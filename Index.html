@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吉田獅玄 | シニアアナリスト</title>
+    <!-- フォントとアイコンの読み込み -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* =========================================
+           CSS Variables (カラースキーム設定)
+        ========================================= */
+        :root {
+            --bg-color: #ECF0F1; /* ライトグレー */
+            --text-color: #333333;
+            --main-color: #2C3E50; /* ダークブルー */
+            --accent-color: #E74C3C; /* レッド */
+            --section-bg: #ffffff;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        /* ダークモード時の変数上書き */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #ECF0F1;
+            --main-color: #1A252F;
+            --accent-color: #E74C3C;
+            --section-bg: #1E1E1E;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* =========================================
+           Reset & Base Styles
+        ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* =========================================
+           Layout
+        ========================================= */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* =========================================
+           Header & Navigation
+        ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--section-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        [data-theme="dark"] header {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--main-color);
+            transition: color 0.3s;
+        }
+
+        [data-theme="dark"] .logo {
+            color: var(--bg-color);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            font-weight: 700;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        /* =========================================
+           Hero Section
+        ========================================= */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            
+            background-color: #2C3E50; 
+            
+            /* 豊洲（湾岸エリア）のタワマンから水辺越しに都心と富士山を望む構図に最も近い、洗練された絶景画像 */
+            background-image: url('https://images.unsplash.com/photo-1542051812-bf233c0ebc91?q=80&w=2062&auto=format&fit=crop'); 
+            
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 美しい絶景がくっきりと見えるよう、フィルターはごく薄く設定しています */
+            background: rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        [data-theme="dark"] .hero-overlay {
+            /* ダークモード時は少しだけ落ち着かせます */
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            /* 明るい背景でも文字がはっきり読めるよう、適度なドロップシャドウを設定 */
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           About Section (控えめなデザイン)
+        ========================================= */
+        .section-title {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            opacity: 0.7;
+            font-weight: normal;
+        }
+
+        [data-theme="dark"] .section-title {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background-color: var(--text-color);
+            margin: 10px auto 0;
+            opacity: 0.3;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            text-align: center;
+            background-color: transparent;
+            padding: 0 20px;
+            border-radius: 0;
+            box-shadow: none;
+            max-width: 600px;
+            margin: 0 auto;
+            /* アニメーション用初期状態 */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .about-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .profile-img-container {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: none;
+            transition: transform 0.4s ease;
+            opacity: 0.9;
+        }
+        
+        [data-theme="dark"] .profile-img {
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .about-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            line-height: 1.4;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+
+        [data-theme="dark"] .about-text h3 {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .about-text p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+
+        /* =========================================
+           Contact Section
+        ========================================= */
+        #contact {
+            background-color: var(--section-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        [data-theme="dark"] #contact {
+            background-color: var(--main-color);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .contact-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #1877F2; /* Facebook Blue */
+            color: #ffffff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.5);
+            background-color: #166fe5;
+        }
+
+        /* =========================================
+           Footer
+        ========================================= */
+        footer {
+            background-color: var(--main-color);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+        }
+
+        [data-theme="dark"] footer {
+            background-color: #0f171e;
+        }
+
+        /* =========================================
+           Animations
+        ========================================= */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================
+           Responsive Design (Mobile)
+        ========================================= */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                height: auto;
+                padding: 15px 0;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+                padding: 0 15px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                padding: 0;
+                gap: 15px;
+            }
+
+            .about-text h3 {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 70px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#hero" class="logo">Shigen Yoshida</a>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <!-- ダークモード切り替えボタン -->
+                        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Dark Mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <h1>AIを活用した情報発信</h1>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">Who I Am</h2>
+                <div class="about-content fade-in-section">
+                    <div class="profile-img-container">
+                        <!-- 清潔感のあるカジュアルな男性のイラスト (DiceBear APIによる自動生成SVGを使用) -->
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=ecf0f1&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0" alt="吉田獅玄" class="profile-img">
+                    </div>
+                    <div class="about-text">
+                        <h3>初めまして、シニアアナリストの吉田獅玄です</h3>
+                        <p>４０年を超える国内製造メーカに在籍し、電力、鉄鋼、半導体、自動車部品等の事業と関わってきました。現在フリーランスとして活動しています。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-content fade-in-section">
+                    <p>情報発信中心ですが、ご意見あればSNSでコメントください。</p>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="btn">
+                        <i class="fab fa-facebook-f"></i> Facebookでつながる
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Shigen Yoshida. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ==========================================
+        // ダークモード/ライトモードの切り替え機能
+        // ==========================================
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.body;
+        const icon = themeBtn.querySelector('i');
+
+        // ローカルストレージから前回のテーマ設定を読み込む
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // ボタンクリック時の処理
+        themeBtn.addEventListener('click', () => {
+            if (body.hasAttribute('data-theme')) {
+                body.removeAttribute('data-theme');
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // ==========================================
+        // スクロール時のフェードインアニメーション (Intersection Observer)
+        // ==========================================
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 // 要素が15%表示されたら発火
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // 一度アニメーションしたら監視を解除
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // クラス 'fade-in-section' を持つすべての要素を監視対象にする
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
