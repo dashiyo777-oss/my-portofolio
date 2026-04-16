@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロフィール | 吉田獅玄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #ECF0F1;
+            --text-color: #333333;
+            --main-color: #2C3E50;
+            --accent-color: #E74C3C;
+            --section-bg: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .profile-card {
+            background-color: var(--section-bg);
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--main-color);
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .bio {
+            font-size: 0.95rem;
+            opacity: 0.75;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--main-color);
+            font-size: 0.9rem;
+            border: 1px solid var(--main-color);
+            padding: 10px 24px;
+            border-radius: 50px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            background-color: var(--main-color);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=ecf0f1&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0"
+                 alt="吉田獅玄" class="profile-img">
+            <h1>吉田 獅玄</h1>
+            <p class="title">シニアアナリスト</p>
+            <p class="bio">
+                ４０年を超える国内製造メーカに在籍し、電力、鉄鋼、半導体、自動車部品等の事業と関わってきました。
+                現在フリーランスとして活動し、AIを活用した情報発信を行っています。
+            </p>
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> トップに戻る
+            </a>
+        </div>
+    </div>
+</body>
+</html>
