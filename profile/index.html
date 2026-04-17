@@ -22,19 +22,79 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.8;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 20px;
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            min-height: 100vh;
+        }
+
+        /* 左側：背景＋テキスト */
+        .left-panel {
+            background-color: var(--main-color);
+            background-image: url('https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 60px 50px;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(44,62,80,0.75) 0%, rgba(26,37,47,0.4) 100%);
+        }
+
+        .left-text {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+
+        .left-text h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .left-text p {
+            font-size: 0.9rem;
+            font-weight: 300;
+            opacity: 0.7;
+            max-width: 340px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: #fff; }
+
+        /* 右側：プロフィールカード */
+        .right-panel {
+            background-color: var(--section-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
         }
 
         .profile-card {
-            background-color: var(--section-bg);
-            border-radius: 12px;
-            padding: 50px 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 340px;
             text-align: center;
         }
 
@@ -43,64 +103,106 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            border: 3px solid var(--bg-color);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            font-size: 1.8rem;
+        .profile-card h1 {
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--main-color);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .title {
-            font-size: 1rem;
+        .profile-title {
+            font-size: 0.9rem;
             color: var(--accent-color);
             margin-bottom: 24px;
             font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--accent-color);
+            margin: 0 auto 24px;
+            opacity: 0.4;
         }
 
         .bio {
-            font-size: 0.95rem;
-            opacity: 0.75;
+            font-size: 0.9rem;
+            opacity: 0.65;
             font-weight: 300;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            margin-bottom: 32px;
+            text-align: left;
+            line-height: 2;
         }
 
-        .back-link {
+        .sns-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: var(--main-color);
+            gap: 10px;
+            color: #1877F2;
             font-size: 0.9rem;
-            border: 1px solid var(--main-color);
-            padding: 10px 24px;
+            border: 1px solid #1877F2;
+            padding: 10px 28px;
             border-radius: 50px;
             transition: all 0.3s;
             text-decoration: none;
         }
 
-        .back-link:hover {
-            background-color: var(--main-color);
+        .sns-link:hover {
+            background-color: #1877F2;
             color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                min-height: 240px;
+                padding: 40px 30px;
+            }
+
+            .right-panel {
+                padding: 50px 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile-card">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=ecf0f1&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0"
-                 alt="吉田獅玄" class="profile-img">
-            <h1>吉田 獅玄</h1>
-            <p class="title">シニアアナリスト</p>
-            <p class="bio">
-                ４０年を超える国内製造メーカに在籍し、電力、鉄鋼、半導体、自動車部品等の事業と関わってきました。
-                現在フリーランスとして活動し、AIを活用した情報発信を行っています。
-            </p>
-            <a href="../index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> トップに戻る
-            </a>
+    <div class="layout">
+        <!-- 左パネル -->
+        <div class="left-panel">
+            <div class="left-text">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> トップに戻る
+                </a>
+                <h2>Shigen Yoshida</h2>
+                <p>AIを活用した情報発信を行うシニアアナリスト</p>
+            </div>
+        </div>
+
+        <!-- 右パネル：プロフィールプレビュー -->
+        <div class="right-panel">
+            <div class="profile-card">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=ecf0f1&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0"
+                     alt="吉田獅玄" class="profile-img">
+                <h1>吉田 獅玄</h1>
+                <p class="profile-title">シニアアナリスト</p>
+                <div class="divider"></div>
+                <p class="bio">
+                    ４０年を超える国内製造メーカに在籍し、電力、鉄鋼、半導体、自動車部品等の事業と関わってきました。
+                    現在フリーランスとして活動し、AIを活用した情報発信を行っています。
+                </p>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="sns-link">
+                    <i class="fab fa-facebook-f"></i> Facebookでつながる
+                </a>
+            </div>
         </div>
     </div>
 </body>
