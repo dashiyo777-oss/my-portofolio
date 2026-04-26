@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>実績 | 吉田獅玄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #F5F2EE;
+            --text-color: #333333;
+            --main-color: #2C3E50;
+            --accent-color: #C8813A;
+            --section-bg: #ffffff;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ヘッダー */
+        header {
+            background-color: var(--section-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--main-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--main-color);
+            font-size: 0.85rem;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover { opacity: 1; }
+
+        /* ページタイトル */
+        .page-hero {
+            background-color: var(--main-color);
+            color: #fff;
+            text-align: center;
+            padding: 64px 24px 56px;
+        }
+
+        .page-hero h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            font-size: 0.9rem;
+            opacity: 0.55;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* メインコンテンツ */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        /* フィルターボタン */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 48px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 22px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            background: var(--section-bg);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* カードグリッド */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        /* カード */
+        .card {
+            background: var(--section-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        .card-thumb {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #eee;
+            display: block;
+        }
+
+        .card-thumb-placeholder {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .card-body {
+            padding: 20px 22px 22px;
+        }
+
+        .card-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+        }
+
+        /* バッジカラー */
+        .badge-slide   { background: #EAF4FB; color: #2980b9; }
+        .badge-column  { background: #EAF7EC; color: #27ae60; }
+        .badge-video   { background: #FDF3E7; color: #e67e22; }
+        .badge-mv      { background: #F5EEF8; color: #8e44ad; }
+        .badge-proposal{ background: #FDFEFE; color: #7f8c8d; border: 1px solid #ddd; }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--main-color);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            opacity: 0.65;
+            font-weight: 300;
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .card-meta {
+            font-size: 0.78rem;
+            opacity: 0.45;
+            margin-bottom: 14px;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .card-link:hover { border-bottom-color: var(--accent-color); }
+
+        /* 提案カードの特別スタイル */
+        .card.proposal-rejected .card-thumb-placeholder {
+            background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+        }
+
+        .card.proposal-accepted .card-thumb-placeholder {
+            background: linear-gradient(135deg, #a8d8a8, #52b788);
+        }
+
+        /* 空状態 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 0;
+            color: #aaa;
+            display: none;
+        }
+
+        .empty-state i { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+
+        @media (max-width: 640px) {
+            .page-hero h1 { font-size: 1.5rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="../index.html" class="logo">Shigen Yoshida</a>
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> トップに戻る
+            </a>
+        </div>
+    </header>
+
+    <div class="page-hero">
+        <h1>Works</h1>
+        <p>スライド・コラム・動画・提案など活動の記録</p>
+    </div>
+
+    <div class="container">
+
+        <!-- フィルターボタン -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-th"></i> すべて
+            </button>
+            <button class="filter-btn" data-filter="slide">
+                <i class="fas fa-tv"></i> スライド
+            </button>
+            <button class="filter-btn" data-filter="column">
+                <i class="fas fa-pen-nib"></i> コラム
+            </button>
+            <button class="filter-btn" data-filter="video">
+                <i class="fas fa-film"></i> Short動画
+            </button>
+            <button class="filter-btn" data-filter="mv">
+                <i class="fas fa-music"></i> MV
+            </button>
+            <button class="filter-btn" data-filter="proposal">
+                <i class="fas fa-briefcase"></i> 提案
+            </button>
+        </div>
+
+        <!-- カード一覧 -->
+        <div class="cards-grid" id="cards-grid">
+
+            <!-- ▼▼▼ スライド ▼▼▼ -->
+            <div class="card" data-category="slide">
+                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #2980b9, #6dd5fa);">
+                    <i class="fas fa-tv"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-slide">スライド</span>
+                    <h3 class="card-title">AIが変える製造業の未来</h3>
+                    <p class="card-desc">NotebookLMを活用して制作。電力・半導体分野におけるAI活用の可能性を解説。</p>
+                    <p class="card-meta"><i class="far fa-calendar-alt"></i> 2024年</p>
+                    <a href="#" class="card-link" target="_blank" rel="noopener">
+                        noteで見る <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ▼▼▼ コラム ▼▼▼ -->
+            <div class="card" data-category="column">
+                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #27ae60, #6fcf97);">
+                    <i class="fas fa-pen-nib"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-column">コラム</span>
+                    <h3 class="card-title">フリーランスアナリストとして感じたこと</h3>
+                    <p class="card-desc">40年の製造業キャリアを経てフリーランスに転向した経緯と気づきを綴ったコラム。</p>
+                    <p class="card-meta"><i class="far fa-calendar-alt"></i> 2024年</p>
+                    <a href="#" class="card-link" target="_blank" rel="noopener">
+                        noteで見る <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ▼▼▼ Short動画 ▼▼▼ -->
+            <div class="card" data-category="video">
+                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #e67e22, #f9ca24);">
+                    <i class="fas fa-film"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-video">Short動画</span>
+                    <h3 class="card-title">半導体業界の現状を3分で解説</h3>
+                    <p class="card-desc">AIを使って制作したショート動画。半導体サプライチェーンのポイントをわかりやすく紹介。</p>
+                    <p class="card-meta"><i class="far fa-calendar-alt"></i> 2024年</p>
+                    <a href="#" class="card-link" target="_blank" rel="noopener">
+                        動画を見る <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ▼▼▼ MV ▼▼▼ -->
+            <div class="card" data-category="mv">
+                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #8e44ad, #c39bd3);">
+                    <i class="fas fa-music"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-mv">MV</span>
+                    <h3 class="card-title">制作MV タイトル</h3>
+                    <p class="card-desc">AIツールを活用して制作したミュージックビデオ。映像・音楽ともにAI生成。</p>
+                    <p class="card-meta"><i class="far fa-calendar-alt"></i> 2024年</p>
+                    <a href="#" class="card-link" target="_blank" rel="noopener">
+                        MVを見る <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ▼▼▼ 提案（採用） ▼▼▼ -->
+            <div class="card proposal-accepted" data-category="proposal">
+                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #a8d8a8, #52b788);">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案・採用</span>
+                    <h3 class="card-title">クライアント提案 タイトル</h3>
+                    <p class="card-desc">AI活用に関するコンサルティング提案。課題分析から実装ロードマップまでを提示。</p>
+                    <p class="card-meta"><i class="far fa-calendar-alt"></i> 2024年</p>
+                </div>
+            </div>
+
+            <!-- ▼▼▼ 提案（不採用） ▼▼▼ -->
+            <div class="card proposal-rejected" data-category="proposal">
+                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #bdc3c7, #95a5a6);">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案・不採用</span>
+                    <h3 class="card-title">クライアント提案 タイトル</h3>
+                    <p class="card-desc">製造業向けDX推進提案。予算の都合で不採用となったが、後の案件に活用。</p>
+                    <p class="card-meta"><i class="far fa-calendar-alt"></i> 2024年</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="empty-state" id="empty-state">
+            <i class="fas fa-inbox"></i>
+            該当する実績がありません
+        </div>
+
+    </div>
+
+    <script>
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.card');
+        const emptyState = document.getElementById('empty-state');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                let visible = 0;
+
+                cards.forEach(card => {
+                    const match = filter === 'all' || card.dataset.category === filter;
+                    card.classList.toggle('hidden', !match);
+                    if (match) visible++;
+                });
+
+                emptyState.style.display = visible === 0 ? 'block' : 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
