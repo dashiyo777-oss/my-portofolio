@@ -155,22 +155,81 @@
             display: none;
         }
 
+        .card-thumb-wrap {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
         .card-thumb {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
-            background-color: #eee;
             display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-thumb {
+            transform: scale(1.04);
         }
 
         .card-thumb-placeholder {
             width: 100%;
-            height: 180px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
             color: rgba(255,255,255,0.8);
+        }
+
+        /* 再生ボタンオーバーレイ */
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.25);
+            transition: background 0.3s;
+        }
+
+        .card:hover .play-overlay {
+            background: rgba(0,0,0,0.4);
+        }
+
+        .play-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            transition: transform 0.3s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .card:hover .play-btn {
+            transform: scale(1.12);
+        }
+
+        /* カテゴリラベル（サムネイル上） */
+        .thumb-label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 50px;
         }
 
         .card-body {
@@ -300,8 +359,11 @@
 
             <!-- ▼▼▼ スライド ▼▼▼ -->
             <div class="card" data-category="slide">
-                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #2980b9, #6dd5fa);">
-                    <i class="fas fa-tv"></i>
+                <div class="card-thumb-wrap">
+                    <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #1a6fa8, #4db8d4);">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <span class="thumb-label">Slide</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-slide">スライド</span>
@@ -315,8 +377,11 @@
 
             <!-- ▼▼▼ コラム ▼▼▼ -->
             <div class="card" data-category="column">
-                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #27ae60, #6fcf97);">
-                    <i class="fas fa-pen-nib"></i>
+                <div class="card-thumb-wrap">
+                    <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #1e8449, #52be80);">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <span class="thumb-label">Column</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-column">コラム</span>
@@ -330,8 +395,18 @@
 
             <!-- ▼▼▼ Short動画 ▼▼▼ -->
             <div class="card" data-category="video">
-                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #e67e22, #f9ca24);">
-                    <i class="fas fa-film"></i>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb"
+                         src="https://img.youtube.com/vi/Mg8e6_V7nG8/maxresdefault.jpg"
+                         alt="This Cat Thought It Was a Bird"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#e67e22,#f9ca24);">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" target="_blank" rel="noopener" class="play-overlay">
+                        <div class="play-btn"><i class="fas fa-play"></i></div>
+                    </a>
+                    <span class="thumb-label">Short動画</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-video">Short動画</span>
@@ -345,8 +420,18 @@
 
             <!-- ▼▼▼ MV ▼▼▼ -->
             <div class="card" data-category="mv">
-                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #8e44ad, #c39bd3);">
-                    <i class="fas fa-music"></i>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb"
+                         src="https://img.youtube.com/vi/e96Fm1wDRzI/maxresdefault.jpg"
+                         alt="Song for Hiro"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#8e44ad,#c39bd3);">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <a href="https://youtu.be/e96Fm1wDRzI" target="_blank" rel="noopener" class="play-overlay">
+                        <div class="play-btn"><i class="fas fa-play"></i></div>
+                    </a>
+                    <span class="thumb-label">MV</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-mv">MV</span>
@@ -360,8 +445,15 @@
 
             <!-- ▼▼▼ 提案 ▼▼▼ -->
             <div class="card" data-category="proposal">
-                <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #d4a96a, #c8813a);">
-                    <i class="fas fa-briefcase"></i>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb"
+                         src="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5"
+                         alt="税理士法人企業理念"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#d4a96a,#c8813a);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span class="thumb-label">提案</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-proposal">提案</span>
