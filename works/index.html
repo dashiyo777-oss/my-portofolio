@@ -26,7 +26,6 @@
             min-height: 100vh;
         }
 
-        /* ヘッダー */
         header {
             background-color: var(--section-bg);
             box-shadow: 0 2px 10px rgba(0,0,0,0.06);
@@ -66,7 +65,6 @@
 
         .back-link:hover { opacity: 1; }
 
-        /* ページタイトル */
         .page-hero {
             background-color: var(--main-color);
             color: #fff;
@@ -88,14 +86,12 @@
             letter-spacing: 1px;
         }
 
-        /* メインコンテンツ */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 56px 24px 80px;
         }
 
-        /* フィルターボタン */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
@@ -130,29 +126,35 @@
             color: #fff;
         }
 
-        /* カードグリッド */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 28px;
         }
 
-        /* カード */
+        /* カード（全体クリック可能） */
         .card {
             background: var(--section-bg);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
-            transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            cursor: pointer;
         }
 
         .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
         }
 
-        .card.hidden {
-            display: none;
+        .card.hidden { display: none; }
+
+        /* カード全体をクリック可能にするオーバーレイ */
+        .card-cover {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
         }
 
         .card-thumb-wrap {
@@ -160,6 +162,7 @@
             width: 100%;
             height: 200px;
             overflow: hidden;
+            background: #eee;
         }
 
         .card-thumb {
@@ -170,9 +173,7 @@
             transition: transform 0.4s ease;
         }
 
-        .card:hover .card-thumb {
-            transform: scale(1.04);
-        }
+        .card:hover .card-thumb { transform: scale(1.04); }
 
         .card-thumb-placeholder {
             width: 100%;
@@ -184,7 +185,6 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* 再生ボタンオーバーレイ */
         .play-overlay {
             position: absolute;
             inset: 0;
@@ -193,11 +193,10 @@
             justify-content: center;
             background: rgba(0,0,0,0.25);
             transition: background 0.3s;
+            z-index: 1;
         }
 
-        .card:hover .play-overlay {
-            background: rgba(0,0,0,0.4);
-        }
+        .card:hover .play-overlay { background: rgba(0,0,0,0.4); }
 
         .play-btn {
             width: 56px;
@@ -213,11 +212,8 @@
             box-shadow: 0 4px 16px rgba(0,0,0,0.3);
         }
 
-        .card:hover .play-btn {
-            transform: scale(1.12);
-        }
+        .card:hover .play-btn { transform: scale(1.12); }
 
-        /* カテゴリラベル（サムネイル上） */
         .thumb-label {
             position: absolute;
             top: 12px;
@@ -230,11 +226,10 @@
             text-transform: uppercase;
             padding: 4px 10px;
             border-radius: 50px;
+            z-index: 1;
         }
 
-        .card-body {
-            padding: 20px 22px 22px;
-        }
+        .card-body { padding: 20px 22px 22px; }
 
         .card-badge {
             display: inline-block;
@@ -247,12 +242,11 @@
             margin-bottom: 10px;
         }
 
-        /* バッジカラー */
-        .badge-slide   { background: #EAF4FB; color: #2980b9; }
-        .badge-column  { background: #EAF7EC; color: #27ae60; }
-        .badge-video   { background: #FDF3E7; color: #e67e22; }
-        .badge-mv      { background: #F5EEF8; color: #8e44ad; }
-        .badge-proposal{ background: #FDFEFE; color: #7f8c8d; border: 1px solid #ddd; }
+        .badge-slide    { background: #EAF4FB; color: #2980b9; }
+        .badge-column   { background: #EAF7EC; color: #27ae60; }
+        .badge-video    { background: #FDF3E7; color: #e67e22; }
+        .badge-mv       { background: #F5EEF8; color: #8e44ad; }
+        .badge-proposal { background: #FDFEFE; color: #7f8c8d; border: 1px solid #ddd; }
 
         .card-title {
             font-size: 1rem;
@@ -270,12 +264,6 @@
             line-height: 1.8;
         }
 
-        .card-meta {
-            font-size: 0.78rem;
-            opacity: 0.45;
-            margin-bottom: 14px;
-        }
-
         .card-link {
             display: inline-flex;
             align-items: center;
@@ -283,22 +271,14 @@
             font-size: 0.82rem;
             color: var(--accent-color);
             text-decoration: none;
+            position: relative;
+            z-index: 3;
             border-bottom: 1px solid transparent;
             transition: border-color 0.3s;
         }
 
         .card-link:hover { border-bottom-color: var(--accent-color); }
 
-        /* 提案カードの特別スタイル */
-        .card.proposal-rejected .card-thumb-placeholder {
-            background: linear-gradient(135deg, #bdc3c7, #95a5a6);
-        }
-
-        .card.proposal-accepted .card-thumb-placeholder {
-            background: linear-gradient(135deg, #a8d8a8, #52b788);
-        }
-
-        /* 空状態 */
         .empty-state {
             text-align: center;
             padding: 60px 0;
@@ -332,35 +312,30 @@
 
     <div class="container">
 
-        <!-- フィルターボタン -->
         <div class="filter-bar">
-            <button class="filter-btn active" data-filter="all">
-                <i class="fas fa-th"></i> すべて
-            </button>
-            <button class="filter-btn" data-filter="slide">
-                <i class="fas fa-tv"></i> スライド
-            </button>
-            <button class="filter-btn" data-filter="column">
-                <i class="fas fa-pen-nib"></i> コラム
-            </button>
-            <button class="filter-btn" data-filter="video">
-                <i class="fas fa-film"></i> Short動画
-            </button>
-            <button class="filter-btn" data-filter="mv">
-                <i class="fas fa-music"></i> MV
-            </button>
-            <button class="filter-btn" data-filter="proposal">
-                <i class="fas fa-briefcase"></i> 提案
-            </button>
+            <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i> すべて</button>
+            <button class="filter-btn" data-filter="slide"><i class="fas fa-tv"></i> スライド</button>
+            <button class="filter-btn" data-filter="column"><i class="fas fa-pen-nib"></i> コラム</button>
+            <button class="filter-btn" data-filter="video"><i class="fas fa-film"></i> Short動画</button>
+            <button class="filter-btn" data-filter="mv"><i class="fas fa-music"></i> MV</button>
+            <button class="filter-btn" data-filter="proposal"><i class="fas fa-briefcase"></i> 提案</button>
         </div>
 
-        <!-- カード一覧 -->
         <div class="cards-grid" id="cards-grid">
 
-            <!-- ▼▼▼ スライド ▼▼▼ -->
+            <!-- ============================================
+                 スライド
+                 追加方法：このブロックをコピーして下に貼り付け
+                 href・src・タイトル・説明を書き換えるだけ
+            ============================================ -->
             <div class="card" data-category="slide">
+                <a href="https://note.com/leo77777/n/n76b4f5156fd5" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
-                    <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #1a6fa8, #4db8d4);">
+                    <img class="card-thumb"
+                         src="https://image.thum.io/get/width/600/crop/400/https://note.com/leo77777/n/n76b4f5156fd5"
+                         alt="AIによる業務改革と日本経済のブループリント"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);">
                         <i class="fas fa-tv"></i>
                     </div>
                     <span class="thumb-label">Slide</span>
@@ -369,16 +344,41 @@
                     <span class="card-badge badge-slide">スライド</span>
                     <h3 class="card-title">AIによる業務改革と日本経済のブループリント</h3>
                     <p class="card-desc">全産業における現状・課題・あるべき姿を NotebookLM を活用してまとめたスライド。</p>
-                    <a href="https://note.com/leo77777/n/n76b4f5156fd5" class="card-link" target="_blank" rel="noopener">
-                        noteで見る <i class="fas fa-external-link-alt"></i>
-                    </a>
+                    <a href="https://note.com/leo77777/n/n76b4f5156fd5" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
-            <!-- ▼▼▼ コラム ▼▼▼ -->
-            <div class="card" data-category="column">
+            <div class="card" data-category="slide">
+                <a href="https://note.com/leo77777/n/n23eeeb7cfd06" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
-                    <div class="card-thumb-placeholder" style="background: linear-gradient(135deg, #1e8449, #52be80);">
+                    <img class="card-thumb"
+                         src="https://image.thum.io/get/width/600/crop/400/https://note.com/leo77777/n/n23eeeb7cfd06"
+                         alt="新しいスライド"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <span class="thumb-label">Slide</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-slide">スライド</span>
+                    <h3 class="card-title">スライドタイトル</h3>
+                    <p class="card-desc">スライドの説明を入力してください。</p>
+                    <a href="https://note.com/leo77777/n/n23eeeb7cfd06" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <!-- ============================================
+                 コラム
+            ============================================ -->
+            <div class="card" data-category="column">
+                <a href="https://note.com/ryuzaburo7/n/n747484673402" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb"
+                         src="https://image.thum.io/get/width/600/crop/400/https://note.com/ryuzaburo7/n/n747484673402"
+                         alt="副業初心者におすすめの副業5選"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1e8449,#52be80);">
                         <i class="fas fa-pen-nib"></i>
                     </div>
                     <span class="thumb-label">Column</span>
@@ -387,14 +387,15 @@
                     <span class="card-badge badge-column">コラム</span>
                     <h3 class="card-title">副業初心者におすすめの副業5選｜未経験でも月1万円を目指せる仕事を紹介</h3>
                     <p class="card-desc">この記事はポートフォリオ用のサンプル記事です。</p>
-                    <a href="https://note.com/ryuzaburo7/n/n747484673402" class="card-link" target="_blank" rel="noopener">
-                        noteで見る <i class="fas fa-external-link-alt"></i>
-                    </a>
+                    <a href="https://note.com/ryuzaburo7/n/n747484673402" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
-            <!-- ▼▼▼ Short動画 ▼▼▼ -->
+            <!-- ============================================
+                 Short動画
+            ============================================ -->
             <div class="card" data-category="video">
+                <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
                     <img class="card-thumb"
                          src="https://img.youtube.com/vi/Mg8e6_V7nG8/maxresdefault.jpg"
@@ -403,23 +404,24 @@
                     <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#e67e22,#f9ca24);">
                         <i class="fas fa-film"></i>
                     </div>
-                    <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" target="_blank" rel="noopener" class="play-overlay">
+                    <div class="play-overlay">
                         <div class="play-btn"><i class="fas fa-play"></i></div>
-                    </a>
+                    </div>
                     <span class="thumb-label">Short動画</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-video">Short動画</span>
                     <h3 class="card-title">This Cat Thought It Was a Bird… 🤖🐈</h3>
                     <p class="card-desc">Leo the cat saw something flying… and thought it was a bird. 🐈🌿 But it wasn't.</p>
-                    <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" class="card-link" target="_blank" rel="noopener">
-                        動画を見る <i class="fas fa-external-link-alt"></i>
-                    </a>
+                    <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" class="card-link" target="_blank" rel="noopener">動画を見る <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
-            <!-- ▼▼▼ MV ▼▼▼ -->
+            <!-- ============================================
+                 MV
+            ============================================ -->
             <div class="card" data-category="mv">
+                <a href="https://youtu.be/e96Fm1wDRzI" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
                     <img class="card-thumb"
                          src="https://img.youtube.com/vi/e96Fm1wDRzI/maxresdefault.jpg"
@@ -428,23 +430,117 @@
                     <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#8e44ad,#c39bd3);">
                         <i class="fas fa-music"></i>
                     </div>
-                    <a href="https://youtu.be/e96Fm1wDRzI" target="_blank" rel="noopener" class="play-overlay">
+                    <div class="play-overlay">
                         <div class="play-btn"><i class="fas fa-play"></i></div>
-                    </a>
+                    </div>
                     <span class="thumb-label">MV</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-mv">MV</span>
                     <h3 class="card-title">Song for Hiro (Reignite Edition)</h3>
                     <p class="card-desc">w-Band is a music project focused on life itself. Love, dreams, admiration, daily moments, and emotions we all experience. Let these sounds blend into your own story.</p>
-                    <a href="https://youtu.be/e96Fm1wDRzI" class="card-link" target="_blank" rel="noopener">
-                        MVを見る <i class="fas fa-external-link-alt"></i>
-                    </a>
+                    <a href="https://youtu.be/e96Fm1wDRzI" class="card-link" target="_blank" rel="noopener">MVを見る <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
-            <!-- ▼▼▼ 提案 ▼▼▼ -->
+            <!-- ============================================
+                 提案
+                 追加方法：このブロックをコピーして下に貼り付け
+                 src・href・タイトル・説明を書き換えるだけ
+            ============================================ -->
             <div class="card" data-category="proposal">
+                <a href="../images/proposals/kuchou-plan.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb" src="../images/proposals/kuchou-plan.jpg" alt="空調プランのご提案"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1565c0,#42a5f5);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span class="thumb-label">提案</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案</span>
+                    <h3 class="card-title">ドラッグストア専用 空調プランのご提案</h3>
+                    <p class="card-desc">中部空調株式会社向け。電気代削減・トラブル防止に特化した空調プランを提案。</p>
+                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="card" data-category="proposal">
+                <a href="../images/proposals/kuchou-reform.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb" src="../images/proposals/kuchou-reform.jpg" alt="空調リフォーム"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#00695c,#4db6ac);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span class="thumb-label">提案</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案</span>
+                    <h3 class="card-title">空調機のリフォームで快適・省エネ環境を実現</h3>
+                    <p class="card-desc">中部エアークリーナー向け。本体交換なしで性能を復活させるコイル更新プランを提案。</p>
+                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="card" data-category="proposal">
+                <a href="../images/proposals/taue.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb" src="../images/proposals/taue.jpg" alt="田植え体験会"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#2e7d32,#81c784);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span class="thumb-label">提案</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案</span>
+                    <h3 class="card-title">田植え体験会 2026 告知フライヤー</h3>
+                    <p class="card-desc">東郷ふるさとおこし協議会向け。地域イベントの集客を目的とした告知フライヤーを制作。</p>
+                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="card" data-category="proposal">
+                <a href="../images/proposals/geniwa-white.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb" src="../images/proposals/geniwa-white.jpg" alt="弦庭演奏会（白）"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#c8a951,#f0e68c);">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <span class="thumb-label">提案</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案</span>
+                    <h3 class="card-title">弦楽アンサンブル「弦庭」第3回演奏会チラシ（白）</h3>
+                    <p class="card-desc">弦楽アンサンブル向け。優雅な雰囲気を表現した明るいデザインのコンサートチラシ。</p>
+                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="card" data-category="proposal">
+                <a href="../images/proposals/geniwa-black.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb" src="../images/proposals/geniwa-black.jpg" alt="弦庭演奏会（黒）"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#212121,#616161);">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <span class="thumb-label">提案</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-proposal">提案</span>
+                    <h3 class="card-title">弦楽アンサンブル「弦庭」第3回演奏会チラシ（黒）</h3>
+                    <p class="card-desc">弦楽アンサンブル向け。高級感と重厚感を演出したダークデザインのコンサートチラシ。</p>
+                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </div>
+
+            <!-- 既存の税理士法人提案 -->
+            <div class="card" data-category="proposal">
+                <a href="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
                     <img class="card-thumb"
                          src="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5"
@@ -459,9 +555,7 @@
                     <span class="card-badge badge-proposal">提案</span>
                     <h3 class="card-title">税理士法人企業理念</h3>
                     <p class="card-desc">税理士法人向けに作成した企業理念の提案資料。</p>
-                    <a href="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5" class="card-link" target="_blank" rel="noopener">
-                        資料を見る <i class="fas fa-external-link-alt"></i>
-                    </a>
+                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
                 </div>
             </div>
 
@@ -483,16 +577,13 @@
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
                 const filter = btn.dataset.filter;
                 let visible = 0;
-
                 cards.forEach(card => {
                     const match = filter === 'all' || card.dataset.category === filter;
                     card.classList.toggle('hidden', !match);
                     if (match) visible++;
                 });
-
                 emptyState.style.display = visible === 0 ? 'block' : 'none';
             });
         });

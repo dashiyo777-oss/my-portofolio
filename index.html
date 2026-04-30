@@ -393,8 +393,88 @@
         }
 
         /* =========================================
-           Animations
+           Works Preview Section
         ========================================= */
+        #works-preview {
+            background-color: var(--section-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .works-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 36px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .works-preview-grid.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .work-item {
+            display: block;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 180px;
+            text-decoration: none;
+            background: var(--main-color);
+        }
+
+        .work-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: brightness(0.75);
+        }
+
+        .work-item:hover img {
+            transform: scale(1.06);
+            filter: brightness(0.95);
+        }
+
+        .work-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 14px 14px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.72));
+            color: #fff;
+        }
+
+        .work-item-label {
+            display: block;
+            font-size: 0.68rem;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .work-item-title {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .works-cta {
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .works-preview-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .work-item { height: 150px; }
+        }
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -490,6 +570,45 @@
                         <p>４０年を超える国内製造メーカに在籍し、電力、鉄鋼、半導体、自動車部品等の事業と関わってきました。</p>
                         <p>現在フリーランスとして活動しています。</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Works Preview Section -->
+        <section id="works-preview">
+            <div class="container">
+                <h2 class="section-title">Works</h2>
+                <div class="works-preview-grid fade-in-section">
+                    <a href="works/" class="work-item">
+                        <img src="https://img.youtube.com/vi/e96Fm1wDRzI/maxresdefault.jpg" alt="Song for Hiro"
+                             onerror="this.style.background='#2C3E50';">
+                        <div class="work-item-overlay">
+                            <span class="work-item-label">MV</span>
+                            <span class="work-item-title">Song for Hiro (Reignite Edition)</span>
+                        </div>
+                    </a>
+                    <a href="works/" class="work-item">
+                        <img src="https://image.thum.io/get/width/600/crop/400/https://note.com/leo77777/n/n76b4f5156fd5"
+                             alt="AIによる業務改革と日本経済のブループリント"
+                             onerror="this.style.background='#2C3E50';">
+                        <div class="work-item-overlay">
+                            <span class="work-item-label">スライド</span>
+                            <span class="work-item-title">AIによる業務改革と日本経済のブループリント</span>
+                        </div>
+                    </a>
+                    <a href="works/" class="work-item">
+                        <img src="images/proposals/kuchou-plan.jpg" alt="空調プランのご提案"
+                             onerror="this.style.background='#2C3E50';">
+                        <div class="work-item-overlay">
+                            <span class="work-item-label">提案</span>
+                            <span class="work-item-title">ドラッグストア専用 空調プランのご提案</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="works-cta">
+                    <a href="works/" class="btn">
+                        <i class="fas fa-th"></i> 実績をすべて見る
+                    </a>
                 </div>
             </div>
         </section>
