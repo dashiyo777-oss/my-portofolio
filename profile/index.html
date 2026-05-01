@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #F5ECD7;
-            --text-color: #3E2A1A;
-            --main-color: #7B4F2E;
+            --bg-color: #F0F2F4;
+            --text-color: #2C3E50;
+            --main-color: #2C3E50;
             --accent-color: #C8813A;
-            --section-bg: #FDF6EC;
+            --section-bg: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,9 +31,9 @@
             min-height: 100vh;
         }
 
-        /* 左側：背景＋テキスト */
+        /* 左側：トップページと同じ背景トーン */
         .left-panel {
-            background-color: #5C3317;
+            background-color: #1A252F;
             background-image: url('https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
@@ -41,13 +41,19 @@
             display: flex;
             align-items: flex-end;
             padding: 60px 50px;
+            animation: slowZoom 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            0% { background-size: 100%; }
+            100% { background-size: 108%; }
         }
 
         .left-panel::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(123,79,46,0.78) 0%, rgba(200,129,58,0.45) 100%);
+            background: linear-gradient(135deg, rgba(44,62,80,0.72) 0%, rgba(26,37,47,0.35) 100%);
         }
 
         .left-text {
@@ -66,15 +72,16 @@
         .left-text p {
             font-size: 0.9rem;
             font-weight: 300;
-            opacity: 0.7;
+            opacity: 0.65;
             max-width: 340px;
+            line-height: 1.9;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.55);
             font-size: 0.85rem;
             text-decoration: none;
             margin-bottom: 30px;
@@ -94,46 +101,44 @@
 
         .profile-card {
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
             text-align: center;
         }
 
+        /* シャツが見えるよう縦長に */
         .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 96px;
+            height: 130px;
+            border-radius: 48px;
             object-fit: cover;
+            object-position: top center;
             margin-bottom: 24px;
             border: 3px solid var(--bg-color);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease;
         }
+
+        .profile-img:hover { transform: scale(1.03); }
 
         .profile-card h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--main-color);
-            margin-bottom: 6px;
-        }
-
-        .profile-title {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            margin-bottom: 24px;
-            font-weight: 400;
-            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
         .divider {
             width: 40px;
             height: 1px;
             background-color: var(--accent-color);
-            margin: 0 auto 24px;
+            margin: 0 auto 22px;
             opacity: 0.4;
         }
 
         .bio {
             font-size: 0.9rem;
-            opacity: 0.65;
+            color: var(--text-color);
+            opacity: 0.7;
             font-weight: 300;
             margin-bottom: 32px;
             text-align: left;
@@ -159,18 +164,9 @@
         }
 
         @media (max-width: 768px) {
-            .layout {
-                grid-template-columns: 1fr;
-            }
-
-            .left-panel {
-                min-height: 240px;
-                padding: 40px 30px;
-            }
-
-            .right-panel {
-                padding: 50px 30px;
-            }
+            .layout { grid-template-columns: 1fr; }
+            .left-panel { min-height: 260px; padding: 40px 30px; }
+            .right-panel { padding: 50px 30px; }
         }
     </style>
 </head>
@@ -183,25 +179,24 @@
                     <i class="fas fa-arrow-left"></i> トップに戻る
                 </a>
                 <h2>Shigen Yoshida</h2>
-                <p>AIを活用した情報発信を行うシニアアナリスト</p>
+                <p>製造メーカーでの経験を軸に、AIを活用してクライアントの課題に向き合います。</p>
             </div>
         </div>
 
-        <!-- 右パネル：プロフィールプレビュー -->
+        <!-- 右パネル：プロフィール -->
         <div class="right-panel">
             <div class="profile-card">
-                <img src="../../images/profile.jpg"
+                <img src="../images/profile.jpg"
                      alt="吉田獅玄" class="profile-img"
                      onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=ecf0f1&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0'">
                 <h1>吉田 獅玄</h1>
-                <p class="profile-title">シニアアナリスト</p>
                 <div class="divider"></div>
                 <p class="bio">
                     製造メーカーでの経験を軸に、今はAIを活用して仕事をしています。<br>
                     レポート・資料・リサーチ・デザイン――<br>
                     クライアントの課題に、最後まで丁寧に向き合う仕事をします。
                 </p>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="sns-link">
+                <a href="https://www.facebook.com/profile.php?id=61558753410397" target="_blank" rel="noopener noreferrer" class="sns-link">
                     <i class="fab fa-facebook-f"></i> Facebookでつながる
                 </a>
             </div>
