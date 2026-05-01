@@ -220,69 +220,59 @@
             background-color: var(--white);
         }
 
-        .about-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 72px;
-            align-items: center;
+        .about-inner {
+            max-width: 760px;
             opacity: 0;
             transform: translateY(24px);
             transition: opacity 0.9s ease, transform 0.9s ease;
         }
 
-        .about-grid.visible {
+        .about-inner.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .about-img-wrap {
-            position: relative;
-        }
-
-        .about-img-wrap::before {
-            content: '';
-            position: absolute;
-            top: -12px; left: -12px;
-            right: 12px; bottom: 12px;
-            border: 1px solid var(--gold);
-            opacity: 0.3;
-            border-radius: 4px;
-        }
-
-        .about-img {
-            width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: contain;
-            object-position: top;
-            border-radius: 4px;
-            background-color: var(--off-white);
-            display: block;
-        }
-
-        .about-text .section-label { margin-bottom: 8px; }
-
-        .about-text h2 {
-            font-size: 1.6rem;
-            font-weight: 700;
+        .about-lead {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.55rem;
+            font-weight: 300;
             color: var(--navy);
-            margin-bottom: 24px;
-            line-height: 1.5;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            border-left: 2px solid var(--gold);
+            padding-left: 24px;
         }
 
-        .about-text p {
+        .about-body {
             font-size: 0.95rem;
             color: var(--text);
-            opacity: 0.75;
+            opacity: 0.72;
             font-weight: 300;
-            margin-bottom: 14px;
-            line-height: 2;
+            line-height: 2.1;
+            margin-bottom: 40px;
+            padding-left: 26px;
+        }
+
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .about-tag {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--navy-light);
+            border: 1px solid rgba(44,62,80,0.25);
+            padding: 6px 16px;
+            border-radius: 50px;
         }
 
         .about-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-top: 12px;
             font-size: 0.82rem;
             color: var(--navy);
             border-bottom: 1px solid var(--navy);
@@ -478,20 +468,20 @@
     <!-- ── About ── -->
     <section id="about">
         <div class="container">
-            <div class="about-grid fade-in">
-                <div class="about-img-wrap">
-                    <img src="images/profile.jpg" alt="吉田獅玄" class="about-img"
-                         onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=f7f6f3&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0'">
+            <div class="about-inner fade-in">
+                <p class="section-label">About</p>
+                <p class="about-lead">AIと製造業の知見を掛け合わせ、<br>伝わる資料・調査・デザインを提供します。</p>
+                <p class="about-body">製造メーカーで生産管理・業務改革に従事した経験を軸に、現在はAIツールを活用したコンテンツ制作・リサーチ・デザイン支援を行っています。「正確に、丁寧に、最後まで」を仕事の基本とし、クライアントのご要望をしっかりヒアリングした上で対応します。</p>
+                <div class="about-tags">
+                    <span class="about-tag">製造業・業務改革</span>
+                    <span class="about-tag">AIレポート・資料作成</span>
+                    <span class="about-tag">市場調査・リサーチ</span>
+                    <span class="about-tag">グラフィックデザイン</span>
+                    <span class="about-tag">動画制作</span>
                 </div>
-                <div class="about-text">
-                    <p class="section-label">About</p>
-                    <h2>吉田 獅玄</h2>
-                    <p>製造メーカーでの経験を軸に、今はAIを活用して仕事をしています。</p>
-                    <p>レポート・資料・リサーチ・デザイン――クライアントの課題に、最後まで丁寧に向き合う仕事をします。</p>
-                    <a href="profile/" class="about-link">
-                        詳しいプロフィール <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
+                <a href="profile/" class="about-link">
+                    詳しいプロフィール <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>

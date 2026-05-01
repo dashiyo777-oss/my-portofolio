@@ -260,6 +260,76 @@
             opacity: 0.5;
         }
 
+        /* ── Services ── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .service-card {
+            background-color: var(--off-white);
+            border-radius: 8px;
+            padding: 20px 18px;
+        }
+
+        .service-card-label {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .service-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-card li {
+            font-size: 0.82rem;
+            color: var(--text);
+            font-weight: 300;
+            line-height: 2;
+            opacity: 0.8;
+        }
+
+        .service-card li::before {
+            content: '—';
+            color: var(--gold);
+            margin-right: 6px;
+            font-size: 0.7rem;
+        }
+
+        /* ── Expertise & Tools ── */
+        .profile-block {
+            margin-bottom: 28px;
+        }
+
+        .profile-block-title {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 0.78rem;
+            color: var(--navy-light);
+            border: 1px solid rgba(44,62,80,0.22);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-weight: 300;
+        }
+
         .profile-sns {
             display: inline-flex;
             align-items: center;
@@ -318,6 +388,7 @@
                 gap: 48px;
             }
             .profile-img-wrap { max-width: 240px; margin: 0 auto; }
+            .services-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -372,9 +443,67 @@
                     </a>
                     <p class="section-label">Profile</p>
                     <h2>製造業の現場知識と<br>AIを融合した仕事</h2>
-                    <p>製造メーカーでの経験を軸に、今はAIを活用して仕事をしています。</p>
-                    <p>レポート・資料・リサーチ・デザイン――クライアントの課題に、最後まで丁寧に向き合う仕事をします。</p>
+                    <p>製造メーカーで生産管理・業務改革に従事した経験を軸に、現在はAIツールを活用したコンテンツ制作・リサーチ・デザイン支援を行っています。</p>
+                    <p>「正確に、丁寧に、最後まで」を仕事の基本とし、ご要望をしっかりヒアリングした上で対応します。</p>
+
                     <div class="divider-gold"></div>
+
+                    <!-- 対応業務 -->
+                    <div class="profile-block">
+                        <p class="profile-block-title">Services</p>
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <p class="service-card-label">Report</p>
+                                <ul>
+                                    <li>AIレポート作成</li>
+                                    <li>プレゼン資料</li>
+                                    <li>インフォグラフィック</li>
+                                    <li>市場調査・データ整理</li>
+                                </ul>
+                            </div>
+                            <div class="service-card">
+                                <p class="service-card-label">Design</p>
+                                <ul>
+                                    <li>ポスター・チラシ</li>
+                                    <li>ロゴ制作</li>
+                                </ul>
+                            </div>
+                            <div class="service-card">
+                                <p class="service-card-label">Video</p>
+                                <ul>
+                                    <li>ショート動画制作</li>
+                                    <li>テロップ編集</li>
+                                    <li>コンテンツ発信</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 得意領域 -->
+                    <div class="profile-block">
+                        <p class="profile-block-title">Expertise</p>
+                        <div class="tag-row">
+                            <span class="tag">製造業（電力・自動車部品・半導体・鉄鋼）</span>
+                            <span class="tag">業務改革・改善</span>
+                            <span class="tag">市場調査レポート</span>
+                        </div>
+                    </div>
+
+                    <!-- 使用ツール -->
+                    <div class="profile-block">
+                        <p class="profile-block-title">Tools</p>
+                        <div class="tag-row">
+                            <span class="tag">Canva</span>
+                            <span class="tag">Premiere Pro</span>
+                            <span class="tag">Excel</span>
+                            <span class="tag">ChatGPT</span>
+                            <span class="tag">NotebookLM</span>
+                            <span class="tag">Gemini</span>
+                            <span class="tag">Claude</span>
+                            <span class="tag">note</span>
+                        </div>
+                    </div>
+
                     <a href="https://www.facebook.com/profile.php?id=61558753410397"
                        target="_blank" rel="noopener noreferrer"
                        class="profile-sns">
