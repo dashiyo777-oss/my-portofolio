@@ -566,10 +566,10 @@
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
         // 訪問カウンター（?admin 付きURLでのみ表示）
-        fetch('https://api.countapi.xyz/hit/dashiyo777-oss-portfolio/pageviews')
+        fetch('https://api.counterapi.dev/v1/dashiyo777oss/portfolio/up')
             .then(res => res.json())
             .then(data => {
-                document.getElementById('visit-count').textContent = data.value.toLocaleString();
+                document.getElementById('visit-count').textContent = data.count.toLocaleString();
                 if (window.location.search.includes('admin')) {
                     document.getElementById('visit-badge').style.display = 'flex';
                 }
@@ -577,7 +577,7 @@
             .catch(() => {
                 if (window.location.search.includes('admin')) {
                     document.getElementById('visit-badge').style.display = 'flex';
-                    document.getElementById('visit-count').textContent = '取得失敗';
+                    document.getElementById('visit-count').textContent = '---';
                 }
             });
     </script>
