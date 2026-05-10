@@ -4,110 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>実績 | 吉田獅玄</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #F5F2EE;
-            --text-color: #333333;
-            --main-color: #2C3E50;
-            --accent-color: #C8813A;
-            --section-bg: #ffffff;
+            --navy: #1A252F;
+            --navy-light: #2C3E50;
+            --gold: #C8813A;
+            --white: #ffffff;
+            --off-white: #F7F6F3;
+            --text: #333333;
+            --text-light: #888888;
             --card-shadow: 0 4px 15px rgba(0,0,0,0.07);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--off-white);
+            color: var(--text);
             line-height: 1.8;
             min-height: 100vh;
         }
 
+        /* ── Header ── */
         header {
-            background-color: var(--section-bg);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(26,37,47,0.96);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
         }
 
         .header-inner {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 0 24px;
-            height: 64px;
+            padding: 0 32px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
         .logo {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--main-color);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--main-color);
-            font-size: 0.85rem;
-            text-decoration: none;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-
-        .back-link:hover { opacity: 1; }
-
-        .page-hero {
-            background-color: var(--main-color);
-            color: #fff;
-            text-align: center;
-            padding: 64px 24px 56px;
-        }
-
-        .page-hero h1 {
-            font-size: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
             font-weight: 300;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover { color: var(--white); }
+        nav a:hover::after { width: 100%; }
+        nav a.nav-active { color: var(--gold); }
+        nav a.nav-active::after { width: 100%; background-color: var(--gold); }
+
+        /* ── Page Hero ── */
+        .page-hero {
+            height: 280px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+            margin-top: 72px;
+        }
+
+        .page-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 40%;
+            animation: slowZoom 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to   { transform: scale(1.06); }
+        }
+
+        .page-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26,37,47,0.78) 0%, rgba(44,62,80,0.38) 100%);
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px 48px;
+        }
+
+        .page-hero-eyebrow {
+            font-size: 0.7rem;
             letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.55;
             margin-bottom: 10px;
         }
 
-        .page-hero p {
-            font-size: 0.9rem;
-            opacity: 0.55;
+        .page-hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
         }
 
+        /* ── Container ── */
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 56px 24px 80px;
+            padding: 56px 32px 100px;
         }
 
+        /* ── Filter ── */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 48px;
+            margin-bottom: 52px;
             justify-content: center;
         }
 
         .filter-btn {
             padding: 8px 22px;
             border-radius: 50px;
-            border: 1px solid #ddd;
-            background: var(--section-bg);
-            color: var(--text-color);
+            border: 1px solid rgba(44,62,80,0.2);
+            background: var(--white);
+            color: var(--navy-light);
             font-family: inherit;
-            font-size: 0.85rem;
+            font-size: 0.83rem;
             cursor: pointer;
             transition: all 0.25s;
             display: flex;
@@ -116,25 +177,25 @@
         }
 
         .filter-btn:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
+            border-color: var(--gold);
+            color: var(--gold);
         }
 
         .filter-btn.active {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #fff;
+            background-color: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
         }
 
+        /* ── Cards Grid ── */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 28px;
         }
 
-        /* カード（全体クリック可能） */
         .card {
-            background: var(--section-bg);
+            background: var(--white);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
@@ -145,12 +206,11 @@
 
         .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
         }
 
         .card.hidden { display: none; }
 
-        /* カード全体をクリック可能にするオーバーレイ */
         .card-cover {
             position: absolute;
             inset: 0;
@@ -207,7 +267,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            color: var(--accent-color);
+            color: var(--gold);
             transition: transform 0.3s;
             box-shadow: 0 4px 16px rgba(0,0,0,0.3);
         }
@@ -251,7 +311,7 @@
         .card-title {
             font-size: 1rem;
             font-weight: 700;
-            color: var(--main-color);
+            color: var(--navy);
             margin-bottom: 8px;
             line-height: 1.5;
         }
@@ -269,16 +329,78 @@
             align-items: center;
             gap: 6px;
             font-size: 0.82rem;
-            color: var(--accent-color);
-            text-decoration: none;
+            color: var(--gold);
             position: relative;
             z-index: 3;
             border-bottom: 1px solid transparent;
             transition: border-color 0.3s;
         }
 
-        .card-link:hover { border-bottom-color: var(--accent-color); }
+        .card-link:hover { border-bottom-color: var(--gold); }
 
+        /* ── More Drawer ── */
+        .more-section {
+            margin-top: 32px;
+        }
+
+        .more-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: none;
+            border: 1px solid rgba(44,62,80,0.2);
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: var(--navy-light);
+            cursor: pointer;
+            transition: all 0.25s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .more-toggle:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .more-toggle.open {
+            border-color: var(--navy);
+            color: var(--navy);
+            background-color: var(--white);
+        }
+
+        .more-toggle .toggle-label {
+            flex: 1;
+        }
+
+        .more-toggle .toggle-count {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        .more-toggle .toggle-icon {
+            transition: transform 0.3s;
+            font-size: 0.75rem;
+        }
+
+        .more-toggle.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .more-cards {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .more-cards.open {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        /* ── Empty state ── */
         .empty-state {
             text-align: center;
             padding: 60px 0;
@@ -288,30 +410,48 @@
 
         .empty-state i { font-size: 2.5rem; margin-bottom: 12px; display: block; }
 
+        /* ── Responsive ── */
         @media (max-width: 640px) {
-            .page-hero h1 { font-size: 1.5rem; }
+            .header-inner { padding: 0 20px; }
+            nav ul { gap: 20px; }
+            .page-hero-content { padding: 0 20px 36px; }
+            .page-hero-content h1 { font-size: 2rem; }
+            .container { padding: 40px 20px 80px; }
             .cards-grid { grid-template-columns: 1fr; }
+            .more-cards.open { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ── Header ── -->
     <header>
         <div class="header-inner">
-            <a href="../index.html" class="logo">Shigen Yoshida</a>
-            <a href="../index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> トップに戻る
-            </a>
+            <a href="../" class="logo">Shigen Yoshida</a>
+            <nav>
+                <ul>
+                    <li><a href="../#about">About</a></li>
+                    <li><a href="./" class="nav-active">Works</a></li>
+                    <li><a href="../#contact">Contact</a></li>
+                    <li><a href="../profile/">Profile</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
+    <!-- ── Page Hero ── -->
     <div class="page-hero">
-        <h1>Works</h1>
-        <p>スライド・コラム・動画・提案など活動の記録</p>
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <p class="page-hero-eyebrow">Portfolio</p>
+            <h1>Works</h1>
+        </div>
     </div>
 
     <div class="container">
 
+        <!-- フィルター -->
         <div class="filter-bar">
             <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i> すべて</button>
             <button class="filter-btn" data-filter="slide"><i class="fas fa-tv"></i> スライド</button>
@@ -321,23 +461,16 @@
             <button class="filter-btn" data-filter="proposal"><i class="fas fa-briefcase"></i> 提案</button>
         </div>
 
+        <!-- ── 代表カード（常時表示） ── -->
         <div class="cards-grid" id="cards-grid">
 
-            <!-- ============================================
-                 スライド
-                 追加方法：このブロックをコピーして下に貼り付け
-                 href・src・タイトル・説明を書き換えるだけ
-            ============================================ -->
-            <div class="card" data-category="slide">
+            <!-- スライド 代表 -->
+            <div class="card" data-category="slide" data-featured="true">
                 <a href="https://note.com/leo77777/n/n76b4f5156fd5" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
-                    <img class="card-thumb"
-                         src="../images/proposals/slide-blueprint.jpg"
-                         alt="AIによる業務改革と日本経済のブループリント"
+                    <img class="card-thumb" src="../images/proposals/slide-blueprint.jpg" alt="AIによる業務改革と日本経済のブループリント"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);">
-                        <i class="fas fa-tv"></i>
-                    </div>
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
                     <span class="thumb-label">Slide</span>
                 </div>
                 <div class="card-body">
@@ -348,39 +481,13 @@
                 </div>
             </div>
 
-            <div class="card" data-category="slide">
-                <a href="https://note.com/leo77777/n/n23eeeb7cfd06" target="_blank" rel="noopener" class="card-cover"></a>
-                <div class="card-thumb-wrap">
-                    <img class="card-thumb"
-                         src="../images/proposals/slide-new.jpg"
-                         alt="豊洲市場・黒字化への青写真"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);">
-                        <i class="fas fa-tv"></i>
-                    </div>
-                    <span class="thumb-label">Slide</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-badge badge-slide">スライド</span>
-                    <h3 class="card-title">豊洲市場・黒字化への青写真｜構造的赤字からの脱却と「世界的フードハブ（輸出軸足）」への転換</h3>
-                    <p class="card-desc">豊洲市場の構造的赤字問題を分析し、世界的フードハブへの転換戦略をNotebookLMで可視化したスライド。</p>
-                    <a href="https://note.com/leo77777/n/n23eeeb7cfd06" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 コラム
-            ============================================ -->
-            <div class="card" data-category="column">
+            <!-- コラム -->
+            <div class="card" data-category="column" data-featured="true">
                 <a href="https://note.com/ryuzaburo7/n/n747484673402" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
-                    <img class="card-thumb"
-                         src="../images/proposals/column-sample.jpg"
-                         alt="副業初心者におすすめの副業5選"
+                    <img class="card-thumb" src="../images/proposals/column.jpg" alt="副業初心者におすすめの副業5選"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1e8449,#52be80);">
-                        <i class="fas fa-pen-nib"></i>
-                    </div>
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1e8449,#52be80);"><i class="fas fa-pen-nib"></i></div>
                     <span class="thumb-label">Column</span>
                 </div>
                 <div class="card-body">
@@ -391,22 +498,14 @@
                 </div>
             </div>
 
-            <!-- ============================================
-                 Short動画
-            ============================================ -->
-            <div class="card" data-category="video">
+            <!-- Short動画 -->
+            <div class="card" data-category="video" data-featured="true">
                 <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
-                    <img class="card-thumb"
-                         src="https://img.youtube.com/vi/Mg8e6_V7nG8/maxresdefault.jpg"
-                         alt="This Cat Thought It Was a Bird"
+                    <img class="card-thumb" src="https://img.youtube.com/vi/Mg8e6_V7nG8/maxresdefault.jpg" alt="This Cat Thought It Was a Bird"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#e67e22,#f9ca24);">
-                        <i class="fas fa-film"></i>
-                    </div>
-                    <div class="play-overlay">
-                        <div class="play-btn"><i class="fas fa-play"></i></div>
-                    </div>
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#e67e22,#f9ca24);"><i class="fas fa-film"></i></div>
+                    <div class="play-overlay"><div class="play-btn"><i class="fas fa-play"></i></div></div>
                     <span class="thumb-label">Short動画</span>
                 </div>
                 <div class="card-body">
@@ -417,144 +516,37 @@
                 </div>
             </div>
 
-            <!-- ============================================
-                 MV
-            ============================================ -->
-            <div class="card" data-category="mv">
+            <!-- MV -->
+            <div class="card" data-category="mv" data-featured="true">
                 <a href="https://youtu.be/e96Fm1wDRzI" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
-                    <img class="card-thumb"
-                         src="https://img.youtube.com/vi/e96Fm1wDRzI/maxresdefault.jpg"
-                         alt="Song for Hiro"
+                    <img class="card-thumb" src="https://img.youtube.com/vi/e96Fm1wDRzI/maxresdefault.jpg" alt="Song for Hiro"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#8e44ad,#c39bd3);">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <div class="play-overlay">
-                        <div class="play-btn"><i class="fas fa-play"></i></div>
-                    </div>
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#8e44ad,#c39bd3);"><i class="fas fa-music"></i></div>
+                    <div class="play-overlay"><div class="play-btn"><i class="fas fa-play"></i></div></div>
                     <span class="thumb-label">MV</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-mv">MV</span>
                     <h3 class="card-title">Song for Hiro (Reignite Edition)</h3>
-                    <p class="card-desc">w-Band is a music project focused on life itself. Love, dreams, admiration, daily moments, and emotions we all experience. Let these sounds blend into your own story.</p>
+                    <p class="card-desc">w-Band is a music project focused on life itself. Love, dreams, admiration, daily moments, and emotions we all experience.</p>
                     <a href="https://youtu.be/e96Fm1wDRzI" class="card-link" target="_blank" rel="noopener">MVを見る <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
-            <!-- ============================================
-                 提案
-                 追加方法：このブロックをコピーして下に貼り付け
-                 src・href・タイトル・説明を書き換えるだけ
-            ============================================ -->
-            <div class="card" data-category="proposal">
+            <!-- 提案 代表 -->
+            <div class="card" data-category="proposal" data-featured="true">
                 <a href="../images/proposals/kuchou-plan.jpg" target="_blank" rel="noopener" class="card-cover"></a>
                 <div class="card-thumb-wrap">
                     <img class="card-thumb" src="../images/proposals/kuchou-plan.jpg" alt="空調プランのご提案"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1565c0,#42a5f5);">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1565c0,#42a5f5);"><i class="fas fa-briefcase"></i></div>
                     <span class="thumb-label">提案</span>
                 </div>
                 <div class="card-body">
                     <span class="card-badge badge-proposal">提案</span>
                     <h3 class="card-title">ドラッグストア専用 空調プランのご提案</h3>
                     <p class="card-desc">中部空調株式会社向け。電気代削減・トラブル防止に特化した空調プランを提案。</p>
-                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
-                </div>
-            </div>
-
-            <div class="card" data-category="proposal">
-                <a href="../images/proposals/kuchou-reform.jpg" target="_blank" rel="noopener" class="card-cover"></a>
-                <div class="card-thumb-wrap">
-                    <img class="card-thumb" src="../images/proposals/kuchou-reform.jpg" alt="空調リフォーム"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#00695c,#4db6ac);">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <span class="thumb-label">提案</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-badge badge-proposal">提案</span>
-                    <h3 class="card-title">空調機のリフォームで快適・省エネ環境を実現</h3>
-                    <p class="card-desc">中部エアークリーナー向け。本体交換なしで性能を復活させるコイル更新プランを提案。</p>
-                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
-                </div>
-            </div>
-
-            <div class="card" data-category="proposal">
-                <a href="../images/proposals/taue.jpg" target="_blank" rel="noopener" class="card-cover"></a>
-                <div class="card-thumb-wrap">
-                    <img class="card-thumb" src="../images/proposals/taue.jpg" alt="田植え体験会"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#2e7d32,#81c784);">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <span class="thumb-label">提案</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-badge badge-proposal">提案</span>
-                    <h3 class="card-title">田植え体験会 2026 告知フライヤー</h3>
-                    <p class="card-desc">東郷ふるさとおこし協議会向け。地域イベントの集客を目的とした告知フライヤーを制作。</p>
-                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
-                </div>
-            </div>
-
-            <div class="card" data-category="proposal">
-                <a href="../images/proposals/geniwa-white.jpg" target="_blank" rel="noopener" class="card-cover"></a>
-                <div class="card-thumb-wrap">
-                    <img class="card-thumb" src="../images/proposals/geniwa-white.jpg" alt="弦庭演奏会（白）"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#c8a951,#f0e68c);">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <span class="thumb-label">提案</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-badge badge-proposal">提案</span>
-                    <h3 class="card-title">弦楽アンサンブル「弦庭」第3回演奏会チラシ（白）</h3>
-                    <p class="card-desc">弦楽アンサンブル向け。優雅な雰囲気を表現した明るいデザインのコンサートチラシ。</p>
-                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
-                </div>
-            </div>
-
-            <div class="card" data-category="proposal">
-                <a href="../images/proposals/geniwa-black.jpg" target="_blank" rel="noopener" class="card-cover"></a>
-                <div class="card-thumb-wrap">
-                    <img class="card-thumb" src="../images/proposals/geniwa-black.jpg" alt="弦庭演奏会（黒）"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#212121,#616161);">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <span class="thumb-label">提案</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-badge badge-proposal">提案</span>
-                    <h3 class="card-title">弦楽アンサンブル「弦庭」第3回演奏会チラシ（黒）</h3>
-                    <p class="card-desc">弦楽アンサンブル向け。高級感と重厚感を演出したダークデザインのコンサートチラシ。</p>
-                    <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
-                </div>
-            </div>
-
-            <!-- 既存の税理士法人提案 -->
-            <div class="card" data-category="proposal">
-                <a href="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5" target="_blank" rel="noopener" class="card-cover"></a>
-                <div class="card-thumb-wrap">
-                    <img class="card-thumb"
-                         src="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5"
-                         alt="税理士法人企業理念"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#d4a96a,#c8813a);">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <span class="thumb-label">提案</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-badge badge-proposal">提案</span>
-                    <h3 class="card-title">税理士法人企業理念</h3>
-                    <p class="card-desc">税理士法人向けに作成した企業理念の提案資料。</p>
                     <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
                 </div>
             </div>
@@ -566,25 +558,438 @@
             該当する実績がありません
         </div>
 
+        <!-- ── スライド ドロワー ── -->
+        <div class="more-section" id="drawer-slide" data-category="slide">
+            <button class="more-toggle" onclick="toggleDrawer('slide')">
+                <i class="fas fa-tv"></i>
+                <span class="toggle-label">その他のスライドを見る</span>
+                <span class="toggle-count">13件</span>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </button>
+            <div class="more-cards" id="more-slide">
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n23eeeb7cfd06" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/豊洲黒字化表紙.jpg" alt="豊洲市場・黒字化への青写真"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">豊洲市場・黒字化への青写真｜構造的赤字からの脱却と「世界的フードハブ（輸出軸足）」への転換</h3>
+                        <p class="card-desc">豊洲市場の構造的赤字問題を分析し、世界的フードハブへの転換戦略をNotebookLMで可視化したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n23eeeb7cfd06" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n391570870dd3" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙.jpg" alt="日本のメディア危機"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">日本のメディア危機の構造と改革への道筋：伝統的メディアの衰退から再生へ</h3>
+                        <p class="card-desc">伝統的メディアの構造的衰退を分析し、再生に向けた改革の道筋をNotebookLMで整理したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n391570870dd3" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n49e11da33b2a" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙神の名.jpg" alt="神の名の下の再編"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">神の名の下の再編：2026年グローバル宗教・地政学統合リスク分析</h3>
+                        <p class="card-desc">宗教と地政学の交差点から2026年のグローバルリスクを統合的に分析したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n49e11da33b2a" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n503c60e3ebc7" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙中東地政学クライシス.jpg" alt="2026年中東地政学クライシス"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">2026年中東地政学クライシス：米・イスラエル・イラン戦争の定量的影響と戦略的対応</h3>
+                        <p class="card-desc">米・イスラエル・イラン間の紛争シナリオを定量分析し、日本への影響と対応策を整理したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n503c60e3ebc7" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n182bd00ea8e4" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙中東紛争.jpg" alt="2026年ホルムズ海峡危機"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">2026年ホルムズ海峡危機と日本：エネルギー・産業・医療の連鎖的リスクと国家生存のためのサプライチェーン改革</h3>
+                        <p class="card-desc">ホルムズ海峡封鎖シナリオ下での日本のエネルギー・産業・医療リスクとサプライチェーン改革を論じたスライド。</p>
+                        <a href="https://note.com/leo77777/n/n182bd00ea8e4" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n17114d6f4e7e" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/人口増表紙.jpg" alt="日本人口増への途"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">日本人口増への途</h3>
+                        <p class="card-desc">人口減少に直面する日本が人口回復に向かうための政策的アプローチを整理したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n17114d6f4e7e" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/nc1e338b47c3f" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙東京ブラックホール.jpg" alt="東京ブラックホール"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">東京ブラックホール</h3>
+                        <p class="card-desc">東京一極集中が地方・日本全体に与える構造的影響を分析したスライド。</p>
+                        <a href="https://note.com/leo77777/n/nc1e338b47c3f" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n5a79b42a2cec" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙農業.jpg" alt="日本農業の構造的転換"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">日本農業の構造的転換と未来ビジョン</h3>
+                        <p class="card-desc">日本農業が直面する構造的課題を整理し、AI・テクノロジー活用による未来ビジョンを示したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n5a79b42a2cec" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n2aa4154c5097" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙AI勝ち負け.jpg" alt="AIによるおおいなる分岐"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">AIによるおおいなる分岐：国家・企業・個人の「勝ち組」と「負け組」を分かつ境界線</h3>
+                        <p class="card-desc">AI時代に格差を生む構造を解析し、国家・企業・個人それぞれの戦略的対応を論じたスライド。</p>
+                        <a href="https://note.com/leo77777/n/n2aa4154c5097" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n007da4d8e8c2" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙基軸通貨行方.jpg" alt="基軸通貨ドルの変容"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">基軸通貨ドルの変容と日本・世界の未来</h3>
+                        <p class="card-desc">ドル基軸通貨体制の変容が日本と世界に与える影響を分析し、対応策を示したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n007da4d8e8c2" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n69e9faa0656a" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/欧州失敗事例表紙.jpg" alt="人口減少時代の選択"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">人口減少時代の選択：欧州の教訓から導く日本の「多文化共生」</h3>
+                        <p class="card-desc">欧州の移民・多文化政策の成功と失敗から、日本が採るべき多文化共生の戦略を整理したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n69e9faa0656a" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/n82743d6399f8" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/表紙少子化対策.jpg" alt="少子化を考える"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">【少子化を考える】日本経済の再構築：AI×少子化対策の統合戦略</h3>
+                        <p class="card-desc">少子化問題をAI活用と経済政策の両面から統合的に捉え、日本経済再構築の戦略を示したスライド。</p>
+                        <a href="https://note.com/leo77777/n/n82743d6399f8" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="slide">
+                    <a href="https://note.com/leo77777/n/nd43dbd3b4fae" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/豊洲世界一表紙.jpg" alt="世界一の魚市場「豊洲」"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#1a6fa8,#4db8d4);"><i class="fas fa-tv"></i></div>
+                        <span class="thumb-label">Slide</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-slide">スライド</span>
+                        <h3 class="card-title">世界一の魚市場「豊洲」</h3>
+                        <p class="card-desc">世界最大級の魚市場・豊洲の現状と可能性を整理したスライド。</p>
+                        <a href="https://note.com/leo77777/n/nd43dbd3b4fae" class="card-link" target="_blank" rel="noopener">noteで見る <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── 提案 ドロワー ── -->
+        <div class="more-section" id="drawer-proposal" data-category="proposal">
+            <button class="more-toggle" onclick="toggleDrawer('proposal')">
+                <i class="fas fa-briefcase"></i>
+                <span class="toggle-label">その他の提案を見る</span>
+                <span class="toggle-count">8件</span>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </button>
+            <div class="more-cards" id="more-proposal">
+
+                <div class="card" data-category="proposal">
+                    <a href="../images/proposals/kuchou-reform.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/kuchou-reform.jpg" alt="空調リフォーム"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#00695c,#4db6ac);"><i class="fas fa-briefcase"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">空調機のリフォームで快適・省エネ環境を実現</h3>
+                        <p class="card-desc">中部エアークリーナー向け。本体交換なしで性能を復活させるコイル更新プランを提案。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="../images/proposals/taue.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/taue.jpg" alt="田植え体験会"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#2e7d32,#81c784);"><i class="fas fa-briefcase"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">田植え体験会 2026 告知フライヤー</h3>
+                        <p class="card-desc">東郷ふるさとおこし協議会向け。地域イベントの集客を目的とした告知フライヤーを制作。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="../images/proposals/geniwa-white.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/geniwa-white.jpg" alt="弦庭演奏会（白）"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#c8a951,#f0e68c);"><i class="fas fa-music"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">弦楽アンサンブル「弦庭」第3回演奏会チラシ（白）</h3>
+                        <p class="card-desc">弦楽アンサンブル向け。優雅な雰囲気を表現した明るいデザインのコンサートチラシ。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="../images/proposals/geniwa-black.jpg" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb" src="../images/proposals/geniwa-black.jpg" alt="弦庭演奏会（黒）"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#212121,#616161);"><i class="fas fa-music"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">弦楽アンサンブル「弦庭」第3回演奏会チラシ（黒）</h3>
+                        <p class="card-desc">弦楽アンサンブル向け。高級感と重厚感を演出したダークデザインのコンサートチラシ。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb"
+                             src="https://1drv.ms/i/c/28fc20f9b2191555/IQBR9AF40U6gTL9dgA8Xiu5aAV9EQbWye_keLhyBRTegWqw?e=1L8Ft5"
+                             alt="税理士法人企業理念"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#d4a96a,#c8813a);"><i class="fas fa-briefcase"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">税理士法人企業理念</h3>
+                        <p class="card-desc">税理士法人向けに作成した企業理念の提案資料。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="https://onedrive.live.com/?qt=allmyphotos&photosData=%2Fshare%2F28FC20F9B2191555%21s39009ba233274658a13e6211d57eb8de%3Fithint%3Dphoto%26e%3DzytIYt%26migratedtospo%3Dtrue&cid=28FC20F9B2191555&id=28FC20F9B2191555%21s39009ba233274658a13e6211d57eb8de&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8yOGZjMjBmOWIyMTkxNTU1L0lRQ2ltd0E1SnpOWVJxRS1ZaEhWZnJqZUFkM29IWm1YQ1A5eFdidFRydjU1b0JrP2U9enl0SVl0&v=photos" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#e74c3c,#f1948a);"><i class="fas fa-utensils"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">イタリアンレストランで楽しむ「夏の宴会プラン」</h3>
+                        <p class="card-desc">イタリアンレストランの夏の宴会プランを訴求したデザイン提案。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="../images/proposals/logo-company-a.png" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb"
+                             src="../images/proposals/logo-company-a.png"
+                             alt="会社ロゴ提案（A）"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#2c3e50,#4ca1af);"><i class="fas fa-pen-ruler"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">会社ロゴ提案（A）</h3>
+                        <p class="card-desc">会社ブランディングのためのロゴデザイン提案（案A）。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="card" data-category="proposal">
+                    <a href="../images/proposals/YUnaレゴ使用例.png" target="_blank" rel="noopener" class="card-cover"></a>
+                    <div class="card-thumb-wrap">
+                        <img class="card-thumb"
+                             src="../images/proposals/YUnaレゴ使用例.png"
+                             alt="スナックロゴ（A）"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#8e44ad,#bb8fce);"><i class="fas fa-star"></i></div>
+                        <span class="thumb-label">提案</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge badge-proposal">提案</span>
+                        <h3 class="card-title">スナックロゴ（A）</h3>
+                        <p class="card-desc">スナック店舗向けのロゴデザイン提案（案A）。</p>
+                        <span class="card-link">資料を見る <i class="fas fa-external-link-alt"></i></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
+    <!-- ── Footer ── -->
+    <footer style="background-color:#0f1a22;color:rgba(255,255,255,0.3);text-align:center;padding:32px;font-size:0.78rem;letter-spacing:1px;">
+        <p>&copy; 2026 Shigen Yoshida. All Rights Reserved.</p>
+    </footer>
+
     <script>
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.card');
-        const emptyState = document.getElementById('empty-state');
+        // ── ドロワー開閉 ──
+        function toggleDrawer(category) {
+            const cards = document.getElementById('more-' + category);
+            const btn   = document.querySelector('#drawer-' + category + ' .more-toggle');
+            const isOpen = cards.classList.contains('open');
+            cards.classList.toggle('open', !isOpen);
+            btn.classList.toggle('open', !isOpen);
+        }
+
+        // ── フィルター ──
+        const filterBtns   = document.querySelectorAll('.filter-btn');
+        const mainCards    = document.querySelectorAll('#cards-grid .card');
+        const allDrawers   = document.querySelectorAll('.more-section');
+        const emptyState   = document.getElementById('empty-state');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 const filter = btn.dataset.filter;
-                let visible = 0;
-                cards.forEach(card => {
-                    const match = filter === 'all' || card.dataset.category === filter;
-                    card.classList.toggle('hidden', !match);
-                    if (match) visible++;
-                });
-                emptyState.style.display = visible === 0 ? 'block' : 'none';
+
+                if (filter === 'all') {
+                    // 代表カードをすべて表示
+                    mainCards.forEach(card => card.classList.remove('hidden'));
+                    // ドロワーを閉じた状態で表示
+                    allDrawers.forEach(drawer => {
+                        drawer.style.display = '';
+                        const moreCards = drawer.querySelector('.more-cards');
+                        const moreBtn   = drawer.querySelector('.more-toggle');
+                        moreCards.classList.remove('open');
+                        moreBtn.classList.remove('open');
+                    });
+                    emptyState.style.display = 'none';
+                } else {
+                    // 指定カテゴリの代表カードのみ表示
+                    let visible = 0;
+                    mainCards.forEach(card => {
+                        const match = card.dataset.category === filter;
+                        card.classList.toggle('hidden', !match);
+                        if (match) visible++;
+                    });
+
+                    // 同カテゴリのドロワーは展開、他は非表示
+                    allDrawers.forEach(drawer => {
+                        if (drawer.dataset.category === filter) {
+                            drawer.style.display = '';
+                            const moreCards = drawer.querySelector('.more-cards');
+                            const moreBtn   = drawer.querySelector('.more-toggle');
+                            moreCards.classList.add('open');
+                            moreBtn.classList.add('open');
+                            visible += moreCards.querySelectorAll('.card').length;
+                        } else {
+                            drawer.style.display = 'none';
+                        }
+                    });
+
+                    emptyState.style.display = visible === 0 ? 'block' : 'none';
+                }
             });
         });
     </script>

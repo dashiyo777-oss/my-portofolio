@@ -3,207 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>プロフィール | 吉田獅玄</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Profile | 吉田獅玄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #F5ECD7;
-            --text-color: #3E2A1A;
-            --main-color: #7B4F2E;
-            --accent-color: #C8813A;
-            --section-bg: #FDF6EC;
+            --navy: #1A252F;
+            --navy-light: #2C3E50;
+            --gold: #C8813A;
+            --white: #ffffff;
+            --off-white: #F7F6F3;
+            --text: #333333;
+            --text-light: #888888;
+            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--off-white);
+            color: var(--text);
             line-height: 1.8;
-            min-height: 100vh;
         }
 
-        .layout {
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            min-height: 100vh;
+        /* ── Header ── */
+        header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(26,37,47,0.96);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
         }
 
-        /* 左側：背景＋テキスト */
-        .left-panel {
-            background-color: #5C3317;
-            background-image: url('https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover { color: var(--white); }
+        nav a:hover::after { width: 100%; }
+
+        nav a.nav-works { color: var(--gold); }
+        nav a.nav-works:hover { color: #e09a50; }
+
+        nav a.nav-active {
+            color: var(--white);
+        }
+        nav a.nav-active::after {
+            width: 100%;
+        }
+
+        /* ── Page Hero ── */
+        .page-hero {
+            height: 320px;
             position: relative;
             display: flex;
             align-items: flex-end;
-            padding: 60px 50px;
+            overflow: hidden;
         }
 
-        .left-panel::before {
-            content: '';
+        .page-hero-bg {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(123,79,46,0.78) 0%, rgba(200,129,58,0.45) 100%);
+            background-image: url('https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 30%;
+            animation: slowZoom 25s ease-in-out infinite alternate;
         }
 
-        .left-text {
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to   { transform: scale(1.06); }
+        }
+
+        .page-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26,37,47,0.75) 0%, rgba(44,62,80,0.35) 100%);
+        }
+
+        .page-hero-content {
             position: relative;
-            z-index: 1;
-            color: #fff;
+            z-index: 2;
+            color: var(--white);
+            padding: 0 0 56px 0;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-left: 32px;
+            padding-bottom: 56px;
         }
 
-        .left-text h2 {
-            font-size: 2rem;
+        .page-hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.55;
+            margin-bottom: 10px;
+        }
+
+        .page-hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
             font-weight: 300;
             letter-spacing: 3px;
+        }
+
+        /* ── Profile Section ── */
+        #profile {
+            padding: 100px 0 120px;
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 80px;
+            align-items: start;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .profile-grid.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Image column ── */
+        .profile-img-wrap {
+            position: relative;
+        }
+
+        .profile-img-wrap::before {
+            content: '';
+            position: absolute;
+            top: -12px; left: -12px;
+            right: 12px; bottom: 12px;
+            border: 1px solid var(--gold);
+            opacity: 0.3;
+            border-radius: 4px;
+        }
+
+        .profile-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: contain;
+            object-position: top center;
+            border-radius: 4px;
+            background-color: var(--off-white);
+            display: block;
+        }
+
+        .profile-name-sub {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .profile-name-sub .name-ja {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: 2px;
+        }
+
+        .profile-name-sub .name-en {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ── Text column ── */
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
             margin-bottom: 12px;
         }
 
-        .left-text p {
-            font-size: 0.9rem;
+        .profile-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
             font-weight: 300;
-            opacity: 0.7;
-            max-width: 340px;
+            color: var(--navy);
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+
+        .profile-text p {
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.75;
+            font-weight: 300;
+            margin-bottom: 16px;
+            line-height: 2.1;
+        }
+
+        .divider-gold {
+            width: 36px;
+            height: 1px;
+            background-color: var(--gold);
+            margin: 36px 0;
+            opacity: 0.5;
+        }
+
+        /* ── Services ── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .service-card {
+            background-color: var(--off-white);
+            border-radius: 8px;
+            padding: 20px 18px;
+        }
+
+        .service-card-label {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .service-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-card li {
+            font-size: 0.82rem;
+            color: var(--text);
+            font-weight: 300;
+            line-height: 2;
+            opacity: 0.8;
+        }
+
+        .service-card li::before {
+            content: '—';
+            color: var(--gold);
+            margin-right: 6px;
+            font-size: 0.7rem;
+        }
+
+        /* ── Expertise & Tools ── */
+        .profile-block {
+            margin-bottom: 28px;
+        }
+
+        .profile-block-title {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 0.78rem;
+            color: var(--navy-light);
+            border: 1px solid rgba(44,62,80,0.22);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-weight: 300;
+        }
+
+        .profile-sns {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            background-color: #1877F2;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .profile-sns:hover {
+            background-color: #1558b0;
+            transform: translateY(-2px);
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
-            text-decoration: none;
-            margin-bottom: 30px;
-            transition: color 0.3s;
+            font-size: 0.82rem;
+            color: var(--navy);
+            border-bottom: 1px solid var(--navy);
+            padding-bottom: 2px;
+            transition: color 0.3s, border-color 0.3s;
+            margin-bottom: 32px;
         }
 
-        .back-link:hover { color: #fff; }
-
-        /* 右側：プロフィールカード */
-        .right-panel {
-            background-color: var(--section-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 40px;
+        .back-link:hover {
+            color: var(--gold);
+            border-color: var(--gold);
         }
 
-        .profile-card {
-            width: 100%;
-            max-width: 340px;
+        /* ── Footer ── */
+        footer {
+            background-color: #0f1a22;
+            color: rgba(255,255,255,0.3);
             text-align: center;
-        }
-
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 24px;
-            border: 3px solid var(--bg-color);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
-
-        .profile-card h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--main-color);
-            margin-bottom: 6px;
-        }
-
-        .profile-title {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            margin-bottom: 24px;
-            font-weight: 400;
+            padding: 32px;
+            font-size: 0.78rem;
             letter-spacing: 1px;
         }
 
-        .divider {
-            width: 40px;
-            height: 1px;
-            background-color: var(--accent-color);
-            margin: 0 auto 24px;
-            opacity: 0.4;
-        }
-
-        .bio {
-            font-size: 0.9rem;
-            opacity: 0.65;
-            font-weight: 300;
-            margin-bottom: 32px;
-            text-align: left;
-            line-height: 2;
-        }
-
-        .sns-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: #1877F2;
-            font-size: 0.9rem;
-            border: 1px solid #1877F2;
-            padding: 10px 28px;
-            border-radius: 50px;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .sns-link:hover {
-            background-color: #1877F2;
-            color: #fff;
-        }
-
+        /* ── Responsive ── */
         @media (max-width: 768px) {
-            .layout {
+            .header-inner { padding: 0 20px; }
+            nav ul { gap: 20px; }
+            .page-hero { height: 240px; }
+            .page-hero-content { padding-left: 20px; padding-bottom: 36px; }
+            .page-hero-content h1 { font-size: 2rem; }
+            .profile-grid {
                 grid-template-columns: 1fr;
+                gap: 48px;
             }
-
-            .left-panel {
-                min-height: 240px;
-                padding: 40px 30px;
-            }
-
-            .right-panel {
-                padding: 50px 30px;
-            }
+            .profile-img-wrap { max-width: 240px; margin: 0 auto; }
+            .services-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="layout">
-        <!-- 左パネル -->
-        <div class="left-panel">
-            <div class="left-text">
-                <a href="../index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i> トップに戻る
-                </a>
-                <h2>Shigen Yoshida</h2>
-                <p>AIを活用した情報発信を行うシニアアナリスト</p>
-            </div>
-        </div>
 
-        <!-- 右パネル：プロフィールプレビュー -->
-        <div class="right-panel">
-            <div class="profile-card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=ecf0f1&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0"
-                     alt="吉田獅玄" class="profile-img">
-                <h1>吉田 獅玄</h1>
-                <p class="profile-title">シニアアナリスト</p>
-                <div class="divider"></div>
-                <p class="bio">
-                    ４０年を超える国内製造メーカに在籍し、電力、鉄鋼、半導体、自動車部品等の事業と関わってきました。
-                    現在フリーランスとして活動し、AIを活用した情報発信を行っています。
-                </p>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="sns-link">
-                    <i class="fab fa-facebook-f"></i> Facebookでつながる
-                </a>
-            </div>
+    <!-- ── Header ── -->
+    <header>
+        <div class="header-inner">
+            <a href="../" class="logo">Shigen Yoshida</a>
+            <nav>
+                <ul>
+                    <li><a href="../#about">About</a></li>
+                    <li><a href="../works/" class="nav-works">Works</a></li>
+                    <li><a href="../#contact">Contact</a></li>
+                    <li><a href="./" class="nav-active">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ── Page Hero ── -->
+    <div class="page-hero" style="padding-top: 72px;">
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <p class="page-hero-eyebrow">About me</p>
+            <h1>Profile</h1>
         </div>
     </div>
+
+    <!-- ── Profile Content ── -->
+    <section id="profile">
+        <div class="container">
+            <div class="profile-grid fade-in">
+
+                <!-- 左：画像 -->
+                <div class="profile-img-wrap">
+                    <img src="../images/profile.jpg"
+                         alt="吉田獅玄"
+                         class="profile-img"
+                         onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=Shigen&backgroundColor=f7f6f3&style=circle&top=shortHair&clothing=blazerAndShirt&facialHairProbability=0'">
+                    <div class="profile-name-sub">
+                        <p class="name-ja">吉田 獅玄</p>
+                        <p class="name-en">Shigen Yoshida</p>
+                    </div>
+                </div>
+
+                <!-- 右：テキスト -->
+                <div class="profile-text">
+                    <a href="../" class="back-link">
+                        <i class="fas fa-arrow-left"></i> トップに戻る
+                    </a>
+                    <p class="section-label">Profile</p>
+                    <h2>製造業の現場知識と<br>AIを融合した仕事</h2>
+                    <p>製造メーカーで生産管理・業務改革に従事した経験を軸に、現在はAIツールを活用したコンテンツ制作・リサーチ・デザイン支援を行っています。</p>
+                    <p>「正確に、丁寧に、最後まで」を仕事の基本とし、ご要望をしっかりヒアリングした上で対応します。</p>
+
+                    <div class="divider-gold"></div>
+
+                    <!-- 対応業務 -->
+                    <div class="profile-block">
+                        <p class="profile-block-title">Services</p>
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <p class="service-card-label">Report</p>
+                                <ul>
+                                    <li>AIレポート作成</li>
+                                    <li>プレゼン資料</li>
+                                    <li>インフォグラフィック</li>
+                                    <li>市場調査・データ整理</li>
+                                </ul>
+                            </div>
+                            <div class="service-card">
+                                <p class="service-card-label">Design</p>
+                                <ul>
+                                    <li>ポスター・チラシ</li>
+                                    <li>ロゴ制作</li>
+                                </ul>
+                            </div>
+                            <div class="service-card">
+                                <p class="service-card-label">Video</p>
+                                <ul>
+                                    <li>ショート動画制作</li>
+                                    <li>テロップ編集</li>
+                                    <li>コンテンツ発信</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 得意領域 -->
+                    <div class="profile-block">
+                        <p class="profile-block-title">Expertise</p>
+                        <div class="tag-row">
+                            <span class="tag">製造業（電力・自動車部品・半導体・鉄鋼）</span>
+                            <span class="tag">業務改革・改善</span>
+                            <span class="tag">市場調査レポート</span>
+                        </div>
+                    </div>
+
+                    <!-- 使用ツール -->
+                    <div class="profile-block">
+                        <p class="profile-block-title">Tools</p>
+                        <div class="tag-row">
+                            <span class="tag">Canva</span>
+                            <span class="tag">Premiere Pro</span>
+                            <span class="tag">Excel</span>
+                            <span class="tag">ChatGPT</span>
+                            <span class="tag">NotebookLM</span>
+                            <span class="tag">Gemini</span>
+                            <span class="tag">Claude</span>
+                            <span class="tag">note</span>
+                        </div>
+                    </div>
+
+                    <a href="https://www.facebook.com/profile.php?id=61558753410397"
+                       target="_blank" rel="noopener noreferrer"
+                       class="profile-sns">
+                        <i class="fab fa-facebook-f"></i> Facebookでつながる
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Footer ── */-->
+    <footer>
+        <p>&copy; 2026 Shigen Yoshida. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
 </body>
 </html>
