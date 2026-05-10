@@ -564,7 +564,29 @@
         }, { threshold: 0.15 });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // 訪問カウンター（?admin 付きURLでのみ表示）
+        fetch('https://api.countapi.xyz/hit/dashiyo777-oss-portfolio/pageviews')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('visit-count').textContent = data.value.toLocaleString();
+                if (window.location.search.includes('admin')) {
+                    document.getElementById('visit-badge').style.display = 'flex';
+                }
+            })
+            .catch(() => {
+                if (window.location.search.includes('admin')) {
+                    document.getElementById('visit-badge').style.display = 'flex';
+                    document.getElementById('visit-count').textContent = '取得失敗';
+                }
+            });
     </script>
+
+    <!-- 訪問カウンターバッジ（?admin 付きURLのみ表示） -->
+    <div id="visit-badge" style="display:none;position:fixed;bottom:24px;right:24px;background:rgba(26,37,47,0.92);color:#fff;padding:12px 18px;border-radius:10px;font-size:0.8rem;z-index:9999;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);backdrop-filter:blur(8px);font-family:'Noto Sans JP',sans-serif;">
+        <i class="fas fa-eye" style="color:#C8813A;"></i>
+        <span>累計訪問数 <strong id="visit-count" style="font-size:1rem;margin-left:4px;">--</strong></span>
+    </div>
 
 </body>
 </html>
