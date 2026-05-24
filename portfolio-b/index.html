@@ -125,7 +125,7 @@
 
         .hero-inner {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr 190px;
             gap: 64px;
             align-items: center;
         }
@@ -408,11 +408,14 @@
             border-radius: 50px;
         }
 
-        .cat-proposal { color: #2D6A9F; }
-        .cat-design   { color: #0F766E; }
-        .cat-column   { color: #16A34A; }
-        .cat-video    { color: #EA580C; }
-        .cat-mv       { color: #7C3AED; }
+        .cat-teian   { color: #2D6A9F; }
+        .cat-logo    { color: #C8813A; }
+        .cat-chirashi{ color: #0F766E; }
+        .cat-poster  { color: #7C3AED; }
+        .cat-banner  { color: #DC2626; }
+        .cat-column  { color: #16A34A; }
+        .cat-video   { color: #EA580C; }
+        .cat-mv      { color: #7C3AED; }
 
         /* Body */
         .card-body { padding: 18px 20px 20px; }
@@ -623,7 +626,7 @@
                     </tr>
                     <tr>
                         <th>活動拠点</th>
-                        <td>愛知県</td>
+                        <td>東京都</td>
                     </tr>
                     <tr>
                         <th>経歴</th>
@@ -723,31 +726,26 @@
 
         <!-- タブ -->
         <div class="works-tabs fade-in">
-            <button class="tab-btn active" data-tab="all">
-                <i class="fas fa-th-large"></i> すべて
-            </button>
-            <button class="tab-btn" data-tab="proposal">
-                <i class="fas fa-briefcase"></i> 提案・デザイン
-            </button>
-            <button class="tab-btn" data-tab="column">
-                <i class="fas fa-pen-nib"></i> コラム
-            </button>
-            <button class="tab-btn" data-tab="video">
-                <i class="fas fa-film"></i> 動画
-            </button>
+            <button class="tab-btn active" data-tab="all"><i class="fas fa-th-large"></i> すべて</button>
+            <button class="tab-btn" data-tab="teian"><i class="fas fa-briefcase"></i> 提案資料</button>
+            <button class="tab-btn" data-tab="logo"><i class="fas fa-pen-ruler"></i> ロゴ</button>
+            <button class="tab-btn" data-tab="chirashi"><i class="fas fa-file-image"></i> チラシ</button>
+            <button class="tab-btn" data-tab="poster"><i class="fas fa-image"></i> ポスター</button>
+            <button class="tab-btn" data-tab="column"><i class="fas fa-pen-nib"></i> コラム</button>
+            <button class="tab-btn" data-tab="video"><i class="fas fa-film"></i> 動画・MV</button>
         </div>
 
         <!-- ── カード一覧 ── -->
         <div class="cards-grid" id="cards-grid">
 
-            <!-- ════ 提案・デザイン ════ -->
+            <!-- ════ 提案資料 ════ -->
 
-            <div class="card fade-in" data-cat="proposal">
+            <div class="card fade-in" data-cat="teian">
                 <div class="card-thumb-wrap">
                     <a href="../images/proposals/kuchou-plan.jpg" target="_blank" rel="noopener" class="card-thumb-link">
                         <img class="card-thumb" src="../images/proposals/kuchou-plan.jpg" alt="空調プランのご提案">
                     </a>
-                    <span class="card-cat cat-proposal">提案</span>
+                    <span class="card-cat cat-teian">提案資料</span>
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">空調プランのご提案</h3>
@@ -756,12 +754,12 @@
                 </div>
             </div>
 
-            <div class="card fade-in" data-cat="proposal">
+            <div class="card fade-in" data-cat="teian">
                 <div class="card-thumb-wrap">
                     <a href="../images/proposals/kuchou-reform.jpg" target="_blank" rel="noopener" class="card-thumb-link">
                         <img class="card-thumb" src="../images/proposals/kuchou-reform.jpg" alt="空調機リフォーム提案">
                     </a>
-                    <span class="card-cat cat-proposal">提案</span>
+                    <span class="card-cat cat-teian">提案資料</span>
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">空調機のリフォームで快適・省エネ環境を実現</h3>
@@ -770,56 +768,14 @@
                 </div>
             </div>
 
-            <div class="card fade-in" data-cat="proposal">
-                <div class="card-thumb-wrap">
-                    <a href="../images/proposals/taue.jpg" target="_blank" rel="noopener" class="card-thumb-link">
-                        <img class="card-thumb" src="../images/proposals/taue.jpg" alt="田植え体験会フライヤー">
-                    </a>
-                    <span class="card-cat cat-design">デザイン</span>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">田植え体験会 2026 告知フライヤー</h3>
-                    <p class="card-desc">東郷ふるさとおこし協議会向け。地域イベントの集客を目的とした告知フライヤー制作。</p>
-                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
-                </div>
-            </div>
-
-            <div class="card fade-in" data-cat="proposal">
-                <div class="card-thumb-wrap">
-                    <a href="../images/proposals/geniwa-white.jpg" target="_blank" rel="noopener" class="card-thumb-link">
-                        <img class="card-thumb" src="../images/proposals/geniwa-white.jpg" alt="弦庭演奏会チラシ（白）">
-                    </a>
-                    <span class="card-cat cat-design">デザイン</span>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">弦楽アンサンブル「弦庭」演奏会チラシ（白）</h3>
-                    <p class="card-desc">優雅な雰囲気を表現した明るいデザインのコンサートチラシ。</p>
-                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
-                </div>
-            </div>
-
-            <div class="card fade-in" data-cat="proposal">
-                <div class="card-thumb-wrap">
-                    <a href="../images/proposals/geniwa-black.jpg" target="_blank" rel="noopener" class="card-thumb-link">
-                        <img class="card-thumb" src="../images/proposals/geniwa-black.jpg" alt="弦庭演奏会チラシ（黒）">
-                    </a>
-                    <span class="card-cat cat-design">デザイン</span>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">弦楽アンサンブル「弦庭」演奏会チラシ（黒）</h3>
-                    <p class="card-desc">高級感と重厚感を演出したダークデザインのコンサートチラシ。</p>
-                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
-                </div>
-            </div>
-
-            <div class="card fade-in" data-cat="proposal">
+            <div class="card fade-in" data-cat="teian">
                 <div class="card-thumb-wrap">
                     <a href="../images/proposals/%E3%80%90%E6%8F%90%E6%A1%88%E7%94%A8%E3%80%91%E7%A8%8E%E7%90%86%E5%A3%AB%E6%B3%95%E4%BA%BA%E4%BC%81%E6%A5%AD%E7%90%86%E5%BF%B5%E3%80%802026%E5%B9%B44%E6%9C%8827%E6%97%A5%2008_41_08.png" target="_blank" rel="noopener" class="card-thumb-link">
                         <img class="card-thumb"
                              src="../images/proposals/%E3%80%90%E6%8F%90%E6%A1%88%E7%94%A8%E3%80%91%E7%A8%8E%E7%90%86%E5%A3%AB%E6%B3%95%E4%BA%BA%E4%BC%81%E6%A5%AD%E7%90%86%E5%BF%B5%E3%80%802026%E5%B9%B44%E6%9C%8827%E6%97%A5%2008_41_08.png"
                              alt="税理士法人企業理念">
                     </a>
-                    <span class="card-cat cat-proposal">提案</span>
+                    <span class="card-cat cat-teian">提案資料</span>
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">税理士法人企業理念</h3>
@@ -828,30 +784,16 @@
                 </div>
             </div>
 
-            <div class="card fade-in" data-cat="proposal">
-                <div class="card-thumb-wrap">
-                    <a href="../images/proposals/%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E3%81%A7%E6%A5%BD%E3%81%97%E3%82%80%E3%80%8C%E5%A4%8F%E3%81%AE%E5%AE%B4%E4%BC%9A%E3%83%97%E3%83%A9%E3%83%B3%E3%80%8D.jpg" target="_blank" rel="noopener" class="card-thumb-link">
-                        <img class="card-thumb"
-                             src="../images/proposals/%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E3%81%A7%E6%A5%BD%E3%81%97%E3%82%80%E3%80%8C%E5%A4%8F%E3%81%AE%E5%AE%B4%E4%BC%9A%E3%83%97%E3%83%A9%E3%83%B3%E3%80%8D.jpg"
-                             alt="イタリアンレストランで楽しむ「夏の宴会プラン」">
-                    </a>
-                    <span class="card-cat cat-design">デザイン</span>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">イタリアンレストランで楽しむ「夏の宴会プラン」</h3>
-                    <p class="card-desc">イタリアンレストランの夏の宴会プランを訴求したデザイン提案。</p>
-                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
-                </div>
-            </div>
+            <!-- ════ ロゴ ════ -->
 
-            <div class="card fade-in" data-cat="proposal">
+            <div class="card fade-in" data-cat="logo">
                 <div class="card-thumb-wrap">
                     <a href="../images/proposals/ChatGPT%20Image%202026%E5%B9%B44%E6%9C%8829%E6%97%A5%2013_14_01.png" target="_blank" rel="noopener" class="card-thumb-link">
                         <img class="card-thumb"
                              src="../images/proposals/ChatGPT%20Image%202026%E5%B9%B44%E6%9C%8829%E6%97%A5%2013_14_01.png"
                              alt="会社ロゴ提案（A）">
                     </a>
-                    <span class="card-cat cat-design">デザイン</span>
+                    <span class="card-cat cat-logo">ロゴ</span>
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">会社ロゴ提案（A）</h3>
@@ -860,18 +802,80 @@
                 </div>
             </div>
 
-            <div class="card fade-in" data-cat="proposal">
+            <div class="card fade-in" data-cat="logo">
                 <div class="card-thumb-wrap">
                     <a href="../images/proposals/YUna%E3%83%AC%E3%82%B4%E4%BD%BF%E7%94%A8%E4%BE%8B.png" target="_blank" rel="noopener" class="card-thumb-link">
                         <img class="card-thumb"
                              src="../images/proposals/YUna%E3%83%AC%E3%82%B4%E4%BD%BF%E7%94%A8%E4%BE%8B.png"
                              alt="スナックロゴ（A）">
                     </a>
-                    <span class="card-cat cat-design">デザイン</span>
+                    <span class="card-cat cat-logo">ロゴ</span>
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">スナックロゴ（A）</h3>
                     <p class="card-desc">スナック店舗向けのロゴデザイン提案（案A）。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <!-- ════ チラシ ════ -->
+
+            <div class="card fade-in" data-cat="chirashi">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/taue.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/taue.jpg" alt="田植え体験会フライヤー">
+                    </a>
+                    <span class="card-cat cat-chirashi">チラシ</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">田植え体験会 2026 告知フライヤー</h3>
+                    <p class="card-desc">東郷ふるさとおこし協議会向け。地域イベントの集客を目的とした告知フライヤー制作。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="chirashi">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/geniwa-white.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/geniwa-white.jpg" alt="弦庭演奏会チラシ（白）">
+                    </a>
+                    <span class="card-cat cat-chirashi">チラシ</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">弦楽アンサンブル「弦庭」演奏会チラシ（白）</h3>
+                    <p class="card-desc">優雅な雰囲気を表現した明るいデザインのコンサートチラシ。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="chirashi">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/geniwa-black.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/geniwa-black.jpg" alt="弦庭演奏会チラシ（黒）">
+                    </a>
+                    <span class="card-cat cat-chirashi">チラシ</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">弦楽アンサンブル「弦庭」演奏会チラシ（黒）</h3>
+                    <p class="card-desc">高級感と重厚感を演出したダークデザインのコンサートチラシ。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <!-- ════ ポスター ════ -->
+
+            <div class="card fade-in" data-cat="poster">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E3%81%A7%E6%A5%BD%E3%81%97%E3%82%80%E3%80%8C%E5%A4%8F%E3%81%AE%E5%AE%B4%E4%BC%9A%E3%83%97%E3%83%A9%E3%83%B3%E3%80%8D.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb"
+                             src="../images/proposals/%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E3%81%A7%E6%A5%BD%E3%81%97%E3%82%80%E3%80%8C%E5%A4%8F%E3%81%AE%E5%AE%B4%E4%BC%9A%E3%83%97%E3%83%A9%E3%83%B3%E3%80%8D.jpg"
+                             alt="イタリアンレストランで楽しむ「夏の宴会プラン」">
+                    </a>
+                    <span class="card-cat cat-poster">ポスター</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">イタリアンレストランで楽しむ「夏の宴会プラン」</h3>
+                    <p class="card-desc">イタリアンレストランの夏の宴会プランを訴求したデザイン提案。</p>
                     <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
                 </div>
             </div>
@@ -890,11 +894,11 @@
                 <div class="card-body">
                     <h3 class="card-title">副業初心者におすすめの副業5選</h3>
                     <p class="card-desc">未経験でも月1万円を目指せる仕事を紹介したnoteコラム（サンプル記事）。</p>
-                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> noteで読む</div>
+                    <div class="card-link-row"><i class="fab fa-note-sticky"></i> noteで読む</div>
                 </div>
             </div>
 
-            <!-- ════ 動画 ════ -->
+            <!-- ════ 動画・MV ════ -->
 
             <div class="card fade-in" data-cat="video">
                 <div class="card-thumb-wrap">
@@ -907,7 +911,7 @@
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">This Cat Thought It Was a Bird… 🐈</h3>
-                    <p class="card-desc">AIと映像編集を組み合わせたショート動画コンテンツ。</p>
+                    <p class="card-desc">AIと映像編集を組み合わせたショート動画コンテンツ。CapCutで編集・YouTube Shortsで公開。</p>
                     <div class="card-link-row"><i class="fab fa-youtube"></i> YouTube Shortsで見る</div>
                 </div>
             </div>
@@ -923,7 +927,7 @@
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">Song for Hiro (Reignite Edition)</h3>
-                    <p class="card-desc">w-Bandによる楽曲MV。愛・夢・日常の感情をテーマにした映像作品。</p>
+                    <p class="card-desc">w-Bandによる楽曲MV。愛・夢・日常の感情をテーマにした映像作品。YouTubeで公開中。</p>
                     <div class="card-link-row"><i class="fab fa-youtube"></i> YouTubeで見る</div>
                 </div>
             </div>
