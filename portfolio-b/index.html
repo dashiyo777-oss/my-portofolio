@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吉田獅玄 | フリーランス・資料制作・デザイン</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================================
+           Base
+        ============================================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --white:    #FFFFFF;
+            --offwhite: #F4F6F9;
+            --border:   #E5E8ED;
+            --text:     #1D2330;
+            --muted:    #6B7280;
+            --blue:     #2D6A9F;
+            --gold:     #C8813A;
+            --radius:   10px;
+            --shadow:   0 2px 12px rgba(0,0,0,0.07);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; }
+
+        /* ============================================================
+           Layout
+        ============================================================ */
+        .inner {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section     { padding: 80px 0; }
+        .section-alt { background: var(--offwhite); }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .section-sub {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 48px;
+        }
+
+        /* ============================================================
+           Header
+        ============================================================ */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text);
+        }
+        .logo span { color: var(--blue); }
+
+        nav { display: flex; gap: 28px; align-items: center; }
+
+        nav a.nav-link {
+            font-size: 0.83rem;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+        nav a.nav-link:hover { color: var(--text); }
+
+        .nav-cta {
+            background: var(--blue);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: #245a8a; }
+
+        /* ============================================================
+           Hero
+        ============================================================ */
+        .hero { padding: 80px 0 72px; }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.78rem;
+            letter-spacing: 3px;
+            color: var(--blue);
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .hero-name {
+            font-size: clamp(1.9rem, 4.5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+            margin-bottom: 22px;
+        }
+        .hero-name em { font-style: normal; color: var(--blue); }
+
+        .hero-tagline {
+            font-size: 0.92rem;
+            color: var(--muted);
+            line-height: 2;
+            margin-bottom: 36px;
+        }
+
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: var(--blue);
+            color: var(--white);
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover { background: #245a8a; transform: translateY(-1px); }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            padding: 11px 24px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+        .hero-photo-wrap { position: relative; }
+
+        .hero-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 16px;
+            background: var(--offwhite);
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: -14px;
+            left: -14px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            box-shadow: var(--shadow);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        .hero-badge b { color: var(--blue); }
+
+        /* ============================================================
+           About
+        ============================================================ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+
+        .about-lead {
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 1.95;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--gold);
+            padding-left: 18px;
+        }
+
+        .about-body {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .about-tag {
+            background: #EEF3FA;
+            color: var(--blue);
+            font-size: 0.76rem;
+            padding: 5px 13px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+
+        .info-table tr { border-bottom: 1px solid var(--border); }
+        .info-table tr:last-child { border-bottom: none; }
+
+        .info-table th, .info-table td {
+            padding: 12px 4px;
+            font-size: 0.85rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .info-table th {
+            color: var(--muted);
+            font-weight: 400;
+            width: 88px;
+            white-space: nowrap;
+        }
+
+        .info-table td { font-weight: 500; }
+
+        /* ============================================================
+           Services
+        ============================================================ */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 22px;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .service-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+        .service-icon {
+            width: 44px;
+            height: 44px;
+            background: #EEF3FA;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--blue);
+            margin-bottom: 16px;
+        }
+
+        .service-title { font-size: 0.98rem; font-weight: 700; margin-bottom: 10px; }
+
+        .service-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.85; }
+
+        .service-tools {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tool-tag {
+            font-size: 0.7rem;
+            background: var(--offwhite);
+            color: var(--muted);
+            padding: 3px 10px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+
+        /* ============================================================
+           Works
+        ============================================================ */
+        .works-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            font-family: inherit;
+            font-size: 0.82rem;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 500; }
+        .tab-btn:hover:not(.active) { border-color: var(--blue); color: var(--blue); }
+
+        /* Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(292px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.09); transform: translateY(-3px); }
+        .card.hidden { display: none; }
+
+        /* Thumb */
+        .card-thumb-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-thumb-link { display: block; }
+
+        .card-thumb {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+            background: var(--offwhite);
+            transition: transform 0.35s;
+        }
+        .card:hover .card-thumb { transform: scale(1.04); }
+
+        .card-thumb-placeholder {
+            width: 100%;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: rgba(255,255,255,0.7);
+            transition: transform 0.35s;
+        }
+        .card:hover .card-thumb-placeholder { transform: scale(1.04); }
+
+        .card-cat {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.93);
+            backdrop-filter: blur(4px);
+            font-size: 0.69rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+
+        .cat-proposal { color: #2D6A9F; }
+        .cat-design   { color: #0F766E; }
+        .cat-column   { color: #16A34A; }
+        .cat-video    { color: #EA580C; }
+        .cat-mv       { color: #7C3AED; }
+
+        /* Body */
+        .card-body { padding: 18px 20px 20px; }
+
+        .card-title {
+            font-size: 0.94rem;
+            font-weight: 700;
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.81rem;
+            color: var(--muted);
+            line-height: 1.85;
+            margin-bottom: 14px;
+        }
+
+        .card-link-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.79rem;
+            color: var(--blue);
+        }
+
+        /* ============================================================
+           Contact
+        ============================================================ */
+        .contact-box {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-lead {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 2;
+            margin-bottom: 36px;
+        }
+
+        .contact-btns {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .sns-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 24px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1.5px solid var(--border);
+            transition: all 0.2s;
+        }
+        .sns-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+        .sns-fb { border-color: #1877F2; color: #1877F2; }
+        .sns-fb:hover { background: #1877F2; color: white; }
+
+        .sns-note { border-color: #2CB696; color: #2CB696; }
+        .sns-note:hover { background: #2CB696; color: white; }
+
+        /* ============================================================
+           Footer
+        ============================================================ */
+        footer {
+            background: #1D2330;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+            padding: 28px;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================================
+           Responsive
+        ============================================================ */
+        @media (max-width: 840px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+            .hero-photo-wrap { max-width: 220px; margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; gap: 32px; }
+            .services-grid { grid-template-columns: 1fr; }
+            nav a.nav-link { display: none; }
+        }
+
+        @media (max-width: 520px) {
+            .section { padding: 56px 0; }
+            .section-title { font-size: 1.4rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .hero-btns { flex-direction: column; }
+            .contact-btns { flex-direction: column; align-items: center; }
+        }
+
+        /* Fade-in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: none; }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     Header
+============================================================ -->
+<header>
+    <div class="inner header-inner">
+        <a href="#top" class="logo">Shigen <span>Yoshida</span></a>
+        <nav>
+            <a href="#about"    class="nav-link">About</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#works"    class="nav-link">Works</a>
+            <a href="#contact"  class="nav-cta">お問い合わせ</a>
+        </nav>
+    </div>
+</header>
+
+
+<!-- ============================================================
+     Hero
+============================================================ -->
+<section class="hero" id="top">
+    <div class="inner">
+        <div class="hero-inner fade-in">
+
+            <div>
+                <p class="hero-eyebrow">Freelance Creator / Analyst</p>
+                <h1 class="hero-name">
+                    <em>AIと製造の知見</em>を武器に<br>
+                    あなたの「伝えたい」を<br>
+                    カタチにします。
+                </h1>
+                <p class="hero-tagline">
+                    製造メーカーでの生産管理・業務改革経験を活かし、<br>
+                    提案資料・デザイン・動画コンテンツを制作します。<br>
+                    個人・中小企業のご相談を丁寧にお受けしています。
+                </p>
+                <div class="hero-btns">
+                    <a href="#works" class="btn-primary">
+                        <i class="fas fa-briefcase"></i> 制作事例を見る
+                    </a>
+                    <a href="#contact" class="btn-outline">
+                        <i class="fas fa-envelope"></i> 相談・依頼はこちら
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-photo-wrap">
+                <img src="../images/profile.jpg" alt="吉田獅玄" class="hero-photo"
+                     onerror="this.style.background='var(--offwhite)';">
+                <div class="hero-badge">
+                    製造業 × AI × デザイン<br>
+                    <b>フリーランス</b>として活動中
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     About
+============================================================ -->
+<section class="section section-alt" id="about">
+    <div class="inner">
+        <div class="fade-in">
+            <span class="section-label">About</span>
+            <h2 class="section-title">自己紹介</h2>
+            <p class="section-sub">製造メーカーの現場経験から生まれた、実践的な資料・デザイン制作</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="fade-in">
+                <p class="about-lead">
+                    作る人の立場を知っているから、<br>「伝わる」資料が作れます。
+                </p>
+                <p class="about-body">
+                    製造メーカーで生産管理・業務改革に従事した後、AIツールとデザインを組み合わせた資料制作でフリーランスとして活動しています。
+                    スライド・提案書・フライヤー・ロゴから動画コンテンツまで、依頼主の「伝えたいこと」を丁寧にくみ取ってカタチにすることが得意です。
+                </p>
+                <p class="about-body">
+                    得意な分野は製造業・中小企業向けの業務改善提案、地域イベントの集客ツール、個人・店舗のブランディング資料など。
+                    大げさな実績数字より、目の前の一件を丁寧に仕上げることを大切にしています。
+                </p>
+                <div class="about-tags">
+                    <span class="about-tag">製造業・業務改革</span>
+                    <span class="about-tag">AI活用（NotebookLM / ChatGPT）</span>
+                    <span class="about-tag">提案資料作成</span>
+                    <span class="about-tag">デザイン制作</span>
+                    <span class="about-tag">動画・音楽コンテンツ</span>
+                </div>
+            </div>
+
+            <div class="fade-in">
+                <table class="info-table">
+                    <tr>
+                        <th>名前</th>
+                        <td>吉田 獅玄（Shigen Yoshida）</td>
+                    </tr>
+                    <tr>
+                        <th>活動拠点</th>
+                        <td>愛知県</td>
+                    </tr>
+                    <tr>
+                        <th>経歴</th>
+                        <td>製造メーカー 生産管理・業務改革 → フリーランス</td>
+                    </tr>
+                    <tr>
+                        <th>得意分野</th>
+                        <td>提案資料 / デザイン / 動画 / AI調査</td>
+                    </tr>
+                    <tr>
+                        <th>使用ツール</th>
+                        <td>PowerPoint · Canva · ChatGPT · NotebookLM · CapCut</td>
+                    </tr>
+                </table>
+                <div style="margin-top:24px;">
+                    <a href="../profile/" class="btn-outline" style="font-size:0.82rem;padding:10px 20px;">
+                        詳しいプロフィールへ <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     Services
+============================================================ -->
+<section class="section" id="services">
+    <div class="inner">
+        <div class="fade-in">
+            <span class="section-label">Services</span>
+            <h2 class="section-title">できること</h2>
+            <p class="section-sub">企画・構成から制作・納品まで、一貫して対応します</p>
+        </div>
+
+        <div class="services-grid">
+
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-file-powerpoint"></i></div>
+                <h3 class="service-title">提案資料・スライド制作</h3>
+                <p class="service-desc">
+                    業務改善・企業理念・イベント企画など、目的に合わせた構成とデザインで
+                    「読まれる・伝わる」資料を作成します。
+                </p>
+                <div class="service-tools">
+                    <span class="tool-tag">PowerPoint</span>
+                    <span class="tool-tag">Canva</span>
+                    <span class="tool-tag">NotebookLM</span>
+                    <span class="tool-tag">ChatGPT</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-pen-ruler"></i></div>
+                <h3 class="service-title">デザイン制作</h3>
+                <p class="service-desc">
+                    ロゴ・フライヤー・チラシ・SNS素材など、ブランドのイメージを大切にしながら
+                    使いやすくデザインします。
+                </p>
+                <div class="service-tools">
+                    <span class="tool-tag">Canva</span>
+                    <span class="tool-tag">ChatGPT画像生成</span>
+                    <span class="tool-tag">Adobe Express</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-video"></i></div>
+                <h3 class="service-title">動画・コンテンツ制作</h3>
+                <p class="service-desc">
+                    Short動画・MV・情報発信コラムなど、見てもらえる・読んでもらえる
+                    コンテンツを企画から制作します。
+                </p>
+                <div class="service-tools">
+                    <span class="tool-tag">CapCut</span>
+                    <span class="tool-tag">YouTube</span>
+                    <span class="tool-tag">note</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     Works
+============================================================ -->
+<section class="section section-alt" id="works">
+    <div class="inner">
+        <div class="fade-in">
+            <span class="section-label">Works</span>
+            <h2 class="section-title">制作事例</h2>
+            <p class="section-sub">提案・デザイン・動画など実際に手がけた仕事の一覧です</p>
+        </div>
+
+        <!-- タブ -->
+        <div class="works-tabs fade-in">
+            <button class="tab-btn active" data-tab="all">
+                <i class="fas fa-th-large"></i> すべて
+            </button>
+            <button class="tab-btn" data-tab="proposal">
+                <i class="fas fa-briefcase"></i> 提案・デザイン
+            </button>
+            <button class="tab-btn" data-tab="column">
+                <i class="fas fa-pen-nib"></i> コラム
+            </button>
+            <button class="tab-btn" data-tab="video">
+                <i class="fas fa-film"></i> 動画
+            </button>
+        </div>
+
+        <!-- ── カード一覧 ── -->
+        <div class="cards-grid" id="cards-grid">
+
+            <!-- ════ 提案・デザイン ════ -->
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/kuchou-plan.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/kuchou-plan.jpg" alt="空調プランのご提案">
+                    </a>
+                    <span class="card-cat cat-proposal">提案</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">空調プランのご提案</h3>
+                    <p class="card-desc">中部エアークリーナー向け。省エネ・快適環境を実現するための空調改善プランを資料化。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/kuchou-reform.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/kuchou-reform.jpg" alt="空調機リフォーム提案">
+                    </a>
+                    <span class="card-cat cat-proposal">提案</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">空調機のリフォームで快適・省エネ環境を実現</h3>
+                    <p class="card-desc">本体交換なしで性能を復活させるコイル更新プランの提案資料。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/taue.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/taue.jpg" alt="田植え体験会フライヤー">
+                    </a>
+                    <span class="card-cat cat-design">デザイン</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">田植え体験会 2026 告知フライヤー</h3>
+                    <p class="card-desc">東郷ふるさとおこし協議会向け。地域イベントの集客を目的とした告知フライヤー制作。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/geniwa-white.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/geniwa-white.jpg" alt="弦庭演奏会チラシ（白）">
+                    </a>
+                    <span class="card-cat cat-design">デザイン</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">弦楽アンサンブル「弦庭」演奏会チラシ（白）</h3>
+                    <p class="card-desc">優雅な雰囲気を表現した明るいデザインのコンサートチラシ。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/geniwa-black.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb" src="../images/proposals/geniwa-black.jpg" alt="弦庭演奏会チラシ（黒）">
+                    </a>
+                    <span class="card-cat cat-design">デザイン</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">弦楽アンサンブル「弦庭」演奏会チラシ（黒）</h3>
+                    <p class="card-desc">高級感と重厚感を演出したダークデザインのコンサートチラシ。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/%E3%80%90%E6%8F%90%E6%A1%88%E7%94%A8%E3%80%91%E7%A8%8E%E7%90%86%E5%A3%AB%E6%B3%95%E4%BA%BA%E4%BC%81%E6%A5%AD%E7%90%86%E5%BF%B5%E3%80%802026%E5%B9%B44%E6%9C%8827%E6%97%A5%2008_41_08.png" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb"
+                             src="../images/proposals/%E3%80%90%E6%8F%90%E6%A1%88%E7%94%A8%E3%80%91%E7%A8%8E%E7%90%86%E5%A3%AB%E6%B3%95%E4%BA%BA%E4%BC%81%E6%A5%AD%E7%90%86%E5%BF%B5%E3%80%802026%E5%B9%B44%E6%9C%8827%E6%97%A5%2008_41_08.png"
+                             alt="税理士法人企業理念">
+                    </a>
+                    <span class="card-cat cat-proposal">提案</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">税理士法人企業理念</h3>
+                    <p class="card-desc">税理士法人向けに作成した企業理念の提案資料。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E3%81%A7%E6%A5%BD%E3%81%97%E3%82%80%E3%80%8C%E5%A4%8F%E3%81%AE%E5%AE%B4%E4%BC%9A%E3%83%97%E3%83%A9%E3%83%B3%E3%80%8D.jpg" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb"
+                             src="../images/proposals/%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E3%81%A7%E6%A5%BD%E3%81%97%E3%82%80%E3%80%8C%E5%A4%8F%E3%81%AE%E5%AE%B4%E4%BC%9A%E3%83%97%E3%83%A9%E3%83%B3%E3%80%8D.jpg"
+                             alt="イタリアンレストランで楽しむ「夏の宴会プラン」">
+                    </a>
+                    <span class="card-cat cat-design">デザイン</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">イタリアンレストランで楽しむ「夏の宴会プラン」</h3>
+                    <p class="card-desc">イタリアンレストランの夏の宴会プランを訴求したデザイン提案。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/ChatGPT%20Image%202026%E5%B9%B44%E6%9C%8829%E6%97%A5%2013_14_01.png" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb"
+                             src="../images/proposals/ChatGPT%20Image%202026%E5%B9%B44%E6%9C%8829%E6%97%A5%2013_14_01.png"
+                             alt="会社ロゴ提案（A）">
+                    </a>
+                    <span class="card-cat cat-design">デザイン</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">会社ロゴ提案（A）</h3>
+                    <p class="card-desc">会社ブランディングのためのロゴデザイン提案（案A）。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="proposal">
+                <div class="card-thumb-wrap">
+                    <a href="../images/proposals/YUna%E3%83%AC%E3%82%B4%E4%BD%BF%E7%94%A8%E4%BE%8B.png" target="_blank" rel="noopener" class="card-thumb-link">
+                        <img class="card-thumb"
+                             src="../images/proposals/YUna%E3%83%AC%E3%82%B4%E4%BD%BF%E7%94%A8%E4%BE%8B.png"
+                             alt="スナックロゴ（A）">
+                    </a>
+                    <span class="card-cat cat-design">デザイン</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">スナックロゴ（A）</h3>
+                    <p class="card-desc">スナック店舗向けのロゴデザイン提案（案A）。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> 資料を見る</div>
+                </div>
+            </div>
+
+            <!-- ════ コラム ════ -->
+
+            <div class="card fade-in" data-cat="column">
+                <div class="card-thumb-wrap">
+                    <a href="https://note.com/ryuzaburo7/n/n747484673402" target="_blank" rel="noopener" class="card-thumb-link">
+                        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#16A34A,#6FCF97);">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+                    </a>
+                    <span class="card-cat cat-column">コラム</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">副業初心者におすすめの副業5選</h3>
+                    <p class="card-desc">未経験でも月1万円を目指せる仕事を紹介したnoteコラム（サンプル記事）。</p>
+                    <div class="card-link-row"><i class="fas fa-external-link-alt"></i> noteで読む</div>
+                </div>
+            </div>
+
+            <!-- ════ 動画 ════ -->
+
+            <div class="card fade-in" data-cat="video">
+                <div class="card-thumb-wrap">
+                    <a href="https://youtube.com/shorts/Mg8e6_V7nG8?feature=share" target="_blank" rel="noopener" class="card-thumb-link">
+                        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#EA580C,#F9CA24);">
+                            <i class="fas fa-film"></i>
+                        </div>
+                    </a>
+                    <span class="card-cat cat-video">Short動画</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">This Cat Thought It Was a Bird… 🐈</h3>
+                    <p class="card-desc">AIと映像編集を組み合わせたショート動画コンテンツ。</p>
+                    <div class="card-link-row"><i class="fab fa-youtube"></i> YouTube Shortsで見る</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" data-cat="video">
+                <div class="card-thumb-wrap">
+                    <a href="https://youtu.be/e96Fm1wDRzI" target="_blank" rel="noopener" class="card-thumb-link">
+                        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#7C3AED,#C39BD3);">
+                            <i class="fas fa-music"></i>
+                        </div>
+                    </a>
+                    <span class="card-cat cat-mv">MV</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Song for Hiro (Reignite Edition)</h3>
+                    <p class="card-desc">w-Bandによる楽曲MV。愛・夢・日常の感情をテーマにした映像作品。</p>
+                    <div class="card-link-row"><i class="fab fa-youtube"></i> YouTubeで見る</div>
+                </div>
+            </div>
+
+        </div><!-- /cards-grid -->
+    </div>
+</section>
+
+
+<!-- ============================================================
+     Contact
+============================================================ -->
+<section class="section" id="contact">
+    <div class="inner">
+        <div class="fade-in" style="text-align:center;">
+            <span class="section-label">Contact</span>
+            <h2 class="section-title">お問い合わせ</h2>
+        </div>
+        <div class="contact-box fade-in">
+            <p class="contact-lead">
+                お仕事のご相談・ご依頼はお気軽にどうぞ。<br>
+                「こんなことを頼めるかな？」という段階でも大丈夫です。<br>
+                まずはSNSまたはFacebookでメッセージをお送りください。
+            </p>
+            <div class="contact-btns">
+                <a href="https://www.facebook.com/shigen.yoshida.9" target="_blank" rel="noopener" class="sns-btn sns-fb">
+                    <i class="fab fa-facebook-f"></i> Facebookで連絡する
+                </a>
+                <a href="https://note.com/leo77777" target="_blank" rel="noopener" class="sns-btn sns-note">
+                    <i class="fas fa-pen-nib"></i> noteを見る
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     Footer
+============================================================ -->
+<footer>
+    © 2026 Shigen Yoshida. All rights reserved.
+</footer>
+
+
+<!-- ============================================================
+     Script
+============================================================ -->
+<script>
+    // ── Tab filter ──
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const cards   = document.querySelectorAll('#cards-grid .card');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const tab = btn.dataset.tab;
+            cards.forEach(c => {
+                const match = tab === 'all' || c.dataset.cat === tab;
+                c.classList.toggle('hidden', !match);
+            });
+        });
+    });
+
+    // ── Fade-in on scroll ──
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
