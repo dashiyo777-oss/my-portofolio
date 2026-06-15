@@ -106,9 +106,9 @@
           "sageId": "gandhi",
           "quote": "弱い者は決して人を赦せない。赦しは強き者の徳である。",
           "quoteOriginal": "The weak can never forgive. Forgiveness is the attribute of the strong.",
-          "source": "ガンジーに広く帰属",
-          "note": "一次出典の最終確認を推奨(README参照)。",
-          "verified": false,
+          "source": "Young India, 1931年4月2日（マハトマ・ガンジー全集）",
+          "note": "バガト・シン処刑をめぐる会見での発言。",
+          "verified": true,
           "effects": { "mind": 6, "wisdom": 8 }
         },
         {
@@ -257,21 +257,21 @@
           "effects": { "mind": 5 }
         },
         {
-          "sageId": "gandhi",
-          "quote": "強さは身体の力からは生まれない。屈することのない意志から生まれる。",
-          "quoteOriginal": "Strength does not come from physical capacity. It comes from an indomitable will.",
-          "source": "ガンジーに広く帰属",
-          "note": "一次出典の最終確認を推奨(README参照)。",
-          "verified": false,
-          "effects": { "mind": 6, "passion": 8 }
+          "sageId": "curie",
+          "quote": "人生は誰にとっても楽ではありません。でも、それがどうしたというのでしょう。私たちは忍耐を、そして何よりも自分自身への自信を持たねばなりません。自分は何かのために才能を授かっている、それは必ず成し遂げられるのだ、と信じることです。",
+          "quoteOriginal": "Life is not easy for any of us. But what of that? We must have perseverance and above all confidence in ourselves. We must believe that we are gifted for something, and that this thing must be attained.",
+          "source": "エーヴ・キュリー『キュリー夫人伝』(Madame Curie), 1937（V.Sheean 訳, p.222）",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "passion": 7, "wisdom": 4 }
         },
         {
           "sageId": "ali",
           "quote": "練習の一分一秒が嫌だった。だが私は自分に言った。『やめるな。今苦しめ。そして残りの人生をチャンピオンとして生きろ』と。",
           "quoteOriginal": "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'",
-          "source": "モハメド・アリに広く帰属",
-          "note": "一次出典の最終確認を推奨(README参照)。",
-          "verified": false,
+          "source": "Muhammad Ali Center 公式『In His Own Words』",
+          "note": "本人の言葉として公式機関が掲載。",
+          "verified": true,
           "effects": { "mind": 7, "passion": 9 }
         }
       ]
@@ -367,13 +367,13 @@
           "effects": { "mind": 5 }
         },
         {
-          "sageId": "curie",
-          "quote": "人生に怖れるべきものは何もない。ただ理解すべきものがあるだけ。今こそ、より多くを理解すべき時。そうすれば、怖れは少なくなる。",
-          "quoteOriginal": "Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.",
-          "source": "マリ・キュリーに広く帰属",
-          "note": "一次出典の最終確認を推奨(README参照)。",
-          "verified": false,
-          "effects": { "mind": 8, "wisdom": 7 }
+          "sageId": "keller",
+          "quote": "世界は苦しみに満ちている。けれど、それを乗り越える力もまた、世界には満ちている。",
+          "quoteOriginal": "Although the world is full of suffering, it is also full of the overcoming of it.",
+          "source": "ヘレン・ケラー『楽天主義』(Optimism), 1903",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 9, "wisdom": 6 }
         },
         {
           "sageId": "scripture_quran",

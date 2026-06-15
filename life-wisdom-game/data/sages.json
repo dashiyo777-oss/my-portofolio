@@ -142,6 +142,19 @@
       "note": "一次出典が確実な名言の選定中。確定までイベント未割当(§verification)。"
     },
     {
+      "id": "keller",
+      "name": "ヘレン・ケラー",
+      "nameEn": "Helen Keller",
+      "region": "US",
+      "field": "humanitarian",
+      "era": "1880–1968",
+      "stance": "overcoming",
+      "rank": 3,
+      "isPremium": true,
+      "packId": "pack_human",
+      "color": "#a0825f"
+    },
+    {
       "id": "einstein",
       "name": "アルベルト・アインシュタイン",
       "nameEn": "Albert Einstein",
