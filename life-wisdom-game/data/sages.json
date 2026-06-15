@@ -168,6 +168,45 @@
       "color": "#4f7d8c"
     },
     {
+      "id": "annefrank",
+      "name": "アンネ・フランク",
+      "nameEn": "Anne Frank",
+      "region": "DE/NL",
+      "field": "humanitarian",
+      "era": "1929–1945",
+      "stance": "hope",
+      "rank": 2,
+      "isPremium": true,
+      "packId": "pack_human",
+      "color": "#8fae6f"
+    },
+    {
+      "id": "vangogh",
+      "name": "フィンセント・ファン・ゴッホ",
+      "nameEn": "Vincent van Gogh",
+      "region": "NL",
+      "field": "art",
+      "era": "1853–1890",
+      "stance": "passion",
+      "rank": 3,
+      "isPremium": true,
+      "packId": "pack_art",
+      "color": "#e0a44a"
+    },
+    {
+      "id": "frankl",
+      "name": "ヴィクトール・フランクル",
+      "nameEn": "Viktor Frankl",
+      "region": "AT",
+      "field": "thought",
+      "era": "1905–1997",
+      "stance": "meaning",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_thought",
+      "color": "#6b5b95"
+    },
+    {
       "id": "mandela",
       "name": "ネルソン・マンデラ",
       "nameEn": "Nelson Mandela",

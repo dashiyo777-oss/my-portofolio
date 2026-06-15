@@ -431,6 +431,107 @@
           "effects": { "wisdom": 12, "mind": 4 }
         }
       ]
+    },
+    {
+      "id": "relationship_distrust_01",
+      "category": "relationship",
+      "mood": "down",
+      "title": "人を、もう信じられない。",
+      "body": "裏切られたり傷つけられたりが続いて、人間そのものが怖くなってしまった。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "用心は知恵。でも、心まで閉じなくていい。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "annefrank",
+          "quote": "それでもなお私は、人は心の奥底ではほんとうに善良なのだと信じています。",
+          "quoteOriginal": "In spite of everything, I still believe that people are truly good at heart.",
+          "source": "『アンネの日記』1944年7月15日",
+          "note": "迫害の最中に書かれた一節。",
+          "verified": true,
+          "effects": { "mind": 8, "bonds": 6 }
+        },
+        {
+          "sageId": "scripture_bible",
+          "tradition": "christianity",
+          "quote": "あなたの隣人を、自分自身のように愛しなさい。",
+          "quoteOriginal": "Love your neighbor as yourself.",
+          "source": "新約聖書 マルコによる福音書 12:31",
+          "note": "聖典の言葉として引用。",
+          "verified": true,
+          "rank": 5,
+          "effects": { "mind": 12, "bonds": 8 }
+        }
+      ]
+    },
+    {
+      "id": "unfair_situation_01",
+      "category": "self",
+      "mood": "lost",
+      "title": "理不尽な目に遭った。どうにもできない。",
+      "body": "自分のせいではないのに、状況は変わってくれない。やり場のない思いが渦巻く。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "変えられないものを嘆くより、変えられる一点に手を伸ばそう。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "frankl",
+          "quote": "もはや状況を変えられないとき、私たちは自分自身を変えることを求められる。",
+          "quoteOriginal": "When we are no longer able to change a situation, we are challenged to change ourselves.",
+          "source": "ヴィクトール・フランクル『夜と霧』(Man's Search for Meaning), 1946",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 8, "wisdom": 10 }
+        },
+        {
+          "sageId": "confucius",
+          "quote": "知者は惑わず、仁者は憂えず、勇者は懼れず。",
+          "quoteOriginal": "知者不惑、仁者不憂、勇者不懼。",
+          "source": "論語 子罕第九",
+          "note": "知恵ある者は迷わず、徳ある者は思い悩まず、勇ある者は怖れない。",
+          "verified": true,
+          "effects": { "mind": 6, "wisdom": 8 }
+        }
+      ]
+    },
+    {
+      "id": "big_goal_overwhelm_01",
+      "category": "self",
+      "mood": "lost",
+      "title": "目標が大きすぎて、足がすくむ。",
+      "body": "やりたいことは大きい。でも、あまりに遠くて、何から始めればいいか分からない。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "山の頂上ではなく、次の一歩だけを見よう。",
+          "note": "",
+          "effects": { "mind": 4, "passion": 4 }
+        },
+        {
+          "sageId": "vangogh",
+          "quote": "偉大なことは、衝動でなされるのではない。小さなことの積み重ねによって成し遂げられる。",
+          "quoteOriginal": "Great things are not done by impulse, but by a series of small things brought together.",
+          "source": "テオ宛 書簡, 1882年10月22日(letter 274)",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 6, "passion": 7, "wisdom": 4 }
+        },
+        {
+          "sageId": "frankl",
+          "quote": "人から一切を奪うことはできても、たった一つだけ奪えないものがある。どんな状況でも、自分の態度を、自分の道を選ぶという自由だ。",
+          "quoteOriginal": "Everything can be taken from a man but one thing: the last of the human freedoms—to choose one's attitude in any given set of circumstances, to choose one's own way.",
+          "source": "ヴィクトール・フランクル『夜と霧』(Man's Search for Meaning), 1946",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "passion": 6, "wisdom": 6 }
+        }
+      ]
     }
   ]
 }
