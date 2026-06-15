@@ -668,6 +668,107 @@
           "effects": { "mind": 12, "bonds": 8 }
         }
       ]
+    },
+    {
+      "id": "health_anxiety_01",
+      "category": "health",
+      "mood": "down",
+      "title": "検査結果が出るまで、悪いことばかり考えてしまう。",
+      "body": "まだ何も分かっていないのに、頭の中は最悪の想像でいっぱい。不安で眠れない。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "まだ起きていない不幸を、先に味わう必要はない。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "seneca",
+          "quote": "私たちは現実よりも、想像の中でこそ、より多く苦しむ。",
+          "quoteOriginal": "We suffer more often in imagination than in reality.",
+          "source": "セネカ『ルキリウスへの手紙』第13通（根拠なき恐れについて）",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 8, "wisdom": 8 }
+        },
+        {
+          "sageId": "keller",
+          "quote": "楽観とは、成就へと導く信念である。希望と自信なくしては、何ひとつ成し得ない。",
+          "quoteOriginal": "Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.",
+          "source": "ヘレン・ケラー『楽天主義』(Optimism), 1903",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "passion": 5 }
+        }
+      ]
+    },
+    {
+      "id": "health_serious_01",
+      "category": "health",
+      "mood": "down",
+      "title": "重い病と向き合う日々。心が折れそう。",
+      "body": "長い治療。良くなる日もあれば、どうしようもなく不安な夜もある。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "今日を生きているだけで、あなたは十分に立派だ。",
+          "note": "",
+          "effects": { "mind": 5 }
+        },
+        {
+          "sageId": "seneca",
+          "quote": "時には、生きることそのものが、勇気ある行いなのだ。",
+          "quoteOriginal": "Sometimes even to live is an act of courage.",
+          "source": "セネカ『ルキリウスへの手紙』第78通（心の癒す力について）",
+          "note": "セネカ自身の闘病の経験から記された一節。",
+          "verified": true,
+          "effects": { "mind": 9, "wisdom": 7 }
+        },
+        {
+          "sageId": "scripture_bible",
+          "tradition": "christianity",
+          "quote": "たとえ死の陰の谷を歩むときも、わたしは災いを恐れない。あなたが共にいてくださるから。",
+          "quoteOriginal": "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.",
+          "source": "旧約聖書 詩篇 23:4",
+          "note": "聖典の言葉として引用。",
+          "verified": true,
+          "rank": 5,
+          "effects": { "mind": 14, "wisdom": 8 }
+        }
+      ]
+    },
+    {
+      "id": "perseverance_setback_01",
+      "category": "self",
+      "mood": "down",
+      "title": "何度挑んでも失敗する。もう心が折れた。",
+      "body": "立ち上がっては転び、また立ち上がっては転ぶ。前に進んでいる気がしない。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "倒れた回数ではなく、起き上がった回数を数えよう。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "churchill",
+          "quote": "決して屈するな。決して、決して、決して。名誉と良識の信念に反する場合のほかは。",
+          "quoteOriginal": "Never give in, never give in, never, never, never, never—except to convictions of honour and good sense.",
+          "source": "ハーロー校での演説, 1941年10月29日",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "passion": 9 }
+        },
+        {
+          "sageId": "nietzsche",
+          "quote": "生きる「なぜ」を持つ者は、ほとんどあらゆる「いかに」に耐えられる。",
+          "quoteOriginal": "He who has a why to live for can bear almost any how.",
+          "source": "ニーチェ『偶像の黄昏』箴言と矢 12, 1889",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "wisdom": 9 }
+        }
+      ]
     }
   ]
 }

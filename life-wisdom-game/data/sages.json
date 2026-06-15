@@ -235,6 +235,45 @@
       "note": "人生訓として一次出典が確実な一節を選定中。確定までイベント未割当(§verification)。"
     },
     {
+      "id": "seneca",
+      "name": "セネカ",
+      "nameEn": "Seneca",
+      "region": "Rome",
+      "field": "thought",
+      "era": "BC1頃–AD65",
+      "stance": "stoic",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_thought",
+      "color": "#6e6a5c"
+    },
+    {
+      "id": "churchill",
+      "name": "ウィンストン・チャーチル",
+      "nameEn": "Winston Churchill",
+      "region": "GB",
+      "field": "leader",
+      "era": "1874–1965",
+      "stance": "resolve",
+      "rank": 3,
+      "isPremium": true,
+      "packId": "pack_leader",
+      "color": "#8a7a5c"
+    },
+    {
+      "id": "nietzsche",
+      "name": "フリードリヒ・ニーチェ",
+      "nameEn": "Friedrich Nietzsche",
+      "region": "DE",
+      "field": "thought",
+      "era": "1844–1900",
+      "stance": "meaning",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_thought",
+      "color": "#5c5a6e"
+    },
+    {
       "id": "laozi",
       "name": "老子",
       "nameEn": "Laozi",
