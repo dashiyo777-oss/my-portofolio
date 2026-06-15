@@ -1,0 +1,149 @@
+/* 叡智の灯火 — 和の温かみ。スマホ縦持ち最適化。ビルド不要。 */
+:root{
+  --bg:#2b2622; --paper:#f6efe2; --paper2:#efe5d3; --ink:#33291f;
+  --ink-soft:#6b5d4a; --gold:#caa45d; --gold-deep:#a9863f;
+  --line:#e0d3bb; --shadow:0 6px 22px rgba(40,30,16,.16);
+  --r:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+  line-height:1.7; -webkit-text-size-adjust:100%;
+}
+#app{
+  max-width:480px; margin:0 auto; min-height:100vh;
+  background:
+    radial-gradient(120% 60% at 50% -10%, #fbf6ec 0%, var(--paper) 45%, var(--paper2) 100%);
+  box-shadow:var(--shadow);
+  padding:18px 18px calc(28px + env(safe-area-inset-bottom)); position:relative;
+}
+button{font-family:inherit; cursor:pointer}
+.center{text-align:center}
+.muted{color:var(--ink-soft)}
+.small{font-size:.82rem}
+
+/* ---- 共通ボタン ---- */
+.btn{
+  display:block; width:100%; border:none; border-radius:999px;
+  padding:14px 18px; font-size:1.02rem; font-weight:600;
+  background:linear-gradient(180deg,#3c342a,#2b2622); color:#f4ead4;
+  box-shadow:0 4px 14px rgba(40,30,16,.25); margin:10px 0; transition:transform .08s ease, filter .15s;
+}
+.btn:active{transform:translateY(1px) scale(.997)}
+.btn.gold{background:linear-gradient(180deg,var(--gold),var(--gold-deep)); color:#2b2210}
+.btn.ghost{background:transparent; color:var(--ink-soft); box-shadow:none; border:1px solid var(--line); font-weight:500}
+.btn.sm{display:inline-block; width:auto; padding:9px 16px; font-size:.86rem; margin:4px}
+
+/* ---- タイトル ---- */
+.title-wrap{padding:46px 8px 18px; text-align:center}
+.flame{font-size:42px; filter:drop-shadow(0 0 14px rgba(202,164,93,.6))}
+h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight:700}
+.subtitle{color:var(--ink-soft); letter-spacing:.06em; margin:0 0 6px}
+.title-actions{margin-top:26px}
+.tagline{margin:30px 6px 0; color:var(--ink-soft); font-size:.92rem}
+
+/* ---- ステータスバー ---- */
+.statusbar{
+  display:flex; align-items:center; gap:10px; padding:10px 14px; margin:-4px -4px 14px;
+  background:rgba(255,255,255,.55); border:1px solid var(--line); border-radius:14px;
+  position:sticky; top:8px; z-index:5; backdrop-filter:blur(4px);
+}
+.heart{font-size:1.1rem}
+.mindbar{flex:1; height:10px; background:#e7dcc6; border-radius:99px; overflow:hidden}
+.mindbar > i{display:block; height:100%; background:linear-gradient(90deg,#d98b6a,#caa45d)}
+.rankchip{font-size:.74rem; padding:3px 9px; border-radius:99px; background:#efe2c6; color:#7a5e22; white-space:nowrap; border:1px solid #e3d2a8}
+.wisrow{font-size:.72rem; color:var(--ink-soft); margin:0 2px 16px}
+.wisrow .wbar{height:5px; background:#e7dcc6; border-radius:99px; overflow:hidden; margin-top:3px}
+.wisrow .wbar > i{display:block; height:100%; background:var(--gold)}
+
+/* ---- イベント ---- */
+.eyebrow{display:inline-block; font-size:.72rem; letter-spacing:.12em; color:var(--gold-deep);
+  border:1px solid #e3d2a8; padding:2px 10px; border-radius:99px; margin-bottom:10px}
+.event-title{font-size:1.32rem; font-weight:700; margin:.1em 0 .4em; line-height:1.5}
+.event-body{color:var(--ink-soft); margin:0 0 18px}
+.advice-help{font-size:.8rem; color:var(--ink-soft); margin:0 2px 8px}
+
+/* ---- 助言カード ---- */
+.card{
+  position:relative; width:100%; text-align:left; border:1px solid var(--line);
+  background:#fffdf8; border-radius:var(--r); padding:14px 14px 14px 16px; margin:10px 0;
+  box-shadow:0 3px 10px rgba(40,30,16,.07); border-left:5px solid var(--c,#ccc);
+  transition:transform .08s, box-shadow .15s;
+}
+.card:active{transform:translateY(1px)}
+.card.tap{cursor:pointer}
+.card.tap:hover{box-shadow:0 6px 16px rgba(40,30,16,.13)}
+.card-head{display:flex; align-items:center; gap:10px; margin-bottom:7px}
+.disc{
+  width:34px; height:34px; border-radius:50%; flex:0 0 auto; display:grid; place-items:center;
+  color:#fff; font-size:.95rem; font-weight:700; background:var(--c,#999); box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)
+}
+.disc.scripture{background:radial-gradient(circle at 50% 35%, #f3dca0, var(--gold-deep)); color:#5a3f12}
+.sname{font-size:.9rem; font-weight:600}
+.sname .era{font-weight:400; color:var(--ink-soft); font-size:.74rem; margin-left:6px}
+.badge{margin-left:auto; font-size:.66rem; padding:2px 8px; border-radius:99px; background:#f0e6cf; color:#7a5e22; border:1px solid #e6d6ac; white-space:nowrap}
+.badge.sacred{background:linear-gradient(180deg,#f6e3b0,#e6c878); color:#5a3f12; border-color:#d8b86a}
+.quote{font-size:1.06rem; line-height:1.65; margin:2px 0 0}
+.qnote{font-size:.82rem; color:var(--ink-soft); margin:6px 0 0}
+.source{display:block; font-size:.72rem; color:var(--gold-deep); margin-top:8px; letter-spacing:.02em}
+
+/* ロック中カード */
+.card.locked{opacity:.72; filter:saturate(.5); border-left-color:#cdbfa6}
+.lockmsg{font-size:.85rem; color:var(--ink-soft)}
+.lockmsg b{color:var(--gold-deep)}
+
+/* 偉人フェーズ解放バナー */
+.paywall{
+  border:1.5px dashed var(--gold-deep); background:linear-gradient(180deg,#fff8e9,#f7ecd2);
+  border-radius:var(--r); padding:16px; margin:14px 0; text-align:center;
+}
+.paywall h3{margin:.2em 0 .3em; font-size:1.05rem}
+.paywall p{margin:.2em 0 .8em; font-size:.84rem; color:var(--ink-soft)}
+
+/* ---- 決断結果 ---- */
+.result-quote{
+  font-size:1.4rem; line-height:1.7; text-align:center; margin:26px 10px 14px;
+  position:relative;
+}
+.result-quote:before{content:"❝"; color:var(--gold); font-size:2rem; display:block; line-height:0; margin-bottom:18px}
+.result-from{text-align:center; color:var(--ink-soft); font-size:.86rem; margin-bottom:4px}
+.result-source{text-align:center; color:var(--gold-deep); font-size:.74rem; margin-bottom:18px}
+.deltas{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:14px 0}
+.delta{font-size:.82rem; padding:5px 12px; border-radius:99px; background:#f0e8d6; border:1px solid var(--line)}
+.delta.up{color:#3f7d4f} .delta.down{color:#b15a3c}
+.saved-toast{text-align:center; color:var(--gold-deep); font-size:.84rem; margin:6px 0 2px}
+.fb{display:flex; gap:10px; justify-content:center; margin:14px 0 4px}
+.fb button{border:1px solid var(--line); background:#fffdf8; border-radius:99px; padding:9px 16px; font-size:.86rem; color:var(--ink)}
+.fb button.on{background:var(--gold); border-color:var(--gold-deep); color:#2b2210; font-weight:600}
+
+/* ---- 休息 ---- */
+.rest{ text-align:center; padding:40px 12px }
+.rest .moon{font-size:40px}
+.rest .line{font-size:1.18rem; margin:18px 8px; line-height:1.7}
+
+/* ---- わが叡智の書 ---- */
+.book-head{display:flex; align-items:center; gap:8px; margin:2px 0 12px}
+.book-head h2{font-size:1.2rem; margin:0}
+.tabs{display:flex; gap:6px; margin:6px 0 14px}
+.tabs button{flex:1; border:1px solid var(--line); background:#fffdf8; border-radius:99px; padding:8px; font-size:.86rem; color:var(--ink-soft)}
+.tabs button.on{background:#2b2622; color:#f4ead4; border-color:#2b2622}
+.filters{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px}
+.chip{font-size:.74rem; padding:4px 10px; border-radius:99px; border:1px solid var(--line); background:#fffdf8; color:var(--ink-soft)}
+.chip.on{background:var(--gold); border-color:var(--gold-deep); color:#2b2210}
+.entry{border:1px solid var(--line); border-left:4px solid var(--c,#ccc); background:#fffdf8; border-radius:14px; padding:12px 13px; margin:9px 0}
+.entry .when{font-size:.72rem; color:var(--ink-soft)}
+.entry .etitle{font-size:.86rem; color:var(--ink-soft); margin:2px 0 6px}
+.entry .eq{font-size:1.0rem; line-height:1.6}
+.entry .efrom{font-size:.76rem; color:var(--gold-deep); margin-top:6px}
+.entry .fbmark{font-size:.74rem; margin-top:6px; color:var(--ink-soft)}
+.empty{ text-align:center; color:var(--ink-soft); padding:40px 10px }
+.summary{background:rgba(255,255,255,.6); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:14px; font-size:.88rem}
+.summary b{color:var(--gold-deep)}
+
+.footer-actions{margin-top:22px}
+.notice{font-size:.72rem; color:var(--ink-soft); text-align:center; margin-top:18px; line-height:1.6}
+.fade{animation:fade .35s ease}
+@keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
