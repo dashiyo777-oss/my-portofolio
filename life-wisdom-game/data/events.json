@@ -532,6 +532,142 @@
           "effects": { "mind": 7, "passion": 6, "wisdom": 6 }
         }
       ]
+    },
+    {
+      "id": "study_effort_01",
+      "category": "study",
+      "mood": "down",
+      "title": "努力しても、才能のある人に追いつけない。",
+      "body": "どれだけやっても、もっとできる人がいる。努力なんて意味がないのかと思えてくる。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "才能はスタート地点。努力は、そこから歩いた距離。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "edison",
+          "quote": "天才とは、1パーセントのひらめきと、99パーセントの努力である。",
+          "quoteOriginal": "Genius is one percent inspiration and ninety-nine percent perspiration.",
+          "source": "本人が1927年の書簡で自らの言葉と認める（Harper's Monthly, 1932 掲載）",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 6, "passion": 8, "wisdom": 4 }
+        },
+        {
+          "sageId": "laozi",
+          "quote": "千里の道も、一歩から始まる。",
+          "quoteOriginal": "千里之行、始於足下。",
+          "source": "老子『道徳経』第64章",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 6, "wisdom": 8 }
+        }
+      ]
+    },
+    {
+      "id": "work_newjob_01",
+      "category": "work",
+      "mood": "lost",
+      "title": "新しい環境に、まるで馴染めない。",
+      "body": "転職（進学）したばかり。やり方も人間関係も違って、自分だけ浮いている気がする。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "馴染めないのは、あなたが新しい世界に足を踏み入れた証。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "brucelee",
+          "quote": "心を空にせよ。形を持たず、器に従う水のようであれ。友よ、水になれ。",
+          "quoteOriginal": "Empty your mind, be formless, shapeless, like water. Be water, my friend.",
+          "source": "The Pierre Berton Show, 1971年12月9日",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "wisdom": 7 }
+        },
+        {
+          "sageId": "confucius",
+          "quote": "之を知るを之を知ると為し、知らざるを知らずと為す。是れ知るなり。",
+          "quoteOriginal": "知之為知之、不知為不知、是知也。",
+          "source": "論語 為政第二",
+          "note": "知っていることと知らないことを正直に分けられる、それが知るということ。",
+          "verified": true,
+          "effects": { "mind": 5, "wisdom": 8 }
+        }
+      ]
+    },
+    {
+      "id": "money_contentment_01",
+      "category": "money",
+      "mood": "down",
+      "title": "周りと比べて、自分はお金がなくて惨めだ。",
+      "body": "SNSを見ると、皆が豊かに見える。自分だけ取り残されている気がしてつらい。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "他人の財布の中身ではなく、自分の心の豊かさを数えてみよう。",
+          "note": "",
+          "effects": { "mind": 4 }
+        },
+        {
+          "sageId": "confucius",
+          "quote": "粗末な飯を食べ、水を飲み、肘を枕にして眠る。その暮らしの中にも、楽しみはある。",
+          "quoteOriginal": "飯疏食、飲水、曲肱而枕之、楽亦在其中矣。",
+          "source": "論語 述而第七",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 7, "wisdom": 8 }
+        },
+        {
+          "sageId": "scripture_dhammapada",
+          "tradition": "buddhism",
+          "quote": "健康は最高の利得、満足は最大の財産、信頼は最良の親族、ニルヴァーナ（涅槃）は最上の安楽である。",
+          "quoteOriginal": "Health is the greatest gift, contentment the greatest wealth, a trusted friend the best relative, Nibbana the greatest bliss.",
+          "source": "法句経(ダンマパダ) 第204偈",
+          "note": "聖典の言葉として引用。",
+          "verified": true,
+          "rank": 5,
+          "effects": { "mind": 13, "wisdom": 9 }
+        }
+      ]
+    },
+    {
+      "id": "love_courage_01",
+      "category": "love",
+      "mood": "lost",
+      "title": "好きな人に、気持ちを伝える勇気が出ない。",
+      "body": "想いはある。でも、断られるのが怖くて、あと一歩が踏み出せない。",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "伝えない後悔は、断られる痛みより長く残る。",
+          "note": "",
+          "effects": { "mind": 4, "passion": 4 }
+        },
+        {
+          "sageId": "eleanor",
+          "quote": "あなたが「できない」と思うことこそ、やってみなければなりません。",
+          "quoteOriginal": "You must do the thing you think you cannot do.",
+          "source": "エレノア・ルーズベルト『You Learn by Living』第2章, 1960",
+          "note": "",
+          "verified": true,
+          "effects": { "mind": 6, "passion": 8 }
+        },
+        {
+          "sageId": "scripture_bible",
+          "tradition": "christianity",
+          "quote": "あなたがたのすることを、すべて愛をもって行いなさい。",
+          "quoteOriginal": "Do everything in love.",
+          "source": "新約聖書 コリント人への手紙一 16:14",
+          "note": "聖典の言葉として引用。",
+          "verified": true,
+          "rank": 5,
+          "effects": { "mind": 12, "bonds": 8 }
+        }
+      ]
     }
   ]
 }
