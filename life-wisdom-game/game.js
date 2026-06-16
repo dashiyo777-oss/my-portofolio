@@ -170,7 +170,8 @@
       posLine +
       '</div>' +
       '<div class="title-actions">' +
-      '<button class="btn gold" data-act="start">' + (has ? "つづきから歩む" : "人生をはじめる") + '</button>' +
+      '<button class="btn gold" data-act="' + (has ? "start" : "walk") + '">' + (has ? "つづきから歩む" : "人生を歩む") + '</button>' +
+      '<button class="btn gold" data-act="consult">悩みを相談する</button>' +
       '<button class="btn ghost" data-act="book">わが叡智の書を見る' + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
       '<button class="btn ghost" data-act="cert">叡智の免許状を見る</button>' +
       (has ? '<button class="btn ghost" data-act="reset">はじめからやり直す</button>' : "") +
@@ -183,9 +184,16 @@
 
   // ---------- 画面: イベント ----------
   var currentEvent = null, currentLegend = null;
+  var mode = "auto", consultCat = null;   // auto=人生を歩む / consult=悩みを相談する
   function pickEvent() {
-    var pool = EVENTS.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
-    if (pool.length === 0) { state.seen = []; pool = EVENTS.slice(); }
+    var pool;
+    if (mode === "consult" && consultCat) {
+      pool = EVENTS.filter(function (e) { return e.category === consultCat && state.seen.indexOf(e.id) < 0; });
+      if (pool.length === 0) pool = EVENTS.filter(function (e) { return e.category === consultCat; });
+    } else {
+      pool = EVENTS.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
+      if (pool.length === 0) { state.seen = []; pool = EVENTS.slice(); }
+    }
     return pool[Math.floor(Math.random() * pool.length)];
   }
   function proceed() {
@@ -193,6 +201,19 @@
     currentEvent = pickEvent();
     currentLegend = rollLegend();
     showEvent(currentEvent);
+  }
+  // ② 相談モード：今の悩みを自分で選ぶ
+  function showConsult() {
+    var grid = Object.keys(CAT_LABEL).map(function (c) {
+      return '<button class="consult-cat" data-consultcat="' + c + '">' + esc(CAT_LABEL[c]) + '</button>';
+    }).join("");
+    render('<div class="fade">' + statusbar() +
+      '<h2 class="event-title">どんなことで、悩んでいますか？</h2>' +
+      '<p class="event-body">いま心にあるものを選ぶと、その悩みに効く言葉が訪れます。</p>' +
+      '<div class="consult-grid">' + grid + '</div>' +
+      '<button class="btn ghost" data-act="walk">おまかせで人生を歩む</button>' +
+      '<button class="btn ghost" data-act="title">タイトルへ</button>' +
+      '</div>');
   }
   function showEvent(ev) {
     var legendHtml = currentLegend ? legendCard(currentLegend) : "";
@@ -203,15 +224,29 @@
       '<p>ここから先は、世界の偉人があなたの相談相手に。<br>出典付きの本物の言葉、そして高みの賢者たちへ。</p>' +
       '<button class="btn gold sm" data-act="unlock" style="display:inline-block">偉人フェーズを解放（デモ）</button>' +
       '</div>';
+    var consultBack = (mode === "consult") ? '<button class="btn ghost" data-act="consult">← 悩みを選び直す</button>' : "";
     var html = '<div class="fade">' + statusbar() +
       '<span class="eyebrow">' + esc(CAT_LABEL[ev.category] || ev.category) + ' ・ ' + esc(MOOD_LABEL[ev.mood] || ev.mood) + '</span>' +
       '<h2 class="event-title">' + esc(ev.title) + '</h2>' +
       '<p class="event-body">' + esc(ev.body) + '</p>' +
-      '<p class="advice-help">心に響いた言葉を、ひとつ選ぼう。</p>' +
+      '<p class="advice-help reading-hint">ひと呼吸おいて、言葉に耳を澄ませて……</p>' +
       paywall + cards +
       '<button class="btn ghost" data-act="book">わが叡智の書</button>' +
+      consultBack +
+      '<button class="btn ghost" data-act="title">中断（タイトルへ）</button>' +
       '</div>';
     render(html);
+    gateReading(ev);
+  }
+  // ③ 読み飛ばし防止：言葉をすぐ選べないよう、ひと呼吸ぶん選択肢を伏せ、間をおいて開く
+  function gateReading(ev) {
+    var ms = Math.max(800, Math.min(2200, 700 + (ev.body ? ev.body.length : 0) * 40));
+    setTimeout(function () {
+      var btns = app.querySelectorAll(".card.tap[disabled]");
+      for (var i = 0; i < btns.length; i++) { btns[i].removeAttribute("disabled"); }
+      var hint = app.querySelector(".reading-hint");
+      if (hint) { hint.textContent = "心に響いた言葉を、ひとつ選ぼう。"; hint.classList.add("ready"); }
+    }, ms);
   }
   function adviceCard(ev, adv) {
     var sage = SAGES[adv.sageId] || { name: adv.sageId, color: "#999" };
@@ -239,7 +274,7 @@
     var pill = rarity ? '<span class="rar rar-' + rarity + '">' + RARITY_LABEL[rarity] + '</span>' : '<span class="rar rar-free">無料</span>';
     var note = adv.note ? '<p class="qnote">' + esc(adv.note) + '</p>' : "";
     var src = adv.source ? '<span class="source">— ' + esc(adv.source) + '</span>' : "";
-    return '<button class="card tap" data-rarity="' + (rarity || "free") + '" style="--c:' + color + '" data-choose="' + esc(adv.sageId) + '">' +
+    return '<button class="card tap" data-rarity="' + (rarity || "free") + '" style="--c:' + color + '" data-choose="' + esc(adv.sageId) + '" disabled>' +
       '<div class="card-head">' +
       '<span class="disc' + (scripture ? ' scripture' : '') + '">' + esc(discChar(sage)) + '</span>' +
       '<span class="sname">' + esc(sage.name) + era + '</span>' + pill +
@@ -250,7 +285,7 @@
   // 伝説カード（出会いの予兆だけ見せ、内容は祝福演出で明かす）
   function legendCard(legend) {
     var sage = SAGES[legend.sageId] || { color: "#caa45d" };
-    return '<button class="card tap legend" data-rarity="legendary" style="--c:' + (sage.color || "#caa45d") + '" data-legend="' + esc(legend.id) + '">' +
+    return '<button class="card tap legend" data-rarity="legendary" style="--c:' + (sage.color || "#caa45d") + '" data-legend="' + esc(legend.id) + '" disabled>' +
       '<div class="card-head"><span class="disc legenddisc">✦</span>' +
       '<span class="sname">特別な来訪</span><span class="rar rar-legendary">✦ 伝説 ✦</span></div>' +
       '<p class="quote legend-teaser">いにしえの偉人が、あなたに言葉を贈ろうとしている……<br>そっと、受け取ってみますか。</p>' +
@@ -367,6 +402,7 @@
       '</div>' +
       '<button class="btn gold" data-act="next">人生をつづける</button>' +
       '<button class="btn ghost" data-act="book">わが叡智の書を見る</button>' +
+      '<button class="btn ghost" data-act="title">中断（タイトルへ）</button>' +
       '</div>';
     render(html);
   }
@@ -520,12 +556,15 @@
     if (t.hasAttribute("data-fb")) { var box = t.closest(".fb"); setFeedback(+box.getAttribute("data-fbidx"), t.getAttribute("data-fb")); return; }
     if (t.hasAttribute("data-tab")) { bookTab = t.getAttribute("data-tab"); showBook(); return; }
     if (t.hasAttribute("data-filter")) { bookFilter = t.getAttribute("data-filter"); showBook(); return; }
+    if (t.hasAttribute("data-consultcat")) { mode = "consult"; consultCat = t.getAttribute("data-consultcat"); proceed(); return; }
     var act = t.getAttribute("data-act");
-    if (act === "start" || act === "next") proceed();
+    if (act === "walk") { mode = "auto"; consultCat = null; proceed(); }
+    else if (act === "consult") showConsult();
+    else if (act === "start" || act === "next") proceed();
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
     else if (act === "title") showTitle();
-    else if (act === "unlock") { state.premiumUnlocked = true; save(); showEvent(currentEvent); }
+    else if (act === "unlock") { state.premiumUnlocked = true; save(); if (currentEvent) showEvent(currentEvent); else proceed(); }
     else if (act === "reset") { if (confirm("これまでの歩みと叡智の書が消えます。よろしいですか？")) resetGame(); }
   });
 

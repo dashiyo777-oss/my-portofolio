@@ -65,6 +65,24 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .event-title{font-size:1.32rem; font-weight:700; margin:.1em 0 .4em; line-height:1.5}
 .event-body{color:var(--ink-soft); margin:0 0 18px}
 .advice-help{font-size:.8rem; color:var(--ink-soft); margin:0 2px 8px}
+.reading-hint{transition:color .4s ease}
+.reading-hint:not(.ready){color:var(--gold-deep)}
+
+/* ③ 読み飛ばし防止：選択肢は“ひと呼吸”伏せる */
+.card.tap[disabled]{opacity:.45; cursor:default; filter:saturate(.55)}
+.card.tap[disabled] .quote{color:#a99c84}
+.card.tap:not([disabled]){animation:cardwake .4s ease}
+@keyframes cardwake{from{opacity:.5; transform:translateY(3px)} to{opacity:1; transform:none}}
+
+/* ② 相談モードのカテゴリ選択 */
+.consult-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:8px 0 16px}
+.consult-cat{
+  border:1px solid var(--line); background:#fffdf8; border-radius:14px; padding:20px 10px;
+  font-family:inherit; font-size:1.08rem; color:var(--ink); box-shadow:0 2px 8px rgba(40,30,16,.06);
+  transition:transform .08s, box-shadow .15s;
+}
+.consult-cat:active{transform:translateY(1px)}
+.consult-cat:hover{box-shadow:0 5px 14px rgba(40,30,16,.12)}
 
 /* ---- 助言カード ---- */
 .card{
