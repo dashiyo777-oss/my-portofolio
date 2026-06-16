@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "note": "伝説の言葉（超レア・収集要素・全10枚）。出現率ごく低、叡智(wisdom)が高いほど遭遇率UP。全件 verified:true（誤帰属を伝説枠に入れない）。遭遇＝祝福演出→図鑑(0/10)に蒐集。",
+  "legends": [
+    {
+      "id": "L01", "sageId": "socrates", "rarity": "legendary", "minWisdom": 40, "verified": true,
+      "quote": "吟味されざる生に、人にとって生きる値打ちはない。",
+      "quoteOriginal": "The unexamined life is not worth living.",
+      "source": "プラトン『ソクラテスの弁明』38a",
+      "effects": { "wisdom": 14, "mind": 6 }
+    },
+    {
+      "id": "L02", "sageId": "king", "rarity": "legendary", "minWisdom": 40, "verified": true,
+      "quote": "闇は闇を追い払えない。光だけがそれをなしうる。憎しみは憎しみを追い払えない。愛だけがそれをなしうる。",
+      "quoteOriginal": "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.",
+      "source": "M.L.キング『汝の敵を愛せよ』(Strength to Love), 1963",
+      "effects": { "mind": 10, "bonds": 8, "wisdom": 8 }
+    },
+    {
+      "id": "L03", "sageId": "mandela", "rarity": "legendary", "minWisdom": 60, "verified": true,
+      "quote": "教育は、世界を変えるために使える最も強力な武器である。",
+      "quoteOriginal": "Education is the most powerful weapon which you can use to change the world.",
+      "source": "ヴィトワーテルスラント大学での演説, 2003",
+      "effects": { "wisdom": 14, "passion": 6 }
+    },
+    {
+      "id": "L04", "sageId": "shakespeare", "rarity": "legendary", "minWisdom": 60, "verified": true,
+      "quote": "何よりもまず、おのれ自身に忠実であれ。",
+      "quoteOriginal": "This above all: to thine own self be true.",
+      "source": "シェイクスピア『ハムレット』第1幕第3場",
+      "effects": { "wisdom": 10, "mind": 6, "passion": 4 }
+    },
+    {
+      "id": "L05", "sageId": "laozi", "rarity": "legendary", "minWisdom": 90, "verified": true,
+      "quote": "人を知る者は智なり。自らを知る者は明なり。",
+      "quoteOriginal": "知人者智、自知者明。",
+      "source": "老子『道徳経』第33章",
+      "effects": { "wisdom": 14, "mind": 4 }
+    },
+    {
+      "id": "L06", "sageId": "einstein", "rarity": "legendary", "minWisdom": 90, "verified": true,
+      "quote": "大切なのは、問い続けることをやめないことだ。好奇心には、それ自体に存在する理由がある。",
+      "quoteOriginal": "The important thing is not to stop questioning. Curiosity has its own reason for existence.",
+      "source": "LIFE誌『Old Man's Advice to Youth』, 1955年5月2日",
+      "effects": { "wisdom": 12, "passion": 6 }
+    },
+    {
+      "id": "L07", "sageId": "keller", "rarity": "legendary", "minWisdom": 120, "verified": true,
+      "quote": "一人でできることは、ほんのわずか。けれど、共にあれば、私たちは多くを成せる。",
+      "quoteOriginal": "Alone we can do so little; together we can do so much.",
+      "source": "J.P.ラッシュ『ヘレンと教師』(Helen and Teacher), 1980 に記録",
+      "effects": { "mind": 8, "bonds": 10 }
+    },
+    {
+      "id": "L08", "sageId": "scripture_dhammapada", "tradition": "buddhism", "rarity": "legendary", "minWisdom": 120, "verified": true,
+      "quote": "心は、すべてに先立つ。心が主であり、すべては心がつくり出す。",
+      "quoteOriginal": "Mind precedes all mental states. Mind is their chief; they are all mind-wrought.",
+      "source": "法句経(ダンマパダ) 第1偈",
+      "note": "聖典の言葉として引用。",
+      "effects": { "mind": 10, "wisdom": 12 }
+    },
+    {
+      "id": "L09", "sageId": "fukuzawa", "rarity": "legendary", "minWisdom": 160, "verified": true,
+      "quote": "天は人の上に人を造らず、人の下に人を造らず、と云えり。",
+      "quoteOriginal": "天は人の上に人を造らず人の下に人を造らずと云へり。",
+      "source": "福沢諭吉『学問のすゝめ』初編, 1872",
+      "effects": { "wisdom": 12, "bonds": 6 }
+    },
+    {
+      "id": "L10", "sageId": "confucius", "rarity": "legendary", "minWisdom": 160, "verified": true,
+      "quote": "之を知る者は之を好む者に如かず。之を好む者は之を楽しむ者に如かず。",
+      "quoteOriginal": "知之者不如好之者、好之者不如楽之者。",
+      "source": "論語 雍也第六",
+      "note": "知る人は好む人に及ばず、好む人は楽しむ人に及ばない。",
+      "effects": { "wisdom": 10, "passion": 8 }
+    }
+  ]
+}

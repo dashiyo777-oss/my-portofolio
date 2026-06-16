@@ -12,8 +12,11 @@
   var SAGES = {}; D.sages.sages.forEach(function (s) { SAGES[s.id] = s; });
   var RANKS = D.sages.ranks;             // {"1":{title,unlockWisdom}, ...}
   var EVENTS = D.events.events;
+  var LEGENDS = (D.legends && D.legends.legends) || [];
   var SAVE_KEY = "lifewisdom.save.v1";
+  var CODEX_KEY = "lifewisdom.codex.v1";   // 伝説の図鑑は人生(セーブ)を越えて引き継ぐ
   var REST_THRESHOLD = 25;
+  var RARITY_LABEL = { common: "並", rare: "希", sacred: "神聖", legendary: "伝説" };
 
   var STAT_LABEL = { mind: "心", wisdom: "叡智", bonds: "絆", wealth: "財", passion: "情熱" };
   var CAT_LABEL = { work: "仕事", relationship: "人間関係", love: "恋愛", study: "学業", money: "お金", health: "健康", self: "自己" };
@@ -21,6 +24,7 @@
 
   var app = document.getElementById("app");
   var state = load() || newGame();
+  var codex = loadCodex();   // 見つけた伝説ID[]
 
   // ---------- セーブ/ロード ----------
   function newGame() {
@@ -32,10 +36,40 @@
   }
   function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
   function load() { try { var r = localStorage.getItem(SAVE_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
-  function resetGame() { state = newGame(); save(); showTitle(); }
+  function resetGame() { state = newGame(); save(); showTitle(); }  // codex は意図的に残す（人生を越えて引き継ぐ叡智）
+
+  // ---------- 伝説の図鑑（codex） ----------
+  function loadCodex() { try { return JSON.parse(localStorage.getItem(CODEX_KEY)) || []; } catch (e) { return []; } }
+  function saveCodex() { try { localStorage.setItem(CODEX_KEY, JSON.stringify(codex)); } catch (e) {} }
+  function codexHas(id) { return codex.indexOf(id) >= 0; }
+  function codexAdd(id) { if (!codexHas(id)) { codex.push(id); saveCodex(); } }
+
+  function rarityOf(sageId, isLegend) {
+    if (isLegend) return "legendary";
+    if (isScripture(sageId)) return "sacred";
+    var s = SAGES[sageId];
+    if (s && s.rank >= 3) return "rare";
+    return "common";
+  }
+  // 伝説との遭遇判定：未収集かつ叡智条件を満たす伝説から、低確率で1枚（叡智が高いほど遭遇率UP）
+  function rollLegend() {
+    if (!state.premiumUnlocked) return null;
+    var eligible = LEGENDS.filter(function (l) { return !codexHas(l.id) && state.stats.wisdom >= (l.minWisdom || 0); });
+    if (eligible.length === 0) return null;
+    var p = 0.06 + Math.min(0.20, state.stats.wisdom / 1200);
+    if (Math.random() >= p) return null;
+    return eligible[Math.floor(Math.random() * eligible.length)];
+  }
 
   // ---------- ヘルパ ----------
   function clamp(n) { return Math.max(0, Math.min(100, Math.round(n))); }
+  // 叡智(wisdom)は経験値として上限なく積む。他のステータスは 0–100。
+  function applyStat(k, delta) {
+    var before = state.stats[k] || 0;
+    var nv = before + delta;
+    state.stats[k] = (k === "wisdom") ? Math.max(0, Math.round(nv)) : clamp(nv);
+    return state.stats[k] - before;
+  }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function isScripture(id) { return id.indexOf("scripture") === 0; }
 
@@ -101,13 +135,14 @@
       '<button class="btn ghost" data-act="book">わが叡智の書を見る' + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
       (has ? '<button class="btn ghost" data-act="reset">はじめからやり直す</button>' : "") +
       '</div>' +
+      '<p class="codex-tease">✦ 伝説の言葉 ' + codex.length + ' / ' + LEGENDS.length + ' 蒐集 ✦</p>' +
       '<p class="tagline">迷ったとき、世界の偉人があなたの相談相手になる。<br>正解を選ぶのではなく、あなたに響いた言葉を選ぼう。</p>' +
       '<p class="notice">※ これは制作中のプロトタイプ（MVP）です。名言はすべて出典付きで裏取りしています。</p>';
     render(html);
   }
 
   // ---------- 画面: イベント ----------
-  var currentEvent = null;
+  var currentEvent = null, currentLegend = null;
   function pickEvent() {
     var pool = EVENTS.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
     if (pool.length === 0) { state.seen = []; pool = EVENTS.slice(); }
@@ -116,10 +151,12 @@
   function proceed() {
     if (state.stats.mind < REST_THRESHOLD) { showRest(); return; }
     currentEvent = pickEvent();
+    currentLegend = rollLegend();
     showEvent(currentEvent);
   }
   function showEvent(ev) {
-    var cards = ev.advices.map(function (adv) { return adviceCard(ev, adv); }).join("");
+    var legendHtml = currentLegend ? legendCard(currentLegend) : "";
+    var cards = legendHtml + ev.advices.map(function (adv) { return adviceCard(ev, adv); }).join("");
     var paywall = state.premiumUnlocked ? "" :
       '<div class="paywall">' +
       '<h3>🕯 偉人フェーズ</h3>' +
@@ -158,16 +195,25 @@
     }
     // 表示可能
     var era = sage.era ? '<span class="era">' + esc(sage.era) + '</span>' : "";
-    var badge = adv.sageId === "original" ? '<span class="badge">無料</span>'
-      : '<span class="badge' + (scripture ? ' sacred' : '') + '">' + esc(RANKS[sage.rank] ? RANKS[sage.rank].title : "") + '</span>';
+    var rarity = adv.sageId === "original" ? null : rarityOf(adv.sageId, false);
+    var pill = rarity ? '<span class="rar rar-' + rarity + '">' + RARITY_LABEL[rarity] + '</span>' : '<span class="rar rar-free">無料</span>';
     var note = adv.note ? '<p class="qnote">' + esc(adv.note) + '</p>' : "";
     var src = adv.source ? '<span class="source">— ' + esc(adv.source) + '</span>' : "";
-    return '<button class="card tap" style="--c:' + color + '" data-choose="' + esc(adv.sageId) + '">' +
+    return '<button class="card tap" data-rarity="' + (rarity || "free") + '" style="--c:' + color + '" data-choose="' + esc(adv.sageId) + '">' +
       '<div class="card-head">' +
       '<span class="disc' + (scripture ? ' scripture' : '') + '">' + esc(discChar(sage)) + '</span>' +
-      '<span class="sname">' + esc(sage.name) + era + '</span>' + badge +
+      '<span class="sname">' + esc(sage.name) + era + '</span>' + pill +
       '</div>' +
       '<p class="quote">' + esc(adv.quote) + '</p>' + note + src +
+      '</button>';
+  }
+  // 伝説カード（出会いの予兆だけ見せ、内容は祝福演出で明かす）
+  function legendCard(legend) {
+    var sage = SAGES[legend.sageId] || { color: "#caa45d" };
+    return '<button class="card tap legend" data-rarity="legendary" style="--c:' + (sage.color || "#caa45d") + '" data-legend="' + esc(legend.id) + '">' +
+      '<div class="card-head"><span class="disc legenddisc">✦</span>' +
+      '<span class="sname">特別な来訪</span><span class="rar rar-legendary">✦ 伝説 ✦</span></div>' +
+      '<p class="quote legend-teaser">いにしえの偉人が、あなたに言葉を贈ろうとしている……<br>そっと、受け取ってみますか。</p>' +
       '</button>';
   }
 
@@ -179,8 +225,7 @@
     var beforeMind = state.stats.mind, beforeRank = unlockedRank();
     var deltas = [];
     Object.keys(adv.effects || {}).forEach(function (k) {
-      var b = state.stats[k] || 0; state.stats[k] = clamp(b + adv.effects[k]);
-      var diff = state.stats[k] - b; if (diff !== 0) deltas.push({ k: k, d: diff });
+      var diff = applyStat(k, adv.effects[k]); if (diff !== 0) deltas.push({ k: k, d: diff });
     });
     var rec = {
       ts: new Date().toISOString(), turn: state.turn + 1,
@@ -192,9 +237,66 @@
     };
     state.turn++; state.journal.push(rec);
     if (state.seen.indexOf(ev.id) < 0) state.seen.push(ev.id);
+    currentLegend = null;  // 通常の言葉を選んだら、伝説はそっと去る
     recomputeFavorite(); save();
     var rankedUp = unlockedRank() > beforeRank ? unlockedRank() : 0;
     showResult(state.journal.length - 1, deltas, rankedUp);
+  }
+
+  // 伝説を受け取る：祝福演出 → 図鑑に蒐集 → 結果
+  function chooseLegend(id) {
+    var legend = null; LEGENDS.forEach(function (l) { if (l.id === id) legend = l; });
+    if (!legend || codexHas(id)) return;
+    var sage = SAGES[legend.sageId] || {};
+    var beforeRank = unlockedRank();
+    var deltas = [];
+    Object.keys(legend.effects || {}).forEach(function (k) {
+      var diff = applyStat(k, legend.effects[k]); if (diff !== 0) deltas.push({ k: k, d: diff });
+    });
+    var ev = currentEvent || {};
+    var rec = {
+      ts: new Date().toISOString(), turn: state.turn + 1,
+      eventId: ev.id || "", category: ev.category || "self", mood: ev.mood || "", title: ev.title || "伝説との邂逅",
+      chosenSageId: legend.sageId, sageName: sage.name || legend.sageId,
+      quote: legend.quote, source: legend.source || "", note: legend.note || "",
+      tradition: legend.tradition || null, isScripture: isScripture(legend.sageId),
+      isLegend: true, legendId: legend.id, rarity: "legendary",
+      mindBefore: state.stats.mind, mindAfter: state.stats.mind, playerNote: "", feedback: null
+    };
+    rec.mindBefore = rec.mindAfter; // 表示用（伝説は心も整う）
+    state.turn++; state.journal.push(rec); codexAdd(legend.id);
+    if (ev.id && state.seen.indexOf(ev.id) < 0) state.seen.push(ev.id);
+    currentLegend = null; recomputeFavorite(); save();
+    var rankedUp = unlockedRank() > beforeRank ? unlockedRank() : 0;
+    var idx = state.journal.length - 1;
+    celebrate(legend, function () { showResult(idx, deltas, rankedUp); });
+  }
+
+  // 祝福演出（全画面・光と粒子）
+  function celebrate(legend, done) {
+    var sage = SAGES[legend.sageId] || {};
+    var found = codex.length, total = LEGENDS.length;
+    var ov = document.createElement("div");
+    ov.className = "celebrate";
+    var sparks = "";
+    for (var i = 0; i < 14; i++) { sparks += '<i style="--i:' + i + '"></i>'; }
+    ov.innerHTML =
+      '<div class="cel-rays"></div>' +
+      '<div class="cel-particles">' + sparks + '</div>' +
+      '<div class="cel-inner">' +
+      '<div class="cel-label">✦ 伝説の言葉に出会った ✦</div>' +
+      '<div class="cel-quote">' + esc(legend.quote) + '</div>' +
+      '<div class="cel-from">— ' + esc(sage.name || legend.sageId) + (isScripture(legend.sageId) ? "（聖典）" : "") + '</div>' +
+      (legend.source ? '<div class="cel-source">' + esc(legend.source) + '</div>' : "") +
+      '<div class="cel-count">伝説 ' + found + ' / ' + total + ' 蒐集</div>' +
+      '<button class="btn gold cel-btn">この叡智を受け取る</button>' +
+      '</div>';
+    document.body.appendChild(ov);
+    requestAnimationFrame(function () { ov.classList.add("show"); });
+    ov.querySelector(".cel-btn").addEventListener("click", function () {
+      ov.classList.add("out");
+      setTimeout(function () { ov.remove(); done(); }, 280);
+    });
   }
 
   function showResult(idx, deltas, rankedUp) {
@@ -203,7 +305,9 @@
       var up = x.d > 0; return '<span class="delta ' + (up ? "up" : "down") + '">' + esc(STAT_LABEL[x.k] || x.k) + " " + (up ? "+" : "") + x.d + '</span>';
     }).join("");
     var rankBanner = rankedUp ? '<p class="saved-toast">✨ 新たな境地「' + esc(RANKS[rankedUp].title) + '」に到達した</p>' : "";
-    var html = '<div class="fade">' +
+    var ribbon = rec.isLegend ? '<p class="rarity-ribbon legendary">✦ 伝説の言葉 ✦</p>'
+      : (rec.isScripture ? '<p class="rarity-ribbon sacred">神聖なる導き</p>' : "");
+    var html = '<div class="fade">' + ribbon +
       '<p class="result-quote">' + esc(rec.quote) + '</p>' +
       '<p class="result-from">— ' + esc(rec.sageName) + (rec.isScripture ? "（聖典の言葉）" : "") + '</p>' +
       (rec.source ? '<p class="result-source">' + esc(rec.source) + '</p>' : "") +
@@ -251,7 +355,7 @@
   var bookTab = "timeline", bookFilter = "all";
   function showBook() {
     var j = state.journal;
-    if (j.length === 0) {
+    if (j.length === 0 && codex.length === 0) {
       render('<div class="fade">' + bookHeader() +
         '<div class="empty">まだ何も記されていません。<br>人生を歩み、言葉を受け取りましょう。</div>' +
         '<button class="btn gold" data-act="start">人生をはじめる</button>' +
@@ -263,16 +367,15 @@
     var summary = '<div class="summary">あなたは <b>' + j.length + '</b> の岐路を歩み、<b>' + resonated + '</b> の言葉に「響いた」と頷いた。' +
       (fav ? '<br>最も多く言葉を選んだのは <b>' + esc(fav.name) + '</b>。あなたの座右の賢者。' : "") + '</div>';
 
-    var list;
-    if (bookTab === "timeline") {
-      list = j.slice().reverse().map(entryHTML).join("");
+    var list, filters = "";
+    if (bookTab === "codex") {
+      list = codexHTML();
+    } else if (bookTab === "timeline") {
+      list = j.slice().reverse().map(entryHTML).join("") || '<div class="empty">まだ歩みはありません。</div>';
     } else {
       var items = j.filter(function (x) { return bookFilter === "all" || x.category === bookFilter; });
       // コレクション=言葉のお守り（重複した言葉はまとめず素直に列挙、新しい順）
       list = items.slice().reverse().map(entryHTML).join("") || '<div class="empty">この分類の記録はまだありません。</div>';
-    }
-    var filters = "";
-    if (bookTab === "collection") {
       var cats = ["all"].concat(Object.keys(CAT_LABEL));
       filters = '<div class="filters">' + cats.map(function (c) {
         return '<button class="chip' + (bookFilter === c ? " on" : "") + '" data-filter="' + c + '">' + (c === "all" ? "すべて" : esc(CAT_LABEL[c])) + '</button>';
@@ -281,7 +384,8 @@
     render('<div class="fade">' + bookHeader() +
       '<div class="tabs">' +
       '<button class="' + (bookTab === "timeline" ? "on" : "") + '" data-tab="timeline">歩み</button>' +
-      '<button class="' + (bookTab === "collection" ? "on" : "") + '" data-tab="collection">叡智のお守り</button>' +
+      '<button class="' + (bookTab === "collection" ? "on" : "") + '" data-tab="collection">お守り</button>' +
+      '<button class="' + (bookTab === "codex" ? "on" : "") + '" data-tab="codex">伝説 ' + codex.length + '/' + LEGENDS.length + '</button>' +
       '</div>' + summary + filters + list +
       '<div class="footer-actions">' +
       '<button class="btn gold" data-act="start">人生をつづける</button>' +
@@ -290,6 +394,23 @@
   }
   function bookHeader() {
     return '<div class="book-head"><span class="flame" style="font-size:24px">📖</span><h2>わが叡智の書</h2></div>';
+  }
+  function codexHTML() {
+    var head = '<div class="codex-head">✦ 伝説の言葉 <b>' + codex.length + '</b> / ' + LEGENDS.length + ' 蒐集 ✦<br>' +
+      '<span class="small muted">めったに現れぬ言葉。叡智を深めるほど、出会いは近づく。</span></div>';
+    var grid = LEGENDS.map(function (l) {
+      var sage = SAGES[l.sageId] || {};
+      if (codexHas(l.id)) {
+        return '<div class="legend-slot found" style="--c:' + (sage.color || "#caa45d") + '">' +
+          '<div class="ls-head">✦ ' + esc(sage.name || l.sageId) + (isScripture(l.sageId) ? "（聖典）" : "") + '</div>' +
+          '<div class="ls-quote">' + esc(l.quote) + '</div>' +
+          '<div class="ls-src">' + esc(l.source || "") + '</div></div>';
+      }
+      return '<div class="legend-slot locked">' +
+        '<div class="ls-head">？ ？ ？</div>' +
+        '<div class="ls-quote">未だ見ぬ言葉 — 叡智 ' + (l.minWisdom || 0) + ' 以上で出会える</div></div>';
+    }).join("");
+    return head + '<div class="codex-grid">' + grid + '</div>';
   }
   function entryHTML(rec) {
     var sage = SAGES[rec.chosenSageId] || { color: "#bbb" };
@@ -309,8 +430,9 @@
   function render(html) { app.innerHTML = html; window.scrollTo(0, 0); }
 
   app.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-act],[data-choose],[data-fb],[data-tab],[data-filter]");
+    var t = e.target.closest("[data-act],[data-choose],[data-legend],[data-fb],[data-tab],[data-filter]");
     if (!t) return;
+    if (t.hasAttribute("data-legend")) { chooseLegend(t.getAttribute("data-legend")); return; }
     if (t.hasAttribute("data-choose")) { choose(currentEvent, t.getAttribute("data-choose")); return; }
     if (t.hasAttribute("data-fb")) { var box = t.closest(".fb"); setFeedback(+box.getAttribute("data-fbidx"), t.getAttribute("data-fb")); return; }
     if (t.hasAttribute("data-tab")) { bookTab = t.getAttribute("data-tab"); showBook(); return; }
