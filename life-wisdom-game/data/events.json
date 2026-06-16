@@ -1,7 +1,15 @@
 {
   "version": 1,
   "note": "人生イベント×偉人の助言データ。各 advice は出典(source)付き。verified=一次出典で裏取り済み。verified:false は『広く帰属するが一次出典の確認推奨』(README参照)。聖典は §4.4 準拠。",
-  "categories": ["work", "relationship", "love", "study", "money", "health", "self"],
+  "categories": [
+    "work",
+    "relationship",
+    "love",
+    "study",
+    "money",
+    "health",
+    "self"
+  ],
   "events": [
     {
       "id": "work_failure_01",
@@ -14,7 +22,10 @@
           "sageId": "original",
           "quote": "今日のあなたは、まだ物語の途中にいる。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Today, you are still only in the middle of your story."
         },
         {
           "sageId": "confucius",
@@ -23,7 +34,11 @@
           "source": "論語 衛霊公第十五",
           "note": "失敗そのものではなく、正さないことこそが過ちだ、の意。",
           "verified": true,
-          "effects": { "mind": 5, "wisdom": 8 }
+          "effects": {
+            "mind": 5,
+            "wisdom": 8
+          },
+          "quoteEn": "To make a mistake and not correct it — that is the real mistake."
         },
         {
           "sageId": "jobs",
@@ -32,7 +47,10 @@
           "source": "Stanford University Commencement Address, 2005",
           "note": "",
           "verified": true,
-          "effects": { "mind": 8, "passion": 6 }
+          "effects": {
+            "mind": 8,
+            "passion": 6
+          }
         },
         {
           "sageId": "mandela",
@@ -41,9 +59,14 @@
           "source": "Long Walk to Freedom (自伝), 1994",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "wisdom": 6 }
+          "effects": {
+            "mind": 7,
+            "wisdom": 6
+          }
         }
-      ]
+      ],
+      "titleEn": "A big failure at work. I want to quit…",
+      "bodyEn": "I made a serious mistake on a project I was trusted with. The stares around me sting, and I want to disappear."
     },
     {
       "id": "work_overwhelm_01",
@@ -56,7 +79,10 @@
           "sageId": "original",
           "quote": "一度に運ぶ必要はない。次の一歩だけを見よう。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "You don't have to carry it all at once. Look only at the next step."
         },
         {
           "sageId": "lincoln",
@@ -65,7 +91,10 @@
           "source": "Letter to Isham Reavis, 1855-11-05",
           "note": "",
           "verified": true,
-          "effects": { "mind": 5, "passion": 7 }
+          "effects": {
+            "mind": 5,
+            "passion": 7
+          }
         },
         {
           "sageId": "curie",
@@ -74,7 +103,10 @@
           "source": "『ピエール・キュリー』(Pierre Curie), 1923",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "wisdom": 6 }
+          "effects": {
+            "mind": 6,
+            "wisdom": 6
+          }
         },
         {
           "sageId": "scripture_quran",
@@ -85,9 +117,15 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 14, "wisdom": 8 }
+          "effects": {
+            "mind": 14,
+            "wisdom": 8
+          },
+          "quoteEn": "Indeed, with hardship comes ease. Indeed, with hardship comes ease."
         }
-      ]
+      ],
+      "titleEn": "There's too much to do — I'm about to break.",
+      "bodyEn": "Work keeps piling up and I don't know where to start. My mind and body are near their limit."
     },
     {
       "id": "relationship_conflict_01",
@@ -100,7 +138,10 @@
           "sageId": "original",
           "quote": "怒りを手放すのは、相手のためではなく、あなた自身のため。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Letting go of anger is not for the other person — it's for you."
         },
         {
           "sageId": "gandhi",
@@ -109,7 +150,10 @@
           "source": "Young India, 1931年4月2日（マハトマ・ガンジー全集）",
           "note": "バガト・シン処刑をめぐる会見での発言。",
           "verified": true,
-          "effects": { "mind": 6, "wisdom": 8 }
+          "effects": {
+            "mind": 6,
+            "wisdom": 8
+          }
         },
         {
           "sageId": "confucius",
@@ -118,7 +162,11 @@
           "source": "論語 顔淵第十二",
           "note": "自分がされたくないことを、人にもしない。",
           "verified": true,
-          "effects": { "mind": 5, "bonds": 6 }
+          "effects": {
+            "mind": 5,
+            "bonds": 6
+          },
+          "quoteEn": "Do not impose on others what you yourself do not desire."
         },
         {
           "sageId": "scripture_dhammapada",
@@ -129,9 +177,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 13, "wisdom": 10 }
+          "effects": {
+            "mind": 13,
+            "wisdom": 10
+          }
         }
-      ]
+      ],
+      "titleEn": "I just can't forgive that person.",
+      "bodyEn": "Someone I trusted betrayed me. The anger and resentment won't leave my heart."
     },
     {
       "id": "love_heartbreak_01",
@@ -144,7 +197,10 @@
           "sageId": "original",
           "quote": "痛むのは、あなたが本気で愛せた証。その心は無駄にならない。",
           "note": "",
-          "effects": { "mind": 5 }
+          "effects": {
+            "mind": 5
+          },
+          "quoteEn": "It hurts because you truly loved. That heart will never be wasted."
         },
         {
           "sageId": "teresa",
@@ -153,7 +209,10 @@
           "source": "マザー・テレサ(広く文献に記録)",
           "note": "",
           "verified": true,
-          "effects": { "mind": 9, "bonds": 5 }
+          "effects": {
+            "mind": 9,
+            "bonds": 5
+          }
         },
         {
           "sageId": "einstein",
@@ -162,7 +221,10 @@
           "source": "息子エドゥアルト宛の手紙, 1930",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "passion": 6 }
+          "effects": {
+            "mind": 7,
+            "passion": 6
+          }
         },
         {
           "sageId": "scripture_bible",
@@ -173,9 +235,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 13, "bonds": 8 }
+          "effects": {
+            "mind": 13,
+            "bonds": 8
+          }
         }
-      ]
+      ],
+      "titleEn": "My heart is broken. It feels like it could tear apart.",
+      "bodyEn": "I've parted from someone dear. I can't focus on anything, and the tears won't stop."
     },
     {
       "id": "study_struggle_01",
@@ -188,7 +255,10 @@
           "sageId": "original",
           "quote": "伸びない時期は、根を張っている時期。芽はあとから出る。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "When you seem stuck, you are growing roots. The shoots come later."
         },
         {
           "sageId": "confucius",
@@ -197,7 +267,11 @@
           "source": "論語 為政第二",
           "note": "学ぶことと考えること、両輪が要る。",
           "verified": true,
-          "effects": { "mind": 4, "wisdom": 10 }
+          "effects": {
+            "mind": 4,
+            "wisdom": 10
+          },
+          "quoteEn": "Learning without thought is labor lost; thought without learning is perilous."
         },
         {
           "sageId": "einstein",
@@ -206,9 +280,15 @@
           "source": "Saturday Evening Post インタビュー, 1929",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "wisdom": 8, "passion": 4 }
+          "effects": {
+            "mind": 6,
+            "wisdom": 8,
+            "passion": 4
+          }
         }
-      ]
+      ],
+      "titleEn": "No matter how I study, I'm not improving.",
+      "bodyEn": "I'm trying hard but the results won't come. Maybe I just have no talent."
     },
     {
       "id": "money_worry_01",
@@ -221,7 +301,10 @@
           "sageId": "original",
           "quote": "不安は、あなたが真剣に生きている証拠。まず今日の一歩から。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Anxiety is proof you're taking life seriously. Start with just today's step."
         },
         {
           "sageId": "confucius",
@@ -230,7 +313,11 @@
           "source": "論語 述而第七",
           "note": "正しくない富や地位は、自分には浮雲のようなもの、の意。",
           "verified": true,
-          "effects": { "mind": 5, "wisdom": 8 }
+          "effects": {
+            "mind": 5,
+            "wisdom": 8
+          },
+          "quoteEn": "Wealth and honor gained unjustly are to me as drifting clouds."
         },
         {
           "sageId": "einstein",
@@ -239,9 +326,14 @@
           "source": "LIFE誌(William Miller), 1955",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "wisdom": 7 }
+          "effects": {
+            "mind": 6,
+            "wisdom": 7
+          }
         }
-      ]
+      ],
+      "titleEn": "I have no money. The future terrifies me.",
+      "bodyEn": "My income and savings are both shaky. Thinking about money keeps me up at night."
     },
     {
       "id": "self_doubt_01",
@@ -254,7 +346,10 @@
           "sageId": "original",
           "quote": "比べる相手は他人ではなく、昨日のあなた。",
           "note": "",
-          "effects": { "mind": 5 }
+          "effects": {
+            "mind": 5
+          },
+          "quoteEn": "The one to compare with is not others, but yesterday's you."
         },
         {
           "sageId": "curie",
@@ -263,7 +358,11 @@
           "source": "エーヴ・キュリー『キュリー夫人伝』(Madame Curie), 1937（V.Sheean 訳, p.222）",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "passion": 7, "wisdom": 4 }
+          "effects": {
+            "mind": 7,
+            "passion": 7,
+            "wisdom": 4
+          }
         },
         {
           "sageId": "ali",
@@ -272,9 +371,14 @@
           "source": "Muhammad Ali Center 公式『In His Own Words』",
           "note": "本人の言葉として公式機関が掲載。",
           "verified": true,
-          "effects": { "mind": 7, "passion": 9 }
+          "effects": {
+            "mind": 7,
+            "passion": 9
+          }
         }
-      ]
+      ],
+      "titleEn": "I can't find any confidence in myself.",
+      "bodyEn": "I feel I fail at everything. I compare myself to others and sink."
     },
     {
       "id": "change_world_01",
@@ -287,7 +391,11 @@
           "sageId": "original",
           "quote": "完璧な準備が整う日は来ない。半歩でいい、動いてみよう。",
           "note": "",
-          "effects": { "mind": 4, "passion": 4 }
+          "effects": {
+            "mind": 4,
+            "passion": 4
+          },
+          "quoteEn": "The day of perfect readiness never comes. Half a step is enough — just move."
         },
         {
           "sageId": "ryoma",
@@ -296,7 +404,11 @@
           "source": "姉・乙女宛 書簡, 文久3年(1863)",
           "note": "古い世を洗い清め、新しくする、という志。",
           "verified": true,
-          "effects": { "mind": 5, "passion": 9 }
+          "effects": {
+            "mind": 5,
+            "passion": 9
+          },
+          "quoteEn": "I shall wash Japan clean and make it anew, once more."
         },
         {
           "sageId": "jobs",
@@ -305,9 +417,15 @@
           "source": "Stanford University Commencement Address, 2005",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "passion": 8, "wisdom": 4 }
+          "effects": {
+            "mind": 6,
+            "passion": 8,
+            "wisdom": 4
+          }
         }
-      ]
+      ],
+      "titleEn": "I want to change things, but can't take the first step.",
+      "bodyEn": "I know I can't stay like this. Yet I can't summon the courage."
     },
     {
       "id": "lonely_01",
@@ -320,7 +438,10 @@
           "sageId": "original",
           "quote": "あなたが思うより、世界はあなたに優しくできている。",
           "note": "",
-          "effects": { "mind": 5 }
+          "effects": {
+            "mind": 5
+          },
+          "quoteEn": "The world is kinder to you than you think."
         },
         {
           "sageId": "confucius",
@@ -329,7 +450,11 @@
           "source": "論語 里仁第四",
           "note": "誠実に生きる人は孤立しない。必ず理解者が現れる。",
           "verified": true,
-          "effects": { "mind": 7, "bonds": 6 }
+          "effects": {
+            "mind": 7,
+            "bonds": 6
+          },
+          "quoteEn": "Virtue is never solitary; it is sure to have neighbors."
         },
         {
           "sageId": "teresa",
@@ -338,7 +463,10 @@
           "source": "マザー・テレサ(広く文献に記録)",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "bonds": 5 }
+          "effects": {
+            "mind": 6,
+            "bonds": 5
+          }
         },
         {
           "sageId": "scripture_bible",
@@ -349,9 +477,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 15, "wisdom": 8 }
+          "effects": {
+            "mind": 15,
+            "wisdom": 8
+          }
         }
-      ]
+      ],
+      "titleEn": "I feel all alone and uneasy.",
+      "bodyEn": "It feels like there's no one to rely on. Loneliness weighs heavy on my chest."
     },
     {
       "id": "health_illness_01",
@@ -364,7 +497,10 @@
           "sageId": "original",
           "quote": "休むことは、負けることではない。回復もまた、前進。",
           "note": "",
-          "effects": { "mind": 5 }
+          "effects": {
+            "mind": 5
+          },
+          "quoteEn": "To rest is not to lose. Recovering, too, is moving forward."
         },
         {
           "sageId": "keller",
@@ -373,7 +509,10 @@
           "source": "ヘレン・ケラー『楽天主義』(Optimism), 1903",
           "note": "",
           "verified": true,
-          "effects": { "mind": 9, "wisdom": 6 }
+          "effects": {
+            "mind": 9,
+            "wisdom": 6
+          }
         },
         {
           "sageId": "scripture_quran",
@@ -384,9 +523,15 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 14, "wisdom": 8 }
+          "effects": {
+            "mind": 14,
+            "wisdom": 8
+          },
+          "quoteEn": "God does not burden any soul beyond what it can bear."
         }
-      ]
+      ],
+      "titleEn": "My health has broken down. I'm anxious about what's ahead.",
+      "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me."
     },
     {
       "id": "success_highmood_01",
@@ -399,7 +544,10 @@
           "sageId": "original",
           "quote": "順風の時こそ、足元を見つめる人が遠くまで行ける。",
           "note": "",
-          "effects": { "wisdom": 5 }
+          "effects": {
+            "wisdom": 5
+          },
+          "quoteEn": "In fair winds, it is those who watch their footing who travel farthest."
         },
         {
           "sageId": "confucius",
@@ -408,7 +556,11 @@
           "source": "論語 子路第十三",
           "note": "立派な人はゆったりして驕らない。小人は驕って落ち着かない。",
           "verified": true,
-          "effects": { "wisdom": 10, "mind": 3 }
+          "effects": {
+            "wisdom": 10,
+            "mind": 3
+          },
+          "quoteEn": "The noble person is calm but not proud; the petty person is proud but not calm."
         },
         {
           "sageId": "lincoln",
@@ -417,7 +569,10 @@
           "source": "エイブラハム・リンカーン(演説への応答, 1862頃)",
           "note": "",
           "verified": true,
-          "effects": { "wisdom": 7, "passion": 5 }
+          "effects": {
+            "wisdom": 7,
+            "passion": 5
+          }
         },
         {
           "sageId": "scripture_bible",
@@ -428,9 +583,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "wisdom": 12, "mind": 4 }
+          "effects": {
+            "wisdom": 12,
+            "mind": 4
+          }
         }
-      ]
+      ],
+      "titleEn": "Things are going so well I'm getting carried away.",
+      "bodyEn": "Everything I do is going great. Yet my footing feels strangely unsteady."
     },
     {
       "id": "relationship_distrust_01",
@@ -443,7 +603,10 @@
           "sageId": "original",
           "quote": "用心は知恵。でも、心まで閉じなくていい。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Caution is wisdom. But you needn't close your heart as well."
         },
         {
           "sageId": "annefrank",
@@ -452,7 +615,10 @@
           "source": "『アンネの日記』1944年7月15日",
           "note": "迫害の最中に書かれた一節。",
           "verified": true,
-          "effects": { "mind": 8, "bonds": 6 }
+          "effects": {
+            "mind": 8,
+            "bonds": 6
+          }
         },
         {
           "sageId": "scripture_bible",
@@ -463,9 +629,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 12, "bonds": 8 }
+          "effects": {
+            "mind": 12,
+            "bonds": 8
+          }
         }
-      ]
+      ],
+      "titleEn": "I can't trust people anymore.",
+      "bodyEn": "After being betrayed and hurt again and again, I've come to fear people themselves."
     },
     {
       "id": "unfair_situation_01",
@@ -478,7 +649,10 @@
           "sageId": "original",
           "quote": "変えられないものを嘆くより、変えられる一点に手を伸ばそう。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Rather than mourn what can't be changed, reach for the one thing that can."
         },
         {
           "sageId": "frankl",
@@ -487,7 +661,10 @@
           "source": "ヴィクトール・フランクル『夜と霧』(Man's Search for Meaning), 1946",
           "note": "",
           "verified": true,
-          "effects": { "mind": 8, "wisdom": 10 }
+          "effects": {
+            "mind": 8,
+            "wisdom": 10
+          }
         },
         {
           "sageId": "confucius",
@@ -496,9 +673,15 @@
           "source": "論語 子罕第九",
           "note": "知恵ある者は迷わず、徳ある者は思い悩まず、勇ある者は怖れない。",
           "verified": true,
-          "effects": { "mind": 6, "wisdom": 8 }
+          "effects": {
+            "mind": 6,
+            "wisdom": 8
+          },
+          "quoteEn": "The wise are free from doubts, the benevolent from anxiety, the brave from fear."
         }
-      ]
+      ],
+      "titleEn": "Something unfair happened, and I'm powerless.",
+      "bodyEn": "It's not my fault, yet the situation won't change. Feelings with nowhere to go swirl inside me."
     },
     {
       "id": "big_goal_overwhelm_01",
@@ -511,7 +694,11 @@
           "sageId": "original",
           "quote": "山の頂上ではなく、次の一歩だけを見よう。",
           "note": "",
-          "effects": { "mind": 4, "passion": 4 }
+          "effects": {
+            "mind": 4,
+            "passion": 4
+          },
+          "quoteEn": "Look not at the mountain's peak, but only at your next step."
         },
         {
           "sageId": "vangogh",
@@ -520,7 +707,11 @@
           "source": "テオ宛 書簡, 1882年10月22日(letter 274)",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "passion": 7, "wisdom": 4 }
+          "effects": {
+            "mind": 6,
+            "passion": 7,
+            "wisdom": 4
+          }
         },
         {
           "sageId": "frankl",
@@ -529,9 +720,15 @@
           "source": "ヴィクトール・フランクル『夜と霧』(Man's Search for Meaning), 1946",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "passion": 6, "wisdom": 6 }
+          "effects": {
+            "mind": 7,
+            "passion": 6,
+            "wisdom": 6
+          }
         }
-      ]
+      ],
+      "titleEn": "The goal is so big my legs freeze.",
+      "bodyEn": "What I want to do is grand. But it's so far away I don't know where to begin."
     },
     {
       "id": "study_effort_01",
@@ -544,7 +741,10 @@
           "sageId": "original",
           "quote": "才能はスタート地点。努力は、そこから歩いた距離。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Talent is the starting line. Effort is the distance you walk from it."
         },
         {
           "sageId": "edison",
@@ -553,7 +753,11 @@
           "source": "本人が1927年の書簡で自らの言葉と認める（Harper's Monthly, 1932 掲載）",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "passion": 8, "wisdom": 4 }
+          "effects": {
+            "mind": 6,
+            "passion": 8,
+            "wisdom": 4
+          }
         },
         {
           "sageId": "laozi",
@@ -562,9 +766,15 @@
           "source": "老子『道徳経』第64章",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "wisdom": 8 }
+          "effects": {
+            "mind": 6,
+            "wisdom": 8
+          },
+          "quoteEn": "A journey of a thousand miles begins with a single step."
         }
-      ]
+      ],
+      "titleEn": "However I try, I can't catch up to the talented.",
+      "bodyEn": "However much I do, someone does it better. I start to wonder if effort even matters."
     },
     {
       "id": "work_newjob_01",
@@ -577,7 +787,10 @@
           "sageId": "original",
           "quote": "馴染めないのは、あなたが新しい世界に足を踏み入れた証。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Not fitting in is proof you've stepped into a new world."
         },
         {
           "sageId": "brucelee",
@@ -586,7 +799,10 @@
           "source": "The Pierre Berton Show, 1971年12月9日",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "wisdom": 7 }
+          "effects": {
+            "mind": 7,
+            "wisdom": 7
+          }
         },
         {
           "sageId": "confucius",
@@ -595,9 +811,15 @@
           "source": "論語 為政第二",
           "note": "知っていることと知らないことを正直に分けられる、それが知るということ。",
           "verified": true,
-          "effects": { "mind": 5, "wisdom": 8 }
+          "effects": {
+            "mind": 5,
+            "wisdom": 8
+          },
+          "quoteEn": "To know what you know, and to know what you do not know — that is true knowing."
         }
-      ]
+      ],
+      "titleEn": "I just can't fit into the new environment.",
+      "bodyEn": "I've just changed jobs (or schools). The ways and the people differ, and I feel out of place."
     },
     {
       "id": "money_contentment_01",
@@ -610,7 +832,10 @@
           "sageId": "original",
           "quote": "他人の財布の中身ではなく、自分の心の豊かさを数えてみよう。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Count not what's in others' wallets, but the richness of your own heart."
         },
         {
           "sageId": "confucius",
@@ -619,7 +844,11 @@
           "source": "論語 述而第七",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "wisdom": 8 }
+          "effects": {
+            "mind": 7,
+            "wisdom": 8
+          },
+          "quoteEn": "With coarse rice to eat, water to drink, and a bent arm for a pillow — joy is found even here."
         },
         {
           "sageId": "scripture_dhammapada",
@@ -630,9 +859,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 13, "wisdom": 9 }
+          "effects": {
+            "mind": 13,
+            "wisdom": 9
+          }
         }
-      ]
+      ],
+      "titleEn": "Compared to others, I feel miserable about money.",
+      "bodyEn": "On social media everyone looks wealthy. It hurts to feel left behind."
     },
     {
       "id": "love_courage_01",
@@ -645,7 +879,11 @@
           "sageId": "original",
           "quote": "伝えない後悔は、断られる痛みより長く残る。",
           "note": "",
-          "effects": { "mind": 4, "passion": 4 }
+          "effects": {
+            "mind": 4,
+            "passion": 4
+          },
+          "quoteEn": "The regret of not telling lingers longer than the pain of refusal."
         },
         {
           "sageId": "eleanor",
@@ -654,7 +892,10 @@
           "source": "エレノア・ルーズベルト『You Learn by Living』第2章, 1960",
           "note": "",
           "verified": true,
-          "effects": { "mind": 6, "passion": 8 }
+          "effects": {
+            "mind": 6,
+            "passion": 8
+          }
         },
         {
           "sageId": "scripture_bible",
@@ -665,9 +906,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 12, "bonds": 8 }
+          "effects": {
+            "mind": 12,
+            "bonds": 8
+          }
         }
-      ]
+      ],
+      "titleEn": "I can't find the courage to confess my feelings.",
+      "bodyEn": "The feelings are there. But fearing rejection, I can't take that last step."
     },
     {
       "id": "health_anxiety_01",
@@ -680,7 +926,10 @@
           "sageId": "original",
           "quote": "まだ起きていない不幸を、先に味わう必要はない。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "There's no need to taste a misfortune that hasn't happened."
         },
         {
           "sageId": "seneca",
@@ -689,7 +938,10 @@
           "source": "セネカ『ルキリウスへの手紙』第13通（根拠なき恐れについて）",
           "note": "",
           "verified": true,
-          "effects": { "mind": 8, "wisdom": 8 }
+          "effects": {
+            "mind": 8,
+            "wisdom": 8
+          }
         },
         {
           "sageId": "keller",
@@ -698,9 +950,14 @@
           "source": "ヘレン・ケラー『楽天主義』(Optimism), 1903",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "passion": 5 }
+          "effects": {
+            "mind": 7,
+            "passion": 5
+          }
         }
-      ]
+      ],
+      "titleEn": "Until the results come, I imagine only the worst.",
+      "bodyEn": "Nothing is known yet, but my head is full of worst-case scenarios. I can't sleep."
     },
     {
       "id": "health_serious_01",
@@ -713,7 +970,10 @@
           "sageId": "original",
           "quote": "今日を生きているだけで、あなたは十分に立派だ。",
           "note": "",
-          "effects": { "mind": 5 }
+          "effects": {
+            "mind": 5
+          },
+          "quoteEn": "Simply by living through today, you are already enough."
         },
         {
           "sageId": "seneca",
@@ -722,7 +982,10 @@
           "source": "セネカ『ルキリウスへの手紙』第78通（心の癒す力について）",
           "note": "セネカ自身の闘病の経験から記された一節。",
           "verified": true,
-          "effects": { "mind": 9, "wisdom": 7 }
+          "effects": {
+            "mind": 9,
+            "wisdom": 7
+          }
         },
         {
           "sageId": "scripture_bible",
@@ -733,9 +996,14 @@
           "note": "聖典の言葉として引用。",
           "verified": true,
           "rank": 5,
-          "effects": { "mind": 14, "wisdom": 8 }
+          "effects": {
+            "mind": 14,
+            "wisdom": 8
+          }
         }
-      ]
+      ],
+      "titleEn": "Facing a serious illness, day after day.",
+      "bodyEn": "A long treatment. Some days are better; some nights, the fear is unbearable."
     },
     {
       "id": "perseverance_setback_01",
@@ -748,7 +1016,10 @@
           "sageId": "original",
           "quote": "倒れた回数ではなく、起き上がった回数を数えよう。",
           "note": "",
-          "effects": { "mind": 4 }
+          "effects": {
+            "mind": 4
+          },
+          "quoteEn": "Count not how many times you fell, but how many times you rose."
         },
         {
           "sageId": "churchill",
@@ -757,7 +1028,10 @@
           "source": "ハーロー校での演説, 1941年10月29日",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "passion": 9 }
+          "effects": {
+            "mind": 7,
+            "passion": 9
+          }
         },
         {
           "sageId": "nietzsche",
@@ -766,9 +1040,14 @@
           "source": "ニーチェ『偶像の黄昏』箴言と矢 12, 1889",
           "note": "",
           "verified": true,
-          "effects": { "mind": 7, "wisdom": 9 }
+          "effects": {
+            "mind": 7,
+            "wisdom": 9
+          }
         }
-      ]
+      ],
+      "titleEn": "I fail no matter how often I try. I'm broken.",
+      "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward."
     }
   ]
 }

@@ -55,3 +55,7 @@
 1. 新しい偉人は `sages.json` に追記（`rank`/`packId`/`isPremium`）。
 2. 新しい悩みは `events.json` に追記。`advices[].sageId` で偉人を参照。
 3. 出典のない励ましは `sageId:"original"` にする（実在人物に帰属させない）。
+
+## 多言語（i18n）
+- 英語表示用フィールド：偉人 `nameEn`、名言 `quoteEn`（無ければ `quoteOriginal`）、悩み `titleEn`/`bodyEn`。
+- 言語切替はタイトルのトグル（既定=日本語）。英語モードで全件クリーンな英文表示を確認済み。

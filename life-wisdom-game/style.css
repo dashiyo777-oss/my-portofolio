@@ -25,6 +25,11 @@ button{font-family:inherit; cursor:pointer}
 .muted{color:var(--ink-soft)}
 .small{font-size:.82rem}
 
+/* 言語切替 */
+.lang-toggle{display:flex; justify-content:flex-end; gap:6px; margin:-6px -4px 2px}
+.lang-toggle button{border:1px solid var(--line); background:#fffdf8; color:var(--ink-soft); border-radius:99px; padding:5px 12px; font-family:inherit; font-size:.76rem}
+.lang-toggle button.on{background:#2b2622; color:#f4ead4; border-color:#2b2622}
+
 /* ---- 共通ボタン ---- */
 .btn{
   display:block; width:100%; border:none; border-radius:999px;
