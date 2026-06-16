@@ -18,6 +18,23 @@
   var REST_THRESHOLD = 25;
   var RARITY_LABEL = { common: "並", rare: "希", sacred: "神聖", legendary: "伝説" };
 
+  // 叡智の位（段位）。偉人ランク(§4.3)とは別の、プレイヤー自身の格付け。生涯記録ベース＝下がらない。
+  var POSITIONS = [
+    { min: 0, title: "灯火の見習い", grade: "無級" },
+    { min: 60, title: "学びの徒", grade: "五級" },
+    { min: 150, title: "思索の人", grade: "三級" },
+    { min: 280, title: "求道の人", grade: "一級" },
+    { min: 430, title: "賢慮の士", grade: "初段" },
+    { min: 620, title: "叡智の探究者", grade: "参段" },
+    { min: 850, title: "達観の人", grade: "伍段" },
+    { min: 1100, title: "心の師範", grade: "七段" },
+    { min: 1400, title: "叡智の達人", grade: "九段" },
+    { min: 1700, title: "賢聖", grade: "十段" },
+    { min: 1950, title: "叡智名人", grade: "名人" },
+    { min: 2200, title: "叡智皆伝", grade: "免許皆伝" }
+  ];
+  var ACCLAIM_KEY = "lifewisdom.acclaim.v1";   // 生涯記録（到達した言葉・制覇カテゴリ）。人生をやり直しても残る。
+
   var STAT_LABEL = { mind: "心", wisdom: "叡智", bonds: "絆", wealth: "財", passion: "情熱" };
   var CAT_LABEL = { work: "仕事", relationship: "人間関係", love: "恋愛", study: "学業", money: "お金", health: "健康", self: "自己" };
   var MOOD_LABEL = { down: "落ち込み", lost: "迷い", high: "高揚" };
@@ -25,6 +42,7 @@
   var app = document.getElementById("app");
   var state = load() || newGame();
   var codex = loadCodex();   // 見つけた伝説ID[]
+  var acclaim = loadAcclaim();   // 生涯記録 { quotes:{key:1}, cats:{cat:1} }
 
   // ---------- セーブ/ロード ----------
   function newGame() {
@@ -43,6 +61,22 @@
   function saveCodex() { try { localStorage.setItem(CODEX_KEY, JSON.stringify(codex)); } catch (e) {} }
   function codexHas(id) { return codex.indexOf(id) >= 0; }
   function codexAdd(id) { if (!codexHas(id)) { codex.push(id); saveCodex(); } }
+
+  // ---------- 叡智の位（段位・免許状） ----------
+  function loadAcclaim() { try { var r = JSON.parse(localStorage.getItem(ACCLAIM_KEY)); return (r && r.quotes) ? r : { quotes: {}, cats: {} }; } catch (e) { return { quotes: {}, cats: {} }; } }
+  function saveAcclaim() { try { localStorage.setItem(ACCLAIM_KEY, JSON.stringify(acclaim)); } catch (e) {} }
+  function recordAcclaim(quoteKey, category) {
+    var changed = false;
+    if (quoteKey && !acclaim.quotes[quoteKey]) { acclaim.quotes[quoteKey] = 1; changed = true; }
+    if (category && !acclaim.cats[category]) { acclaim.cats[category] = 1; changed = true; }
+    if (changed) saveAcclaim();
+  }
+  function playerProgress() {
+    var q = Object.keys(acclaim.quotes).length, c = Object.keys(acclaim.cats).length, l = codex.length;
+    return { points: q * 12 + l * 120 + c * 50, quotes: q, cats: c, legends: l };
+  }
+  function positionFor(points) { var p = POSITIONS[0]; for (var i = 0; i < POSITIONS.length; i++) { if (points >= POSITIONS[i].min) p = POSITIONS[i]; } return p; }
+  function nextPosition(points) { for (var i = 0; i < POSITIONS.length; i++) { if (points < POSITIONS[i].min) return POSITIONS[i]; } return null; }
 
   function rarityOf(sageId, isLegend) {
     if (isLegend) return "legendary";
@@ -125,14 +159,20 @@
   // ---------- 画面: タイトル ----------
   function showTitle() {
     var has = state.journal.length > 0;
+    var pg = playerProgress(); var pos = positionFor(pg.points);
+    var posLine = (has || pg.points > 0)
+      ? '<p class="title-pos">あなたの位 ― <b>' + esc(pos.title) + '</b><span class="grade">' + esc(pos.grade) + '</span></p>'
+      : '';
     var html = '<div class="fade title-wrap">' +
       '<div class="flame">🪔</div>' +
       '<h1 class="title">叡智の灯火</h1>' +
       '<p class="subtitle">人生の岐路と、偉人たちの言葉</p>' +
+      posLine +
       '</div>' +
       '<div class="title-actions">' +
       '<button class="btn gold" data-act="start">' + (has ? "つづきから歩む" : "人生をはじめる") + '</button>' +
       '<button class="btn ghost" data-act="book">わが叡智の書を見る' + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
+      '<button class="btn ghost" data-act="cert">叡智の免許状を見る</button>' +
       (has ? '<button class="btn ghost" data-act="reset">はじめからやり直す</button>' : "") +
       '</div>' +
       '<p class="codex-tease">✦ 伝説の言葉 ' + codex.length + ' / ' + LEGENDS.length + ' 蒐集 ✦</p>' +
@@ -238,9 +278,12 @@
     state.turn++; state.journal.push(rec);
     if (state.seen.indexOf(ev.id) < 0) state.seen.push(ev.id);
     currentLegend = null;  // 通常の言葉を選んだら、伝説はそっと去る
+    var beforePos = positionFor(playerProgress().points);
+    recordAcclaim(ev.id + ":" + sageId, ev.category);
+    var positionUp = positionFor(playerProgress().points).title !== beforePos.title ? positionFor(playerProgress().points) : null;
     recomputeFavorite(); save();
     var rankedUp = unlockedRank() > beforeRank ? unlockedRank() : 0;
-    showResult(state.journal.length - 1, deltas, rankedUp);
+    showResult(state.journal.length - 1, deltas, rankedUp, positionUp);
   }
 
   // 伝説を受け取る：祝福演出 → 図鑑に蒐集 → 結果
@@ -264,12 +307,15 @@
       mindBefore: state.stats.mind, mindAfter: state.stats.mind, playerNote: "", feedback: null
     };
     rec.mindBefore = rec.mindAfter; // 表示用（伝説は心も整う）
+    var beforePos = positionFor(playerProgress().points);
     state.turn++; state.journal.push(rec); codexAdd(legend.id);
+    recordAcclaim("legend:" + legend.id, ev.category || "self");
+    var positionUp = positionFor(playerProgress().points).title !== beforePos.title ? positionFor(playerProgress().points) : null;
     if (ev.id && state.seen.indexOf(ev.id) < 0) state.seen.push(ev.id);
     currentLegend = null; recomputeFavorite(); save();
     var rankedUp = unlockedRank() > beforeRank ? unlockedRank() : 0;
     var idx = state.journal.length - 1;
-    celebrate(legend, function () { showResult(idx, deltas, rankedUp); });
+    celebrate(legend, function () { showResult(idx, deltas, rankedUp, positionUp); });
   }
 
   // 祝福演出（全画面・光と粒子）
@@ -299,12 +345,13 @@
     });
   }
 
-  function showResult(idx, deltas, rankedUp) {
+  function showResult(idx, deltas, rankedUp, positionUp) {
     var rec = state.journal[idx];
     var dhtml = deltas.map(function (x) {
       var up = x.d > 0; return '<span class="delta ' + (up ? "up" : "down") + '">' + esc(STAT_LABEL[x.k] || x.k) + " " + (up ? "+" : "") + x.d + '</span>';
     }).join("");
     var rankBanner = rankedUp ? '<p class="saved-toast">✨ 新たな境地「' + esc(RANKS[rankedUp].title) + '」に到達した</p>' : "";
+    var posBanner = positionUp ? '<p class="pos-banner">🎖 昇位 ―「' + esc(positionUp.title) + '（' + esc(positionUp.grade) + '）」へ</p>' : "";
     var ribbon = rec.isLegend ? '<p class="rarity-ribbon legendary">✦ 伝説の言葉 ✦</p>'
       : (rec.isScripture ? '<p class="rarity-ribbon sacred">神聖なる導き</p>' : "");
     var html = '<div class="fade">' + ribbon +
@@ -312,7 +359,7 @@
       '<p class="result-from">— ' + esc(rec.sageName) + (rec.isScripture ? "（聖典の言葉）" : "") + '</p>' +
       (rec.source ? '<p class="result-source">' + esc(rec.source) + '</p>' : "") +
       (dhtml ? '<div class="deltas">' + dhtml + '</div>' : "") +
-      rankBanner +
+      rankBanner + posBanner +
       '<p class="saved-toast">📖 「わが叡智の書」に刻まれた</p>' +
       '<div class="fb" data-fbidx="' + idx + '">' +
       '<button data-fb="resonated">響いた ♡</button>' +
@@ -426,6 +473,42 @@
       '</div>';
   }
 
+  // ---------- 叡智の免許状（証明書） ----------
+  function showCert() {
+    var pg = playerProgress(); var pos = positionFor(pg.points); var nx = nextPosition(pg.points);
+    var d = new Date();
+    var ymd = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    var prog = "";
+    if (nx) {
+      var span = nx.min - pos.min, p = Math.max(0, Math.min(1, (pg.points - pos.min) / span));
+      prog = '<div class="cert-next">次の位「' + esc(nx.title) + '（' + esc(nx.grade) + '）」まで あと ' + (nx.min - pg.points) + ' 点' +
+        '<div class="wbar"><i style="width:' + (p * 100).toFixed(0) + '%"></i></div></div>';
+    } else {
+      prog = '<div class="cert-next">最高位「叡智皆伝」に到達。あなたは生涯の探究者。</div>';
+    }
+    var html = '<div class="fade">' +
+      '<div class="certificate">' +
+      '<div class="cert-corner tl"></div><div class="cert-corner tr"></div><div class="cert-corner bl"></div><div class="cert-corner br"></div>' +
+      '<div class="cert-kicker">叡 智 之 證</div>' +
+      '<div class="cert-sub">人生相談 叡智検定</div>' +
+      '<div class="cert-pos">' + esc(pos.title) + '</div>' +
+      '<div class="cert-grade">' + esc(pos.grade) + '</div>' +
+      '<div class="cert-stats">' +
+      '<div><b>' + pg.points + '</b><span>叡智ポイント</span></div>' +
+      '<div><b>' + pg.quotes + '</b><span>到達した言葉</span></div>' +
+      '<div><b>' + pg.legends + ' / ' + LEGENDS.length + '</b><span>伝説</span></div>' +
+      '<div><b>' + pg.cats + ' / 7</b><span>制覇した悩み</span></div>' +
+      '</div>' +
+      '<div class="cert-foot"><span class="cert-date">' + esc(ymd) + ' 発行</span><span class="cert-seal">灯</span></div>' +
+      '</div>' +
+      prog +
+      '<p class="notice">※ 位は「到達した言葉・伝説・制覇カテゴリ」の生涯記録で決まり、人生をやり直しても下がりません。</p>' +
+      '<button class="btn gold" data-act="start">人生をつづける</button>' +
+      '<button class="btn ghost" data-act="title">タイトルへ</button>' +
+      '</div>';
+    render(html);
+  }
+
   // ---------- レンダリング & イベント委譲 ----------
   function render(html) { app.innerHTML = html; window.scrollTo(0, 0); }
 
@@ -440,6 +523,7 @@
     var act = t.getAttribute("data-act");
     if (act === "start" || act === "next") proceed();
     else if (act === "book") showBook();
+    else if (act === "cert") showCert();
     else if (act === "title") showTitle();
     else if (act === "unlock") { state.premiumUnlocked = true; save(); showEvent(currentEvent); }
     else if (act === "reset") { if (confirm("これまでの歩みと叡智の書が消えます。よろしいですか？")) resetGame(); }
