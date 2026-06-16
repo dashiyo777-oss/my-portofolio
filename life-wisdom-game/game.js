@@ -156,10 +156,23 @@
       '</div>' + wis;
   }
 
+  // 復習（想起）：集めた言葉をそっと再提示し、叡智を記憶に定着させる
+  function dailyRecall() {
+    var pool = state.journal.filter(function (j) { return j.feedback === "resonated"; });
+    if (pool.length === 0) pool = state.journal;
+    if (pool.length === 0) return null;
+    var day = Math.floor(Date.now() / 86400000);
+    return pool[day % pool.length];
+  }
+
   // ---------- 画面: タイトル ----------
   function showTitle() {
     var has = state.journal.length > 0;
     var pg = playerProgress(); var pos = positionFor(pg.points);
+    var recall = dailyRecall();
+    var recallHtml = recall ? '<div class="recall"><span class="recall-k">🕯 今日、心に留めたい言葉</span>' +
+      '<p class="recall-q">' + esc(recall.quote) + '</p>' +
+      '<span class="recall-f">— ' + esc(recall.sageName) + '</span></div>' : "";
     var posLine = (has || pg.points > 0)
       ? '<p class="title-pos">あなたの位 ― <b>' + esc(pos.title) + '</b><span class="grade">' + esc(pos.grade) + '</span></p>'
       : '';
@@ -177,8 +190,9 @@
       (has ? '<button class="btn ghost" data-act="reset">はじめからやり直す</button>' : "") +
       '</div>' +
       '<p class="codex-tease">✦ 伝説の言葉 ' + codex.length + ' / ' + LEGENDS.length + ' 蒐集 ✦</p>' +
-      '<p class="tagline">迷ったとき、世界の偉人があなたの相談相手になる。<br>正解を選ぶのではなく、あなたに響いた言葉を選ぼう。</p>' +
-      '<p class="notice">※ これは制作中のプロトタイプ（MVP）です。名言はすべて出典付きで裏取りしています。</p>';
+      recallHtml +
+      '<p class="tagline">迷ったとき、世界の偉人があなたの相談相手になる。<br>言葉を選び、暮らしに活かし、少しずつ賢くなっていく。</p>' +
+      '<p class="notice">※ これは制作中のプロトタイプ（MVP）です。名言はすべて出典付きで裏取りしています。<br>つらさが長く続くときは、どうか一人で抱えず、信頼できる人や専門の窓口に頼ってください。</p>';
     render(html);
   }
 
@@ -400,6 +414,12 @@
       '<button data-fb="resonated">響いた ♡</button>' +
       '<button data-fb="not_now">今はそうでもない</button>' +
       '</div>' +
+      '<div class="reflect" data-ridx="' + idx + '">' +
+      '<button class="reflect-toggle" data-act="reflect-open">✎ この言葉を、暮らしにどう活かす？</button>' +
+      '<div class="reflect-body" hidden>' +
+      '<textarea class="reflect-input" rows="2" placeholder="今日からできる小さな一歩を、ひとこと…"></textarea>' +
+      '<button class="btn ghost sm" data-act="reflect-save">暮らしに活かすと、心に留める</button>' +
+      '</div></div>' +
       '<button class="btn gold" data-act="next">人生をつづける</button>' +
       '<button class="btn ghost" data-act="book">わが叡智の書を見る</button>' +
       '<button class="btn ghost" data-act="title">中断（タイトルへ）</button>' +
@@ -505,6 +525,7 @@
       '<div class="etitle">' + esc(rec.title) + '</div>' +
       '<div class="eq">' + esc(rec.quote) + '</div>' +
       '<div class="efrom">— ' + esc(rec.sageName) + (rec.isScripture ? "（聖典）" : "") + (rec.source ? " ／ " + esc(rec.source) : "") + '</div>' +
+      (rec.playerNote ? '<div class="enote">✎ ' + esc(rec.playerNote) + '</div>' : "") +
       (fb ? '<div class="fbmark">' + esc(fb) + '</div>' : "") +
       '</div>';
   }
@@ -565,6 +586,14 @@
     else if (act === "cert") showCert();
     else if (act === "title") showTitle();
     else if (act === "unlock") { state.premiumUnlocked = true; save(); if (currentEvent) showEvent(currentEvent); else proceed(); }
+    else if (act === "reflect-open") { var rb = app.querySelector(".reflect-body"); if (rb) rb.hidden = false; if (t.style) t.style.display = "none"; }
+    else if (act === "reflect-save") {
+      var rbox = t.closest ? t.closest(".reflect") : null;
+      var ridx = (rbox && rbox.getAttribute) ? +rbox.getAttribute("data-ridx") : -1;
+      var rinp = app.querySelector(".reflect-input");
+      if (state.journal[ridx]) { state.journal[ridx].playerNote = rinp ? rinp.value : ""; save(); }
+      if (rbox) rbox.innerHTML = '<p class="reflect-done">✓ 暮らしに活かす一歩を、心に留めた</p>';
+    }
     else if (act === "reset") { if (confirm("これまでの歩みと叡智の書が消えます。よろしいですか？")) resetGame(); }
   });
 
