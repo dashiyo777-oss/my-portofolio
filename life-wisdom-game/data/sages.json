@@ -326,6 +326,58 @@
       "color": "#8a7a9c"
     },
     {
+      "id": "socrates",
+      "name": "ソクラテス",
+      "nameEn": "Socrates",
+      "region": "Greece",
+      "field": "thought",
+      "era": "BC470–BC399",
+      "stance": "inquiry",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_thought",
+      "color": "#6c7a89"
+    },
+    {
+      "id": "king",
+      "name": "マーティン・ルーサー・キング Jr.",
+      "nameEn": "Martin Luther King Jr.",
+      "region": "US",
+      "field": "leader",
+      "era": "1929–1968",
+      "stance": "love",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_leader",
+      "color": "#b5894a"
+    },
+    {
+      "id": "shakespeare",
+      "name": "ウィリアム・シェイクスピア",
+      "nameEn": "William Shakespeare",
+      "region": "GB",
+      "field": "literature",
+      "era": "1564–1616",
+      "stance": "insight",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_art",
+      "color": "#7d6b95"
+    },
+    {
+      "id": "fukuzawa",
+      "name": "福沢諭吉",
+      "nameEn": "Fukuzawa Yukichi",
+      "region": "JP",
+      "field": "thought",
+      "era": "1835–1901",
+      "stance": "independence",
+      "rank": 4,
+      "isPremium": true,
+      "packId": "pack_thought",
+      "color": "#5e7d6a"
+    },
+    {
       "id": "scripture_bible",
       "name": "聖書の言葉",
       "nameEn": "The Bible",
