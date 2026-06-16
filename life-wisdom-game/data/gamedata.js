@@ -462,7 +462,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Today, you are still only in the middle of your story."
           },
           {
             "sageId": "confucius",
@@ -474,7 +475,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 5,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "To make a mistake and not correct it — that is the real mistake."
           },
           {
             "sageId": "jobs",
@@ -500,7 +502,9 @@ window.GAME_DATA = {
               "wisdom": 6
             }
           }
-        ]
+        ],
+        "titleEn": "A big failure at work. I want to quit…",
+        "bodyEn": "I made a serious mistake on a project I was trusted with. The stares around me sting, and I want to disappear."
       },
       {
         "id": "work_overwhelm_01",
@@ -515,7 +519,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "You don't have to carry it all at once. Look only at the next step."
           },
           {
             "sageId": "lincoln",
@@ -553,9 +558,12 @@ window.GAME_DATA = {
             "effects": {
               "mind": 14,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "Indeed, with hardship comes ease. Indeed, with hardship comes ease."
           }
-        ]
+        ],
+        "titleEn": "There's too much to do — I'm about to break.",
+        "bodyEn": "Work keeps piling up and I don't know where to start. My mind and body are near their limit."
       },
       {
         "id": "relationship_conflict_01",
@@ -570,7 +578,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Letting go of anger is not for the other person — it's for you."
           },
           {
             "sageId": "gandhi",
@@ -594,7 +603,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 5,
               "bonds": 6
-            }
+            },
+            "quoteEn": "Do not impose on others what you yourself do not desire."
           },
           {
             "sageId": "scripture_dhammapada",
@@ -610,7 +620,9 @@ window.GAME_DATA = {
               "wisdom": 10
             }
           }
-        ]
+        ],
+        "titleEn": "I just can't forgive that person.",
+        "bodyEn": "Someone I trusted betrayed me. The anger and resentment won't leave my heart."
       },
       {
         "id": "love_heartbreak_01",
@@ -625,7 +637,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 5
-            }
+            },
+            "quoteEn": "It hurts because you truly loved. That heart will never be wasted."
           },
           {
             "sageId": "teresa",
@@ -665,7 +678,9 @@ window.GAME_DATA = {
               "bonds": 8
             }
           }
-        ]
+        ],
+        "titleEn": "My heart is broken. It feels like it could tear apart.",
+        "bodyEn": "I've parted from someone dear. I can't focus on anything, and the tears won't stop."
       },
       {
         "id": "study_struggle_01",
@@ -680,7 +695,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "When you seem stuck, you are growing roots. The shoots come later."
           },
           {
             "sageId": "confucius",
@@ -692,7 +708,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 4,
               "wisdom": 10
-            }
+            },
+            "quoteEn": "Learning without thought is labor lost; thought without learning is perilous."
           },
           {
             "sageId": "einstein",
@@ -707,7 +724,9 @@ window.GAME_DATA = {
               "passion": 4
             }
           }
-        ]
+        ],
+        "titleEn": "No matter how I study, I'm not improving.",
+        "bodyEn": "I'm trying hard but the results won't come. Maybe I just have no talent."
       },
       {
         "id": "money_worry_01",
@@ -722,7 +741,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Anxiety is proof you're taking life seriously. Start with just today's step."
           },
           {
             "sageId": "confucius",
@@ -734,7 +754,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 5,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "Wealth and honor gained unjustly are to me as drifting clouds."
           },
           {
             "sageId": "einstein",
@@ -748,7 +769,9 @@ window.GAME_DATA = {
               "wisdom": 7
             }
           }
-        ]
+        ],
+        "titleEn": "I have no money. The future terrifies me.",
+        "bodyEn": "My income and savings are both shaky. Thinking about money keeps me up at night."
       },
       {
         "id": "self_doubt_01",
@@ -763,7 +786,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 5
-            }
+            },
+            "quoteEn": "The one to compare with is not others, but yesterday's you."
           },
           {
             "sageId": "curie",
@@ -790,7 +814,9 @@ window.GAME_DATA = {
               "passion": 9
             }
           }
-        ]
+        ],
+        "titleEn": "I can't find any confidence in myself.",
+        "bodyEn": "I feel I fail at everything. I compare myself to others and sink."
       },
       {
         "id": "change_world_01",
@@ -806,7 +832,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 4,
               "passion": 4
-            }
+            },
+            "quoteEn": "The day of perfect readiness never comes. Half a step is enough — just move."
           },
           {
             "sageId": "ryoma",
@@ -818,7 +845,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 5,
               "passion": 9
-            }
+            },
+            "quoteEn": "I shall wash Japan clean and make it anew, once more."
           },
           {
             "sageId": "jobs",
@@ -833,7 +861,9 @@ window.GAME_DATA = {
               "wisdom": 4
             }
           }
-        ]
+        ],
+        "titleEn": "I want to change things, but can't take the first step.",
+        "bodyEn": "I know I can't stay like this. Yet I can't summon the courage."
       },
       {
         "id": "lonely_01",
@@ -848,7 +878,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 5
-            }
+            },
+            "quoteEn": "The world is kinder to you than you think."
           },
           {
             "sageId": "confucius",
@@ -860,7 +891,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 7,
               "bonds": 6
-            }
+            },
+            "quoteEn": "Virtue is never solitary; it is sure to have neighbors."
           },
           {
             "sageId": "teresa",
@@ -888,7 +920,9 @@ window.GAME_DATA = {
               "wisdom": 8
             }
           }
-        ]
+        ],
+        "titleEn": "I feel all alone and uneasy.",
+        "bodyEn": "It feels like there's no one to rely on. Loneliness weighs heavy on my chest."
       },
       {
         "id": "health_illness_01",
@@ -903,7 +937,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 5
-            }
+            },
+            "quoteEn": "To rest is not to lose. Recovering, too, is moving forward."
           },
           {
             "sageId": "keller",
@@ -929,9 +964,12 @@ window.GAME_DATA = {
             "effects": {
               "mind": 14,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "God does not burden any soul beyond what it can bear."
           }
-        ]
+        ],
+        "titleEn": "My health has broken down. I'm anxious about what's ahead.",
+        "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me."
       },
       {
         "id": "success_highmood_01",
@@ -946,7 +984,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "wisdom": 5
-            }
+            },
+            "quoteEn": "In fair winds, it is those who watch their footing who travel farthest."
           },
           {
             "sageId": "confucius",
@@ -958,7 +997,8 @@ window.GAME_DATA = {
             "effects": {
               "wisdom": 10,
               "mind": 3
-            }
+            },
+            "quoteEn": "The noble person is calm but not proud; the petty person is proud but not calm."
           },
           {
             "sageId": "lincoln",
@@ -986,7 +1026,9 @@ window.GAME_DATA = {
               "mind": 4
             }
           }
-        ]
+        ],
+        "titleEn": "Things are going so well I'm getting carried away.",
+        "bodyEn": "Everything I do is going great. Yet my footing feels strangely unsteady."
       },
       {
         "id": "relationship_distrust_01",
@@ -1001,7 +1043,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Caution is wisdom. But you needn't close your heart as well."
           },
           {
             "sageId": "annefrank",
@@ -1029,7 +1072,9 @@ window.GAME_DATA = {
               "bonds": 8
             }
           }
-        ]
+        ],
+        "titleEn": "I can't trust people anymore.",
+        "bodyEn": "After being betrayed and hurt again and again, I've come to fear people themselves."
       },
       {
         "id": "unfair_situation_01",
@@ -1044,7 +1089,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Rather than mourn what can't be changed, reach for the one thing that can."
           },
           {
             "sageId": "frankl",
@@ -1068,9 +1114,12 @@ window.GAME_DATA = {
             "effects": {
               "mind": 6,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "The wise are free from doubts, the benevolent from anxiety, the brave from fear."
           }
-        ]
+        ],
+        "titleEn": "Something unfair happened, and I'm powerless.",
+        "bodyEn": "It's not my fault, yet the situation won't change. Feelings with nowhere to go swirl inside me."
       },
       {
         "id": "big_goal_overwhelm_01",
@@ -1086,7 +1135,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 4,
               "passion": 4
-            }
+            },
+            "quoteEn": "Look not at the mountain's peak, but only at your next step."
           },
           {
             "sageId": "vangogh",
@@ -1114,7 +1164,9 @@ window.GAME_DATA = {
               "wisdom": 6
             }
           }
-        ]
+        ],
+        "titleEn": "The goal is so big my legs freeze.",
+        "bodyEn": "What I want to do is grand. But it's so far away I don't know where to begin."
       },
       {
         "id": "study_effort_01",
@@ -1129,7 +1181,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Talent is the starting line. Effort is the distance you walk from it."
           },
           {
             "sageId": "edison",
@@ -1154,9 +1207,12 @@ window.GAME_DATA = {
             "effects": {
               "mind": 6,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "A journey of a thousand miles begins with a single step."
           }
-        ]
+        ],
+        "titleEn": "However I try, I can't catch up to the talented.",
+        "bodyEn": "However much I do, someone does it better. I start to wonder if effort even matters."
       },
       {
         "id": "work_newjob_01",
@@ -1171,7 +1227,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Not fitting in is proof you've stepped into a new world."
           },
           {
             "sageId": "brucelee",
@@ -1195,9 +1252,12 @@ window.GAME_DATA = {
             "effects": {
               "mind": 5,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "To know what you know, and to know what you do not know — that is true knowing."
           }
-        ]
+        ],
+        "titleEn": "I just can't fit into the new environment.",
+        "bodyEn": "I've just changed jobs (or schools). The ways and the people differ, and I feel out of place."
       },
       {
         "id": "money_contentment_01",
@@ -1212,7 +1272,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Count not what's in others' wallets, but the richness of your own heart."
           },
           {
             "sageId": "confucius",
@@ -1224,7 +1285,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 7,
               "wisdom": 8
-            }
+            },
+            "quoteEn": "With coarse rice to eat, water to drink, and a bent arm for a pillow — joy is found even here."
           },
           {
             "sageId": "scripture_dhammapada",
@@ -1240,7 +1302,9 @@ window.GAME_DATA = {
               "wisdom": 9
             }
           }
-        ]
+        ],
+        "titleEn": "Compared to others, I feel miserable about money.",
+        "bodyEn": "On social media everyone looks wealthy. It hurts to feel left behind."
       },
       {
         "id": "love_courage_01",
@@ -1256,7 +1320,8 @@ window.GAME_DATA = {
             "effects": {
               "mind": 4,
               "passion": 4
-            }
+            },
+            "quoteEn": "The regret of not telling lingers longer than the pain of refusal."
           },
           {
             "sageId": "eleanor",
@@ -1284,7 +1349,9 @@ window.GAME_DATA = {
               "bonds": 8
             }
           }
-        ]
+        ],
+        "titleEn": "I can't find the courage to confess my feelings.",
+        "bodyEn": "The feelings are there. But fearing rejection, I can't take that last step."
       },
       {
         "id": "health_anxiety_01",
@@ -1299,7 +1366,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "There's no need to taste a misfortune that hasn't happened."
           },
           {
             "sageId": "seneca",
@@ -1325,7 +1393,9 @@ window.GAME_DATA = {
               "passion": 5
             }
           }
-        ]
+        ],
+        "titleEn": "Until the results come, I imagine only the worst.",
+        "bodyEn": "Nothing is known yet, but my head is full of worst-case scenarios. I can't sleep."
       },
       {
         "id": "health_serious_01",
@@ -1340,7 +1410,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 5
-            }
+            },
+            "quoteEn": "Simply by living through today, you are already enough."
           },
           {
             "sageId": "seneca",
@@ -1368,7 +1439,9 @@ window.GAME_DATA = {
               "wisdom": 8
             }
           }
-        ]
+        ],
+        "titleEn": "Facing a serious illness, day after day.",
+        "bodyEn": "A long treatment. Some days are better; some nights, the fear is unbearable."
       },
       {
         "id": "perseverance_setback_01",
@@ -1383,7 +1456,8 @@ window.GAME_DATA = {
             "note": "",
             "effects": {
               "mind": 4
-            }
+            },
+            "quoteEn": "Count not how many times you fell, but how many times you rose."
           },
           {
             "sageId": "churchill",
@@ -1409,7 +1483,9 @@ window.GAME_DATA = {
               "wisdom": 9
             }
           }
-        ]
+        ],
+        "titleEn": "I fail no matter how often I try. I'm broken.",
+        "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward."
       }
     ]
   },
@@ -1487,7 +1563,8 @@ window.GAME_DATA = {
         "effects": {
           "wisdom": 14,
           "mind": 4
-        }
+        },
+        "quoteEn": "He who knows others is wise; he who knows himself is enlightened."
       },
       {
         "id": "L06",
@@ -1545,7 +1622,8 @@ window.GAME_DATA = {
         "effects": {
           "wisdom": 12,
           "bonds": 6
-        }
+        },
+        "quoteEn": "Heaven does not create one person above or below another."
       },
       {
         "id": "L10",
@@ -1560,7 +1638,8 @@ window.GAME_DATA = {
         "effects": {
           "wisdom": 10,
           "passion": 8
-        }
+        },
+        "quoteEn": "Those who know it are not equal to those who love it; those who love it are not equal to those who delight in it."
       }
     ]
   }
