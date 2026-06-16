@@ -570,7 +570,7 @@
   function render(html) { app.innerHTML = html; window.scrollTo(0, 0); }
 
   app.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-act],[data-choose],[data-legend],[data-fb],[data-tab],[data-filter]");
+    var t = e.target.closest("[data-act],[data-choose],[data-legend],[data-consultcat],[data-fb],[data-tab],[data-filter]");
     if (!t) return;
     if (t.hasAttribute("data-legend")) { chooseLegend(t.getAttribute("data-legend")); return; }
     if (t.hasAttribute("data-choose")) { choose(currentEvent, t.getAttribute("data-choose")); return; }
