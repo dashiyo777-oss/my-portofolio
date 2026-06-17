@@ -90,23 +90,45 @@
   var AMB_KEY = "lifewisdom.amb.v1";
   var ambientOn = (function () { try { return localStorage.getItem(AMB_KEY) === "on"; } catch (e) { return false; } })();
   var ambNodes = null;
+  // 長調の和音がゆっくり進行する、気高く前向きなBGM（I–IV–V–I）
+  var AMB_CHORDS = [
+    [130.81, 261.63, 329.63, 392.00],   // C  (I)
+    [174.61, 261.63, 349.23, 440.00],   // F  (IV)
+    [196.00, 246.94, 392.00, 587.33],   // G  (V)
+    [130.81, 261.63, 392.00, 523.25]    // C  (I・オクターブ上で締め)
+  ];
+  var AMB_SPARK = [523.25, 587.33, 659.25, 783.99, 880.00]; // ハ長調ペンタトニックの澄んだ音
   function startAmbient() {
     var a = audioCtx(); if (!a) return; stopAmbient();
     try {
-      var master = a.createGain(); master.gain.value = 0.0001; master.connect(a.destination);
-      var filt = a.createBiquadFilter(); filt.type = "lowpass"; filt.frequency.value = 700; filt.Q.value = 0.5; filt.connect(master);
-      var pad = a.createGain(); pad.gain.value = 0.12; pad.connect(filt);
-      var oscs = [];
-      [110, 164.81, 220].forEach(function (f, i) { var o = a.createOscillator(); o.type = "sine"; o.frequency.value = f; if (i === 2) o.detune.value = 5; o.connect(pad); o.start(); oscs.push(o); });
-      var lfo = a.createOscillator(); lfo.frequency.value = 0.07; var lg = a.createGain(); lg.gain.value = 0.05; lfo.connect(lg); lg.connect(master.gain); lfo.start(); oscs.push(lfo);
-      master.gain.setValueAtTime(0.0001, a.currentTime); master.gain.exponentialRampToValueAtTime(0.30, a.currentTime + 3);
-      var timer = setInterval(function () { if (Math.random() < 0.5) { var n = [880, 987.77, 1174.66, 1318.51, 1567.98]; bell([[n[Math.floor(Math.random() * n.length)], 1]], 2.6, 0.05, 2400); } }, 4500);
-      ambNodes = { master: master, oscs: oscs, timer: timer };
+      var master = a.createGain(); master.gain.setValueAtTime(0.0001, a.currentTime);
+      master.gain.exponentialRampToValueAtTime(0.5, a.currentTime + 2.5); master.connect(a.destination);
+      var filt = a.createBiquadFilter(); filt.type = "lowpass"; filt.frequency.value = 1300; filt.Q.value = 0.4; filt.connect(master);
+      var dur = 7, idx = 0;
+      function playChord(notes) {
+        var t = a.currentTime;
+        var cg = a.createGain();
+        cg.gain.setValueAtTime(0.0001, t);
+        cg.gain.exponentialRampToValueAtTime(0.13, t + 1.6);            // ふわっと立ち上がり
+        cg.gain.setValueAtTime(0.13, t + dur - 1.6);
+        cg.gain.exponentialRampToValueAtTime(0.0001, t + dur);           // 次の和音へクロスフェード
+        cg.connect(filt);
+        notes.forEach(function (f, i) {
+          var o = a.createOscillator(); o.type = "triangle"; o.frequency.value = f; o.detune.value = (i - 1) * 2.5;
+          var og = a.createGain(); og.gain.value = (i === 0 ? 0.36 : 0.28);
+          o.connect(og); og.connect(cg); o.start(t); o.stop(t + dur + 0.2);
+        });
+        bell([[AMB_SPARK[idx % AMB_SPARK.length] * 2, 1]], 2.4, 0.035, 2600); // 和音の頭に澄んだ一音
+      }
+      function step() { playChord(AMB_CHORDS[idx % AMB_CHORDS.length]); idx++; }
+      step();
+      var timer = setInterval(step, dur * 1000);
+      ambNodes = { master: master, timer: timer };
     } catch (e) {}
   }
   function stopAmbient() {
     if (!ambNodes) return;
-    try { clearInterval(ambNodes.timer); var a = audioCtx(); var t = a ? a.currentTime : 0; ambNodes.master.gain.cancelScheduledValues(t); ambNodes.master.gain.setValueAtTime(0.30, t); ambNodes.master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); ambNodes.oscs.forEach(function (o) { try { o.stop(t + 1.4); } catch (e) {} }); } catch (e) {}
+    try { clearInterval(ambNodes.timer); var a = audioCtx(); var t = a ? a.currentTime : 0; ambNodes.master.gain.cancelScheduledValues(t); ambNodes.master.gain.setValueAtTime(0.5, t); ambNodes.master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); } catch (e) {}
     ambNodes = null;
   }
   function toggleAmbient() { ambientOn = !ambientOn; try { localStorage.setItem(AMB_KEY, ambientOn ? "on" : "off"); } catch (e) {} if (ambientOn) startAmbient(); else stopAmbient(); }
