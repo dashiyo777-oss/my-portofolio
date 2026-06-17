@@ -30,8 +30,15 @@
   function catLabel(c) { var x = CAT[c]; return x ? (lang === "en" ? x[1] : x[0]) : c; }
   var MOOD = { down: ["落ち込み", "Down"], lost: ["迷い", "Lost"], high: ["高揚", "Uplifted"] };
   function moodLabel(m) { var x = MOOD[m]; return x ? (lang === "en" ? x[1] : x[0]) : m; }
-  var RANK_TITLE_EN = { 1: "Apprentice Sage", 2: "Sage", 3: "Great Sage", 4: "Legendary Sage", 5: "Sacred Guidance" };
+  var RANK_TITLE_EN = { 1: "The Kindler", 2: "Sprout of Learning", 3: "Questioner", 4: "Thinker", 5: "The Prudent", 6: "Great Sage", 7: "The Enlightened", 8: "Seeker of Legends", 9: "Sacred Guidance", 10: "Wisdom Mastery" };
   function rankTitle(r) { return lang === "en" ? (RANK_TITLE_EN[r] || RANKS[r].title) : RANKS[r].title; }
+  var MAX_RANK = 10;
+
+  // 会員（note 月額）判定：その月のコードを入れた月だけ有効＝毎月の更新が要る
+  function monthKey(d) { return d.getFullYear() * 100 + (d.getMonth() + 1); }
+  function expectedCode(d) { var m = monthKey(d); var n = ((m * 7919) % 9000) + 1000; return "TOMO-" + n; }
+  function isPaid() { return state.paidMonth === monthKey(new Date()); }
+  function sageTier(id) { var s = SAGES[id]; return (s && s.tier) ? s.tier : "paid"; }
 
   // 叡智の位（段位）。生涯記録ベース＝下がらない。
   var POSITIONS = [
@@ -64,7 +71,7 @@
 
   // ---------- セーブ/ロード ----------
   function newGame() {
-    return { v: 1, stats: { mind: 60, wisdom: 0, bonds: 50, wealth: 50, passion: 50 }, turn: 0, journal: [], seen: [], premiumUnlocked: false, favoriteSage: null };
+    return { v: 1, stats: { mind: 60, wisdom: 0, bonds: 50, wealth: 50, passion: 50 }, turn: 0, journal: [], seen: [], paidMonth: 0, favoriteSage: null };
   }
   function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
   function load() { try { var r = localStorage.getItem(SAVE_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
@@ -98,7 +105,7 @@
     return "common";
   }
   function rollLegend() {
-    if (!state.premiumUnlocked) return null;
+    if (!isPaid()) return null;
     var eligible = LEGENDS.filter(function (l) { return !codexHas(l.id) && state.stats.wisdom >= (l.minWisdom || 0); });
     if (eligible.length === 0) return null;
     var p = 0.06 + Math.min(0.20, state.stats.wisdom / 1200);
@@ -118,16 +125,17 @@
   function isScripture(id) { return id.indexOf("scripture") === 0; }
   function scriptureTag() { return L("（聖典）", " (Scripture)"); }
 
-  function unlockedRank() { var r = 1; [1, 2, 3, 4, 5].forEach(function (k) { if (state.stats.wisdom >= RANKS[k].unlockWisdom) r = k; }); return r; }
+  function unlockedRank() { var r = 1; for (var k = 1; k <= MAX_RANK; k++) { if (state.stats.wisdom >= RANKS[k].unlockWisdom) r = k; } return r; }
   function nextRankInfo() {
     var cur = unlockedRank();
-    if (cur >= 5) return null;
+    if (cur >= MAX_RANK) return null;
     var nk = cur + 1;
     return { rank: nk, need: RANKS[nk].unlockWisdom, have: state.stats.wisdom, prevNeed: RANKS[cur].unlockWisdom };
   }
+  // 表示状態: "show" | "member"（会員限定）| "rank"（叡智で解放）
   function adviceState(adv) {
-    if (adv.sageId === "original") return "show";
-    if (!state.premiumUnlocked) return "premium";
+    if (adv.sageId === "original" || sageTier(adv.sageId) === "free") return "show";
+    if (!isPaid()) return "member";
     var sage = SAGES[adv.sageId];
     if (sage && state.stats.wisdom < RANKS[sage.rank].unlockWisdom) return "rank";
     return "show";
@@ -157,8 +165,8 @@
           "Wisdom " + s.wisdom + " / " + rem + " to the next stage “" + esc(rankTitle(nx.rank)) + "”") +
         '<div class="wbar"><i style="width:' + (prog * 100).toFixed(0) + '%"></i></div></div>';
     } else {
-      wis = '<div class="wisrow">' + L("叡智 " + s.wisdom + " ／ 最高の境地「" + esc(rankTitle(5)) + "」に到達",
-        "Wisdom " + s.wisdom + " / Reached the highest stage “" + esc(rankTitle(5)) + "”") + '</div>';
+      wis = '<div class="wisrow">' + L("叡智 " + s.wisdom + " ／ 最高の境地「" + esc(rankTitle(MAX_RANK)) + "」に到達",
+        "Wisdom " + s.wisdom + " / Reached the highest stage “" + esc(rankTitle(MAX_RANK)) + "”") + '</div>';
     }
     return '<div class="statusbar">' +
       '<span class="heart">❤️</span>' +
@@ -199,8 +207,10 @@
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
       '<button class="btn ghost" data-act="book">' + L("わが叡智の書を見る", "Open the Book of Wisdom") + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
+      (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
       (has ? '<button class="btn ghost" data-act="reset">' + L("はじめからやり直す", "Start a new life") + '</button>' : "") +
       '</div>' +
+      (isPaid() ? '<p class="member-on">' + L("✓ 会員（今月有効）", "✓ Member (valid this month)") + '</p>' : "") +
       '<p class="codex-tease">' + L("✦ 伝説の言葉 " + codex.length + " / " + LEGENDS.length + " 蒐集 ✦", "✦ Legendary Words " + codex.length + " / " + LEGENDS.length + " collected ✦") + '</p>' +
       recallHtml +
       '<p class="tagline">' + L("迷ったとき、世界の偉人があなたの相談相手になる。<br>言葉を選び、暮らしに活かし、少しずつ賢くなっていく。",
@@ -214,24 +224,33 @@
   var currentEvent = null, currentLegend = null;
   var mode = "auto", consultCat = null;
   function pickEvent() {
+    var avail = isPaid() ? EVENTS : EVENTS.filter(function (e) { return e.tier === "free"; });
     var pool;
     if (mode === "consult" && consultCat) {
-      pool = EVENTS.filter(function (e) { return e.category === consultCat && state.seen.indexOf(e.id) < 0; });
-      if (pool.length === 0) pool = EVENTS.filter(function (e) { return e.category === consultCat; });
+      pool = avail.filter(function (e) { return e.category === consultCat && state.seen.indexOf(e.id) < 0; });
+      if (pool.length === 0) pool = avail.filter(function (e) { return e.category === consultCat; });
     } else {
-      pool = EVENTS.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
-      if (pool.length === 0) { state.seen = []; pool = EVENTS.slice(); }
+      pool = avail.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
+      if (pool.length === 0) { state.seen = []; pool = avail.slice(); }
     }
+    if (pool.length === 0) return null;
     return pool[Math.floor(Math.random() * pool.length)];
   }
   function proceed() {
     if (state.stats.mind < REST_THRESHOLD) { showRest(); return; }
-    currentEvent = pickEvent();
+    var ev = pickEvent();
+    if (!ev) { showMemberGate(); return; }
+    currentEvent = ev;
     currentLegend = rollLegend();
     showEvent(currentEvent);
   }
+  function freeCategories() { var m = {}; EVENTS.forEach(function (e) { if (e.tier === "free") m[e.category] = 1; }); return m; }
   function showConsult() {
-    var grid = CAT_KEYS.map(function (c) { return '<button class="consult-cat" data-consultcat="' + c + '">' + esc(catLabel(c)) + '</button>'; }).join("");
+    var fc = freeCategories(), paid = isPaid();
+    var grid = CAT_KEYS.map(function (c) {
+      if (!paid && !fc[c]) return '<button class="consult-cat locked" data-act="membergate">' + esc(catLabel(c)) + ' 🔒</button>';
+      return '<button class="consult-cat" data-consultcat="' + c + '">' + esc(catLabel(c)) + '</button>';
+    }).join("");
     render('<div class="fade">' + statusbar() +
       '<h2 class="event-title">' + L("どんなことで、悩んでいますか？", "What is troubling you?") + '</h2>' +
       '<p class="event-body">' + L("いま心にあるものを選ぶと、その悩みに効く言葉が訪れます。", "Choose what's on your heart, and words for that worry will come.") + '</p>' +
@@ -240,16 +259,31 @@
       '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
       '</div>');
   }
+  // 会員コード入力バナー（note 月額）
+  function memberBanner() {
+    return '<div class="paywall">' +
+      '<h3>' + L("🔑 会員エリア（note）", "🔑 Members area (note)") + '</h3>' +
+      '<p>' + L("世界の偉人・聖典・伝説、そして多くの悩みは会員限定。<br>note会員ページの「今月のコード」を入れると解放されます。",
+        "The world's sages, scriptures, legends and many worries are members-only.<br>Enter this month's code from the note members page to unlock.") + '</p>' +
+      '<input class="code-input" autocapitalize="characters" placeholder="' + L("今月のコード（例: TOMO-1234）", "This month's code (e.g. TOMO-1234)") + '">' +
+      '<button class="btn gold sm" data-act="redeem" style="display:inline-block">' + L("コードで解放", "Unlock with code") + '</button>' +
+      '<div class="code-msg"></div>' +
+      '</div>';
+  }
+  function showMemberGate() {
+    render('<div class="fade">' + statusbar() +
+      '<h2 class="event-title">' + L("ここから先は、会員エリアです", "Beyond here is the members area") + '</h2>' +
+      '<p class="event-body">' + L("恋愛・学業などの悩み、世界の偉人・聖典・伝説、そして毎月の新しい言葉は会員限定。noteの会員ページの「今月のコード」で解放できます。",
+        "Worries like love and study, the world's sages, scriptures and legends, and fresh words each month are members-only. Unlock with this month's code from the note members page.") + '</p>' +
+      memberBanner() +
+      '<button class="btn ghost" data-act="walk">' + L("無料で歩む", "Walk for free") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
   function showEvent(ev) {
     var legendHtml = currentLegend ? legendCard(currentLegend) : "";
     var cards = legendHtml + ev.advices.map(function (adv) { return adviceCard(ev, adv); }).join("");
-    var paywall = state.premiumUnlocked ? "" :
-      '<div class="paywall">' +
-      '<h3>' + L("🕯 偉人フェーズ", "🕯 The Sages' Phase") + '</h3>' +
-      '<p>' + L("ここから先は、世界の偉人があなたの相談相手に。<br>出典付きの本物の言葉、そして高みの賢者たちへ。",
-        "Beyond here, the great minds of the world become your counsel.<br>Real, sourced words — and the higher sages await.") + '</p>' +
-      '<button class="btn gold sm" data-act="unlock" style="display:inline-block">' + L("偉人フェーズを解放（デモ）", "Unlock the Sages' Phase (demo)") + '</button>' +
-      '</div>';
+    var paywall = isPaid() ? "" : memberBanner();
     var consultBack = (mode === "consult") ? '<button class="btn ghost" data-act="consult">' + L("← 悩みを選び直す", "← Choose another worry") + '</button>' : "";
     var html = '<div class="fade">' + statusbar() +
       '<span class="eyebrow">' + esc(catLabel(ev.category)) + ' ・ ' + esc(moodLabel(ev.mood)) + '</span>' +
@@ -279,11 +313,11 @@
     var scripture = isScripture(adv.sageId);
     var color = sage.color || "#999";
 
-    if (st === "premium") {
+    if (st === "member") {
       return '<div class="card locked" style="--c:' + color + '">' +
         '<div class="card-head"><span class="disc' + (scripture ? ' scripture' : '') + '">🔒</span>' +
-        '<span class="sname">？？？</span><span class="badge">' + L("偉人フェーズ", "Sages' Phase") + '</span></div>' +
-        '<p class="lockmsg">' + L("この言葉は <b>偉人フェーズ</b> で開きます。", "This word opens in the <b>Sages' Phase</b>.") + '</p></div>';
+        '<span class="sname">' + esc(sageName(sage)) + '</span><span class="badge">' + L("会員限定", "Members") + '</span></div>' +
+        '<p class="lockmsg">' + L("この言葉は <b>会員</b> で開きます（今月のコードを入力）。", "This word opens for <b>members</b> (enter this month's code).") + '</p></div>';
     }
     if (st === "rank") {
       var need = RANKS[sage.rank].unlockWisdom, rem = Math.max(0, need - state.stats.wisdom);
@@ -591,7 +625,18 @@
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
     else if (act === "title") showTitle();
-    else if (act === "unlock") { state.premiumUnlocked = true; save(); if (currentEvent) showEvent(currentEvent); else proceed(); }
+    else if (act === "membergate") { showMemberGate(); }
+    else if (act === "redeem") {
+      var cinp = app.querySelector(".code-input");
+      var code = cinp ? (cinp.value || "").trim().toUpperCase() : "";
+      if (code === expectedCode(new Date()).toUpperCase()) {
+        state.paidMonth = monthKey(new Date()); save();
+        if (currentEvent) showEvent(currentEvent); else showTitle();
+      } else {
+        var msgEl = app.querySelector(".code-msg");
+        if (msgEl) msgEl.textContent = L("コードが違います。note会員ページをご確認ください。", "Incorrect code. Please check the note members page.");
+      }
+    }
     else if (act === "reflect-open") { var rb = app.querySelector(".reflect-body"); if (rb) rb.hidden = false; if (t.style) t.style.display = "none"; }
     else if (act === "reflect-save") {
       var rbox = t.closest ? t.closest(".reflect") : null;

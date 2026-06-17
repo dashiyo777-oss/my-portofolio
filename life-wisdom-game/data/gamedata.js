@@ -6,24 +6,44 @@ window.GAME_DATA = {
     "note": "偉人・聖典マスタ。rank=経験(wisdom)で解放される到達度(1〜5)。isPremium=偉人フェーズ(課金境界)。原則・設計は ../SPEC.md §4.3 §4.4 §10.2 を参照。",
     "ranks": {
       "1": {
-        "title": "入門の賢者",
+        "title": "灯をともす者",
         "unlockWisdom": 0
       },
       "2": {
-        "title": "賢者",
-        "unlockWisdom": 30
+        "title": "学びの芽",
+        "unlockWisdom": 15
       },
       "3": {
-        "title": "大賢者",
-        "unlockWisdom": 70
+        "title": "問いを持つ者",
+        "unlockWisdom": 40
       },
       "4": {
-        "title": "伝説の賢者",
-        "unlockWisdom": 120
+        "title": "思索の人",
+        "unlockWisdom": 80
       },
       "5": {
+        "title": "賢慮の士",
+        "unlockWisdom": 140
+      },
+      "6": {
+        "title": "大賢者",
+        "unlockWisdom": 220
+      },
+      "7": {
+        "title": "達観の人",
+        "unlockWisdom": 320
+      },
+      "8": {
+        "title": "伝説の探究者",
+        "unlockWisdom": 450
+      },
+      "9": {
         "title": "神聖なる導き",
-        "unlockWisdom": 200
+        "unlockWisdom": 620
+      },
+      "10": {
+        "title": "叡智皆伝",
+        "unlockWisdom": 850
       }
     },
     "sages": [
@@ -38,7 +58,8 @@ window.GAME_DATA = {
         "isPremium": false,
         "packId": null,
         "color": "#caa45d",
-        "desc": "無料で寄り添うナレーター。実在人物の言葉ではない一般的な励まし(original)。"
+        "desc": "無料で寄り添うナレーター。実在人物の言葉ではない一般的な励まし(original)。",
+        "tier": "free"
       },
       {
         "id": "teresa",
@@ -51,7 +72,8 @@ window.GAME_DATA = {
         "rank": 1,
         "isPremium": true,
         "packId": "pack_human",
-        "color": "#6fa8a0"
+        "color": "#6fa8a0",
+        "tier": "free"
       },
       {
         "id": "lincoln",
@@ -64,7 +86,8 @@ window.GAME_DATA = {
         "rank": 1,
         "isPremium": true,
         "packId": "pack_leader",
-        "color": "#7a6f57"
+        "color": "#7a6f57",
+        "tier": "free"
       },
       {
         "id": "ali",
@@ -74,10 +97,11 @@ window.GAME_DATA = {
         "field": "sports",
         "era": "1942–2016",
         "stance": "confidence",
-        "rank": 1,
+        "rank": 2,
         "isPremium": true,
         "packId": "pack_sports",
-        "color": "#c0603a"
+        "color": "#c0603a",
+        "tier": "free"
       },
       {
         "id": "confucius",
@@ -90,7 +114,8 @@ window.GAME_DATA = {
         "rank": 2,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#8f7355"
+        "color": "#8f7355",
+        "tier": "paid"
       },
       {
         "id": "jobs",
@@ -103,7 +128,8 @@ window.GAME_DATA = {
         "rank": 2,
         "isPremium": true,
         "packId": "pack_business",
-        "color": "#3b6ea5"
+        "color": "#3b6ea5",
+        "tier": "paid"
       },
       {
         "id": "ryoma",
@@ -113,10 +139,11 @@ window.GAME_DATA = {
         "field": "leader",
         "era": "1836–1867",
         "stance": "action",
-        "rank": 2,
+        "rank": 3,
         "isPremium": true,
         "packId": "pack_leader",
-        "color": "#5b8a72"
+        "color": "#5b8a72",
+        "tier": "paid"
       },
       {
         "id": "gandhi",
@@ -126,10 +153,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "1869–1948",
         "stance": "nonviolence",
-        "rank": 3,
+        "rank": 4,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#b08968"
+        "color": "#b08968",
+        "tier": "paid"
       },
       {
         "id": "curie",
@@ -139,10 +167,11 @@ window.GAME_DATA = {
         "field": "science",
         "era": "1867–1934",
         "stance": "perseverance",
-        "rank": 3,
+        "rank": 4,
         "isPremium": true,
         "packId": "pack_science",
-        "color": "#5f6caf"
+        "color": "#5f6caf",
+        "tier": "paid"
       },
       {
         "id": "hepburn",
@@ -152,12 +181,13 @@ window.GAME_DATA = {
         "field": "art",
         "era": "1929–1993",
         "stance": "grace",
-        "rank": 3,
+        "rank": 5,
         "isPremium": true,
         "packId": "pack_art",
         "color": "#c98ca0",
         "pendingContent": true,
-        "note": "一次出典が確実な名言の選定中。確定までイベント未割当(§verification)。"
+        "note": "一次出典が確実な名言の選定中。確定までイベント未割当(§verification)。",
+        "tier": "paid"
       },
       {
         "id": "keller",
@@ -167,10 +197,11 @@ window.GAME_DATA = {
         "field": "humanitarian",
         "era": "1880–1968",
         "stance": "overcoming",
-        "rank": 3,
+        "rank": 5,
         "isPremium": true,
         "packId": "pack_human",
-        "color": "#a0825f"
+        "color": "#a0825f",
+        "tier": "paid"
       },
       {
         "id": "einstein",
@@ -180,10 +211,11 @@ window.GAME_DATA = {
         "field": "science",
         "era": "1879–1955",
         "stance": "curiosity",
-        "rank": 4,
+        "rank": 6,
         "isPremium": true,
         "packId": "pack_science",
-        "color": "#4f7d8c"
+        "color": "#4f7d8c",
+        "tier": "paid"
       },
       {
         "id": "annefrank",
@@ -193,10 +225,11 @@ window.GAME_DATA = {
         "field": "humanitarian",
         "era": "1929–1945",
         "stance": "hope",
-        "rank": 2,
+        "rank": 3,
         "isPremium": true,
         "packId": "pack_human",
-        "color": "#8fae6f"
+        "color": "#8fae6f",
+        "tier": "paid"
       },
       {
         "id": "vangogh",
@@ -206,10 +239,11 @@ window.GAME_DATA = {
         "field": "art",
         "era": "1853–1890",
         "stance": "passion",
-        "rank": 3,
+        "rank": 4,
         "isPremium": true,
         "packId": "pack_art",
-        "color": "#e0a44a"
+        "color": "#e0a44a",
+        "tier": "paid"
       },
       {
         "id": "frankl",
@@ -219,10 +253,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "1905–1997",
         "stance": "meaning",
-        "rank": 4,
+        "rank": 6,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#6b5b95"
+        "color": "#6b5b95",
+        "tier": "paid"
       },
       {
         "id": "mandela",
@@ -232,10 +267,11 @@ window.GAME_DATA = {
         "field": "leader",
         "era": "1918–2013",
         "stance": "forgiveness",
-        "rank": 4,
+        "rank": 6,
         "isPremium": true,
         "packId": "pack_leader",
-        "color": "#9c7b3c"
+        "color": "#9c7b3c",
+        "tier": "paid"
       },
       {
         "id": "murasaki",
@@ -245,12 +281,13 @@ window.GAME_DATA = {
         "field": "literature",
         "era": "c.973–c.1014",
         "stance": "sensibility",
-        "rank": 3,
+        "rank": 5,
         "isPremium": true,
         "packId": "pack_art",
         "color": "#9b8fb0",
         "pendingContent": true,
-        "note": "人生訓として一次出典が確実な一節を選定中。確定までイベント未割当(§verification)。"
+        "note": "人生訓として一次出典が確実な一節を選定中。確定までイベント未割当(§verification)。",
+        "tier": "paid"
       },
       {
         "id": "seneca",
@@ -260,10 +297,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "BC1頃–AD65",
         "stance": "stoic",
-        "rank": 4,
+        "rank": 7,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#6e6a5c"
+        "color": "#6e6a5c",
+        "tier": "paid"
       },
       {
         "id": "churchill",
@@ -273,10 +311,11 @@ window.GAME_DATA = {
         "field": "leader",
         "era": "1874–1965",
         "stance": "resolve",
-        "rank": 3,
+        "rank": 5,
         "isPremium": true,
         "packId": "pack_leader",
-        "color": "#8a7a5c"
+        "color": "#8a7a5c",
+        "tier": "paid"
       },
       {
         "id": "nietzsche",
@@ -286,10 +325,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "1844–1900",
         "stance": "meaning",
-        "rank": 4,
+        "rank": 7,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#5c5a6e"
+        "color": "#5c5a6e",
+        "tier": "paid"
       },
       {
         "id": "laozi",
@@ -299,10 +339,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "BC6世紀頃",
         "stance": "flow",
-        "rank": 3,
+        "rank": 5,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#7a8c6f"
+        "color": "#7a8c6f",
+        "tier": "paid"
       },
       {
         "id": "edison",
@@ -312,10 +353,11 @@ window.GAME_DATA = {
         "field": "science",
         "era": "1847–1931",
         "stance": "perseverance",
-        "rank": 2,
+        "rank": 3,
         "isPremium": true,
         "packId": "pack_science",
-        "color": "#b08a3e"
+        "color": "#b08a3e",
+        "tier": "paid"
       },
       {
         "id": "brucelee",
@@ -325,10 +367,11 @@ window.GAME_DATA = {
         "field": "sports",
         "era": "1940–1973",
         "stance": "adaptability",
-        "rank": 3,
+        "rank": 4,
         "isPremium": true,
         "packId": "pack_sports",
-        "color": "#b5503a"
+        "color": "#b5503a",
+        "tier": "paid"
       },
       {
         "id": "eleanor",
@@ -338,10 +381,11 @@ window.GAME_DATA = {
         "field": "leader",
         "era": "1884–1962",
         "stance": "courage",
-        "rank": 2,
+        "rank": 3,
         "isPremium": true,
         "packId": "pack_leader",
-        "color": "#8a7a9c"
+        "color": "#8a7a9c",
+        "tier": "paid"
       },
       {
         "id": "socrates",
@@ -351,10 +395,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "BC470–BC399",
         "stance": "inquiry",
-        "rank": 4,
+        "rank": 7,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#6c7a89"
+        "color": "#6c7a89",
+        "tier": "paid"
       },
       {
         "id": "king",
@@ -364,10 +409,11 @@ window.GAME_DATA = {
         "field": "leader",
         "era": "1929–1968",
         "stance": "love",
-        "rank": 4,
+        "rank": 8,
         "isPremium": true,
         "packId": "pack_leader",
-        "color": "#b5894a"
+        "color": "#b5894a",
+        "tier": "paid"
       },
       {
         "id": "shakespeare",
@@ -377,10 +423,11 @@ window.GAME_DATA = {
         "field": "literature",
         "era": "1564–1616",
         "stance": "insight",
-        "rank": 4,
+        "rank": 8,
         "isPremium": true,
         "packId": "pack_art",
-        "color": "#7d6b95"
+        "color": "#7d6b95",
+        "tier": "paid"
       },
       {
         "id": "fukuzawa",
@@ -390,10 +437,11 @@ window.GAME_DATA = {
         "field": "thought",
         "era": "1835–1901",
         "stance": "independence",
-        "rank": 4,
+        "rank": 8,
         "isPremium": true,
         "packId": "pack_thought",
-        "color": "#5e7d6a"
+        "color": "#5e7d6a",
+        "tier": "paid"
       },
       {
         "id": "scripture_bible",
@@ -402,11 +450,12 @@ window.GAME_DATA = {
         "tradition": "christianity",
         "field": "scripture",
         "stance": "sacred",
-        "rank": 5,
+        "rank": 9,
         "isPremium": true,
         "packId": "pack_scripture",
         "color": "#caa45d",
-        "note": "神を一人称で演じない。聖典の一節を出典(章節)付きで賜る(§4.4)。"
+        "note": "神を一人称で演じない。聖典の一節を出典(章節)付きで賜る(§4.4)。",
+        "tier": "paid"
       },
       {
         "id": "scripture_quran",
@@ -415,11 +464,12 @@ window.GAME_DATA = {
         "tradition": "islam",
         "field": "scripture",
         "stance": "sacred",
-        "rank": 5,
+        "rank": 9,
         "isPremium": true,
         "packId": "pack_scripture",
         "color": "#caa45d",
-        "note": "アッラー及び預言者を絵で描かない。光・カリグラフィー等の抽象表現(§4.4 D)。"
+        "note": "アッラー及び預言者を絵で描かない。光・カリグラフィー等の抽象表現(§4.4 D)。",
+        "tier": "paid"
       },
       {
         "id": "scripture_dhammapada",
@@ -428,11 +478,12 @@ window.GAME_DATA = {
         "tradition": "buddhism",
         "field": "scripture",
         "stance": "sacred",
-        "rank": 5,
+        "rank": 9,
         "isPremium": true,
         "packId": "pack_scripture",
         "color": "#caa45d",
-        "note": "仏典の一節を出典(章節)付きで賜る(§4.4)。"
+        "note": "仏典の一節を出典(章節)付きで賜る(§4.4)。",
+        "tier": "paid"
       }
     ]
   },
@@ -504,7 +555,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "A big failure at work. I want to quit…",
-        "bodyEn": "I made a serious mistake on a project I was trusted with. The stares around me sting, and I want to disappear."
+        "bodyEn": "I made a serious mistake on a project I was trusted with. The stares around me sting, and I want to disappear.",
+        "tier": "paid"
       },
       {
         "id": "work_overwhelm_01",
@@ -563,7 +615,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "There's too much to do — I'm about to break.",
-        "bodyEn": "Work keeps piling up and I don't know where to start. My mind and body are near their limit."
+        "bodyEn": "Work keeps piling up and I don't know where to start. My mind and body are near their limit.",
+        "tier": "free"
       },
       {
         "id": "relationship_conflict_01",
@@ -622,7 +675,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I just can't forgive that person.",
-        "bodyEn": "Someone I trusted betrayed me. The anger and resentment won't leave my heart."
+        "bodyEn": "Someone I trusted betrayed me. The anger and resentment won't leave my heart.",
+        "tier": "paid"
       },
       {
         "id": "love_heartbreak_01",
@@ -680,7 +734,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "My heart is broken. It feels like it could tear apart.",
-        "bodyEn": "I've parted from someone dear. I can't focus on anything, and the tears won't stop."
+        "bodyEn": "I've parted from someone dear. I can't focus on anything, and the tears won't stop.",
+        "tier": "paid"
       },
       {
         "id": "study_struggle_01",
@@ -726,7 +781,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "No matter how I study, I'm not improving.",
-        "bodyEn": "I'm trying hard but the results won't come. Maybe I just have no talent."
+        "bodyEn": "I'm trying hard but the results won't come. Maybe I just have no talent.",
+        "tier": "paid"
       },
       {
         "id": "money_worry_01",
@@ -771,7 +827,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I have no money. The future terrifies me.",
-        "bodyEn": "My income and savings are both shaky. Thinking about money keeps me up at night."
+        "bodyEn": "My income and savings are both shaky. Thinking about money keeps me up at night.",
+        "tier": "free"
       },
       {
         "id": "self_doubt_01",
@@ -816,7 +873,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I can't find any confidence in myself.",
-        "bodyEn": "I feel I fail at everything. I compare myself to others and sink."
+        "bodyEn": "I feel I fail at everything. I compare myself to others and sink.",
+        "tier": "free"
       },
       {
         "id": "change_world_01",
@@ -863,7 +921,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I want to change things, but can't take the first step.",
-        "bodyEn": "I know I can't stay like this. Yet I can't summon the courage."
+        "bodyEn": "I know I can't stay like this. Yet I can't summon the courage.",
+        "tier": "paid"
       },
       {
         "id": "lonely_01",
@@ -922,7 +981,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I feel all alone and uneasy.",
-        "bodyEn": "It feels like there's no one to rely on. Loneliness weighs heavy on my chest."
+        "bodyEn": "It feels like there's no one to rely on. Loneliness weighs heavy on my chest.",
+        "tier": "free"
       },
       {
         "id": "health_illness_01",
@@ -969,7 +1029,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "My health has broken down. I'm anxious about what's ahead.",
-        "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me."
+        "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me.",
+        "tier": "free"
       },
       {
         "id": "success_highmood_01",
@@ -1028,7 +1089,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "Things are going so well I'm getting carried away.",
-        "bodyEn": "Everything I do is going great. Yet my footing feels strangely unsteady."
+        "bodyEn": "Everything I do is going great. Yet my footing feels strangely unsteady.",
+        "tier": "paid"
       },
       {
         "id": "relationship_distrust_01",
@@ -1074,7 +1136,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I can't trust people anymore.",
-        "bodyEn": "After being betrayed and hurt again and again, I've come to fear people themselves."
+        "bodyEn": "After being betrayed and hurt again and again, I've come to fear people themselves.",
+        "tier": "paid"
       },
       {
         "id": "unfair_situation_01",
@@ -1119,7 +1182,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "Something unfair happened, and I'm powerless.",
-        "bodyEn": "It's not my fault, yet the situation won't change. Feelings with nowhere to go swirl inside me."
+        "bodyEn": "It's not my fault, yet the situation won't change. Feelings with nowhere to go swirl inside me.",
+        "tier": "paid"
       },
       {
         "id": "big_goal_overwhelm_01",
@@ -1166,7 +1230,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "The goal is so big my legs freeze.",
-        "bodyEn": "What I want to do is grand. But it's so far away I don't know where to begin."
+        "bodyEn": "What I want to do is grand. But it's so far away I don't know where to begin.",
+        "tier": "paid"
       },
       {
         "id": "study_effort_01",
@@ -1212,7 +1277,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "However I try, I can't catch up to the talented.",
-        "bodyEn": "However much I do, someone does it better. I start to wonder if effort even matters."
+        "bodyEn": "However much I do, someone does it better. I start to wonder if effort even matters.",
+        "tier": "paid"
       },
       {
         "id": "work_newjob_01",
@@ -1257,7 +1323,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I just can't fit into the new environment.",
-        "bodyEn": "I've just changed jobs (or schools). The ways and the people differ, and I feel out of place."
+        "bodyEn": "I've just changed jobs (or schools). The ways and the people differ, and I feel out of place.",
+        "tier": "paid"
       },
       {
         "id": "money_contentment_01",
@@ -1304,7 +1371,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "Compared to others, I feel miserable about money.",
-        "bodyEn": "On social media everyone looks wealthy. It hurts to feel left behind."
+        "bodyEn": "On social media everyone looks wealthy. It hurts to feel left behind.",
+        "tier": "paid"
       },
       {
         "id": "love_courage_01",
@@ -1351,7 +1419,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I can't find the courage to confess my feelings.",
-        "bodyEn": "The feelings are there. But fearing rejection, I can't take that last step."
+        "bodyEn": "The feelings are there. But fearing rejection, I can't take that last step.",
+        "tier": "paid"
       },
       {
         "id": "health_anxiety_01",
@@ -1395,7 +1464,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "Until the results come, I imagine only the worst.",
-        "bodyEn": "Nothing is known yet, but my head is full of worst-case scenarios. I can't sleep."
+        "bodyEn": "Nothing is known yet, but my head is full of worst-case scenarios. I can't sleep.",
+        "tier": "paid"
       },
       {
         "id": "health_serious_01",
@@ -1441,7 +1511,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "Facing a serious illness, day after day.",
-        "bodyEn": "A long treatment. Some days are better; some nights, the fear is unbearable."
+        "bodyEn": "A long treatment. Some days are better; some nights, the fear is unbearable.",
+        "tier": "paid"
       },
       {
         "id": "perseverance_setback_01",
@@ -1485,7 +1556,8 @@ window.GAME_DATA = {
           }
         ],
         "titleEn": "I fail no matter how often I try. I'm broken.",
-        "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward."
+        "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward.",
+        "tier": "paid"
       }
     ]
   },
