@@ -342,3 +342,20 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 #app.night .lang-toggle button.on{background:var(--gold); color:#241c0c; border-color:var(--gold)}
 #app.night .cert-kicker,#app.night .cert-pos,#app.night .cert-stats b{color:#e8d6ab}
 #app.night .member-on{color:#7fc08c}
+
+/* ---- 仕上げ：カテゴリアイコン＆巻物カード ---- */
+.cc-ic{display:block; font-size:1.5rem; margin-bottom:5px; line-height:1}
+.scroll-card{
+  position:relative; margin:18px 2px 14px; padding:28px 20px 24px;
+  background:linear-gradient(180deg,#fffdf8,#f6eedd);
+  border:1px solid var(--line); border-radius:14px; box-shadow:0 6px 20px rgba(40,30,16,.12);
+}
+.scroll-card:before,.scroll-card:after{content:""; position:absolute; left:16%; right:16%; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.scroll-card:before{top:12px} .scroll-card:after{bottom:12px}
+.scroll-card .result-quote{margin:14px 4px 12px}
+.scroll-card.sacred{box-shadow:0 6px 22px rgba(202,164,93,.28)}
+.scroll-card.sacred:before,.scroll-card.sacred:after{height:2.5px; background:linear-gradient(90deg,transparent,var(--gold-deep),transparent)}
+.scroll-card.legendary{border-color:var(--gold-deep); box-shadow:0 8px 28px rgba(202,164,93,.38)}
+#app.night .scroll-card{background:linear-gradient(180deg,#2c2823,#241f1a); border-color:var(--line)}
+#app.night .scroll-card .result-quote{color:var(--ink)}

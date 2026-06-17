@@ -30,6 +30,10 @@
   function catLabel(c) { var x = CAT[c]; return x ? (lang === "en" ? x[1] : x[0]) : c; }
   var MOOD = { down: ["落ち込み", "Down"], lost: ["迷い", "Lost"], high: ["高揚", "Uplifted"] };
   function moodLabel(m) { var x = MOOD[m]; return x ? (lang === "en" ? x[1] : x[0]) : m; }
+  var CAT_ICON = { work: "💼", relationship: "🤝", love: "💗", study: "📚", money: "🪙", health: "🌱", self: "🧭" };
+  function catIcon(c) { return CAT_ICON[c] || "•"; }
+  var MOOD_ICON = { down: "🌧", lost: "🌫", high: "✨" };
+  function moodIcon(m) { return MOOD_ICON[m] || ""; }
   var RANK_TITLE_EN = { 1: "The Kindler", 2: "Sprout of Learning", 3: "Questioner", 4: "Thinker", 5: "The Prudent", 6: "Great Sage", 7: "The Enlightened", 8: "Seeker of Legends", 9: "Sacred Guidance", 10: "Wisdom Mastery" };
   function rankTitle(r) { return lang === "en" ? (RANK_TITLE_EN[r] || RANKS[r].title) : RANKS[r].title; }
   var MAX_RANK = 10;
@@ -282,8 +286,8 @@
   function showConsult() {
     var fc = freeCategories(), paid = isPaid();
     var grid = CAT_KEYS.map(function (c) {
-      if (!paid && !fc[c]) return '<button class="consult-cat locked" data-act="membergate">' + esc(catLabel(c)) + ' 🔒</button>';
-      return '<button class="consult-cat" data-consultcat="' + c + '">' + esc(catLabel(c)) + '</button>';
+      if (!paid && !fc[c]) return '<button class="consult-cat locked" data-act="membergate"><span class="cc-ic">' + catIcon(c) + '</span>' + esc(catLabel(c)) + ' 🔒</button>';
+      return '<button class="consult-cat" data-consultcat="' + c + '"><span class="cc-ic">' + catIcon(c) + '</span>' + esc(catLabel(c)) + '</button>';
     }).join("");
     render('<div class="fade">' + statusbar() +
       '<h2 class="event-title">' + L("どんなことで、悩んでいますか？", "What is troubling you?") + '</h2>' +
@@ -320,7 +324,7 @@
     var paywall = isPaid() ? "" : memberBanner();
     var consultBack = (mode === "consult") ? '<button class="btn ghost" data-act="consult">' + L("← 悩みを選び直す", "← Choose another worry") + '</button>' : "";
     var html = '<div class="fade">' + statusbar() +
-      '<span class="eyebrow">' + esc(catLabel(ev.category)) + ' ・ ' + esc(moodLabel(ev.mood)) + '</span>' +
+      '<span class="eyebrow">' + catIcon(ev.category) + ' ' + esc(catLabel(ev.category)) + ' ・ ' + moodIcon(ev.mood) + ' ' + esc(moodLabel(ev.mood)) + '</span>' +
       '<h2 class="event-title">' + esc(evTitle(ev)) + '</h2>' +
       '<p class="event-body">' + esc(evBody(ev)) + '</p>' +
       '<p class="advice-help reading-hint">' + L("ひと呼吸おいて、言葉に耳を澄ませて……", "Take a breath, and listen for the words…") + '</p>' +
@@ -477,9 +481,11 @@
     var ribbon = rec.isLegend ? '<p class="rarity-ribbon legendary">' + L("✦ 伝説の言葉 ✦", "✦ A Legendary Word ✦") + '</p>'
       : (rec.isScripture ? '<p class="rarity-ribbon sacred">' + L("神聖なる導き", "Sacred Guidance") + '</p>' : "");
     var html = '<div class="fade">' + ribbon +
+      '<div class="scroll-card' + (rec.isLegend ? ' legendary' : (rec.isScripture ? ' sacred' : '')) + '">' +
       '<p class="result-quote">' + esc(rec.quote) + '</p>' +
       '<p class="result-from">— ' + esc(rec.sageName) + (rec.isScripture ? L("（聖典の言葉）", " (words of scripture)") : "") + '</p>' +
       (rec.source ? '<p class="result-source">' + esc(rec.source) + '</p>' : "") +
+      '</div>' +
       (dhtml ? '<div class="deltas">' + dhtml + '</div>' : "") +
       rankBanner + posBanner +
       '<p class="saved-toast">' + L("📖 「わが叡智の書」に刻まれた", "📖 Inscribed in your Book of Wisdom") + '</p>' +
@@ -552,7 +558,7 @@
       list = items.slice().reverse().map(entryHTML).join("") || '<div class="empty">' + L("この分類の記録はまだありません。", "No records in this category yet.") + '</div>';
       var cats = ["all"].concat(CAT_KEYS);
       filters = '<div class="filters">' + cats.map(function (c) {
-        return '<button class="chip' + (bookFilter === c ? " on" : "") + '" data-filter="' + c + '">' + (c === "all" ? L("すべて", "All") : esc(catLabel(c))) + '</button>';
+        return '<button class="chip' + (bookFilter === c ? " on" : "") + '" data-filter="' + c + '">' + (c === "all" ? L("すべて", "All") : catIcon(c) + " " + esc(catLabel(c))) + '</button>';
       }).join("") + '</div>';
     }
     render('<div class="fade">' + bookHeader() +
@@ -593,7 +599,7 @@
     var fb = rec.feedback === "resonated" ? L("♡ 響いた", "♡ resonated") : (rec.feedback === "not_now" ? L("今はそうでもない", "not quite now") : "");
     var ep = L("第" + rec.turn + "話", "Ch. " + rec.turn);
     return '<div class="entry" style="--c:' + (sage.color || "#bbb") + '">' +
-      '<div class="when">' + ep + ' ・ ' + esc(when) + ' ・ ' + esc(catLabel(rec.category)) + '</div>' +
+      '<div class="when">' + ep + ' ・ ' + esc(when) + ' ・ ' + catIcon(rec.category) + ' ' + esc(catLabel(rec.category)) + '</div>' +
       '<div class="etitle">' + esc(rec.title) + '</div>' +
       '<div class="eq">' + esc(rec.quote) + '</div>' +
       '<div class="efrom">— ' + esc(rec.sageName) + (rec.isScripture ? scriptureTag() : "") + (rec.source ? " ／ " + esc(rec.source) : "") + '</div>' +
