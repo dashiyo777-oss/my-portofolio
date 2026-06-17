@@ -53,7 +53,7 @@
     if (actx && actx.state === "suspended" && actx.resume) { try { actx.resume(); } catch (e) {} }
     return actx;
   }
-  // 1音（やわらかな立ち上がりと減衰）
+  // 単音（ゆるい立ち上がり＝クリック音を防ぐ）
   function tone(freq, dur, gain, delay) {
     var a = audioCtx(); if (!a || !soundOn) return;
     var t = a.currentTime + (delay || 0);
@@ -61,13 +61,29 @@
     o.type = "sine"; o.frequency.value = freq;
     o.connect(g); g.connect(a.destination);
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(gain, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(gain, t + 0.05);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     o.start(t); o.stop(t + dur + 0.05);
   }
-  function sfxChime() { tone(880, 1.6, 0.12, 0); tone(1320, 1.3, 0.05, 0.01); tone(1760, 0.9, 0.03, 0.02); }            // 決断＝おりんの一打
-  function sfxSacred() { tone(196, 2.8, 0.13, 0); tone(392, 2.4, 0.07, 0.03); tone(587.33, 2.0, 0.04, 0.06); tone(783.99, 1.6, 0.025, 0.09); } // 神聖・伝説＝深い鐘＋倍音
-  function sfxRest() { tone(523.25, 1.2, 0.08, 0); tone(659.25, 1.3, 0.06, 0.06); tone(783.99, 1.5, 0.05, 0.12); }       // 休息＝やわらかな和音
+  // 鐘/おりん：複数の倍音をまとめ、ローパスで角を取り、ふわっと減衰
+  function bell(parts, dur, gain, cutoff) {
+    var a = audioCtx(); if (!a || !soundOn) return;
+    var t = a.currentTime;
+    var g = a.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain, t + 0.07);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    var f = a.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = cutoff || 1600; f.Q.value = 0.6;
+    g.connect(f); f.connect(a.destination);
+    parts.forEach(function (p) {
+      var o = a.createOscillator(); o.type = "sine"; o.frequency.value = p[0];
+      var pg = a.createGain(); pg.gain.value = p[1];
+      o.connect(pg); pg.connect(g); o.start(t); o.stop(t + dur + 0.1);
+    });
+  }
+  function sfxChime() { bell([[587.33, 1], [880, 0.35], [1174.66, 0.14]], 2.2, 0.05, 1500); }                    // 決断＝柔らかなおりん（静か）
+  function sfxSacred() { bell([[196, 1], [392, 0.5], [587.33, 0.28], [783.99, 0.14]], 3.2, 0.11, 2200); }         // 神聖・伝説＝深い鐘
+  function sfxRest() { bell([[523.25, 1], [659.25, 0.6], [783.99, 0.5]], 1.8, 0.06, 1700); }                      // 休息＝やわらかな和音
   function toggleSound() { soundOn = !soundOn; try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (e) {} if (soundOn) sfxChime(); }
 
   // 環境音（ゆるいパッド＋まれな風鈴・任意ON）
@@ -78,18 +94,19 @@
     var a = audioCtx(); if (!a) return; stopAmbient();
     try {
       var master = a.createGain(); master.gain.value = 0.0001; master.connect(a.destination);
-      var pad = a.createGain(); pad.gain.value = 0.05; pad.connect(master);
+      var filt = a.createBiquadFilter(); filt.type = "lowpass"; filt.frequency.value = 700; filt.Q.value = 0.5; filt.connect(master);
+      var pad = a.createGain(); pad.gain.value = 0.12; pad.connect(filt);
       var oscs = [];
       [110, 164.81, 220].forEach(function (f, i) { var o = a.createOscillator(); o.type = "sine"; o.frequency.value = f; if (i === 2) o.detune.value = 5; o.connect(pad); o.start(); oscs.push(o); });
-      var lfo = a.createOscillator(); lfo.frequency.value = 0.07; var lg = a.createGain(); lg.gain.value = 0.03; lfo.connect(lg); lg.connect(master.gain); lfo.start(); oscs.push(lfo);
-      master.gain.setValueAtTime(0.0001, a.currentTime); master.gain.exponentialRampToValueAtTime(0.10, a.currentTime + 3);
-      var timer = setInterval(function () { if (Math.random() < 0.5) { var n = [880, 987.77, 1174.66, 1318.51, 1567.98]; tone(n[Math.floor(Math.random() * n.length)], 2.4, 0.022, 0); } }, 4500);
+      var lfo = a.createOscillator(); lfo.frequency.value = 0.07; var lg = a.createGain(); lg.gain.value = 0.05; lfo.connect(lg); lg.connect(master.gain); lfo.start(); oscs.push(lfo);
+      master.gain.setValueAtTime(0.0001, a.currentTime); master.gain.exponentialRampToValueAtTime(0.30, a.currentTime + 3);
+      var timer = setInterval(function () { if (Math.random() < 0.5) { var n = [880, 987.77, 1174.66, 1318.51, 1567.98]; bell([[n[Math.floor(Math.random() * n.length)], 1]], 2.6, 0.05, 2400); } }, 4500);
       ambNodes = { master: master, oscs: oscs, timer: timer };
     } catch (e) {}
   }
   function stopAmbient() {
     if (!ambNodes) return;
-    try { clearInterval(ambNodes.timer); var a = audioCtx(); var t = a ? a.currentTime : 0; ambNodes.master.gain.cancelScheduledValues(t); ambNodes.master.gain.setValueAtTime(0.10, t); ambNodes.master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); ambNodes.oscs.forEach(function (o) { try { o.stop(t + 1.4); } catch (e) {} }); } catch (e) {}
+    try { clearInterval(ambNodes.timer); var a = audioCtx(); var t = a ? a.currentTime : 0; ambNodes.master.gain.cancelScheduledValues(t); ambNodes.master.gain.setValueAtTime(0.30, t); ambNodes.master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); ambNodes.oscs.forEach(function (o) { try { o.stop(t + 1.4); } catch (e) {} }); } catch (e) {}
     ambNodes = null;
   }
   function toggleAmbient() { ambientOn = !ambientOn; try { localStorage.setItem(AMB_KEY, ambientOn ? "on" : "off"); } catch (e) {} if (ambientOn) startAmbient(); else stopAmbient(); }
