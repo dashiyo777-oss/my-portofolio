@@ -1558,6 +1558,139 @@ window.GAME_DATA = {
         "titleEn": "I fail no matter how often I try. I'm broken.",
         "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward.",
         "tier": "paid"
+      },
+      {
+        "id": "self_mastery_01",
+        "category": "self",
+        "mood": "lost",
+        "tier": "paid",
+        "title": "目先の誘惑や怠け心に、負けそうになる。",
+        "body": "やるべきことは分かっている。なのに、楽な方へ楽な方へと、心が流れてしまう。",
+        "titleEn": "I keep losing to temptation and laziness.",
+        "bodyEn": "I know what I should do. Yet my heart keeps drifting toward the easy way out.",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "意志は、使うほど強くなる筋肉のようなもの。",
+            "quoteEn": "Will is like a muscle — it grows stronger the more you use it.",
+            "note": "",
+            "effects": {
+              "mind": 4
+            }
+          },
+          {
+            "sageId": "confucius",
+            "quote": "己に克ちて礼に復るを仁と為す。",
+            "quoteOriginal": "克己復礼為仁。",
+            "quoteEn": "To master oneself and return to what is right — that is benevolence.",
+            "source": "論語 顔淵第十二",
+            "note": "自分に打ち克ち、あるべき姿に立ち返ること。",
+            "verified": true,
+            "effects": {
+              "mind": 5,
+              "wisdom": 9
+            }
+          },
+          {
+            "sageId": "seneca",
+            "quote": "人生が短いのではない。私たちが、多くの時間を浪費しているのだ。",
+            "quoteOriginal": "It is not that we have a short time to live, but that we waste much of it.",
+            "quoteEn": "It is not that we have a short time to live, but that we waste much of it.",
+            "source": "セネカ『人生の短さについて』(De Brevitate Vitae)",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 4,
+              "wisdom": 8,
+              "passion": 4
+            }
+          }
+        ]
+      },
+      {
+        "id": "hardship_meaning_01",
+        "category": "self",
+        "mood": "down",
+        "tier": "paid",
+        "title": "このつらさに、意味なんてあるのか。",
+        "body": "報われない苦しみが続く。耐える意味が、だんだん分からなくなってきた。",
+        "titleEn": "Does this pain even mean anything?",
+        "bodyEn": "Unrewarded suffering drags on. I'm losing sight of why I should keep enduring it.",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "意味は、後からわかる。今はただ、生き延びるだけでいい。",
+            "quoteEn": "The meaning comes later. For now, simply surviving is enough.",
+            "note": "",
+            "effects": {
+              "mind": 5
+            }
+          },
+          {
+            "sageId": "nietzsche",
+            "quote": "私を殺さないものは、私をより強くする。",
+            "quoteOriginal": "What does not kill me makes me stronger.",
+            "quoteEn": "What does not kill me makes me stronger.",
+            "source": "ニーチェ『偶像の黄昏』箴言と矢 8, 1889",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 7,
+              "wisdom": 8,
+              "passion": 5
+            }
+          }
+        ]
+      },
+      {
+        "id": "kindness_giving_01",
+        "category": "relationship",
+        "mood": "lost",
+        "tier": "paid",
+        "title": "自分に余裕がなくて、人に優しくできない。",
+        "body": "本当は優しくありたい。でも自分のことで精一杯で、誰かを思いやる隙間がない。",
+        "titleEn": "I have no room to spare, so I can't be kind to others.",
+        "bodyEn": "I truly want to be kind. But I'm so consumed by my own struggles that there's no room to care for anyone.",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "まず自分を満たそう。それはわがままではなく、優しさの源。",
+            "quoteEn": "Fill your own cup first. That is not selfishness — it is the source of kindness.",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "bonds": 3
+            }
+          },
+          {
+            "sageId": "annefrank",
+            "quote": "幸せな人は、ほかの人をも幸せにする。",
+            "quoteOriginal": "Whoever is happy will make others happy too.",
+            "quoteEn": "Whoever is happy will make others happy too.",
+            "source": "『アンネの日記』",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 6,
+              "bonds": 7
+            }
+          },
+          {
+            "sageId": "scripture_bible",
+            "tradition": "christianity",
+            "quote": "与えなさい。そうすれば、あなたがたにも与えられる。",
+            "quoteOriginal": "Give, and it will be given to you.",
+            "quoteEn": "Give, and it will be given to you.",
+            "source": "新約聖書 ルカによる福音書 6:38",
+            "note": "聖典の言葉として引用。",
+            "verified": true,
+            "rank": 5,
+            "effects": {
+              "mind": 11,
+              "bonds": 9
+            }
+          }
+        ]
       }
     ]
   },
