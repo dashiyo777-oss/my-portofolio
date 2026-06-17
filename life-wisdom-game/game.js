@@ -66,6 +66,12 @@
   function sfxRest() { tone(523.25, 1.2, 0.08, 0); tone(659.25, 1.3, 0.06, 0.06); tone(783.99, 1.5, 0.05, 0.12); }       // 休息＝やわらかな和音
   function toggleSound() { soundOn = !soundOn; try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (e) {} if (soundOn) sfxChime(); }
 
+  // ---------- 夜モード（ダーク） ----------
+  var NIGHT_KEY = "lifewisdom.night.v1";
+  var night = (function () { try { return localStorage.getItem(NIGHT_KEY) === "on"; } catch (e) { return false; } })();
+  function applyNight() { try { if (night) app.classList.add("night"); else app.classList.remove("night"); } catch (e) {} }
+  function toggleNight() { night = !night; try { localStorage.setItem(NIGHT_KEY, night ? "on" : "off"); } catch (e) {} applyNight(); }
+
   // 叡智の位（段位）。生涯記録ベース＝下がらない。
   var POSITIONS = [
     { min: 0, ja: "灯火の見習い", g: "無級", en: "Kindling Novice", eg: "Ungraded" },
@@ -221,6 +227,7 @@
       ? '<p class="title-pos">' + L("あなたの位 ― ", "Your rank — ") + '<b>' + esc(posTitle(pos)) + '</b><span class="grade">' + esc(posGrade(pos)) + '</span></p>'
       : '';
     var langToggle = '<div class="lang-toggle">' +
+      '<button class="snd" data-act="night" title="' + L("夜モード", "Night mode") + '">' + (night ? "☀️" : "🌙") + '</button>' +
       '<button class="snd" data-act="sound" title="' + L("音のオン/オフ", "Sound on/off") + '">' + (soundOn ? "🔔" : "🔕") + '</button>' +
       '<button class="' + (lang === "ja" ? "on" : "") + '" data-act="lang" data-lang="ja">日本語</button>' +
       '<button class="' + (lang === "en" ? "on" : "") + '" data-act="lang" data-lang="en">English</button></div>';
@@ -649,6 +656,7 @@
     if (t.hasAttribute("data-consultcat")) { mode = "consult"; consultCat = t.getAttribute("data-consultcat"); proceed(); return; }
     var act = t.getAttribute("data-act");
     if (act === "sound") { toggleSound(); showTitle(); }
+    else if (act === "night") { toggleNight(); showTitle(); }
     else if (act === "lang") { setLang(t.getAttribute("data-lang")); showTitle(); }
     else if (act === "walk") { mode = "auto"; consultCat = null; proceed(); }
     else if (act === "consult") showConsult();
@@ -679,5 +687,6 @@
     else if (act === "reset") { if (confirm(L("これまでの歩みと叡智の書が消えます。よろしいですか？", "Your journey and Book of Wisdom will be erased. Are you sure?"))) resetGame(); }
   });
 
+  applyNight();
   showTitle();
 })();
