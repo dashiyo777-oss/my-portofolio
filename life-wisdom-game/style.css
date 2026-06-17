@@ -10,7 +10,7 @@ html,body{margin:0;padding:0}
 body{
   background:var(--bg);
   color:var(--ink);
-  font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",YuMincho,serif;
   line-height:1.7; -webkit-text-size-adjust:100%;
 }
 #app{
@@ -29,6 +29,7 @@ button{font-family:inherit; cursor:pointer}
 .lang-toggle{display:flex; justify-content:flex-end; gap:6px; margin:-6px -4px 2px}
 .lang-toggle button{border:1px solid var(--line); background:#fffdf8; color:var(--ink-soft); border-radius:99px; padding:5px 12px; font-family:inherit; font-size:.76rem}
 .lang-toggle button.on{background:#2b2622; color:#f4ead4; border-color:#2b2622}
+.lang-toggle .snd{font-size:.95rem; padding:5px 10px}
 
 /* ---- 共通ボタン ---- */
 .btn{
@@ -44,7 +45,19 @@ button{font-family:inherit; cursor:pointer}
 
 /* ---- タイトル ---- */
 .title-wrap{padding:46px 8px 18px; text-align:center}
-.flame{font-size:42px; filter:drop-shadow(0 0 14px rgba(202,164,93,.6))}
+.flame{font-size:42px; display:inline-block; transform-origin:center 70%;
+  filter:drop-shadow(0 0 14px rgba(202,164,93,.6));
+  animation:flicker 3.2s ease-in-out infinite}
+@keyframes flicker{
+  0%,100%{filter:drop-shadow(0 0 10px rgba(202,164,93,.5)); transform:scale(1) rotate(-1deg)}
+  25%{filter:drop-shadow(0 0 17px rgba(202,164,93,.85)); transform:scale(1.06) rotate(1.2deg)}
+  50%{filter:drop-shadow(0 0 12px rgba(202,164,93,.6)); transform:scale(.97) rotate(-1.4deg)}
+  75%{filter:drop-shadow(0 0 19px rgba(214,180,110,.9)); transform:scale(1.04) rotate(.8deg)}
+}
+@media (prefers-reduced-motion: reduce){
+  .flame{animation:none}
+  .fade,.card.tap:not([disabled]),.cel-inner,.cel-rays,.cel-particles i,.card.legend,.disc.legenddisc{animation:none !important}
+}
 h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight:700}
 .subtitle{color:var(--ink-soft); letter-spacing:.06em; margin:0 0 6px}
 .title-actions{margin-top:26px}
@@ -101,10 +114,15 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .card.tap:hover{box-shadow:0 6px 16px rgba(40,30,16,.13)}
 .card-head{display:flex; align-items:center; gap:10px; margin-bottom:7px}
 .disc{
-  width:34px; height:34px; border-radius:50%; flex:0 0 auto; display:grid; place-items:center;
-  color:#fff; font-size:.95rem; font-weight:700; background:var(--c,#999); box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)
+  width:36px; height:36px; border-radius:50%; flex:0 0 auto; display:grid; place-items:center;
+  color:#fff; font-size:.98rem; font-weight:700;
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255,255,255,.5), transparent 46%),
+    radial-gradient(circle at 50% 64%, var(--c,#999), rgba(0,0,0,.22));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45), inset 0 -3px 7px rgba(0,0,0,.22), 0 2px 6px rgba(40,30,16,.2);
+  text-shadow:0 1px 2px rgba(0,0,0,.3)
 }
-.disc.scripture{background:radial-gradient(circle at 50% 35%, #f3dca0, var(--gold-deep)); color:#5a3f12}
+.disc.scripture{background:radial-gradient(circle at 38% 28%, #fbeec2, var(--gold-deep)); color:#5a3f12; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6), inset 0 -3px 7px rgba(120,80,20,.3), 0 0 10px rgba(202,164,93,.5)}
 .sname{font-size:.9rem; font-weight:600}
 .sname .era{font-weight:400; color:var(--ink-soft); font-size:.74rem; margin-left:6px}
 .badge{margin-left:auto; font-size:.66rem; padding:2px 8px; border-radius:99px; background:#f0e6cf; color:#7a5e22; border:1px solid #e6d6ac; white-space:nowrap}
@@ -125,6 +143,10 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 }
 .paywall h3{margin:.2em 0 .3em; font-size:1.05rem}
 .paywall p{margin:.2em 0 .8em; font-size:.84rem; color:var(--ink-soft)}
+.code-input{width:100%; max-width:280px; margin:0 auto 10px; display:block; border:1px solid #d8b86a; border-radius:10px; padding:11px 12px; font-family:inherit; font-size:1rem; text-align:center; letter-spacing:.08em; background:#fffdf8; color:var(--ink)}
+.code-msg{font-size:.8rem; color:#b15a3c; margin-top:8px; min-height:1em}
+.member-on{text-align:center; color:#3f7d4f; font-size:.82rem; margin:10px 0 0}
+.consult-cat.locked{opacity:.6; border-style:dashed; color:var(--ink-soft); cursor:pointer}
 
 /* ---- 決断結果 ---- */
 .result-quote{
@@ -293,3 +315,66 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .legend-slot.locked{background:#efe7d8; border-style:dashed; color:#a8997e; text-align:center}
 .legend-slot.locked .ls-head{letter-spacing:.3em; font-weight:700; margin-bottom:4px}
 .legend-slot.locked .ls-quote{font-size:.78rem}
+
+/* ===== 夜モード（ダーク） ===== */
+#app.night{
+  --paper:#23201b; --paper2:#1a1714; --ink:#ece3d2; --ink-soft:#b3a589;
+  --line:#3c3529; --gold:#d9b56a; --gold-deep:#d8b772; --shadow:0 6px 22px rgba(0,0,0,.45);
+  background:radial-gradient(120% 60% at 50% -10%, #2c2820 0%, #211e19 45%, #1a1714 100%);
+  color:var(--ink);
+}
+#app.night .subtitle,#app.night .muted,#app.night .tagline,#app.night .notice,#app.night .event-body,#app.night .qnote,#app.night .advice-help{color:var(--ink-soft)}
+#app.night .card,#app.night .entry,#app.night .consult-cat,#app.night .fb button,#app.night .tabs button,#app.night .chip,#app.night .reflect-input,#app.night .code-input,#app.night .legend-slot.found,#app.night .reflect-toggle{background:#2a2620; color:var(--ink); border-color:var(--line)}
+#app.night .statusbar,#app.night .summary,#app.night .recall,#app.night .cert-stats > div{background:rgba(255,255,255,.05); border-color:var(--line)}
+#app.night .mindbar,#app.night .wisrow .wbar,#app.night .cert-next .wbar{background:#3c3529}
+#app.night .rankchip{background:#3a3122; color:#e8d6ab; border-color:#4a3f28}
+#app.night .eyebrow{border-color:#4a3f28; color:var(--gold)}
+#app.night .tabs button.on{background:var(--gold-deep); color:#241c0c; border-color:var(--gold-deep)}
+#app.night .paywall{background:linear-gradient(180deg,#2f291b,#262017); border-color:var(--gold-deep)}
+#app.night .certificate{background:linear-gradient(160deg,#2b2620,#231f1a)}
+#app.night .certificate:before{border-color:#5a4d30}
+#app.night .legend-slot.locked{background:#241f19; color:#8a7d66; border-color:var(--line)}
+#app.night .delta{background:#2e2a20; border-color:var(--line)}
+#app.night .delta.up{color:#7fc08c} #app.night .delta.down{color:#e0916f}
+#app.night .enote{background:#2e2a20; color:#cbbfa6}
+#app.night .btn.ghost{color:var(--ink-soft); border-color:var(--line)}
+#app.night .lang-toggle button{background:#2a2620; color:var(--ink-soft); border-color:var(--line)}
+#app.night .lang-toggle button.on{background:var(--gold); color:#241c0c; border-color:var(--gold)}
+#app.night .cert-kicker,#app.night .cert-pos,#app.night .cert-stats b{color:#e8d6ab}
+#app.night .member-on{color:#7fc08c}
+
+/* ---- 仕上げ：カテゴリアイコン＆巻物カード ---- */
+.cc-ic{display:block; font-size:1.5rem; margin-bottom:5px; line-height:1}
+.scroll-card{
+  position:relative; margin:18px 2px 14px; padding:28px 20px 24px;
+  background:linear-gradient(180deg,#fffdf8,#f6eedd);
+  border:1px solid var(--line); border-radius:14px; box-shadow:0 6px 20px rgba(40,30,16,.12);
+}
+.scroll-card:before,.scroll-card:after{content:""; position:absolute; left:16%; right:16%; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.scroll-card:before{top:12px} .scroll-card:after{bottom:12px}
+.scroll-card .result-quote{margin:14px 4px 12px}
+.scroll-card.sacred{box-shadow:0 6px 22px rgba(202,164,93,.28)}
+.scroll-card.sacred:before,.scroll-card.sacred:after{height:2.5px; background:linear-gradient(90deg,transparent,var(--gold-deep),transparent)}
+.scroll-card.legendary{border-color:var(--gold-deep); box-shadow:0 8px 28px rgba(202,164,93,.38)}
+#app.night .scroll-card{background:linear-gradient(180deg,#2c2823,#241f1a); border-color:var(--line)}
+#app.night .scroll-card .result-quote{color:var(--ink)}
+
+/* ---- 仕上げ：環境音トグル/休息の深呼吸/祝福フラッシュ ---- */
+.lang-toggle .snd.on{background:var(--gold); color:#241c0c; border-color:var(--gold-deep)}
+.rest .breath{width:120px; height:120px; margin:6px auto 8px; border-radius:50%;
+  display:grid; place-items:center;
+  background:radial-gradient(circle, rgba(202,164,93,.22), transparent 70%);
+  animation:breathe 8s ease-in-out infinite}
+.rest .breath .moon{font-size:40px}
+.breath-cue{color:var(--gold-deep); letter-spacing:.1em; font-size:.86rem; margin:0 0 8px}
+@keyframes breathe{
+  0%,100%{transform:scale(.82); opacity:.7}
+  45%{transform:scale(1.12); opacity:1}
+  55%{transform:scale(1.12); opacity:1}
+}
+.cel-flash{position:absolute; inset:0; background:radial-gradient(circle at 50% 45%, rgba(255,240,200,.85), rgba(202,164,93,.2) 35%, transparent 65%);
+  opacity:0; animation:celflash 1.1s ease-out forwards}
+@keyframes celflash{0%{opacity:0; transform:scale(.6)} 18%{opacity:.95} 100%{opacity:0; transform:scale(1.6)}}
+@media (prefers-reduced-motion: reduce){ .rest .breath,.cel-flash{animation:none} }
+#app.night .breath-cue{color:var(--gold)}

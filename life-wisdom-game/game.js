@@ -30,8 +30,75 @@
   function catLabel(c) { var x = CAT[c]; return x ? (lang === "en" ? x[1] : x[0]) : c; }
   var MOOD = { down: ["落ち込み", "Down"], lost: ["迷い", "Lost"], high: ["高揚", "Uplifted"] };
   function moodLabel(m) { var x = MOOD[m]; return x ? (lang === "en" ? x[1] : x[0]) : m; }
-  var RANK_TITLE_EN = { 1: "Apprentice Sage", 2: "Sage", 3: "Great Sage", 4: "Legendary Sage", 5: "Sacred Guidance" };
+  var CAT_ICON = { work: "💼", relationship: "🤝", love: "💗", study: "📚", money: "🪙", health: "🌱", self: "🧭" };
+  function catIcon(c) { return CAT_ICON[c] || "•"; }
+  var MOOD_ICON = { down: "🌧", lost: "🌫", high: "✨" };
+  function moodIcon(m) { return MOOD_ICON[m] || ""; }
+  var RANK_TITLE_EN = { 1: "The Kindler", 2: "Sprout of Learning", 3: "Questioner", 4: "Thinker", 5: "The Prudent", 6: "Great Sage", 7: "The Enlightened", 8: "Seeker of Legends", 9: "Sacred Guidance", 10: "Wisdom Mastery" };
   function rankTitle(r) { return lang === "en" ? (RANK_TITLE_EN[r] || RANKS[r].title) : RANKS[r].title; }
+  var MAX_RANK = 10;
+
+  // 会員（note 月額）判定：その月のコードを入れた月だけ有効＝毎月の更新が要る
+  function monthKey(d) { return d.getFullYear() * 100 + (d.getMonth() + 1); }
+  function expectedCode(d) { var m = monthKey(d); var n = ((m * 7919) % 9000) + 1000; return "TOMO-" + n; }
+  function isPaid() { return state.paidMonth === monthKey(new Date()); }
+  function sageTier(id) { var s = SAGES[id]; return (s && s.tier) ? s.tier : "paid"; }
+
+  // ---------- 音（Web Audioで原音合成・権利クリーン・外部依存なし） ----------
+  var SOUND_KEY = "lifewisdom.sound.v1";
+  var soundOn = (function () { try { return localStorage.getItem(SOUND_KEY) !== "off"; } catch (e) { return true; } })();
+  var actx = null;
+  function audioCtx() {
+    if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { actx = null; } }
+    if (actx && actx.state === "suspended" && actx.resume) { try { actx.resume(); } catch (e) {} }
+    return actx;
+  }
+  // 1音（やわらかな立ち上がりと減衰）
+  function tone(freq, dur, gain, delay) {
+    var a = audioCtx(); if (!a || !soundOn) return;
+    var t = a.currentTime + (delay || 0);
+    var o = a.createOscillator(), g = a.createGain();
+    o.type = "sine"; o.frequency.value = freq;
+    o.connect(g); g.connect(a.destination);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function sfxChime() { tone(880, 1.6, 0.12, 0); tone(1320, 1.3, 0.05, 0.01); tone(1760, 0.9, 0.03, 0.02); }            // 決断＝おりんの一打
+  function sfxSacred() { tone(196, 2.8, 0.13, 0); tone(392, 2.4, 0.07, 0.03); tone(587.33, 2.0, 0.04, 0.06); tone(783.99, 1.6, 0.025, 0.09); } // 神聖・伝説＝深い鐘＋倍音
+  function sfxRest() { tone(523.25, 1.2, 0.08, 0); tone(659.25, 1.3, 0.06, 0.06); tone(783.99, 1.5, 0.05, 0.12); }       // 休息＝やわらかな和音
+  function toggleSound() { soundOn = !soundOn; try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (e) {} if (soundOn) sfxChime(); }
+
+  // 環境音（ゆるいパッド＋まれな風鈴・任意ON）
+  var AMB_KEY = "lifewisdom.amb.v1";
+  var ambientOn = (function () { try { return localStorage.getItem(AMB_KEY) === "on"; } catch (e) { return false; } })();
+  var ambNodes = null;
+  function startAmbient() {
+    var a = audioCtx(); if (!a) return; stopAmbient();
+    try {
+      var master = a.createGain(); master.gain.value = 0.0001; master.connect(a.destination);
+      var pad = a.createGain(); pad.gain.value = 0.05; pad.connect(master);
+      var oscs = [];
+      [110, 164.81, 220].forEach(function (f, i) { var o = a.createOscillator(); o.type = "sine"; o.frequency.value = f; if (i === 2) o.detune.value = 5; o.connect(pad); o.start(); oscs.push(o); });
+      var lfo = a.createOscillator(); lfo.frequency.value = 0.07; var lg = a.createGain(); lg.gain.value = 0.03; lfo.connect(lg); lg.connect(master.gain); lfo.start(); oscs.push(lfo);
+      master.gain.setValueAtTime(0.0001, a.currentTime); master.gain.exponentialRampToValueAtTime(0.10, a.currentTime + 3);
+      var timer = setInterval(function () { if (Math.random() < 0.5) { var n = [880, 987.77, 1174.66, 1318.51, 1567.98]; tone(n[Math.floor(Math.random() * n.length)], 2.4, 0.022, 0); } }, 4500);
+      ambNodes = { master: master, oscs: oscs, timer: timer };
+    } catch (e) {}
+  }
+  function stopAmbient() {
+    if (!ambNodes) return;
+    try { clearInterval(ambNodes.timer); var a = audioCtx(); var t = a ? a.currentTime : 0; ambNodes.master.gain.cancelScheduledValues(t); ambNodes.master.gain.setValueAtTime(0.10, t); ambNodes.master.gain.exponentialRampToValueAtTime(0.0001, t + 1.2); ambNodes.oscs.forEach(function (o) { try { o.stop(t + 1.4); } catch (e) {} }); } catch (e) {}
+    ambNodes = null;
+  }
+  function toggleAmbient() { ambientOn = !ambientOn; try { localStorage.setItem(AMB_KEY, ambientOn ? "on" : "off"); } catch (e) {} if (ambientOn) startAmbient(); else stopAmbient(); }
+
+  // ---------- 夜モード（ダーク） ----------
+  var NIGHT_KEY = "lifewisdom.night.v1";
+  var night = (function () { try { return localStorage.getItem(NIGHT_KEY) === "on"; } catch (e) { return false; } })();
+  function applyNight() { try { if (night) app.classList.add("night"); else app.classList.remove("night"); } catch (e) {} }
+  function toggleNight() { night = !night; try { localStorage.setItem(NIGHT_KEY, night ? "on" : "off"); } catch (e) {} applyNight(); }
 
   // 叡智の位（段位）。生涯記録ベース＝下がらない。
   var POSITIONS = [
@@ -64,7 +131,7 @@
 
   // ---------- セーブ/ロード ----------
   function newGame() {
-    return { v: 1, stats: { mind: 60, wisdom: 0, bonds: 50, wealth: 50, passion: 50 }, turn: 0, journal: [], seen: [], premiumUnlocked: false, favoriteSage: null };
+    return { v: 1, stats: { mind: 60, wisdom: 0, bonds: 50, wealth: 50, passion: 50 }, turn: 0, journal: [], seen: [], paidMonth: 0, favoriteSage: null };
   }
   function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
   function load() { try { var r = localStorage.getItem(SAVE_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
@@ -98,7 +165,7 @@
     return "common";
   }
   function rollLegend() {
-    if (!state.premiumUnlocked) return null;
+    if (!isPaid()) return null;
     var eligible = LEGENDS.filter(function (l) { return !codexHas(l.id) && state.stats.wisdom >= (l.minWisdom || 0); });
     if (eligible.length === 0) return null;
     var p = 0.06 + Math.min(0.20, state.stats.wisdom / 1200);
@@ -118,16 +185,17 @@
   function isScripture(id) { return id.indexOf("scripture") === 0; }
   function scriptureTag() { return L("（聖典）", " (Scripture)"); }
 
-  function unlockedRank() { var r = 1; [1, 2, 3, 4, 5].forEach(function (k) { if (state.stats.wisdom >= RANKS[k].unlockWisdom) r = k; }); return r; }
+  function unlockedRank() { var r = 1; for (var k = 1; k <= MAX_RANK; k++) { if (state.stats.wisdom >= RANKS[k].unlockWisdom) r = k; } return r; }
   function nextRankInfo() {
     var cur = unlockedRank();
-    if (cur >= 5) return null;
+    if (cur >= MAX_RANK) return null;
     var nk = cur + 1;
     return { rank: nk, need: RANKS[nk].unlockWisdom, have: state.stats.wisdom, prevNeed: RANKS[cur].unlockWisdom };
   }
+  // 表示状態: "show" | "member"（会員限定）| "rank"（叡智で解放）
   function adviceState(adv) {
-    if (adv.sageId === "original") return "show";
-    if (!state.premiumUnlocked) return "premium";
+    if (adv.sageId === "original" || sageTier(adv.sageId) === "free") return "show";
+    if (!isPaid()) return "member";
     var sage = SAGES[adv.sageId];
     if (sage && state.stats.wisdom < RANKS[sage.rank].unlockWisdom) return "rank";
     return "show";
@@ -157,8 +225,8 @@
           "Wisdom " + s.wisdom + " / " + rem + " to the next stage “" + esc(rankTitle(nx.rank)) + "”") +
         '<div class="wbar"><i style="width:' + (prog * 100).toFixed(0) + '%"></i></div></div>';
     } else {
-      wis = '<div class="wisrow">' + L("叡智 " + s.wisdom + " ／ 最高の境地「" + esc(rankTitle(5)) + "」に到達",
-        "Wisdom " + s.wisdom + " / Reached the highest stage “" + esc(rankTitle(5)) + "”") + '</div>';
+      wis = '<div class="wisrow">' + L("叡智 " + s.wisdom + " ／ 最高の境地「" + esc(rankTitle(MAX_RANK)) + "」に到達",
+        "Wisdom " + s.wisdom + " / Reached the highest stage “" + esc(rankTitle(MAX_RANK)) + "”") + '</div>';
     }
     return '<div class="statusbar">' +
       '<span class="heart">❤️</span>' +
@@ -187,6 +255,9 @@
       ? '<p class="title-pos">' + L("あなたの位 ― ", "Your rank — ") + '<b>' + esc(posTitle(pos)) + '</b><span class="grade">' + esc(posGrade(pos)) + '</span></p>'
       : '';
     var langToggle = '<div class="lang-toggle">' +
+      '<button class="snd" data-act="night" title="' + L("夜モード", "Night mode") + '">' + (night ? "☀️" : "🌙") + '</button>' +
+      '<button class="snd' + (ambientOn ? " on" : "") + '" data-act="ambient" title="' + L("環境音", "Ambient sound") + '">🎐</button>' +
+      '<button class="snd" data-act="sound" title="' + L("音のオン/オフ", "Sound on/off") + '">' + (soundOn ? "🔔" : "🔕") + '</button>' +
       '<button class="' + (lang === "ja" ? "on" : "") + '" data-act="lang" data-lang="ja">日本語</button>' +
       '<button class="' + (lang === "en" ? "on" : "") + '" data-act="lang" data-lang="en">English</button></div>';
     var html = langToggle + '<div class="fade title-wrap">' +
@@ -199,8 +270,10 @@
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
       '<button class="btn ghost" data-act="book">' + L("わが叡智の書を見る", "Open the Book of Wisdom") + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
+      (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
       (has ? '<button class="btn ghost" data-act="reset">' + L("はじめからやり直す", "Start a new life") + '</button>' : "") +
       '</div>' +
+      (isPaid() ? '<p class="member-on">' + L("✓ 会員（今月有効）", "✓ Member (valid this month)") + '</p>' : "") +
       '<p class="codex-tease">' + L("✦ 伝説の言葉 " + codex.length + " / " + LEGENDS.length + " 蒐集 ✦", "✦ Legendary Words " + codex.length + " / " + LEGENDS.length + " collected ✦") + '</p>' +
       recallHtml +
       '<p class="tagline">' + L("迷ったとき、世界の偉人があなたの相談相手になる。<br>言葉を選び、暮らしに活かし、少しずつ賢くなっていく。",
@@ -214,24 +287,33 @@
   var currentEvent = null, currentLegend = null;
   var mode = "auto", consultCat = null;
   function pickEvent() {
+    var avail = isPaid() ? EVENTS : EVENTS.filter(function (e) { return e.tier === "free"; });
     var pool;
     if (mode === "consult" && consultCat) {
-      pool = EVENTS.filter(function (e) { return e.category === consultCat && state.seen.indexOf(e.id) < 0; });
-      if (pool.length === 0) pool = EVENTS.filter(function (e) { return e.category === consultCat; });
+      pool = avail.filter(function (e) { return e.category === consultCat && state.seen.indexOf(e.id) < 0; });
+      if (pool.length === 0) pool = avail.filter(function (e) { return e.category === consultCat; });
     } else {
-      pool = EVENTS.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
-      if (pool.length === 0) { state.seen = []; pool = EVENTS.slice(); }
+      pool = avail.filter(function (e) { return state.seen.indexOf(e.id) < 0; });
+      if (pool.length === 0) { state.seen = []; pool = avail.slice(); }
     }
+    if (pool.length === 0) return null;
     return pool[Math.floor(Math.random() * pool.length)];
   }
   function proceed() {
     if (state.stats.mind < REST_THRESHOLD) { showRest(); return; }
-    currentEvent = pickEvent();
+    var ev = pickEvent();
+    if (!ev) { showMemberGate(); return; }
+    currentEvent = ev;
     currentLegend = rollLegend();
     showEvent(currentEvent);
   }
+  function freeCategories() { var m = {}; EVENTS.forEach(function (e) { if (e.tier === "free") m[e.category] = 1; }); return m; }
   function showConsult() {
-    var grid = CAT_KEYS.map(function (c) { return '<button class="consult-cat" data-consultcat="' + c + '">' + esc(catLabel(c)) + '</button>'; }).join("");
+    var fc = freeCategories(), paid = isPaid();
+    var grid = CAT_KEYS.map(function (c) {
+      if (!paid && !fc[c]) return '<button class="consult-cat locked" data-act="membergate"><span class="cc-ic">' + catIcon(c) + '</span>' + esc(catLabel(c)) + ' 🔒</button>';
+      return '<button class="consult-cat" data-consultcat="' + c + '"><span class="cc-ic">' + catIcon(c) + '</span>' + esc(catLabel(c)) + '</button>';
+    }).join("");
     render('<div class="fade">' + statusbar() +
       '<h2 class="event-title">' + L("どんなことで、悩んでいますか？", "What is troubling you?") + '</h2>' +
       '<p class="event-body">' + L("いま心にあるものを選ぶと、その悩みに効く言葉が訪れます。", "Choose what's on your heart, and words for that worry will come.") + '</p>' +
@@ -240,19 +322,34 @@
       '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
       '</div>');
   }
+  // 会員コード入力バナー（note 月額）
+  function memberBanner() {
+    return '<div class="paywall">' +
+      '<h3>' + L("🔑 会員エリア（note）", "🔑 Members area (note)") + '</h3>' +
+      '<p>' + L("世界の偉人・聖典・伝説、そして多くの悩みは会員限定。<br>note会員ページの「今月のコード」を入れると解放されます。",
+        "The world's sages, scriptures, legends and many worries are members-only.<br>Enter this month's code from the note members page to unlock.") + '</p>' +
+      '<input class="code-input" autocapitalize="characters" placeholder="' + L("今月のコード（例: TOMO-1234）", "This month's code (e.g. TOMO-1234)") + '">' +
+      '<button class="btn gold sm" data-act="redeem" style="display:inline-block">' + L("コードで解放", "Unlock with code") + '</button>' +
+      '<div class="code-msg"></div>' +
+      '</div>';
+  }
+  function showMemberGate() {
+    render('<div class="fade">' + statusbar() +
+      '<h2 class="event-title">' + L("ここから先は、会員エリアです", "Beyond here is the members area") + '</h2>' +
+      '<p class="event-body">' + L("恋愛・学業などの悩み、世界の偉人・聖典・伝説、そして毎月の新しい言葉は会員限定。noteの会員ページの「今月のコード」で解放できます。",
+        "Worries like love and study, the world's sages, scriptures and legends, and fresh words each month are members-only. Unlock with this month's code from the note members page.") + '</p>' +
+      memberBanner() +
+      '<button class="btn ghost" data-act="walk">' + L("無料で歩む", "Walk for free") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
   function showEvent(ev) {
     var legendHtml = currentLegend ? legendCard(currentLegend) : "";
     var cards = legendHtml + ev.advices.map(function (adv) { return adviceCard(ev, adv); }).join("");
-    var paywall = state.premiumUnlocked ? "" :
-      '<div class="paywall">' +
-      '<h3>' + L("🕯 偉人フェーズ", "🕯 The Sages' Phase") + '</h3>' +
-      '<p>' + L("ここから先は、世界の偉人があなたの相談相手に。<br>出典付きの本物の言葉、そして高みの賢者たちへ。",
-        "Beyond here, the great minds of the world become your counsel.<br>Real, sourced words — and the higher sages await.") + '</p>' +
-      '<button class="btn gold sm" data-act="unlock" style="display:inline-block">' + L("偉人フェーズを解放（デモ）", "Unlock the Sages' Phase (demo)") + '</button>' +
-      '</div>';
+    var paywall = isPaid() ? "" : memberBanner();
     var consultBack = (mode === "consult") ? '<button class="btn ghost" data-act="consult">' + L("← 悩みを選び直す", "← Choose another worry") + '</button>' : "";
     var html = '<div class="fade">' + statusbar() +
-      '<span class="eyebrow">' + esc(catLabel(ev.category)) + ' ・ ' + esc(moodLabel(ev.mood)) + '</span>' +
+      '<span class="eyebrow">' + catIcon(ev.category) + ' ' + esc(catLabel(ev.category)) + ' ・ ' + moodIcon(ev.mood) + ' ' + esc(moodLabel(ev.mood)) + '</span>' +
       '<h2 class="event-title">' + esc(evTitle(ev)) + '</h2>' +
       '<p class="event-body">' + esc(evBody(ev)) + '</p>' +
       '<p class="advice-help reading-hint">' + L("ひと呼吸おいて、言葉に耳を澄ませて……", "Take a breath, and listen for the words…") + '</p>' +
@@ -279,11 +376,11 @@
     var scripture = isScripture(adv.sageId);
     var color = sage.color || "#999";
 
-    if (st === "premium") {
+    if (st === "member") {
       return '<div class="card locked" style="--c:' + color + '">' +
         '<div class="card-head"><span class="disc' + (scripture ? ' scripture' : '') + '">🔒</span>' +
-        '<span class="sname">？？？</span><span class="badge">' + L("偉人フェーズ", "Sages' Phase") + '</span></div>' +
-        '<p class="lockmsg">' + L("この言葉は <b>偉人フェーズ</b> で開きます。", "This word opens in the <b>Sages' Phase</b>.") + '</p></div>';
+        '<span class="sname">' + esc(sageName(sage)) + '</span><span class="badge">' + L("会員限定", "Members") + '</span></div>' +
+        '<p class="lockmsg">' + L("この言葉は <b>会員</b> で開きます（今月のコードを入力）。", "This word opens for <b>members</b> (enter this month's code).") + '</p></div>';
     }
     if (st === "rank") {
       var need = RANKS[sage.rank].unlockWisdom, rem = Math.max(0, need - state.stats.wisdom);
@@ -377,8 +474,9 @@
     var ov = document.createElement("div");
     ov.className = "celebrate";
     var sparks = "";
-    for (var i = 0; i < 14; i++) { sparks += '<i style="--i:' + i + '"></i>'; }
+    for (var i = 0; i < 20; i++) { sparks += '<i style="--i:' + i + '"></i>'; }
     ov.innerHTML =
+      '<div class="cel-flash"></div>' +
       '<div class="cel-rays"></div>' +
       '<div class="cel-particles">' + sparks + '</div>' +
       '<div class="cel-inner">' +
@@ -390,6 +488,7 @@
       '<button class="btn gold cel-btn">' + L("この叡智を受け取る", "Receive this wisdom") + '</button>' +
       '</div>';
     document.body.appendChild(ov);
+    sfxSacred();
     requestAnimationFrame(function () { ov.classList.add("show"); });
     ov.querySelector(".cel-btn").addEventListener("click", function () {
       ov.classList.add("out");
@@ -397,8 +496,53 @@
     });
   }
 
+  // ① 名言を画像化してシェア/保存（Canvas・外部依存なし）
+  var lastRec = null;
+  function wrapCanvas(ctx, text, maxW) {
+    var lines = [], cur = "";
+    if (/\s/.test(text)) {
+      var ws = text.split(/\s+/);
+      for (var w = 0; w < ws.length; w++) { var test = cur ? cur + " " + ws[w] : ws[w]; if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = ws[w]; } else cur = test; }
+    } else {
+      for (var i = 0; i < text.length; i++) { var t = cur + text[i]; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = text[i]; } else cur = t; }
+    }
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function drawShare(rec) {
+    var W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
+    var x = c.getContext && c.getContext("2d"); if (!x) return;
+    var dark = night;
+    var g = x.createLinearGradient(0, 0, 0, H);
+    if (dark) { g.addColorStop(0, "#2c2820"); g.addColorStop(1, "#1c1915"); } else { g.addColorStop(0, "#fbf6ec"); g.addColorStop(1, "#efe5d3"); }
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    var ink = dark ? "#ece3d2" : "#33291f", soft = dark ? "#b3a589" : "#6b5d4a", gold = "#caa45d", goldd = dark ? "#d8b772" : "#a9863f";
+    x.strokeStyle = gold; x.lineWidth = 6; x.strokeRect(40, 40, W - 80, H - 80);
+    x.strokeStyle = "rgba(202,164,93,.45)"; x.lineWidth = 2; x.strokeRect(58, 58, W - 116, H - 116);
+    x.textAlign = "center"; x.textBaseline = "middle";
+    var q = rec.quote, big = q.length > 64 ? 44 : (q.length > 32 ? 56 : 64), lh = Math.round(big * 1.5);
+    x.font = "600 " + big + "px 'Noto Serif JP', serif"; x.fillStyle = ink;
+    var lines = wrapCanvas(x, q, W - 220);
+    var startY = H / 2 - (lines.length - 1) * lh / 2 - 60;
+    lines.forEach(function (ln, i) { x.fillText(ln, W / 2, startY + i * lh); });
+    var y = startY + lines.length * lh + 24;
+    x.font = "500 40px 'Noto Serif JP', serif"; x.fillStyle = soft;
+    x.fillText("— " + rec.sageName + (rec.isScripture ? "（聖典）" : ""), W / 2, y); y += 58;
+    if (rec.source) { x.font = "400 28px 'Noto Serif JP', serif"; x.fillStyle = goldd; wrapCanvas(x, rec.source, W - 240).forEach(function (s) { x.fillText(s, W / 2, y); y += 38; }); }
+    x.font = "500 36px 'Noto Serif JP', serif"; x.fillStyle = goldd; x.fillText("🪔 " + L("叡智の灯火", "Beacon of Wisdom"), W / 2, H - 116);
+    x.font = "400 24px sans-serif"; x.fillStyle = soft; x.fillText("dashiyo777-oss.github.io/my-portofolio/life-wisdom-game/", W / 2, H - 74);
+    var name = (lang === "en" ? "beacon-of-wisdom.png" : "叡智の灯火.png");
+    function deliver(blob) {
+      try { var f = new File([blob], name, { type: "image/png" }); if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], text: rec.quote + " — " + rec.sageName + "  #" + L("叡智の灯火", "BeaconOfWisdom") }).catch(function () {}); return; } } catch (e) {}
+      var a = document.createElement("a"); a.download = name; a.href = URL.createObjectURL(blob); document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    }
+    if (c.toBlob) c.toBlob(deliver, "image/png"); else { var a = document.createElement("a"); a.download = name; a.href = c.toDataURL("image/png"); a.click(); }
+  }
+  function shareCard(rec) { if (!rec) return; if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawShare(rec); }); else drawShare(rec); }
+
   function showResult(idx, deltas, rankedUp, positionUp) {
-    var rec = state.journal[idx];
+    var rec = state.journal[idx]; lastRec = rec;
+    if (rec.isLegend) { /* 祝福演出で鳴らし済み */ } else if (rec.isScripture) { sfxSacred(); } else { sfxChime(); }
     var dhtml = deltas.map(function (x) {
       var up = x.d > 0; return '<span class="delta ' + (up ? "up" : "down") + '">' + esc(statLabel(x.k)) + " " + (up ? "+" : "") + x.d + '</span>';
     }).join("");
@@ -407,9 +551,11 @@
     var ribbon = rec.isLegend ? '<p class="rarity-ribbon legendary">' + L("✦ 伝説の言葉 ✦", "✦ A Legendary Word ✦") + '</p>'
       : (rec.isScripture ? '<p class="rarity-ribbon sacred">' + L("神聖なる導き", "Sacred Guidance") + '</p>' : "");
     var html = '<div class="fade">' + ribbon +
+      '<div class="scroll-card' + (rec.isLegend ? ' legendary' : (rec.isScripture ? ' sacred' : '')) + '">' +
       '<p class="result-quote">' + esc(rec.quote) + '</p>' +
       '<p class="result-from">— ' + esc(rec.sageName) + (rec.isScripture ? L("（聖典の言葉）", " (words of scripture)") : "") + '</p>' +
       (rec.source ? '<p class="result-source">' + esc(rec.source) + '</p>' : "") +
+      '</div>' +
       (dhtml ? '<div class="deltas">' + dhtml + '</div>' : "") +
       rankBanner + posBanner +
       '<p class="saved-toast">' + L("📖 「わが叡智の書」に刻まれた", "📖 Inscribed in your Book of Wisdom") + '</p>' +
@@ -424,6 +570,7 @@
       '<button class="btn ghost sm" data-act="reflect-save">' + L("暮らしに活かすと、心に留める", "Keep it, and live it") + '</button>' +
       '</div></div>' +
       '<button class="btn gold" data-act="next">' + L("人生をつづける", "Continue your life") + '</button>' +
+      '<button class="btn ghost" data-act="share">' + L("📤 この言葉を画像で残す", "📤 Save this word as an image") + '</button>' +
       '<button class="btn ghost" data-act="book">' + L("わが叡智の書を見る", "Open the Book of Wisdom") + '</button>' +
       '<button class="btn ghost" data-act="title">' + L("中断（タイトルへ）", "Pause (back to title)") + '</button>' +
       '</div>';
@@ -444,8 +591,10 @@
       : ["立ち止まる勇気もまた、強さ。", "今日はもう、よく頑張った。", "息を吸って、吐いて。それだけで充分。"];
     var line = lines[Math.floor(Math.random() * lines.length)];
     state.stats.mind = clamp(state.stats.mind + 22); save();
+    sfxRest();
     render('<div class="fade rest">' +
-      '<div class="moon">🌙</div>' +
+      '<div class="breath"><span class="moon">🌙</span></div>' +
+      '<p class="breath-cue">' + L("ゆっくり、深呼吸……", "Breathe slowly, deeply…") + '</p>' +
       '<p class="line">' + esc(line) + '</p>' +
       '<p class="muted small">' + L("心が少し、回復した（心 +22）", "Your heart recovered a little (Mind +22)") + '</p>' +
       '<button class="btn gold" data-act="next">' + L("また歩き出す", "Walk on again") + '</button>' +
@@ -481,7 +630,7 @@
       list = items.slice().reverse().map(entryHTML).join("") || '<div class="empty">' + L("この分類の記録はまだありません。", "No records in this category yet.") + '</div>';
       var cats = ["all"].concat(CAT_KEYS);
       filters = '<div class="filters">' + cats.map(function (c) {
-        return '<button class="chip' + (bookFilter === c ? " on" : "") + '" data-filter="' + c + '">' + (c === "all" ? L("すべて", "All") : esc(catLabel(c))) + '</button>';
+        return '<button class="chip' + (bookFilter === c ? " on" : "") + '" data-filter="' + c + '">' + (c === "all" ? L("すべて", "All") : catIcon(c) + " " + esc(catLabel(c))) + '</button>';
       }).join("") + '</div>';
     }
     render('<div class="fade">' + bookHeader() +
@@ -522,7 +671,7 @@
     var fb = rec.feedback === "resonated" ? L("♡ 響いた", "♡ resonated") : (rec.feedback === "not_now" ? L("今はそうでもない", "not quite now") : "");
     var ep = L("第" + rec.turn + "話", "Ch. " + rec.turn);
     return '<div class="entry" style="--c:' + (sage.color || "#bbb") + '">' +
-      '<div class="when">' + ep + ' ・ ' + esc(when) + ' ・ ' + esc(catLabel(rec.category)) + '</div>' +
+      '<div class="when">' + ep + ' ・ ' + esc(when) + ' ・ ' + catIcon(rec.category) + ' ' + esc(catLabel(rec.category)) + '</div>' +
       '<div class="etitle">' + esc(rec.title) + '</div>' +
       '<div class="eq">' + esc(rec.quote) + '</div>' +
       '<div class="efrom">— ' + esc(rec.sageName) + (rec.isScripture ? scriptureTag() : "") + (rec.source ? " ／ " + esc(rec.source) : "") + '</div>' +
@@ -577,6 +726,7 @@
   app.addEventListener("click", function (e) {
     var t = e.target.closest("[data-act],[data-choose],[data-legend],[data-consultcat],[data-fb],[data-tab],[data-filter]");
     if (!t) return;
+    if (ambientOn && !ambNodes) startAmbient();   // 初回タップで環境音を再開（自動再生制限対策）
     if (t.hasAttribute("data-legend")) { chooseLegend(t.getAttribute("data-legend")); return; }
     if (t.hasAttribute("data-choose")) { choose(currentEvent, t.getAttribute("data-choose")); return; }
     if (t.hasAttribute("data-fb")) { var box = t.closest(".fb"); setFeedback(+box.getAttribute("data-fbidx"), t.getAttribute("data-fb")); return; }
@@ -584,14 +734,29 @@
     if (t.hasAttribute("data-filter")) { bookFilter = t.getAttribute("data-filter"); showBook(); return; }
     if (t.hasAttribute("data-consultcat")) { mode = "consult"; consultCat = t.getAttribute("data-consultcat"); proceed(); return; }
     var act = t.getAttribute("data-act");
-    if (act === "lang") { setLang(t.getAttribute("data-lang")); showTitle(); }
+    if (act === "sound") { toggleSound(); showTitle(); }
+    else if (act === "ambient") { toggleAmbient(); showTitle(); }
+    else if (act === "share") { shareCard(lastRec); }
+    else if (act === "night") { toggleNight(); showTitle(); }
+    else if (act === "lang") { setLang(t.getAttribute("data-lang")); showTitle(); }
     else if (act === "walk") { mode = "auto"; consultCat = null; proceed(); }
     else if (act === "consult") showConsult();
     else if (act === "start" || act === "next") proceed();
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
     else if (act === "title") showTitle();
-    else if (act === "unlock") { state.premiumUnlocked = true; save(); if (currentEvent) showEvent(currentEvent); else proceed(); }
+    else if (act === "membergate") { showMemberGate(); }
+    else if (act === "redeem") {
+      var cinp = app.querySelector(".code-input");
+      var code = cinp ? (cinp.value || "").trim().toUpperCase() : "";
+      if (code === expectedCode(new Date()).toUpperCase()) {
+        state.paidMonth = monthKey(new Date()); save();
+        if (currentEvent) showEvent(currentEvent); else showTitle();
+      } else {
+        var msgEl = app.querySelector(".code-msg");
+        if (msgEl) msgEl.textContent = L("コードが違います。note会員ページをご確認ください。", "Incorrect code. Please check the note members page.");
+      }
+    }
     else if (act === "reflect-open") { var rb = app.querySelector(".reflect-body"); if (rb) rb.hidden = false; if (t.style) t.style.display = "none"; }
     else if (act === "reflect-save") {
       var rbox = t.closest ? t.closest(".reflect") : null;
@@ -603,5 +768,6 @@
     else if (act === "reset") { if (confirm(L("これまでの歩みと叡智の書が消えます。よろしいですか？", "Your journey and Book of Wisdom will be erased. Are you sure?"))) resetGame(); }
   });
 
+  applyNight();
   showTitle();
 })();

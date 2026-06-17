@@ -66,7 +66,8 @@
         }
       ],
       "titleEn": "A big failure at work. I want to quit…",
-      "bodyEn": "I made a serious mistake on a project I was trusted with. The stares around me sting, and I want to disappear."
+      "bodyEn": "I made a serious mistake on a project I was trusted with. The stares around me sting, and I want to disappear.",
+      "tier": "paid"
     },
     {
       "id": "work_overwhelm_01",
@@ -125,7 +126,8 @@
         }
       ],
       "titleEn": "There's too much to do — I'm about to break.",
-      "bodyEn": "Work keeps piling up and I don't know where to start. My mind and body are near their limit."
+      "bodyEn": "Work keeps piling up and I don't know where to start. My mind and body are near their limit.",
+      "tier": "free"
     },
     {
       "id": "relationship_conflict_01",
@@ -184,7 +186,8 @@
         }
       ],
       "titleEn": "I just can't forgive that person.",
-      "bodyEn": "Someone I trusted betrayed me. The anger and resentment won't leave my heart."
+      "bodyEn": "Someone I trusted betrayed me. The anger and resentment won't leave my heart.",
+      "tier": "paid"
     },
     {
       "id": "love_heartbreak_01",
@@ -242,7 +245,8 @@
         }
       ],
       "titleEn": "My heart is broken. It feels like it could tear apart.",
-      "bodyEn": "I've parted from someone dear. I can't focus on anything, and the tears won't stop."
+      "bodyEn": "I've parted from someone dear. I can't focus on anything, and the tears won't stop.",
+      "tier": "paid"
     },
     {
       "id": "study_struggle_01",
@@ -288,7 +292,8 @@
         }
       ],
       "titleEn": "No matter how I study, I'm not improving.",
-      "bodyEn": "I'm trying hard but the results won't come. Maybe I just have no talent."
+      "bodyEn": "I'm trying hard but the results won't come. Maybe I just have no talent.",
+      "tier": "paid"
     },
     {
       "id": "money_worry_01",
@@ -333,7 +338,8 @@
         }
       ],
       "titleEn": "I have no money. The future terrifies me.",
-      "bodyEn": "My income and savings are both shaky. Thinking about money keeps me up at night."
+      "bodyEn": "My income and savings are both shaky. Thinking about money keeps me up at night.",
+      "tier": "free"
     },
     {
       "id": "self_doubt_01",
@@ -378,7 +384,8 @@
         }
       ],
       "titleEn": "I can't find any confidence in myself.",
-      "bodyEn": "I feel I fail at everything. I compare myself to others and sink."
+      "bodyEn": "I feel I fail at everything. I compare myself to others and sink.",
+      "tier": "free"
     },
     {
       "id": "change_world_01",
@@ -425,7 +432,8 @@
         }
       ],
       "titleEn": "I want to change things, but can't take the first step.",
-      "bodyEn": "I know I can't stay like this. Yet I can't summon the courage."
+      "bodyEn": "I know I can't stay like this. Yet I can't summon the courage.",
+      "tier": "paid"
     },
     {
       "id": "lonely_01",
@@ -484,7 +492,8 @@
         }
       ],
       "titleEn": "I feel all alone and uneasy.",
-      "bodyEn": "It feels like there's no one to rely on. Loneliness weighs heavy on my chest."
+      "bodyEn": "It feels like there's no one to rely on. Loneliness weighs heavy on my chest.",
+      "tier": "free"
     },
     {
       "id": "health_illness_01",
@@ -531,7 +540,8 @@
         }
       ],
       "titleEn": "My health has broken down. I'm anxious about what's ahead.",
-      "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me."
+      "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me.",
+      "tier": "free"
     },
     {
       "id": "success_highmood_01",
@@ -590,7 +600,8 @@
         }
       ],
       "titleEn": "Things are going so well I'm getting carried away.",
-      "bodyEn": "Everything I do is going great. Yet my footing feels strangely unsteady."
+      "bodyEn": "Everything I do is going great. Yet my footing feels strangely unsteady.",
+      "tier": "paid"
     },
     {
       "id": "relationship_distrust_01",
@@ -636,7 +647,8 @@
         }
       ],
       "titleEn": "I can't trust people anymore.",
-      "bodyEn": "After being betrayed and hurt again and again, I've come to fear people themselves."
+      "bodyEn": "After being betrayed and hurt again and again, I've come to fear people themselves.",
+      "tier": "paid"
     },
     {
       "id": "unfair_situation_01",
@@ -681,7 +693,8 @@
         }
       ],
       "titleEn": "Something unfair happened, and I'm powerless.",
-      "bodyEn": "It's not my fault, yet the situation won't change. Feelings with nowhere to go swirl inside me."
+      "bodyEn": "It's not my fault, yet the situation won't change. Feelings with nowhere to go swirl inside me.",
+      "tier": "paid"
     },
     {
       "id": "big_goal_overwhelm_01",
@@ -728,7 +741,8 @@
         }
       ],
       "titleEn": "The goal is so big my legs freeze.",
-      "bodyEn": "What I want to do is grand. But it's so far away I don't know where to begin."
+      "bodyEn": "What I want to do is grand. But it's so far away I don't know where to begin.",
+      "tier": "paid"
     },
     {
       "id": "study_effort_01",
@@ -774,7 +788,8 @@
         }
       ],
       "titleEn": "However I try, I can't catch up to the talented.",
-      "bodyEn": "However much I do, someone does it better. I start to wonder if effort even matters."
+      "bodyEn": "However much I do, someone does it better. I start to wonder if effort even matters.",
+      "tier": "paid"
     },
     {
       "id": "work_newjob_01",
@@ -819,7 +834,8 @@
         }
       ],
       "titleEn": "I just can't fit into the new environment.",
-      "bodyEn": "I've just changed jobs (or schools). The ways and the people differ, and I feel out of place."
+      "bodyEn": "I've just changed jobs (or schools). The ways and the people differ, and I feel out of place.",
+      "tier": "paid"
     },
     {
       "id": "money_contentment_01",
@@ -866,7 +882,8 @@
         }
       ],
       "titleEn": "Compared to others, I feel miserable about money.",
-      "bodyEn": "On social media everyone looks wealthy. It hurts to feel left behind."
+      "bodyEn": "On social media everyone looks wealthy. It hurts to feel left behind.",
+      "tier": "paid"
     },
     {
       "id": "love_courage_01",
@@ -913,7 +930,8 @@
         }
       ],
       "titleEn": "I can't find the courage to confess my feelings.",
-      "bodyEn": "The feelings are there. But fearing rejection, I can't take that last step."
+      "bodyEn": "The feelings are there. But fearing rejection, I can't take that last step.",
+      "tier": "paid"
     },
     {
       "id": "health_anxiety_01",
@@ -957,7 +975,8 @@
         }
       ],
       "titleEn": "Until the results come, I imagine only the worst.",
-      "bodyEn": "Nothing is known yet, but my head is full of worst-case scenarios. I can't sleep."
+      "bodyEn": "Nothing is known yet, but my head is full of worst-case scenarios. I can't sleep.",
+      "tier": "paid"
     },
     {
       "id": "health_serious_01",
@@ -1003,7 +1022,8 @@
         }
       ],
       "titleEn": "Facing a serious illness, day after day.",
-      "bodyEn": "A long treatment. Some days are better; some nights, the fear is unbearable."
+      "bodyEn": "A long treatment. Some days are better; some nights, the fear is unbearable.",
+      "tier": "paid"
     },
     {
       "id": "perseverance_setback_01",
@@ -1047,7 +1067,141 @@
         }
       ],
       "titleEn": "I fail no matter how often I try. I'm broken.",
-      "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward."
+      "bodyEn": "I rise and fall, rise and fall again. It doesn't feel like I'm moving forward.",
+      "tier": "paid"
+    },
+    {
+      "id": "self_mastery_01",
+      "category": "self",
+      "mood": "lost",
+      "tier": "paid",
+      "title": "目先の誘惑や怠け心に、負けそうになる。",
+      "body": "やるべきことは分かっている。なのに、楽な方へ楽な方へと、心が流れてしまう。",
+      "titleEn": "I keep losing to temptation and laziness.",
+      "bodyEn": "I know what I should do. Yet my heart keeps drifting toward the easy way out.",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "意志は、使うほど強くなる筋肉のようなもの。",
+          "quoteEn": "Will is like a muscle — it grows stronger the more you use it.",
+          "note": "",
+          "effects": {
+            "mind": 4
+          }
+        },
+        {
+          "sageId": "confucius",
+          "quote": "己に克ちて礼に復るを仁と為す。",
+          "quoteOriginal": "克己復礼為仁。",
+          "quoteEn": "To master oneself and return to what is right — that is benevolence.",
+          "source": "論語 顔淵第十二",
+          "note": "自分に打ち克ち、あるべき姿に立ち返ること。",
+          "verified": true,
+          "effects": {
+            "mind": 5,
+            "wisdom": 9
+          }
+        },
+        {
+          "sageId": "seneca",
+          "quote": "人生が短いのではない。私たちが、多くの時間を浪費しているのだ。",
+          "quoteOriginal": "It is not that we have a short time to live, but that we waste much of it.",
+          "quoteEn": "It is not that we have a short time to live, but that we waste much of it.",
+          "source": "セネカ『人生の短さについて』(De Brevitate Vitae)",
+          "note": "",
+          "verified": true,
+          "effects": {
+            "mind": 4,
+            "wisdom": 8,
+            "passion": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "hardship_meaning_01",
+      "category": "self",
+      "mood": "down",
+      "tier": "paid",
+      "title": "このつらさに、意味なんてあるのか。",
+      "body": "報われない苦しみが続く。耐える意味が、だんだん分からなくなってきた。",
+      "titleEn": "Does this pain even mean anything?",
+      "bodyEn": "Unrewarded suffering drags on. I'm losing sight of why I should keep enduring it.",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "意味は、後からわかる。今はただ、生き延びるだけでいい。",
+          "quoteEn": "The meaning comes later. For now, simply surviving is enough.",
+          "note": "",
+          "effects": {
+            "mind": 5
+          }
+        },
+        {
+          "sageId": "nietzsche",
+          "quote": "私を殺さないものは、私をより強くする。",
+          "quoteOriginal": "What does not kill me makes me stronger.",
+          "quoteEn": "What does not kill me makes me stronger.",
+          "source": "ニーチェ『偶像の黄昏』箴言と矢 8, 1889",
+          "note": "",
+          "verified": true,
+          "effects": {
+            "mind": 7,
+            "wisdom": 8,
+            "passion": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "kindness_giving_01",
+      "category": "relationship",
+      "mood": "lost",
+      "tier": "paid",
+      "title": "自分に余裕がなくて、人に優しくできない。",
+      "body": "本当は優しくありたい。でも自分のことで精一杯で、誰かを思いやる隙間がない。",
+      "titleEn": "I have no room to spare, so I can't be kind to others.",
+      "bodyEn": "I truly want to be kind. But I'm so consumed by my own struggles that there's no room to care for anyone.",
+      "advices": [
+        {
+          "sageId": "original",
+          "quote": "まず自分を満たそう。それはわがままではなく、優しさの源。",
+          "quoteEn": "Fill your own cup first. That is not selfishness — it is the source of kindness.",
+          "note": "",
+          "effects": {
+            "mind": 5,
+            "bonds": 3
+          }
+        },
+        {
+          "sageId": "annefrank",
+          "quote": "幸せな人は、ほかの人をも幸せにする。",
+          "quoteOriginal": "Whoever is happy will make others happy too.",
+          "quoteEn": "Whoever is happy will make others happy too.",
+          "source": "『アンネの日記』",
+          "note": "",
+          "verified": true,
+          "effects": {
+            "mind": 6,
+            "bonds": 7
+          }
+        },
+        {
+          "sageId": "scripture_bible",
+          "tradition": "christianity",
+          "quote": "与えなさい。そうすれば、あなたがたにも与えられる。",
+          "quoteOriginal": "Give, and it will be given to you.",
+          "quoteEn": "Give, and it will be given to you.",
+          "source": "新約聖書 ルカによる福音書 6:38",
+          "note": "聖典の言葉として引用。",
+          "verified": true,
+          "rank": 5,
+          "effects": {
+            "mind": 11,
+            "bonds": 9
+          }
+        }
+      ]
     }
   ]
 }
