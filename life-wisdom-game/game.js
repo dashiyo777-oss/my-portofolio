@@ -40,6 +40,32 @@
   function isPaid() { return state.paidMonth === monthKey(new Date()); }
   function sageTier(id) { var s = SAGES[id]; return (s && s.tier) ? s.tier : "paid"; }
 
+  // ---------- 音（Web Audioで原音合成・権利クリーン・外部依存なし） ----------
+  var SOUND_KEY = "lifewisdom.sound.v1";
+  var soundOn = (function () { try { return localStorage.getItem(SOUND_KEY) !== "off"; } catch (e) { return true; } })();
+  var actx = null;
+  function audioCtx() {
+    if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { actx = null; } }
+    if (actx && actx.state === "suspended" && actx.resume) { try { actx.resume(); } catch (e) {} }
+    return actx;
+  }
+  // 1音（やわらかな立ち上がりと減衰）
+  function tone(freq, dur, gain, delay) {
+    var a = audioCtx(); if (!a || !soundOn) return;
+    var t = a.currentTime + (delay || 0);
+    var o = a.createOscillator(), g = a.createGain();
+    o.type = "sine"; o.frequency.value = freq;
+    o.connect(g); g.connect(a.destination);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function sfxChime() { tone(880, 1.6, 0.12, 0); tone(1320, 1.3, 0.05, 0.01); tone(1760, 0.9, 0.03, 0.02); }            // 決断＝おりんの一打
+  function sfxSacred() { tone(196, 2.8, 0.13, 0); tone(392, 2.4, 0.07, 0.03); tone(587.33, 2.0, 0.04, 0.06); tone(783.99, 1.6, 0.025, 0.09); } // 神聖・伝説＝深い鐘＋倍音
+  function sfxRest() { tone(523.25, 1.2, 0.08, 0); tone(659.25, 1.3, 0.06, 0.06); tone(783.99, 1.5, 0.05, 0.12); }       // 休息＝やわらかな和音
+  function toggleSound() { soundOn = !soundOn; try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (e) {} if (soundOn) sfxChime(); }
+
   // 叡智の位（段位）。生涯記録ベース＝下がらない。
   var POSITIONS = [
     { min: 0, ja: "灯火の見習い", g: "無級", en: "Kindling Novice", eg: "Ungraded" },
@@ -195,6 +221,7 @@
       ? '<p class="title-pos">' + L("あなたの位 ― ", "Your rank — ") + '<b>' + esc(posTitle(pos)) + '</b><span class="grade">' + esc(posGrade(pos)) + '</span></p>'
       : '';
     var langToggle = '<div class="lang-toggle">' +
+      '<button class="snd" data-act="sound" title="' + L("音のオン/オフ", "Sound on/off") + '">' + (soundOn ? "🔔" : "🔕") + '</button>' +
       '<button class="' + (lang === "ja" ? "on" : "") + '" data-act="lang" data-lang="ja">日本語</button>' +
       '<button class="' + (lang === "en" ? "on" : "") + '" data-act="lang" data-lang="en">English</button></div>';
     var html = langToggle + '<div class="fade title-wrap">' +
@@ -424,6 +451,7 @@
       '<button class="btn gold cel-btn">' + L("この叡智を受け取る", "Receive this wisdom") + '</button>' +
       '</div>';
     document.body.appendChild(ov);
+    sfxSacred();
     requestAnimationFrame(function () { ov.classList.add("show"); });
     ov.querySelector(".cel-btn").addEventListener("click", function () {
       ov.classList.add("out");
@@ -433,6 +461,7 @@
 
   function showResult(idx, deltas, rankedUp, positionUp) {
     var rec = state.journal[idx];
+    if (rec.isLegend) { /* 祝福演出で鳴らし済み */ } else if (rec.isScripture) { sfxSacred(); } else { sfxChime(); }
     var dhtml = deltas.map(function (x) {
       var up = x.d > 0; return '<span class="delta ' + (up ? "up" : "down") + '">' + esc(statLabel(x.k)) + " " + (up ? "+" : "") + x.d + '</span>';
     }).join("");
@@ -478,6 +507,7 @@
       : ["立ち止まる勇気もまた、強さ。", "今日はもう、よく頑張った。", "息を吸って、吐いて。それだけで充分。"];
     var line = lines[Math.floor(Math.random() * lines.length)];
     state.stats.mind = clamp(state.stats.mind + 22); save();
+    sfxRest();
     render('<div class="fade rest">' +
       '<div class="moon">🌙</div>' +
       '<p class="line">' + esc(line) + '</p>' +
@@ -618,7 +648,8 @@
     if (t.hasAttribute("data-filter")) { bookFilter = t.getAttribute("data-filter"); showBook(); return; }
     if (t.hasAttribute("data-consultcat")) { mode = "consult"; consultCat = t.getAttribute("data-consultcat"); proceed(); return; }
     var act = t.getAttribute("data-act");
-    if (act === "lang") { setLang(t.getAttribute("data-lang")); showTitle(); }
+    if (act === "sound") { toggleSound(); showTitle(); }
+    else if (act === "lang") { setLang(t.getAttribute("data-lang")); showTitle(); }
     else if (act === "walk") { mode = "auto"; consultCat = null; proceed(); }
     else if (act === "consult") showConsult();
     else if (act === "start" || act === "next") proceed();
