@@ -1,0 +1,17 @@
+name = "eichi-no-tomoshibi-api"
+main = "src/worker.js"
+compatibility_date = "2024-11-01"
+
+# D1 データベース（`wrangler d1 create eichi-db` で作成し、ここに database_id を貼る）
+[[d1_databases]]
+binding = "DB"
+database_name = "eichi-db"
+database_id = "REPLACE_WITH_YOUR_D1_ID"
+
+# 公開フロントのオリジン（CORS許可）。GitHub Pages のURL。
+[vars]
+ALLOW_ORIGIN = "https://dashiyo777-oss.github.io"
+
+# 秘密は wrangler secret で設定（vars に書かない）:
+#   wrangler secret put JWT_SECRET
+#   wrangler secret put CODE_SECRET

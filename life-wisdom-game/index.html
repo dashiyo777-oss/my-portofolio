@@ -13,7 +13,10 @@
 </head>
 <body>
   <main id="app" aria-live="polite"></main>
-  <!-- データは JSON(data/sages.json, data/events.json) が正典。gamedata.js は build-data.py で生成 -->
+  <!-- 会員API（サーバー化時に Worker の URL を設定。空なら従来どおりクライアント同梱で動作） -->
+  <script>window.LWG_API = "";</script>
+  <!-- データは JSON(data/*.json) が正典。gamedata.js は build-data.py で生成。
+       本番サーバー化時は gamedata.js → gamedata.free.js に差し替え（有料はAPI取得）。 -->
   <script src="data/gamedata.js"></script>
   <script src="game.js"></script>
 </body>

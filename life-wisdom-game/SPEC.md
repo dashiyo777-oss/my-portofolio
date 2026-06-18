@@ -682,7 +682,7 @@ note は会員状態を外部検証するAPIを持たない。よって「**note
 - **利用者×時間でしか作れない＝後発は追随不能**。サーバー化の本丸価値。
 
 ### 17.7 移行フェーズ
-- **P1**：バックエンド構築 → 有料コンテンツをサーバ移管 → `redeem`/`content` 稼働 → クライアントから**有料データとコード式を削除**。
+- **P1 ★実装済（server/）**：Worker(`/api/redeem`・`/api/content`・`/api/feedback`)＋D1スキーマ＋seed生成(`build-seed.py`)＋無料バンドル(`gamedata.free.js`)＋月替わりコード生成(`gen-codes.mjs`)。フロントは `window.LWG_API` 設定時のみAPI取得に切替（空＝従来挙動）。デプロイ手順は `server/README.md`。
 - **P2**：`feedback`/`stats`（堀）を本番ON。
 - **P3**：`daily`配信・透かし・アカウント＆クラウド同期。
 

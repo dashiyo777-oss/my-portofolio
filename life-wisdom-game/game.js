@@ -6,6 +6,7 @@
   var D = window.GAME_DATA;
   if (!D) { document.getElementById("app").innerHTML = "<p style='padding:24px'>データを読み込めませんでした。<br>data/gamedata.js を確認してください（build-data.py で生成）。</p>"; return; }
 
+  var API = ((window.LWG_API || "") + "").replace(/\/+$/, "");   // 会員API。空なら従来どおりクライアント同梱で動作
   var SAGES = {}; D.sages.sages.forEach(function (s) { SAGES[s.id] = s; });
   var RANKS = D.sages.ranks;
   var EVENTS = D.events.events;
@@ -43,6 +44,20 @@
   function expectedCode(d) { var m = monthKey(d); var n = ((m * 7919) % 9000) + 1000; return "TOMO-" + n; }
   function isPaid() { return state.paidMonth === monthKey(new Date()); }
   function sageTier(id) { var s = SAGES[id]; return (s && s.tier) ? s.tier : "paid"; }
+
+  // 有料データをサーバーから取り込む（API利用時のみ）。無料seedに重複なくマージ。
+  function applyPaidData(d) {
+    if (!d) return;
+    (d.sages || []).forEach(function (s) { if (s && s.id && !SAGES[s.id]) { SAGES[s.id] = s; D.sages.sages.push(s); } });
+    (d.events || []).forEach(function (e) { if (e && e.id && !EVENTS.some(function (x) { return x.id === e.id; })) EVENTS.push(e); });
+    (d.legends || []).forEach(function (l) { if (l && l.id && !LEGENDS.some(function (x) { return x.id === l.id; })) LEGENDS.push(l); });
+  }
+  function fetchPaid() {
+    if (!API || !state.token) return Promise.resolve();
+    return fetch(API + "/api/content", { headers: { "Authorization": "Bearer " + state.token } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) { applyPaidData(d); });
+  }
 
   // ---------- 音（Web Audioで原音合成・権利クリーン・外部依存なし） ----------
   var SOUND_KEY = "lifewisdom.sound.v1";
@@ -757,13 +772,18 @@
     else if (act === "redeem") {
       var cinp = app.querySelector(".code-input");
       var code = cinp ? (cinp.value || "").trim().toUpperCase() : "";
-      if (code === expectedCode(new Date()).toUpperCase()) {
+      var fail = function () { var m = app.querySelector(".code-msg"); if (m) m.textContent = L("コードが違います。note会員ページをご確認ください。", "Incorrect code. Please check the note members page."); };
+      if (API) {
+        var m0 = app.querySelector(".code-msg"); if (m0) m0.textContent = L("確認中…", "Verifying…");
+        fetch(API + "/api/redeem", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: code }) })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+          .then(function (d) { state.paidMonth = monthKey(new Date()); state.token = d.token; save(); return fetchPaid(); })
+          .then(function () { if (currentEvent) showEvent(currentEvent); else showTitle(); })
+          .catch(fail);
+      } else if (code === expectedCode(new Date()).toUpperCase()) {
         state.paidMonth = monthKey(new Date()); save();
         if (currentEvent) showEvent(currentEvent); else showTitle();
-      } else {
-        var msgEl = app.querySelector(".code-msg");
-        if (msgEl) msgEl.textContent = L("コードが違います。note会員ページをご確認ください。", "Incorrect code. Please check the note members page.");
-      }
+      } else fail();
     }
     else if (act === "reflect-open") { var rb = app.querySelector(".reflect-body"); if (rb) rb.hidden = false; if (t.style) t.style.display = "none"; }
     else if (act === "reflect-save") {
@@ -778,4 +798,5 @@
 
   applyNight();
   showTitle();
+  if (API && state.token && isPaid()) fetchPaid().then(function () { showTitle(); }).catch(function () {});
 })();
