@@ -55,7 +55,15 @@ curl -X POST https://.../api/redeem -H 'content-type: application/json' -d '{"co
 curl https://.../api/content -H 'Authorization: Bearer <返ってきたtoken>'
 curl -X POST https://.../api/feedback -H 'content-type: application/json' -d '{"eventId":"e1","sageId":"jobs","mood":"down","fb":"resonated"}'
 curl 'https://.../api/stats?key=e1:jobs'
+curl 'https://.../api/stats?event=e1'        # イベント内の偉人別「響いた率」
+curl 'https://.../api/daily?lang=ja'         # 今日の一言
 ```
+
+## P3（堀の活用・保護）
+- `/api/daily` 日替わり配信（聖典/原文は除外）
+- `/api/stats?event=ID` → 「💛多くの人に響いた」推薦バッジ
+- レート制限（redeem 10/分・feedback 120/分・IP単位）
+- 配信監査 `deliveries`（`lic`=トークンの短いハッシュ。**テキストは改変せず**正確性を保ったまま流出元を追跡）
 
 ## 注意
 - 有料部分はネット必須（無料版は従来どおりオフライン可）。

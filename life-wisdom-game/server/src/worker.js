@@ -68,7 +68,28 @@ async function loadType(env, type) {
   return (rs.results || []).map(function (r) { try { return JSON.parse(r.payload); } catch (e) { return null; } }).filter(Boolean);
 }
 
+// 簡易レート制限（IP×バケット）。limit回/windowSec を超えたら true。
+async function limited(env, ip, bucket, limit, windowSec) {
+  if (!env.DB || !ip) return false;
+  const now = Date.now();
+  try {
+    const rs = await env.DB.prepare("SELECT COUNT(*) AS c FROM rl WHERE ip=? AND bucket=? AND ts > ?")
+      .bind(ip, bucket, now - windowSec * 1000).all();
+    const c = (rs.results && rs.results[0] && rs.results[0].c) || 0;
+    if (c >= limit) return true;
+    await env.DB.prepare("INSERT INTO rl (ip,bucket,ts) VALUES (?,?,?)").bind(ip, bucket, now).run();
+    if (Math.random() < 0.02) { try { await env.DB.prepare("DELETE FROM rl WHERE ts < ?").bind(now - 3600 * 1000).run(); } catch (e) {} }
+  } catch (e) {}
+  return false;
+}
+async function fingerprint(token) {
+  const h = await hmacHex("lic", token || "");
+  return h.slice(0, 12);
+}
+
 async function redeem(request, env, h) {
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  if (await limited(env, ip, "redeem", 10, 60)) return json({ error: "rate_limited" }, 429, h);
   let body; try { body = await request.json(); } catch (e) { return json({ error: "bad_request" }, 400, h); }
   const code = (body && body.code ? String(body.code) : "").trim().toUpperCase();
   const mk = monthKey(new Date());
@@ -85,10 +106,14 @@ async function content(request, env, h) {
   const payload = await verifyJWT(token, env.JWT_SECRET);
   if (!payload || payload.m !== monthKey(new Date())) return json({ error: "unauthorized" }, 401, h);
   const [sages, events, legends] = await Promise.all([loadType(env, "sage"), loadType(env, "event"), loadType(env, "legend")]);
-  return json({ sages: sages, events: events, legends: legends }, 200, h);
+  const lic = await fingerprint(token);
+  try { await env.DB.prepare("INSERT INTO deliveries (ts,lic,ip) VALUES (?,?,?)").bind(Date.now(), lic, request.headers.get("CF-Connecting-IP") || "").run(); } catch (e) {}
+  return json({ sages: sages, events: events, legends: legends, lic: lic }, 200, h);
 }
 
 async function feedback(request, env, h) {
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  if (await limited(env, ip, "fb", 120, 60)) return json({ ok: true, skipped: true }, 200, h);
   let b; try { b = await request.json(); } catch (e) { return json({ error: "bad_request" }, 400, h); }
   try {
     await env.DB.prepare("INSERT INTO feedback (ts,event_id,sage_id,mood,fb) VALUES (?,?,?,?,?)")
@@ -97,9 +122,19 @@ async function feedback(request, env, h) {
   return json({ ok: true }, 200, h);
 }
 
-// 「○%が響いた」集計（匿名・読み取り）。key = "eventId:sageId"
+// 「○%が響いた」集計（匿名・読み取り）。?key="eventId:sageId" or ?event=ID（イベント内の全偉人）
 async function stats(request, env, h) {
-  const key = new URL(request.url).searchParams.get("key") || "";
+  const url = new URL(request.url);
+  const event = url.searchParams.get("event");
+  if (event) {
+    const rs = await env.DB.prepare("SELECT sage_id, fb, COUNT(*) AS c FROM feedback WHERE event_id=? GROUP BY sage_id, fb").bind(event).all();
+    const m = {};
+    (rs.results || []).forEach(function (r) { const s = m[r.sage_id] || (m[r.sage_id] = { resonated: 0, not_now: 0 }); if (r.fb === "resonated") s.resonated = r.c; else if (r.fb === "not_now") s.not_now = r.c; });
+    const out = {};
+    Object.keys(m).forEach(function (k) { const s = m[k], n = s.resonated + s.not_now; out[k] = { resonated: s.resonated, not_now: s.not_now, samples: n, resonateRate: n ? s.resonated / n : 0 }; });
+    return json({ event: event, sages: out }, 200, h);
+  }
+  const key = url.searchParams.get("key") || "";
   const i = key.indexOf(":");
   if (i < 0) return json({ error: "bad_key" }, 400, h);
   const ev = key.slice(0, i), sg = key.slice(i + 1);
@@ -108,6 +143,29 @@ async function stats(request, env, h) {
   (rs.results || []).forEach(function (r) { if (r.fb === "resonated") res = r.c; else if (r.fb === "not_now") not = r.c; });
   const samples = res + not;
   return json({ key: key, resonated: res, not_now: not, samples: samples, resonateRate: samples ? res / samples : 0 }, 200, h);
+}
+
+// 日替わりの「今日の一言」（サーバー配信・日付で決定論的・聖典/原文除外）
+let _dailyCache = {};
+async function daily(request, env, h) {
+  const lang = (new URL(request.url).searchParams.get("lang") === "en") ? "en" : "ja";
+  const day = Math.floor(Date.now() / 86400000);
+  const ck = day + ":" + lang;
+  if (_dailyCache[ck]) return json(_dailyCache[ck], 200, h);
+  const [events, sages] = await Promise.all([loadType(env, "event"), loadType(env, "sage")]);
+  const nameOf = {}; sages.forEach(function (s) { nameOf[s.id] = (lang === "en" && s.nameEn) ? s.nameEn : s.name; });
+  const pool = [];
+  events.slice().sort(function (a, b) { return a.id < b.id ? -1 : 1; }).forEach(function (e) {
+    (e.advices || []).forEach(function (a) {
+      if (a.sageId === "original" || a.sageId.indexOf("scripture") === 0) return;
+      pool.push({ eventId: e.id, sageId: a.sageId, sageName: nameOf[a.sageId] || a.sageId, source: a.source || "",
+        quote: (lang === "en" ? (a.quoteEn || a.quoteOriginal || a.quote) : a.quote) });
+    });
+  });
+  if (pool.length === 0) return json({ error: "empty" }, 404, h);
+  const pick = pool[day % pool.length];
+  _dailyCache = {}; _dailyCache[ck] = pick;
+  return json(pick, 200, h);
 }
 
 export default {
@@ -121,6 +179,7 @@ export default {
       if (url.pathname === "/api/content" && request.method === "GET") return await content(request, env, h);
       if (url.pathname === "/api/feedback" && request.method === "POST") return await feedback(request, env, h);
       if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);
+      if (url.pathname === "/api/daily" && request.method === "GET") return await daily(request, env, h);
       return json({ error: "not_found" }, 404, h);
     } catch (e) {
       return json({ error: "server_error" }, 500, h);

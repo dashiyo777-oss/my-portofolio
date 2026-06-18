@@ -17,3 +17,19 @@ CREATE TABLE IF NOT EXISTS feedback (
   fb        TEXT                       -- 'resonated' | 'not_now'
 );
 CREATE INDEX IF NOT EXISTS idx_feedback_key ON feedback (event_id, sage_id);
+
+-- レート制限（簡易・IP×バケット×時刻）
+CREATE TABLE IF NOT EXISTS rl (
+  ip     TEXT,
+  bucket TEXT,
+  ts     INTEGER
+);
+CREATE INDEX IF NOT EXISTS idx_rl ON rl (ip, bucket, ts);
+
+-- 配信監査（流出元の追跡用・テキストは改変しない＝名言の正確性を守る）
+CREATE TABLE IF NOT EXISTS deliveries (
+  ts  INTEGER,
+  lic TEXT,      -- 会員トークンの短いフィンガープリント
+  ip  TEXT
+);
+

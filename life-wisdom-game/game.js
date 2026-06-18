@@ -271,9 +271,9 @@
     var has = state.journal.length > 0;
     var pg = playerProgress(); var pos = positionFor(pg.points);
     var recall = dailyRecall();
-    var recallHtml = recall ? '<div class="recall"><span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
-      '<p class="recall-q">' + esc(recall.quote) + '</p>' +
-      '<span class="recall-f">— ' + esc(recall.sageName) + '</span></div>' : "";
+    var recallInner = recall ? ('<span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
+      '<p class="recall-q">' + esc(recall.quote) + '</p><span class="recall-f">— ' + esc(recall.sageName) + '</span>') : "";
+    var recallHtml = (API || recallInner) ? '<div class="recall">' + recallInner + '</div>' : "";
     var posLine = (has || pg.points > 0)
       ? '<p class="title-pos">' + L("あなたの位 ― ", "Your rank — ") + '<b>' + esc(posTitle(pos)) + '</b><span class="grade">' + esc(posGrade(pos)) + '</span></p>'
       : '';
@@ -304,6 +304,7 @@
       '<p class="notice">' + L("※ これは制作中のプロトタイプ（MVP）です。名言はすべて出典付きで裏取りしています。<br>つらさが長く続くときは、どうか一人で抱えず、信頼できる人や専門の窓口に頼ってください。",
         "※ This is a prototype (MVP). Every quote is sourced and fact-checked.<br>If hardship persists, please don't carry it alone — reach out to someone you trust or a professional resource.") + '</p>';
     render(html);
+    if (API) loadDaily();
   }
 
   // ---------- イベント ----------
@@ -383,6 +384,7 @@
       '</div>';
     render(html);
     gateReading(ev);
+    if (API) loadEventStats(ev);
   }
   function gateReading(ev) {
     var ms = Math.max(800, Math.min(2200, 700 + ((lang === "en" ? (ev.bodyEn || ev.body) : ev.body) || "").length * 40));
@@ -616,6 +618,30 @@
     try {
       fetch(API + "/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ eventId: rec.eventId, sageId: rec.chosenSageId, mood: rec.mood, fb: val }) }).catch(function () {});
     } catch (e) {}
+  }
+  // P3: 日替わりの「今日の一言」をサーバーから（API時のみ・失敗時は無表示）
+  function loadDaily() {
+    if (!API) return;
+    fetch(API + "/api/daily?lang=" + lang).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.quote) return;
+      var box = app.querySelector(".recall"); if (!box) return;
+      box.innerHTML = '<span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
+        '<p class="recall-q">' + esc(d.quote) + '</p><span class="recall-f">— ' + esc(d.sageName) + '</span>';
+    }).catch(function () {});
+  }
+  // P3: 響き度で「多くの人に響いた」助言にバッジ（推薦の軽いヒント）
+  function loadEventStats(ev) {
+    if (!API) return;
+    fetch(API + "/api/stats?event=" + encodeURIComponent(ev.id)).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.sages) return;
+      var best = null, br = 0;
+      Object.keys(d.sages).forEach(function (sid) { var s = d.sages[sid]; if (s.samples >= 5 && s.resonateRate > br) { br = s.resonateRate; best = sid; } });
+      if (!best) return;
+      var card = app.querySelector('.card.tap[data-choose="' + best + '"]'); if (!card) return;
+      var head = card.querySelector(".card-head"); if (!head) return;
+      var b = document.createElement("span"); b.className = "loved"; b.textContent = L("💛 多くの人に響いた", "💛 Resonated with many");
+      head.appendChild(b);
+    }).catch(function () {});
   }
   // 「○%が響いた」社会的証明（サンプルが十分なときだけ表示）
   function loadStats(key) {
