@@ -378,3 +378,7 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 @keyframes celflash{0%{opacity:0; transform:scale(.6)} 18%{opacity:.95} 100%{opacity:0; transform:scale(1.6)}}
 @media (prefers-reduced-motion: reduce){ .rest .breath,.cel-flash{animation:none} }
 #app.night .breath-cue{color:var(--gold)}
+
+/* P2: 社会的証明（○%が響いた） */
+.social-proof{text-align:center; color:var(--gold-deep); font-size:.8rem; margin:4px 0 0; min-height:1em; letter-spacing:.02em}
+#app.night .social-proof{color:var(--gold)}

@@ -683,7 +683,7 @@ note は会員状態を外部検証するAPIを持たない。よって「**note
 
 ### 17.7 移行フェーズ
 - **P1 ★実装済（server/）**：Worker(`/api/redeem`・`/api/content`・`/api/feedback`)＋D1スキーマ＋seed生成(`build-seed.py`)＋無料バンドル(`gamedata.free.js`)＋月替わりコード生成(`gen-codes.mjs`)。フロントは `window.LWG_API` 設定時のみAPI取得に切替（空＝従来挙動）。デプロイ手順は `server/README.md`。
-- **P2**：`feedback`/`stats`（堀）を本番ON。
+- **P2 ★実装済**：決断時に響き度を `/api/feedback` へ匿名送信→`/api/stats` で「○%が響いた（N人）」を結果画面に表示（サンプル5以上のみ）。集計は D1 の GROUP BY（読み取り時）。推薦の重み付けはP3で。
 - **P3**：`daily`配信・透かし・アカウント＆クラウド同期。
 
 ### 17.8 コスト・運用

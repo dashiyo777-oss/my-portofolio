@@ -97,6 +97,19 @@ async function feedback(request, env, h) {
   return json({ ok: true }, 200, h);
 }
 
+// 「○%が響いた」集計（匿名・読み取り）。key = "eventId:sageId"
+async function stats(request, env, h) {
+  const key = new URL(request.url).searchParams.get("key") || "";
+  const i = key.indexOf(":");
+  if (i < 0) return json({ error: "bad_key" }, 400, h);
+  const ev = key.slice(0, i), sg = key.slice(i + 1);
+  const rs = await env.DB.prepare("SELECT fb, COUNT(*) AS c FROM feedback WHERE event_id=? AND sage_id=? GROUP BY fb").bind(ev, sg).all();
+  let res = 0, not = 0;
+  (rs.results || []).forEach(function (r) { if (r.fb === "resonated") res = r.c; else if (r.fb === "not_now") not = r.c; });
+  const samples = res + not;
+  return json({ key: key, resonated: res, not_now: not, samples: samples, resonateRate: samples ? res / samples : 0 }, 200, h);
+}
+
 export default {
   async fetch(request, env) {
     const h = cors(env);
@@ -107,6 +120,7 @@ export default {
       if (url.pathname === "/api/redeem" && request.method === "POST") return await redeem(request, env, h);
       if (url.pathname === "/api/content" && request.method === "GET") return await content(request, env, h);
       if (url.pathname === "/api/feedback" && request.method === "POST") return await feedback(request, env, h);
+      if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);
       return json({ error: "not_found" }, 404, h);
     } catch (e) {
       return json({ error: "server_error" }, 500, h);

@@ -582,6 +582,7 @@
       (dhtml ? '<div class="deltas">' + dhtml + '</div>' : "") +
       rankBanner + posBanner +
       '<p class="saved-toast">' + L("📖 「わが叡智の書」に刻まれた", "📖 Inscribed in your Book of Wisdom") + '</p>' +
+      '<p class="social-proof"></p>' +
       '<div class="fb" data-fbidx="' + idx + '">' +
       '<button data-fb="resonated">' + L("響いた ♡", "This resonated ♡") + '</button>' +
       '<button data-fb="not_now">' + L("今はそうでもない", "Not quite now") + '</button>' +
@@ -598,13 +599,36 @@
       '<button class="btn ghost" data-act="title">' + L("中断（タイトルへ）", "Pause (back to title)") + '</button>' +
       '</div>';
     render(html);
+    if (API && rec.eventId && rec.chosenSageId) loadStats(rec.eventId + ":" + rec.chosenSageId);
   }
   function setFeedback(idx, val) {
-    if (!state.journal[idx]) return;
-    state.journal[idx].feedback = (state.journal[idx].feedback === val) ? null : val;
+    var rec = state.journal[idx];
+    if (!rec) return;
+    rec.feedback = (rec.feedback === val) ? null : val;
     save();
     var box = app.querySelector(".fb");
-    if (box) box.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-fb") === state.journal[idx].feedback); });
+    if (box) box.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-fb") === rec.feedback); });
+    if (API && rec.feedback) postFeedback(rec, rec.feedback);   // 響き度をサーバーへ集約（P2）
+  }
+  // 響き度を匿名でサーバーへ（fire-and-forget）
+  function postFeedback(rec, val) {
+    if (!API || !rec) return;
+    try {
+      fetch(API + "/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ eventId: rec.eventId, sageId: rec.chosenSageId, mood: rec.mood, fb: val }) }).catch(function () {});
+    } catch (e) {}
+  }
+  // 「○%が響いた」社会的証明（サンプルが十分なときだけ表示）
+  function loadStats(key) {
+    if (!API) return;
+    fetch(API + "/api/stats?key=" + encodeURIComponent(key))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.samples || d.samples < 5) return;
+        var el = app.querySelector(".social-proof"); if (!el) return;
+        var pct = Math.round(d.resonateRate * 100);
+        el.textContent = L("この言葉を受けた人の " + pct + "% が「響いた」（" + d.samples + "人）",
+          pct + "% of those who received this felt it resonated (" + d.samples + ")");
+      }).catch(function () {});
   }
 
   // ---------- 休息 ----------

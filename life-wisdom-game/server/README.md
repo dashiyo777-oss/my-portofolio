@@ -53,6 +53,8 @@ CODE_SECRET="（wrangler secret に入れたのと同じ値）" node server/gen-
 curl https://.../api/health
 curl -X POST https://.../api/redeem -H 'content-type: application/json' -d '{"code":"TOMO-XXXX"}'
 curl https://.../api/content -H 'Authorization: Bearer <返ってきたtoken>'
+curl -X POST https://.../api/feedback -H 'content-type: application/json' -d '{"eventId":"e1","sageId":"jobs","mood":"down","fb":"resonated"}'
+curl 'https://.../api/stats?key=e1:jobs'
 ```
 
 ## 注意
