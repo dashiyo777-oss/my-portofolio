@@ -9,39 +9,39 @@ window.GAME_DATA = {
       },
       "2": {
         "title": "学びの芽",
-        "unlockWisdom": 15
+        "unlockWisdom": 10
       },
       "3": {
         "title": "問いを持つ者",
-        "unlockWisdom": 40
+        "unlockWisdom": 25
       },
       "4": {
         "title": "思索の人",
-        "unlockWisdom": 80
+        "unlockWisdom": 45
       },
       "5": {
         "title": "賢慮の士",
-        "unlockWisdom": 140
+        "unlockWisdom": 70
       },
       "6": {
         "title": "大賢者",
-        "unlockWisdom": 220
+        "unlockWisdom": 100
       },
       "7": {
         "title": "達観の人",
-        "unlockWisdom": 320
+        "unlockWisdom": 135
       },
       "8": {
         "title": "伝説の探究者",
-        "unlockWisdom": 450
+        "unlockWisdom": 175
       },
       "9": {
         "title": "神聖なる導き",
-        "unlockWisdom": 620
+        "unlockWisdom": 230
       },
       "10": {
         "title": "叡智皆伝",
-        "unlockWisdom": 850
+        "unlockWisdom": 290
       }
     },
     "sages": [
