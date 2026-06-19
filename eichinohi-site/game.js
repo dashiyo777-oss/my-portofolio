@@ -255,6 +255,12 @@
       '<span class="heart">❤️</span>' +
       '<span class="mindbar"><i style="width:' + s.mind + '%"></i></span>' +
       '<span class="rankchip">' + esc(rankTitle(unlockedRank())) + '</span>' +
+      '<span class="sb-ctrl" style="margin-left:auto;display:flex;gap:4px">' +
+      '<button class="snd" data-act="night" title="' + L("夜モード", "Night mode") + '">' + (night ? "☀️" : "🌙") + '</button>' +
+      '<button class="snd' + (ambientOn ? " on" : "") + '" data-act="ambient" title="' + L("BGM", "BGM") + '">🎐</button>' +
+      '<button class="snd" data-act="sound" title="' + L("音のオン/オフ", "Sound on/off") + '">' + (soundOn ? "🔔" : "🔕") + '</button>' +
+      '<button class="snd" data-act="title" title="' + L("タイトルへ", "Title") + '">🏠</button>' +
+      '</span>' +
       '</div>' + wis;
   }
 
@@ -268,6 +274,7 @@
 
   // ---------- タイトル ----------
   function showTitle() {
+    curView = showTitle;
     var has = state.journal.length > 0;
     var pg = playerProgress(); var pos = positionFor(pg.points);
     var recall = dailyRecall();
@@ -309,6 +316,7 @@
 
   // ---------- イベント ----------
   var currentEvent = null, currentLegend = null;
+  var curView = showTitle;   // 現在の画面（音/夜モード切替後に同じ画面を再描画するため）
   var mode = "auto", consultCat = null;
   function pickEvent() {
     var avail = isPaid() ? EVENTS : EVENTS.filter(function (e) { return e.tier === "free"; });
@@ -333,6 +341,7 @@
   }
   function freeCategories() { var m = {}; EVENTS.forEach(function (e) { if (e.tier === "free") m[e.category] = 1; }); return m; }
   function showConsult() {
+    curView = showConsult;
     var fc = freeCategories(), paid = isPaid();
     var grid = CAT_KEYS.map(function (c) {
       if (!paid && !fc[c]) return '<button class="consult-cat locked" data-act="membergate"><span class="cc-ic">' + catIcon(c) + '</span>' + esc(catLabel(c)) + ' 🔒</button>';
@@ -358,6 +367,7 @@
       '</div>';
   }
   function showMemberGate() {
+    curView = showMemberGate;
     render('<div class="fade">' + statusbar() +
       '<h2 class="event-title">' + L("ここから先は、会員エリアです", "Beyond here is the members area") + '</h2>' +
       '<p class="event-body">' + L("恋愛・学業などの悩み、世界の偉人・聖典・伝説、そして毎月の新しい言葉は会員限定。noteの会員ページの「今月のコード」で解放できます。",
@@ -368,6 +378,7 @@
       '</div>');
   }
   function showEvent(ev) {
+    curView = function () { showEvent(ev); };
     var legendHtml = currentLegend ? legendCard(currentLegend) : "";
     var cards = legendHtml + ev.advices.map(function (adv) { return adviceCard(ev, adv); }).join("");
     var paywall = isPaid() ? "" : memberBanner();
@@ -566,6 +577,7 @@
   function shareCard(rec) { if (!rec) return; if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawShare(rec); }); else drawShare(rec); }
 
   function showResult(idx, deltas, rankedUp, positionUp) {
+    curView = function () { showResult(idx, deltas, rankedUp, positionUp); };
     var rec = state.journal[idx]; lastRec = rec;
     if (rec.isLegend) { /* 祝福演出で鳴らし済み */ } else if (rec.isScripture) { sfxSacred(); } else { sfxChime(); }
     var dhtml = deltas.map(function (x) {
@@ -659,6 +671,7 @@
 
   // ---------- 休息 ----------
   function showRest() {
+    curView = showRest;
     var lines = lang === "en"
       ? ["The courage to pause is also strength.", "You've done well today.", "Breathe in, breathe out. That alone is enough."]
       : ["立ち止まる勇気もまた、強さ。", "今日はもう、よく頑張った。", "息を吸って、吐いて。それだけで充分。"];
@@ -746,6 +759,9 @@
     return '<div class="entry" style="--c:' + (sage.color || "#bbb") + '">' +
       '<div class="when">' + ep + ' ・ ' + esc(when) + ' ・ ' + catIcon(rec.category) + ' ' + esc(catLabel(rec.category)) + '</div>' +
       '<div class="etitle">' + esc(rec.title) + '</div>' +
+      '<div class="eauthor" style="display:flex;align-items:center;gap:6px;margin:2px 0 6px;font-weight:700;color:var(--c)">' +
+        '<span class="edisc" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;font-size:12px">' + esc(discChar(sage)) + '</span>' +
+        esc(rec.sageName) + (rec.isScripture ? scriptureTag() : "") + '</div>' +
       '<div class="eq">' + esc(rec.quote) + '</div>' +
       '<div class="efrom">— ' + esc(rec.sageName) + (rec.isScripture ? scriptureTag() : "") + (rec.source ? " ／ " + esc(rec.source) : "") + '</div>' +
       (rec.playerNote ? '<div class="enote">✎ ' + esc(rec.playerNote) + '</div>' : "") +
@@ -807,11 +823,11 @@
     if (t.hasAttribute("data-filter")) { bookFilter = t.getAttribute("data-filter"); showBook(); return; }
     if (t.hasAttribute("data-consultcat")) { mode = "consult"; consultCat = t.getAttribute("data-consultcat"); proceed(); return; }
     var act = t.getAttribute("data-act");
-    if (act === "sound") { toggleSound(); showTitle(); }
-    else if (act === "ambient") { toggleAmbient(); showTitle(); }
+    if (act === "sound") { toggleSound(); (curView || showTitle)(); }
+    else if (act === "ambient") { toggleAmbient(); (curView || showTitle)(); }
     else if (act === "share") { shareCard(lastRec); }
-    else if (act === "night") { toggleNight(); showTitle(); }
-    else if (act === "lang") { setLang(t.getAttribute("data-lang")); showTitle(); }
+    else if (act === "night") { toggleNight(); (curView || showTitle)(); }
+    else if (act === "lang") { setLang(t.getAttribute("data-lang")); (curView || showTitle)(); }
     else if (act === "walk") { mode = "auto"; consultCat = null; proceed(); }
     else if (act === "consult") showConsult();
     else if (act === "start" || act === "next") proceed();
