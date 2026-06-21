@@ -300,6 +300,7 @@
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
       '<button class="btn ghost" data-act="book">' + L("わが叡智の書を見る", "Open the Book of Wisdom") + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
+      (isMaster() ? '<button class="btn gold hiden-open" data-act="hiden">' + L("📜 叡智皆伝の書をひらく", "📜 Open your Book of Mastery") + '</button>' : "") +
       (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
       (has ? '<button class="btn ghost" data-act="reset">' + L("はじめからやり直す", "Start a new life") + '</button>' : "") +
       '</div>' +
@@ -584,6 +585,7 @@
       var up = x.d > 0; return '<span class="delta ' + (up ? "up" : "down") + '">' + esc(statLabel(x.k)) + " " + (up ? "+" : "") + x.d + '</span>';
     }).join("");
     var rankBanner = rankedUp ? '<p class="saved-toast">' + L("✨ 新たな境地「" + esc(rankTitle(rankedUp)) + "」に到達した", "✨ You reached a new stage: “" + esc(rankTitle(rankedUp)) + "”") + '</p>' : "";
+    var masterBanner = (rankedUp === MAX_RANK) ? (function () { try { sfxSacred(); } catch (e) {} return '<button class="master-toast" data-act="hiden">' + L("📜 「叡智皆伝」に到達！秘伝の書がひらかれた ―― ひらく →", "📜 You reached Wisdom Mastery! Your secret book is revealed — open it →") + '</button>'; })() : "";
     var posBanner = positionUp ? '<p class="pos-banner">' + L("🎖 昇位 ―「" + esc(posTitle(positionUp)) + "（" + esc(posGrade(positionUp)) + "）」へ", "🎖 Promotion — to “" + esc(posTitle(positionUp)) + "” (" + esc(posGrade(positionUp)) + ")") + '</p>' : "";
     var ribbon = rec.isLegend ? '<p class="rarity-ribbon legendary">' + L("✦ 伝説の言葉 ✦", "✦ A Legendary Word ✦") + '</p>'
       : (rec.isScripture ? '<p class="rarity-ribbon sacred">' + L("神聖なる導き", "Sacred Guidance") + '</p>' : "");
@@ -594,7 +596,7 @@
       (rec.source ? '<p class="result-source">' + esc(rec.source) + '</p>' : "") +
       '</div>' +
       (dhtml ? '<div class="deltas">' + dhtml + '</div>' : "") +
-      rankBanner + posBanner +
+      rankBanner + masterBanner + posBanner +
       '<p class="saved-toast">' + L("📖 「わが叡智の書」に刻まれた", "📖 Inscribed in your Book of Wisdom") + '</p>' +
       '<p class="social-proof"></p>' +
       '<div class="fb" data-fbidx="' + idx + '">' +
@@ -809,6 +811,101 @@
     render(html);
   }
 
+  // ---------- 叡智皆伝の書（秘伝の書） ----------
+  function isMaster() { return unlockedRank() >= MAX_RANK; }
+  function isGrandMaster() { return isMaster() && codex.length >= LEGENDS.length; }
+  function masterTitle() { return isGrandMaster() ? L("真・叡智皆伝", "True Mastery of Wisdom") : L("叡智皆伝", "Mastery of Wisdom"); }
+  function resonatedList() {
+    var r = state.journal.filter(function (j) { return j.feedback === "resonated" && j.quote; });
+    if (r.length === 0) r = state.journal.filter(function (j) { return j.quote; });
+    return r;
+  }
+  function hidenClosing() {
+    if (isGrandMaster()) return L(
+      "全ての伝説を集め、皆伝の頂に至った者へ。<br>知恵とは、覚えた言葉の数ではない。<br>それを暮らしに変えた、その手のぬくもりだ。<br>あなたが選んだ言葉のひとつひとつが、もう、あなたの一部になっている。<br>灯火は、役目を終える。<br>あとは——あなたが、照らす番だ。",
+      "To the one who gathered every legend and reached the summit:<br>Wisdom is not the number of words you have learned,<br>but the warmth of the hands that turned them into a life.<br>Every word you chose has already become part of you.<br>The beacon's work is done.<br>Now — you are the light.");
+    return L(
+      "ここまで、よく歩いてきた。<br>あなたはもう、答えを外にばかり探す者ではない。<br>迷いの日に灯した小さな火は、いつしかあなた自身の光になった。<br>これからは、あなたが誰かの灯火となる番だ。<br>——その火を、絶やさぬように。",
+      "You have walked far.<br>You no longer seek your answers only outside yourself.<br>The small flame you lit in your darkest days has become your own light.<br>Now it is your turn to be a beacon for others.<br>— Keep the fire burning.");
+  }
+  function showHiden() {
+    curView = showHiden;
+    if (!isMaster()) { showTitle(); return; }
+    sfxSacred();
+    var gm = isGrandMaster();
+    var d = new Date();
+    var ymd = lang === "en"
+      ? ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
+      : d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    var res = resonatedList();
+    var anth = res.slice(0, 14).map(function (r) {
+      return '<div class="hiden-q">「' + esc(r.quote) + '」<span class="hiden-from">— ' + esc(r.sageName) + '</span></div>';
+    }).join("") || '<p class="muted">' + L("まだ言葉が記されていません。", "No words are recorded yet.") + '</p>';
+    var fav = state.favoriteSage && SAGES[state.favoriteSage] ? sageName(SAGES[state.favoriteSage]) : "—";
+    var resonatedCount = state.journal.filter(function (j) { return j.feedback === "resonated"; }).length;
+    var html = '<div class="fade hiden">' +
+      '<div class="hiden-scroll' + (gm ? ' gm' : '') + '">' +
+      '<div class="hiden-seal">' + (gm ? "皆" : "灯") + '</div>' +
+      '<div class="hiden-kicker">' + L("秘 伝 之 書", "The Book of Secret Wisdom") + '</div>' +
+      '<h2 class="hiden-name">' + esc(masterTitle()) + '</h2>' +
+      '<p class="hiden-date">' + L(esc(ymd) + " 到達", "Attained " + esc(ymd)) + '</p>' +
+      '<div class="hiden-stats">' +
+      '<div><b>' + state.journal.length + '</b><span>' + L("歩んだ岐路", "Crossroads") + '</span></div>' +
+      '<div><b>' + resonatedCount + '</b><span>' + L("響いた言葉", "Resonated") + '</span></div>' +
+      '<div><b>' + codex.length + ' / ' + LEGENDS.length + '</b><span>' + L("伝説", "Legends") + '</span></div>' +
+      '<div><b>' + esc(fav) + '</b><span>' + L("座右の賢者", "Guiding Sage") + '</span></div>' +
+      '</div>' +
+      '<div class="hiden-sec">' + L("◇ あなたの秘伝 ◇", "◇ Your Own Wisdom ◇") + '</div>' +
+      '<p class="hiden-lead">' + L("旅の中で「響いた」と選んだ言葉。これは、あなただけの叡智の書。", "The words that resonated with you — a book of wisdom that is yours alone.") + '</p>' +
+      '<div class="hiden-anth">' + anth + '</div>' +
+      '<div class="hiden-sec">' + L("◇ 灯火からの、最後の言葉 ◇", "◇ The Beacon's Final Words ◇") + '</div>' +
+      '<p class="hiden-closing">' + hidenClosing() + '</p>' +
+      '</div>' +
+      '<button class="btn gold" data-act="hidenshare">' + L("📜 皆伝の書を画像で残す・共有", "📜 Save & share your scroll") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>';
+    render(html);
+  }
+  function drawHiden() {
+    var W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
+    var x = c.getContext && c.getContext("2d"); if (!x) return;
+    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#2a2016"); g.addColorStop(1, "#161210");
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    var ink = "#f0e6d2", gold = "#d8b772", soft = "#b3a589";
+    x.strokeStyle = gold; x.lineWidth = 6; x.strokeRect(40, 40, W - 80, H - 80);
+    x.strokeStyle = "rgba(216,183,114,.4)"; x.lineWidth = 2; x.strokeRect(58, 58, W - 116, H - 116);
+    x.textAlign = "center"; x.textBaseline = "middle";
+    x.beginPath(); x.arc(W / 2, 230, 72, 0, Math.PI * 2); x.fillStyle = gold; x.fill();
+    x.fillStyle = "#171210"; x.font = "700 70px 'Noto Serif JP', serif"; x.fillText(isGrandMaster() ? "皆" : "灯", W / 2, 238);
+    x.fillStyle = gold; x.font = "600 38px 'Noto Serif JP', serif"; x.fillText(L("秘 伝 之 書", "Book of Secret Wisdom"), W / 2, 360);
+    x.fillStyle = ink; x.font = "700 96px 'Noto Serif JP', serif"; x.fillText(masterTitle(), W / 2, 460);
+    var d = new Date(), ymd = lang === "en"
+      ? ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
+      : d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    x.fillStyle = soft; x.font = "400 34px 'Noto Serif JP', serif"; x.fillText(L(ymd + " 到達", "Attained " + ymd), W / 2, 540);
+    var rc = state.journal.filter(function (j) { return j.feedback === "resonated"; }).length;
+    x.fillStyle = goldStr(); function goldStr() { return "#d8b772"; }
+    x.font = "500 36px 'Noto Serif JP', serif";
+    x.fillText(L("歩んだ岐路 " + state.journal.length + "　響いた言葉 " + rc + "　伝説 " + codex.length + "/" + LEGENDS.length,
+      "Crossroads " + state.journal.length + " · Resonated " + rc + " · Legends " + codex.length + "/" + LEGENDS.length), W / 2, 620);
+    var res = resonatedList().slice(0, 2), y = 760;
+    x.fillStyle = "rgba(216,183,114,.5)"; x.font = "400 30px 'Noto Serif JP', serif"; x.fillText(L("◇ あなたの秘伝 ◇", "◇ Your Own Wisdom ◇"), W / 2, y); y += 70;
+    res.forEach(function (r) {
+      x.fillStyle = ink; x.font = "500 40px 'Noto Serif JP', serif";
+      wrapCanvas(x, "「" + r.quote + "」", W - 200).forEach(function (ln) { x.fillText(ln, W / 2, y); y += 56; });
+      x.fillStyle = soft; x.font = "400 28px 'Noto Serif JP', serif"; x.fillText("— " + r.sageName, W / 2, y); y += 64;
+    });
+    x.fillStyle = gold; x.font = "500 36px 'Noto Serif JP', serif"; x.fillText("🪔 " + L("叡智の灯火", "Beacon of Wisdom"), W / 2, H - 120);
+    x.fillStyle = soft; x.font = "400 26px sans-serif"; x.fillText("eichinohi.com", W / 2, H - 76);
+    var name = (lang === "en" ? "mastery-of-wisdom.png" : "叡智皆伝の書.png");
+    function deliver(blob) {
+      try { var f = new File([blob], name, { type: "image/png" }); if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], text: masterTitle() + " — " + L("叡智の灯火", "Beacon of Wisdom") + "  #" + L("叡智の灯火", "BeaconOfWisdom") + "  eichinohi.com" }).catch(function () {}); return; } } catch (e) {}
+      var a = document.createElement("a"); a.download = name; a.href = URL.createObjectURL(blob); document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    }
+    if (c.toBlob) c.toBlob(deliver, "image/png"); else { var a = document.createElement("a"); a.download = name; a.href = c.toDataURL("image/png"); a.click(); }
+  }
+  function shareHiden() { if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawHiden); else drawHiden(); }
+
   // ---------- レンダリング & イベント委譲 ----------
   function render(html) { app.innerHTML = html; window.scrollTo(0, 0); }
 
@@ -833,6 +930,8 @@
     else if (act === "start" || act === "next") proceed();
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
+    else if (act === "hiden") showHiden();
+    else if (act === "hidenshare") shareHiden();
     else if (act === "title") showTitle();
     else if (act === "membergate") { showMemberGate(); }
     else if (act === "redeem") {

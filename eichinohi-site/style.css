@@ -387,3 +387,41 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .loved{margin-left:8px; font-size:.64rem; padding:2px 8px; border-radius:99px; white-space:nowrap;
   background:linear-gradient(180deg,#ffe7ad,#f3c969); color:#6b4e10; border:1px solid #e3b94f}
 #app.night .loved{background:linear-gradient(180deg,#5a4a22,#473916); color:#f1d68a; border-color:#6b5524}
+
+/* ===== 叡智皆伝の書（秘伝の書） ===== */
+.hiden-open{background:linear-gradient(180deg,#f6d98a,#d8b15a)!important;color:#4a3410!important;
+  box-shadow:0 4px 18px rgba(216,177,90,.35);font-weight:700;border:1px solid #e7c878}
+.master-toast{display:block;width:100%;margin:10px 0;padding:14px 16px;border-radius:14px;cursor:pointer;
+  font-size:.95rem;font-weight:700;color:#4a3410;border:1px solid #e7c878;
+  background:linear-gradient(180deg,#ffe9b0,#f0c862);box-shadow:0 4px 18px rgba(216,177,90,.4);
+  animation:hidenPulse 1.6s ease-in-out infinite}
+@keyframes hidenPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02);box-shadow:0 6px 26px rgba(216,177,90,.6)}}
+@media (prefers-reduced-motion:reduce){.master-toast{animation:none}}
+
+.hiden{max-width:620px;margin:0 auto}
+.hiden-scroll{position:relative;margin:8px 0 18px;padding:34px 26px 30px;border-radius:14px;
+  background:linear-gradient(170deg,#fbf4e6,#efe2c9);border:2px solid #d8b15a;
+  box-shadow:0 14px 50px rgba(60,40,10,.28),inset 0 0 0 1px rgba(216,177,90,.4);color:#3a2c18;text-align:center}
+.hiden-scroll.gm{background:linear-gradient(170deg,#2c2417,#1d1810);color:#f0e6d2;border-color:#e7c878;
+  box-shadow:0 14px 60px rgba(0,0,0,.5),inset 0 0 0 1px rgba(231,200,120,.5)}
+.hiden-seal{width:78px;height:78px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;
+  font:700 40px 'Noto Serif JP',serif;color:#fff;background:radial-gradient(circle at 35% 30%,#e8b860,#b07d2a);
+  box-shadow:0 4px 16px rgba(150,100,20,.45)}
+.hiden-kicker{letter-spacing:.5em;font-size:.78rem;color:#b07d2a;margin-bottom:4px}
+.hiden-scroll.gm .hiden-kicker{color:#e7c878}
+.hiden-name{font:700 2rem/1.2 'Noto Serif JP',serif;margin:2px 0 4px}
+.hiden-date{font-size:.82rem;opacity:.7;margin-bottom:14px}
+.hiden-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:6px 0 18px;
+  border-top:1px solid rgba(176,125,42,.3);border-bottom:1px solid rgba(176,125,42,.3);padding:12px 0}
+.hiden-stats b{display:block;font:700 1.2rem 'Noto Serif JP',serif;color:#b07d2a}
+.hiden-scroll.gm .hiden-stats b{color:#e7c878}
+.hiden-stats span{font-size:.62rem;opacity:.7;letter-spacing:.04em}
+.hiden-sec{margin:18px 0 6px;font-size:.92rem;letter-spacing:.12em;color:#b07d2a;font-weight:700}
+.hiden-scroll.gm .hiden-sec{color:#e7c878}
+.hiden-lead{font-size:.82rem;opacity:.78;margin-bottom:12px;line-height:1.6}
+.hiden-anth{display:flex;flex-direction:column;gap:10px;text-align:left}
+.hiden-q{font-family:'Noto Serif JP',serif;line-height:1.7;font-size:.95rem;
+  border-left:2px solid #d8b15a;padding-left:12px}
+.hiden-from{display:block;margin-top:3px;font-size:.74rem;opacity:.7}
+.hiden-closing{font-family:'Noto Serif JP',serif;line-height:2;font-size:1.02rem;margin:6px 4px 2px;
+  letter-spacing:.02em;font-weight:400}
