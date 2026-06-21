@@ -654,7 +654,13 @@
     .tl-event { font-size: 0.82rem; color: rgba(253,246,236,0.8); line-height: 1.75; border-left: 1px solid rgba(200,134,10,0.3); padding-left: 0.9rem; }
   </style>
 <style>
-.profile-portrait-col .portrait-era-label{font-size:.58rem;letter-spacing:.05em;color:var(--gray);text-align:center;display:block;margin-top:.4rem}
+.portrait-frame{border-radius:7px;box-shadow:0 8px 28px rgba(0,0,0,.45);position:relative}
+.portrait-frame::after{content:"";position:absolute;inset:7px;border:1px solid rgba(253,246,236,.16);border-radius:3px;pointer-events:none;z-index:2}
+.portrait-placeholder{position:absolute;inset:0;gap:.35rem}
+.portrait-placeholder::before{content:"";position:absolute;top:-30%;left:-10%;width:120%;height:80%;background:radial-gradient(ellipse at center,rgba(255,235,200,.18),transparent 70%);pointer-events:none}
+.p-field-glyph{font-size:1.1rem;color:rgba(253,246,236,.55);text-shadow:0 0 14px rgba(0,0,0,.5)}
+.portrait-kanji{writing-mode:vertical-rl;font-weight:700;letter-spacing:.12em;color:rgba(253,246,236,.95);text-shadow:0 2px 12px rgba(0,0,0,.6),0 0 26px rgba(255,220,150,.25);line-height:1.05;max-height:62%}
+.portrait-era-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.64rem;letter-spacing:.04em;color:rgba(253,246,236,.62);writing-mode:horizontal-tb;text-align:center;max-width:88%;line-height:1.3}
 .sage-bio{font-family:'Noto Serif JP',serif;font-weight:300;line-height:1.85;color:var(--white);font-size:.95rem;margin:.9rem 0 .8rem}
 .sage-cta{display:inline-block;font-size:.8rem;letter-spacing:.03em;color:var(--gold);text-decoration:none;border:1px solid rgba(200,134,10,.4);border-radius:999px;padding:.5rem 1.1rem;transition:.25s}
 .sage-cta:hover{background:var(--gold);color:#2e1c0a}
@@ -668,8 +674,7 @@
 <header class="site-header">
   <span class="logo">Ryuzaburo</span>
   <nav style="display:flex;gap:1.6rem;align-items:center">
-    <a href="women-history.html">日本の女性</a>
-    <a href="politicians.html">政治家</a>
+    <a href="women-history.html">日本の女性</a><a href="politicians.html">政治家</a>
     <a href="world-sages.html" style="color:var(--gold)">世界の偉人</a>
     <a href="https://eichinohi.com/" target="_blank" rel="noopener">🏮 ゲーム</a>
     <button id="themeToggle" style="background:none;border:1px solid rgba(200,134,10,.3);color:var(--gray);border-radius:999px;padding:.2rem .7rem;font-size:.6rem;cursor:pointer">◐</button>
@@ -686,8 +691,9 @@
       <div class="profile-rank"><span class="rank-num">01</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#7a6f57">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">エイブラハム​リンカーン</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#2e271c,#7a6f57)">
+            <span class="p-field-glyph">♛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">エイブラハム・リンカーン</span>
             <span class="portrait-era-label">Abraham Lincoln</span>
           </div>
         </div>
@@ -706,8 +712,9 @@
       <div class="profile-rank"><span class="rank-num">02</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#6fa8a0">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">マザー​テレサ</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#2b3730,#6fa8a0)">
+            <span class="p-field-glyph">✚</span>
+            <span class="portrait-kanji" style="font-size:1.3rem">マザー・テレサ</span>
             <span class="portrait-era-label">Mother Teresa</span>
           </div>
         </div>
@@ -726,8 +733,9 @@
       <div class="profile-rank"><span class="rank-num">03</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#3b6ea5">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">スティーブ​ジョブズ</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#1c2632,#3b6ea5)">
+            <span class="p-field-glyph">✺</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">スティーブ・ジョブズ</span>
             <span class="portrait-era-label">Steve Jobs</span>
           </div>
         </div>
@@ -746,8 +754,9 @@
       <div class="profile-rank"><span class="rank-num">04</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#c0603a">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">モハメド​アリ</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#412214,#c0603a)">
+            <span class="p-field-glyph">✦</span>
+            <span class="portrait-kanji" style="font-size:1.3rem">モハメド・アリ</span>
             <span class="portrait-era-label">Muhammad Ali</span>
           </div>
         </div>
@@ -766,8 +775,9 @@
       <div class="profile-rank"><span class="rank-num">05</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#8f7355">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:2.1rem">孔子</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#34281b,#8f7355)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:2.5rem">孔子</span>
             <span class="portrait-era-label">Confucius</span>
           </div>
         </div>
@@ -786,8 +796,9 @@
       <div class="profile-rank"><span class="rank-num">06</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#8fae6f">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">アンネ​フランク</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#343823,#8fae6f)">
+            <span class="p-field-glyph">✚</span>
+            <span class="portrait-kanji" style="font-size:1.3rem">アンネ・フランク</span>
             <span class="portrait-era-label">Anne Frank</span>
           </div>
         </div>
@@ -806,8 +817,9 @@
       <div class="profile-rank"><span class="rank-num">07</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#8a7a9c">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">エレノア​ルーズベルト</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#322a2f,#8a7a9c)">
+            <span class="p-field-glyph">♛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">エレノア・ルーズベルト</span>
             <span class="portrait-era-label">Eleanor Roosevelt</span>
           </div>
         </div>
@@ -826,8 +838,9 @@
       <div class="profile-rank"><span class="rank-num">08</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#b08a3e">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">トーマス​エジソン</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#3d2e15,#b08a3e)">
+            <span class="p-field-glyph">⚛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">トーマス・エジソン</span>
             <span class="portrait-era-label">Thomas Edison</span>
           </div>
         </div>
@@ -846,8 +859,9 @@
       <div class="profile-rank"><span class="rank-num">09</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#5b8a72">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.5rem">坂本龍馬</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#252e23,#5b8a72)">
+            <span class="p-field-glyph">♛</span>
+            <span class="portrait-kanji" style="font-size:1.7rem">坂本龍馬</span>
             <span class="portrait-era-label">Sakamoto Ryoma</span>
           </div>
         </div>
@@ -866,8 +880,9 @@
       <div class="profile-rank"><span class="rank-num">10</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#e0a44a">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">フィンセント​ファン​ゴッホ</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#4a3518,#e0a44a)">
+            <span class="p-field-glyph">❀</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">フィンセント・ファン・ゴッホ</span>
             <span class="portrait-era-label">Vincent van Gogh</span>
           </div>
         </div>
@@ -886,8 +901,9 @@
       <div class="profile-rank"><span class="rank-num">11</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#b5503a">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">ブルース​リー</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#3e1e14,#b5503a)">
+            <span class="p-field-glyph">✦</span>
+            <span class="portrait-kanji" style="font-size:1.3rem">ブルース・リー</span>
             <span class="portrait-era-label">Bruce Lee</span>
           </div>
         </div>
@@ -906,8 +922,9 @@
       <div class="profile-rank"><span class="rank-num">12</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#b08968">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">マハトマ​ガンジー</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#3d2e21,#b08968)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">マハトマ・ガンジー</span>
             <span class="portrait-era-label">Mahatma Gandhi</span>
           </div>
         </div>
@@ -926,8 +943,9 @@
       <div class="profile-rank"><span class="rank-num">13</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#5f6caf">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">マリ​キュリー</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#262635,#5f6caf)">
+            <span class="p-field-glyph">⚛</span>
+            <span class="portrait-kanji" style="font-size:1.3rem">マリ・キュリー</span>
             <span class="portrait-era-label">Marie Curie</span>
           </div>
         </div>
@@ -946,8 +964,9 @@
       <div class="profile-rank"><span class="rank-num">14</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#8a7a5c">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">ウィンストン​チャーチル</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#322a1d,#8a7a5c)">
+            <span class="p-field-glyph">♛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">ウィンストン・チャーチル</span>
             <span class="portrait-era-label">Winston Churchill</span>
           </div>
         </div>
@@ -966,8 +985,9 @@
       <div class="profile-rank"><span class="rank-num">15</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#c98ca0">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">オードリー​ヘプバーン</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#442f30,#c98ca0)">
+            <span class="p-field-glyph">❀</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">オードリー・ヘプバーン</span>
             <span class="portrait-era-label">Audrey Hepburn</span>
           </div>
         </div>
@@ -986,8 +1006,9 @@
       <div class="profile-rank"><span class="rank-num">16</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#a0825f">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">ヘレン​ケラー</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#382c1e,#a0825f)">
+            <span class="p-field-glyph">✚</span>
+            <span class="portrait-kanji" style="font-size:1.3rem">ヘレン・ケラー</span>
             <span class="portrait-era-label">Helen Keller</span>
           </div>
         </div>
@@ -1006,7 +1027,8 @@
       <div class="profile-rank"><span class="rank-num">17</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#9b8fb0">
-          <div class="portrait-placeholder">
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#373035,#9b8fb0)">
+            <span class="p-field-glyph">✒</span>
             <span class="portrait-kanji" style="font-size:2.1rem">紫式部</span>
             <span class="portrait-era-label">Murasaki Shikibu</span>
           </div>
@@ -1026,8 +1048,9 @@
       <div class="profile-rank"><span class="rank-num">18</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#7a8c6f">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:2.1rem">老子</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#2e2f23,#7a8c6f)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:2.5rem">老子</span>
             <span class="portrait-era-label">Laozi</span>
           </div>
         </div>
@@ -1046,8 +1069,9 @@
       <div class="profile-rank"><span class="rank-num">19</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#4f7d8c">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">アルベルト​アインシュタイン</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#222b2b,#4f7d8c)">
+            <span class="p-field-glyph">⚛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">アルベルト・アインシュタイン</span>
             <span class="portrait-era-label">Albert Einstein</span>
           </div>
         </div>
@@ -1066,8 +1090,9 @@
       <div class="profile-rank"><span class="rank-num">20</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#9c7b3c">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">ネルソン​マンデラ</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#372a14,#9c7b3c)">
+            <span class="p-field-glyph">♛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">ネルソン・マンデラ</span>
             <span class="portrait-era-label">Nelson Mandela</span>
           </div>
         </div>
@@ -1086,8 +1111,9 @@
       <div class="profile-rank"><span class="rank-num">21</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#6b5b95">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">ヴィクトール​フランクル</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#29212d,#6b5b95)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">ヴィクトール・フランクル</span>
             <span class="portrait-era-label">Viktor Frankl</span>
           </div>
         </div>
@@ -1106,7 +1132,8 @@
       <div class="profile-rank"><span class="rank-num">22</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#6e6a5c">
-          <div class="portrait-placeholder">
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#2a251d,#6e6a5c)">
+            <span class="p-field-glyph">☯</span>
             <span class="portrait-kanji" style="font-size:2.1rem">セネカ</span>
             <span class="portrait-era-label">Seneca</span>
           </div>
@@ -1126,8 +1153,9 @@
       <div class="profile-rank"><span class="rank-num">23</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#6c7a89">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.5rem">ソクラテス</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#2a2a2a,#6c7a89)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:1.7rem">ソクラテス</span>
             <span class="portrait-era-label">Socrates</span>
           </div>
         </div>
@@ -1146,8 +1174,9 @@
       <div class="profile-rank"><span class="rank-num">24</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#5c5a6e">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">フリードリヒ​ニーチェ</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#252122,#5c5a6e)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">フリードリヒ・ニーチェ</span>
             <span class="portrait-era-label">Friedrich Nietzsche</span>
           </div>
         </div>
@@ -1166,8 +1195,9 @@
       <div class="profile-rank"><span class="rank-num">25</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#7d6b95">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">ウィリアム​シェイクスピア</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#2f252d,#7d6b95)">
+            <span class="p-field-glyph">✒</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">ウィリアム・シェイクスピア</span>
             <span class="portrait-era-label">William Shakespeare</span>
           </div>
         </div>
@@ -1186,8 +1216,9 @@
       <div class="profile-rank"><span class="rank-num">26</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#b5894a">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.1rem">マーティン​ルーサー​キング Jr.</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#3e2e18,#b5894a)">
+            <span class="p-field-glyph">♛</span>
+            <span class="portrait-kanji" style="font-size:1.05rem">マーティン・ルーサー・キング Jr.</span>
             <span class="portrait-era-label">Martin Luther King Jr.</span>
           </div>
         </div>
@@ -1206,8 +1237,9 @@
       <div class="profile-rank"><span class="rank-num">27</span><span class="rank-label">No.</span></div>
       <div class="profile-portrait-col">
         <div class="portrait-frame" style="border-color:#5e7d6a">
-          <div class="portrait-placeholder">
-            <span class="portrait-kanji" style="font-size:1.5rem">福沢諭吉</span>
+          <div class="portrait-placeholder" style="background:linear-gradient(160deg,#262b21,#5e7d6a)">
+            <span class="p-field-glyph">☯</span>
+            <span class="portrait-kanji" style="font-size:1.7rem">福沢諭吉</span>
             <span class="portrait-era-label">Fukuzawa Yukichi</span>
           </div>
         </div>
@@ -1229,12 +1261,7 @@
   <p style="margin-top:1.5rem;font-size:.7rem">© Ryuzaburo</p>
 </footer>
 <script>
-document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');
-  var f=b.dataset.filter;
-  document.querySelectorAll('.profile-card').forEach(c=>{c.style.display=(f==='all'||c.dataset.field===f)?'':'none';});
-}));
-var t=document.getElementById('themeToggle');
-if(t)t.addEventListener('click',()=>{var h=document.documentElement;h.dataset.theme=h.dataset.theme==='light'?'dark':'light';});
+document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');var f=b.dataset.filter;document.querySelectorAll('.profile-card').forEach(c=>{c.style.display=(f==='all'||c.dataset.field===f)?'':'none';});}));
+var t=document.getElementById('themeToggle');if(t)t.addEventListener('click',()=>{var h=document.documentElement;h.dataset.theme=h.dataset.theme==='light'?'dark':'light';});
 </script>
 </body></html>
