@@ -425,3 +425,31 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .hiden-from{display:block;margin-top:3px;font-size:.74rem;opacity:.7}
 .hiden-closing{font-family:'Noto Serif JP',serif;line-height:2;font-size:1.02rem;margin:6px 4px 2px;
   letter-spacing:.02em;font-weight:400}
+
+/* ===== この灯火について（遊び方ガイド） ===== */
+.guide{max-width:540px;margin:0 auto;text-align:center}
+.guide-head{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:6px}
+.guide-head h2{font-size:1.5rem;font-weight:700;color:var(--ink)}
+#app.night .guide-head h2{color:var(--paper)}
+.guide-lead{font-size:.95rem;line-height:1.9;color:var(--ink-soft);margin:0 6px 18px}
+.guide-sec{text-align:left;background:var(--paper2);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0;box-shadow:var(--shadow)}
+#app.night .guide-sec{background:rgba(255,255,255,.04);border-color:rgba(202,164,93,.2)}
+.guide-sec h3{font-size:1.05rem;font-weight:700;color:var(--gold-deep);margin-bottom:10px}
+.guide-steps{display:flex;flex-direction:column;gap:10px}
+.gstep{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:4px 12px}
+.gstep .gnum{grid-row:1/3;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;background:radial-gradient(circle at 35% 30%,#e0b765,#b88a36)}
+.gstep b{font-size:.98rem;color:var(--ink)}
+#app.night .gstep b{color:var(--paper)}
+.gstep span:not(.gnum){font-size:.82rem;color:var(--ink-soft)}
+.guide-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+.guide-list li{font-size:.92rem;line-height:1.6;color:var(--ink)}
+#app.night .guide-list li{color:var(--paper)}
+.guide-sec.goal{background:linear-gradient(165deg,#fbf2dd,#f2e4c4);border-color:var(--gold);text-align:center}
+#app.night .guide-sec.goal{background:linear-gradient(165deg,#322813,#241c10);border-color:#caa45d}
+.goal-seal{font-size:2rem;margin-bottom:2px}
+.guide-sec.goal h3{color:var(--gold-deep);font-size:1.1rem}
+.guide-sec.goal p{font-size:.92rem;line-height:1.9;color:var(--ink)}
+#app.night .guide-sec.goal p{color:var(--paper)}
+.goal-lock{margin-top:10px;font-size:.82rem;color:var(--gold-deep);font-style:italic}
+.guide-note{font-size:.74rem;color:var(--ink-soft);margin:16px 6px 12px;line-height:1.6}

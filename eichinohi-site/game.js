@@ -299,6 +299,7 @@
       '<button class="btn gold" data-act="' + (has ? "start" : "walk") + '">' + (has ? L("つづきから歩む", "Continue your journey") : L("人生を歩む", "Begin your life")) + '</button>' +
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
       '<button class="btn ghost" data-act="book">' + L("わが叡智の書を見る", "Open the Book of Wisdom") + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
+      '<button class="btn ghost" data-act="guide">' + L("📖 この灯火について（遊び方）", "📖 About this Beacon (how to play)") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
       (isMaster() ? '<button class="btn gold hiden-open" data-act="hiden">' + L("📜 叡智皆伝の書をひらく", "📜 Open your Book of Mastery") + '</button>' : "") +
       (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
@@ -906,6 +907,37 @@
   }
   function shareHiden() { if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawHiden); else drawHiden(); }
 
+  // ---------- この灯火について（遊び方ガイド） ----------
+  function showGuide() {
+    curView = showGuide;
+    var html = '<div class="fade guide">' +
+      '<div class="guide-head"><span class="flame">🪔</span><h2>' + L("「叡智の灯火」へようこそ", "Welcome to the Beacon of Wisdom") + '</h2></div>' +
+      '<p class="guide-lead">' + L("迷ったとき、世界の偉人・聖典・伝説の名言が、あなたに言葉を贈る。<br>言葉を選び、暮らしに活かし、少しずつ賢くなっていく——そんなゲームです。",
+        "When you are lost, the world's sages, scriptures and legends offer you a word.<br>Choose it, live it, and grow a little wiser — that is the game.") + '</p>' +
+      '<div class="guide-sec"><h3>' + L("遊び方は、3ステップ", "How to play — 3 steps") + '</h3>' +
+      '<div class="guide-steps">' +
+      '<div class="gstep"><span class="gnum">1</span><b>' + L("悩みを選ぶ", "Choose a worry") + '</b><span>' + L("仕事・人間関係・自分のこと…", "Work, relationships, yourself…") + '</span></div>' +
+      '<div class="gstep"><span class="gnum">2</span><b>' + L("響いた言葉を選ぶ", "Choose a word that resonates") + '</b><span>' + L("偉人たちが、あなたに言葉を差し出す", "The great minds offer you their words") + '</span></div>' +
+      '<div class="gstep"><span class="gnum">3</span><b>' + L("叡智の書に刻む", "Inscribe it") + '</b><span>' + L("選んだ言葉を記録し、暮らしに活かす", "It is kept in your Book of Wisdom, to live by") + '</span></div>' +
+      '</div></div>' +
+      '<div class="guide-sec"><h3>' + L("遊ぶほど、育つ", "The more you play, the more you grow") + '</h3>' +
+      '<ul class="guide-list">' +
+      '<li>🌱 ' + L("叡智が貯まると、あなたの<b>位（段位）</b>が上がる（全10段）", "Gain wisdom to raise your <b>rank</b> (10 stages)") + '</li>' +
+      '<li>🧭 ' + L("高ランクの<b>偉人</b>が、次々に解放される", "Higher-ranked <b>sages</b> unlock as you grow") + '</li>' +
+      '<li>✦ ' + L("めったに現れぬ<b>「伝説の言葉」</b>を蒐集できる", "Collect rare <b>legendary words</b>") + '</li>' +
+      '</ul></div>' +
+      '<div class="guide-sec goal"><div class="goal-seal">📜</div><h3>' + L("目指すは頂き ―― 叡智皆伝の書", "The summit — the Book of Mastery") + '</h3>' +
+      '<p>' + L("最高位「<b>叡智皆伝</b>」に至った者だけが開ける、<b>秘伝の一冊</b>。<br>あなたが「響いた」と選んだ言葉の<b>集大成</b>と、灯火からの<b>最後の言葉</b>が贈られます。<br>さらに全ての伝説を集めれば、「<b>真・皆伝</b>」へ。",
+        "Opened only by those who reach the highest rank, <b>Wisdom Mastery</b>.<br>It gathers <b>all the words you chose</b> and the Beacon's <b>final words to you</b>.<br>Collect every legend to reach <b>True Mastery</b>.") + '</p>' +
+      (isMaster() ? '<button class="btn gold sm" data-act="hiden">' + L("📜 あなたの皆伝の書をひらく", "📜 Open your Book of Mastery") + '</button>' : '<p class="goal-lock">' + L("〔まだ封印されています。頂きで、あなたを待っています。〕", "〔Still sealed — it awaits you at the summit.〕") + '</p>') +
+      '</div>' +
+      '<p class="guide-note">' + L("※ つらさが長く続くときは、一人で抱えず、信頼できる人や専門の窓口に頼ってください。", "※ If hardship persists, please don't carry it alone — reach out to someone you trust or a professional resource.") + '</p>' +
+      '<button class="btn gold" data-act="start">' + L("さあ、人生を歩もう", "Begin your journey") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>';
+    render(html);
+  }
+
   // ---------- レンダリング & イベント委譲 ----------
   function render(html) { app.innerHTML = html; window.scrollTo(0, 0); }
 
@@ -930,6 +962,7 @@
     else if (act === "start" || act === "next") proceed();
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
+    else if (act === "guide") showGuide();
     else if (act === "hiden") showHiden();
     else if (act === "hidenshare") shareHiden();
     else if (act === "title") showTitle();
