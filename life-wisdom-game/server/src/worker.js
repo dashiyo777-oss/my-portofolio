@@ -51,12 +51,20 @@ export async function expectedCode(mk, secret) {
   return "TOMO-" + n;
 }
 
-function cors(env) {
+function cors(env, request) {
+  const allow = (env && env.ALLOW_ORIGIN) || "*";
+  let origin = "*";
+  if (allow !== "*") {
+    const list = allow.split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+    const reqOrigin = request && request.headers.get("Origin");
+    origin = (reqOrigin && list.indexOf(reqOrigin) >= 0) ? reqOrigin : (list[0] || "*");
+  }
   return {
-    "Access-Control-Allow-Origin": (env && env.ALLOW_ORIGIN) || "*",
+    "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Access-Control-Allow-Headers": "Authorization,Content-Type",
-    "Access-Control-Max-Age": "86400"
+    "Access-Control-Max-Age": "86400",
+    "Vary": "Origin"
   };
 }
 function json(obj, status, headers) {
@@ -97,6 +105,48 @@ async function redeem(request, env, h) {
   if (!code || code !== want) return json({ error: "invalid_code" }, 401, h);
   const exp = monthEndExp(new Date());
   const token = await signJWT({ m: mk, exp: exp }, env.JWT_SECRET);
+  return json({ token: token, exp: exp, month: mk }, 200, h);
+}
+
+// Gumroad ライセンス検証（海外課金）。env.GUMROAD_PRODUCT_ID か GUMROAD_PRODUCT_PERMALINK が必要。
+async function gumroadVerify(env, license) {
+  const params = new URLSearchParams();
+  if (env.GUMROAD_PRODUCT_ID) params.set("product_id", env.GUMROAD_PRODUCT_ID);
+  else if (env.GUMROAD_PRODUCT_PERMALINK) params.set("product_permalink", env.GUMROAD_PRODUCT_PERMALINK);
+  params.set("license_key", license);
+  params.set("increment_uses_count", "false");
+  const r = await fetch("https://api.gumroad.com/v2/licenses/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString()
+  });
+  if (!r.ok) return null;
+  return await r.json();
+}
+function licenseActive(data) {
+  if (!data || data.success !== true) return false;
+  const p = data.purchase || {};
+  if (p.refunded || p.chargebacked || p.disputed) return false;
+  // サブスク商品なら、終了/解約/支払い失敗が入っていないこと
+  if (p.subscription_ended_at || p.subscription_cancelled_at || p.subscription_failed_at) return false;
+  return true;
+}
+async function redeemLicense(request, env, h) {
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  if (await limited(env, ip, "lic", 10, 60)) return json({ error: "rate_limited" }, 429, h);
+  if (!env.GUMROAD_PRODUCT_ID && !env.GUMROAD_PRODUCT_PERMALINK) return json({ error: "not_configured" }, 503, h);
+  let body; try { body = await request.json(); } catch (e) { return json({ error: "bad_request" }, 400, h); }
+  const license = (body && body.license ? String(body.license) : "").trim();
+  if (!license) return json({ error: "bad_request" }, 400, h);
+  let data; try { data = await gumroadVerify(env, license); } catch (e) { data = null; }
+  if (!licenseActive(data)) return json({ error: "invalid_license" }, 401, h);
+  const mk = monthKey(new Date());
+  const exp = monthEndExp(new Date());
+  const token = await signJWT({ m: mk, exp: exp, src: "gum" }, env.JWT_SECRET);
+  try {
+    const lic = await fingerprint(license);
+    await env.DB.prepare("INSERT INTO deliveries (ts,lic,ip) VALUES (?,?,?)").bind(Date.now(), lic, ip).run();
+  } catch (e) {}
   return json({ token: token, exp: exp, month: mk }, 200, h);
 }
 
@@ -170,12 +220,13 @@ async function daily(request, env, h) {
 
 export default {
   async fetch(request, env) {
-    const h = cors(env);
+    const h = cors(env, request);
     if (request.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(request.url);
     try {
       if (url.pathname === "/api/health") return json({ ok: true, month: monthKey(new Date()) }, 200, h);
       if (url.pathname === "/api/redeem" && request.method === "POST") return await redeem(request, env, h);
+      if (url.pathname === "/api/redeem-license" && request.method === "POST") return await redeemLicense(request, env, h);
       if (url.pathname === "/api/content" && request.method === "GET") return await content(request, env, h);
       if (url.pathname === "/api/feedback" && request.method === "POST") return await feedback(request, env, h);
       if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);

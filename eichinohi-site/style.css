@@ -453,3 +453,12 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 #app.night .guide-sec.goal p{color:var(--paper)}
 .goal-lock{margin-top:10px;font-size:.82rem;color:var(--gold-deep);font-style:italic}
 .guide-note{font-size:.74rem;color:var(--ink-soft);margin:16px 6px 12px;line-height:1.6}
+
+/* ===== Gumroad ライセンス入力（海外課金） ===== */
+.paywall-or{margin:14px auto 6px; font-size:.78rem; color:var(--ink-soft); letter-spacing:.05em}
+.lic-lead{margin:.2em 0 .6em; font-size:.82rem; color:var(--ink-soft)}
+.lic-buy{margin:0 0 8px; font-size:.85rem}
+.lic-buy a{color:var(--gold-deep); font-weight:600}
+.lic-input{width:100%; max-width:280px; margin:0 auto 10px; display:block; border:1px solid #d8b86a; border-radius:10px; padding:11px 12px; font-family:inherit; font-size:.95rem; text-align:center; letter-spacing:.04em; background:#fffdf8; color:var(--ink)}
+.lic-msg{font-size:.8rem; color:#b15a3c; margin-top:8px; min-height:1em}
+#app.night .lic-input{background:#2a2620; color:var(--ink); border-color:var(--line)}

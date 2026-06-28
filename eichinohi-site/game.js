@@ -7,6 +7,7 @@
   if (!D) { document.getElementById("app").innerHTML = "<p style='padding:24px'>データを読み込めませんでした。<br>gamedata.js を確認してください。</p>"; return; }
 
   var API = ((window.LWG_API || "") + "").replace(/\/+$/, "");   // 会員API。空なら従来どおりクライアント同梱で動作
+  var GUMROAD_URL = ((window.LWG_GUMROAD_URL || "") + "");        // 海外向け購入ページ（Gumroad）。index.htmlで設定。空なら非表示
   var SAGES = {}; D.sages.sages.forEach(function (s) { SAGES[s.id] = s; });
   var RANKS = D.sages.ranks;
   var EVENTS = D.events.events;
@@ -154,7 +155,7 @@
 
   // ---------- セーブ/ロード ----------
   function newGame() {
-    return { v: 1, stats: { mind: 60, wisdom: 0, bonds: 50, wealth: 50, passion: 50 }, turn: 0, journal: [], seen: [], paidMonth: 0, favoriteSage: null };
+    return { v: 1, stats: { mind: 60, wisdom: 0, bonds: 50, wealth: 50, passion: 50 }, turn: 0, journal: [], seen: [], paidMonth: 0, favoriteSage: null, license: "" };
   }
   function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
   function load() { try { var r = localStorage.getItem(SAVE_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
@@ -366,6 +367,13 @@
       '<input class="code-input" autocapitalize="characters" placeholder="' + L("今月のコード（例: TOMO-1234）", "This month's code (e.g. TOMO-1234)") + '">' +
       '<button class="btn gold sm" data-act="redeem" style="display:inline-block">' + L("コードで解放", "Unlock with code") + '</button>' +
       '<div class="code-msg"></div>' +
+      '<div class="paywall-or">' + L("―― または ――", "―― or ――") + '</div>' +
+      '<p class="lic-lead">' + L("海外の方・Gumroadで購入した方は、ライセンスキーで解放できます。",
+        "Overseas? Unlock with the license key from your Gumroad purchase.") + '</p>' +
+      (GUMROAD_URL ? '<p class="lic-buy"><a href="' + esc(GUMROAD_URL) + '" target="_blank" rel="noopener">' + L("→ 購入ページ（Gumroad）", "→ Get a key (Gumroad)") + '</a></p>' : "") +
+      '<input class="lic-input" placeholder="' + L("Gumroadのライセンスキー", "Gumroad license key") + '">' +
+      '<button class="btn gold sm" data-act="redeem-lic" style="display:inline-block">' + L("キーで解放", "Unlock with key") + '</button>' +
+      '<div class="lic-msg"></div>' +
       '</div>';
   }
   function showMemberGate() {
@@ -983,6 +991,19 @@
         if (currentEvent) showEvent(currentEvent); else showTitle();
       } else fail();
     }
+    else if (act === "redeem-lic") {
+      var linp = app.querySelector(".lic-input");
+      var lic = linp ? (linp.value || "").trim() : "";
+      var lmsg = app.querySelector(".lic-msg");
+      if (!API) { if (lmsg) lmsg.textContent = L("現在この端末では利用できません。", "Not available right now."); return; }
+      if (!lic) { if (lmsg) lmsg.textContent = L("ライセンスキーを入力してください。", "Please enter your license key."); return; }
+      if (lmsg) lmsg.textContent = L("確認中…", "Verifying…");
+      fetch(API + "/api/redeem-license", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ license: lic }) })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (d) { state.paidMonth = monthKey(new Date()); state.token = d.token; state.license = lic; save(); return fetchPaid(); })
+        .then(function () { if (currentEvent) showEvent(currentEvent); else showTitle(); })
+        .catch(function () { if (lmsg) lmsg.textContent = L("キーが確認できませんでした。購入後のメールをご確認ください。", "Couldn't verify the key. Please check your purchase email."); });
+    }
     else if (act === "reflect-open") { var rb = app.querySelector(".reflect-body"); if (rb) rb.hidden = false; if (t.style) t.style.display = "none"; }
     else if (act === "reflect-save") {
       var rbox = t.closest ? t.closest(".reflect") : null;
@@ -994,7 +1015,17 @@
     else if (act === "reset") { if (confirm(L("これまでの歩みと叡智の書が消えます。よろしいですか？", "Your journey and Book of Wisdom will be erased. Are you sure?"))) resetGame(); }
   });
 
+  // 保存済みライセンスを毎月自動で再検証（サブスク解約なら静かに失効）
+  function tryLicenseRefresh() {
+    fetch(API + "/api/redeem-license", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ license: state.license }) })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) { state.paidMonth = monthKey(new Date()); state.token = d.token; save(); return fetchPaid(); })
+      .then(function () { showTitle(); })
+      .catch(function () {});
+  }
+
   applyNight();
   showTitle();
   if (API && state.token && isPaid()) fetchPaid().then(function () { showTitle(); }).catch(function () {});
+  else if (API && state.license && !isPaid()) tryLicenseRefresh();
 })();
