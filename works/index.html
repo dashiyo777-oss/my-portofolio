@@ -307,6 +307,7 @@
         .badge-video    { background: #FDF3E7; color: #e67e22; }
         .badge-mv       { background: #F5EEF8; color: #8e44ad; }
         .badge-proposal { background: #FDFEFE; color: #7f8c8d; border: 1px solid #ddd; }
+        .badge-app      { background: #E6F4F1; color: #226b62; }
 
         .card-title {
             font-size: 1rem;
@@ -454,6 +455,7 @@
         <!-- フィルター -->
         <div class="filter-bar">
             <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i> すべて</button>
+            <button class="filter-btn" data-filter="app"><i class="fas fa-mobile-screen-button"></i> Webアプリ</button>
             <button class="filter-btn" data-filter="slide"><i class="fas fa-tv"></i> スライド</button>
             <button class="filter-btn" data-filter="column"><i class="fas fa-pen-nib"></i> コラム</button>
             <button class="filter-btn" data-filter="video"><i class="fas fa-film"></i> Short動画</button>
@@ -463,6 +465,23 @@
 
         <!-- ── 代表カード（常時表示） ── -->
         <div class="cards-grid" id="cards-grid">
+
+            <!-- Webアプリ 代表：効く（Kiku） -->
+            <div class="card" data-category="app" data-featured="true">
+                <a href="../health-tips-rating-app/" target="_blank" rel="noopener" class="card-cover"></a>
+                <div class="card-thumb-wrap">
+                    <img class="card-thumb" src="../images/apps/kiku.png" alt="効く（Kiku）— 健康・生活情報の評価ランキングアプリ"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="card-thumb-placeholder" style="display:none;background:linear-gradient(135deg,#2f8f83,#226b62);"><i class="fas fa-mobile-screen-button"></i></div>
+                    <span class="thumb-label">Web App</span>
+                </div>
+                <div class="card-body">
+                    <span class="card-badge badge-app">Webアプリ</span>
+                    <h3 class="card-title">効く（Kiku）— 本当に効く生活の知恵をランクで</h3>
+                    <p class="card-desc">健康・生活のお役立ち情報を「体感・科学的根拠・専門家監修」で評価し、ジャンル別にランク付けするWebアプリ。検索・タグ横断・信頼性フィルタ・日英対応。65件・15ジャンル収録。</p>
+                    <a href="../health-tips-rating-app/" class="card-link" target="_blank" rel="noopener">アプリを開く <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
 
             <!-- スライド 代表 -->
             <div class="card" data-category="slide" data-featured="true">
