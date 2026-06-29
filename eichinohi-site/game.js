@@ -329,7 +329,7 @@
       '<div class="flame">🪔</div>' +
       '<h1 class="title">' + L("叡智の灯火", "Beacon of Wisdom") + '</h1>' +
       '<p class="subtitle">' + L("人生の岐路と、偉人たちの言葉", "Life's crossroads, and the words of the wise") + '</p>' +
-      posLine + (prestige > 0 ? '<p class="prestige-badge">✦ ' + L(prestige + "巡目の歩み", "Loop " + prestige) + ' ✦</p>' : '') + '</div>' +
+      posLine + (prestige > 0 ? '<p class="prestige-badge">✦ ' + L((prestige + 1) + "巡目の歩み", "Loop " + (prestige + 1)) + ' ✦</p>' : '') + '</div>' +
       '<div class="title-actions">' +
       '<button class="btn gold" data-act="' + (has ? "start" : "walk") + '">' + (has ? L("つづきから歩む", "Continue your journey") : L("人生を歩む", "Begin your life")) + '</button>' +
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
@@ -337,7 +337,7 @@
       '<button class="btn ghost" data-act="guide">' + L("📖 この灯火について（遊び方）", "📖 About this Beacon (how to play)") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
       (isMaster() ? '<button class="btn gold hiden-open" data-act="hiden">' + L("📜 叡智皆伝の書をひらく", "📜 Open your Book of Mastery") + '</button>' : "") +
-      (isMaster() ? '<button class="btn gold newlife" data-act="newlife">' + L("🌱 新たな人生を歩む（" + (prestige + 1) + "巡目へ）", "🌱 Begin a new life (loop " + (prestige + 1) + ")") + '</button>' : "") +
+      (isMaster() ? '<button class="btn gold newlife" data-act="newlife">' + L("🌱 新たな人生を歩む（" + (prestige + 2) + "巡目へ）", "🌱 Begin a new life (loop " + (prestige + 2) + ")") + '</button>' : "") +
       (treasures.length > 0 ? '<button class="btn ghost" data-act="treasures">' + L("🗝️ 秘宝コレクション（" + treasures.length + "/" + TREASURES.length + "）", "🗝️ Treasure Collection (" + treasures.length + "/" + TREASURES.length + ")") + '</button>' : "") +
       (legacy.length > 0 ? '<button class="btn ghost" data-act="legacy">' + L("🕯 灯火に遺した言葉（" + legacy.length + "）", "🕯 Words you left (" + legacy.length + ")") + '</button>' : "") +
       (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
@@ -847,7 +847,7 @@
       '<div><b>' + pg.quotes + '</b><span>' + L("到達した言葉", "Words Reached") + '</span></div>' +
       '<div><b>' + pg.legends + ' / ' + LEGENDS.length + '</b><span>' + L("伝説", "Legends") + '</span></div>' +
       '<div><b>' + pg.cats + ' / 7</b><span>' + L("制覇した悩み", "Worries Mastered") + '</span></div>' +
-      '<div><b>' + prestige + '</b><span>' + L("巡目（周回）", "Loops") + '</span></div>' +
+      '<div><b>' + prestige + '</b><span>' + L("周回数", "Loops cleared") + '</span></div>' +
       '<div><b>' + treasures.length + ' / ' + TREASURES.length + '</b><span>' + L("秘宝", "Treasures") + '</span></div>' +
       '</div>' +
       '<div class="cert-foot"><span class="cert-date">' + L(esc(ymd) + " 発行", "Issued " + esc(ymd)) + '</span><span class="cert-seal">灯</span></div>' +
@@ -961,7 +961,7 @@
     curView = showNewLife;
     render('<div class="fade newlife-screen">' +
       '<div class="flame">🌱</div>' +
-      '<h2 class="event-title">' + L(prestige + "巡目の人生が、はじまる。", "Your life — loop " + prestige + " — begins.") + '</h2>' +
+      '<h2 class="event-title">' + L((prestige + 1) + "巡目の人生が、はじまる。", "Your life — loop " + (prestige + 1) + " — begins.") + '</h2>' +
       '<p class="event-body">' + L("叡智の旅は、また最初の一歩から。けれど、あなたが集めた伝説・位・秘宝は、消えない。<br>この道のどこかに、前の人生では出会えなかった<b>宝物</b>が眠っている。",
         "The journey to wisdom begins from the first step again. Yet the legends, rank and treasures you gathered remain.<br>Somewhere on this path sleeps a <b>treasure</b> you could not meet before.") + '</p>' +
       '<button class="btn gold" data-act="walk">' + L("新たな人生を歩む", "Walk your new life") + '</button>' +
