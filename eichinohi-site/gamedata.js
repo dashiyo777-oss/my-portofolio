@@ -630,17 +630,17 @@ window.GAME_DATA = {
             "quoteEn": "You can't choose the outcome, but a heartfelt step is always yours to be proud of."
           },
           {
-            "sageId": "eleanor",
-            "quote": "できないと思うことを、やってみなさい。",
-            "quoteOriginal": "You must do the things you think you cannot do.",
-            "source": "エレノア・ルーズベルト『You Learn by Living』1960",
+            "sageId": "teresa",
+            "quote": "痛むほどに愛するなら、もう痛みはなくなり、ただ、より深い愛だけが残る。",
+            "quoteOriginal": "I have found the paradox, that if you love until it hurts, there can be no more hurt, only more love.",
+            "source": "マザー・テレサ（ノーベル平和賞講演 1979）",
             "note": "",
             "verified": true,
             "effects": {
-              "passion": 7,
-              "mind": 4
+              "mind": 6,
+              "bonds": 5
             },
-            "quoteEn": "You must do the things you think you cannot do."
+            "quoteEn": "If you love until it hurts, there can be no more hurt, only more love."
           },
           {
             "sageId": "original",
@@ -944,17 +944,14 @@ window.GAME_DATA = {
             "quoteEn": "Loneliness is proof you live deeply. That sensitivity is a treasure."
           },
           {
-            "sageId": "keller",
-            "quote": "一人でできることは少ない。けれど力を合わせれば、多くのことができる。",
-            "quoteOriginal": "Alone we can do so little; together we can do so much.",
-            "source": "ヘレン・ケラー",
+            "sageId": "original",
+            "quote": "「さびしい」と言える日が、きっと来る。その日まで、この灯火がそばにいる。",
             "note": "",
-            "verified": true,
             "effects": {
-              "bonds": 6,
-              "mind": 4
+              "mind": 6,
+              "bonds": 3
             },
-            "quoteEn": "Alone we can do so little; together we can do so much."
+            "quoteEn": "A day will come when you can say \"I'm lonely.\" Until then, this beacon stays beside you."
           },
           {
             "sageId": "scripture_quran",
@@ -1057,6 +1054,272 @@ window.GAME_DATA = {
               "mind": 5
             },
             "quoteEn": "Happiness is not something to find, but something to notice."
+          }
+        ]
+      },
+      {
+        "id": "work_recognition_01",
+        "category": "work",
+        "mood": "high",
+        "title": "頑張りが、認められた。",
+        "body": "努力を見てもらえた気がして、心が温かい。",
+        "titleEn": "My effort was recognized.",
+        "bodyEn": "It felt like someone saw my hard work, and my heart is warm.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "その喜びを、ちゃんと味わおう。努力が実った、確かな証。",
+            "note": "",
+            "effects": {
+              "passion": 6,
+              "mind": 5
+            },
+            "quoteEn": "Savor this joy fully. It's solid proof your effort bore fruit."
+          },
+          {
+            "sageId": "keller",
+            "quote": "最善を尽くせば、自分の人生に、そして誰かの人生に、どんな奇跡が起こるか分からない。",
+            "quoteOriginal": "When we do the best we can, we never know what miracle is wrought in our life, or in the life of another.",
+            "source": "ヘレン・ケラー",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 5,
+              "wisdom": 5
+            },
+            "quoteEn": "When we do the best we can, we never know what miracle is wrought in our life, or in the life of another."
+          },
+          {
+            "sageId": "original",
+            "quote": "次の一歩も、あなたなら歩める。今日の自分を、誇っていい。",
+            "note": "",
+            "effects": {
+              "passion": 6
+            },
+            "quoteEn": "You can take the next step too. Be proud of who you were today."
+          }
+        ]
+      },
+      {
+        "id": "relationship_distance_01",
+        "category": "relationship",
+        "mood": "lost",
+        "title": "人との距離感が、わからない。",
+        "body": "近づきすぎても、離れすぎても不安。ちょうどいいが、つかめない。",
+        "titleEn": "I can't gauge the right distance with people.",
+        "bodyEn": "Too close or too far both make me anxious. I can't find the balance.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "近すぎず、遠すぎず。心地よい距離は、少しずつ見つかっていく。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "bonds": 4
+            },
+            "quoteEn": "Not too close, not too far. A comfortable distance is found little by little."
+          },
+          {
+            "sageId": "confucius",
+            "quote": "君子は和して同ぜず。",
+            "quoteOriginal": "君子和而不同。",
+            "source": "論語 子路第十三",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 6,
+              "bonds": 4
+            },
+            "quoteEn": "The wise are in harmony with others, yet do not merely conform."
+          },
+          {
+            "sageId": "original",
+            "quote": "合わせすぎなくていい。あなたのままで、つながれる人がいる。",
+            "note": "",
+            "effects": {
+              "bonds": 5,
+              "mind": 4
+            },
+            "quoteEn": "You don't have to over-adapt. There are people you connect with as you are."
+          }
+        ]
+      },
+      {
+        "id": "love_beginning_01",
+        "category": "love",
+        "mood": "high",
+        "title": "恋が、始まりそう。",
+        "body": "誰かを想うと、胸がどきどきする。こんな気持ち、久しぶり。",
+        "titleEn": "A new love may be beginning.",
+        "bodyEn": "Thinking of someone makes my heart race. It's been a while.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "そのときめきを、大切に。心が動くというのは、素敵なこと。",
+            "note": "",
+            "effects": {
+              "passion": 7,
+              "mind": 4
+            },
+            "quoteEn": "Cherish that flutter. To have your heart move is a beautiful thing."
+          },
+          {
+            "sageId": "scripture_bible",
+            "quote": "愛は忍耐強い。愛は情け深い。",
+            "quoteOriginal": "Love is patient, love is kind.",
+            "source": "新約聖書 コリントの信徒への手紙一 13章4節",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 8,
+              "bonds": 5
+            },
+            "quoteEn": "Love is patient, love is kind."
+          },
+          {
+            "sageId": "original",
+            "quote": "結果を急がず、この時間そのものを楽しもう。",
+            "note": "",
+            "effects": {
+              "passion": 5,
+              "mind": 4
+            },
+            "quoteEn": "Don't rush the outcome — enjoy this time itself."
+          }
+        ]
+      },
+      {
+        "id": "study_goal_01",
+        "category": "study",
+        "mood": "high",
+        "title": "目標に向かって、頑張りたい。",
+        "body": "やりたいことが、見えてきた。この勢いを、続けたい。",
+        "titleEn": "I want to work toward my goal.",
+        "bodyEn": "I'm starting to see what I want. I want to keep this momentum.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "その意気を、燃やし続けよう。コツコツが、いちばん遠くまで行く。",
+            "note": "",
+            "effects": {
+              "passion": 7,
+              "wisdom": 4
+            },
+            "quoteEn": "Keep that fire burning. Steady steps carry you the farthest."
+          },
+          {
+            "sageId": "eleanor",
+            "quote": "できないと思うことを、やってみなさい。",
+            "quoteOriginal": "You must do the things you think you cannot do.",
+            "source": "エレノア・ルーズベルト『You Learn by Living』1960",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 7,
+              "mind": 4
+            },
+            "quoteEn": "You must do the things you think you cannot do."
+          },
+          {
+            "sageId": "original",
+            "quote": "大きな目標も、今日のひと頁から。あなたは、もう歩き出している。",
+            "note": "",
+            "effects": {
+              "wisdom": 5
+            },
+            "quoteEn": "Even big goals start with today's page. You've already begun."
+          }
+        ]
+      },
+      {
+        "id": "health_habit_01",
+        "category": "health",
+        "mood": "lost",
+        "title": "生活習慣を変えたいのに、続かない。",
+        "body": "決めたことが三日でくずれる。意志が弱い自分が、情けない。",
+        "titleEn": "I want to change my habits but can't keep it up.",
+        "bodyEn": "What I decide falls apart in three days. I feel pathetic for my weak will.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "三日坊主でも、また始めればいい。続けるとは、何度でも戻ること。",
+            "note": "",
+            "effects": {
+              "mind": 6
+            },
+            "quoteEn": "Even if you slip after three days, just begin again. To continue is to return, again and again."
+          },
+          {
+            "sageId": "gandhi",
+            "quote": "強さは身体の力からではなく、不屈の意志から生まれる。",
+            "quoteOriginal": "Strength does not come from physical capacity. It comes from an indomitable will.",
+            "source": "ガンジー『Young India』",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 6,
+              "mind": 4
+            },
+            "quoteEn": "Strength does not come from physical capacity. It comes from an indomitable will."
+          },
+          {
+            "sageId": "original",
+            "quote": "大きく変えなくていい。今日できる、小さな一つから。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 3
+            },
+            "quoteEn": "You don't have to change big. Start with one small thing today."
+          }
+        ]
+      },
+      {
+        "id": "self_purpose_01",
+        "category": "self",
+        "mood": "lost",
+        "title": "自分が、何をしたいのか、わからない。",
+        "body": "周りは進んでいるのに、自分だけ目標がない気がする。",
+        "titleEn": "I don't know what I want to do.",
+        "bodyEn": "Everyone's moving ahead, and I feel like only I have no goal.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "『わからない』は、出発点。答えは、歩きながら見つかっていく。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 5
+            },
+            "quoteEn": "\"I don't know\" is a starting point. The answer is found as you walk."
+          },
+          {
+            "sageId": "seneca",
+            "quote": "どの港を目指すか分からなければ、どんな風も、追い風にはならない。",
+            "quoteOriginal": "If one does not know to which port one is sailing, no wind is favorable.",
+            "source": "セネカ『倫理書簡集』71",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 7,
+              "mind": 4
+            },
+            "quoteEn": "If one does not know to which port one is sailing, no wind is favorable."
+          },
+          {
+            "sageId": "original",
+            "quote": "焦らず、心が少し動く方へ。それが、あなたの羅針盤。",
+            "note": "",
+            "effects": {
+              "wisdom": 5
+            },
+            "quoteEn": "Don't rush — move toward what stirs your heart even a little. That's your compass."
           }
         ]
       }
