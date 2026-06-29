@@ -676,15 +676,16 @@ window.GAME_DATA = {
           },
           {
             "sageId": "confucius",
-            "quote": "知るを知るとし、知らざるを知らずとせよ。これが、知るということだ。",
-            "quoteOriginal": "知之為知之、不知為不知、是知也。",
-            "source": "論語 為政第二",
+            "quote": "学びて時にこれを習う、亦た説ばしからずや。",
+            "quoteOriginal": "學而時習之、不亦説乎。",
+            "source": "論語 学而第一",
             "note": "",
             "verified": true,
             "effects": {
-              "wisdom": 7
+              "wisdom": 6,
+              "passion": 4
             },
-            "quoteEn": "To know what you know and know what you do not know — that is true knowledge."
+            "quoteEn": "To learn, and at due times practice what you have learned — is that not a pleasure?"
           },
           {
             "sageId": "original",
@@ -717,17 +718,18 @@ window.GAME_DATA = {
             "quoteEn": "Don't blame yourself. The day you noticed is the day change begins."
           },
           {
-            "sageId": "gandhi",
-            "quote": "強さは身体の力からではなく、不屈の意志から生まれる。",
-            "quoteOriginal": "Strength does not come from physical capacity. It comes from an indomitable will.",
-            "source": "ガンジー『Young India』",
+            "sageId": "seneca",
+            "quote": "貧しいのは、持っているものが少ない人ではなく、もっと欲しがる人である。",
+            "quoteOriginal": "non qui parum habet, sed qui plus cupit, pauper est.",
+            "source": "セネカ『倫理書簡集』2",
             "note": "",
             "verified": true,
             "effects": {
-              "passion": 6,
+              "wisdom": 6,
+              "wealth": 4,
               "mind": 4
             },
-            "quoteEn": "Strength does not come from physical capacity. It comes from an indomitable will."
+            "quoteEn": "It is not the man who has too little, but the man who craves more, that is poor."
           },
           {
             "sageId": "original",
@@ -853,17 +855,17 @@ window.GAME_DATA = {
             "quoteEn": "The only one worth comparing to is yesterday's you."
           },
           {
-            "sageId": "seneca",
-            "quote": "人は現実よりも、想像の中でより多く苦しむ。",
-            "quoteOriginal": "We suffer more often in imagination than in reality.",
-            "source": "セネカ『倫理書簡集』13",
+            "sageId": "confucius",
+            "quote": "人の己を知らざるを患えず、人を知らざるを患う。",
+            "quoteOriginal": "不患人之不己知、患不知人也。",
+            "source": "論語 学而第一",
             "note": "",
             "verified": true,
             "effects": {
-              "mind": 6,
+              "mind": 5,
               "wisdom": 6
             },
-            "quoteEn": "We suffer more often in imagination than in reality."
+            "quoteEn": "Do not be troubled that others do not know you; be troubled that you do not know others."
           },
           {
             "sageId": "original",
