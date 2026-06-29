@@ -438,7 +438,7 @@
       JP: { ja: "🇯🇵 日本", en: "🇯🇵 Japan" }, CN: { ja: "🇨🇳 中国", en: "🇨🇳 China" },
       US: { ja: "🇺🇸 アメリカ", en: "🇺🇸 USA" }, FR: { ja: "🇫🇷 フランス", en: "🇫🇷 France" },
       KR: { ja: "🇰🇷 韓国", en: "🇰🇷 Korea" }, IN: { ja: "🇮🇳 インド", en: "🇮🇳 India" },
-      TH: { ja: "🇹🇭 タイ", en: "🇹🇭 Thailand" }
+      TH: { ja: "🇹🇭 タイ", en: "🇹🇭 Thailand" }, IT: { ja: "🇮🇹 イタリア", en: "🇮🇹 Italy" }
     };
     return map[code] ? L(map[code]) : code;
   }
