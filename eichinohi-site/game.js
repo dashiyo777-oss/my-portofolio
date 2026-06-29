@@ -16,6 +16,8 @@
   var CODEX_KEY = "lifewisdom.codex.v1";
   var ACCLAIM_KEY = "lifewisdom.acclaim.v1";
   var LANG_KEY = "lifewisdom.lang.v1";
+  var PRESTIGE_KEY = "lifewisdom.prestige.v1";
+  var TREASURE_KEY = "lifewisdom.treasure.v1";
   var REST_THRESHOLD = 25;
 
   // ---------- i18n ----------
@@ -152,6 +154,8 @@
   var state = load() || newGame();
   var codex = loadCodex();
   var acclaim = loadAcclaim();
+  var prestige = loadPrestige();
+  var treasures = loadTreasures();
 
   // ---------- セーブ/ロード ----------
   function newGame() {
@@ -178,6 +182,32 @@
     var q = Object.keys(acclaim.quotes).length, c = Object.keys(acclaim.cats).length, l = codex.length;
     return { points: q * 12 + l * 120 + c * 50, quotes: q, cats: c, legends: l };
   }
+
+  // ---------- 周回（新たな人生）＆ 隠れ宝 ----------
+  function loadPrestige() { try { return parseInt(localStorage.getItem(PRESTIGE_KEY), 10) || 0; } catch (e) { return 0; } }
+  function savePrestige() { try { localStorage.setItem(PRESTIGE_KEY, String(prestige)); } catch (e) {} }
+  function loadTreasures() { try { return JSON.parse(localStorage.getItem(TREASURE_KEY)) || []; } catch (e) { return []; } }
+  function saveTreasures() { try { localStorage.setItem(TREASURE_KEY, JSON.stringify(treasures)); } catch (e) {} }
+  function treasureHas(id) { return treasures.indexOf(id) >= 0; }
+  // 灯火からの隠しメッセージ（オリジナル）。minPrestige巡目以降に、低確率でのみ出会える。
+  var TREASURES = [
+    { id: "t1", minPrestige: 1, reward: 10, ja: "二度目の道で、はじめて見える景色がある。よくぞ、ここまで歩いた。", en: "Some scenery is seen only on the second road. Well done, for walking this far." },
+    { id: "t2", minPrestige: 1, reward: 10, ja: "迷い、転び、それでも灯を絶やさなかった者へ。あなたの歩みそのものが、すでに宝だ。", en: "To one who wavered, fell, yet never let the light die — your very steps are already a treasure." },
+    { id: "t3", minPrestige: 2, reward: 12, ja: "言葉は、覚えるものではない。生きるものだ。あなたは、もう知っている。", en: "Words are not to be memorized, but to be lived. You already know this." },
+    { id: "t4", minPrestige: 3, reward: 14, ja: "頂きは終わりではなく、また始まる場所。何度巡っても、はじめての朝がある。", en: "The summit is not an end but a place to begin again. However many loops, there is always a first morning." },
+    { id: "t5", minPrestige: 5, reward: 20, ja: "ここまで来た者は、ごくわずか。この灯は、もう、あなた自身だ。", en: "Few have ever come this far. This flame is now you yourself." }
+  ];
+  function rollTreasure() {
+    var pool = TREASURES.filter(function (t) { return t.minPrestige <= prestige && !treasureHas(t.id); });
+    if (pool.length === 0) return null;
+    if (Math.random() >= 0.06) return null;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+  function beginNewLife() {
+    prestige++; savePrestige();
+    state = newGame(); save();
+    showNewLife();
+  }
   function positionFor(points) { var p = POSITIONS[0]; for (var i = 0; i < POSITIONS.length; i++) { if (points >= POSITIONS[i].min) p = POSITIONS[i]; } return p; }
   function nextPosition(points) { for (var i = 0; i < POSITIONS.length; i++) { if (points < POSITIONS[i].min) return POSITIONS[i]; } return null; }
 
@@ -192,7 +222,7 @@
     if (!isPaid()) return null;
     var eligible = LEGENDS.filter(function (l) { return !codexHas(l.id) && state.stats.wisdom >= (l.minWisdom || 0); });
     if (eligible.length === 0) return null;
-    var p = 0.06 + Math.min(0.20, state.stats.wisdom / 1200);
+    var p = 0.06 + Math.min(0.20, state.stats.wisdom / 1200) + Math.min(0.15, prestige * 0.03);
     if (Math.random() >= p) return null;
     return eligible[Math.floor(Math.random() * eligible.length)];
   }
@@ -295,7 +325,7 @@
       '<div class="flame">🪔</div>' +
       '<h1 class="title">' + L("叡智の灯火", "Beacon of Wisdom") + '</h1>' +
       '<p class="subtitle">' + L("人生の岐路と、偉人たちの言葉", "Life's crossroads, and the words of the wise") + '</p>' +
-      posLine + '</div>' +
+      posLine + (prestige > 0 ? '<p class="prestige-badge">✦ ' + L(prestige + "巡目の歩み", "Loop " + prestige) + ' ✦</p>' : '') + '</div>' +
       '<div class="title-actions">' +
       '<button class="btn gold" data-act="' + (has ? "start" : "walk") + '">' + (has ? L("つづきから歩む", "Continue your journey") : L("人生を歩む", "Begin your life")) + '</button>' +
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
@@ -303,6 +333,8 @@
       '<button class="btn ghost" data-act="guide">' + L("📖 この灯火について（遊び方）", "📖 About this Beacon (how to play)") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
       (isMaster() ? '<button class="btn gold hiden-open" data-act="hiden">' + L("📜 叡智皆伝の書をひらく", "📜 Open your Book of Mastery") + '</button>' : "") +
+      (isMaster() ? '<button class="btn gold newlife" data-act="newlife">' + L("🌱 新たな人生を歩む（" + (prestige + 1) + "巡目へ）", "🌱 Begin a new life (loop " + (prestige + 1) + ")") + '</button>' : "") +
+      (treasures.length > 0 ? '<button class="btn ghost" data-act="treasures">' + L("🗝️ 秘宝コレクション（" + treasures.length + "/" + TREASURES.length + "）", "🗝️ Treasure Collection (" + treasures.length + "/" + TREASURES.length + ")") + '</button>' : "") +
       (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
       (has ? '<button class="btn ghost" data-act="reset">' + L("はじめからやり直す", "Start a new life") + '</button>' : "") +
       '</div>' +
@@ -336,6 +368,8 @@
   }
   function proceed() {
     if (state.stats.mind < REST_THRESHOLD) { showRest(); return; }
+    var tr = rollTreasure();
+    if (tr) { showTreasure(tr); return; }
     var ev = pickEvent();
     if (!ev) { showMemberGate(); return; }
     currentEvent = ev;
@@ -808,6 +842,8 @@
       '<div><b>' + pg.quotes + '</b><span>' + L("到達した言葉", "Words Reached") + '</span></div>' +
       '<div><b>' + pg.legends + ' / ' + LEGENDS.length + '</b><span>' + L("伝説", "Legends") + '</span></div>' +
       '<div><b>' + pg.cats + ' / 7</b><span>' + L("制覇した悩み", "Worries Mastered") + '</span></div>' +
+      '<div><b>' + prestige + '</b><span>' + L("巡目（周回）", "Loops") + '</span></div>' +
+      '<div><b>' + treasures.length + ' / ' + TREASURES.length + '</b><span>' + L("秘宝", "Treasures") + '</span></div>' +
       '</div>' +
       '<div class="cert-foot"><span class="cert-date">' + L(esc(ymd) + " 発行", "Issued " + esc(ymd)) + '</span><span class="cert-seal">灯</span></div>' +
       '</div>' +
@@ -915,6 +951,49 @@
   }
   function shareHiden() { if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawHiden); else drawHiden(); }
 
+  // ---------- 新たな人生（周回）＆ 宝物 ----------
+  function showNewLife() {
+    curView = showNewLife;
+    render('<div class="fade newlife-screen">' +
+      '<div class="flame">🌱</div>' +
+      '<h2 class="event-title">' + L(prestige + "巡目の人生が、はじまる。", "Your life — loop " + prestige + " — begins.") + '</h2>' +
+      '<p class="event-body">' + L("叡智の旅は、また最初の一歩から。けれど、あなたが集めた伝説・位・秘宝は、消えない。<br>この道のどこかに、前の人生では出会えなかった<b>宝物</b>が眠っている。",
+        "The journey to wisdom begins from the first step again. Yet the legends, rank and treasures you gathered remain.<br>Somewhere on this path sleeps a <b>treasure</b> you could not meet before.") + '</p>' +
+      '<button class="btn gold" data-act="walk">' + L("新たな人生を歩む", "Walk your new life") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
+  function showTreasure(tr) {
+    var fresh = !treasureHas(tr.id);
+    if (fresh) { treasures.push(tr.id); saveTreasures(); applyStat("wisdom", tr.reward || 8); save(); }
+    curView = function () { showTreasure(tr); };
+    render('<div class="fade treasure">' +
+      '<div class="tre-glow">🗝️</div>' +
+      '<p class="tre-kicker">' + L("✦ 宝物を見つけた ✦", "✦ You found a treasure ✦") + '</p>' +
+      '<div class="tre-card"><p class="tre-msg">' + esc(L(tr.ja, tr.en)) + '</p>' +
+      '<span class="tre-from">— ' + L("灯火より", "from the Beacon") + '</span></div>' +
+      (fresh ? '<p class="tre-reward">' + L("叡智 +" + (tr.reward || 8) + "　・　秘宝コレクションに加わった", "Wisdom +" + (tr.reward || 8) + " · added to your treasures") + '</p>' : '') +
+      '<button class="btn gold" data-act="start">' + L("歩みをつづける", "Continue your journey") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
+  function showTreasures() {
+    curView = showTreasures;
+    var rows = TREASURES.map(function (t) {
+      var got = treasureHas(t.id);
+      return '<div class="tre-row' + (got ? " got" : "") + '">' +
+        '<span class="tre-ic">' + (got ? "🗝️" : "✦") + '</span>' +
+        '<span class="tre-rowmsg">' + (got ? esc(L(t.ja, t.en)) : L("まだ見ぬ宝 ―― " + t.minPrestige + "巡目以降の、どこかに。", "A treasure yet unseen — somewhere from loop " + t.minPrestige + ".")) + '</span>' +
+        '</div>';
+    }).join("");
+    render('<div class="fade treasures-list">' +
+      '<h2 class="event-title">' + L("秘宝コレクション", "Treasure Collection") + '</h2>' +
+      '<p class="ranks-sum">' + L("見つけた宝 <b>" + treasures.length + " / " + TREASURES.length + "</b>", "Found <b>" + treasures.length + " / " + TREASURES.length + "</b>") + '</p>' +
+      '<div class="tre-collection">' + rows + '</div>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
+
   // ---------- 叡智の段位一覧 ----------
   function showRanks() {
     showRanks._back = (curView === showRanks) ? showRanks._back : curView;
@@ -1006,6 +1085,8 @@
     else if (act === "guide") showGuide();
     else if (act === "ranks") showRanks();
     else if (act === "ranks-back") { (showRanks._back || showTitle)(); }
+    else if (act === "newlife") { if (confirm(L("新たな人生（" + (prestige + 1) + "巡目）を歩みますか？\nこの人生の叡智と旅はリセットされますが、伝説・位・秘宝は残ります。", "Begin a new life (loop " + (prestige + 1) + ")?\nThis life's wisdom and journey reset, but legends, rank and treasures remain."))) beginNewLife(); }
+    else if (act === "treasures") showTreasures();
     else if (act === "hiden") showHiden();
     else if (act === "hidenshare") shareHiden();
     else if (act === "title") showTitle();

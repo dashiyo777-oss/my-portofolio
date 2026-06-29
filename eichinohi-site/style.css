@@ -485,3 +485,31 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .rank-summit{margin:16px 8px;font-size:.9rem;color:var(--gold-deep)}
 .rankchip{cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:manipulation}
 .rankchip::after{content:" \203A"; opacity:.6; font-weight:700}
+
+/* ===== 周回（新たな人生）＆ 隠れ宝 ===== */
+.prestige-badge{margin:8px auto 0;font-size:.82rem;letter-spacing:.08em;color:var(--gold-deep);font-weight:700}
+.btn.newlife{background:linear-gradient(165deg,#cfe0c0,#a9c98f);color:#2f3a24}
+#app.night .btn.newlife{background:linear-gradient(165deg,#3a4a2a,#2a3a1c);color:#dfeccf}
+.newlife-screen{text-align:center;max-width:480px;margin:0 auto}
+/* treasure reveal */
+.treasure{max-width:480px;margin:0 auto;text-align:center}
+.tre-glow{font-size:2.4rem;margin:8px 0 2px;filter:drop-shadow(0 0 14px rgba(216,177,90,.6))}
+.tre-kicker{font-size:.9rem;letter-spacing:.1em;color:var(--gold-deep);font-weight:700;margin:0 0 12px}
+.tre-card{background:linear-gradient(165deg,#fbf2dd,#f1e3c2);border:1px solid var(--gold);border-radius:18px;
+  padding:22px 20px;box-shadow:var(--shadow);position:relative}
+#app.night .tre-card{background:linear-gradient(165deg,#322813,#241c10);border-color:#caa45d}
+.tre-msg{font-size:1.1rem;line-height:1.95;color:var(--ink)}
+#app.night .tre-msg{color:var(--paper)}
+.tre-from{display:block;margin-top:12px;font-size:.82rem;color:var(--gold-deep)}
+.tre-reward{margin:14px 6px;font-size:.86rem;color:var(--gold-deep);font-weight:700}
+/* treasure collection */
+.treasures-list{max-width:480px;margin:0 auto;text-align:center}
+.tre-collection{display:flex;flex-direction:column;gap:8px;text-align:left}
+.tre-row{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:10px;padding:12px 14px;
+  border:1px solid var(--line);border-radius:12px;background:var(--paper2);color:var(--ink-soft)}
+#app.night .tre-row{background:rgba(255,255,255,.03);border-color:rgba(202,164,93,.18)}
+.tre-row.got{background:linear-gradient(165deg,#fbf2dd,#f2e4c4);border-color:var(--gold);color:var(--ink)}
+#app.night .tre-row.got{background:linear-gradient(165deg,#322813,#241c10);border-color:#caa45d;color:var(--paper)}
+.tre-ic{font-size:1.1rem;text-align:center}
+.tre-rowmsg{font-size:.92rem;line-height:1.6}
+.tre-row:not(.got) .tre-rowmsg{font-style:italic;opacity:.8}
