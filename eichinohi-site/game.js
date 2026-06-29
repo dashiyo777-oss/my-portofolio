@@ -290,6 +290,7 @@
       '<span class="heart">❤️</span>' +
       '<span class="mindbar"><i style="width:' + s.mind + '%"></i></span>' +
       '<span class="rankchip" data-act="ranks" role="button" tabindex="0" title="' + L("段位一覧を見る", "View stages") + '">' + esc(rankTitle(unlockedRank())) + '</span>' +
+      (prestige > 0 ? '<span class="loopchip" title="' + L("周回", "Loop") + '">' + L((prestige + 1) + "巡", "L" + (prestige + 1)) + '</span>' : '') +
       '<span class="sb-ctrl" style="margin-left:auto;display:flex;gap:4px">' +
       '<button class="snd" data-act="night" title="' + L("夜モード", "Night mode") + '">' + (night ? "☀️" : "🌙") + '</button>' +
       '<button class="snd' + (ambientOn ? " on" : "") + '" data-act="ambient" title="' + L("BGM", "BGM") + '">🎐</button>' +
