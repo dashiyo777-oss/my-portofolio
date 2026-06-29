@@ -76,7 +76,13 @@
     rv_unreviewed:{ ja: "未監修", en: "Not reviewed" },
     rv_expert:    { ja: "監修済み", en: "Reviewed" },
     empty:        { ja: "このジャンルはまだありません。", en: "Nothing here yet." },
-    rankLabel:    { ja: "位", en: "" }
+    rankLabel:    { ja: "位", en: "" },
+    searchPh:     { ja: "キーワードで検索（例: 認知症予防、海外発掘）", en: "Search (e.g. tag, keyword)" },
+    tagsLabel:    { ja: "タグで横断", en: "Filter by tag" },
+    clear:        { ja: "クリア", en: "Clear" },
+    results:      { ja: "件", en: " results" },
+    noResults:    { ja: "条件に合う情報が見つかりませんでした。", en: "No matching tips found." },
+    relatedTags:  { ja: "タグ", en: "Tags" }
   };
   function t(key) { return (STR[key] && STR[key][state.lang]) || key; }
   function L(obj) { if (!obj) return ""; return obj[state.lang] || obj.ja || obj.en || ""; }
@@ -126,13 +132,44 @@
     return n === 0 ? 0 : Math.round((s.resonated / n) * 100);
   }
 
-  // ── ルーティング（#/ , #/g/<genre> , #/c/<id>） ──
+  // 横断フィルタの状態（検索語はハッシュに載せず、ジャンル/タグに重ねられる）
+  var searchQuery = "";
+  var currentFilter = { genre: null, tag: null };
+
+  // 全タグを出現頻度順で集計（タグ横断のための一覧）
+  function allTags() {
+    var counts = {};
+    DATA.contents.forEach(function (c) {
+      (c.tags || []).forEach(function (tag) { counts[tag] = (counts[tag] || 0) + 1; });
+    });
+    return Object.keys(counts).map(function (k) { return { tag: k, count: counts[k] }; })
+      .sort(function (a, b) { return b.count - a.count || a.tag.localeCompare(b.tag); });
+  }
+
+  // 現在のフィルタ＋検索語に一致するコンテンツ（スコア順）
+  function matchedContents() {
+    var list = DATA.contents.slice();
+    if (currentFilter.genre) list = list.filter(function (c) { return c.genreId === currentFilter.genre; });
+    if (currentFilter.tag) list = list.filter(function (c) { return (c.tags || []).indexOf(currentFilter.tag) >= 0; });
+    var q = searchQuery.trim().toLowerCase();
+    if (q) {
+      list = list.filter(function (c) {
+        var hay = [c.title.ja, c.title.en, c.summary.ja, c.summary.en].concat(c.tags || []).join(" ").toLowerCase();
+        return hay.indexOf(q) >= 0;
+      });
+    }
+    return list.sort(function (a, b) { return scoreOf(b) - scoreOf(a); });
+  }
+
+  // ── ルーティング（#/ , #/g/<genre> , #/t/<tag> , #/c/<id>） ──
   function route() {
     var h = location.hash.replace(/^#\/?/, "");
     var parts = h.split("/");
-    if (parts[0] === "c" && parts[1]) return renderDetail(parts[1]);
-    if (parts[0] === "g" && parts[1]) return renderHome(parts[1]);
-    return renderHome(null);
+    if (parts[0] === "c" && parts[1]) return renderDetail(decodeURIComponent(parts[1]));
+    if (parts[0] === "g" && parts[1]) { currentFilter = { genre: parts[1], tag: null }; return renderHome(); }
+    if (parts[0] === "t" && parts[1]) { currentFilter = { genre: null, tag: decodeURIComponent(parts[1]) }; return renderHome(); }
+    currentFilter = { genre: null, tag: null };
+    return renderHome();
   }
 
   // ── 描画ヘルパ ──
@@ -163,33 +200,63 @@
     return '<span class="pill ' + cls + '">' + (c.review.status === "expert" ? "✔ " : "○ ") + esc(t("rv_" + c.review.status)) + "</span>";
   }
 
-  // ── ホーム / ランキング ──
-  function renderHome(activeGenre) {
-    var list = DATA.contents.slice();
-    if (activeGenre) list = list.filter(function (c) { return c.genreId === activeGenre; });
-    list.sort(function (a, b) { return scoreOf(b) - scoreOf(a); });
+  // ── ホーム / ランキング（検索＋ジャンル＋タグ横断） ──
+  function renderHome() {
+    var activeGenre = currentFilter.genre, activeTag = currentFilter.tag;
 
-    var chips = '<a class="chip ' + (!activeGenre ? "on" : "") + '" href="#/">' + esc(t("all")) + "</a>" +
+    var genreChips = '<a class="chip ' + (!activeGenre ? "on" : "") + '" href="#/">' + esc(t("all")) + "</a>" +
       DATA.genres.map(function (g) {
         return '<a class="chip ' + (activeGenre === g.id ? "on" : "") + '" href="#/g/' + g.id + '" style="--c:' + g.color + '">' +
           g.icon + " " + esc(L(g.name)) + "</a>";
       }).join("");
 
-    var rows = list.length ? list.map(function (c, i) { return rankCard(c, i + 1); }).join("") :
-      '<p class="empty">' + esc(t("empty")) + "</p>";
+    var tagChips = allTags().map(function (o) {
+      var on = activeTag === o.tag ? "on" : "";
+      return '<a class="chip tagchip ' + on + '" href="#/t/' + encodeURIComponent(o.tag) + '"># ' +
+        esc(o.tag) + ' <i>' + o.count + "</i></a>";
+    }).join("");
 
     app.innerHTML = "";
     app.appendChild(el(header()));
     app.appendChild(el(
       '<main class="wrap">' +
-        '<div class="chips">' + chips + "</div>" +
-        '<div class="listhead"><span>' + esc(t("rankedBy")) + "</span></div>" +
-        '<ol class="list">' + rows + "</ol>" +
+        // 検索ボックス
+        '<div class="searchbar">' +
+          '<span class="si">🔍</span>' +
+          '<input id="kikuSearch" type="search" placeholder="' + esc(t("searchPh")) + '" value="' + esc(searchQuery) + '" autocomplete="off">' +
+          '<button id="kikuSearchClear" class="sclear" aria-label="clear">×</button>' +
+        "</div>" +
+        '<div class="chips">' + genreChips + "</div>" +
+        '<div class="taglabel">' + esc(t("tagsLabel")) + "</div>" +
+        '<div class="chips tagrow">' + tagChips + "</div>" +
+        '<div class="listhead"><span>' + esc(t("rankedBy")) + '</span><b id="kikuCount"></b></div>' +
+        '<ol class="list" id="kikuList"></ol>' +
         '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
       "</main>"
     ));
+
     bindLang();
+    bindSearch();
+    fillList();
     window.scrollTo(0, 0);
+  }
+
+  // リストだけを再描画（検索入力中にフォーカスを保つため、入力欄は作り直さない）
+  function fillList() {
+    var list = matchedContents();
+    var ol = document.getElementById("kikuList");
+    var cnt = document.getElementById("kikuCount");
+    if (cnt) cnt.textContent = list.length + t("results");
+    if (!ol) return;
+    ol.innerHTML = list.length ? list.map(function (c, i) { return rankCard(c, i + 1); }).join("") :
+      '<p class="empty">' + esc(t("noResults")) + "</p>";
+  }
+
+  function bindSearch() {
+    var input = document.getElementById("kikuSearch");
+    var clear = document.getElementById("kikuSearchClear");
+    if (input) input.oninput = function () { searchQuery = input.value; fillList(); };
+    if (clear) clear.onclick = function () { searchQuery = ""; if (input) { input.value = ""; input.focus(); } fillList(); };
   }
 
   function rankCard(c, rank) {
@@ -240,6 +307,12 @@
         '<span class="gtag" style="--c:' + g.color + '">' + g.icon + " " + esc(L(g.name)) + "</span>" +
         "<h1>" + esc(L(c.title)) + "</h1>" +
         '<p class="lead">' + esc(L(c.summary)) + "</p>" +
+
+        // タグ（クリックでジャンル横断）
+        ((c.tags && c.tags.length) ?
+          '<div class="dtags">' + c.tags.map(function (tag) {
+            return '<a class="chip tagchip" href="#/t/' + encodeURIComponent(tag) + '"># ' + esc(tag) + "</a>";
+          }).join("") + "</div>" : "") +
 
         // 効くスコアと内訳（透明性）
         '<section class="scorebox">' +

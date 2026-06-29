@@ -65,6 +65,35 @@ ol, ul { list-style: none; }
 /* ── Layout ── */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 16px 16px 64px; }
 
+/* ── Search ── */
+.searchbar { position: relative; display: flex; align-items: center; margin: 6px 0 12px; }
+.searchbar .si { position: absolute; left: 14px; font-size: 0.95rem; opacity: .6; pointer-events: none; }
+.searchbar input {
+  width: 100%; font: inherit; font-size: 0.95rem;
+  padding: 12px 40px 12px 40px; border: 1px solid var(--line); border-radius: 999px;
+  background: #fff; color: var(--ink); outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.searchbar input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 18%, #fff); }
+.searchbar input::-webkit-search-cancel-button { display: none; }
+.sclear {
+  position: absolute; right: 8px; width: 28px; height: 28px; border: none; background: #eef2f1;
+  color: var(--ink-soft); border-radius: 50%; font-size: 1.05rem; line-height: 1; cursor: pointer;
+}
+.sclear:hover { background: #e0e6e4; color: var(--ink); }
+
+/* ── Tag chips ── */
+.taglabel { font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; margin: 2px 2px 6px; }
+.tagrow { padding-bottom: 6px; }
+.tagchip { font-size: 0.8rem; }
+.tagchip i { font-style: normal; opacity: .55; font-size: 0.72rem; margin-left: 2px; }
+.tagchip.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+.tagchip.on i { opacity: .8; }
+.dtags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+.dtags .tagchip { background: #fff; border: 1px solid var(--line); color: var(--teal-d); }
+.dtags .tagchip:hover { border-color: var(--teal); }
+
+.listhead b { margin-left: auto; color: var(--teal-d); font-size: 0.78rem; font-weight: 700; }
+
 /* ── Genre chips ── */
 .chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; -webkit-overflow-scrolling: touch; }
 .chips::-webkit-scrollbar { display: none; }
