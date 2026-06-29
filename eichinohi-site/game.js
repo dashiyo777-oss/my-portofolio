@@ -18,6 +18,7 @@
   var LANG_KEY = "lifewisdom.lang.v1";
   var PRESTIGE_KEY = "lifewisdom.prestige.v1";
   var TREASURE_KEY = "lifewisdom.treasure.v1";
+  var LEGACY_KEY = "lifewisdom.legacy.v1";
   var REST_THRESHOLD = 25;
 
   // ---------- i18n ----------
@@ -156,6 +157,7 @@
   var acclaim = loadAcclaim();
   var prestige = loadPrestige();
   var treasures = loadTreasures();
+  var legacy = loadLegacy();
 
   // ---------- セーブ/ロード ----------
   function newGame() {
@@ -189,6 +191,8 @@
   function loadTreasures() { try { return JSON.parse(localStorage.getItem(TREASURE_KEY)) || []; } catch (e) { return []; } }
   function saveTreasures() { try { localStorage.setItem(TREASURE_KEY, JSON.stringify(treasures)); } catch (e) {} }
   function treasureHas(id) { return treasures.indexOf(id) >= 0; }
+  function loadLegacy() { try { return JSON.parse(localStorage.getItem(LEGACY_KEY)) || []; } catch (e) { return []; } }
+  function saveLegacy() { try { localStorage.setItem(LEGACY_KEY, JSON.stringify(legacy)); } catch (e) {} }
   // 灯火からの隠しメッセージ（オリジナル）。minPrestige巡目以降に、低確率でのみ出会える。
   var TREASURES = [
     { id: "t1", minPrestige: 1, reward: 10, ja: "二度目の道で、はじめて見える景色がある。よくぞ、ここまで歩いた。", en: "Some scenery is seen only on the second road. Well done, for walking this far." },
@@ -335,6 +339,7 @@
       (isMaster() ? '<button class="btn gold hiden-open" data-act="hiden">' + L("📜 叡智皆伝の書をひらく", "📜 Open your Book of Mastery") + '</button>' : "") +
       (isMaster() ? '<button class="btn gold newlife" data-act="newlife">' + L("🌱 新たな人生を歩む（" + (prestige + 1) + "巡目へ）", "🌱 Begin a new life (loop " + (prestige + 1) + ")") + '</button>' : "") +
       (treasures.length > 0 ? '<button class="btn ghost" data-act="treasures">' + L("🗝️ 秘宝コレクション（" + treasures.length + "/" + TREASURES.length + "）", "🗝️ Treasure Collection (" + treasures.length + "/" + TREASURES.length + ")") + '</button>' : "") +
+      (legacy.length > 0 ? '<button class="btn ghost" data-act="legacy">' + L("🕯 灯火に遺した言葉（" + legacy.length + "）", "🕯 Words you left (" + legacy.length + ")") + '</button>' : "") +
       (isPaid() ? "" : '<button class="btn ghost" data-act="membergate">' + L("会員コードを入力（note会員）", "Enter member code (note)") + '</button>') +
       (has ? '<button class="btn ghost" data-act="reset">' + L("はじめからやり直す", "Start a new life") + '</button>' : "") +
       '</div>' +
@@ -963,6 +968,33 @@
       '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
       '</div>');
   }
+  function showLeaveWord() {
+    curView = showLeaveWord;
+    render('<div class="fade leave-word">' +
+      '<div class="flame">🕯️</div>' +
+      '<h2 class="event-title">' + L("頂きに在る、あなたへ。", "To you, at the summit.") + '</h2>' +
+      '<p class="event-body">' + L("ひとつの人生を、歩き終えました。<br>よければ、この灯火に<b>あなたの言葉</b>を遺しませんか。<br>それは「" + (prestige + 1) + "巡目の言葉」として、刻まれます。",
+        "You have walked one life to its end.<br>If you wish, leave <b>your own words</b> in this beacon.<br>They will be inscribed as your “loop " + (prestige + 1) + "” words.") + '</p>' +
+      '<input class="legacy-name code-input" maxlength="24" placeholder="' + L("お名前（任意）", "Your name (optional)") + '">' +
+      '<textarea class="legacy-words" maxlength="120" rows="3" placeholder="' + L("あなたの言葉（120字まで）", "Your words (up to 120)") + '"></textarea>' +
+      '<button class="btn gold" data-act="leave-save">' + L("言葉を遺して、新たな人生へ", "Leave your words and begin anew") + '</button>' +
+      '<button class="btn ghost" data-act="leave-skip">' + L("遺さずに進む", "Continue without leaving words") + '</button>' +
+      '</div>');
+  }
+  function showLegacy() {
+    curView = showLegacy;
+    var rows = legacy.length
+      ? legacy.slice().reverse().map(function (e) {
+          return '<div class="legacy-row"><p class="lg-words">「' + esc(e.words) + '」</p>' +
+            '<span class="lg-meta">— ' + esc(e.name) + '　・　' + L(e.loop + "巡目の灯", "loop " + e.loop) + '</span></div>';
+        }).join("")
+      : '<p class="ranks-sum">' + L("まだ言葉は遺されていません。頂きに達したとき、刻むことができます。", "No words yet. You can inscribe them when you reach the summit.") + '</p>';
+    render('<div class="fade legacy-list">' +
+      '<h2 class="event-title">' + L("灯火に遺した言葉", "Words Left in the Beacon") + '</h2>' +
+      '<div class="legacy-rows">' + rows + '</div>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
   function showTreasure(tr) {
     var fresh = !treasureHas(tr.id);
     if (fresh) { treasures.push(tr.id); saveTreasures(); applyStat("wisdom", tr.reward || 8); save(); }
@@ -1085,7 +1117,16 @@
     else if (act === "guide") showGuide();
     else if (act === "ranks") showRanks();
     else if (act === "ranks-back") { (showRanks._back || showTitle)(); }
-    else if (act === "newlife") { if (confirm(L("新たな人生（" + (prestige + 1) + "巡目）を歩みますか？\nこの人生の叡智と旅はリセットされますが、伝説・位・秘宝は残ります。", "Begin a new life (loop " + (prestige + 1) + ")?\nThis life's wisdom and journey reset, but legends, rank and treasures remain."))) beginNewLife(); }
+    else if (act === "newlife") { showLeaveWord(); }
+    else if (act === "leave-save") {
+      var nmEl = app.querySelector(".legacy-name"), wdEl = app.querySelector(".legacy-words");
+      var nm = nmEl ? (nmEl.value || "").trim().slice(0, 24) : "";
+      var wd = wdEl ? (wdEl.value || "").trim().slice(0, 120) : "";
+      if (wd) { legacy.push({ name: nm || L("名もなき灯", "A nameless light"), words: wd, loop: prestige + 1, ts: Date.now() }); if (legacy.length > 50) legacy = legacy.slice(-50); saveLegacy(); }
+      beginNewLife();
+    }
+    else if (act === "leave-skip") { beginNewLife(); }
+    else if (act === "legacy") showLegacy();
     else if (act === "treasures") showTreasures();
     else if (act === "hiden") showHiden();
     else if (act === "hidenshare") shareHiden();

@@ -513,3 +513,18 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .tre-ic{font-size:1.1rem;text-align:center}
 .tre-rowmsg{font-size:.92rem;line-height:1.6}
 .tre-row:not(.got) .tre-rowmsg{font-style:italic;opacity:.8}
+
+/* ===== 灯火に遺す言葉（プレイヤーの言葉） ===== */
+.leave-word{max-width:480px;margin:0 auto;text-align:center}
+.legacy-name{margin-bottom:8px}
+.legacy-words{width:100%;max-width:340px;margin:0 auto 10px;display:block;border:1px solid #d8b86a;border-radius:12px;
+  padding:11px 12px;font-family:inherit;font-size:.95rem;line-height:1.6;background:#fffdf8;color:var(--ink);resize:vertical}
+#app.night .legacy-words{background:#2a2620;color:var(--ink);border-color:var(--line)}
+.legacy-list{max-width:480px;margin:0 auto;text-align:center}
+.legacy-rows{display:flex;flex-direction:column;gap:10px;text-align:left}
+.legacy-row{background:linear-gradient(165deg,#fbf2dd,#f2e4c4);border:1px solid var(--gold);border-radius:14px;
+  padding:14px 16px;box-shadow:var(--shadow)}
+#app.night .legacy-row{background:linear-gradient(165deg,#322813,#241c10);border-color:#caa45d}
+.lg-words{font-size:1rem;line-height:1.85;color:var(--ink)}
+#app.night .lg-words{color:var(--paper)}
+.lg-meta{display:block;margin-top:8px;font-size:.8rem;color:var(--gold-deep)}
