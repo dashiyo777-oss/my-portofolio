@@ -204,6 +204,38 @@ ol, ul { list-style: none; }
 .tipped { margin-top: 10px; color: var(--good); font-weight: 700; font-size: 0.85rem; }
 .demo { display: block; margin-top: 8px; color: var(--ink-soft); font-size: 0.68rem; }
 
+.wholink { text-decoration: none; transition: opacity .15s; }
+.wholink:hover { opacity: .75; }
+.profilelink { color: var(--teal-d) !important; font-weight: 700; margin-top: 2px; }
+
+/* related + mini cards */
+.related h2 { margin-bottom: 12px; }
+.minilist { display: flex; flex-direction: column; gap: 10px; }
+.mini { display: flex; gap: 12px; align-items: center; background: #fff; border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px 12px; transition: transform .15s, box-shadow .15s; }
+.mini:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.related .mini { margin-bottom: 10px; }
+.related .mini:last-child { margin-bottom: 0; }
+.mini-score { flex: none; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--teal), var(--teal-d)); color: #fff; font-weight: 800; font-size: 1.05rem; }
+.mini-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mini-title { font-weight: 700; font-size: 0.92rem; line-height: 1.35; color: var(--ink); }
+.mini-metrics { font-size: 0.72rem; color: var(--ink-soft); }
+
+/* contributor profile */
+.profile { display: flex; gap: 14px; align-items: center; }
+.avatar.big { width: 64px; height: 64px; font-size: 1.6rem; }
+.profile-info { min-width: 0; }
+.profile-info h1 { font-size: 1.4rem; margin: 0 0 4px; }
+.exp-badge { font-size: 0.7rem; font-weight: 700; color: var(--good); background: #e7f3ec;
+  padding: 3px 8px; border-radius: 999px; vertical-align: middle; }
+.profile-bio { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 6px; }
+.profile-stats { display: flex; gap: 12px; margin-bottom: 14px; }
+.pstat { flex: 1; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 14px; text-align: center; box-shadow: var(--shadow); }
+.pstat b { display: block; font-size: 1.5rem; color: var(--teal-d); font-weight: 800; }
+.pstat small { font-size: 0.7rem; color: var(--ink-soft); }
+
 /* try + feedback */
 .tryblock { text-align: center; }
 .trybtn { width: 100%; border: none; background: var(--navy); color: #fff;

@@ -89,7 +89,13 @@
     q_all:        { ja: "すべて", en: "All" },
     q_expert:     { ja: "専門家以上", en: "Expert+" },
     q_study:      { ja: "研究の裏付け", en: "Study-backed" },
-    q_reviewed:   { ja: "監修済み", en: "Reviewed" }
+    q_reviewed:   { ja: "監修済み", en: "Reviewed" },
+    contributions:{ ja: "提供した知恵", en: "Contributions" },
+    tipsReceived: { ja: "受け取った感謝（デモ）", en: "Thanks received (demo)" },
+    expertBadge:  { ja: "専門家", en: "Expert" },
+    viewProfile:  { ja: "プロフィールを見る →", en: "View profile →" },
+    related:      { ja: "関連する知恵", en: "Related tips" },
+    itemsUnit:    { ja: "件", en: "" }
   };
   function t(key) { return (STR[key] && STR[key][state.lang]) || key; }
   function L(obj) { if (!obj) return ""; return obj[state.lang] || obj.ja || obj.en || ""; }
@@ -184,6 +190,7 @@
     var h = location.hash.replace(/^#\/?/, "");
     var parts = h.split("/");
     if (parts[0] === "c" && parts[1]) return renderDetail(decodeURIComponent(parts[1]));
+    if (parts[0] === "u" && parts[1]) return renderContributor(decodeURIComponent(parts[1]));
     if (parts[0] === "g" && parts[1]) { currentFilter = { genre: parts[1], tag: null }; return renderHome(); }
     if (parts[0] === "t" && parts[1]) { currentFilter = { genre: null, tag: decodeURIComponent(parts[1]) }; return renderHome(); }
     currentFilter = { genre: null, tag: null };
@@ -386,10 +393,13 @@
 
         // 貢献者＋チップ
         '<section class="block contributor">' +
-          '<div class="who"><span class="avatar" style="background:' + (au ? au.color : "#888") + '">' +
+          (au ? '<a class="who wholink" href="#/u/' + au.id + '">' : '<div class="who">') +
+            '<span class="avatar" style="background:' + (au ? au.color : "#888") + '">' +
             (au ? esc(au.name.slice(0, 1)) : "?") + "</span>" +
             "<div><b>" + esc(t("by")) + " " + (au ? esc(au.name) : "?") + (au && au.expert ? ' <span class="exp">✔</span>' : "") +
-            "</b><small>" + (au ? esc(L(au.bio)) : "") + "</small></div></div>" +
+            "</b><small>" + (au ? esc(L(au.bio)) : "") + "</small>" +
+            (au ? '<small class="profilelink">' + esc(t("viewProfile")) + "</small>" : "") +
+            "</div>" + (au ? "</a>" : "</div>") +
           '<div class="tipbox"><p>' + esc(t("tipDesc")) + "</p>" +
             '<div class="tipbtns">' +
               [100, 300, 500].map(function (v) { return '<button class="tipbtn" data-tip="' + v + '">¥' + v + "</button>"; }).join("") +
@@ -406,6 +416,14 @@
           (u.tried ? feedbackBlock : "") +
         "</section>" +
 
+        // 関連する知恵
+        (function () {
+          var rel = relatedTo(c, 3);
+          if (!rel.length) return "";
+          return '<section class="block related"><h2>' + esc(t("related")) + "</h2>" +
+            rel.map(miniCard).join("") + "</section>";
+        })() +
+
         '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
       "</main>"
     ));
@@ -416,8 +434,87 @@
   }
 
   function flag(code) {
-    var map = { JP: "🇯🇵 日本", CN: "🇨🇳 中国", US: "🇺🇸 アメリカ", FR: "🇫🇷 フランス", KR: "🇰🇷 韓国" };
-    return map[code] || code;
+    var map = {
+      JP: { ja: "🇯🇵 日本", en: "🇯🇵 Japan" }, CN: { ja: "🇨🇳 中国", en: "🇨🇳 China" },
+      US: { ja: "🇺🇸 アメリカ", en: "🇺🇸 USA" }, FR: { ja: "🇫🇷 フランス", en: "🇫🇷 France" },
+      KR: { ja: "🇰🇷 韓国", en: "🇰🇷 Korea" }, IN: { ja: "🇮🇳 インド", en: "🇮🇳 India" },
+      TH: { ja: "🇹🇭 タイ", en: "🇹🇭 Thailand" }
+    };
+    return map[code] ? L(map[code]) : code;
+  }
+
+  // 貢献者ごとの集計
+  function contentsByContributor(uid) {
+    return DATA.contents.filter(function (c) { return c.contributorId === uid; })
+      .sort(function (a, b) { return scoreOf(b) - scoreOf(a); });
+  }
+  function tipsReceivedBy(uid) {
+    return contentsByContributor(uid).reduce(function (sum, c) {
+      var u = state.user[c.id];
+      return sum + (u && u.tipped ? u.tipped : 0);
+    }, 0);
+  }
+  // 関連する知恵（共有タグ数→スコアで上位。自分自身は除外）
+  function relatedTo(c, n) {
+    var tags = c.tags || [];
+    return DATA.contents.filter(function (x) { return x.id !== c.id; })
+      .map(function (x) {
+        var shared = (x.tags || []).filter(function (tg) { return tags.indexOf(tg) >= 0; }).length;
+        var sameGenre = x.genreId === c.genreId ? 1 : 0;
+        return { c: x, rel: shared * 2 + sameGenre };
+      })
+      .filter(function (o) { return o.rel > 0; })
+      .sort(function (a, b) { return b.rel - a.rel || scoreOf(b.c) - scoreOf(a.c); })
+      .slice(0, n || 3).map(function (o) { return o.c; });
+  }
+
+  // コンパクトカード（関連・貢献者ページで使う）
+  function miniCard(c) {
+    var g = genreById(c.genreId);
+    return '<a class="mini" href="#/c/' + c.id + '">' +
+      '<span class="mini-score">' + scoreOf(c) + "</span>" +
+      '<span class="mini-body">' +
+        '<span class="gtag" style="--c:' + g.color + '">' + g.icon + " " + esc(L(g.name)) + "</span>" +
+        '<span class="mini-title">' + esc(L(c.title)) + "</span>" +
+        '<span class="mini-metrics">👍 ' + feltRate(c) + "% · " + esc(t("ev_" + c.evidence.level)) + "</span>" +
+      "</span></a>";
+  }
+
+  // ── 貢献者ページ ──
+  function renderContributor(uid) {
+    var au = contributorById(uid);
+    if (!au) return renderHome();
+    var list = contentsByContributor(uid);
+    var tips = tipsReceivedBy(uid);
+
+    app.innerHTML = "";
+    app.appendChild(el(header()));
+    app.appendChild(el(
+      '<main class="wrap detail">' +
+        '<a class="back" href="#/">' + esc(t("back")) + "</a>" +
+
+        '<section class="block profile">' +
+          '<span class="avatar big" style="background:' + au.color + '">' + esc(au.name.slice(0, 1)) + "</span>" +
+          '<div class="profile-info">' +
+            "<h1>" + esc(au.name) + (au.expert ? ' <span class="exp-badge">✔ ' + esc(t("expertBadge")) + "</span>" : "") + "</h1>" +
+            '<p class="profile-bio">' + esc(L(au.bio)) + "</p>" +
+            '<p class="origin">' + esc(t("from")) + ": " + flag(au.origin) + "</p>" +
+          "</div>" +
+        "</section>" +
+
+        '<div class="profile-stats">' +
+          '<div class="pstat"><b>' + list.length + '</b><small>' + esc(t("contributions")) + "</small></div>" +
+          '<div class="pstat"><b>¥' + tips.toLocaleString() + '</b><small>' + esc(t("tipsReceived")) + "</small></div>" +
+        "</div>" +
+
+        '<div class="listhead"><span>' + esc(t("contributions")) + '</span><b>' + list.length + esc(t("itemsUnit")) + "</b></div>" +
+        '<div class="minilist">' + list.map(miniCard).join("") + "</div>" +
+
+        '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
+      "</main>"
+    ));
+    bindLang();
+    window.scrollTo(0, 0);
   }
 
   // ── イベント束ね ──
