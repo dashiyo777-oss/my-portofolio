@@ -255,7 +255,7 @@
     return '<div class="statusbar">' +
       '<span class="heart">❤️</span>' +
       '<span class="mindbar"><i style="width:' + s.mind + '%"></i></span>' +
-      '<span class="rankchip">' + esc(rankTitle(unlockedRank())) + '</span>' +
+      '<span class="rankchip" data-act="ranks" role="button" tabindex="0" title="' + L("段位一覧を見る", "View stages") + '">' + esc(rankTitle(unlockedRank())) + '</span>' +
       '<span class="sb-ctrl" style="margin-left:auto;display:flex;gap:4px">' +
       '<button class="snd" data-act="night" title="' + L("夜モード", "Night mode") + '">' + (night ? "☀️" : "🌙") + '</button>' +
       '<button class="snd' + (ambientOn ? " on" : "") + '" data-act="ambient" title="' + L("BGM", "BGM") + '">🎐</button>' +
@@ -915,6 +915,39 @@
   }
   function shareHiden() { if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawHiden); else drawHiden(); }
 
+  // ---------- 叡智の段位一覧 ----------
+  function showRanks() {
+    showRanks._back = (curView === showRanks) ? showRanks._back : curView;
+    curView = showRanks;
+    var cur = unlockedRank(), w = state.stats.wisdom, rows = "";
+    for (var k = 1; k <= MAX_RANK; k++) {
+      var need = RANKS[k].unlockWisdom, done = w >= need, isCur = (k === cur);
+      rows += '<div class="rank-row' + (isCur ? " cur" : "") + (done ? " done" : "") + '">' +
+        '<span class="rk-no">' + k + '</span>' +
+        '<span class="rk-title">' + esc(rankTitle(k)) + (k === MAX_RANK ? ' 📜' : '') + '</span>' +
+        '<span class="rk-need">' + L("叡智 " + need, "Wisdom " + need) + '</span>' +
+        '<span class="rk-mark">' + (done ? "✓" : (isCur ? "●" : "")) + '</span>' +
+        '</div>';
+    }
+    var nx = nextRankInfo();
+    var sum = nx
+      ? L("いま <b>" + esc(rankTitle(cur)) + "</b>（叡智 " + w + "）。次の「" + esc(rankTitle(nx.rank)) + "」まで あと <b>" + Math.max(0, nx.need - nx.have) + "</b>。",
+          "Now <b>" + esc(rankTitle(cur)) + "</b> (Wisdom " + w + "). <b>" + Math.max(0, nx.need - nx.have) + "</b> to “" + esc(rankTitle(nx.rank)) + "”.")
+      : L("最高位 <b>" + esc(rankTitle(MAX_RANK)) + "</b> に到達しています。", "You've reached <b>" + esc(rankTitle(MAX_RANK)) + "</b>.");
+    var summit = (cur < MAX_RANK)
+      ? '<p class="rank-summit">' + L("頂き「" + esc(rankTitle(MAX_RANK)) + "」まで あと 叡智 <b>" + Math.max(0, RANKS[MAX_RANK].unlockWisdom - w) + "</b>",
+          "To the summit “" + esc(rankTitle(MAX_RANK)) + "”: <b>" + Math.max(0, RANKS[MAX_RANK].unlockWisdom - w) + "</b> wisdom") + '</p>'
+      : '<p class="rank-summit">' + L("✦ 頂きに在り。秘伝の書がひらかれている。", "✦ At the summit. Your secret book is open.") + '</p>';
+    render('<div class="fade ranks">' +
+      '<h2 class="event-title">' + L("叡智の段位", "Stages of Wisdom") + '</h2>' +
+      '<p class="ranks-sum">' + sum + '</p>' +
+      '<div class="rank-list">' + rows + '</div>' +
+      summit +
+      '<button class="btn gold" data-act="ranks-back">' + L("戻る", "Back") + '</button>' +
+      '<button class="btn ghost" data-act="title">' + L("タイトルへ", "Back to title") + '</button>' +
+      '</div>');
+  }
+
   // ---------- この灯火について（遊び方ガイド） ----------
   function showGuide() {
     curView = showGuide;
@@ -971,6 +1004,8 @@
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
     else if (act === "guide") showGuide();
+    else if (act === "ranks") showRanks();
+    else if (act === "ranks-back") { (showRanks._back || showTitle)(); }
     else if (act === "hiden") showHiden();
     else if (act === "hidenshare") shareHiden();
     else if (act === "title") showTitle();
