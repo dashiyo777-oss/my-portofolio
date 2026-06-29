@@ -100,6 +100,45 @@ window.GAME_DATA = {
         "packId": "pack_sports",
         "color": "#c0603a",
         "tier": "free"
+      },
+      {
+        "id": "scripture_bible",
+        "name": "聖書の言葉",
+        "nameEn": "The Bible",
+        "tradition": "christianity",
+        "field": "scripture",
+        "stance": "sacred",
+        "rank": 9,
+        "isPremium": true,
+        "packId": "pack_scripture",
+        "color": "#caa45d",
+        "tier": "free"
+      },
+      {
+        "id": "scripture_quran",
+        "name": "クルアーンの言葉",
+        "nameEn": "The Quran",
+        "tradition": "islam",
+        "field": "scripture",
+        "stance": "sacred",
+        "rank": 9,
+        "isPremium": true,
+        "packId": "pack_scripture",
+        "color": "#caa45d",
+        "tier": "free"
+      },
+      {
+        "id": "scripture_dhammapada",
+        "name": "法句経（ダンマパダ）の言葉",
+        "nameEn": "The Dhammapada",
+        "tradition": "buddhism",
+        "field": "scripture",
+        "stance": "sacred",
+        "rank": 9,
+        "isPremium": true,
+        "packId": "pack_scripture",
+        "color": "#caa45d",
+        "tier": "free"
       }
     ]
   },
