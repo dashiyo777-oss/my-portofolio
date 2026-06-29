@@ -24,11 +24,13 @@
       var browserLang = (navigator.language || "ja").slice(0, 2) === "en" ? "en" : "ja";
       return {
         lang: s.lang || browserLang,
+        // 信頼性フィルタ（好みとして永続）: "all" | "expert" | "study" | "reviewed"
+        quality: s.quality || "all",
         // contentId -> { tried:bool, feedback:"resonated"|"not_now"|null, tipped:int }
         user: s.user || {}
       };
     } catch (e) {
-      return { lang: "ja", user: {} };
+      return { lang: "ja", quality: "all", user: {} };
     }
   }
   function save() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
@@ -82,7 +84,12 @@
     clear:        { ja: "クリア", en: "Clear" },
     results:      { ja: "件", en: " results" },
     noResults:    { ja: "条件に合う情報が見つかりませんでした。", en: "No matching tips found." },
-    relatedTags:  { ja: "タグ", en: "Tags" }
+    relatedTags:  { ja: "タグ", en: "Tags" },
+    qualityLabel: { ja: "信頼性で絞る", en: "Filter by trust" },
+    q_all:        { ja: "すべて", en: "All" },
+    q_expert:     { ja: "専門家以上", en: "Expert+" },
+    q_study:      { ja: "研究の裏付け", en: "Study-backed" },
+    q_reviewed:   { ja: "監修済み", en: "Reviewed" }
   };
   function t(key) { return (STR[key] && STR[key][state.lang]) || key; }
   function L(obj) { if (!obj) return ""; return obj[state.lang] || obj.ja || obj.en || ""; }
@@ -146,11 +153,22 @@
       .sort(function (a, b) { return b.count - a.count || a.tag.localeCompare(b.tag); });
   }
 
+  // 信頼性（科学的根拠／監修）で絞る
+  function passQuality(c) {
+    switch (state.quality) {
+      case "study":    return c.evidence.level === "study";
+      case "expert":   return c.evidence.level === "expert" || c.evidence.level === "study";
+      case "reviewed": return c.review.status === "expert";
+      default:         return true;
+    }
+  }
+
   // 現在のフィルタ＋検索語に一致するコンテンツ（スコア順）
   function matchedContents() {
     var list = DATA.contents.slice();
     if (currentFilter.genre) list = list.filter(function (c) { return c.genreId === currentFilter.genre; });
     if (currentFilter.tag) list = list.filter(function (c) { return (c.tags || []).indexOf(currentFilter.tag) >= 0; });
+    if (state.quality !== "all") list = list.filter(passQuality);
     var q = searchQuery.trim().toLowerCase();
     if (q) {
       list = list.filter(function (c) {
@@ -227,6 +245,14 @@
           '<button id="kikuSearchClear" class="sclear" aria-label="clear">×</button>' +
         "</div>" +
         '<div class="chips">' + genreChips + "</div>" +
+        // 信頼性フィルタ（科学的根拠／監修で絞る）
+        '<div class="taglabel">' + esc(t("qualityLabel")) + "</div>" +
+        '<div class="seg" id="kikuQuality">' +
+          ["all", "expert", "study", "reviewed"].map(function (q) {
+            return '<button class="segbtn ' + (state.quality === q ? "on" : "") + '" data-q="' + q + '">' +
+              esc(t("q_" + q)) + "</button>";
+          }).join("") +
+        "</div>" +
         '<div class="taglabel">' + esc(t("tagsLabel")) + "</div>" +
         '<div class="chips tagrow">' + tagChips + "</div>" +
         '<div class="listhead"><span>' + esc(t("rankedBy")) + '</span><b id="kikuCount"></b></div>' +
@@ -237,8 +263,25 @@
 
     bindLang();
     bindSearch();
+    bindQuality();
     fillList();
     window.scrollTo(0, 0);
+  }
+
+  // 信頼性フィルタ: クリックで切替・永続化。リストとボタンのみ更新（検索フォーカス維持）
+  function bindQuality() {
+    var seg = document.getElementById("kikuQuality");
+    if (!seg) return;
+    Array.prototype.forEach.call(seg.querySelectorAll("[data-q]"), function (btn) {
+      btn.onclick = function () {
+        state.quality = btn.getAttribute("data-q");
+        save();
+        Array.prototype.forEach.call(seg.querySelectorAll("[data-q]"), function (b) {
+          b.classList.toggle("on", b.getAttribute("data-q") === state.quality);
+        });
+        fillList();
+      };
+    });
   }
 
   // リストだけを再描画（検索入力中にフォーカスを保つため、入力欄は作り直さない）

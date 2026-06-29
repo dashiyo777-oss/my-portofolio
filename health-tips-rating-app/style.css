@@ -94,6 +94,16 @@ ol, ul { list-style: none; }
 
 .listhead b { margin-left: auto; color: var(--teal-d); font-size: 0.78rem; font-weight: 700; }
 
+/* ── Quality (trust) segmented control ── */
+.seg { display: flex; gap: 4px; background: #eef2f1; border-radius: 12px; padding: 4px; margin-bottom: 4px; }
+.segbtn {
+  flex: 1; border: none; background: transparent; color: var(--ink-soft);
+  padding: 9px 6px; border-radius: 9px; font: inherit; font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; white-space: nowrap; transition: all .15s;
+}
+.segbtn:hover { color: var(--ink); }
+.segbtn.on { background: #fff; color: var(--teal-d); box-shadow: 0 1px 4px rgba(31,42,40,.12); }
+
 /* ── Genre chips ── */
 .chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; -webkit-overflow-scrolling: touch; }
 .chips::-webkit-scrollbar { display: none; }
