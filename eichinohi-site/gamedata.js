@@ -139,6 +139,104 @@ window.GAME_DATA = {
         "packId": "pack_scripture",
         "color": "#caa45d",
         "tier": "free"
+      },
+      {
+        "id": "confucius",
+        "name": "孔子",
+        "nameEn": "Confucius",
+        "region": "CN",
+        "field": "thought",
+        "era": "BC551–BC479",
+        "stance": "virtue",
+        "rank": 2,
+        "isPremium": false,
+        "packId": "pack_free",
+        "color": "#8f7355",
+        "tier": "free"
+      },
+      {
+        "id": "gandhi",
+        "name": "マハトマ・ガンジー",
+        "nameEn": "Mahatma Gandhi",
+        "region": "IN",
+        "field": "thought",
+        "era": "1869–1948",
+        "stance": "nonviolence",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_free",
+        "color": "#b08968",
+        "tier": "free"
+      },
+      {
+        "id": "keller",
+        "name": "ヘレン・ケラー",
+        "nameEn": "Helen Keller",
+        "region": "US",
+        "field": "humanitarian",
+        "era": "1880–1968",
+        "stance": "overcoming",
+        "rank": 5,
+        "isPremium": false,
+        "packId": "pack_free",
+        "color": "#a0825f",
+        "tier": "free"
+      },
+      {
+        "id": "seneca",
+        "name": "セネカ",
+        "nameEn": "Seneca",
+        "region": "Rome",
+        "field": "thought",
+        "era": "BC1頃–AD65",
+        "stance": "stoic",
+        "rank": 7,
+        "isPremium": false,
+        "packId": "pack_free",
+        "color": "#6e6a5c",
+        "tier": "free"
+      },
+      {
+        "id": "eleanor",
+        "name": "エレノア・ルーズベルト",
+        "nameEn": "Eleanor Roosevelt",
+        "region": "US",
+        "field": "leader",
+        "era": "1884–1962",
+        "stance": "courage",
+        "rank": 3,
+        "isPremium": false,
+        "packId": "pack_free",
+        "color": "#8a7a9c",
+        "tier": "free"
+      },
+      {
+        "id": "curie",
+        "name": "マリ・キュリー",
+        "nameEn": "Marie Curie",
+        "region": "PL/FR",
+        "field": "science",
+        "era": "1867–1934",
+        "stance": "perseverance",
+        "rank": 4,
+        "isPremium": true,
+        "packId": "pack_science",
+        "color": "#5f6caf",
+        "tier": "paid"
+      },
+      {
+        "id": "einstein",
+        "name": "アルベルト・アインシュタイン",
+        "nameEn": "Albert Einstein",
+        "region": "DE/US",
+        "field": "science",
+        "era": "1879–1955",
+        "stance": "curiosity",
+        "rank": 6,
+        "isPremium": true,
+        "packId": "pack_science",
+        "color": "#4f7d8c",
+        "tier": "paid"
       }
     ]
   },
@@ -413,6 +511,552 @@ window.GAME_DATA = {
         "titleEn": "My health has broken down. I'm anxious about what's ahead.",
         "bodyEn": "I fell ill unexpectedly. Worry about what comes next floods over me.",
         "tier": "free"
+      },
+      {
+        "id": "work_boss_01",
+        "category": "work",
+        "mood": "lost",
+        "title": "上司と、どうしても合わない。",
+        "body": "顔を合わせるだけで気が重い。仕事に行くのが、つらく感じる。",
+        "titleEn": "I just can't get along with my boss.",
+        "bodyEn": "Just seeing them weighs on me. Going to work feels hard.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "相手は変えられない。でも、自分の受け取り方は選べる。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "You can't change others, but you can choose how you receive them."
+          },
+          {
+            "sageId": "confucius",
+            "quote": "己の欲せざる所、人に施すこと勿れ。",
+            "quoteOriginal": "己所不欲、勿施於人。",
+            "source": "論語 衛霊公第十五",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 7,
+              "bonds": 4
+            },
+            "quoteEn": "Do not impose on others what you do not wish for yourself."
+          },
+          {
+            "sageId": "seneca",
+            "quote": "人は現実よりも、想像の中でより多く苦しむ。",
+            "quoteOriginal": "We suffer more often in imagination than in reality.",
+            "source": "セネカ『倫理書簡集』13",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 6,
+              "wisdom": 6
+            },
+            "quoteEn": "We suffer more often in imagination than in reality."
+          }
+        ]
+      },
+      {
+        "id": "relationship_quarrel_01",
+        "category": "relationship",
+        "mood": "down",
+        "title": "大切な人と、ぶつかってしまった。",
+        "body": "言い過ぎたかもしれない。気まずさが、胸に残っている。",
+        "titleEn": "I clashed with someone I care about.",
+        "bodyEn": "Maybe I said too much. The awkwardness lingers in my chest.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "謝るのに、遅すぎることはない。小さなひと言から。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "bonds": 5
+            },
+            "quoteEn": "It's never too late to apologize. Start with a small word."
+          },
+          {
+            "sageId": "scripture_dhammapada",
+            "quote": "この世では、怨みに報いるに怨みをもってしては、ついに怨みの息むことがない。怨みをすててこそ息む。",
+            "quoteOriginal": "na hi verena verāni, sammantīdha kudācanaṃ; averena ca sammanti, esa dhammo sanantano.",
+            "source": "法句経(ダンマパダ) 第5偈",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 10,
+              "wisdom": 8,
+              "bonds": 4
+            },
+            "quoteEn": "Hatred is never appeased by hatred. By non-hatred alone is it appeased."
+          },
+          {
+            "sageId": "teresa",
+            "quote": "私たちの誰もが大きなことをできるわけではない。でも、小さなことを大きな愛をもって行うことはできる。",
+            "quoteOriginal": "Not all of us can do great things. But we can do small things with great love.",
+            "source": "マザー・テレサ",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "bonds": 7,
+              "mind": 4
+            },
+            "quoteEn": "Not all of us can do great things. But we can do small things with great love."
+          }
+        ]
+      },
+      {
+        "id": "love_unrequited_01",
+        "category": "love",
+        "mood": "down",
+        "title": "好きな人に、想いが届かない。",
+        "body": "近づきたいのに、勇気が出ない。期待しては、落ち込む。",
+        "titleEn": "My feelings aren't reaching the one I love.",
+        "bodyEn": "I want to get closer but can't find the courage. I hope, then I sink.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "結果は選べない。でも、心からの一歩は、いつでもあなたの誇りになる。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "passion": 5
+            },
+            "quoteEn": "You can't choose the outcome, but a heartfelt step is always yours to be proud of."
+          },
+          {
+            "sageId": "eleanor",
+            "quote": "できないと思うことを、やってみなさい。",
+            "quoteOriginal": "You must do the things you think you cannot do.",
+            "source": "エレノア・ルーズベルト『You Learn by Living』1960",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 7,
+              "mind": 4
+            },
+            "quoteEn": "You must do the things you think you cannot do."
+          },
+          {
+            "sageId": "original",
+            "quote": "焦らなくていい。あなたの価値は、誰かの返事で決まるものではない。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "No need to rush. Your worth isn't decided by anyone's reply."
+          }
+        ]
+      },
+      {
+        "id": "study_motivation_01",
+        "category": "study",
+        "mood": "lost",
+        "title": "勉強に、まったく身が入らない。",
+        "body": "やらなきゃと分かっているのに、机に向かえない。",
+        "titleEn": "I can't focus on studying at all.",
+        "bodyEn": "I know I have to, yet I can't sit at my desk.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "やる気は、始めたあとに付いてくる。まず5分だけ、開いてみよう。",
+            "note": "",
+            "effects": {
+              "mind": 4,
+              "passion": 5
+            },
+            "quoteEn": "Motivation follows action. Just open it for five minutes."
+          },
+          {
+            "sageId": "confucius",
+            "quote": "知るを知るとし、知らざるを知らずとせよ。これが、知るということだ。",
+            "quoteOriginal": "知之為知之、不知為不知、是知也。",
+            "source": "論語 為政第二",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 7
+            },
+            "quoteEn": "To know what you know and know what you do not know — that is true knowledge."
+          },
+          {
+            "sageId": "original",
+            "quote": "完璧を目指さなくていい。今日のひと頁が、未来をつくる。",
+            "note": "",
+            "effects": {
+              "wisdom": 5
+            },
+            "quoteEn": "You don't have to be perfect. Today's one page builds your future."
+          }
+        ]
+      },
+      {
+        "id": "money_spend_01",
+        "category": "money",
+        "mood": "lost",
+        "title": "つい使いすぎて、お金が貯まらない。",
+        "body": "分かっているのに、衝動を抑えられない自分が、嫌になる。",
+        "titleEn": "I overspend and can never save.",
+        "bodyEn": "I know better, yet I can't control the urge — and I hate that about myself.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "自分を責めなくていい。気づけた今日が、変わりはじめる日。",
+            "note": "",
+            "effects": {
+              "mind": 5
+            },
+            "quoteEn": "Don't blame yourself. The day you noticed is the day change begins."
+          },
+          {
+            "sageId": "gandhi",
+            "quote": "強さは身体の力からではなく、不屈の意志から生まれる。",
+            "quoteOriginal": "Strength does not come from physical capacity. It comes from an indomitable will.",
+            "source": "ガンジー『Young India』",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 6,
+              "mind": 4
+            },
+            "quoteEn": "Strength does not come from physical capacity. It comes from an indomitable will."
+          },
+          {
+            "sageId": "original",
+            "quote": "小さな『使わない』を、ひとつだけ選んでみよう。",
+            "note": "",
+            "effects": {
+              "wealth": 6,
+              "wisdom": 3
+            },
+            "quoteEn": "Choose just one small \"I won't spend\" today."
+          }
+        ]
+      },
+      {
+        "id": "health_unwell_01",
+        "category": "health",
+        "mood": "down",
+        "title": "体の調子が悪くて、心まで沈む。",
+        "body": "思うように動けない。このまま良くならないのでは、と不安になる。",
+        "titleEn": "My body is unwell, and my heart sinks with it.",
+        "bodyEn": "I can't move as I want. I fear it may never get better.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "今日は休むのも、立派な前進。回復は、あなたのペースで。",
+            "note": "",
+            "effects": {
+              "mind": 7
+            },
+            "quoteEn": "Resting today is real progress too. Heal at your own pace."
+          },
+          {
+            "sageId": "scripture_bible",
+            "quote": "すべて重荷を負うて苦労している者は、わたしのもとに来なさい。休ませてあげよう。",
+            "quoteOriginal": "Come to me, all you who are weary and burdened, and I will give you rest.",
+            "source": "新約聖書 マタイによる福音書 11章28節",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 12,
+              "wisdom": 6
+            },
+            "quoteEn": "Come to me, all you who are weary and burdened, and I will give you rest."
+          },
+          {
+            "sageId": "keller",
+            "quote": "世界は苦しみに満ちている。しかし、それを乗り越える力にも満ちている。",
+            "quoteOriginal": "Although the world is full of suffering, it is also full of the overcoming of it.",
+            "source": "ヘレン・ケラー『楽天主義』1903",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 6,
+              "wisdom": 5
+            },
+            "quoteEn": "Although the world is full of suffering, it is also full of the overcoming of it."
+          }
+        ]
+      },
+      {
+        "id": "self_confidence_01",
+        "category": "self",
+        "mood": "down",
+        "title": "自分に、自信が持てない。",
+        "body": "何をしても、自分はダメだと感じてしまう。",
+        "titleEn": "I can't believe in myself.",
+        "bodyEn": "Whatever I do, I feel like I'm not good enough.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "自信は『できた経験』から育つ。今日の小さな一つを、数えよう。",
+            "note": "",
+            "effects": {
+              "mind": 4,
+              "passion": 5
+            },
+            "quoteEn": "Confidence grows from small wins. Count one of yours today."
+          },
+          {
+            "sageId": "keller",
+            "quote": "楽観は、成就へと導く信念である。希望と自信なくしては、何事も成し得ない。",
+            "quoteOriginal": "Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.",
+            "source": "ヘレン・ケラー『楽天主義』1903",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 6,
+              "mind": 4
+            },
+            "quoteEn": "Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence."
+          },
+          {
+            "sageId": "original",
+            "quote": "あなたが思うより、あなたはずっと多くを乗り越えてきた。",
+            "note": "",
+            "effects": {
+              "mind": 5
+            },
+            "quoteEn": "You've overcome far more than you give yourself credit for."
+          }
+        ]
+      },
+      {
+        "id": "self_compare_01",
+        "category": "self",
+        "mood": "lost",
+        "title": "つい、他人と比べて落ち込む。",
+        "body": "SNSを見ては、自分だけ取り残された気持ちになる。",
+        "titleEn": "I compare myself to others and feel low.",
+        "bodyEn": "Scrolling social media, I feel like only I am left behind.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "比べる相手は、昨日の自分だけでいい。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "The only one worth comparing to is yesterday's you."
+          },
+          {
+            "sageId": "seneca",
+            "quote": "人は現実よりも、想像の中でより多く苦しむ。",
+            "quoteOriginal": "We suffer more often in imagination than in reality.",
+            "source": "セネカ『倫理書簡集』13",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 6,
+              "wisdom": 6
+            },
+            "quoteEn": "We suffer more often in imagination than in reality."
+          },
+          {
+            "sageId": "original",
+            "quote": "あなたの花は、あなたの季節に咲く。",
+            "note": "",
+            "effects": {
+              "mind": 5
+            },
+            "quoteEn": "Your flower blooms in your own season."
+          }
+        ]
+      },
+      {
+        "id": "work_career_01",
+        "category": "work",
+        "mood": "lost",
+        "title": "今の仕事のままで、いいのだろうか。",
+        "body": "毎日が同じことの繰り返し。この先が、見えない。",
+        "titleEn": "Is it okay to stay in this job?",
+        "bodyEn": "Every day is the same. I can't see what lies ahead.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "迷いは、次へ進みたい心のサイン。焦らず、棚卸しから。",
+            "note": "",
+            "effects": {
+              "mind": 4,
+              "wisdom": 5
+            },
+            "quoteEn": "Doubt is your heart wanting to move forward. Start by taking stock."
+          },
+          {
+            "sageId": "eleanor",
+            "quote": "恐れと正面から向き合うたびに、人は強さと勇気と自信を得る。",
+            "quoteOriginal": "You gain strength, courage and confidence by every experience in which you really stop to look fear in the face.",
+            "source": "エレノア・ルーズベルト『You Learn by Living』1960",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 7,
+              "mind": 4
+            },
+            "quoteEn": "You gain strength, courage and confidence by every experience in which you really stop to look fear in the face."
+          },
+          {
+            "sageId": "original",
+            "quote": "正解の道はない。あなたが歩けば、そこが道になる。",
+            "note": "",
+            "effects": {
+              "passion": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "There is no \"right\" road. Where you walk becomes the road."
+          }
+        ]
+      },
+      {
+        "id": "lonely_02",
+        "category": "relationship",
+        "mood": "down",
+        "title": "ひとりぼっちだと、感じてしまう。",
+        "body": "周りに人はいても、心は満たされない。",
+        "titleEn": "I feel all alone.",
+        "bodyEn": "Even with people around, my heart feels empty.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "孤独は、あなたが深く生きている証。その感受性は、宝。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "Loneliness is proof you live deeply. That sensitivity is a treasure."
+          },
+          {
+            "sageId": "keller",
+            "quote": "一人でできることは少ない。けれど力を合わせれば、多くのことができる。",
+            "quoteOriginal": "Alone we can do so little; together we can do so much.",
+            "source": "ヘレン・ケラー",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "bonds": 6,
+              "mind": 4
+            },
+            "quoteEn": "Alone we can do so little; together we can do so much."
+          },
+          {
+            "sageId": "scripture_quran",
+            "quote": "われを念え。そうすれば、われもあなたがたを念う。",
+            "quoteOriginal": "فَاذْكُرُونِي أَذْكُرْكُمْ",
+            "source": "クルアーン 第2章(アル・バカラ) 152節",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 10,
+              "wisdom": 8
+            },
+            "quoteEn": "Remember Me; I will remember you."
+          }
+        ]
+      },
+      {
+        "id": "self_newchallenge_01",
+        "category": "self",
+        "mood": "high",
+        "title": "新しいことに、挑戦してみたい！",
+        "body": "やってみたい気持ちが湧いている。でも、少しだけ怖い。",
+        "titleEn": "I want to try something new!",
+        "bodyEn": "The urge to try is rising. But I'm a little scared, too.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "その高鳴りを、信じよう。最初の一歩は、今この瞬間に踏める。",
+            "note": "",
+            "effects": {
+              "passion": 8,
+              "mind": 4
+            },
+            "quoteEn": "Trust that thrill. The first step can be taken right now."
+          },
+          {
+            "sageId": "keller",
+            "quote": "人生は、勇敢な冒険か、さもなくば無か。",
+            "quoteOriginal": "Life is either a daring adventure or nothing at all.",
+            "source": "ヘレン・ケラー『The Open Door』1957",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 8,
+              "wisdom": 4
+            },
+            "quoteEn": "Life is either a daring adventure or nothing at all."
+          },
+          {
+            "sageId": "original",
+            "quote": "失敗は、挑んだ者だけがもらえる勲章。",
+            "note": "",
+            "effects": {
+              "passion": 6,
+              "wisdom": 4
+            },
+            "quoteEn": "Failure is a medal given only to those who dared."
+          }
+        ]
+      },
+      {
+        "id": "self_grateful_01",
+        "category": "self",
+        "mood": "high",
+        "title": "今ある幸せを、大切にしたい。",
+        "body": "当たり前の毎日が、ふと、愛おしく感じられた。",
+        "titleEn": "I want to cherish the happiness I have now.",
+        "bodyEn": "My ordinary days suddenly felt precious.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "気づけたことが、すでに豊かさ。その心を、明日へ。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "bonds": 4
+            },
+            "quoteEn": "Noticing is already richness. Carry that heart into tomorrow."
+          },
+          {
+            "sageId": "scripture_bible",
+            "quote": "すべてのことについて、感謝しなさい。",
+            "quoteOriginal": "Give thanks in all circumstances.",
+            "source": "新約聖書 テサロニケの信徒への手紙一 5章18節",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 8,
+              "wisdom": 6
+            },
+            "quoteEn": "Give thanks in all circumstances."
+          },
+          {
+            "sageId": "original",
+            "quote": "幸せは、探すものではなく、気づくもの。",
+            "note": "",
+            "effects": {
+              "mind": 5
+            },
+            "quoteEn": "Happiness is not something to find, but something to notice."
+          }
+        ]
       }
     ]
   },
