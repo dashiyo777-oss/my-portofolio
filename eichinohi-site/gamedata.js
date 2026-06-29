@@ -237,6 +237,132 @@ window.GAME_DATA = {
         "packId": "pack_science",
         "color": "#4f7d8c",
         "tier": "paid"
+      },
+      {
+        "id": "musashi",
+        "name": "宮本武蔵",
+        "nameEn": "Miyamoto Musashi",
+        "region": "JP",
+        "era": "1584?–1645",
+        "field": "swordsman",
+        "stance": "mastery",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#7a4a3a",
+        "tier": "free"
+      },
+      {
+        "id": "nobunaga",
+        "name": "織田信長",
+        "nameEn": "Oda Nobunaga",
+        "region": "JP",
+        "era": "1534–1582",
+        "field": "warlord",
+        "stance": "resolve",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#a0432e",
+        "tier": "free"
+      },
+      {
+        "id": "sonshi",
+        "name": "孫子",
+        "nameEn": "Sun Tzu",
+        "region": "CN",
+        "era": "BC544?–BC496?",
+        "field": "strategy",
+        "stance": "strategy",
+        "rank": 5,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#6a5a3a",
+        "tier": "free"
+      },
+      {
+        "id": "komei",
+        "name": "諸葛亮",
+        "nameEn": "Zhuge Liang",
+        "region": "CN",
+        "era": "181–234",
+        "field": "strategist",
+        "stance": "wisdom",
+        "rank": 5,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#3a6a5a",
+        "tier": "free"
+      },
+      {
+        "id": "shingen",
+        "name": "武田信玄",
+        "nameEn": "Takeda Shingen",
+        "region": "JP",
+        "era": "1521–1573",
+        "field": "warlord",
+        "stance": "leadership",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#8a3a3a",
+        "tier": "free"
+      },
+      {
+        "id": "kenshin",
+        "name": "上杉謙信",
+        "nameEn": "Uesugi Kenshin",
+        "region": "JP",
+        "era": "1530–1578",
+        "field": "warlord",
+        "stance": "valor",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#4a5a8a",
+        "tier": "free"
+      },
+      {
+        "id": "kanbei",
+        "name": "黒田官兵衛",
+        "nameEn": "Kuroda Kanbei",
+        "region": "JP",
+        "era": "1546–1604",
+        "field": "strategist",
+        "stance": "calm",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#5a5a6a",
+        "tier": "free"
+      },
+      {
+        "id": "shoin",
+        "name": "吉田松陰",
+        "nameEn": "Yoshida Shoin",
+        "region": "JP",
+        "era": "1830–1859",
+        "field": "thought",
+        "stance": "conviction",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#9a5a2a",
+        "tier": "free"
+      },
+      {
+        "id": "saigo",
+        "name": "西郷隆盛",
+        "nameEn": "Saigo Takamori",
+        "region": "JP",
+        "era": "1828–1877",
+        "field": "leader",
+        "stance": "sincerity",
+        "rank": 4,
+        "isPremium": false,
+        "packId": "pack_hero",
+        "color": "#6a4a3a",
+        "tier": "free"
       }
     ]
   },
@@ -1320,6 +1446,323 @@ window.GAME_DATA = {
               "wisdom": 5
             },
             "quoteEn": "Don't rush — move toward what stirs your heart even a little. That's your compass."
+          }
+        ]
+      },
+      {
+        "id": "hero_challenge_01",
+        "category": "work",
+        "mood": "lost",
+        "title": "大事な勝負に、挑む。勝てるか不安だ。",
+        "body": "本番が近い。準備はした。でも、勝てる保証はない。",
+        "titleEn": "I face a big challenge. I'm unsure I can win.",
+        "bodyEn": "The day is near. I've prepared. But there's no guarantee.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "sonshi",
+            "quote": "彼を知り己を知れば、百戦して殆うからず。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 7,
+              "passion": 4
+            },
+            "source": "『孫子』謀攻篇",
+            "quoteEn": "Know the enemy and know yourself, and in a hundred battles you will never be in peril.",
+            "quoteOriginal": "知彼知己、百戦不殆。"
+          },
+          {
+            "sageId": "original",
+            "quote": "勝負の前の武者震いは、本気の証。準備した自分を、信じよう。",
+            "note": "",
+            "effects": {
+              "passion": 6,
+              "mind": 4
+            },
+            "quoteEn": "The tremor before battle is proof of your resolve. Trust the self that prepared."
+          },
+          {
+            "sageId": "kenshin",
+            "quote": "運は天にあり、鎧は胸にあり、手柄は足にあり。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 7,
+              "mind": 4
+            },
+            "source": "上杉謙信 伝（家訓）",
+            "quoteEn": "Fortune lies with Heaven, armor in your heart, merit in your feet."
+          }
+        ]
+      },
+      {
+        "id": "hero_decision_01",
+        "category": "self",
+        "mood": "lost",
+        "title": "決めきれない。後悔するのが、怖い。",
+        "body": "どちらを選んでも、間違いな気がして、動けない。",
+        "titleEn": "I can't decide. I'm afraid of regret.",
+        "bodyEn": "Whichever I choose feels wrong, so I can't move.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "musashi",
+            "quote": "我、事において後悔をせず。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 6,
+              "wisdom": 5
+            },
+            "source": "『独行道』（自筆 1645）",
+            "quoteEn": "I have no regret for what I have done."
+          },
+          {
+            "sageId": "original",
+            "quote": "迷うのは、真剣な証。完璧な正解はない。選べば、それが正解になる。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "Hesitation is proof you care. There's no perfect answer — choose, and it becomes right."
+          },
+          {
+            "sageId": "nobunaga",
+            "quote": "是非に及ばず。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 6,
+              "mind": 4
+            },
+            "source": "『信長公記』（太田牛一）",
+            "quoteEn": "It cannot be helped — so be it."
+          }
+        ]
+      },
+      {
+        "id": "hero_effort_01",
+        "category": "self",
+        "mood": "down",
+        "title": "努力が報われるか、わからない。",
+        "body": "頑張っても結果が出ない。心が折れそうになる。",
+        "titleEn": "I don't know if my effort will pay off.",
+        "bodyEn": "I try, but no results come. I'm about to break.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "結果はまだ見えなくても、積み重ねは裏切らない。",
+            "note": "",
+            "effects": {
+              "mind": 5
+            },
+            "quoteEn": "Even if results aren't visible yet, what you've built will not betray you."
+          },
+          {
+            "sageId": "musashi",
+            "quote": "千日の稽古を鍛とし、万日の稽古を錬とす。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 6,
+              "wisdom": 5
+            },
+            "source": "『五輪書』地の巻",
+            "quoteEn": "A thousand days of training forge you; ten thousand days temper you."
+          },
+          {
+            "sageId": "komei",
+            "quote": "学ばざれば才を広むる無く、志無ければ学を成すこと無し。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 6,
+              "passion": 4
+            },
+            "source": "『誡子書』",
+            "quoteEn": "Without study you cannot broaden talent; without aspiration you cannot complete study.",
+            "quoteOriginal": "非学無以広才、非志無以成学。"
+          }
+        ]
+      },
+      {
+        "id": "hero_lead_01",
+        "category": "work",
+        "mood": "lost",
+        "title": "人を率いる立場が、重い。",
+        "body": "部下や仲間に、どう接すればいいか分からない。責任が重い。",
+        "titleEn": "Leading others feels heavy.",
+        "bodyEn": "I don't know how to treat my team. The responsibility weighs on me.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "shingen",
+            "quote": "人は城、人は石垣、人は堀。情けは味方、仇は敵なり。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "bonds": 6,
+              "wisdom": 5
+            },
+            "source": "『甲陽軍鑑』",
+            "quoteEn": "People are your castle, your stone walls, your moat; kindness is your ally."
+          },
+          {
+            "sageId": "original",
+            "quote": "一人で背負わなくていい。信頼こそが、いちばん強い守り。",
+            "note": "",
+            "effects": {
+              "bonds": 5,
+              "mind": 4
+            },
+            "quoteEn": "You don't have to carry it alone. Trust is the strongest defense."
+          },
+          {
+            "sageId": "original",
+            "quote": "完璧な上に立とうとしなくていい。共に歩めば、人は石垣になる。",
+            "note": "",
+            "effects": {
+              "bonds": 5,
+              "passion": 4
+            },
+            "quoteEn": "You don't have to lead perfectly. Walk together, and people become your walls."
+          }
+        ]
+      },
+      {
+        "id": "hero_purpose_01",
+        "category": "self",
+        "mood": "lost",
+        "title": "何のために頑張るのか、見失った。",
+        "body": "走り続けて、ふと、目的が分からなくなった。",
+        "titleEn": "I've lost sight of what I'm striving for.",
+        "bodyEn": "Running on and on, I suddenly can't see my purpose.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "komei",
+            "quote": "澹泊にして以て志を明らかにし、寧静にして以て遠きを致す。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 7,
+              "mind": 4
+            },
+            "source": "『誡子書』",
+            "quoteEn": "Through tranquility, clarify your aims; through serenity, reach far.",
+            "quoteOriginal": "澹泊明志、寧静致遠。"
+          },
+          {
+            "sageId": "original",
+            "quote": "立ち止まって、心を静めていい。志は、静けさの中で見えてくる。",
+            "note": "",
+            "effects": {
+              "mind": 6,
+              "wisdom": 4
+            },
+            "quoteEn": "It's okay to pause and quiet your heart. Purpose appears in the stillness."
+          },
+          {
+            "sageId": "kanbei",
+            "quote": "思ひおく 言の葉なくて つひにゆく 道はまよはじ なるにまかせて",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "mind": 5,
+              "wisdom": 5
+            },
+            "source": "黒田官兵衛 辞世",
+            "quoteEn": "I leave no words behind; the road ahead holds no doubt — I go as things are."
+          }
+        ]
+      },
+      {
+        "id": "hero_resilience_01",
+        "category": "self",
+        "mood": "down",
+        "title": "もう、立ち上がれない気がする。",
+        "body": "何度も折れて、心の力が、残っていない。",
+        "titleEn": "I feel I can't get up anymore.",
+        "bodyEn": "I've broken so many times. No strength is left in my heart.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "original",
+            "quote": "倒れても、心の芯まで折れたわけじゃない。",
+            "note": "",
+            "effects": {
+              "mind": 6
+            },
+            "quoteEn": "Even fallen, the core of your heart is not broken."
+          },
+          {
+            "sageId": "shoin",
+            "quote": "身はたとひ 武蔵の野辺に 朽ちぬとも 留め置かまし 大和魂",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "passion": 7,
+              "wisdom": 4
+            },
+            "source": "『留魂録』（辞世）",
+            "quoteEn": "Though my body rot in the fields of Musashi, my Yamato spirit shall remain."
+          },
+          {
+            "sageId": "original",
+            "quote": "もう一度、立てばいい。何度でも。それが、生きるということ。",
+            "note": "",
+            "effects": {
+              "passion": 5,
+              "mind": 4
+            },
+            "quoteEn": "Just rise once more — as many times as it takes. That is what it means to live."
+          }
+        ]
+      },
+      {
+        "id": "hero_values_01",
+        "category": "self",
+        "mood": "lost",
+        "title": "本当に大切なものが、わからなくなった。",
+        "body": "お金や評価を追ううちに、自分の芯を見失った気がする。",
+        "titleEn": "I've lost sight of what truly matters.",
+        "bodyEn": "Chasing money and praise, I feel I've lost my core.",
+        "tier": "free",
+        "advices": [
+          {
+            "sageId": "saigo",
+            "quote": "命もいらず、名もいらず、官位も金もいらぬ人は、始末に困るもの也。",
+            "note": "",
+            "verified": true,
+            "effects": {
+              "wisdom": 7,
+              "mind": 4
+            },
+            "source": "『南洲翁遺訓』",
+            "quoteEn": "One who wants neither life, name, rank, nor money is hard to handle — yet only such a person can achieve great things."
+          },
+          {
+            "sageId": "original",
+            "quote": "肩書きや数字の外に、あなたの芯がある。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "wisdom": 4
+            },
+            "quoteEn": "Beyond titles and numbers lies your true core."
+          },
+          {
+            "sageId": "original",
+            "quote": "失って初めて見える、本当に大切なもの。今、思い出していい。",
+            "note": "",
+            "effects": {
+              "mind": 5,
+              "bonds": 4
+            },
+            "quoteEn": "What matters most often appears only when lost. You may remember it now."
           }
         ]
       }
