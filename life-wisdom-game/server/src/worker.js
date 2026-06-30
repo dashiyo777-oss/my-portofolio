@@ -247,8 +247,10 @@ async function computeUsage(env) {
 }
 // ?key=env.USAGE_KEY で保護した利用状況JSON。
 async function usage(request, env, h) {
-  const key = new URL(request.url).searchParams.get("key") || "";
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key") || "";
   if (!env.USAGE_KEY || key !== env.USAGE_KEY) return json({ error: "unauthorized" }, 401, h);
+  if (url.searchParams.get("send") === "1") { try { await sendDailyReport(env); } catch (e) {} }
   return json(await computeUsage(env), 200, h);
 }
 // 日次レポートを Discord/Slack の Webhook へ送る（env.REPORT_WEBHOOK）。
