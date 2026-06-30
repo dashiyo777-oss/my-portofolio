@@ -218,7 +218,63 @@ async function daily(request, env, h) {
   return json(pick, 200, h);
 }
 
+// 利用状況の集計（D1から）。/api/usage と 日次レポートの両方で使う。
+async function computeUsage(env) {
+  const now = Date.now(), d1 = now - 86400000, d7 = now - 7 * 86400000;
+  async function one(sql, binds) {
+    try { var st = env.DB.prepare(sql); var rs = await (binds && binds.length ? st.bind.apply(st, binds) : st).all(); return (rs.results && rs.results[0]) || null; } catch (e) { return null; }
+  }
+  function c(row) { return row ? (row.c || 0) : -1; }
+  const fbTotal = c(await one("SELECT COUNT(*) AS c FROM feedback"));
+  const fb24 = c(await one("SELECT COUNT(*) AS c FROM feedback WHERE ts > ?", [d1]));
+  const fb7 = c(await one("SELECT COUNT(*) AS c FROM feedback WHERE ts > ?", [d7]));
+  const delTotal = c(await one("SELECT COUNT(*) AS c FROM deliveries"));
+  const del24 = c(await one("SELECT COUNT(*) AS c FROM deliveries WHERE ts > ?", [d1]));
+  const topRow = await one("SELECT event_id, COUNT(*) AS c FROM feedback WHERE ts > ? GROUP BY event_id ORDER BY c DESC LIMIT 1", [d1]);
+  let res24 = null;
+  try {
+    const rs = await env.DB.prepare("SELECT fb, COUNT(*) AS c FROM feedback WHERE ts > ? GROUP BY fb").bind(d1).all();
+    let r = 0, n = 0; (rs.results || []).forEach(function (x) { if (x.fb === "resonated") r = x.c; n += x.c; });
+    res24 = { resonated: r, samples: n, rate: n ? Math.round(r / n * 100) : 0 };
+  } catch (e) {}
+  return {
+    ts: now, month: monthKey(new Date()),
+    feedback: { total: fbTotal, last24h: fb24, last7d: fb7 },
+    deliveries: { total: delTotal, last24h: del24 },
+    topWorry24h: topRow ? { id: topRow.event_id, count: topRow.c } : null,
+    resonate24h: res24
+  };
+}
+// ?key=env.USAGE_KEY で保護した利用状況JSON。
+async function usage(request, env, h) {
+  const key = new URL(request.url).searchParams.get("key") || "";
+  if (!env.USAGE_KEY || key !== env.USAGE_KEY) return json({ error: "unauthorized" }, 401, h);
+  return json(await computeUsage(env), 200, h);
+}
+// 日次レポートを Discord/Slack の Webhook へ送る（env.REPORT_WEBHOOK）。
+async function sendDailyReport(env) {
+  if (!env.REPORT_WEBHOOK) return;
+  const u = await computeUsage(env);
+  const jst = new Date(u.ts + 9 * 3600000).toISOString().slice(0, 10);
+  const res = u.resonate24h;
+  const lines = [
+    "🏮 叡智の灯火 — 日次レポート（" + jst + " JST）",
+    "■ ゲーム内の反応（feedback）",
+    "　・昨日: " + u.feedback.last24h + " 件 ／ 7日: " + u.feedback.last7d + " 件 ／ 累計: " + u.feedback.total + " 件",
+    "■ 響き度（昨日）: " + (res && res.samples ? res.rate + "%（" + res.samples + "件）" : "—"),
+    "■ よく選ばれた悩み（昨日）: " + (u.topWorry24h ? u.topWorry24h.id + "（" + u.topWorry24h.count + "件）" : "—"),
+    "■ ライセンス利用: 昨日 " + u.deliveries.last24h + " ／ 累計 " + u.deliveries.total
+  ];
+  const text = lines.join("\n");
+  try {
+    await fetch(env.REPORT_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: text, text: text }) });
+  } catch (e) {}
+}
+
 export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(sendDailyReport(env));
+  },
   async fetch(request, env) {
     const h = cors(env, request);
     if (request.method === "OPTIONS") return new Response(null, { headers: h });
@@ -231,6 +287,7 @@ export default {
       if (url.pathname === "/api/feedback" && request.method === "POST") return await feedback(request, env, h);
       if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);
       if (url.pathname === "/api/daily" && request.method === "GET") return await daily(request, env, h);
+      if (url.pathname === "/api/usage" && request.method === "GET") return await usage(request, env, h);
       return json({ error: "not_found" }, 404, h);
     } catch (e) {
       return json({ error: "server_error" }, 500, h);
