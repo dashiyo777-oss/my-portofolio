@@ -253,6 +253,55 @@ async function usage(request, env, h) {
   if (url.searchParams.get("send") === "1") { try { await sendDailyReport(env); } catch (e) {} }
   return json(await computeUsage(env), 200, h);
 }
+// 日次の推移（JSTの日付ごとに集計）。グラフ用。
+async function computeSeries(env, days) {
+  const now = Date.now(), since = now - days * 86400000;
+  async function byDay(table) {
+    try {
+      const rs = await env.DB.prepare("SELECT strftime('%Y-%m-%d', ts/1000, 'unixepoch', '+9 hours') AS d, COUNT(*) AS c FROM " + table + " WHERE ts > ? GROUP BY d").bind(since).all();
+      const m = {}; (rs.results || []).forEach(function (r) { m[r.d] = r.c; }); return m;
+    } catch (e) { return {}; }
+  }
+  const fbMap = await byDay("feedback"), delMap = await byDay("deliveries");
+  const labels = [], feedback = [], deliveries = [];
+  for (var i = days - 1; i >= 0; i--) {
+    var d = new Date(now - i * 86400000 + 9 * 3600000).toISOString().slice(0, 10);
+    labels.push(d.slice(5)); feedback.push(fbMap[d] || 0); deliveries.push(delMap[d] || 0);
+  }
+  return { labels: labels, feedback: feedback, deliveries: deliveries };
+}
+// ブックマーク用の利用ダッシュボード（グラフつきHTML）。?key=USAGE_KEY で保護。
+async function dashboard(request, env) {
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key") || "";
+  if (!env.USAGE_KEY || key !== env.USAGE_KEY) return new Response("unauthorized", { status: 401 });
+  const u = await computeUsage(env), s = await computeSeries(env, 30);
+  const rr = (u.resonate24h && u.resonate24h.samples) ? (u.resonate24h.rate + "%") : "—";
+  const top = u.topWorry24h ? u.topWorry24h.id + "（" + u.topWorry24h.count + "）" : "—";
+  const html = '<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1"><title>叡智の灯火 — 利用ダッシュボード</title>' +
+    '<style>body{font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif;background:#f6efe2;color:#33291f;margin:0;padding:18px}' +
+    '.wrap{max-width:760px;margin:0 auto}h1{font-size:1.2rem}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}' +
+    '.card{background:#fff;border:1px solid #e0d3bb;border-radius:12px;padding:12px;text-align:center}.card b{font-size:1.5rem;color:#a9863f;display:block}' +
+    '.card span{font-size:.78rem;color:#6b5d4a}canvas{background:#fff;border:1px solid #e0d3bb;border-radius:12px;padding:10px;margin-top:6px}' +
+    '.meta{font-size:.8rem;color:#6b5d4a;margin-top:10px}</style></head><body><div class="wrap">' +
+    '<h1>🏮 叡智の灯火 — 利用ダッシュボード</h1>' +
+    '<div class="cards">' +
+    '<div class="card"><b>' + u.feedback.last24h + '</b><span>昨日の反応</span></div>' +
+    '<div class="card"><b>' + u.feedback.last7d + '</b><span>7日の反応</span></div>' +
+    '<div class="card"><b>' + u.feedback.total + '</b><span>累計の反応</span></div>' +
+    '<div class="card"><b>' + rr + '</b><span>響き度（昨日）</span></div>' +
+    '</div><canvas id="c" height="170"></canvas>' +
+    '<p class="meta">直近30日の日次推移（JST）／ よく選ばれた悩み（昨日）: ' + top + '<br>更新：開くたびに最新（このページをブックマークしてください）</p>' +
+    '<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script><script>' +
+    'var L=' + JSON.stringify(s.labels) + ',F=' + JSON.stringify(s.feedback) + ',D=' + JSON.stringify(s.deliveries) + ';' +
+    'new Chart(document.getElementById("c"),{type:"line",data:{labels:L,datasets:[' +
+    '{label:"反応(feedback)",data:F,borderColor:"#a9863f",backgroundColor:"rgba(202,164,93,.15)",fill:true,tension:.3},' +
+    '{label:"ライセンス",data:D,borderColor:"#6fa8a0",fill:false,tension:.3}]},' +
+    'options:{plugins:{legend:{labels:{boxWidth:12}}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});' +
+    '</script></div></body></html>';
+  return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
+}
 // 日次レポートを Discord/Slack の Webhook へ送る（env.REPORT_WEBHOOK）。
 async function sendDailyReport(env) {
   if (!env.REPORT_WEBHOOK) return;
@@ -267,6 +316,7 @@ async function sendDailyReport(env) {
     "■ よく選ばれた悩み（昨日）: " + (u.topWorry24h ? u.topWorry24h.id + "（" + u.topWorry24h.count + "件）" : "—"),
     "■ ライセンス利用: 昨日 " + u.deliveries.last24h + " ／ 累計 " + u.deliveries.total
   ];
+  if (env.USAGE_KEY) lines.push("📈 推移グラフ: https://api.eichinohi.com/dashboard?key=" + env.USAGE_KEY);
   const text = lines.join("\n");
   try {
     await fetch(env.REPORT_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: text, text: text }) });
@@ -290,6 +340,7 @@ export default {
       if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);
       if (url.pathname === "/api/daily" && request.method === "GET") return await daily(request, env, h);
       if (url.pathname === "/api/usage" && request.method === "GET") return await usage(request, env, h);
+      if (url.pathname === "/dashboard" && request.method === "GET") return await dashboard(request, env);
       return json({ error: "not_found" }, 404, h);
     } catch (e) {
       return json({ error: "server_error" }, 500, h);
