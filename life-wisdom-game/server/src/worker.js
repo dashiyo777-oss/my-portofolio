@@ -95,6 +95,75 @@ async function fingerprint(token) {
   return h.slice(0, 12);
 }
 
+// ───────────────────────────────────────────────────────────────
+// 静的サイト計測ハブ（議員ランキング等）。1x1 GIF ビーコンで hits に記録。
+// 計測したいサイトをここに登録すると、ダッシュボード/日次レポートに自動で出る。
+const SITES = {
+  politicians: { label: "議員ランキング", emoji: "🏛" }
+};
+
+let _hitsReady = false;
+async function ensureHits(env) {
+  if (_hitsReady || !env.DB) return;
+  try {
+    await env.DB.prepare("CREATE TABLE IF NOT EXISTS hits (site TEXT, ts INTEGER, ip TEXT, ref TEXT)").run();
+    try { await env.DB.prepare("CREATE INDEX IF NOT EXISTS idx_hits_site_ts ON hits (site, ts)").run(); } catch (e) {}
+    _hitsReady = true;
+  } catch (e) {}
+}
+// 1x1 透明GIF（ビーコン応答用）。
+const GIF1x1 = Uint8Array.from([0x47,0x49,0x46,0x38,0x39,0x61,0x01,0x00,0x01,0x00,0x80,0x00,0x00,0x00,0x00,0x00,0xff,0xff,0xff,0x21,0xf9,0x04,0x01,0x00,0x00,0x00,0x00,0x2c,0x00,0x00,0x00,0x00,0x01,0x00,0x01,0x00,0x00,0x02,0x02,0x44,0x01,0x00,0x3b]);
+function gif1x1(h) {
+  return new Response(GIF1x1, { status: 200, headers: Object.assign({}, h || {}, {
+    "Content-Type": "image/gif",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache"
+  }) });
+}
+// 計測ビーコン: /api/hit?site=politicians&r=乱数  → hits に記録して 1x1 GIF を返す。
+async function hit(request, env, h) {
+  const url = new URL(request.url);
+  const site = (url.searchParams.get("site") || "site").slice(0, 32).replace(/[^A-Za-z0-9_-]/g, "") || "site";
+  await ensureHits(env);
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  // 同一IP×サイトは30分に1回だけ計上（ユニーク訪問の近似・ボット連打を抑制）
+  const dup = await limited(env, ip, "hit:" + site, 1, 1800);
+  if (!dup) {
+    const ref = (request.headers.get("Referer") || "").slice(0, 300);
+    try { await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref) VALUES (?,?,?,?)").bind(site, Date.now(), ip, ref).run(); } catch (e) {}
+  }
+  return gif1x1(h);
+}
+// サイト単位のアクセス集計。
+async function computeHits(env, site) {
+  await ensureHits(env);
+  const now = Date.now(), d1 = now - 86400000, d7 = now - 7 * 86400000;
+  async function n(sql, binds) {
+    try { var st = env.DB.prepare(sql); var rs = await st.bind.apply(st, binds).all(); return (rs.results && rs.results[0] && rs.results[0].c) || 0; } catch (e) { return -1; }
+  }
+  const total = await n("SELECT COUNT(*) AS c FROM hits WHERE site=?", [site]);
+  const last24h = await n("SELECT COUNT(*) AS c FROM hits WHERE site=? AND ts > ?", [site, d1]);
+  const last7d = await n("SELECT COUNT(*) AS c FROM hits WHERE site=? AND ts > ?", [site, d7]);
+  const uniq24h = await n("SELECT COUNT(DISTINCT ip) AS c FROM hits WHERE site=? AND ts > ?", [site, d1]);
+  return { site: site, total: total, last24h: last24h, last7d: last7d, uniq24h: uniq24h };
+}
+// サイト単位の日次推移（JST）。グラフ用。
+async function computeHitSeries(env, site, days) {
+  await ensureHits(env);
+  const now = Date.now(), since = now - days * 86400000;
+  const m = {};
+  try {
+    const rs = await env.DB.prepare("SELECT strftime('%Y-%m-%d', ts/1000, 'unixepoch', '+9 hours') AS d, COUNT(*) AS c FROM hits WHERE site=? AND ts > ? GROUP BY d").bind(site, since).all();
+    (rs.results || []).forEach(function (r) { m[r.d] = r.c; });
+  } catch (e) {}
+  const labels = [], hits = [];
+  for (var i = days - 1; i >= 0; i--) {
+    var d = new Date(now - i * 86400000 + 9 * 3600000).toISOString().slice(0, 10);
+    labels.push(d.slice(5)); hits.push(m[d] || 0);
+  }
+  return { labels: labels, hits: hits };
+}
+
 async function redeem(request, env, h) {
   const ip = request.headers.get("CF-Connecting-IP") || "";
   if (await limited(env, ip, "redeem", 10, 60)) return json({ error: "rate_limited" }, 429, h);
@@ -275,6 +344,8 @@ async function dashboard(request, env) {
   const url = new URL(request.url);
   const key = url.searchParams.get("key") || "";
   if (!env.USAGE_KEY || key !== env.USAGE_KEY) return new Response("unauthorized", { status: 401 });
+  const site = url.searchParams.get("site");
+  if (site) return await siteDashboard(env, site);
   const u = await computeUsage(env), s = await computeSeries(env, 30);
   const rr = (u.resonate24h && u.resonate24h.samples) ? (u.resonate24h.rate + "%") : "—";
   const top = u.topWorry24h ? u.topWorry24h.id + "（" + u.topWorry24h.count + "）" : "—";
@@ -302,6 +373,33 @@ async function dashboard(request, env) {
     '</script></div></body></html>';
   return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
 }
+// 静的サイト（議員ランキング等）の計測ダッシュボード。?key=USAGE_KEY&site=politicians
+async function siteDashboard(env, site) {
+  const meta = SITES[site] || { label: site, emoji: "📊" };
+  const h = await computeHits(env, site), s = await computeHitSeries(env, site, 30);
+  const html = '<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1"><title>' + meta.label + ' — 計測ダッシュボード</title>' +
+    '<style>body{font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif;background:#f6efe2;color:#33291f;margin:0;padding:18px}' +
+    '.wrap{max-width:760px;margin:0 auto}h1{font-size:1.2rem}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}' +
+    '.card{background:#fff;border:1px solid #e0d3bb;border-radius:12px;padding:12px;text-align:center}.card b{font-size:1.5rem;color:#a9863f;display:block}' +
+    '.card span{font-size:.78rem;color:#6b5d4a}canvas{background:#fff;border:1px solid #e0d3bb;border-radius:12px;padding:10px;margin-top:6px}' +
+    '.meta{font-size:.8rem;color:#6b5d4a;margin-top:10px}</style></head><body><div class="wrap">' +
+    '<h1>' + meta.emoji + ' ' + meta.label + ' — 計測ダッシュボード</h1>' +
+    '<div class="cards">' +
+    '<div class="card"><b>' + h.last24h + '</b><span>昨日のアクセス</span></div>' +
+    '<div class="card"><b>' + h.uniq24h + '</b><span>昨日のユニーク</span></div>' +
+    '<div class="card"><b>' + h.last7d + '</b><span>7日のアクセス</span></div>' +
+    '<div class="card"><b>' + h.total + '</b><span>累計のアクセス</span></div>' +
+    '</div><canvas id="c" height="170"></canvas>' +
+    '<p class="meta">直近30日の日次推移（JST）／ ユニークは同一IPを30分に1回として概算<br>更新：開くたびに最新（このページをブックマークしてください）</p>' +
+    '<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script><script>' +
+    'var L=' + JSON.stringify(s.labels) + ',H=' + JSON.stringify(s.hits) + ';' +
+    'new Chart(document.getElementById("c"),{type:"line",data:{labels:L,datasets:[' +
+    '{label:"アクセス",data:H,borderColor:"#a9863f",backgroundColor:"rgba(202,164,93,.15)",fill:true,tension:.3}]},' +
+    'options:{plugins:{legend:{labels:{boxWidth:12}}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});' +
+    '</script></div></body></html>';
+  return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
+}
 // 日次レポートを Discord/Slack の Webhook へ送る（env.REPORT_WEBHOOK）。
 async function sendDailyReport(env) {
   if (!env.REPORT_WEBHOOK) return;
@@ -317,6 +415,15 @@ async function sendDailyReport(env) {
     "■ ライセンス利用: 昨日 " + u.deliveries.last24h + " ／ 累計 " + u.deliveries.total
   ];
   if (env.USAGE_KEY) lines.push("📈 推移グラフ: https://api.eichinohi.com/dashboard?key=" + env.USAGE_KEY);
+  // 静的サイト（議員ランキング等）のアクセス
+  for (const site of Object.keys(SITES)) {
+    try {
+      const hh = await computeHits(env, site), m = SITES[site];
+      lines.push("");
+      lines.push("■ " + m.emoji + " " + m.label + "：昨日 " + hh.last24h + "（ユニーク " + hh.uniq24h + "） ／ 7日 " + hh.last7d + " ／ 累計 " + hh.total);
+      if (env.USAGE_KEY) lines.push("　📈 https://api.eichinohi.com/dashboard?key=" + env.USAGE_KEY + "&site=" + site);
+    } catch (e) {}
+  }
   const text = lines.join("\n");
   try {
     await fetch(env.REPORT_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: text, text: text }) });
@@ -340,6 +447,7 @@ export default {
       if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);
       if (url.pathname === "/api/daily" && request.method === "GET") return await daily(request, env, h);
       if (url.pathname === "/api/usage" && request.method === "GET") return await usage(request, env, h);
+      if (url.pathname === "/api/hit" && request.method === "GET") return await hit(request, env, h);
       if (url.pathname === "/dashboard" && request.method === "GET") return await dashboard(request, env);
       return json({ error: "not_found" }, 404, h);
     } catch (e) {
