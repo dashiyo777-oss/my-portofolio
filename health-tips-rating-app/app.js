@@ -95,7 +95,12 @@
     expertBadge:  { ja: "専門家", en: "Expert" },
     viewProfile:  { ja: "プロフィールを見る →", en: "View profile →" },
     related:      { ja: "関連する知恵", en: "Related tips" },
-    itemsUnit:    { ja: "件", en: "" }
+    itemsUnit:    { ja: "件", en: "" },
+    watchVideo:   { ja: "動画で見る", en: "Watch on video" },
+    searchYT:     { ja: "YouTubeで探す", en: "Search YouTube" },
+    searchTT:     { ja: "TikTokで探す", en: "Search TikTok" },
+    videoNote:    { ja: "外部サイト（YouTube / TikTok）が新しいタブで開きます。",
+                    en: "Opens YouTube / TikTok in a new tab." }
   };
   function t(key) { return (STR[key] && STR[key][state.lang]) || key; }
   function L(obj) { if (!obj) return ""; return obj[state.lang] || obj.ja || obj.en || ""; }
@@ -384,11 +389,15 @@
         (L(c.caution) && L(c.caution) !== "—" ?
           '<section class="block caution"><h2>⚠ ' + esc(t("caution")) + "</h2><p>" + esc(L(c.caution)) + "</p></section>" : "") +
 
-        // 出典（公式リンクのみ・再配信しない）
-        '<section class="block"><h2>' + esc(t("source")) + "</h2>" +
-          '<a class="source" href="' + esc(c.source.url) + '" target="_blank" rel="noopener noreferrer">' +
-            esc(c.source.label) + " · " + esc(t("openSource")) + "</a>" +
-          '<p class="origin">' + esc(t("from")) + ": " + flag(c.origin) + "</p>" +
+        // 動画で見る（公式埋め込み or 実検索リンク・再配信しない）
+        '<section class="block"><h2>▶ ' + esc(t("watchVideo")) + "</h2>" +
+          embedHtml(c) +
+          '<div class="videobtns">' +
+            '<a class="vbtn yt" href="' + youtubeSearch(c) + '" target="_blank" rel="noopener noreferrer">▶ ' + esc(t("searchYT")) + "</a>" +
+            '<a class="vbtn tt" href="' + tiktokSearch(c) + '" target="_blank" rel="noopener noreferrer">♪ ' + esc(t("searchTT")) + "</a>" +
+          "</div>" +
+          '<p class="origin">' + esc(t("from")) + ": " + flag(c.origin) + '</p>' +
+          '<small class="videonote">' + esc(t("videoNote")) + "</small>" +
         "</section>" +
 
         // 貢献者＋チップ
@@ -454,6 +463,23 @@
       return sum + (u && u.tipped ? u.tipped : 0);
     }, 0);
   }
+  // 動画検索リンク（全件で“実際の動画”に飛べるようにする。リンクなので著作権も安全）
+  function videoQuery(c) {
+    var kw = L(c.title) + " " + (c.tags && c.tags[0] ? c.tags[0] : "") + " やり方";
+    return encodeURIComponent(kw.replace(/[（）()「」]/g, " ").trim());
+  }
+  function youtubeSearch(c) { return "https://www.youtube.com/results?search_query=" + videoQuery(c); }
+  function tiktokSearch(c) { return "https://www.tiktok.com/search?q=" + videoQuery(c); }
+  // 公式埋め込み（許諾済み/公式埋め込み可能な動画IDがある場合のみ。再配信ではない）
+  function embedHtml(c) {
+    if (!c.video) return "";
+    if (c.video.provider === "youtube" && c.video.id) {
+      return '<div class="embed"><iframe src="https://www.youtube.com/embed/' + esc(c.video.id) +
+        '" title="YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+    }
+    return "";
+  }
+
   // 関連する知恵（共有タグ数→スコアで上位。自分自身は除外）
   function relatedTo(c, n) {
     var tags = c.tags || [];
