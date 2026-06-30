@@ -287,6 +287,39 @@ async function daily(request, env, h) {
   return json(pick, 200, h);
 }
 
+// 運営者専用：今月（と来月）の会員コードを確認。?key=USAGE_KEY で保護。
+async function adminCode(request, env) {
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key") || "";
+  if (!env.USAGE_KEY || key !== env.USAGE_KEY) return new Response("unauthorized", { status: 401 });
+  if (!env.CODE_SECRET) return new Response("CODE_SECRET 未設定", { status: 503 });
+  const now = new Date();
+  const mkNow = monthKey(now);
+  const nextDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 0, 0, 0));
+  const mkNext = monthKey(nextDate);
+  const codeNow = await expectedCode(mkNow, env.CODE_SECRET);
+  const codeNext = await expectedCode(mkNext, env.CODE_SECRET);
+  // 切り替えは「翌月1日の 00:00 UTC = 09:00 JST」。
+  const switchJst = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 0, 0, 0) + 9 * 3600000).toISOString().slice(0, 16).replace("T", " ");
+  function ym(mk) { return Math.floor(mk / 100) + "年" + (mk % 100) + "月"; }
+  const html = '<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1"><title>会員コード確認（運営者用）</title>' +
+    '<style>body{font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif;background:#f6efe2;color:#33291f;margin:0;padding:22px}' +
+    '.wrap{max-width:560px;margin:0 auto}h1{font-size:1.15rem}.box{background:#fff;border:1px solid #e0d3bb;border-radius:14px;padding:16px;margin:12px 0}' +
+    '.lbl{font-size:.8rem;color:#6b5d4a}.code{font-size:2rem;font-weight:700;color:#a9863f;letter-spacing:1px;margin:4px 0;user-select:all}' +
+    '.now{border-color:#a9863f}.next{opacity:.85}.meta{font-size:.8rem;color:#6b5d4a;line-height:1.7}</style></head><body><div class="wrap">' +
+    '<h1>🔑 会員コード確認（運営者用）</h1>' +
+    '<div class="box now"><div class="lbl">いま有効なコード（' + ym(mkNow) + '）— これをnoteに貼る</div>' +
+    '<div class="code">' + codeNow + '</div></div>' +
+    '<div class="box next"><div class="lbl">次のコード（' + ym(mkNext) + '）— ' + switchJst + ' JST から有効</div>' +
+    '<div class="code">' + codeNext + '</div></div>' +
+    '<p class="meta">・コードは毎月「1日 09:00（JST）」に自動で切り替わります。<br>' +
+    '・1日の朝9時を過ぎたら、上の「次のコード」が「いま有効」になります。忘れずにnoteを更新してください。<br>' +
+    '・このページは合言葉付きURL。他人に共有しないでください。</p>' +
+    '</div></body></html>';
+  return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
+}
+
 // 利用状況の集計（D1から）。/api/usage と 日次レポートの両方で使う。
 async function computeUsage(env) {
   const now = Date.now(), d1 = now - 86400000, d7 = now - 7 * 86400000;
@@ -448,6 +481,7 @@ export default {
       if (url.pathname === "/api/daily" && request.method === "GET") return await daily(request, env, h);
       if (url.pathname === "/api/usage" && request.method === "GET") return await usage(request, env, h);
       if (url.pathname === "/api/hit" && request.method === "GET") return await hit(request, env, h);
+      if (url.pathname === "/api/admin-code" && request.method === "GET") return await adminCode(request, env);
       if (url.pathname === "/dashboard" && request.method === "GET") return await dashboard(request, env);
       return json({ error: "not_found" }, 404, h);
     } catch (e) {
