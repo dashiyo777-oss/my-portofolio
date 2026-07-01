@@ -464,9 +464,12 @@
     }, 0);
   }
   // 動画検索リンク（全件で“実際の動画”に飛べるようにする。リンクなので著作権も安全）
+  // 検索語は UI 言語に依存させず常に日本語で組む（元コンテンツが日本語圏中心のため、
+  // 英語UIで英語タイトルが混ざって的外れな結果になるのを防ぐ）。
+  // c.videoKw があれば、その厳選キーワードを優先（項目ごとに命中精度を上げられる）。
   function videoQuery(c) {
-    var kw = L(c.title) + " " + (c.tags && c.tags[0] ? c.tags[0] : "") + " やり方";
-    return encodeURIComponent(kw.replace(/[（）()「」]/g, " ").trim());
+    var kw = c.videoKw || (c.title.ja + " " + (c.tags && c.tags[0] ? c.tags[0] : "") + " やり方");
+    return encodeURIComponent(kw.replace(/[（）()「」]/g, " ").replace(/\s+/g, " ").trim());
   }
   function youtubeSearch(c) { return "https://www.youtube.com/results?search_query=" + videoQuery(c); }
   function tiktokSearch(c) { return "https://www.tiktok.com/search?q=" + videoQuery(c); }
