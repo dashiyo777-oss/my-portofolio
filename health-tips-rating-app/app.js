@@ -96,6 +96,8 @@
     viewProfile:  { ja: "プロフィールを見る →", en: "View profile →" },
     related:      { ja: "関連する知恵", en: "Related tips" },
     itemsUnit:    { ja: "件", en: "" },
+    scoreAbout:   { ja: "効くスコアとは？", en: "About the Kiku Score" },
+    scoreTitle:   { ja: "効くスコアとは", en: "What is the Kiku Score?" },
     watchVideo:   { ja: "動画で見る", en: "Watch on video" },
     searchYT:     { ja: "YouTubeで探す", en: "Search YouTube" },
     searchTT:     { ja: "TikTokで探す", en: "Search TikTok" },
@@ -196,6 +198,7 @@
     var parts = h.split("/");
     if (parts[0] === "c" && parts[1]) return renderDetail(decodeURIComponent(parts[1]));
     if (parts[0] === "u" && parts[1]) return renderContributor(decodeURIComponent(parts[1]));
+    if (parts[0] === "score") return renderScore();
     if (parts[0] === "g" && parts[1]) { currentFilter = { genre: parts[1], tag: null }; return renderHome(); }
     if (parts[0] === "t" && parts[1]) { currentFilter = { genre: null, tag: decodeURIComponent(parts[1]) }; return renderHome(); }
     currentFilter = { genre: null, tag: null };
@@ -267,7 +270,9 @@
         "</div>" +
         '<div class="taglabel">' + esc(t("tagsLabel")) + "</div>" +
         '<div class="chips tagrow">' + tagChips + "</div>" +
-        '<div class="listhead"><span>' + esc(t("rankedBy")) + '</span><b id="kikuCount"></b></div>' +
+        '<div class="listhead"><span>' + esc(t("rankedBy")) + '</span>' +
+          '<a class="scorelink" href="#/score">ⓘ ' + esc(t("scoreAbout")) + '</a>' +
+          '<b id="kikuCount"></b></div>' +
         '<ol class="list" id="kikuList"></ol>' +
         '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
       "</main>"
@@ -371,7 +376,7 @@
 
         // 効くスコアと内訳（透明性）
         '<section class="scorebox">' +
-          '<div class="bigscore"><b>' + scoreOf(c) + '</b><i>' + esc(t("kikuScore")) + "</i></div>" +
+          '<a class="bigscore" href="#/score" title="' + esc(t("scoreAbout")) + '"><b>' + scoreOf(c) + '</b><i>' + esc(t("kikuScore")) + '</i><em>ⓘ</em></a>' +
           '<div class="breakdown">' +
             '<div class="bd"><span>' + esc(t("felt")) + '</span><b>👍 ' + feltRate(c) + "%</b><small>" +
               esc(t("reach")) + " " + s.tried.toLocaleString() + "</small></div>" +
@@ -540,6 +545,71 @@
         '<div class="minilist">' + list.map(miniCard).join("") + "</div>" +
 
         '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
+      "</main>"
+    ));
+    bindLang();
+    window.scrollTo(0, 0);
+  }
+
+  // ── 効くスコアの基準ページ ──
+  function renderScore() {
+    var evRows = [
+      ["study", EVIDENCE_W.study], ["expert", EVIDENCE_W.expert],
+      ["anecdotal", EVIDENCE_W.anecdotal], ["none", EVIDENCE_W.none]
+    ].map(function (r) {
+      return "<tr><td>" + esc(t("ev_" + r[0])) + "</td><td>" + r[1].toFixed(2) + "</td></tr>";
+    }).join("");
+    var rvRows = [
+      ["expert", REVIEW_W.expert], ["unreviewed", REVIEW_W.unreviewed]
+    ].map(function (r) {
+      return "<tr><td>" + esc(t("rv_" + r[0])) + "</td><td>" + r[1].toFixed(2) + "</td></tr>";
+    }).join("");
+
+    app.innerHTML = "";
+    app.appendChild(el(header()));
+    app.appendChild(el(
+      '<main class="wrap detail">' +
+        '<a class="back" href="#/">' + esc(t("back")) + "</a>" +
+        "<h1>" + esc(t("scoreTitle")) + "</h1>" +
+        '<p class="lead">' + esc(L({
+          ja: "「バズ（再生数）」ではなく「本当に効くか」を表すための、透明なスコア（0〜100）です。次の4つの要素を重みづけして合算します。",
+          en: "A transparent 0–100 score that reflects whether a tip actually works — not how viral it is. It combines four weighted factors."
+        })) + "</p>" +
+
+        '<section class="block"><h2>' + esc(L({ ja: "計算式", en: "Formula" })) + "</h2>" +
+          '<p class="formula">' + esc(L({
+            ja: "スコア = 100 ×（0.55×体感 ＋ 0.25×科学的根拠 ＋ 0.15×専門家監修 ＋ 0.05×人気）",
+            en: "Score = 100 × (0.55×Experience + 0.25×Evidence + 0.15×Review + 0.05×Popularity)"
+          })) + "</p></section>" +
+
+        '<section class="block"><h2>' + esc(L({ ja: "4つの要素", en: "The four factors" })) + "</h2>" +
+          '<div class="factor"><b>① ' + esc(t("felt")) + ' <span class="w">55%</span></b><p>' + esc(L({
+            ja: "「効いた」と答えた割合。少数の票でも荒れにくいよう Wilson 下限で慎重に評価します。",
+            en: "The share of people who said it worked — evaluated with a Wilson lower bound so few votes don't inflate it."
+          })) + "</p></div>" +
+          '<div class="factor"><b>② ' + esc(t("evidence")) + ' <span class="w">25%</span></b><p>' + esc(L({
+            ja: "科学的根拠の度合い。4段階で重みづけします。",
+            en: "The degree of scientific evidence, weighted in four levels."
+          })) + '</p><table class="wtab">' + evRows + "</table></div>" +
+          '<div class="factor"><b>③ ' + esc(t("supervision")) + ' <span class="w">15%</span></b><p>' + esc(L({
+            ja: "専門家の監修があるか。",
+            en: "Whether an expert has reviewed it."
+          })) + '</p><table class="wtab">' + rvRows + "</table></div>" +
+          '<div class="factor"><b>④ ' + esc(L({ ja: "人気", en: "Popularity" })) + ' <span class="w">5%</span></b><p>' + esc(L({
+            ja: "試した人数。重みを意図的にごく小さく（5%）し、対数で伸びを抑えています。",
+            en: "How many people tried it — deliberately tiny (5%) and log-dampened."
+          })) + "</p></div>" +
+        "</section>" +
+
+        '<section class="block caution"><h2>💡 ' + esc(L({ ja: "この設計のねらい", en: "Why it's built this way" })) + "</h2><p>" + esc(L({
+          ja: "人気（再生数）の重みはわずか5%。だから再生数が多くても、体感率や根拠・監修が低い動画は上位に来ません。「バズ」と「本当に効く」を分けるのが目的です。",
+          en: "Popularity counts for only 5%. So a viral video with low experience, evidence, or review will not rank high. The goal is to separate 'viral' from 'actually works'."
+        })) + "</p></section>" +
+
+        '<p class="disclaimer">⚠ ' + esc(L({
+          ja: "効くスコアは医療的な有効性の保証ではありません。体感と根拠を分けて分かりやすく示すための目安です。",
+          en: "The Kiku Score is not a guarantee of medical effectiveness. It is a guide that separates experience from evidence."
+        })) + "</p>" +
       "</main>"
     ));
     bindLang();
