@@ -211,6 +211,8 @@ a.bigscore:hover { filter: brightness(1.08); }
 .embed { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden;
   margin-bottom: 14px; background: #000; }
 .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* 縦型（TikTok / ショート） */
+.embed-vertical { aspect-ratio: 9 / 16; max-width: 325px; margin-left: auto; margin-right: auto; }
 .videobtns { display: flex; gap: 10px; flex-wrap: wrap; }
 .vbtn { flex: 1; min-width: 140px; text-align: center; padding: 12px 14px; border-radius: 10px;
   font-weight: 800; font-size: 0.9rem; color: #fff; transition: opacity .15s; }

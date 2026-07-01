@@ -478,14 +478,21 @@
   }
   function youtubeSearch(c) { return "https://www.youtube.com/results?search_query=" + videoQuery(c); }
   function tiktokSearch(c) { return "https://www.tiktok.com/search?q=" + videoQuery(c); }
-  // 公式埋め込み（許諾済み/公式埋め込み可能な動画IDがある場合のみ。再配信ではない）
+  // 公式埋め込み（公式の埋め込みプレーヤーを iframe 表示。動画の再配信ではない）
+  // video: { youtube: "<id>", tiktok: "<id>", provider/ id (旧形式も可) }
   function embedHtml(c) {
     if (!c.video) return "";
-    if (c.video.provider === "youtube" && c.video.id) {
-      return '<div class="embed"><iframe src="https://www.youtube.com/embed/' + esc(c.video.id) +
-        '" title="YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+    var v = c.video, out = "";
+    var yt = v.youtube || (v.provider === "youtube" ? v.id : null);
+    if (yt) {
+      out += '<div class="embed"><iframe src="https://www.youtube.com/embed/' + esc(yt) +
+        '" title="YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
     }
-    return "";
+    if (v.tiktok) {
+      out += '<div class="embed embed-vertical"><iframe src="https://www.tiktok.com/player/v1/' + esc(v.tiktok) +
+        '" title="TikTok" frameborder="0" allow="encrypted-media; fullscreen" allowfullscreen></iframe></div>';
+    }
+    return out;
   }
 
   // 関連する知恵（共有タグ数→スコアで上位。自分自身は除外）
