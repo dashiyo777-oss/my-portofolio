@@ -92,7 +92,26 @@ ol, ul { list-style: none; }
 .dtags .tagchip { background: #fff; border: 1px solid var(--line); color: var(--teal-d); }
 .dtags .tagchip:hover { border-color: var(--teal); }
 
+.scorelink { color: var(--teal-d); font-size: 0.74rem; font-weight: 700; border-bottom: 1px solid transparent; }
+.scorelink:hover { border-bottom-color: var(--teal-d); }
 .listhead b { margin-left: auto; color: var(--teal-d); font-size: 0.78rem; font-weight: 700; }
+
+/* score info link on detail big score */
+.bigscore em { font-style: normal; font-size: 0.7rem; opacity: .85; margin-top: 3px; }
+a.bigscore { text-decoration: none; transition: filter .15s; }
+a.bigscore:hover { filter: brightness(1.08); }
+
+/* score explanation page */
+.formula { background: #f6faf9; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+  font-weight: 700; color: var(--teal-d); font-size: 0.9rem; line-height: 1.6; }
+.factor { padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.factor:last-child { border-bottom: none; }
+.factor > b { display: block; font-size: 0.98rem; color: var(--navy); margin-bottom: 4px; }
+.factor .w { color: var(--teal-d); font-size: 0.8rem; margin-left: 6px; }
+.factor p { font-size: 0.85rem; color: var(--ink-soft); }
+.wtab { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.wtab td { border: 1px solid var(--line); padding: 6px 10px; font-size: 0.8rem; }
+.wtab td:last-child { text-align: right; font-weight: 700; color: var(--teal-d); width: 72px; }
 
 /* ── Quality (trust) segmented control ── */
 .seg { display: flex; gap: 4px; background: #eef2f1; border-radius: 12px; padding: 4px; margin-bottom: 4px; }
