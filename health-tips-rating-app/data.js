@@ -892,6 +892,7 @@
     // ── アンチエイジング（追加） ──
     {
       id: "antiaging-sunscreen", genreId: "antiaging", contributorId: "hana", origin: "US",
+      video: { youtube: "hMivYBlCOeY", tiktok: "7394255780087614740" },
       title: { ja: "毎日の日焼け止めで光老化を防ぐ", en: "Daily sunscreen against photo-aging" },
       summary: { ja: "シミ・しわの大きな原因は紫外線（光老化）。曇りや室内でも、日々の日焼け止めが最も確実なアンチエイジング習慣の一つ。",
                  en: "UV (photo-aging) is a major cause of spots and wrinkles. Daily sunscreen — even on cloudy days — is one of the most reliable anti-aging habits." },
