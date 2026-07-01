@@ -432,6 +432,7 @@
     // ── 脚・むくみ（新ジャンル） ──
     {
       id: "legs-calf-pump", genreId: "legs", contributorId: "mei", origin: "JP",
+      video: { youtube: "NzSUEn42NFs", tiktok: "7488290697167047941" },
       title: { ja: "かかと上げでふくらはぎポンプ", en: "Calf raises as a 'second heart' pump" },
       summary: {
         ja: "立って、または座ってかかとを上げ下げし、ふくらはぎの筋ポンプで脚の巡りを促す。長時間同じ姿勢のむくみ対策に。",
