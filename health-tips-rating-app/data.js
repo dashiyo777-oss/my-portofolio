@@ -188,6 +188,7 @@
     },
     {
       id: "eyes-2020", genreId: "eyes", contributorId: "mei", origin: "JP",
+      video: { youtube: "jCt0aF7yB8M", tiktok: "7263545390593592582" },
       title: { ja: "20-20-20ルールで目を守る", en: "The 20-20-20 rule for screens" },
       summary: {
         ja: "20分ごとに20フィート（約6m）先を20秒見る、という眼科でも案内される習慣。地味だが根拠のある王道。",
