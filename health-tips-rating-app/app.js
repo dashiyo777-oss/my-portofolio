@@ -43,6 +43,11 @@
   var STR = {
     brand:        { ja: "効く", en: "Kiku" },
     tagline:      { ja: "本当に効く生活の知恵を、ランクで。", en: "Life tips that actually work — ranked." },
+    heroSub:      { ja: "体感・科学的根拠・専門家監修で評価。“バズ”ではなく“効く”を。",
+                    en: "Rated by experience, evidence & expert review — not by hype." },
+    statTips:     { ja: "の知恵", en: "tips" },
+    statGenres:   { ja: "ジャンル", en: "genres" },
+    statCountries:{ ja: "カ国から発掘", en: "countries" },
     all:          { ja: "すべて", en: "All" },
     rankedBy:     { ja: "効くスコア順", en: "By Kiku Score" },
     kikuScore:    { ja: "効くスコア", en: "Kiku Score" },
@@ -233,6 +238,67 @@
     return '<span class="pill ' + cls + '">' + (c.review.status === "expert" ? "✔ " : "○ ") + esc(t("rv_" + c.review.status)) + "</span>";
   }
 
+  // ── ヒーロー（トップの世界観・数値カウントアップ） ──
+  function heroHtml() {
+    var tips = DATA.contents.length;
+    var genres = DATA.genres.length;
+    var countries = (function () { var s = {}; DATA.contents.forEach(function (c) { s[c.origin] = 1; }); return Object.keys(s).length; })();
+    return '' +
+      '<section class="hero" aria-label="Kiku">' +
+        '<div class="hero-blobs" aria-hidden="true"><span></span><span></span><span></span></div>' +
+        '<div class="hero-grid" aria-hidden="true"></div>' +
+        '<div class="hero-inner">' +
+          '<span class="hero-badge">効 · Kiku</span>' +
+          '<h1 class="hero-title">' + esc(t("tagline")) + "</h1>" +
+          '<p class="hero-sub">' + esc(t("heroSub")) + "</p>" +
+          '<div class="hero-stats">' +
+            '<div class="hstat"><b class="cup" data-to="' + tips + '">0</b><small>' + esc(t("statTips")) + "</small></div>" +
+            '<div class="hstat"><b class="cup" data-to="' + genres + '">0</b><small>' + esc(t("statGenres")) + "</small></div>" +
+            '<div class="hstat"><b class="cup" data-to="' + countries + '">0</b><small>' + esc(t("statCountries")) + "</small></div>" +
+          "</div>" +
+        "</div>" +
+        '<svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">' +
+          '<path d="M0,40 C240,90 480,0 720,30 C960,60 1200,90 1440,40 L1440,80 L0,80 Z"></path></svg>' +
+      "</section>";
+  }
+
+  var prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 数値カウントアップ
+  function runCountUps() {
+    Array.prototype.forEach.call(document.querySelectorAll(".cup"), function (elm) {
+      var to = parseInt(elm.getAttribute("data-to"), 10) || 0;
+      if (prefersReduced) { elm.textContent = to; return; }
+      var start = null, dur = 900;
+      function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        elm.textContent = Math.round(to * eased);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  // 円形スコアリング（SVG）
+  function scoreRing(score) {
+    var r = 33, circ = 2 * Math.PI * r;
+    var off = circ * (1 - Math.max(0, Math.min(100, score)) / 100);
+    return '<svg class="ring" viewBox="0 0 80 80" aria-hidden="true">' +
+      '<circle class="ring-bg" cx="40" cy="40" r="' + r + '"></circle>' +
+      '<circle class="ring-fg" cx="40" cy="40" r="' + r + '" stroke-dasharray="' + circ.toFixed(1) +
+        '" stroke-dashoffset="' + circ.toFixed(1) + '" data-off="' + off.toFixed(1) + '"></circle>' +
+      "</svg>";
+  }
+  function animateRings() {
+    Array.prototype.forEach.call(document.querySelectorAll(".ring-fg"), function (elm) {
+      var off = elm.getAttribute("data-off");
+      if (prefersReduced) { elm.style.strokeDashoffset = off; return; }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { elm.style.strokeDashoffset = off; }); });
+    });
+  }
+
   // ── ホーム / ランキング（検索＋ジャンル＋タグ横断） ──
   function renderHome() {
     var activeGenre = currentFilter.genre, activeTag = currentFilter.tag;
@@ -251,8 +317,9 @@
 
     app.innerHTML = "";
     app.appendChild(el(header()));
+    if (!activeGenre && !activeTag) app.appendChild(el(heroHtml()));
     app.appendChild(el(
-      '<main class="wrap">' +
+      '<main class="wrap' + ((!activeGenre && !activeTag) ? " has-hero" : "") + '">' +
         // 検索ボックス
         '<div class="searchbar">' +
           '<span class="si">🔍</span>' +
@@ -282,6 +349,7 @@
     bindSearch();
     bindQuality();
     fillList();
+    runCountUps();
     window.scrollTo(0, 0);
   }
 
@@ -376,7 +444,9 @@
 
         // 効くスコアと内訳（透明性）
         '<section class="scorebox">' +
-          '<a class="bigscore" href="#/score" title="' + esc(t("scoreAbout")) + '"><b>' + scoreOf(c) + '</b><i>' + esc(t("kikuScore")) + '</i><em>ⓘ</em></a>' +
+          '<a class="bigscore" href="#/score" title="' + esc(t("scoreAbout")) + '">' +
+            scoreRing(scoreOf(c)) +
+            '<span class="bs-num"><b>' + scoreOf(c) + '</b><i>' + esc(t("kikuScore")) + '</i><em>ⓘ</em></span></a>' +
           '<div class="breakdown">' +
             '<div class="bd"><span>' + esc(t("felt")) + '</span><b>👍 ' + feltRate(c) + "%</b><small>" +
               esc(t("reach")) + " " + s.tried.toLocaleString() + "</small></div>" +
@@ -444,6 +514,7 @@
 
     bindLang();
     bindDetail(c);
+    animateRings();
     window.scrollTo(0, 0);
   }
 
