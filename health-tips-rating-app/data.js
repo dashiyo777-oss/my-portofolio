@@ -509,6 +509,7 @@
     // ── アンチエイジング（新ジャンル） ──
     {
       id: "antiaging-slow-squat", genreId: "antiaging", contributorId: "mei", origin: "JP",
+      video: { youtube: "rpnrWCutLw8", tiktok: "7184727289484102913" },
       title: { ja: "スロースクワットで「筋肉貯金」", en: "Slow squats to bank muscle for later life" },
       summary: {
         ja: "イスから立つ動作をゆっくり行う筋トレ。年齢とともに減りやすい下半身の筋肉を保ち、代謝や姿勢の土台を守る狙い。若々しさは筋肉量から、という考え方。",
