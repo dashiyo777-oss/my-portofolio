@@ -1155,5 +1155,80 @@
     }
   ];
 
+  // ─────────────────────────────────────────────
+  // 動画検索の厳選キーワード（id → 検索語）
+  //  ねらい: YouTube/TikTok で開いたとき、上位1〜3位が“その知恵の動画”に
+  //         なるよう、世間でよく使われる呼び名＋短い文脈語で命中率を上げる。
+  //  ここに無い項目は app.js 側が「タイトル＋タグ＋やり方」で自動生成する。
+  // ─────────────────────────────────────────────
+  var VIDEO_KW = {
+    "neck-stuck-release": "胸鎖乳突筋 ほぐし 首こり",
+    "neck-god-point": "合谷 ツボ 肩こり",
+    "back-frog-legs": "カエル足 ストレッチ 腰",
+    "back-hip-reset": "股関節 リセット 足振り",
+    "eyes-palming": "パーミング 目 疲れ",
+    "eyes-2020": "20-20-20ルール 目",
+    "sleep-478": "4-7-8呼吸法 寝る",
+    "sleep-light": "朝日 光 体内時計 睡眠",
+    "home-fold": "Tシャツ 早くたたむ 方法",
+    "home-bottle": "水筒 パッキン 掃除 重曹",
+    "saving-fridge": "冷蔵庫 整理 節約",
+    "saving-standby": "待機電力 節約 方法",
+    "neck-scapula": "肩甲骨はがし やり方",
+    "neck-chin-tuck": "チンタック スマホ首",
+    "neck-ear-roll": "耳 マッサージ 首こり",
+    "back-cat-cow": "キャットアンドカウ ヨガ",
+    "back-piriformis": "梨状筋 ストレッチ お尻",
+    "eyes-jingming": "晴明 ツボ 目",
+    "legs-calf-pump": "かかと上げ ふくらはぎ むくみ",
+    "legs-ankle-thai": "足首回し むくみ",
+    "stomach-warm-water": "白湯 朝 飲み方",
+    "stomach-wind-pose": "ガス抜きのポーズ ヨガ",
+    "antiaging-slow-squat": "スロースクワット やり方",
+    "antiaging-interval-walk": "インターバル速歩 やり方",
+    "antiaging-face-yoga": "フェイスヨガ ほうれい線",
+    "antiaging-tongue-roll": "舌回し体操 やり方",
+    "brain-cognicise": "コグニサイズ やり方",
+    "brain-aerobic": "有酸素運動 認知症 予防",
+    "brain-finger": "指体操 脳トレ",
+    "neck-shrug": "肩すくめ ストレッチ 肩こり",
+    "neck-hot-towel": "蒸しタオル 首こり 温め",
+    "back-pelvic-tilt": "骨盤 傾ける 体操 腰",
+    "back-prone-extension": "マッケンジー体操 腰",
+    "eyes-blink": "まばたき 体操 ドライアイ",
+    "eyes-warm-towel": "蒸しタオル 目 疲れ",
+    "sleep-bath": "入浴 就寝前 睡眠 90分",
+    "sleep-box": "ボックス呼吸 4-4-4-4",
+    "sleep-no-screen": "寝る前 スマホ やめる 睡眠",
+    "legs-elevate": "足 むくみ 上げる 寝る",
+    "legs-calf-stretch": "ふくらはぎ ストレッチ 壁",
+    "stomach-fermented": "発酵食品 腸活",
+    "stomach-fiber-water": "食物繊維 便秘 改善",
+    "home-melamine": "メラミンスポンジ 水垢",
+    "home-baking-deodor": "重曹 消臭 使い方",
+    "saving-mealprep": "作り置き 節約",
+    "saving-sim": "格安SIM 乗り換え 節約",
+    "antiaging-sunscreen": "日焼け止め 毎日 光老化",
+    "antiaging-protein": "たんぱく質 食事 高齢",
+    "brain-sleep7": "睡眠時間 認知症 予防",
+    "brain-reading": "音読 脳トレ",
+    "brain-social": "社会的つながり 認知症 予防",
+    "head-neck-warm": "緊張型頭痛 首 温め",
+    "head-hydrate": "頭痛 水分不足 予防",
+    "head-rest-dark": "片頭痛 対処 休む",
+    "skin-moisture": "入浴後 保湿 乾燥肌",
+    "skin-lukewarm": "ぬるま湯 洗顔 やり方",
+    "skin-scalp": "頭皮マッサージ やり方",
+    "mind-54321": "5-4-3-2-1 グラウンディング 不安",
+    "mind-journaling": "書く 気持ち 整理 ストレス",
+    "mind-forest": "森林浴 効果 リラックス",
+    "diet-mediterranean": "地中海食 やり方",
+    "diet-veggie-first": "ベジファースト 血糖値",
+    "diet-chew": "よく噛む ダイエット",
+    "immune-handwash": "正しい手洗い 方法",
+    "immune-humidity": "のど 乾燥 加湿 風邪予防"
+  };
+  contents.forEach(function (c) { if (VIDEO_KW[c.id]) c.videoKw = VIDEO_KW[c.id]; });
+
   window.APP_DATA = { genres: genres, contributors: contributors, contents: contents };
 })();
