@@ -226,6 +226,7 @@
     },
     {
       id: "sleep-light", genreId: "sleep", contributorId: "mei", origin: "JP",
+      video: { youtube: "SQGwEFuKWdo", tiktok: "7362734824198589712" },
       title: { ja: "朝に光を浴びて体内時計を整える", en: "Morning light to reset your body clock" },
       summary: {
         ja: "起床後すぐ屋外の光を浴びると、夜の眠りが整いやすい。睡眠科学で土台とされる習慣。",
