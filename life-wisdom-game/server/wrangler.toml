@@ -1,0 +1,27 @@
+name = "eichi-no-tomoshibi-api"
+main = "src/worker.js"
+compatibility_date = "2024-11-01"
+
+# D1 データベース（`wrangler d1 create eichi-db` で作成し、ここに database_id を貼る）
+[[d1_databases]]
+binding = "DB"
+database_name = "eichi-db"
+database_id = "REPLACE_WITH_YOUR_D1_ID"
+
+# 公開フロントのオリジン（CORS許可）。カンマ区切りで複数可。本番ドメインを必ず含める。
+[vars]
+ALLOW_ORIGIN = "https://eichinohi.com,https://www.eichinohi.com,https://dashiyo777-oss.github.io"
+# Gumroad 海外課金：商品の permalink（短いURLスラッグ）か product_id のどちらか一方を設定。
+# 例（permalink）: 商品URL xxx.gumroad.com/l/abcd なら "abcd"
+GUMROAD_PRODUCT_PERMALINK = "REPLACE_WITH_GUMROAD_PERMALINK"
+# GUMROAD_PRODUCT_ID = "REPLACE_WITH_GUMROAD_PRODUCT_ID"  # permalink の代わりに product_id を使う場合
+
+# 日次レポート（毎朝7時JST = 22:00 UTC）。Cloudflareが常時実行。
+[triggers]
+crons = ["0 22 * * *"]
+
+# 秘密は wrangler secret で設定（vars に書かない）:
+#   wrangler secret put JWT_SECRET
+#   wrangler secret put CODE_SECRET
+#   wrangler secret put USAGE_KEY        # /api/usage 保護用の合言葉（任意の文字列）
+#   wrangler secret put REPORT_WEBHOOK   # 日次レポートの送り先（Discord/Slack の Webhook URL）

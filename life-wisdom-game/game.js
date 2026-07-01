@@ -6,6 +6,7 @@
   var D = window.GAME_DATA;
   if (!D) { document.getElementById("app").innerHTML = "<p style='padding:24px'>データを読み込めませんでした。<br>data/gamedata.js を確認してください（build-data.py で生成）。</p>"; return; }
 
+  var API = ((window.LWG_API || "") + "").replace(/\/+$/, "");   // 会員API。空なら従来どおりクライアント同梱で動作
   var SAGES = {}; D.sages.sages.forEach(function (s) { SAGES[s.id] = s; });
   var RANKS = D.sages.ranks;
   var EVENTS = D.events.events;
@@ -43,6 +44,20 @@
   function expectedCode(d) { var m = monthKey(d); var n = ((m * 7919) % 9000) + 1000; return "TOMO-" + n; }
   function isPaid() { return state.paidMonth === monthKey(new Date()); }
   function sageTier(id) { var s = SAGES[id]; return (s && s.tier) ? s.tier : "paid"; }
+
+  // 有料データをサーバーから取り込む（API利用時のみ）。無料seedに重複なくマージ。
+  function applyPaidData(d) {
+    if (!d) return;
+    (d.sages || []).forEach(function (s) { if (s && s.id && !SAGES[s.id]) { SAGES[s.id] = s; D.sages.sages.push(s); } });
+    (d.events || []).forEach(function (e) { if (e && e.id && !EVENTS.some(function (x) { return x.id === e.id; })) EVENTS.push(e); });
+    (d.legends || []).forEach(function (l) { if (l && l.id && !LEGENDS.some(function (x) { return x.id === l.id; })) LEGENDS.push(l); });
+  }
+  function fetchPaid() {
+    if (!API || !state.token) return Promise.resolve();
+    return fetch(API + "/api/content", { headers: { "Authorization": "Bearer " + state.token } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) { applyPaidData(d); });
+  }
 
   // ---------- 音（Web Audioで原音合成・権利クリーン・外部依存なし） ----------
   var SOUND_KEY = "lifewisdom.sound.v1";
@@ -256,9 +271,9 @@
     var has = state.journal.length > 0;
     var pg = playerProgress(); var pos = positionFor(pg.points);
     var recall = dailyRecall();
-    var recallHtml = recall ? '<div class="recall"><span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
-      '<p class="recall-q">' + esc(recall.quote) + '</p>' +
-      '<span class="recall-f">— ' + esc(recall.sageName) + '</span></div>' : "";
+    var recallInner = recall ? ('<span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
+      '<p class="recall-q">' + esc(recall.quote) + '</p><span class="recall-f">— ' + esc(recall.sageName) + '</span>') : "";
+    var recallHtml = (API || recallInner) ? '<div class="recall">' + recallInner + '</div>' : "";
     var posLine = (has || pg.points > 0)
       ? '<p class="title-pos">' + L("あなたの位 ― ", "Your rank — ") + '<b>' + esc(posTitle(pos)) + '</b><span class="grade">' + esc(posGrade(pos)) + '</span></p>'
       : '';
@@ -289,6 +304,7 @@
       '<p class="notice">' + L("※ これは制作中のプロトタイプ（MVP）です。名言はすべて出典付きで裏取りしています。<br>つらさが長く続くときは、どうか一人で抱えず、信頼できる人や専門の窓口に頼ってください。",
         "※ This is a prototype (MVP). Every quote is sourced and fact-checked.<br>If hardship persists, please don't carry it alone — reach out to someone you trust or a professional resource.") + '</p>';
     render(html);
+    if (API) loadDaily();
   }
 
   // ---------- イベント ----------
@@ -368,6 +384,7 @@
       '</div>';
     render(html);
     gateReading(ev);
+    if (API) loadEventStats(ev);
   }
   function gateReading(ev) {
     var ms = Math.max(800, Math.min(2200, 700 + ((lang === "en" ? (ev.bodyEn || ev.body) : ev.body) || "").length * 40));
@@ -567,6 +584,7 @@
       (dhtml ? '<div class="deltas">' + dhtml + '</div>' : "") +
       rankBanner + posBanner +
       '<p class="saved-toast">' + L("📖 「わが叡智の書」に刻まれた", "📖 Inscribed in your Book of Wisdom") + '</p>' +
+      '<p class="social-proof"></p>' +
       '<div class="fb" data-fbidx="' + idx + '">' +
       '<button data-fb="resonated">' + L("響いた ♡", "This resonated ♡") + '</button>' +
       '<button data-fb="not_now">' + L("今はそうでもない", "Not quite now") + '</button>' +
@@ -583,13 +601,60 @@
       '<button class="btn ghost" data-act="title">' + L("中断（タイトルへ）", "Pause (back to title)") + '</button>' +
       '</div>';
     render(html);
+    if (API && rec.eventId && rec.chosenSageId) loadStats(rec.eventId + ":" + rec.chosenSageId);
   }
   function setFeedback(idx, val) {
-    if (!state.journal[idx]) return;
-    state.journal[idx].feedback = (state.journal[idx].feedback === val) ? null : val;
+    var rec = state.journal[idx];
+    if (!rec) return;
+    rec.feedback = (rec.feedback === val) ? null : val;
     save();
     var box = app.querySelector(".fb");
-    if (box) box.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-fb") === state.journal[idx].feedback); });
+    if (box) box.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-fb") === rec.feedback); });
+    if (API && rec.feedback) postFeedback(rec, rec.feedback);   // 響き度をサーバーへ集約（P2）
+  }
+  // 響き度を匿名でサーバーへ（fire-and-forget）
+  function postFeedback(rec, val) {
+    if (!API || !rec) return;
+    try {
+      fetch(API + "/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ eventId: rec.eventId, sageId: rec.chosenSageId, mood: rec.mood, fb: val }) }).catch(function () {});
+    } catch (e) {}
+  }
+  // P3: 日替わりの「今日の一言」をサーバーから（API時のみ・失敗時は無表示）
+  function loadDaily() {
+    if (!API) return;
+    fetch(API + "/api/daily?lang=" + lang).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.quote) return;
+      var box = app.querySelector(".recall"); if (!box) return;
+      box.innerHTML = '<span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
+        '<p class="recall-q">' + esc(d.quote) + '</p><span class="recall-f">— ' + esc(d.sageName) + '</span>';
+    }).catch(function () {});
+  }
+  // P3: 響き度で「多くの人に響いた」助言にバッジ（推薦の軽いヒント）
+  function loadEventStats(ev) {
+    if (!API) return;
+    fetch(API + "/api/stats?event=" + encodeURIComponent(ev.id)).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.sages) return;
+      var best = null, br = 0;
+      Object.keys(d.sages).forEach(function (sid) { var s = d.sages[sid]; if (s.samples >= 5 && s.resonateRate > br) { br = s.resonateRate; best = sid; } });
+      if (!best) return;
+      var card = app.querySelector('.card.tap[data-choose="' + best + '"]'); if (!card) return;
+      var head = card.querySelector(".card-head"); if (!head) return;
+      var b = document.createElement("span"); b.className = "loved"; b.textContent = L("💛 多くの人に響いた", "💛 Resonated with many");
+      head.appendChild(b);
+    }).catch(function () {});
+  }
+  // 「○%が響いた」社会的証明（サンプルが十分なときだけ表示）
+  function loadStats(key) {
+    if (!API) return;
+    fetch(API + "/api/stats?key=" + encodeURIComponent(key))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.samples || d.samples < 5) return;
+        var el = app.querySelector(".social-proof"); if (!el) return;
+        var pct = Math.round(d.resonateRate * 100);
+        el.textContent = L("この言葉を受けた人の " + pct + "% が「響いた」（" + d.samples + "人）",
+          pct + "% of those who received this felt it resonated (" + d.samples + ")");
+      }).catch(function () {});
   }
 
   // ---------- 休息 ----------
@@ -757,13 +822,18 @@
     else if (act === "redeem") {
       var cinp = app.querySelector(".code-input");
       var code = cinp ? (cinp.value || "").trim().toUpperCase() : "";
-      if (code === expectedCode(new Date()).toUpperCase()) {
+      var fail = function () { var m = app.querySelector(".code-msg"); if (m) m.textContent = L("コードが違います。note会員ページをご確認ください。", "Incorrect code. Please check the note members page."); };
+      if (API) {
+        var m0 = app.querySelector(".code-msg"); if (m0) m0.textContent = L("確認中…", "Verifying…");
+        fetch(API + "/api/redeem", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: code }) })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+          .then(function (d) { state.paidMonth = monthKey(new Date()); state.token = d.token; save(); return fetchPaid(); })
+          .then(function () { if (currentEvent) showEvent(currentEvent); else showTitle(); })
+          .catch(fail);
+      } else if (code === expectedCode(new Date()).toUpperCase()) {
         state.paidMonth = monthKey(new Date()); save();
         if (currentEvent) showEvent(currentEvent); else showTitle();
-      } else {
-        var msgEl = app.querySelector(".code-msg");
-        if (msgEl) msgEl.textContent = L("コードが違います。note会員ページをご確認ください。", "Incorrect code. Please check the note members page.");
-      }
+      } else fail();
     }
     else if (act === "reflect-open") { var rb = app.querySelector(".reflect-body"); if (rb) rb.hidden = false; if (t.style) t.style.display = "none"; }
     else if (act === "reflect-save") {
@@ -778,4 +848,5 @@
 
   applyNight();
   showTitle();
+  if (API && state.token && isPaid()) fetchPaid().then(function () { showTitle(); }).catch(function () {});
 })();
