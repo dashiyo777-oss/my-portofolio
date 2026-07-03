@@ -107,7 +107,7 @@ const SITES = {
 // 賢人会議（AI対話プロキシ）の設定。会員は無制限、非会員はIP×窓で無料枠のみ。
 const SAGE_MODEL = "claude-sonnet-4-6";
 const SAGE_MAX_TOKENS = 1000;
-const SAGE_FREE_LIMIT = 12;              // 非会員の無料呼び出し回数（IP×窓）
+const SAGE_FREE_LIMIT = 20;              // 非会員の無料呼び出し回数（IP×窓）
 const SAGE_FREE_WINDOW = 7 * 24 * 3600;  // 集計窓（秒）= 7日
 
 let _hitsReady = false;
