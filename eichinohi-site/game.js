@@ -334,6 +334,7 @@
       '<div class="title-actions">' +
       '<button class="btn gold" data-act="' + (has ? "start" : "walk") + '">' + (has ? L("つづきから歩む", "Continue your journey") : L("人生を歩む", "Begin your life")) + '</button>' +
       '<button class="btn gold" data-act="consult">' + L("悩みを相談する", "Seek counsel") + '</button>' +
+      '<button class="btn gold" data-act="kenjin">' + L("🏛 賢人会議へ（偉人と対話）", "🏛 Council of Sages (talk with the wise)") + '</button>' +
       '<button class="btn ghost" data-act="book">' + L("わが叡智の書を見る", "Open the Book of Wisdom") + (has ? "（" + state.journal.length + "）" : "") + '</button>' +
       '<button class="btn ghost" data-act="guide">' + L("📖 この灯火について（遊び方）", "📖 About this Beacon (how to play)") + '</button>' +
       '<button class="btn ghost" data-act="cert">' + L("叡智の免許状を見る", "View your certificate") + '</button>' +
@@ -1112,6 +1113,7 @@
     else if (act === "lang") { setLang(t.getAttribute("data-lang")); (curView || showTitle)(); }
     else if (act === "walk") { mode = "auto"; consultCat = null; proceed(); }
     else if (act === "consult") showConsult();
+    else if (act === "kenjin") { location.href = "https://eichinohi.com/kenjin.html"; }
     else if (act === "start" || act === "next") proceed();
     else if (act === "book") showBook();
     else if (act === "cert") showCert();
