@@ -99,8 +99,16 @@ async function fingerprint(token) {
 // 静的サイト計測ハブ（議員ランキング等）。1x1 GIF ビーコンで hits に記録。
 // 計測したいサイトをここに登録すると、ダッシュボード/日次レポートに自動で出る。
 const SITES = {
-  politicians: { label: "議員ランキング", emoji: "🏛" }
+  politicians: { label: "議員ランキング", emoji: "🏛" },
+  sage_free: { label: "賢人会議（無料）", emoji: "🧙" },
+  sage_member: { label: "賢人会議（会員）", emoji: "🧙" }
 };
+
+// 賢人会議（AI対話プロキシ）の設定。会員は無制限、非会員はIP×窓で無料枠のみ。
+const SAGE_MODEL = "claude-sonnet-4-6";
+const SAGE_MAX_TOKENS = 1000;
+const SAGE_FREE_LIMIT = 12;              // 非会員の無料呼び出し回数（IP×窓）
+const SAGE_FREE_WINDOW = 7 * 24 * 3600;  // 集計窓（秒）= 7日
 
 let _hitsReady = false;
 async function ensureHits(env) {
@@ -463,6 +471,43 @@ async function sendDailyReport(env) {
   } catch (e) {}
 }
 
+// 賢人会議 AI中継。当月有効なJWTを持つ会員は無制限、非会員はIPごとに無料枠のみ。
+async function sage(request, env, h) {
+  if (!env.ANTHROPIC_API_KEY) return json({ error: { message: "not_configured" } }, 503, h);
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  // 会員判定（当月有効なトークンなら会員 = 無制限）
+  let member = false;
+  const auth = request.headers.get("Authorization") || "";
+  const token = auth.replace(/^Bearer\s+/i, "");
+  if (token) {
+    try { const payload = await verifyJWT(token, env.JWT_SECRET); if (payload && payload.m === monthKey(new Date())) member = true; } catch (e) {}
+  }
+  // 非会員は無料枠の回数制限（会員はスキップ＝カウントしない）
+  if (!member) {
+    const over = await limited(env, ip, "sage", SAGE_FREE_LIMIT, SAGE_FREE_WINDOW);
+    if (over) return json({ error: { type: "quota", message: "free_limit_reached" } }, 402, h);
+  }
+  let body; try { body = await request.json(); } catch (e) { return json({ error: { message: "bad_request" } }, 400, h); }
+  if (!Array.isArray(body.messages) || body.messages.length === 0) return json({ error: { message: "messages required" } }, 400, h);
+  const payload = {
+    model: SAGE_MODEL,
+    max_tokens: Math.min(Number(body.max_tokens) || SAGE_MAX_TOKENS, SAGE_MAX_TOKENS),
+    messages: body.messages
+  };
+  let up;
+  try {
+    up = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-api-key": env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01" },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) { return json({ error: { message: "upstream_error" } }, 502, h); }
+  const text = await up.text();
+  // 利用計測（監視ダッシュボード/日次レポート用）
+  try { await ensureHits(env); await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref) VALUES (?,?,?,?)").bind(member ? "sage_member" : "sage_free", Date.now(), ip, "").run(); } catch (e) {}
+  return new Response(text, { status: up.status, headers: Object.assign({}, h, { "Content-Type": "application/json; charset=utf-8" }) });
+}
+
 export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(sendDailyReport(env));
@@ -476,6 +521,7 @@ export default {
       if (url.pathname === "/api/redeem" && request.method === "POST") return await redeem(request, env, h);
       if (url.pathname === "/api/redeem-license" && request.method === "POST") return await redeemLicense(request, env, h);
       if (url.pathname === "/api/content" && request.method === "GET") return await content(request, env, h);
+      if (url.pathname === "/api/sage" && request.method === "POST") return await sage(request, env, h);
       if (url.pathname === "/api/feedback" && request.method === "POST") return await feedback(request, env, h);
       if (url.pathname === "/api/stats" && request.method === "GET") return await stats(request, env, h);
       if (url.pathname === "/api/daily" && request.method === "GET") return await daily(request, env, h);
