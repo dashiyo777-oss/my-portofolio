@@ -1,0 +1,9 @@
+name = "sekai-proxy"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+# デプロイ前に `wrangler kv namespace create SEKAI_USAGE` を実行し、
+# 表示された id を下に貼り付けること
+[[kv_namespaces]]
+binding = "SEKAI_USAGE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

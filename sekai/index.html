@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界の見方サーチ｜叡智の灯火</title>
+<meta name="description" content="キーワードひとつで、各国主要メディアの論調を現地語で検索し、日本の報道と比較します。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@700;900&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+body{margin:0;min-height:100vh;background:#F3F2ED;color:#181C22;font-family:'Noto Sans JP',sans-serif;padding:0 0 64px;}
+.wl-wrap{max-width:680px;margin:0 auto;padding:0 18px;}
+.wl-mast{border-bottom:3px double #181C22;padding:28px 0 16px;margin-bottom:20px;}
+.wl-kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#8A6A1F;margin-bottom:8px;}
+.wl-title{font-family:'Zen Old Mincho',serif;font-weight:900;font-size:34px;line-height:1.15;margin:0;}
+.wl-sub{font-size:13px;color:#5C6470;margin-top:8px;line-height:1.7;}
+.wl-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:#5C6470;margin:22px 0 8px;}
+.wl-input{width:100%;box-sizing:border-box;border:1.5px solid #181C22;background:#fff;border-radius:6px;padding:13px 14px;font-size:16px;font-family:inherit;outline:none;}
+.wl-input:focus{box-shadow:0 0 0 3px rgba(31,78,121,.25);}
+.wl-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.wl-chip{border:1.5px solid #C9C6BC;background:#fff;border-radius:999px;padding:8px 13px;font-size:13.5px;font-family:inherit;cursor:pointer;color:#3A4048;transition:all .12s;}
+.wl-chip.on{border-color:#1F4E79;background:#1F4E79;color:#fff;}
+.wl-chip:disabled{opacity:.4;cursor:not-allowed;}
+.wl-jpchip{border:1.5px solid #BC002D;background:#fff;color:#BC002D;border-radius:999px;padding:8px 13px;font-size:13.5px;font-weight:700;display:inline-block;}
+.wl-hint{font-size:12px;color:#8B9098;margin-top:8px;}
+.wl-quota{margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#5C6470;}
+.wl-quota b{color:#1F4E79;}
+.wl-quota .member{color:#8A6A1F;font-weight:600;}
+.wl-btn{width:100%;margin-top:20px;background:#181C22;color:#F3F2ED;border:none;border-radius:8px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:.06em;}
+.wl-btn:disabled{opacity:.45;cursor:not-allowed;}
+.wl-pay{margin-top:20px;background:#fff;border:1.5px solid #181C22;border-radius:12px;padding:22px 20px;}
+.wl-payk{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#BC002D;margin-bottom:8px;}
+.wl-payt{font-family:'Zen Old Mincho',serif;font-weight:700;font-size:20px;margin:0 0 8px;}
+.wl-payp{font-size:13.5px;line-height:1.85;color:#3A4048;margin:0 0 14px;}
+.wl-paylink{display:inline-block;background:#BC002D;color:#fff;border-radius:8px;padding:12px 18px;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:16px;}
+.wl-passrow{display:flex;gap:8px;}
+.wl-passin{flex:1;border:1.5px solid #C9C6BC;border-radius:6px;padding:11px 12px;font-size:15px;font-family:inherit;outline:none;}
+.wl-passbtn{background:#181C22;color:#fff;border:none;border-radius:6px;padding:11px 16px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;}
+.wl-passerr{font-size:12.5px;color:#BC002D;margin-top:8px;line-height:1.6;}
+.wl-prog{margin-top:20px;display:flex;flex-direction:column;gap:6px;}
+.wl-progrow{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;color:#5C6470;}
+.wl-dot{width:9px;height:9px;border-radius:50%;background:#C9C6BC;flex:none;}
+.wl-dot.searching{background:#8A6A1F;animation:wlblink 1s infinite;}
+.wl-dot.done{background:#1F4E79;}
+.wl-dot.error{background:#BC002D;}
+@keyframes wlblink{50%{opacity:.25}}
+.wl-card{background:#fff;border:1px solid #DDDACF;border-radius:10px;padding:18px 18px 16px;margin-top:16px;box-shadow:0 1px 2px rgba(20,24,29,.05);}
+.wl-card.jp{border-left:4px solid #BC002D;}
+.wl-card.other{border-left:4px solid #1F4E79;}
+.wl-dateline{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;color:#8A6A1F;margin-bottom:6px;}
+.wl-cname{font-family:'Zen Old Mincho',serif;font-weight:700;font-size:20px;display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.wl-tone{display:inline-block;font-size:11.5px;font-weight:700;color:#1F4E79;background:#E8EEF5;border-radius:4px;padding:3px 8px;margin-bottom:10px;}
+.wl-card.jp .wl-tone{color:#BC002D;background:#F9E9ED;}
+.wl-summary{font-size:14.5px;line-height:1.85;margin:0 0 10px;}
+.wl-points{margin:0;padding-left:1.2em;font-size:13.5px;line-height:1.8;color:#3A4048;}
+.wl-outlets{margin-top:10px;border-top:1px dashed #DDDACF;padding-top:10px;font-size:12.5px;line-height:1.7;color:#5C6470;}
+.wl-outname{font-weight:700;color:#181C22;}
+.wl-err{font-size:13px;color:#BC002D;line-height:1.7;}
+.wl-cmp{margin-top:26px;background:#181C22;color:#F3F2ED;border-radius:12px;padding:22px 20px;}
+.wl-cmpk{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#D9B75A;margin-bottom:10px;}
+.wl-cmpline{font-family:'Zen Old Mincho',serif;font-weight:700;font-size:19px;line-height:1.6;margin:0 0 14px;}
+.wl-cmpins{margin:0;padding-left:1.2em;font-size:14px;line-height:1.95;color:#D8DBE0;}
+.wl-cmpblock{margin-top:16px;border-top:1px solid rgba(243,242,237,.2);padding-top:12px;}
+.wl-cmpsub{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:#D9B75A;margin-bottom:6px;}
+.wl-cmptext{margin:0;font-size:14px;line-height:1.9;color:#D8DBE0;}
+@media(min-width:640px){.wl-title{font-size:42px}}
+</style>
+</head>
+<body>
+<div class="wl-wrap">
+  <header class="wl-mast">
+    <div class="wl-kicker">SEKAI NO MIKATA / WORLD LENS</div>
+    <h1 class="wl-title">世界の見方サーチ</h1>
+    <p class="wl-sub">キーワードひとつで、各国主要メディアの論調を現地語で検索し、日本の報道と並べて比較します。leftでもrightでもなく、データから読む。</p>
+  </header>
+
+  <div class="wl-label">KEYWORD ── 調べたいテーマ</div>
+  <input class="wl-input" id="kw" placeholder="例：移民政策 / 円安 / AI規制 / 防衛費">
+
+  <div class="wl-label">COUNTRIES ── 比較する国（最大4カ国）</div>
+  <div class="wl-chips" id="chips"><span class="wl-jpchip">🇯🇵 日本（基準）</span></div>
+  <div class="wl-hint" id="hint"></div>
+
+  <div class="wl-quota" id="quota"></div>
+  <div id="action"></div>
+  <div class="wl-prog" id="prog"></div>
+  <div id="cards"></div>
+  <div id="cmp"></div>
+</div>
+
+<script>
+// ================= 設定（デプロイ時にここを書き換える） =================
+const WORKER_URL = "https://sekai-proxy.dashiyo777.workers.dev"; // ←実際のWorker URLに変更
+const MEMBER_URL = "https://note.com/"; // ←noteメンバーシップ案内ページに変更
+// =====================================================================
+
+const MAX_SELECT = 4;
+const JAPAN = { code:"JP", name:"日本", dateline:"TOKYO", flag:"🇯🇵" };
+const COUNTRIES = [
+  { code:"US", name:"アメリカ", dateline:"WASHINGTON", flag:"🇺🇸" },
+  { code:"CN", name:"中国", dateline:"BEIJING", flag:"🇨🇳" },
+  { code:"KR", name:"韓国", dateline:"SEOUL", flag:"🇰🇷" },
+  { code:"GB", name:"イギリス", dateline:"LONDON", flag:"🇬🇧" },
+  { code:"FR", name:"フランス", dateline:"PARIS", flag:"🇫🇷" },
+  { code:"DE", name:"ドイツ", dateline:"BERLIN", flag:"🇩🇪" },
+  { code:"RU", name:"ロシア", dateline:"MOSCOW", flag:"🇷🇺" },
+  { code:"IN", name:"インド", dateline:"NEW DELHI", flag:"🇮🇳" },
+  { code:"QA", name:"中東（アルジャジーラ等）", dateline:"DOHA", flag:"🇶🇦" },
+];
+
+let selected = ["US","CN","KR"];
+let running = false;
+let status = { freeRemaining:null, isMember:false, dailyRemaining:null };
+
+// clientId（端末ごとの匿名ID）
+function clientId(){
+  let id = localStorage.getItem("wl_cid");
+  if(!id){ id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random()); localStorage.setItem("wl_cid", id); }
+  return id;
+}
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+async function api(path, body){
+  const res = await fetch(WORKER_URL + path, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(Object.assign({ clientId: clientId() }, body || {})),
+  });
+  const data = await res.json();
+  data._status = res.status;
+  return data;
+}
+
+// ---------- 描画 ----------
+function renderChips(){
+  const el = document.getElementById("chips");
+  el.innerHTML = '<span class="wl-jpchip">🇯🇵 日本（基準）</span>' + COUNTRIES.map(c=>{
+    const on = selected.includes(c.code);
+    const dis = running || (!on && selected.length >= MAX_SELECT);
+    return '<button class="wl-chip'+(on?' on':'')+'" data-code="'+c.code+'"'+(dis?' disabled':'')+'>'+c.flag+' '+esc(c.name)+'</button>';
+  }).join("");
+  el.querySelectorAll(".wl-chip").forEach(b=>{
+    b.onclick = ()=>{
+      const code = b.dataset.code;
+      if(selected.includes(code)) selected = selected.filter(x=>x!==code);
+      else if(selected.length < MAX_SELECT) selected.push(code);
+      renderChips();
+    };
+  });
+  document.getElementById("hint").textContent =
+    "選択中："+selected.length+" / "+MAX_SELECT+"　※国が多いほど検索に時間がかかります（1カ国あたり20〜40秒ほど）";
+}
+
+function renderQuota(){
+  const el = document.getElementById("quota");
+  if(status.isMember){
+    el.innerHTML = '<span class="member">◆ 有料メンバー ── 本日あと <b>'+status.dailyRemaining+'</b> 回ご利用いただけます</span>';
+  } else if(status.freeRemaining !== null){
+    el.innerHTML = 'FREE <b>'+status.freeRemaining+'</b> / 10 回（残り）';
+  } else {
+    el.textContent = "";
+  }
+}
+
+function renderAction(){
+  const el = document.getElementById("action");
+  const locked = !status.isMember && status.freeRemaining !== null && status.freeRemaining <= 0;
+  const dayLocked = status.isMember && status.dailyRemaining !== null && status.dailyRemaining <= 0;
+  if(locked){
+    el.innerHTML =
+      '<div class="wl-pay">'+
+      '<div class="wl-payk">MEMBERS ONLY</div>'+
+      '<p class="wl-payt">無料利用分（10回）が終了しました</p>'+
+      '<p class="wl-payp">引き続きご利用いただくには、有料メンバー（月300円）にご登録のうえ、メンバー限定エリアに掲載の「今月のコード」を入力してください。コードは毎月更新されます。</p>'+
+      '<a class="wl-paylink" href="'+MEMBER_URL+'" target="_blank" rel="noreferrer">メンバー登録はこちら（月300円）</a>'+
+      '<div class="wl-passrow"><input class="wl-passin" id="pass" placeholder="今月のコードを入力"><button class="wl-passbtn" id="unlock">解除</button></div>'+
+      '<p class="wl-passerr" id="passerr"></p>'+
+      '</div>';
+    document.getElementById("unlock").onclick = unlock;
+    document.getElementById("pass").addEventListener("keydown", e=>{ if(e.key==="Enter") unlock(); });
+  } else if(dayLocked){
+    el.innerHTML = '<div class="wl-pay"><div class="wl-payk">DAILY LIMIT</div><p class="wl-payt">本日の上限（3回）に達しました</p><p class="wl-payp">検索コスト管理のため、1日3回までとさせていただいています。明日またご利用ください。</p></div>';
+  } else {
+    el.innerHTML = '<button class="wl-btn" id="run"'+(running?" disabled":"")+'>'+(running?"各国メディアを検索中…":"世界の見方を調べる")+'</button>';
+    document.getElementById("run").onclick = run;
+  }
+}
+
+async function unlock(){
+  const code = document.getElementById("pass").value.trim();
+  const errEl = document.getElementById("passerr");
+  if(!code) return;
+  const r = await api("/unlock", { code });
+  if(r.ok){ await refresh(); }
+  else { errEl.textContent = r.error || "コードが違うか、有効期限が切れています。今月のコードはメンバー限定エリアをご確認ください。"; }
+}
+
+async function refresh(){
+  try{
+    const r = await api("/status", {});
+    status = r;
+  }catch(e){ /* Worker未接続時は表示のみ */ }
+  renderQuota();
+  renderAction();
+}
+
+// ---------- 実行 ----------
+function progRow(t, state, extra){
+  return '<div class="wl-progrow"><span class="wl-dot '+state+'"></span>'+esc(t.dateline)+' / '+esc(t.name)+(extra||"")+'</div>';
+}
+
+function cardHtml(t, kw, r, err){
+  let inner;
+  if(err){
+    inner = '<p class="wl-err">取得に失敗しました：'+esc(err)+'（もう一度お試しください）</p>';
+  } else {
+    inner =
+      (r.tone ? '<span class="wl-tone">論調：'+esc(r.tone)+'</span>' : '')+
+      '<p class="wl-summary">'+esc(r.summary)+'</p>'+
+      (Array.isArray(r.points)&&r.points.length ? '<ul class="wl-points">'+r.points.map(p=>'<li>'+esc(p)+'</li>').join("")+'</ul>' : '')+
+      (Array.isArray(r.outlets)&&r.outlets.length ? '<div class="wl-outlets">'+r.outlets.map(o=>'<div><span class="wl-outname">'+esc(o.name)+'</span>：'+esc(o.angle)+'</div>').join("")+'</div>' : '');
+  }
+  return '<article class="wl-card '+(t.code==="JP"?"jp":"other")+'">'+
+    '<div class="wl-dateline">'+esc(t.dateline)+' ── 「'+esc(kw)+'」</div>'+
+    '<div class="wl-cname">'+t.flag+' '+esc(t.name)+'</div>'+inner+'</article>';
+}
+
+async function run(){
+  const kw = document.getElementById("kw").value.trim();
+  if(!kw || running || selected.length === 0) return;
+  running = true;
+  renderChips(); renderAction();
+  document.getElementById("cards").innerHTML = "";
+  document.getElementById("cmp").innerHTML = "";
+
+  // 1回分を消費
+  const c = await api("/consume", {});
+  if(c.error){
+    running = false;
+    await refresh();
+    renderChips();
+    return;
+  }
+  if(c.isMember){ status.isMember = true; status.dailyRemaining = c.dailyRemaining; }
+  else { status.freeRemaining = c.freeRemaining; }
+  renderQuota();
+
+  const targets = [JAPAN].concat(COUNTRIES.filter(x=>selected.includes(x.code)));
+  const states = {}; targets.forEach(t=>states[t.code]="waiting");
+  const drawProg = ()=>{ document.getElementById("prog").innerHTML = targets.map(t=>{
+    const s = states[t.code];
+    const label = s==="searching"?" … 検索中": s==="done"?" … 完了": s==="error"?" … 失敗":"";
+    return progRow(t, s, label);
+  }).join(""); };
+  drawProg();
+
+  const gathered = {};
+  for(const t of targets){
+    states[t.code]="searching"; drawProg();
+    try{
+      const r = await api("/search", { keyword: kw, countryCode: t.code });
+      if(!r.ok) throw new Error(r.message || r.error || "エラー");
+      gathered[t.code] = r.result;
+      document.getElementById("cards").insertAdjacentHTML("beforeend", cardHtml(t, kw, r.result, null));
+      states[t.code]="done";
+    }catch(e){
+      document.getElementById("cards").insertAdjacentHTML("beforeend", cardHtml(t, kw, null, e.message));
+      states[t.code]="error";
+    }
+    drawProg();
+  }
+
+  // 比較インサイト
+  const jp = gathered["JP"];
+  const others = {};
+  targets.forEach(t=>{ if(t.code!=="JP" && gathered[t.code]) others[t.name] = gathered[t.code]; });
+  if(jp && Object.keys(others).length > 0){
+    try{
+      const r = await api("/compare", { keyword: kw, jpResult: jp, others });
+      if(r.ok){
+        const cmp = r.result;
+        document.getElementById("cmp").innerHTML =
+          '<section class="wl-cmp"><div class="wl-cmpk">INSIGHT ── 日本 × 世界</div>'+
+          (cmp.one_line?'<p class="wl-cmpline">'+esc(cmp.one_line)+'</p>':'')+
+          '<ul class="wl-cmpins">'+(cmp.insights||[]).map(s=>'<li>'+esc(s)+'</li>').join("")+'</ul>'+
+          (cmp.why?'<div class="wl-cmpblock"><div class="wl-cmpsub">なぜ差が生まれるか</div><p class="wl-cmptext">'+esc(cmp.why)+'</p></div>':'')+
+          (cmp.watch?'<div class="wl-cmpblock"><div class="wl-cmpsub">今後注視すべきこと</div><p class="wl-cmptext">'+esc(cmp.watch)+'</p></div>':'')+
+          '</section>';
+      }
+    }catch(e){ /* 比較失敗時はカードのみ表示 */ }
+  }
+
+  running = false;
+  await refresh();
+  renderChips();
+}
+
+document.getElementById("kw").addEventListener("keydown", e=>{ if(e.key==="Enter") run(); });
+renderChips();
+refresh();
+</script>
+</body>
+</html>
