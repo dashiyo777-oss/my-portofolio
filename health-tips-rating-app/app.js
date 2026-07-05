@@ -26,11 +26,15 @@
         lang: s.lang || browserLang,
         // 信頼性フィルタ（好みとして永続）: "all" | "expert" | "study" | "reviewed"
         quality: s.quality || "all",
+        // 並び替え（好みとして永続）: "score" | "felt" | "tried" | "min"
+        sort: s.sort || "score",
+        // 保存（ブックマーク）: contentId -> true
+        saved: s.saved || {},
         // contentId -> { tried:bool, feedback:"resonated"|"not_now"|null, tipped:int }
         user: s.user || {}
       };
     } catch (e) {
-      return { lang: "ja", quality: "all", user: {} };
+      return { lang: "ja", quality: "all", sort: "score", saved: {}, user: {} };
     }
   }
   function save() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
@@ -107,7 +111,20 @@
     searchYT:     { ja: "YouTubeで探す", en: "Search YouTube" },
     searchTT:     { ja: "TikTokで探す", en: "Search TikTok" },
     videoNote:    { ja: "外部サイト（YouTube / TikTok）が新しいタブで開きます。",
-                    en: "Opens YouTube / TikTok in a new tab." }
+                    en: "Opens YouTube / TikTok in a new tab." },
+    sortLabel:    { ja: "並び替え", en: "Sort by" },
+    sort_score:   { ja: "効くスコア", en: "Kiku Score" },
+    sort_felt:    { ja: "効いた率", en: "Worked %" },
+    sort_tried:   { ja: "人気", en: "Popular" },
+    sort_min:     { ja: "時短", en: "Quick" },
+    daily:        { ja: "今日の知恵", en: "Tip of the day" },
+    saveTip:      { ja: "☆ 保存", en: "☆ Save" },
+    savedTip:     { ja: "★ 保存済み", en: "★ Saved" },
+    share:        { ja: "シェア", en: "Share" },
+    linkCopied:   { ja: "✓ リンクをコピーしました", en: "✓ Link copied" },
+    savedFilter:  { ja: "保存済み", en: "Saved" },
+    noSaved:      { ja: "保存した知恵はまだありません。カードの ☆ で保存できます。",
+                    en: "No saved tips yet. Tap ☆ on a card to save one." }
   };
   function t(key) { return (STR[key] && STR[key][state.lang]) || key; }
   function L(obj) { if (!obj) return ""; return obj[state.lang] || obj.ja || obj.en || ""; }
@@ -160,6 +177,22 @@
   // 横断フィルタの状態（検索語はハッシュに載せず、ジャンル/タグに重ねられる）
   var searchQuery = "";
   var currentFilter = { genre: null, tag: null };
+  var savedOnly = false; // ★保存済みだけ表示（セッション内のみ）
+
+  // ── 保存（ブックマーク） ──
+  function isSaved(id) { return !!state.saved[id]; }
+  function toggleSave(id) {
+    if (state.saved[id]) delete state.saved[id]; else state.saved[id] = true;
+    save();
+  }
+  function savedCount() { return Object.keys(state.saved).length; }
+
+  // ── 今日の知恵（日付シードで日替わり） ──
+  function dailyPick() {
+    var d = new Date();
+    var seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    return DATA.contents[seed % DATA.contents.length];
+  }
 
   // 全タグを出現頻度順で集計（タグ横断のための一覧）
   function allTags() {
@@ -187,6 +220,7 @@
     if (currentFilter.genre) list = list.filter(function (c) { return c.genreId === currentFilter.genre; });
     if (currentFilter.tag) list = list.filter(function (c) { return (c.tags || []).indexOf(currentFilter.tag) >= 0; });
     if (state.quality !== "all") list = list.filter(passQuality);
+    if (savedOnly) list = list.filter(function (c) { return isSaved(c.id); });
     var q = searchQuery.trim().toLowerCase();
     if (q) {
       list = list.filter(function (c) {
@@ -194,7 +228,17 @@
         return hay.indexOf(q) >= 0;
       });
     }
-    return list.sort(function (a, b) { return scoreOf(b) - scoreOf(a); });
+    // 並び替え（同点は効くスコアで安定させる）
+    switch (state.sort) {
+      case "felt":
+        return list.sort(function (a, b) { return feltRate(b) - feltRate(a) || scoreOf(b) - scoreOf(a); });
+      case "tried":
+        return list.sort(function (a, b) { return effectiveStats(b).tried - effectiveStats(a).tried || scoreOf(b) - scoreOf(a); });
+      case "min":
+        return list.sort(function (a, b) { return a.minutes - b.minutes || scoreOf(b) - scoreOf(a); });
+      default:
+        return list.sort(function (a, b) { return scoreOf(b) - scoreOf(a); });
+    }
   }
 
   // ── ルーティング（#/ , #/g/<genre> , #/t/<tag> , #/c/<id>） ──
@@ -299,6 +343,21 @@
     });
   }
 
+  // ── 今日の知恵（日替わりカード） ──
+  function dailyHtml() {
+    var c = dailyPick();
+    if (!c) return "";
+    var g = genreById(c.genreId);
+    return '<a class="daily" href="#/c/' + c.id + '">' +
+      '<span class="daily-label">☀ ' + esc(t("daily")) + '</span>' +
+      '<span class="daily-title">' + esc(L(c.title)) + '</span>' +
+      '<span class="daily-meta">' +
+        '<span class="gtag" style="--c:' + g.color + '">' + g.icon + " " + esc(L(g.name)) + '</span>' +
+        '<span>' + esc(t("kikuScore")) + ' <b>' + scoreOf(c) + '</b></span>' +
+        '<span>⏱ ' + c.minutes + 'min</span>' +
+      '</span></a>';
+  }
+
   // ── ホーム / ランキング（検索＋ジャンル＋タグ横断） ──
   function renderHome() {
     var activeGenre = currentFilter.genre, activeTag = currentFilter.tag;
@@ -320,6 +379,8 @@
     if (!activeGenre && !activeTag) app.appendChild(el(heroHtml()));
     app.appendChild(el(
       '<main class="wrap' + ((!activeGenre && !activeTag) ? " has-hero" : "") + '">' +
+        // 今日の知恵（日替わりピックアップ・トップのみ）
+        ((!activeGenre && !activeTag) ? dailyHtml() : "") +
         // 検索ボックス
         '<div class="searchbar">' +
           '<span class="si">🔍</span>' +
@@ -335,10 +396,19 @@
               esc(t("q_" + q)) + "</button>";
           }).join("") +
         "</div>" +
+        '<div class="taglabel">' + esc(t("sortLabel")) + "</div>" +
+        '<div class="seg" id="kikuSort">' +
+          ["score", "felt", "tried", "min"].map(function (q) {
+            return '<button class="segbtn ' + (state.sort === q ? "on" : "") + '" data-sort="' + q + '">' +
+              esc(t("sort_" + q)) + "</button>";
+          }).join("") +
+        "</div>" +
         '<div class="taglabel">' + esc(t("tagsLabel")) + "</div>" +
         '<div class="chips tagrow">' + tagChips + "</div>" +
         '<div class="listhead"><span>' + esc(t("rankedBy")) + '</span>' +
           '<a class="scorelink" href="#/score">ⓘ ' + esc(t("scoreAbout")) + '</a>' +
+          '<button class="savedbtn' + (savedOnly ? " on" : "") + '" id="savedToggle" type="button">★ ' +
+            esc(t("savedFilter")) + ' <i>' + savedCount() + '</i></button>' +
           '<b id="kikuCount"></b></div>' +
         '<ol class="list" id="kikuList"></ol>' +
         '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
@@ -348,9 +418,38 @@
     bindLang();
     bindSearch();
     bindQuality();
+    bindSort();
+    bindSavedToggle();
     fillList();
     runCountUps();
     window.scrollTo(0, 0);
+  }
+
+  // 並び替え: クリックで切替・永続化（検索フォーカス維持のためリストのみ更新）
+  function bindSort() {
+    var seg = document.getElementById("kikuSort");
+    if (!seg) return;
+    Array.prototype.forEach.call(seg.querySelectorAll("[data-sort]"), function (btn) {
+      btn.onclick = function () {
+        state.sort = btn.getAttribute("data-sort");
+        save();
+        Array.prototype.forEach.call(seg.querySelectorAll("[data-sort]"), function (b) {
+          b.classList.toggle("on", b.getAttribute("data-sort") === state.sort);
+        });
+        fillList();
+      };
+    });
+  }
+
+  // ★保存済みだけ表示のトグル
+  function bindSavedToggle() {
+    var btn = document.getElementById("savedToggle");
+    if (!btn) return;
+    btn.onclick = function () {
+      savedOnly = !savedOnly;
+      btn.classList.toggle("on", savedOnly);
+      fillList();
+    };
   }
 
   // 信頼性フィルタ: クリックで切替・永続化。リストとボタンのみ更新（検索フォーカス維持）
@@ -377,7 +476,21 @@
     if (cnt) cnt.textContent = list.length + t("results");
     if (!ol) return;
     ol.innerHTML = list.length ? list.map(function (c, i) { return rankCard(c, i + 1); }).join("") :
-      '<p class="empty">' + esc(t("noResults")) + "</p>";
+      '<p class="empty">' + esc(t(savedOnly ? "noSaved" : "noResults")) + "</p>";
+    // カード上の☆保存（リンク遷移を止めてトグル）
+    Array.prototype.forEach.call(ol.querySelectorAll("[data-save]"), function (btn) {
+      btn.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var id = btn.getAttribute("data-save");
+        toggleSave(id);
+        btn.classList.toggle("on", isSaved(id));
+        btn.textContent = isSaved(id) ? "★" : "☆";
+        var tgl = document.getElementById("savedToggle");
+        if (tgl) tgl.innerHTML = "★ " + esc(t("savedFilter")) + " <i>" + savedCount() + "</i>";
+        if (savedOnly) fillList();
+      };
+    });
   }
 
   function bindSearch() {
@@ -397,11 +510,14 @@
         '<div class="card-body">' +
           '<div class="card-top">' +
             '<span class="gtag" style="--c:' + g.color + '">' + g.icon + " " + esc(L(g.name)) + "</span>" +
+            '<button class="starbtn' + (isSaved(c.id) ? " on" : "") + '" type="button" data-save="' + c.id +
+              '" aria-label="save">' + (isSaved(c.id) ? "★" : "☆") + "</button>" +
             '<span class="score"><b>' + scoreOf(c) + "</b><i>" + esc(t("kikuScore")) + "</i></span>" +
           "</div>" +
           '<h3>' + esc(L(c.title)) + "</h3>" +
           '<div class="metrics">' +
             '<span class="felt">👍 ' + feltRate(c) + "% <i>" + esc(t("feltRate")) + "</i></span>" +
+            '<span class="pill mins">⏱ ' + c.minutes + "min</span>" +
             evidencePill(c) + reviewPill(c) +
           "</div>" +
         "</div>" +
@@ -435,6 +551,13 @@
         '<span class="gtag" style="--c:' + g.color + '">' + g.icon + " " + esc(L(g.name)) + "</span>" +
         "<h1>" + esc(L(c.title)) + "</h1>" +
         '<p class="lead">' + esc(L(c.summary)) + "</p>" +
+
+        // 保存・シェア
+        '<div class="actions">' +
+          '<button class="actbtn' + (isSaved(c.id) ? " on" : "") + '" id="saveBtn" type="button">' +
+            esc(t(isSaved(c.id) ? "savedTip" : "saveTip")) + "</button>" +
+          '<button class="actbtn" id="shareBtn" type="button">↗ ' + esc(t("share")) + "</button>" +
+        "</div>" +
 
         // タグ（クリックでジャンル横断）
         ((c.tags && c.tags.length) ?
@@ -702,6 +825,28 @@
 
   function bindDetail(c) {
     var u = userOf(c.id);
+
+    // ☆保存（画面遷移せずボタンだけ更新）
+    var saveBtn = document.getElementById("saveBtn");
+    if (saveBtn) saveBtn.onclick = function () {
+      toggleSave(c.id);
+      saveBtn.classList.toggle("on", isSaved(c.id));
+      saveBtn.textContent = t(isSaved(c.id) ? "savedTip" : "saveTip");
+    };
+
+    // シェア（Web Share API。非対応環境はリンクをコピー）
+    var shareBtn = document.getElementById("shareBtn");
+    if (shareBtn) shareBtn.onclick = function () {
+      var payload = { title: L(c.title), text: L(c.summary), url: location.href };
+      if (navigator.share) {
+        navigator.share(payload).catch(function () {});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(location.href).then(function () {
+          shareBtn.textContent = t("linkCopied");
+          setTimeout(function () { shareBtn.textContent = "↗ " + t("share"); }, 1800);
+        });
+      }
+    };
 
     var tryBtn = document.getElementById("tryBtn");
     if (tryBtn) tryBtn.onclick = function () { u.tried = true; save(); renderDetail(c.id); };

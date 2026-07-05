@@ -366,3 +366,71 @@ a.bigscore:hover .ring-fg { stroke: var(--teal-2); }
     transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .hero-blobs span { animation: none; }
 }
+
+/* ══════════════════════════════════════════════
+   ブラッシュアップ追加分（2026-07）
+   今日の知恵 / ☆保存 / 並び替え / シェア
+   ══════════════════════════════════════════════ */
+
+/* ── 今日の知恵（日替わりピックアップ） ── */
+.daily {
+  display: flex; flex-direction: column; gap: 7px;
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #fdf8ef, #fbf2e2);
+  border: 1px solid #ecd9b8;
+  border-radius: var(--radius);
+  padding: 15px 17px 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 22px rgba(180, 132, 52, 0.10);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.daily::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: linear-gradient(180deg, var(--gold), #b97f37);
+}
+.daily:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(180, 132, 52, 0.18); }
+.daily-label {
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px;
+  color: #a1712c;
+}
+.daily-title { font-size: 1.04rem; font-weight: 800; line-height: 1.45; color: var(--ink); }
+.daily-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-size: 0.76rem; color: var(--ink-soft);
+}
+.daily-meta b { color: var(--teal-d); }
+
+/* ── カードの☆保存ボタン ── */
+.starbtn {
+  flex: none; border: none; background: transparent; cursor: pointer;
+  font-size: 1.15rem; line-height: 1; padding: 4px 6px; margin-left: auto;
+  color: #b9c4c1; border-radius: 8px;
+  transition: transform .15s var(--ease), color .15s var(--ease), background .15s var(--ease);
+}
+.starbtn:hover { color: var(--gold); background: #faf3e6; transform: scale(1.15); }
+.starbtn.on { color: var(--gold); }
+.card-top .score { margin-left: 0; }
+
+/* ── 所要時間ピル ── */
+.pill.mins { background: #eef3f6; color: #4a6a78; border-color: #dbe6ec; }
+
+/* ── 保存済みトグル（リスト見出し内） ── */
+.savedbtn {
+  border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+  padding: 4px 11px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+  cursor: pointer; transition: all .18s var(--ease); white-space: nowrap;
+}
+.savedbtn i { font-style: normal; opacity: .75; }
+.savedbtn:hover { border-color: var(--gold); color: #a1712c; }
+.savedbtn.on { background: linear-gradient(135deg, var(--gold), #c08a3e); border-color: transparent; color: #fff;
+  box-shadow: 0 4px 12px rgba(180, 132, 52, 0.3); }
+
+/* ── 詳細ページの保存・シェア ── */
+.actions { display: flex; gap: 8px; margin: 2px 0 14px; }
+.actbtn {
+  flex: 1; border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+  padding: 10px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; transition: all .18s var(--ease);
+}
+.actbtn:hover { border-color: var(--teal); color: var(--teal-d); transform: translateY(-1px); box-shadow: var(--shadow); }
+.actbtn.on { background: linear-gradient(135deg, #faf3e6, #f6ead2); border-color: #ecd9b8; color: #a1712c; }
