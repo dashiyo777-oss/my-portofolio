@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ひらめき工房</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF1F2;
+  --grid:rgba(90,130,150,.14);
+  --ink:#1C2B36;
+  --ink-soft:#4A5C68;
+  --hanko:#B3311D;
+  --brass:#8C7A3F;
+  --card:#FBFBF8;
+  --line:#C6CFD3;
+  --ok:#2E6B4F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Zen Kaku Gothic New',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:22px 22px;
+  min-height:100vh;
+  padding:16px 14px 90px;
+  max-width:560px;margin:0 auto;
+}
+h1{
+  font-family:'Shippori Mincho',serif;font-weight:800;
+  font-size:26px;letter-spacing:.12em;
+  display:flex;align-items:baseline;gap:10px;
+}
+h1 small{font-size:11px;letter-spacing:.2em;color:var(--ink-soft);font-family:'Zen Kaku Gothic New',sans-serif;font-weight:500}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.tagline{font-size:11.5px;color:var(--ink-soft);margin:2px 0 16px;letter-spacing:.05em}
+
+/* 工程スタンプ */
+.stamps{display:flex;gap:6px;align-items:center}
+.stamp{
+  width:34px;height:34px;border-radius:50%;
+  border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Shippori Mincho',serif;font-weight:800;font-size:15px;
+  color:var(--line);background:transparent;flex-shrink:0;
+  transition:all .25s;
+}
+.stamp.on{
+  border-color:var(--hanko);color:var(--hanko);
+  background:rgba(179,49,29,.06);
+  transform:rotate(-6deg);
+  box-shadow:0 0 0 1px rgba(179,49,29,.15);
+}
+.stamp-link{height:2px;flex:1;background:var(--line);min-width:4px}
+.stamp-link.on{background:var(--hanko)}
+.stamps.big .stamp{width:48px;height:48px;font-size:21px;cursor:pointer}
+.stage-label{font-size:10px;text-align:center;color:var(--ink-soft);margin-top:4px;letter-spacing:.05em}
+
+/* カード */
+.card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:10px;padding:14px 15px;margin-bottom:12px;
+  box-shadow:2px 3px 0 rgba(28,43,54,.06);
+}
+.card.idea{cursor:pointer;transition:transform .15s}
+.card.idea:active{transform:scale(.985)}
+.card.idea h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.card.idea .memo{font-size:12.5px;color:var(--ink-soft);margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.route-tag{
+  display:inline-block;font-size:10.5px;font-weight:700;
+  border:1px solid var(--brass);color:var(--brass);
+  border-radius:3px;padding:1px 7px;margin-bottom:8px;letter-spacing:.08em;
+}
+
+/* ボタン */
+.btn{
+  display:block;width:100%;border:none;border-radius:8px;
+  padding:13px;font-size:15px;font-weight:700;font-family:inherit;
+  cursor:pointer;letter-spacing:.08em;
+}
+.btn-primary{background:var(--hanko);color:#fff;box-shadow:2px 3px 0 rgba(28,43,54,.15)}
+.btn-primary:active{transform:translateY(2px);box-shadow:none}
+.btn-primary:disabled{background:#B9AFA9;box-shadow:none}
+.btn-ghost{background:transparent;border:1.5px dashed var(--ink-soft);color:var(--ink-soft);font-size:13px;padding:10px}
+.btn-danger{background:transparent;color:var(--hanko);border:1px solid var(--hanko);font-size:12px;padding:8px}
+.btn-row{display:flex;gap:8px;margin-top:14px}
+.btn-row .btn{flex:1}
+
+/* 入力 */
+input[type=text],textarea{
+  width:100%;border:1px solid var(--line);border-radius:8px;
+  padding:11px 12px;font-size:15px;font-family:inherit;background:#fff;
+  color:var(--ink);
+}
+input:focus,textarea:focus{outline:2px solid var(--brass);outline-offset:1px}
+textarea{min-height:96px;resize:vertical;line-height:1.6}
+label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin:12px 0 5px;letter-spacing:.1em}
+
+/* 詳細画面セクション */
+.sec-title{
+  font-family:'Shippori Mincho',serif;font-weight:800;font-size:15px;
+  border-left:4px solid var(--hanko);padding-left:8px;
+  margin:20px 0 8px;letter-spacing:.1em;
+}
+.sec-body{font-size:13.5px;line-height:1.75;color:var(--ink)}
+.sec-body ul{padding-left:18px}
+.sec-body li{margin-bottom:5px}
+.right-item{border-bottom:1px dashed var(--line);padding:7px 0;font-size:13.5px}
+.right-item b{color:var(--brass)}
+
+/* チェックリスト */
+.chk{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:9px 0;border-bottom:1px dashed var(--line);cursor:pointer;
+}
+.chk:last-child{border-bottom:none}
+.chk .box{
+  width:20px;height:20px;border:2px solid var(--ink-soft);border-radius:4px;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#fff;margin-top:1px;
+}
+.chk.done .box{background:var(--ok);border-color:var(--ok)}
+.chk .txt{font-size:13.5px;line-height:1.55}
+.chk.done .txt{text-decoration:line-through;color:var(--ink-soft)}
+.chk .stg{
+  font-family:'Shippori Mincho',serif;font-weight:800;font-size:12px;
+  color:var(--hanko);flex-shrink:0;width:18px;text-align:center;margin-top:2px;
+}
+
+/* ローディング */
+.loading{display:flex;flex-direction:column;align-items:center;gap:12px;padding:26px 0}
+.gear{
+  width:44px;height:44px;border-radius:50%;
+  border:4px solid var(--line);border-top-color:var(--hanko);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:12.5px;color:var(--ink-soft);letter-spacing:.08em}
+
+.empty{
+  text-align:center;padding:48px 20px;color:var(--ink-soft);
+  font-size:13.5px;line-height:2;
+}
+.empty .big{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:800;color:var(--ink);letter-spacing:.15em}
+.back{
+  background:none;border:none;font-family:inherit;color:var(--ink-soft);
+  font-size:13px;cursor:pointer;padding:4px 0;margin-bottom:10px;letter-spacing:.05em;
+}
+.err{background:#FBEAE7;border:1px solid var(--hanko);color:var(--hanko);border-radius:8px;padding:10px 12px;font-size:12.5px;margin:10px 0;line-height:1.6}
+.note{font-size:11px;color:var(--ink-soft);line-height:1.7;margin-top:6px}
+.qa-box{margin-top:10px}
+.qa-answer{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:13.5px;line-height:1.8;margin-top:10px;white-space:pre-wrap}
+.qa-item{border:1px solid var(--line);border-radius:8px;background:#fff;margin-top:10px;overflow:hidden}
+.qa-item .q{background:rgba(140,122,63,.10);padding:9px 12px;font-size:13px;font-weight:700;border-bottom:1px dashed var(--line)}
+.qa-item .q .when{font-weight:400;font-size:10.5px;color:var(--ink-soft);float:right;margin-left:8px}
+.qa-item .a{padding:11px 12px;font-size:13.5px;line-height:1.8;white-space:pre-wrap}
+.svg-wrap{background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px;margin-top:4px;overflow-x:auto}
+.svg-wrap svg{width:100%;height:auto;display:block}
+table.bom{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+table.bom th{background:rgba(140,122,63,.12);color:var(--ink);font-weight:700;padding:6px 7px;border:1px solid var(--line);text-align:left;letter-spacing:.05em}
+table.bom td{padding:6px 7px;border:1px solid var(--line);background:#fff}
+table.bom td.num{text-align:right;font-variant-numeric:tabular-nums}
+table.bom tr.total td{font-weight:700;background:rgba(179,49,29,.06)}
+@media (prefers-reduced-motion: reduce){.gear{animation:none}.stamp{transition:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const STAGES = ["思","形","権","宣","売","金"];
+const STAGE_NAMES = {"思":"着想","形":"試作","権":"権利","宣":"宣伝","売":"販売","金":"入金"};
+const STORE_KEY = "hirameki-ideas";
+
+/* ---------- 設定（デプロイ後にここだけ書き換える） ---------- */
+// Cloudflare Worker のエンドポイント。デプロイして得たURLに差し替える。
+// 例: "https://hirameki-proxy.dashiyo777.workers.dev"
+const AI_ENDPOINT = "https://hirameki-proxy.dashiyo777.workers.dev";
+// 使用モデル（Worker がそのまま Anthropic に転送する）
+const AI_MODEL = "claude-sonnet-4-6";
+
+let ideas = [];
+let view = "list";        // list | new | detail
+let currentId = null;
+let analyzing = false;
+let designing = false;
+let drawing = false;
+let costing = false;
+let asking = false;
+let lastError = "";
+
+/* ---------- 保存・読込（localStorage。同一端末内に保存） ---------- */
+async function loadIdeas(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    ideas = raw ? JSON.parse(raw) : [];
+  }catch(e){ ideas = []; }
+}
+async function saveIdeas(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(ideas)); }
+  catch(e){ lastError = "保存に失敗しました。端末の空き容量やプライベートブラウズ設定を確認して、もう一度操作してください。"; render(); }
+}
+
+/* ---------- AI 呼び出し ---------- */
+async function analyzeIdea(idea){
+  const sys = `あなたは個人クリエイターの事業化支援の専門家です。日本の制度・市場を前提に回答します。
+相談者の背景: 元生産技術エンジニア。個人で活動。スマホのみで作業し、コーディングはAI(Claude Code)に任せる。既にCloudflare Workers + Anthropic APIのアプリ運営、note有料メンバーシップでの課金、TuneCore/JASRACでの音楽配信の経験がある。
+アイデアを受け取り、必ず次のJSONのみを出力すること。前置き・後書き・マークダウン記法は一切禁止。
+{"concept":"一言コンセプト(30字以内)","route":"アプリ|物販(雑貨・100均系)|コンテンツ|サービス のいずれか","routeReason":"判定理由(60字以内)","rights":[{"type":"商標/意匠/実用新案/特許/著作権のいずれか","note":"この案件での要点(50字以内)"}],"promoFirst":["最初の宣伝方法。費用ゼロ〜少額で発売初週にできる具体策(各45字以内)を2-3個"],"promoGrowth":["軌道に乗せる拡販ステップ。順番に実行する具体策(各45字以内)を2-3個"],"channels":["販売チャネル案(各40字以内)を2-4個"],"payment":["入金までの仕組み(各40字以内)を2-3個"],"steps":[{"stage":"形/権/宣/売/金のいずれか","text":"具体的な作業(35字以内)"}],"cautions":["注意点(各45字以内)を2-3個"]}
+stepsは工程順に6〜8個で、宣(宣伝)の工程を必ず1個以上含める。promoFirst/promoGrowth/payment/cautionsは各2個、channelsは2〜3個。権利は関係が薄いものは含めない。宣伝は相談者の既存資産(note、YouTube、X、eichinohi.comサイト、メルマガ)の活用を優先しつつ、その商材に合う媒体(SNS、ハンドメイドマルシェ、プレスリリース等)も提案する。実在の制度・サービス名を使い、抽象論を避けること。JSONは改行や余分な空白を入れず1行で出力すること。`;
+  const user = `アイデア名: ${idea.title}\nメモ: ${idea.memo || "(詳細メモなし)"}`;
+  const res = await fetch(AI_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:AI_MODEL,
+      max_tokens:2000,
+      system:sys,
+      messages:[{role:"user",content:user}]
+    })
+  });
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message || "APIエラー");
+  const text = data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
+  const clean = text.replace(/```json|```/g,"").trim();
+  const first = clean.indexOf("{"), last = clean.lastIndexOf("}");
+  const sliced = clean.slice(first, last+1>0?last+1:clean.length);
+  try{ return JSON.parse(sliced); }
+  catch(e){ return JSON.parse(repairJson(clean.slice(first))); }
+}
+
+/* 途中で切れたJSONを閉じて修復する */
+function repairJson(s){
+  let stack=[], inStr=false, esc=false;
+  for(let i=0;i<s.length;i++){
+    const c=s[i];
+    if(inStr){
+      if(esc){ esc=false; }
+      else if(c==="\\"){ esc=true; }
+      else if(c==='"'){ inStr=false; }
+      continue;
+    }
+    if(c==='"') inStr=true;
+    else if(c==="{"||c==="[") stack.push(c);
+    else if(c==="}"||c==="]") stack.pop();
+  }
+  let t=s;
+  if(inStr) t+='"';
+  t=t.replace(/,\s*$/,"");
+  t=t.replace(/,?\s*"[^"]*"\s*:\s*$/,"");
+  t=t.replace(/,\s*$/,"");
+  while(stack.length){ const o=stack.pop(); t += (o==="{"?"}":"]"); }
+  return t;
+}
+
+async function designIdea(idea){
+  const sys = `あなたは製品開発とアプリ開発の実務経験が豊富な設計コンサルタント。相手は元生産技術エンジニア(40年)で図面や仕様の読解力は高い。スマホのみで作業し、開発はClaude Codeに任せ、Cloudflare Workers運用・note課金の経験あり。
+アイデアと工程表を受け取り、具体的な設計書を必ず次のJSONのみで出力。前置き・マークダウン禁止。JSONは改行なし1行で出力。
+{"target":"想定ユーザーと使用場面(45字以内)","requirements":["必須要件(各30字以内)を3-5個"],"spec":[{"item":"仕様項目名(寸法/材料/画面構成/技術構成など)","value":"具体的な内容。数値を入れる(50字以内)"}],"structure":"構造・機構またはシステム構成の説明(130字以内)","proto":["試作の手順(各40字以内)を3-5個。使う道具・サービス名を明記"],"mass":"量産または本開発の方法(70字以内)","cost":"概算原価と想定売価(60字以内)"}
+specは4〜6個。物販なら寸法・材料・機構・重量など、アプリなら画面一覧・機能・技術構成・API費用などを入れる。実在の材料名・サービス名・工法を使い、数値を必ず入れること。`;
+  const user = `アイデア名: ${idea.title}\nメモ: ${idea.memo || "(なし)"}\nルート: ${idea.plan?idea.plan.route:"未判定"}\nコンセプト: ${idea.plan?idea.plan.concept:""}`;
+  const res = await fetch(AI_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:AI_MODEL,
+      max_tokens:2000,
+      system:sys,
+      messages:[{role:"user",content:user}]
+    })
+  });
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message || "APIエラー");
+  const text = data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
+  const clean = text.replace(/```json|```/g,"").trim();
+  const first = clean.indexOf("{"), last = clean.lastIndexOf("}");
+  const sliced = clean.slice(first, last+1>0?last+1:clean.length);
+  try{ return JSON.parse(sliced); }
+  catch(e){ return JSON.parse(repairJson(clean.slice(first))); }
+}
+
+async function drawIdea(idea){
+  const sys = `あなたは製品設計の図面担当。アイデアと設計書から概略図面をSVGで描く。
+出力は<svg>で始まり</svg>で終わるSVGコードのみ。説明文・マークダウン禁止。改行やインデントを入れず、できる限り短いコードで出力すること。
+仕様: viewBox="0 0 700 500"、背景透明。線は#1C2B36、寸法線と引出線は#B3311D、文字はfont-family="sans-serif"で日本語ラベル可。
+物販なら正面図と側面図の2面を並べ、主要寸法(mm)を寸法線で入れる。アプリなら主要2画面のワイヤーフレームを並べ、画面名と主要ボタンを描く。
+右下に品名と単位(mm)の小さな表題欄を入れる。塗りつぶしは最小限、線画中心。要素数は35個以内に厳守すること。`;
+  const user = `品名: ${idea.title}\n設計書: ${JSON.stringify(idea.design)}`;
+  const res = await fetch(AI_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:AI_MODEL,
+      max_tokens:4000,
+      system:sys,
+      messages:[{role:"user",content:user}]
+    })
+  });
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message || "APIエラー");
+  const text = data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
+  const s = text.indexOf("<svg");
+  if(s<0) throw new Error("図面データが取得できませんでした");
+  let svgText = text.slice(s);
+  const end = svgText.lastIndexOf("</svg>");
+  if(end>=0){
+    svgText = svgText.slice(0, end+6);
+  }else{
+    // 途中で切れた場合: 最後の完全な要素までを残して閉じる
+    const lastGt = svgText.lastIndexOf(">");
+    if(lastGt<0) throw new Error("図面データが不完全でした");
+    svgText = svgText.slice(0, lastGt+1) + "</svg>";
+  }
+  return svgText
+    .replace(/<script[\s\S]*?<\/script>/gi,"")
+    .replace(/\son\w+\s*=\s*"[^"]*"/gi,"");
+}
+
+async function costIdea(idea){
+  const sys = `あなたは原価企画の専門家。日本の実勢価格(2026年)で概算見積を出す。
+アイデアと設計書から、必ず次のJSONのみを改行なし1行で出力。前置き・マークダウン禁止。
+{"bom":[{"item":"部品・費目名(20字以内)","spec":"仕様・調達先(30字以内)","qty":"数量","cost":1個あたり円(数値)}],"tooling":"初期費用の内訳と金額(70字以内。金型/3Dプリント/開発費/出願費など)","unitCost":製品1個の製造原価合計(数値),"price":想定売価(数値),"monthly":"月間販売シナリオと粗利額(70字以内。例:月100個で粗利◯円)","note":"見積の前提条件(50字以内)"}
+bomは4〜8行。アプリの場合はbomをAPI費用/サーバー費/決済手数料などの月次費目とし、unitCostは月間運用費、priceは月額または1販売あたり収益として扱う。数値は現実的な概算とすること。`;
+  const user = `品名: ${idea.title}\n設計書: ${JSON.stringify(idea.design)}`;
+  const res = await fetch(AI_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:AI_MODEL,
+      max_tokens:2000,
+      system:sys,
+      messages:[{role:"user",content:user}]
+    })
+  });
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message || "APIエラー");
+  const text = data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
+  const clean = text.replace(/```json|```/g,"").trim();
+  const first = clean.indexOf("{"), last = clean.lastIndexOf("}");
+  const sliced = clean.slice(first, last+1>0?last+1:clean.length);
+  try{ return JSON.parse(sliced); }
+  catch(e){ return JSON.parse(repairJson(clean.slice(first))); }
+}
+
+async function askFollowUp(idea, question){
+  const sys = `あなたは個人クリエイターの事業化支援の専門家。日本の制度前提。相手はスマホのみで作業する元エンジニアで、Cloudflare Workers運用・note課金・TuneCore配信の経験あり。以下のアイデアの文脈で、質問に350字以内・箇条書き中心で具体的に答える。マークダウン記法は使わない。`;
+  const recent = (idea.qaLog||[]).slice(0,3).reverse().map(x=>`Q:${x.q}\nA:${x.a}`).join("\n---\n");
+  const ctx = `アイデア: ${idea.title}\nメモ: ${idea.memo||""}\n分析結果: ${idea.plan ? JSON.stringify(idea.plan) : "未分析"}\n設計書: ${idea.design ? JSON.stringify(idea.design) : "未作成"}\nコスト見積: ${idea.cost ? JSON.stringify(idea.cost) : "未作成"}\n直近の相談履歴:\n${recent||"(なし)"}\n\n新しい質問: ${question}`;
+  const res = await fetch(AI_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:AI_MODEL,
+      max_tokens:1000,
+      system:sys,
+      messages:[{role:"user",content:ctx}]
+    })
+  });
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message || "APIエラー");
+  return data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+}
+
+/* ---------- 描画 ---------- */
+const app = document.getElementById("app");
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function stampsHtml(stageIdx, big, clickable){
+  let h = `<div class="stamps${big?" big":""}">`;
+  STAGES.forEach((s,i)=>{
+    const on = i<=stageIdx ? " on":"";
+    h += `<div style="display:flex;flex-direction:column;align-items:center">
+      <div class="stamp${on}" ${clickable?`onclick="setStage(${i})"`:""} role="${clickable?'button':'img'}" aria-label="${STAGE_NAMES[s]}">${s}</div>
+      ${big?`<div class="stage-label">${STAGE_NAMES[s]}</div>`:""}
+    </div>`;
+    if(i<STAGES.length-1) h += `<div class="stamp-link${i<stageIdx?" on":""}"></div>`;
+  });
+  return h+`</div>`;
+}
+
+function render(){
+  if(view==="list") renderList();
+  else if(view==="new") renderNew();
+  else renderDetail();
+  window.scrollTo(0,0);
+}
+
+function renderList(){
+  let h = `<div class="header"><h1>ひらめき工房 <small>IDEA WORKS</small></h1></div>
+  <p class="tagline">思いつきを、権利と入金まで運ぶ工程管理板。</p>`;
+  if(lastError){ h+=`<div class="err">${esc(lastError)}</div>`; lastError=""; }
+  if(ideas.length===0){
+    h += `<div class="card empty">
+      <div class="big">台帳は空です</div>
+      思いついたら、まず一行。<br>AIが工程表に起こします。
+    </div>`;
+  }else{
+    const sorted=[...ideas].sort((a,b)=>b.created-a.created);
+    for(const it of sorted){
+      const done = it.plan ? it.plan.steps.filter(s=>s.done).length : 0;
+      const total = it.plan ? it.plan.steps.length : 0;
+      h += `<div class="card idea" onclick="openIdea('${it.id}')">
+        ${it.plan?`<span class="route-tag">${esc(it.plan.route)}</span>`:""}
+        <h3>${esc(it.title)}</h3>
+        <div class="memo">${esc(it.plan? it.plan.concept : it.memo || "メモなし")}</div>
+        ${stampsHtml(it.stage,false,false)}
+        ${total?`<div class="note">工程 ${done}/${total} 完了</div>`:`<div class="note">未分析 — 開いてAI工程表を作成</div>`}
+      </div>`;
+    }
+  }
+  h += `<button class="btn btn-primary" style="margin-top:8px" onclick="view='new';render()">＋ ひらめきを記す</button>`;
+  app.innerHTML = h;
+}
+
+function renderNew(){
+  app.innerHTML = `
+    <button class="back" onclick="view='list';render()">← 台帳へ戻る</button>
+    <h1 style="font-size:20px;margin-bottom:14px">新しいひらめき</h1>
+    <div class="card">
+      <label for="f-title">アイデア名（一行で）</label>
+      <input type="text" id="f-title" placeholder="例：折りたたみ式スマホ譜面台">
+      <label for="f-memo">メモ（思いつくまま。空欄でも可）</label>
+      <textarea id="f-memo" placeholder="誰が困っている？ どこで売る？ 材料は？ など断片でOK"></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="addIdea()">台帳に記帳する</button>
+      </div>
+    </div>`;
+  document.getElementById("f-title").focus();
+}
+
+function renderDetail(){
+  const it = ideas.find(i=>i.id===currentId);
+  if(!it){ view="list"; return renderList(); }
+  let h = `<button class="back" onclick="view='list';render()">← 台帳へ戻る</button>`;
+  if(it.plan) h+=`<span class="route-tag">${esc(it.plan.route)}</span>`;
+  h += `<h1 style="font-size:21px;line-height:1.4;margin-bottom:4px">${esc(it.title)}</h1>`;
+  if(it.memo) h+=`<p class="tagline">${esc(it.memo)}</p>`;
+  if(lastError){ h+=`<div class="err">${esc(lastError)}</div>`; lastError=""; }
+
+  h += `<div class="card"><div class="sec-title" style="margin-top:0">現在の工程</div>
+    ${stampsHtml(it.stage,true,true)}
+    <div class="note">押印をタップすると工程を進め（戻し）られます。</div></div>`;
+
+  if(analyzing){
+    h += `<div class="card"><div class="loading"><div class="gear"></div><p>AIが工程表を起こしています…</p></div></div>`;
+  }else if(!it.plan){
+    h += `<div class="card">
+      <p class="sec-body" style="margin-bottom:12px">このアイデアの「ルート判定・権利・宣伝・販売・入金」の工程表をAIが作成します。</p>
+      <button class="btn btn-primary" onclick="runAnalyze()">AIで工程表を作る</button>
+    </div>`;
+  }else{
+    const p = it.plan;
+    h += `<div class="card">
+      <div class="sec-title" style="margin-top:0">コンセプト</div>
+      <p class="sec-body">${esc(p.concept)}</p>
+      <div class="sec-title">ルート判定：${esc(p.route)}</div>
+      <p class="sec-body">${esc(p.routeReason)}</p>
+
+      <div class="sec-title">権利の確保</div>
+      ${p.rights.map(r=>`<div class="right-item"><b>【${esc(r.type)}】</b> ${esc(r.note)}</div>`).join("")}
+
+      <div class="sec-title">最初の宣伝（発売初週・低コスト）</div>
+      <div class="sec-body"><ul>${(p.promoFirst||[]).map(c=>`<li>${esc(c)}</li>`).join("")}</ul></div>
+
+      <div class="sec-title">拡販ステップ</div>
+      <div class="sec-body"><ul>${(p.promoGrowth||[]).map(c=>`<li>${esc(c)}</li>`).join("")}</ul></div>
+
+      <div class="sec-title">販売チャネル</div>
+      <div class="sec-body"><ul>${p.channels.map(c=>`<li>${esc(c)}</li>`).join("")}</ul></div>
+
+      <div class="sec-title">入金の仕組み</div>
+      <div class="sec-body"><ul>${p.payment.map(c=>`<li>${esc(c)}</li>`).join("")}</ul></div>
+
+      <div class="sec-title">注意点</div>
+      <div class="sec-body"><ul>${p.cautions.map(c=>`<li>${esc(c)}</li>`).join("")}</ul></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title" style="margin-top:0">工程チェックリスト</div>
+      ${p.steps.map((s,i)=>`
+        <div class="chk${s.done?" done":""}" onclick="toggleStep(${i})" role="checkbox" aria-checked="${!!s.done}" tabindex="0">
+          <div class="stg">${esc(s.stage)}</div>
+          <div class="box">${s.done?"✓":""}</div>
+          <div class="txt">${esc(s.text)}</div>
+        </div>`).join("")}
+    </div>
+
+    <div class="card">
+      <div class="sec-title" style="margin-top:0">製品設計</div>
+      ${designing
+        ? `<div class="loading"><div class="gear"></div><p>設計書を起こしています…</p></div>`
+        : it.design ? `
+        <div class="right-item"><b>【想定ユーザー】</b> ${esc(it.design.target)}</div>
+        <div class="sec-title" style="font-size:13.5px">必須要件</div>
+        <div class="sec-body"><ul>${(it.design.requirements||[]).map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+        <div class="sec-title" style="font-size:13.5px">主要仕様</div>
+        ${(it.design.spec||[]).map(s=>`<div class="right-item"><b>【${esc(s.item)}】</b> ${esc(s.value)}</div>`).join("")}
+        <div class="sec-title" style="font-size:13.5px">構造・構成</div>
+        <p class="sec-body">${esc(it.design.structure)}</p>
+        <div class="sec-title" style="font-size:13.5px">試作手順</div>
+        <div class="sec-body"><ul>${(it.design.proto||[]).map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+        <div class="right-item"><b>【量産・本開発】</b> ${esc(it.design.mass)}</div>
+        <div class="right-item"><b>【原価と売価】</b> ${esc(it.design.cost)}</div>
+        <div style="margin-top:12px"><button class="btn btn-ghost" onclick="runDesign()">設計書を作り直す</button></div>`
+        : `<p class="sec-body" style="margin-bottom:12px">要件・仕様（寸法・材料・画面構成）・試作手順・原価まで、AIが設計書に起こします。</p>
+        <button class="btn btn-primary" onclick="runDesign()">AIで製品設計書を作る</button>`}
+    </div>
+
+    ${it.design ? `
+    <div class="card">
+      <div class="sec-title" style="margin-top:0">概略図面</div>
+      ${drawing
+        ? `<div class="loading"><div class="gear"></div><p>図面を作図しています…</p></div>`
+        : it.svg ? `
+        <div class="svg-wrap">${it.svg}</div>
+        <div class="note">AIによる概略図です。正式図面は試作後に実測で起こしてください。</div>
+        <div style="margin-top:10px"><button class="btn btn-ghost" onclick="runDraw()">図面を描き直す</button></div>`
+        : `<p class="sec-body" style="margin-bottom:12px">設計書をもとに、寸法線入りの外観図（アプリなら画面ワイヤーフレーム）を作図します。</p>
+        <button class="btn btn-primary" onclick="runDraw()">概略図面を描く</button>`}
+    </div>
+
+    <div class="card">
+      <div class="sec-title" style="margin-top:0">コスト見積</div>
+      ${costing
+        ? `<div class="loading"><div class="gear"></div><p>見積を積算しています…</p></div>`
+        : it.cost ? `
+        <table class="bom">
+          <tr><th>費目</th><th>仕様・調達先</th><th>数量</th><th>単価(円)</th></tr>
+          ${(it.cost.bom||[]).map(b=>`<tr><td>${esc(b.item)}</td><td>${esc(b.spec)}</td><td class="num">${esc(b.qty)}</td><td class="num">${Number(b.cost).toLocaleString()}</td></tr>`).join("")}
+          <tr class="total"><td colspan="3">製造原価 合計（1個あたり）</td><td class="num">${Number(it.cost.unitCost).toLocaleString()}</td></tr>
+          <tr class="total"><td colspan="3">想定売価</td><td class="num">${Number(it.cost.price).toLocaleString()}</td></tr>
+        </table>
+        <div class="right-item"><b>【初期費用】</b> ${esc(it.cost.tooling)}</div>
+        <div class="right-item"><b>【収支シナリオ】</b> ${esc(it.cost.monthly)}</div>
+        <div class="note">前提: ${esc(it.cost.note||"")}　※AIによる概算です。発注前に必ず実見積を取ってください。</div>
+        <div style="margin-top:10px"><button class="btn btn-ghost" onclick="runCost()">見積を作り直す</button></div>`
+        : `<p class="sec-body" style="margin-bottom:12px">部品表（BOM）形式で原価を積み上げ、初期費用・売価・粗利シナリオまで概算します。</p>
+        <button class="btn btn-primary" onclick="runCost()">コスト見積表を作る</button>`}
+    </div>` : ""}
+
+    <div class="card qa-box">
+      <div class="sec-title" style="margin-top:0">深掘り相談</div>
+      <input type="text" id="f-q" placeholder="例：意匠登録の費用と期間は？">
+      ${asking?`<div class="loading"><div class="gear"></div><p>回答を作成中…</p></div>`
+        :`<div class="btn-row" style="margin-top:10px"><button class="btn btn-primary" onclick="runAsk()">AIに聞く</button></div>`}
+      ${qaLogOf(it).map(x=>`
+        <div class="qa-item">
+          <div class="q"><span class="when">${fmtDate(x.t)}</span>Ｑ ${esc(x.q)}</div>
+          <div class="a">${esc(x.a)}</div>
+        </div>`).join("")}
+      ${qaLogOf(it).length>1?`<div style="margin-top:10px"><button class="btn btn-ghost" onclick="clearQa()">相談履歴をすべて消す</button></div>`:""}
+    </div>
+
+    <button class="btn btn-ghost" onclick="runAnalyze()">工程表を作り直す（チェックは消えます）</button>`;
+  }
+  h += `<div style="margin-top:14px"><button class="btn btn-danger" onclick="delIdea()">このアイデアを台帳から削除</button></div>`;
+  app.innerHTML = h;
+}
+
+/* ---------- 操作 ---------- */
+async function addIdea(){
+  const t = document.getElementById("f-title").value.trim();
+  if(!t){ alert("アイデア名を入れてください"); return; }
+  const m = document.getElementById("f-memo").value.trim();
+  const it = { id:"i"+Date.now(), title:t, memo:m, stage:0, plan:null, qa:"", created:Date.now() };
+  ideas.push(it);
+  await saveIdeas();
+  currentId = it.id; view="detail"; render();
+}
+function openIdea(id){ currentId=id; view="detail"; render(); }
+
+async function setStage(i){
+  const it = ideas.find(x=>x.id===currentId);
+  it.stage = (it.stage===i && i>0) ? i-1 : i;
+  await saveIdeas(); render();
+}
+
+async function toggleStep(i){
+  const it = ideas.find(x=>x.id===currentId);
+  it.plan.steps[i].done = !it.plan.steps[i].done;
+  await saveIdeas(); render();
+}
+
+async function runAnalyze(){
+  const it = ideas.find(x=>x.id===currentId);
+  analyzing = true; render();
+  let plan = null, errMsg = "";
+  for(let attempt=1; attempt<=2 && !plan; attempt++){
+    try{
+      plan = await analyzeIdea(it);
+    }catch(e){
+      console.error(e);
+      errMsg = e.message || String(e);
+      if(attempt<2) await new Promise(r=>setTimeout(r,1500));
+    }
+  }
+  if(plan){
+    plan.steps = (plan.steps||[]).map(s=>({stage:s.stage||"形", text:s.text, done:false}));
+    plan.rights = plan.rights||[]; plan.channels=plan.channels||[];
+    plan.payment = plan.payment||[]; plan.cautions=plan.cautions||[];
+    plan.promoFirst = plan.promoFirst||[]; plan.promoGrowth = plan.promoGrowth||[];
+    it.plan = plan;
+    await saveIdeas();
+  }else{
+    lastError = "工程表の作成に失敗しました（2回試行）。少し待ってからもう一度お試しください。詳細: " + errMsg;
+  }
+  analyzing = false; render();
+}
+
+async function runDesign(){
+  const it = ideas.find(x=>x.id===currentId);
+  designing = true; render();
+  let design = null, errMsg = "";
+  for(let attempt=1; attempt<=2 && !design; attempt++){
+    try{
+      design = await designIdea(it);
+    }catch(e){
+      console.error(e);
+      errMsg = e.message || String(e);
+      if(attempt<2) await new Promise(r=>setTimeout(r,1500));
+    }
+  }
+  if(design){
+    it.design = design;
+    await saveIdeas();
+  }else{
+    lastError = "設計書の作成に失敗しました（2回試行）。少し待ってからもう一度お試しください。詳細: " + errMsg;
+  }
+  designing = false; render();
+}
+
+async function runDraw(){
+  const it = ideas.find(x=>x.id===currentId);
+  drawing = true; render();
+  let svg = null, errMsg = "";
+  for(let attempt=1; attempt<=2 && !svg; attempt++){
+    try{ svg = await drawIdea(it); }
+    catch(e){ console.error(e); errMsg = e.message||String(e); if(attempt<2) await new Promise(r=>setTimeout(r,1500)); }
+  }
+  if(svg){ it.svg = svg; await saveIdeas(); }
+  else lastError = "図面の作成に失敗しました（2回試行）。もう一度お試しください。詳細: " + errMsg;
+  drawing = false; render();
+}
+
+async function runCost(){
+  const it = ideas.find(x=>x.id===currentId);
+  costing = true; render();
+  let cost = null, errMsg = "";
+  for(let attempt=1; attempt<=2 && !cost; attempt++){
+    try{ cost = await costIdea(it); }
+    catch(e){ console.error(e); errMsg = e.message||String(e); if(attempt<2) await new Promise(r=>setTimeout(r,1500)); }
+  }
+  if(cost){ it.cost = cost; await saveIdeas(); }
+  else lastError = "見積の作成に失敗しました（2回試行）。もう一度お試しください。詳細: " + errMsg;
+  costing = false; render();
+}
+
+function qaLogOf(it){
+  // 旧版データ(it.qa)があれば履歴形式に移行
+  if(!it.qaLog) it.qaLog = [];
+  if(it.qa){ it.qaLog.unshift({q:"（旧版での相談）", a:it.qa, t:it.created}); delete it.qa; }
+  return it.qaLog;
+}
+function fmtDate(t){
+  const d = new Date(t||Date.now());
+  return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,"0")}`;
+}
+async function clearQa(){
+  if(!confirm("この案件の相談履歴をすべて消します。よろしいですか？")) return;
+  const it = ideas.find(x=>x.id===currentId);
+  it.qaLog = [];
+  await saveIdeas(); render();
+}
+
+async function runAsk(){
+  const it = ideas.find(x=>x.id===currentId);
+  const q = document.getElementById("f-q").value.trim();
+  if(!q){ alert("質問を入れてください"); return; }
+  asking = true; render();
+  try{
+    const a = await askFollowUp(it, q);
+    qaLogOf(it).unshift({q:q, a:a, t:Date.now()});
+    await saveIdeas();
+  }catch(e){
+    console.error(e);
+    lastError = "回答の取得に失敗しました。もう一度お試しください。";
+  }
+  asking = false; render();
+}
+
+async function delIdea(){
+  if(!confirm("このアイデアを削除します。よろしいですか？")) return;
+  ideas = ideas.filter(x=>x.id!==currentId);
+  await saveIdeas();
+  view="list"; render();
+}
+
+/* ---------- 起動 ---------- */
+(async()=>{ await loadIdeas(); render(); })();
+</script>
+</body>
+</html>
