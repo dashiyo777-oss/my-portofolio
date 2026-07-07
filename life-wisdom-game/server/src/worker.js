@@ -116,8 +116,14 @@ async function ensureHits(env) {
   try {
     await env.DB.prepare("CREATE TABLE IF NOT EXISTS hits (site TEXT, ts INTEGER, ip TEXT, ref TEXT)").run();
     try { await env.DB.prepare("CREATE INDEX IF NOT EXISTS idx_hits_site_ts ON hits (site, ts)").run(); } catch (e) {}
+    // 既存テーブルにも国コード列を追加（2回目以降は「列が既にある」エラーになるが無害なので握りつぶす）
+    try { await env.DB.prepare("ALTER TABLE hits ADD COLUMN country TEXT").run(); } catch (e) {}
     _hitsReady = true;
   } catch (e) {}
+}
+// Cloudflare が付与する訪問者の国コード（例: JP, US, GB）。取れない時は空。
+function countryOf(request) {
+  try { return (request.cf && request.cf.country) || request.headers.get("CF-IPCountry") || ""; } catch (e) { return ""; }
 }
 // 1x1 透明GIF（ビーコン応答用）。
 const GIF1x1 = Uint8Array.from([0x47,0x49,0x46,0x38,0x39,0x61,0x01,0x00,0x01,0x00,0x80,0x00,0x00,0x00,0x00,0x00,0xff,0xff,0xff,0x21,0xf9,0x04,0x01,0x00,0x00,0x00,0x00,0x2c,0x00,0x00,0x00,0x00,0x01,0x00,0x01,0x00,0x00,0x02,0x02,0x44,0x01,0x00,0x3b]);
@@ -138,7 +144,7 @@ async function hit(request, env, h) {
   const dup = await limited(env, ip, "hit:" + site, 1, 1800);
   if (!dup) {
     const ref = (request.headers.get("Referer") || "").slice(0, 300);
-    try { await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref) VALUES (?,?,?,?)").bind(site, Date.now(), ip, ref).run(); } catch (e) {}
+    try { await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref,country) VALUES (?,?,?,?,?)").bind(site, Date.now(), ip, ref, countryOf(request)).run(); } catch (e) {}
   }
   return gif1x1(h);
 }
@@ -171,6 +177,26 @@ async function computeHitSeries(env, site, days) {
   }
   return { labels: labels, hits: hits };
 }
+// 直近24hの国別内訳。対象サイト（配列）をまとめて集計 → { JP:10, US:5, ... } を返す。
+async function computeCountry24h(env, sites) {
+  await ensureHits(env);
+  const d1 = Date.now() - 86400000;
+  const ph = sites.map(function () { return "?"; }).join(",");
+  const m = {};
+  try {
+    const st = env.DB.prepare("SELECT country AS cc, COUNT(*) AS c FROM hits WHERE site IN (" + ph + ") AND ts > ? GROUP BY country");
+    const rs = await st.bind.apply(st, sites.concat([d1])).all();
+    (rs.results || []).forEach(function (r) { m[(r.cc || "??")] = r.c; });
+  } catch (e) {}
+  return m;
+}
+// 国別内訳を「日本 / 海外（内訳）」の文字列に整形。
+function splitJpOverseas(m) {
+  let jp = 0, overseas = 0; const ov = [];
+  for (const k in m) { if (k === "JP") { jp += m[k]; } else { overseas += m[k]; ov.push([k, m[k]]); } }
+  ov.sort(function (a, b) { return b[1] - a[1]; });
+  return { jp: jp, overseas: overseas, top: ov };
+}
 
 async function redeem(request, env, h) {
   const ip = request.headers.get("CF-Connecting-IP") || "";
@@ -182,6 +208,8 @@ async function redeem(request, env, h) {
   if (!code || code !== want) return json({ error: "invalid_code" }, 401, h);
   const exp = monthEndExp(new Date());
   const token = await signJWT({ m: mk, exp: exp }, env.JWT_SECRET);
+  // 新規会員（noteコード経由）を国つきで記録 → 日次レポート「新しく会員になった人」用
+  try { await ensureHits(env); await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref,country) VALUES (?,?,?,?,?)").bind("member_join", Date.now(), ip, "note", countryOf(request)).run(); } catch (e) {}
   return json({ token: token, exp: exp, month: mk }, 200, h);
 }
 
@@ -224,6 +252,8 @@ async function redeemLicense(request, env, h) {
     const lic = await fingerprint(license);
     await env.DB.prepare("INSERT INTO deliveries (ts,lic,ip) VALUES (?,?,?)").bind(Date.now(), lic, ip).run();
   } catch (e) {}
+  // 新規会員（Gumroadライセンス経由＝主に海外）を国つきで記録
+  try { await ensureHits(env); await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref,country) VALUES (?,?,?,?,?)").bind("member_join", Date.now(), ip, "gumroad", countryOf(request)).run(); } catch (e) {}
   return json({ token: token, exp: exp, month: mk }, 200, h);
 }
 
@@ -465,6 +495,20 @@ async function sendDailyReport(env) {
       if (env.USAGE_KEY) lines.push("　📈 https://api.eichinohi.com/dashboard?key=" + env.USAGE_KEY + "&site=" + site);
     } catch (e) {}
   }
+  // 🌍 賢人会議の海外モニタリング（昨日・国別）
+  try {
+    const use = splitJpOverseas(await computeCountry24h(env, ["sage_free", "sage_member"]));
+    const ovStr = use.top.slice(0, 6).map(function (x) { return x[0] + " " + x[1]; }).join(" / ") || "—";
+    const join = splitJpOverseas(await computeCountry24h(env, ["member_join"]));
+    const joinTotal = join.jp + join.overseas;
+    const joinStr = [].concat(join.jp ? [["JP", join.jp]] : [], join.top).map(function (x) { return x[0] + " " + x[1]; }).join(" / ") || "—";
+    lines.push("");
+    lines.push("🌍 賢人会議の利用（昨日・国別）");
+    lines.push("　・日本: " + use.jp + " ／ 海外: " + use.overseas);
+    lines.push("　・海外の内訳: " + ovStr);
+    lines.push("🎉 新しく会員になった人（昨日）: " + joinTotal + (joinTotal ? "（" + joinStr + "）" : ""));
+    lines.push("　※売上金額はGumroadアプリで確認（ここは人数の目安）");
+  } catch (e) {}
   const text = lines.join("\n");
   try {
     await fetch(env.REPORT_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: text, text: text }) });
@@ -504,7 +548,7 @@ async function sage(request, env, h) {
   } catch (e) { return json({ error: { message: "upstream_error" } }, 502, h); }
   const text = await up.text();
   // 利用計測（監視ダッシュボード/日次レポート用）
-  try { await ensureHits(env); await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref) VALUES (?,?,?,?)").bind(member ? "sage_member" : "sage_free", Date.now(), ip, "").run(); } catch (e) {}
+  try { await ensureHits(env); await env.DB.prepare("INSERT INTO hits (site,ts,ip,ref,country) VALUES (?,?,?,?,?)").bind(member ? "sage_member" : "sage_free", Date.now(), ip, "", countryOf(request)).run(); } catch (e) {}
   return new Response(text, { status: up.status, headers: Object.assign({}, h, { "Content-Type": "application/json; charset=utf-8" }) });
 }
 
