@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>珈琲手帖 — 一杯を深く楽しむための小さな図鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --roast:#241811;        /* 深煎りの闇 */
+  --wood:#3A2A1E;         /* 店の木壁 */
+  --crema:#F6EEDF;        /* クレマの紙色 */
+  --paper:#FDF8EE;        /* カード紙 */
+  --copper:#C87E3F;       /* 銅ポット */
+  --velvet:#3E5641;       /* ソファの深緑 */
+  --cherry:#A8432C;       /* コーヒーチェリー */
+  --ink:#2B211A;          /* 文字 */
+  --faint:#8A7663;
+  --serif:'Shippori Mincho', serif;
+  --sans:'Zen Kaku Gothic New', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--roast);
+  color:var(--ink);
+  line-height:1.8;
+  padding-bottom:76px;
+}
+/* ===== ヘッダー ===== */
+header{
+  background:linear-gradient(180deg,#1B120C 0%, var(--roast) 100%);
+  color:var(--crema);
+  text-align:center;
+  padding:34px 16px 22px;
+  border-bottom:3px double var(--copper);
+}
+header .eyebrow{
+  font-size:11px;letter-spacing:.35em;color:var(--copper);
+  text-transform:uppercase;margin-bottom:6px;
+}
+header h1{
+  font-family:var(--serif);font-weight:800;font-size:30px;letter-spacing:.14em;
+}
+header h1 .steam{display:inline-block;animation:steam 3.2s ease-in-out infinite;transform-origin:bottom center}
+@keyframes steam{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(4deg)}}
+@media (prefers-reduced-motion: reduce){header h1 .steam{animation:none}}
+header .sub{font-size:12px;color:#BCA88F;letter-spacing:.12em;margin-top:4px}
+/* ===== ナビ ===== */
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:#1B120C;border-top:1px solid #4A382A;
+  display:flex;justify-content:space-around;
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+}
+nav button{
+  background:none;border:none;color:#8A7663;font-family:var(--sans);
+  font-size:10.5px;font-weight:500;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 6px;border-radius:8px;min-width:52px;
+}
+nav button .ic{font-size:19px;line-height:1}
+nav button.active{color:var(--copper)}
+nav button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+/* ===== 共通 ===== */
+main{max-width:640px;margin:0 auto;padding:18px 14px 30px}
+section{display:none}
+section.active{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--paper);border-radius:14px;padding:18px 16px;
+  margin-bottom:14px;box-shadow:0 3px 14px rgba(0,0,0,.35);
+  border:1px solid #E7D9C2;
+}
+.card h2{
+  font-family:var(--serif);font-size:19px;font-weight:700;
+  color:var(--wood);letter-spacing:.08em;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px dashed #D6C4A6;
+}
+.tag{
+  display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  padding:2px 10px;border-radius:999px;margin-right:6px;margin-bottom:4px;
+}
+.tag.copper{background:var(--copper);color:#fff}
+.tag.velvet{background:var(--velvet);color:#fff}
+.tag.cherry{background:var(--cherry);color:#fff}
+.tag.line{background:transparent;border:1px solid var(--copper);color:var(--copper)}
+.note{font-size:12px;color:var(--faint)}
+/* 豆メーター(シグネチャー) */
+.meter{display:flex;align-items:center;gap:8px;margin:3px 0}
+.meter .lbl{font-size:12px;font-weight:700;color:var(--wood);width:3.2em}
+.beans{display:flex;gap:4px}
+.bean{
+  width:15px;height:11px;border-radius:50%;
+  background:#E4D5BC;position:relative;transform:rotate(-18deg);
+}
+.bean::after{
+  content:'';position:absolute;left:50%;top:1px;bottom:1px;width:1.5px;
+  background:var(--paper);transform:translateX(-50%) rotate(6deg);border-radius:2px;
+}
+.bean.on{background:var(--copper)}
+.bean.on.dark{background:#6B4326}
+/* アコーディオン */
+details{border-top:1px solid #E7D9C2;padding:10px 2px}
+details:first-of-type{border-top:none}
+summary{
+  cursor:pointer;font-weight:700;color:var(--wood);font-size:15px;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+summary::-webkit-details-marker{display:none}
+summary .arrow{color:var(--copper);transition:transform .25s;font-size:13px;flex-shrink:0}
+details[open] summary .arrow{transform:rotate(90deg)}
+details .body{padding-top:8px;font-size:14px}
+ol.steps{padding-left:1.4em;font-size:14px}
+ol.steps li{margin-bottom:6px}
+.tip{
+  background:#F1E6CF;border-left:4px solid var(--copper);
+  padding:8px 12px;border-radius:0 8px 8px 0;font-size:13px;margin-top:10px;
+}
+/* 今日の一杯 */
+.today{
+  background:linear-gradient(150deg,#FDF8EE 0%,#F3E5CC 100%);
+  border:1px solid var(--copper);
+}
+.today .date{font-size:11px;letter-spacing:.25em;color:var(--copper);font-weight:700}
+.today h2{border-bottom:none;margin-bottom:4px}
+.today p{font-size:14.5px}
+/* フィルタボタン */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters button{
+  font-family:var(--sans);font-size:12px;font-weight:700;
+  padding:6px 13px;border-radius:999px;border:1px solid var(--copper);
+  background:var(--paper);color:var(--copper);cursor:pointer;
+}
+.filters button.active{background:var(--copper);color:#fff}
+/* 診断 */
+.quiz-q{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--wood);margin-bottom:14px}
+.quiz-opts button{
+  display:block;width:100%;text-align:left;margin-bottom:9px;
+  padding:13px 15px;border-radius:11px;border:1.5px solid #D6C4A6;
+  background:var(--paper);font-family:var(--sans);font-size:14.5px;
+  color:var(--ink);cursor:pointer;transition:border-color .15s, background .15s;
+}
+.quiz-opts button:active{background:#F1E6CF;border-color:var(--copper)}
+.progress{height:5px;background:#E7D9C2;border-radius:99px;margin-bottom:16px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--copper);border-radius:99px;transition:width .3s}
+.karte{
+  border:2px solid var(--copper);border-radius:14px;padding:16px;
+  background:repeating-linear-gradient(0deg,#FDF8EE,#FDF8EE 27px,#F0E4CC 28px);
+}
+.karte h3{font-family:var(--serif);font-size:21px;color:var(--cherry);letter-spacing:.06em}
+.karte .stamp{
+  float:right;border:2px solid var(--cherry);color:var(--cherry);
+  border-radius:50%;width:58px;height:58px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:11px;font-weight:800;transform:rotate(10deg);text-align:center;line-height:1.3;
+}
+.btn{
+  display:inline-block;background:var(--velvet);color:#fff;border:none;
+  font-family:var(--sans);font-weight:700;font-size:14px;
+  padding:11px 26px;border-radius:999px;cursor:pointer;margin-top:12px;
+}
+.btn.copper{background:var(--copper)}
+/* 物語 */
+.episode{padding:12px 0;border-top:1px solid #E7D9C2}
+.episode:first-of-type{border-top:none}
+.episode .who{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--wood)}
+.episode .era{font-size:11px;color:var(--faint);letter-spacing:.1em;margin-left:6px}
+.episode p{font-size:14px;margin-top:4px}
+footer{
+  text-align:center;color:#8A7663;font-size:11px;padding:10px 16px 20px;letter-spacing:.1em;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">COFFEE NOTEBOOK</div>
+  <h1>珈琲手帖<span class="steam">☕</span></h1>
+  <div class="sub">一杯を深く楽しむための小さな図鑑</div>
+</header>
+
+<main>
+
+<!-- ============ 今日の一杯 ============ -->
+<section id="sec-home" class="active">
+  <div class="card today">
+    <div class="date" id="todayDate"></div>
+    <h2>今日の珈琲豆知識</h2>
+    <p id="todayTip"></p>
+  </div>
+
+  <div class="card">
+    <h2>本日のおすすめ産地</h2>
+    <div id="todayOrigin"></div>
+  </div>
+
+  <div class="card">
+    <h2>この手帖の歩き方</h2>
+    <p style="font-size:14px">
+      <b style="color:var(--copper)">産地</b>で世界の豆の個性を知り、
+      <b style="color:var(--copper)">淹れ方</b>で自分の一杯を作り、
+      <b style="color:var(--copper)">精製・焙煎</b>で「ウォッシュド?ナチュラル?」の謎を解く。
+      迷ったら<b style="color:var(--cherry)">診断</b>へ。あなたに合う一杯をお見立てします。
+      休憩には<b style="color:var(--velvet)">物語</b>で偉人たちの珈琲愛をどうぞ。
+    </p>
+  </div>
+</section>
+
+<!-- ============ 産地図鑑 ============ -->
+<section id="sec-origin">
+  <div class="card">
+    <h2>世界の産地図鑑</h2>
+    <p class="note">豆マーク(<span style="color:var(--copper)">●</span>)が多いほどその味が強い、を表します。</p>
+  </div>
+  <div class="filters" id="originFilters"></div>
+  <div id="originList"></div>
+</section>
+
+<!-- ============ 淹れ方 ============ -->
+<section id="sec-brew">
+  <div class="card">
+    <h2>淹れ方ガイド</h2>
+    <p class="note">同じ豆でも、器具が変われば別の一杯に。難易度と所要時間つき。</p>
+  </div>
+  <div id="brewList"></div>
+</section>
+
+<!-- ============ 精製・焙煎 ============ -->
+<section id="sec-process">
+  <div class="card">
+    <h2>ウォッシュド? ナチュラル?</h2>
+    <p style="font-size:14px">「精製(プロセス)」とは、収穫したコーヒーチェリーから<b>種(=豆)を取り出す方法</b>のこと。同じ農園の同じ豆でも、精製が違えば味はまるで別物になります。</p>
+    <div id="processList" style="margin-top:8px"></div>
+  </div>
+  <div class="card">
+    <h2>焙煎度と味の関係</h2>
+    <p class="note" style="margin-bottom:8px">浅いほど酸味と個性、深いほど苦味とコク。</p>
+    <div id="roastList"></div>
+    <div class="tip">☕ 迷ったら<b>中煎り(ハイ〜シティ)</b>から。酸味と苦味のバランスが良く、豆の個性も感じやすい入口です。</div>
+  </div>
+</section>
+
+<!-- ============ 診断 ============ -->
+<section id="sec-quiz">
+  <div class="card">
+    <h2>あなたの一杯お見立て診断</h2>
+    <p class="note" style="margin-bottom:14px">5つの質問で、あなたに合う豆と淹れ方をお見立てします。</p>
+    <div class="progress"><i id="quizBar" style="width:0%"></i></div>
+    <div id="quizArea"></div>
+  </div>
+</section>
+
+<!-- ============ 物語 ============ -->
+<section id="sec-story">
+  <div class="card">
+    <h2>偉人と珈琲</h2>
+    <div id="episodeList"></div>
+  </div>
+  <div class="card">
+    <h2>珈琲の歴史 五分間年表</h2>
+    <div id="historyList"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>珈琲手帖 | 賢人会議 会員特典 — eichinohi.com</footer>
+
+<nav>
+  <button data-sec="sec-home" class="active"><span class="ic">☕</span>今日</button>
+  <button data-sec="sec-origin"><span class="ic">🌍</span>産地</button>
+  <button data-sec="sec-brew"><span class="ic">💧</span>淹れ方</button>
+  <button data-sec="sec-process"><span class="ic">🔥</span>精製焙煎</button>
+  <button data-sec="sec-quiz"><span class="ic">📋</span>診断</button>
+  <button data-sec="sec-story"><span class="ic">📖</span>物語</button>
+</nav>
+
+<script>
+/* =================== データ =================== */
+const TIPS = [
+"コーヒーの果実は「コーヒーチェリー」。私たちが飲む豆は、その甘い果実の中の「種」です。",
+"香りのピークは焙煎後3日〜2週間。買ったばかりの豆が少し落ち着いてからが飲み頃です。",
+"豆の保存は「密閉・冷暗所」。冷蔵庫より、密閉容器で常温の暗い場所が基本。長期なら冷凍を。",
+"お湯の適温は約90℃前後。沸騰直後より、少し落ち着かせてから注ぐとまろやかに。",
+"浅煎りはカフェインがわずかに多め。「深煎り=カフェインが強い」は実は誤解です。",
+"エスプレッソ1杯のカフェインは、実はドリップ1杯より少なめ。量が少ないためです。",
+"世界の生産量1位はブラジル。世界のコーヒーの約3分の1を作っています。",
+"「モカ」は豆の名前であり、イエメンの港町の名前。チョコ入りの飲み物の名はここから派生しました。",
+"挽いた豆は表面積が増え、酸化が一気に進みます。できれば「淹れる直前に挽く」が一番のご馳走。",
+"カップの温度も味のうち。カップを先にお湯で温めると、最後の一口までおいしく飲めます。",
+"コーヒーの木は植えてから実がなるまで3〜5年。一杯の裏に長い歳月があります。",
+"「ブルーマウンテン」を名乗れるのはジャマイカの限られた標高の地域だけ。世界一厳格な産地呼称の一つです。",
+"ドリップの蒸らし(最初の30秒)は、豆のガスを逃がして味を引き出す大事な儀式。粉がふくらんだら新鮮な証拠。",
+"コーヒーかすは消臭剤に。乾かして靴箱や冷蔵庫に置くと活躍します。",
+"「アメリカンコーヒー」は薄いコーヒーではなく、本来は浅煎り豆で淹れたコーヒーのこと。",
+"デカフェは「99%以上カフェイン除去」が国際基準。夜の一杯の強い味方です。",
+"コーヒーベルトは赤道を挟んだ南北25度の帯。世界の産地はほぼこの中に収まります。",
+"豆の等級「SHB」はグアテマラ等の規格で「標高が高い畑の豆」の意味。高地の豆は昼夜の寒暖差で味が締まります。",
+"日本初の喫茶店は1888年、東京・上野の「可否茶館」。珈琲という当て字は文豪たちにも愛されました。",
+"水出しコーヒーは苦味と渋みが出にくく、甘みが際立つ淹れ方。夏はもちろん、冬にホットに温め直しても美味。",
+"ゲイシャはパナマで再発見されたエチオピア原産の品種。ジャスミンのような香りで競売価格の記録を塗り替え続けています。",
+"スペシャルティコーヒーとは「農園から一杯まで」履歴が追える高品質豆のこと。生産者の名前が見える珈琲です。"
+];
+
+const ORIGINS = [
+{n:"エチオピア",r:"アフリカ",a:5,b:2,s:5,bt:1,f:"珈琲発祥の地。紅茶のように華やかで、ベリーや花の香り。",how:"浅煎り×ハンドドリップで香りを全開に。",tag:"モカの故郷"},
+{n:"ケニア",r:"アフリカ",a:5,b:3,s:4,bt:2,f:"カシスのような果実味と力強い酸。冷めるほど甘みが出る優等生。",how:"浅〜中煎り。アイスコーヒーにしても輪郭がくっきり。",tag:"果実の王様"},
+{n:"タンザニア",r:"アフリカ",a:4,b:3,s:3,bt:2,f:"日本では「キリマンジャロ」の名で有名。すっきりした酸と野性味。",how:"中煎りでバランス良く。朝の一杯に。",tag:"キリマンジャロ"},
+{n:"コロンビア",r:"中南米",a:3,b:4,s:4,bt:2,f:"甘み・酸味・コクの三拍子。誰にでも勧められる万能選手。",how:"中煎り。ブレンドの土台にも、単品でも。",tag:"バランスの雄"},
+{n:"ブラジル",r:"中南米",a:2,b:4,s:4,bt:3,f:"ナッツやチョコの風味。酸味が穏やかで飲み疲れしない。",how:"中〜深煎り。カフェオレとの相性は世界一級。",tag:"生産量世界一"},
+{n:"グアテマラ",r:"中南米",a:4,b:4,s:4,bt:2,f:"チョコレートのような甘い余韻と上品な酸。火山性土壌の恵み。",how:"中煎り。食後の一杯やスイーツのお供に。",tag:"火山の恵み"},
+{n:"コスタリカ",r:"中南米",a:4,b:3,s:5,bt:1,f:"ハニープロセス発祥の地。蜂蜜のような甘さときれいな後味。",how:"浅〜中煎りで甘さを味わう。",tag:"ハニーの聖地"},
+{n:"パナマ・ゲイシャ",r:"中南米",a:5,b:2,s:5,bt:1,f:"ジャスミンと桃の香り。競売で史上最高値を更新し続ける別格の豆。",how:"浅煎り×丁寧なドリップ。特別な日の一杯に。",tag:"世界最高値"},
+{n:"ジャマイカ",r:"中南米",a:3,b:3,s:4,bt:2,f:"ブルーマウンテン。絹のような口当たりと完璧な調和。",how:"中煎り。何も足さず、そのままで。",tag:"ブルーマウンテン"},
+{n:"インドネシア",r:"アジア",a:1,b:5,s:3,bt:4,f:"マンデリン。大地のような深いコクとハーブの余韻。酸味が苦手な人の味方。",how:"深煎り。ミルクにも負けない骨格。",tag:"マンデリン"},
+{n:"ベトナム",r:"アジア",a:1,b:4,s:3,bt:5,f:"生産量世界2位。ロブスタ種主体で力強い苦味。練乳と合わせるベトナム式は絶品。",how:"深煎り×練乳のベトナムコーヒーで。",tag:"生産量2位"},
+{n:"イエメン",r:"アフリカ",a:4,b:4,s:4,bt:2,f:"「モカマタリ」の産地。ワインのような発酵感と独特のコク。",how:"中煎り。歴史を感じながらゆっくりと。",tag:"モカマタリ"}
+];
+
+const BREWS = [
+{n:"ペーパードリップ",d:1,t:"約4分",taste:"すっきり・クリア",steps:["豆は中細挽き、1杯あたり12〜13gが目安","カップとドリッパーをお湯で温める","90℃前後のお湯を粉全体に少量注ぎ、30秒蒸らす","中心から「の」の字に3回に分けて注ぐ","粉がお湯に浸かったまま落ち切る前にドリッパーを外す"],tip:"蒸らしで粉がぷっくり膨らめば、豆が新鮮な証拠。"},
+{n:"フレンチプレス",d:1,t:"約4分",taste:"豆の油分まで味わう・まろやか",steps:["豆は粗挽き、お湯300mlに対して16〜18g","粉を入れ、お湯を半分注いで30秒待つ","残りのお湯を注ぎ、フタをして4分","プランジャーをゆっくり押し下げて完成"],tip:"金属フィルターは豆のオイルを通すため、香りが濃厚。豆の実力がそのまま出ます。"},
+{n:"エアロプレス",d:2,t:"約2分",taste:"濃厚なのにクリア・自由自在",steps:["豆は中細挽き15g、お湯は約85℃で200ml","粉とお湯を入れて10秒混ぜる","1分ほど待ち、ゆっくり30秒かけてプレス","お湯で濃さを調整しても良い"],tip:"レシピの自由度が魅力。世界大会があるほど奥深い器具です。"},
+{n:"サイフォン",d:3,t:"約5分",taste:"香り高い・喫茶店の味",steps:["下のフラスコに湯を入れアルコールランプで加熱","お湯が上がってきたら粉(中挽き)を入れ竹べらで攪拌","1分ほどで火を外し、コーヒーが下に落ちるのを待つ"],tip:"純喫茶の象徴。理科の実験のような時間そのものがご馳走。"},
+{n:"水出し(コールドブリュー)",d:1,t:"8時間(待つだけ)",taste:"苦味・渋みが少ない・甘い",steps:["豆は中細挽き、水1Lに対して70〜80g","ポットに粉と水を入れ軽く混ぜる","冷蔵庫で8時間置き、フィルターで濾す"],tip:"寝る前に仕込めば朝には完成。カフェインの出方も穏やかです。"},
+{n:"マキネッタ(直火エスプレッソ)",d:2,t:"約5分",taste:"濃厚・イタリアの家庭の味",steps:["下部にお湯、バスケットに細挽きの粉を平らに(押し固めない)","上部を締めて弱めの中火にかける","コポコポと音がして抽出が終わったら火から下ろす"],tip:"砂糖をひとさじ入れるのがイタリア流。ミルクを泡立てれば家カプチーノに。"}
+];
+
+const PROCESSES = [
+{n:"ウォッシュド(水洗式)",body:"果肉を除いて水で洗い、種だけを乾燥。<b>クリーンで澄んだ味</b>になり、豆本来の個性と酸がまっすぐ伝わる。世界で最も広く使われる方法。",key:"すっきり派はこちら"},
+{n:"ナチュラル(乾燥式)",body:"果実ごと天日乾燥させ、あとから果肉を外す最古の方法。果実の糖分が種に移り、<b>ベリーやワインのような甘く華やかな風味</b>に。エチオピアやブラジルの伝統。",key:"甘く華やか派はこちら"},
+{n:"ハニープロセス",body:"果肉の粘液(ミューシレージ)を残したまま乾燥。ウォッシュドとナチュラルの中間で、<b>蜂蜜のような甘みとコク</b>。残す量でイエロー/レッド/ブラックハニーと呼び分ける。",key:"コスタリカ発祥"},
+{n:"アナエロビック(嫌気性発酵)",body:"密閉タンクで酸素を絶って発酵させる新世代の方法。シナモンやラムのような<b>これまでにない複雑な風味</b>が生まれ、品評会の常連に。",key:"最先端の実験場"}
+];
+
+const ROASTS = [
+{n:"ライト〜シナモン(浅煎り)",a:5,bt:1,f:"柑橘系の酸味、紅茶のよう。豆の個性が最も見える。"},
+{n:"ミディアム〜ハイ(中煎り)",a:3,bt:3,f:"酸味と苦味の均衡点。迷ったらここから。"},
+{n:"シティ〜フルシティ(中深煎り)",a:2,bt:4,f:"コクと香ばしさ。アイスやミルクにも合う。"},
+{n:"フレンチ〜イタリアン(深煎り)",a:1,bt:5,f:"重厚な苦味と甘い余韻。エスプレッソやカフェオレの世界。"}
+];
+
+const EPISODES = [
+{w:"ベートーヴェン",e:"1770–1827",p:"毎朝きっかり60粒の豆を自ら数えて一杯を淹れたと伝えられる。楽聖の一日は、几帳面な珈琲の儀式から始まった。"},
+{w:"バッハ",e:"1685–1750",p:"珈琲に夢中な娘とそれを止める父を描いた「コーヒー・カンタータ」を作曲。当時のライプツィヒの珈琲ブームを音楽に残した。"},
+{w:"バルザック",e:"1799–1850",p:"執筆中は一日に何十杯も濃い珈琲を飲んだ逸話で知られる大量執筆の文豪。「珈琲が胃に落ちると、すべてが動き出す」と書き残した。"},
+{w:"ヴォルテール",e:"1694–1778",p:"珈琲をこよなく愛した啓蒙思想家。「珈琲は毒だ」と忠告されると「ならばずいぶん遅効性の毒だ」と返したという逸話が残る。"},
+{w:"ナポレオン",e:"1769–1821",p:"「濃い珈琲は私を目覚めさせる」と語った珈琲党。流刑先のセントヘレナ島でも珈琲を求めたと伝わる。"},
+{w:"夏目漱石",e:"1867–1916",p:"ロンドン留学で西洋の喫茶文化に触れ、作品にも珈琲が登場。明治の文士たちにとって喫茶店は新しい思索の場だった。"}
+];
+
+const HISTORY = [
+{y:"9世紀頃",p:"エチオピアの山羊飼いカルディが、赤い実を食べて興奮する山羊を見て珈琲を発見した——という伝説が残る。"},
+{y:"15世紀",p:"イエメンのスーフィー修行者たちが夜の祈りの眠気覚ましに珈琲を飲用。モカ港から世界へ広がり始める。"},
+{y:"1652年",p:"ロンドンにコーヒーハウスが登場。1ペニーで議論に参加できる「ペニー大学」と呼ばれ、新聞や保険会社を生む知の社交場に。"},
+{y:"1773年",p:"ボストン茶会事件。紅茶への反発から、アメリカで珈琲が「愛国的な飲み物」として定着していく。"},
+{y:"1888年",p:"東京・上野に日本初の本格喫茶店「可否茶館」開業。以後、珈琲は文士と庶民の文化に。"},
+{y:"1960〜70年代",p:"日本で純喫茶が黄金期を迎える。サイフォンとネルドリップ、深煎りの美学が育つ。"},
+{y:"2000年代〜",p:"「サードウェーブ」到来。産地・農園・精製までを味わうスペシャルティコーヒーの時代へ。日本の喫茶文化が世界から再評価される。"}
+];
+
+const RESULTS = {
+sunny:{t:"陽だまりの一杯",o:"エチオピア または コスタリカ",b:"ペーパードリップ(浅〜中煎り)",p:"あなたは香りと華やかさを楽しむタイプ。フルーティーな浅煎りを、朝の光の中でゆっくりどうぞ。ナチュラル精製の豆を選ぶと甘さがさらに開きます。"},
+balance:{t:"調和の一杯",o:"コロンビア または グアテマラ",b:"ペーパードリップ または フレンチプレス(中煎り)",p:"あなたは全体のバランスを大切にするタイプ。甘み・酸味・コクの揃った中煎りが日常の相棒に。まずは王道のコロンビアから。"},
+deep:{t:"黄昏の一杯",o:"インドネシア(マンデリン) または ブラジル深煎り",b:"フレンチプレス または マキネッタ(深煎り)",p:"あなたはコクと余韻を味わうタイプ。どっしりした深煎りを、夕暮れの読書と共に。ミルクを注いでも豆が負けません。"},
+adventure:{t:"冒険者の一杯",o:"パナマ・ゲイシャ または アナエロビック精製の豆",b:"エアロプレス(レシピを変えて実験を)",p:"あなたは未知の味を探すタイプ。品種や精製の違いを飲み比べる楽しみが待っています。焙煎所で「変わった豆はありますか?」と聞いてみて。"},
+gentle:{t:"月夜の一杯",o:"ブラジル または デカフェのコロンビア",b:"水出し(コールドブリュー)",p:"あなたは穏やかさと優しさを求めるタイプ。苦味も渋みも角が取れた水出しを。夜はデカフェにすれば、眠りを妨げずに珈琲時間を楽しめます。"}
+};
+
+const QUIZ = [
+{q:"珈琲を飲みたくなるのは、どんな時間?",o:[["朝、一日の始まりに","sunny"],["昼、仕事や作業の合間に","balance"],["夕方〜夜、ゆっくりしたい時に","deep"],["時間は関係なく、面白い豆に出会った時","adventure"]]},
+{q:"果物なら、どれが好き?",o:[["柑橘やベリー","sunny"],["りんごや桃","balance"],["カカオの効いたチョコ(果物より)","deep"],["ライチやマンゴーなど珍しいもの","adventure"]]},
+{q:"苦味についての本音は?",o:[["正直、苦いのは得意じゃない","gentle"],["ほどよい苦味なら好き","balance"],["苦味こそ珈琲の醍醐味","deep"],["苦味より「未知の風味」が気になる","adventure"]]},
+{q:"喫茶店で頼むなら?",o:[["香りの良い本日のコーヒー","sunny"],["定番のブレンド","balance"],["カフェオレ・カプチーノ","deep"],["メニューで一番見慣れない一杯","adventure"]]},
+{q:"珈琲に求めるものは?",o:[["目覚めと元気","sunny"],["ほっとする安心感","gentle"],["集中と没入","deep"],["発見と驚き","adventure"]]}
+];
+
+/* =================== 描画 =================== */
+function beansHTML(n,dark){let h='<span class="beans">';for(let i=1;i<=5;i++)h+=`<span class="bean${i<=n?' on':''}${dark?' dark':''}"></span>`;return h+'</span>';}
+function meter(lbl,n,dark){return `<div class="meter"><span class="lbl">${lbl}</span>${beansHTML(n,dark)}</div>`;}
+
+function originCard(o){
+  return `<div class="card" data-region="${o.r}">
+    <h2>${o.n} <span class="tag copper" style="vertical-align:middle">${o.tag}</span></h2>
+    ${meter("酸味",o.a)}${meter("コク",o.b,true)}${meter("甘み",o.s)}${meter("苦味",o.bt,true)}
+    <p style="font-size:14px;margin-top:8px">${o.f}</p>
+    <div class="tip">☕ ${o.how}</div>
+  </div>`;
+}
+
+function renderOrigins(region){
+  document.getElementById('originList').innerHTML =
+    ORIGINS.filter(o=>region==='すべて'||o.r===region).map(originCard).join('');
+}
+
+function initOriginFilters(){
+  const regions=['すべて','アフリカ','中南米','アジア'];
+  const wrap=document.getElementById('originFilters');
+  wrap.innerHTML=regions.map((r,i)=>`<button class="${i===0?'active':''}" data-r="${r}">${r}</button>`).join('');
+  wrap.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    wrap.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderOrigins(b.dataset.r);
+  }));
+  renderOrigins('すべて');
+}
+
+function renderBrews(){
+  const dstr=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+  document.getElementById('brewList').innerHTML = BREWS.map(b=>`
+  <div class="card">
+    <details>
+      <summary>${b.n}<span class="arrow">▶</span></summary>
+      <div class="body">
+        <span class="tag velvet">難易度 ${dstr(b.d)}</span>
+        <span class="tag line">${b.t}</span>
+        <span class="tag cherry">${b.taste}</span>
+        <ol class="steps" style="margin-top:10px">${b.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <div class="tip">☕ ${b.tip}</div>
+      </div>
+    </details>
+  </div>`).join('');
+}
+
+function renderProcess(){
+  document.getElementById('processList').innerHTML = PROCESSES.map(p=>`
+    <details><summary>${p.n}<span class="arrow">▶</span></summary>
+    <div class="body"><span class="tag copper">${p.key}</span><p style="margin-top:6px">${p.body}</p></div></details>`).join('');
+  document.getElementById('roastList').innerHTML = ROASTS.map(r=>`
+    <div style="padding:8px 0;border-top:1px solid #E7D9C2">
+      <b style="color:var(--wood);font-size:14px">${r.n}</b>
+      ${meter("酸味",r.a)}${meter("苦味",r.bt,true)}
+      <p style="font-size:13px;color:var(--faint)">${r.f}</p>
+    </div>`).join('');
+}
+
+function renderStories(){
+  document.getElementById('episodeList').innerHTML = EPISODES.map(e=>`
+    <div class="episode"><span class="who">${e.w}</span><span class="era">${e.e}</span><p>${e.p}</p></div>`).join('');
+  document.getElementById('historyList').innerHTML = HISTORY.map(h=>`
+    <div class="episode"><span class="who" style="color:var(--cherry)">${h.y}</span><p>${h.p}</p></div>`).join('');
+}
+
+/* =================== 診断 =================== */
+let qIdx=0, scores={};
+function startQuiz(){qIdx=0;scores={};showQ();}
+function showQ(){
+  document.getElementById('quizBar').style.width=(qIdx/QUIZ.length*100)+'%';
+  const q=QUIZ[qIdx];
+  document.getElementById('quizArea').innerHTML=`
+    <div class="quiz-q">Q${qIdx+1}. ${q.q}</div>
+    <div class="quiz-opts">${q.o.map((o,i)=>`<button data-i="${i}">${o[0]}</button>`).join('')}</div>`;
+  document.querySelectorAll('#quizArea .quiz-opts button').forEach(b=>b.addEventListener('click',()=>{
+    const key=q.o[+b.dataset.i][1];scores[key]=(scores[key]||0)+1;
+    qIdx++; qIdx<QUIZ.length?showQ():showResult();
+  }));
+}
+function showResult(){
+  document.getElementById('quizBar').style.width='100%';
+  let best='balance',bv=-1;
+  for(const k in scores){if(scores[k]>bv){bv=scores[k];best=k;}}
+  const r=RESULTS[best];
+  document.getElementById('quizArea').innerHTML=`
+    <div class="karte">
+      <div class="stamp">お見立て<br>済</div>
+      <p class="note" style="letter-spacing:.2em">診断カルテ</p>
+      <h3>「${r.t}」</h3>
+      <p style="font-size:14px;margin-top:10px"><b>おすすめの豆:</b> ${r.o}</p>
+      <p style="font-size:14px"><b>おすすめの淹れ方:</b> ${r.b}</p>
+      <p style="font-size:14px;margin-top:8px">${r.p}</p>
+    </div>
+    <button class="btn copper" id="retryQuiz">もう一度診断する</button>
+    <button class="btn" id="goOrigin">産地図鑑で豆を見る</button>`;
+  document.getElementById('retryQuiz').addEventListener('click',startQuiz);
+  document.getElementById('goOrigin').addEventListener('click',()=>switchTo('sec-origin'));
+}
+
+/* =================== 今日の一杯 =================== */
+function renderToday(){
+  const now=new Date();
+  const days=['日','月','火','水','木','金','土'];
+  document.getElementById('todayDate').textContent=
+    `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日(${days[now.getDay()]})`;
+  const seed=Math.floor(now.getTime()/86400000);
+  document.getElementById('todayTip').textContent=TIPS[seed%TIPS.length];
+  const o=ORIGINS[seed%ORIGINS.length];
+  document.getElementById('todayOrigin').innerHTML=originCard(o).replace('class="card"','class=""');
+}
+
+/* =================== ナビ =================== */
+function switchTo(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.sec===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>switchTo(b.dataset.sec)));
+
+/* =================== 初期化 =================== */
+renderToday();initOriginFilters();renderBrews();renderProcess();renderStories();startQuiz();
+</script>
+</body>
+</html>
