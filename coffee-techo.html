@@ -48,6 +48,17 @@ header h1 .steam{display:inline-block;animation:steam 3.2s ease-in-out infinite;
 @keyframes steam{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(4deg)}}
 @media (prefers-reduced-motion: reduce){header h1 .steam{animation:none}}
 header .sub{font-size:12px;color:#BCA88F;letter-spacing:.12em;margin-top:4px}
+/* ===== 写真 ===== */
+.photo{
+  width:100%;display:block;border-radius:12px;
+  border:1px solid #E7D9C2;box-shadow:0 3px 14px rgba(0,0,0,.35);
+  margin-bottom:14px;object-fit:cover;
+}
+.photo.hero{
+  height:190px;border-radius:0;border:none;margin-bottom:0;
+  border-bottom:3px double var(--copper);filter:saturate(1.05) contrast(1.02);
+}
+.photo.banner{height:150px}
 /* ===== ナビ ===== */
 nav{
   position:fixed;bottom:0;left:0;right:0;z-index:50;
@@ -180,6 +191,8 @@ footer{
   <h1>珈琲手帖<span class="steam">☕</span></h1>
   <div class="sub">一杯を深く楽しむための小さな図鑑</div>
 </header>
+<img class="photo hero" alt="ハートのラテアートが描かれた一杯の珈琲" loading="eager" onerror="this.style.display='none'"
+  src="https://images.unsplash.com/photo-1426174840074-541ae41efdb9?fm=jpg&q=70&w=1080&auto=format&fit=crop">
 
 <main>
 
@@ -210,6 +223,8 @@ footer{
 
 <!-- ============ 産地図鑑 ============ -->
 <section id="sec-origin">
+  <img class="photo banner" alt="つややかに焙煎されたコーヒー豆" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1422207109431-97544339f995?fm=jpg&q=70&w=1080&auto=format&fit=crop">
   <div class="card">
     <h2>世界の産地図鑑</h2>
     <p class="note">豆マーク(<span style="color:var(--copper)">●</span>)が多いほどその味が強い、を表します。</p>
@@ -220,6 +235,8 @@ footer{
 
 <!-- ============ 淹れ方 ============ -->
 <section id="sec-brew">
+  <img class="photo banner" alt="ケトルからドリッパーへお湯を注ぐハンドドリップ" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1688366136186-6af7dae834b2?fm=jpg&q=70&w=1080&auto=format&fit=crop">
   <div class="card">
     <h2>淹れ方ガイド</h2>
     <p class="note">同じ豆でも、器具が変われば別の一杯に。難易度と所要時間つき。</p>
@@ -229,6 +246,8 @@ footer{
 
 <!-- ============ 精製・焙煎 ============ -->
 <section id="sec-process">
+  <img class="photo banner" alt="焙煎したコーヒー豆のクローズアップ" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1422207109431-97544339f995?fm=jpg&q=70&w=1080&h=400&auto=format&fit=crop&crop=entropy">
   <div class="card">
     <h2>ウォッシュド? ナチュラル?</h2>
     <p style="font-size:14px">「精製(プロセス)」とは、収穫したコーヒーチェリーから<b>種(=豆)を取り出す方法</b>のこと。同じ農園の同じ豆でも、精製が違えば味はまるで別物になります。</p>
@@ -254,6 +273,8 @@ footer{
 
 <!-- ============ 物語 ============ -->
 <section id="sec-story">
+  <img class="photo banner" alt="アンティーク調の照明が灯る落ち着いた喫茶店の店内" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1743342693571-e91a796317f8?fm=jpg&q=70&w=1080&auto=format&fit=crop">
   <div class="card">
     <h2>偉人と珈琲</h2>
     <div id="episodeList"></div>
