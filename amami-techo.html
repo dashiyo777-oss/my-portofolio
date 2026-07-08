@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あまみ手帖｜スイーツと果物の「へぇ」を集める</title>
+<meta name="description" content="ドバイチョコから桐箱入りの高級柿まで。話題のスイーツと果物の意外な話を集めた小さな手帖。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F4E9;        /* 生成りの紙 */
+  --ink:#37271C;          /* チョコレート色の墨 */
+  --ink-soft:#6B584A;
+  --pistachio:#7C9A55;    /* ピスタチオ */
+  --pistachio-deep:#4E6B36;
+  --pistachio-pale:#E6ECD6;
+  --berry:#CE4A66;        /* いちご */
+  --kaki:#D98B3F;         /* 柿 */
+  --choco:#4A3323;
+  --line:#D9D2BC;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Zen Kaku Gothic New",-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.85;
+  font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif}
+
+/* ===== ヘッダー ===== */
+header{
+  padding:14px 20px 10px;
+  display:flex;align-items:baseline;justify-content:space-between;
+  border-bottom:1px solid var(--line);
+}
+.brand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.25rem;letter-spacing:.14em}
+.brand em{font-style:normal;color:var(--pistachio-deep)}
+.brand-sub{font-size:.68rem;color:var(--ink-soft);letter-spacing:.08em}
+
+/* ===== ヒーロー：ドバイチョコの断面 ===== */
+.hero{padding:44px 22px 30px;text-align:center;overflow:hidden}
+.hero h1{
+  font-family:"Shippori Mincho B1",serif;font-weight:800;
+  font-size:clamp(1.7rem,7.2vw,2.6rem);
+  letter-spacing:.06em;line-height:1.45;
+}
+.hero h1 .green{color:var(--pistachio-deep)}
+.hero p.lead{max-width:560px;margin:16px auto 0;color:var(--ink-soft);font-size:.92rem;text-align:left}
+
+/* CSSで描くドバイチョコの割れ断面 */
+.choco-art{
+  width:min(320px,82vw);height:96px;margin:30px auto 6px;position:relative;
+}
+.choco-half{
+  position:absolute;top:0;width:50%;height:100%;background:var(--choco);
+  box-shadow:inset 0 -8px 0 rgba(0,0,0,.18), inset 0 6px 0 rgba(255,255,255,.07);
+}
+.choco-half.left{left:0;border-radius:12px 0 0 12px;transform:rotate(-2.5deg);transform-origin:right center}
+.choco-half.right{right:0;border-radius:0 12px 12px 0;transform:rotate(2.5deg);transform-origin:left center}
+.choco-fill{
+  position:absolute;top:12px;height:72px;width:26%;
+  background:
+    repeating-linear-gradient(115deg, #B9CE8A 0 3px, #9DBA69 3px 6px, #CDDCA4 6px 9px);
+  border-radius:4px;
+}
+.choco-fill.l{left:24.5%;border-radius:4px 10px 10px 4px}
+.choco-fill.r{right:24.5%;border-radius:10px 4px 4px 10px}
+.choco-caption{font-size:.7rem;color:var(--ink-soft);letter-spacing:.12em}
+@media (prefers-reduced-motion: no-preference){
+  .choco-half.left{animation:crackL 1.1s cubic-bezier(.2,.8,.3,1) .3s both}
+  .choco-half.right{animation:crackR 1.1s cubic-bezier(.2,.8,.3,1) .3s both}
+  @keyframes crackL{from{transform:rotate(0)}to{transform:rotate(-2.5deg)}}
+  @keyframes crackR{from{transform:rotate(0)}to{transform:rotate(2.5deg)}}
+}
+
+/* ===== ナビ ===== */
+nav{
+  position:sticky;top:0;z-index:50;background:var(--paper);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+nav a{
+  flex:1 0 auto;text-align:center;padding:11px 16px;white-space:nowrap;
+  text-decoration:none;color:var(--ink-soft);font-size:.82rem;font-weight:700;letter-spacing:.08em;
+  border-bottom:3px solid transparent;
+}
+nav a:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:-2px}
+nav a.active{color:var(--pistachio-deep);border-bottom-color:var(--pistachio)}
+
+/* ===== セクション共通 ===== */
+section{padding:40px 20px 12px;max-width:640px;margin:0 auto}
+.eyebrow{
+  display:inline-block;font-size:.68rem;letter-spacing:.22em;font-weight:700;
+  color:var(--pistachio-deep);border:1px solid var(--pistachio);border-radius:99px;
+  padding:2px 12px;margin-bottom:10px;background:var(--pistachio-pale);
+}
+h2{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.45rem;letter-spacing:.05em;margin-bottom:6px}
+.sec-lead{color:var(--ink-soft);font-size:.88rem;margin-bottom:22px}
+
+/* ===== カード ===== */
+.card{
+  background:#FFFDF6;border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 18px 14px;margin-bottom:18px;
+  box-shadow:0 1px 0 rgba(55,39,28,.05);
+}
+.card .tag{
+  font-size:.66rem;font-weight:700;letter-spacing:.12em;
+  padding:2px 9px;border-radius:99px;margin-right:6px;
+}
+.tag.trend{background:#F4E3D3;color:#9A5A1E}
+.tag.fruit{background:var(--pistachio-pale);color:var(--pistachio-deep)}
+.tag.luxury{background:#F3DEE3;color:#9A2E4B}
+.tag.conv{background:#E2E7F0;color:#3D5578}
+.card h3{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.08rem;margin:10px 0 8px;line-height:1.5}
+.card p{font-size:.9rem;color:#4A3B2F}
+.card .point{
+  margin-top:12px;padding:10px 12px;background:var(--pistachio-pale);
+  border-radius:8px;font-size:.83rem;line-height:1.7;
+}
+.card .point b{color:var(--pistachio-deep)}
+
+/* へぇボタン */
+.hee-row{display:flex;justify-content:flex-end;margin-top:10px}
+.hee{
+  border:1.5px solid var(--pistachio);background:#fff;color:var(--pistachio-deep);
+  border-radius:99px;padding:6px 16px;font-size:.82rem;font-weight:700;
+  font-family:inherit;cursor:pointer;transition:transform .1s;
+}
+.hee:active{transform:scale(.94)}
+.hee.done{background:var(--pistachio-deep);border-color:var(--pistachio-deep);color:#fff}
+.hee:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ===== クイズ ===== */
+.quiz-box{
+  background:#FFFDF6;border:1.5px solid var(--choco);border-radius:var(--radius);
+  padding:22px 18px;
+}
+.quiz-progress{font-size:.74rem;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:8px;font-weight:700}
+.quiz-q{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.05rem;line-height:1.7;margin-bottom:16px}
+.quiz-opts{display:grid;gap:10px}
+.quiz-opts button{
+  text-align:left;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;
+  background:#fff;font-family:inherit;font-size:.9rem;color:var(--ink);cursor:pointer;line-height:1.6;
+}
+.quiz-opts button:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:1px}
+.quiz-opts button.correct{border-color:var(--pistachio-deep);background:var(--pistachio-pale);font-weight:700}
+.quiz-opts button.wrong{border-color:var(--berry);background:#F9E7EB;color:var(--berry)}
+.quiz-opts button:disabled{cursor:default}
+.quiz-explain{
+  margin-top:14px;padding:12px 14px;background:var(--pistachio-pale);border-radius:10px;
+  font-size:.85rem;display:none;
+}
+.quiz-explain.show{display:block}
+.quiz-explain .verdict{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1rem;margin-bottom:4px}
+.quiz-next{
+  margin-top:14px;width:100%;padding:12px;border:none;border-radius:10px;
+  background:var(--choco);color:#fff;font-family:inherit;font-weight:700;font-size:.92rem;
+  cursor:pointer;display:none;letter-spacing:.1em;
+}
+.quiz-next.show{display:block}
+.quiz-next:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:2px}
+.quiz-result{text-align:center;display:none}
+.quiz-result.show{display:block}
+.quiz-score{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:2.4rem;color:var(--pistachio-deep);margin:8px 0 2px}
+.quiz-rank{font-size:.95rem;font-weight:700;margin-bottom:8px}
+.quiz-result p{font-size:.85rem;color:var(--ink-soft)}
+
+/* ===== 食べたいリスト ===== */
+.want-list{display:grid;gap:10px}
+.want{
+  display:flex;align-items:center;gap:12px;background:#FFFDF6;
+  border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;
+}
+.want input{width:20px;height:20px;accent-color:var(--pistachio-deep);flex-shrink:0}
+.want .w-name{font-weight:700;font-size:.9rem}
+.want .w-note{font-size:.76rem;color:var(--ink-soft)}
+.want.checked{background:var(--pistachio-pale)}
+.want.checked .w-name{text-decoration:line-through;color:var(--ink-soft)}
+.want-count{margin-top:14px;font-size:.85rem;text-align:center;color:var(--pistachio-deep);font-weight:700}
+
+footer{
+  margin-top:48px;padding:26px 20px 40px;border-top:1px solid var(--line);
+  text-align:center;font-size:.74rem;color:var(--ink-soft);line-height:2;
+}
+footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:.95rem;color:var(--ink);letter-spacing:.14em}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="brand">あまみ<em>手帖</em></div>
+    <div class="brand-sub">スイーツと果物の「へぇ」を集める</div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>割った断面が、<br>世界を騒がせた。<span class="green">緑</span>の話から。</h1>
+  <div class="choco-art" aria-hidden="true">
+    <div class="choco-half left"></div>
+    <div class="choco-half right"></div>
+    <div class="choco-fill l"></div>
+    <div class="choco-fill r"></div>
+  </div>
+  <div class="choco-caption">── ドバイチョコレートの断面（イメージ）──</div>
+  <p class="lead">板チョコを割ると、鮮やかなピスタチオグリーンの断面と「ザクッ」という音。SNSで世界に広まったドバイチョコから、皮ごと食べられるバナナ、桐箱に納められる高級柿まで。知るとちょっと嬉しくなる、甘いものの話を集めました。</p>
+</div>
+
+<nav id="nav">
+  <a href="#trend" class="active">いま話題</a>
+  <a href="#fruit">果物の意外な話</a>
+  <a href="#luxury">高級果実の世界</a>
+  <a href="#conv">コンビニスイーツ</a>
+  <a href="#quiz">検定クイズ</a>
+  <a href="#want">食べたい帖</a>
+</nav>
+
+<!-- ===== いま話題 ===== -->
+<section id="trend">
+  <span class="eyebrow">TREND</span>
+  <h2>いま話題のスイーツ</h2>
+  <p class="sec-lead">SNS発のブームは、韓国を経由して日本へ──という流れが定番になりました。</p>
+
+  <div class="card">
+    <span class="tag trend">ブームの本家</span>
+    <h3>ドバイチョコレート</h3>
+    <p>ドバイのブランド「FIX Dessert Chocolatier」が生んだ板チョコ。中身は<b>ピスタチオクリーム</b>と、「天使の髪」とも呼ばれる極細の麺状生地<b>カダイフ</b>。割った瞬間の緑の断面と、噛んだときの「ザクッ」という音がASMR動画としてTikTokで拡散し、世界的ブームになりました。中東の伝統菓子クナーファ（カダイフ＋チーズ＋シロップ）が発想の原点です。</p>
+    <div class="point"><b>豆知識：</b>カダイフが手に入らないとき、日本では「皿うどんの麺」で代用する再現レシピが話題になりました。意外と本格的な食感になるそうです。</div>
+    <div class="hee-row"><button class="hee" data-key="dubai">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag trend">2026年の進化系</span>
+    <h3>ドバイチョコ餅 と エンジェルヘアーチョコ</h3>
+    <p>ブームは終わらず進化中。韓国発の<b>ドバイチョコ餅</b>（もちもち×ザクザクの二重食感）は高校生トレンド調査で1位に。さらに「次に来る」と予測されるのが、トルコの伝統菓子ピシュマニエを使った<b>エンジェルヘアーチョコ</b>。外はパリッ、中は綿菓子のようにふわっ──相反する食感の同居が、ヒットの方程式と言われています。</p>
+    <div class="point"><b>ヒットの法則：</b>単一の食感より「ザクザク＋もちもち」「パリッ＋ふわっ」のような<b>食感のコントラスト</b>があるほうが、人は夢中になりやすいのだとか。</div>
+    <div class="hee-row"><button class="hee" data-key="mochi">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag trend">アイス</span>
+    <h3>「重たい系」アイスの逆襲</h3>
+    <p>ピスタチオブームはアイスにも波及。濃厚なピスタチオペーストをこれでもかと使ったジェラートや、トルコの「伸びるアイス」ドンドルマ（サーレップというランの球根の粉ともち米粉が粘りの秘密）も再注目されています。さっぱり系全盛だった時代から、「濃厚・重たい・背徳感」へと振り子が戻っているのが最近の傾向です。</p>
+    <div class="hee-row"><button class="hee" data-key="ice">へぇ +1</button></div>
+  </div>
+</section>
+
+<!-- ===== 果物の意外な話 ===== -->
+<section id="fruit">
+  <span class="eyebrow">FRUITS</span>
+  <h2>果物の意外な話</h2>
+  <p class="sec-lead">毎日食べている果物にも、知らない顔がたくさんあります。</p>
+
+  <div class="card">
+    <span class="tag fruit">品種の話</span>
+    <h3>皮ごと食べられるバナナがある</h3>
+    <p>岡山県の企業が開発した「もんげーバナナ」が代表格。<b>マイナス60℃で凍結させた種や苗を解凍してから育てる「凍結解凍覚醒法」</b>という独自技術で、熱帯の植物であるバナナを日本の気候で栽培します。国内栽培なので防カビ剤などのポストハーベスト農薬が不要、皮が薄くて渋みが少なく、<b>皮ごと</b>食べられるのが特徴です。</p>
+    <div class="point"><b>ついでに：</b>植物学的には、バナナは「ベリー（液果）」の仲間。逆にイチゴは、定義上ベリーではありません。</div>
+    <div class="hee-row"><button class="hee" data-key="banana">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">味覚の不思議</span>
+    <h3>レモンやパッションフルーツが甘く感じる果実</h3>
+    <p>西アフリカ原産の<b>ミラクルフルーツ</b>。この赤い小さな実を先に食べると、含まれるタンパク質<b>「ミラクリン」</b>が舌の甘味受容体にくっつき、酸味が加わったときだけ甘味センサーが作動する状態になります。その後にレモンやパッションフルーツを食べると、砂糖をかけたように甘く感じるのです。効果はおよそ30分〜2時間。</p>
+    <div class="point"><b>豆知識：</b>ミラクルフルーツ自体はほとんど甘くありません。「甘くする」のではなく「甘く<b>感じさせる</b>」──脳の錯覚を利用した果実です。糖を使わないため、糖分制限中の方のデザート研究にも応用されています。</div>
+    <div class="hee-row"><button class="hee" data-key="miracle">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">柿</span>
+    <h3>「柿が赤くなると、医者が青くなる」</h3>
+    <p>柿1個には、レモン果汁よりずっと多いビタミンCが含まれ、1日の必要量をほぼまかなえるほど。ことわざは伊達ではありません。渋柿の渋み成分タンニンは、干すことで水に溶けない形に変わるため、干し柿は渋くない──「渋が抜ける」のではなく「渋を感じなくなる」だけ、というのも面白いところです。</p>
+    <div class="hee-row"><button class="hee" data-key="kaki">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">イチゴ</span>
+    <h3>イチゴの「果実」は表面のつぶつぶ</h3>
+    <p>私たちが食べている赤い部分は、植物学的には茎の先端がふくらんだ「花托（かたく）」。本当の果実は、表面にある小さなつぶつぶ（痩果）のほうで、その一粒一粒の中に種が入っています。ちなみに「初恋の香り」「淡雪」などの<b>白いイチゴ</b>は、赤い色素アントシアニンをほとんど作らないよう育種された品種です。</p>
+    <div class="hee-row"><button class="hee" data-key="ichigo">へぇ +1</button></div>
+  </div>
+</section>
+
+<!-- ===== 高級果実の世界 ===== -->
+<section id="luxury">
+  <span class="eyebrow">LUXURY</span>
+  <h2>高級果実の世界</h2>
+  <p class="sec-lead">果物が「宝石」になる国、日本。贈答文化が育てた別世界です。</p>
+
+  <div class="card">
+    <span class="tag luxury">柿</span>
+    <h3>桐箱に納められる柿「天下富舞」</h3>
+    <p>岐阜県生まれの新品種「ねおスイート」のうち、糖度などの厳しい基準を満たした最上級品だけが名乗れるブランド柿<b>「天下富舞（てんかふぶ）」</b>。初競りでは<b>2個で数十万円</b>という値がつき、最高ランク「天下人」は桐箱に恭しく納められて出荷されます。糖度は高いもので25度前後──メロンを大きく超える甘さです。</p>
+    <div class="point"><b>なぜ桐箱？</b>桐は湿度を一定に保ち、防虫効果もある日本の伝統的な保存材。高級な着物や刀と同じ扱いを、柿が受けているわけです。檜（ひのき）の箱が使われる高級フルーツギフトもあり、「木の箱に入る果物」は日本の贈答文化ならではの風景です。</div>
+    <div class="hee-row"><button class="hee" data-key="tenkafubu">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">ぶどう</span>
+    <h3>1房100万円超のぶどう「ルビーロマン」</h3>
+    <p>石川県が約14年かけて開発した巨大粒の赤ぶどう。一粒が500円玉より大きく、初競りでは<b>1房150万円超</b>の記録も。粒の大きさ・重さ・糖度・色に厳格な基準があり、基準に満たないものは「ルビーロマン」を名乗れません。品種流出を防ぐため、苗木の県外持ち出しも厳しく管理されています。</p>
+    <div class="hee-row"><button class="hee" data-key="ruby">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">メロン</span>
+    <h3>一本の木に、一玉だけ</h3>
+    <p>静岡のクラウンメロンに代表される高級マスクメロンは、一株に実を一玉だけ残して他をすべて摘み取る<b>「一茎一果」</b>で育てられます。養分を一玉に集中させるための、究極の引き算。表面の網目は、実の成長に皮が追いつかず「ひび割れて、かさぶたのように治った跡」──つまり美しい網目は、傷の芸術なのです。</p>
+    <div class="hee-row"><button class="hee" data-key="melon">へぇ +1</button></div>
+  </div>
+</section>
+
+<!-- ===== コンビニスイーツ ===== -->
+<section id="conv">
+  <span class="eyebrow">CONVENIENCE</span>
+  <h2>コンビニスイーツの実力</h2>
+  <p class="sec-lead">「プロが認める」時代を経て、いまや一流シェフが監修する時代へ。</p>
+
+  <div class="card">
+    <span class="tag conv">監修コラボ</span>
+    <h3>一流シェフ×コンビニ、が当たり前に</h3>
+    <p>ファミリーマートと「ケンズカフェ東京」氏家健治シェフのガトーショコラ、ローソンUchi CaféとGODIVAのコラボなど、有名パティシエ・高級ブランドの監修スイーツはすっかり定番化しました。数千円のスペシャリテの技術を数百円で体験できる──日本のコンビニスイーツは、海外からの旅行者が驚く「日本名物」のひとつになっています。</p>
+    <div class="point"><b>背景：</b>コンビニ側は年間を通じた巨大な販売網と冷蔵物流を持ち、シェフ側はレシピと看板を提供する。双方に利がある座組みが、品質競争を一気に引き上げました。</div>
+    <div class="hee-row"><button class="hee" data-key="chef">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag conv">名作の系譜</span>
+    <h3>「バスチー」から「もこ」まで、ヒットの歴史</h3>
+    <p>セブンの「イタリアンプリン」が固めプリンブームを再燃させ、ローソンの「バスチー」はバスクチーズケーキという言葉自体を全国区にしました。ファミマの「スフレ・プリン」、シュー生地の「もこ」シリーズなど、コンビニ発のヒットが世の中のスイーツトレンドを作る──喫茶店や洋菓子店が流行を作った時代からの、大きな地殻変動です。</p>
+    <div class="hee-row"><button class="hee" data-key="basque">へぇ +1</button></div>
+  </div>
+</section>
+
+<!-- ===== クイズ ===== -->
+<section id="quiz">
+  <span class="eyebrow">QUIZ</span>
+  <h2>あまみ検定・全8問</h2>
+  <p class="sec-lead">ここまで読んだあなたなら、きっと解けるはず。</p>
+
+  <div class="quiz-box">
+    <div id="quizPlay">
+      <div class="quiz-progress" id="qProgress">第1問 / 8</div>
+      <div class="quiz-q" id="qText"></div>
+      <div class="quiz-opts" id="qOpts"></div>
+      <div class="quiz-explain" id="qExplain"></div>
+      <button class="quiz-next" id="qNext">次の問題へ</button>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div style="font-size:.8rem;letter-spacing:.2em;color:var(--ink-soft);font-weight:700">あなたの成績</div>
+      <div class="quiz-score"><span id="qScore">0</span><span style="font-size:1.1rem"> / 8</span></div>
+      <div class="quiz-rank" id="qRank"></div>
+      <p id="qComment"></p>
+      <button class="quiz-next show" id="qRetry" style="margin-top:18px">もう一度挑戦する</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 食べたい帖 ===== -->
+<section id="want">
+  <span class="eyebrow">MY LIST</span>
+  <h2>食べたい帖</h2>
+  <p class="sec-lead">気になったものにチェック。食べたら外して、次の一品へ。</p>
+
+  <div class="want-list" id="wantList"></div>
+  <div class="want-count" id="wantCount"></div>
+</section>
+
+<footer>
+  <div class="fbrand">あまみ手帖</div>
+  <div>スイーツと果物の「へぇ」を、一冊に。</div>
+  <div>※ 価格・販売状況などは変動します。掲載内容は読みものとしてお楽しみください。</div>
+</footer>
+
+<script>
+/* ========= 安全なストレージ（使えない環境ではメモリに退避） ========= */
+var mem = {};
+function sget(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k]||null; } }
+function sset(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
+
+/* ========= へぇボタン ========= */
+document.querySelectorAll('.hee').forEach(function(btn){
+  var key = 'hee_'+btn.dataset.key;
+  var n = parseInt(sget(key)||'0',10);
+  if(n>0){ btn.textContent = 'へぇ ×'+n; btn.classList.add('done'); }
+  btn.addEventListener('click', function(){
+    n++; sset(key, String(n));
+    btn.textContent = 'へぇ ×'+n;
+    btn.classList.add('done');
+  });
+});
+
+/* ========= クイズ ========= */
+var QUIZ = [
+  {q:'ドバイチョコレートの中に入っている「極細の麺状の生地」の名前は？',
+   o:['カダイフ','フォー','ビーフン','カペッリーニ'], a:0,
+   e:'正解はカダイフ。「天使の髪」とも呼ばれる中東の伝統食材で、バターでローストするとザクザク食感になります。日本では皿うどんの麺で代用する人も。'},
+  {q:'レモンを甘く感じさせる「ミラクルフルーツ」。その秘密は？',
+   o:['実に大量の糖が含まれる','ミラクリンというタンパク質が舌に作用する','レモンの酸を中和する','香りで脳をだます'], a:1,
+   e:'ミラクリンが舌の甘味受容体に結合し、酸味があるときだけ甘味センサーが働く状態に。実そのものはほとんど甘くありません。'},
+  {q:'皮ごと食べられる国産バナナ「もんげーバナナ」の栽培技術は？',
+   o:['真夏の温室で育てる','マイナス60℃で凍結・解凍してから育てる','海水で育てる','宇宙で発芽させる'], a:1,
+   e:'「凍結解凍覚醒法」。種や苗を超低温で凍結してから解凍・栽培することで、熱帯植物のバナナが日本の気候でも育つようになります。国内栽培なので防カビ剤も不要。'},
+  {q:'高級柿「天下富舞」の最高ランク品が納められる箱は？',
+   o:['漆塗りの重箱','桐箱','ガラスケース','竹かご'], a:1,
+   e:'桐箱です。桐は湿度を保ち防虫効果もある伝統素材。初競りでは2個で数十万円の値がつくことも。'},
+  {q:'植物学の定義で「ベリー（液果）」に分類されるのはどっち？',
+   o:['イチゴ','バナナ'], a:1,
+   e:'意外にもバナナがベリーの仲間。イチゴの食べている部分は茎の先端（花托）で、本当の果実は表面のつぶつぶのほうです。'},
+  {q:'石川県のぶどう「ルビーロマン」、初競りでの最高記録に近いのは？',
+   o:['1房 約1万5千円','1房 約15万円','1房 150万円超','1房 1500万円'], a:2,
+   e:'1房150万円を超えた年もあります。一粒500円玉大という厳しい基準を満たしたものだけが名乗れるブランドです。'},
+  {q:'高級マスクメロンの美しい網目模様の正体は？',
+   o:['品種改良で描かれた模様','成長中のひび割れが治った跡','日焼けの跡','人の手で彫った飾り'], a:1,
+   e:'実の成長に皮が追いつかずひび割れ、それがかさぶた状に治った跡が網目に。傷が芸術になった例です。'},
+  {q:'2026年、「次に来る」と注目されるトルコ菓子由来のチョコは？',
+   o:['エンジェルヘアーチョコ','スノーホワイトチョコ','サンドストームチョコ','マーメイドチョコ'], a:0,
+   e:'綿菓子のような伝統菓子ピシュマニエを使った「エンジェルヘアーチョコ」。外はパリッ、中はふわっ──食感のコントラストがヒットの方程式です。'}
+];
+var qi=0, score=0;
+var qText=document.getElementById('qText'), qOpts=document.getElementById('qOpts'),
+    qExplain=document.getElementById('qExplain'), qNext=document.getElementById('qNext'),
+    qProgress=document.getElementById('qProgress');
+
+function renderQ(){
+  var Q=QUIZ[qi];
+  qProgress.textContent='第'+(qi+1)+'問 / '+QUIZ.length;
+  qText.textContent=Q.q;
+  qOpts.innerHTML='';
+  qExplain.className='quiz-explain'; qNext.className='quiz-next';
+  Q.o.forEach(function(opt,i){
+    var b=document.createElement('button');
+    b.textContent=opt;
+    b.addEventListener('click',function(){ answer(i,b); });
+    qOpts.appendChild(b);
+  });
+}
+function answer(i,btn){
+  var Q=QUIZ[qi];
+  var ok=(i===Q.a);
+  if(ok) score++;
+  Array.prototype.forEach.call(qOpts.children,function(b,j){
+    b.disabled=true;
+    if(j===Q.a) b.classList.add('correct');
+  });
+  if(!ok) btn.classList.add('wrong');
+  qExplain.innerHTML='<div class="verdict">'+(ok?'○ 正解！':'× ざんねん…')+'</div>'+Q.e;
+  qExplain.classList.add('show');
+  qNext.textContent=(qi===QUIZ.length-1)?'結果を見る':'次の問題へ';
+  qNext.classList.add('show');
+}
+qNext.addEventListener('click',function(){
+  qi++;
+  if(qi<QUIZ.length){ renderQ(); }
+  else{
+    document.getElementById('quizPlay').style.display='none';
+    var r=document.getElementById('quizResult');
+    r.classList.add('show');
+    document.getElementById('qScore').textContent=score;
+    var rank,com;
+    if(score===8){rank='師範｜あまみ博士';com='完璧です。もう果物売り場で講釈できます。';}
+    else if(score>=6){rank='上級｜あまみ通';com='かなりの知識量。惜しかった問題をもう一度どうぞ。';}
+    else if(score>=4){rank='中級｜あまみ好き';com='いい線です。記事を読み返せば満点も近い。';}
+    else{rank='入門｜のびしろ十分';com='ここからが楽しいところ。もう一周いかがですか。';}
+    document.getElementById('qRank').textContent=rank;
+    document.getElementById('qComment').textContent=com;
+  }
+});
+document.getElementById('qRetry').addEventListener('click',function(){
+  qi=0;score=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizPlay').style.display='block';
+  renderQ();
+});
+renderQ();
+
+/* ========= 食べたい帖 ========= */
+var WANTS=[
+  {id:'w1', name:'ドバイチョコレート（本家系）', note:'割る瞬間の音まで味わう'},
+  {id:'w2', name:'ドバイチョコ餅', note:'もちもち×ザクザクの二重食感'},
+  {id:'w3', name:'エンジェルヘアーチョコ', note:'2026年注目・パリッ＆ふわっ'},
+  {id:'w4', name:'もんげーバナナ（皮ごと）', note:'国産・凍結解凍覚醒法'},
+  {id:'w5', name:'ミラクルフルーツ＋レモン体験', note:'味覚の錯覚を試す'},
+  {id:'w6', name:'天下富舞（柿）', note:'桐箱入り・糖度20度超の世界'},
+  {id:'w7', name:'ルビーロマン', note:'一粒500円玉サイズ'},
+  {id:'w8', name:'白いイチゴ（初恋の香り など）', note:'香りは完熟、色は純白'},
+  {id:'w9', name:'シェフ監修コンビニスイーツ', note:'数百円で一流の技を'},
+  {id:'w10',name:'ドンドルマ（伸びるトルコアイス）', note:'伸びる秘密はサーレップ'}
+];
+var list=document.getElementById('wantList');
+function renderWants(){
+  list.innerHTML='';
+  var done=0;
+  WANTS.forEach(function(w){
+    var checked = sget('want_'+w.id)==='1';
+    if(checked) done++;
+    var label=document.createElement('label');
+    label.className='want'+(checked?' checked':'');
+    label.innerHTML='<input type="checkbox" '+(checked?'checked':'')+' aria-label="'+w.name+'">'+
+      '<span><span class="w-name">'+w.name+'</span><br><span class="w-note">'+w.note+'</span></span>';
+    label.querySelector('input').addEventListener('change',function(e){
+      sset('want_'+w.id, e.target.checked?'1':'0');
+      renderWants();
+    });
+    list.appendChild(label);
+  });
+  document.getElementById('wantCount').textContent =
+    done===0 ? 'まだこれから。気になるものにチェックを。'
+             : done+' / '+WANTS.length+' 品を制覇しました';
+}
+renderWants();
+
+/* ========= ナビのアクティブ切替 ========= */
+var links=document.querySelectorAll('nav a');
+var secs=Array.prototype.map.call(links,function(a){return document.querySelector(a.getAttribute('href'));});
+window.addEventListener('scroll',function(){
+  var y=window.scrollY+120, idx=0;
+  secs.forEach(function(s,i){ if(s && s.offsetTop<=y) idx=i; });
+  links.forEach(function(a,i){ a.classList.toggle('active',i===idx); });
+},{passive:true});
+</script>
+</body>
+</html>
