@@ -22,8 +22,11 @@
     try {
       var s = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
       var browserLang = (navigator.language || "ja").slice(0, 2) === "en" ? "en" : "ja";
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       return {
         lang: s.lang || browserLang,
+        // テーマ: "light" | "dark"（初回はOS設定に追従）
+        theme: s.theme || (prefersDark ? "dark" : "light"),
         // 信頼性フィルタ（好みとして永続）: "all" | "expert" | "study" | "reviewed"
         quality: s.quality || "all",
         // 並び替え（好みとして永続）: "score" | "felt" | "tried" | "min"
@@ -34,10 +37,18 @@
         user: s.user || {}
       };
     } catch (e) {
-      return { lang: "ja", quality: "all", sort: "score", saved: {}, user: {} };
+      return { lang: "ja", theme: "light", quality: "all", sort: "score", saved: {}, user: {} };
     }
   }
   function save() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+  // ── テーマ適用（html[data-theme] とブラウザUI色を切替） ──
+  function applyTheme() {
+    document.documentElement.setAttribute("data-theme", state.theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", state.theme === "dark" ? "#101817" : "#2f8f83");
+  }
+  applyTheme();
   function userOf(id) {
     if (!state.user[id]) state.user[id] = { tried: false, feedback: null, tipped: 0 };
     return state.user[id];
@@ -124,7 +135,17 @@
     linkCopied:   { ja: "✓ リンクをコピーしました", en: "✓ Link copied" },
     savedFilter:  { ja: "保存済み", en: "Saved" },
     noSaved:      { ja: "保存した知恵はまだありません。カードの ☆ で保存できます。",
-                    en: "No saved tips yet. Tap ☆ on a card to save one." }
+                    en: "No saved tips yet. Tap ☆ on a card to save one." },
+    filters:      { ja: "絞り込み・並び替え", en: "Filter & sort" },
+    random:       { ja: "🎲 おまかせで1つ", en: "🎲 Surprise me" },
+    myPage:       { ja: "マイ記録", en: "My records" },
+    meSavedSec:   { ja: "保存した知恵", en: "Saved tips" },
+    meTriedSec:   { ja: "やってみた知恵", en: "Tips you tried" },
+    meTriedN:     { ja: "やってみた", en: "Tried" },
+    meWorkedN:    { ja: "効いた", en: "Worked" },
+    meSavedN:     { ja: "保存", en: "Saved" },
+    meEmpty:      { ja: "まだ記録がありません。気になる知恵を試してみましょう。", en: "No records yet. Try a tip you like!" },
+    toTop:        { ja: "トップへ", en: "Top" }
   };
   function t(key) { return (STR[key] && STR[key][state.lang]) || key; }
   function L(obj) { if (!obj) return ""; return obj[state.lang] || obj.ja || obj.en || ""; }
@@ -248,6 +269,7 @@
     if (parts[0] === "c" && parts[1]) return renderDetail(decodeURIComponent(parts[1]));
     if (parts[0] === "u" && parts[1]) return renderContributor(decodeURIComponent(parts[1]));
     if (parts[0] === "score") return renderScore();
+    if (parts[0] === "me") return renderMe();
     if (parts[0] === "g" && parts[1]) { currentFilter = { genre: parts[1], tag: null }; return renderHome(); }
     if (parts[0] === "t" && parts[1]) { currentFilter = { genre: null, tag: decodeURIComponent(parts[1]) }; return renderHome(); }
     currentFilter = { genre: null, tag: null };
@@ -263,13 +285,15 @@
   function evidenceClass(lv) { return "ev-" + lv; }
 
   function header() {
+    var meBtn = '<a class="iconbtn" href="#/me" title="' + esc(t("myPage")) + '" aria-label="' + esc(t("myPage")) + '">📒</a>';
+    var themeBtn = '<button class="iconbtn" id="themeToggle" aria-label="theme">' + (state.theme === "dark" ? "☀️" : "🌙") + "</button>";
     var langBtn = '<button class="lang" id="langToggle">' + (state.lang === "ja" ? "EN" : "日本語") + "</button>";
     return '' +
       '<header class="topbar">' +
         '<a class="brand" href="#/">' +
           '<span class="brand-mark">効</span>' +
           '<span class="brand-text"><b>' + esc(t("brand")) + '</b><small>' + esc(t("tagline")) + "</small></span>" +
-        "</a>" + langBtn +
+        '</a><div class="hbtns">' + meBtn + themeBtn + langBtn + "</div>" +
       "</header>";
   }
 
@@ -388,23 +412,30 @@
           '<button id="kikuSearchClear" class="sclear" aria-label="clear">×</button>' +
         "</div>" +
         '<div class="chips">' + genreChips + "</div>" +
-        // 信頼性フィルタ（科学的根拠／監修で絞る）
-        '<div class="taglabel">' + esc(t("qualityLabel")) + "</div>" +
-        '<div class="seg" id="kikuQuality">' +
-          ["all", "expert", "study", "reviewed"].map(function (q) {
-            return '<button class="segbtn ' + (state.quality === q ? "on" : "") + '" data-q="' + q + '">' +
-              esc(t("q_" + q)) + "</button>";
-          }).join("") +
+        // 絞り込み・並び替え（折りたたみ。既定値以外が選ばれている時は開いた状態で表示）
+        '<div class="filterbar">' +
+          '<button class="filterbtn' + (filterOpen() ? " open" : "") + '" id="filterToggle" type="button" aria-expanded="' + (filterOpen() ? "true" : "false") + '">⚙ ' +
+            esc(t("filters")) + activeFilterBadge() + "</button>" +
+          '<button class="randbtn" id="randomBtn" type="button">' + esc(t("random")) + "</button>" +
         "</div>" +
-        '<div class="taglabel">' + esc(t("sortLabel")) + "</div>" +
-        '<div class="seg" id="kikuSort">' +
-          ["score", "felt", "tried", "min"].map(function (q) {
-            return '<button class="segbtn ' + (state.sort === q ? "on" : "") + '" data-sort="' + q + '">' +
-              esc(t("sort_" + q)) + "</button>";
-          }).join("") +
+        '<div class="filterpanel" id="filterPanel"' + (filterOpen() ? "" : " hidden") + ">" +
+          '<div class="taglabel">' + esc(t("qualityLabel")) + "</div>" +
+          '<div class="seg" id="kikuQuality">' +
+            ["all", "expert", "study", "reviewed"].map(function (q) {
+              return '<button class="segbtn ' + (state.quality === q ? "on" : "") + '" data-q="' + q + '">' +
+                esc(t("q_" + q)) + "</button>";
+            }).join("") +
+          "</div>" +
+          '<div class="taglabel">' + esc(t("sortLabel")) + "</div>" +
+          '<div class="seg" id="kikuSort">' +
+            ["score", "felt", "tried", "min"].map(function (q) {
+              return '<button class="segbtn ' + (state.sort === q ? "on" : "") + '" data-sort="' + q + '">' +
+                esc(t("sort_" + q)) + "</button>";
+            }).join("") +
+          "</div>" +
+          '<div class="taglabel">' + esc(t("tagsLabel")) + "</div>" +
+          '<div class="chips tagrow">' + tagChips + "</div>" +
         "</div>" +
-        '<div class="taglabel">' + esc(t("tagsLabel")) + "</div>" +
-        '<div class="chips tagrow">' + tagChips + "</div>" +
         '<div class="listhead"><span>' + esc(t("rankedBy")) + '</span>' +
           '<a class="scorelink" href="#/score">ⓘ ' + esc(t("scoreAbout")) + '</a>' +
           '<button class="savedbtn' + (savedOnly ? " on" : "") + '" id="savedToggle" type="button">★ ' +
@@ -420,8 +451,114 @@
     bindQuality();
     bindSort();
     bindSavedToggle();
+    bindFilterToggle();
+    bindRandom();
     fillList();
     runCountUps();
+    window.scrollTo(0, 0);
+  }
+
+  // 絞り込みパネル: 既定値以外が選択中なら自動で開く。手動開閉はセッション内で記憶。
+  var filterOpenManual = null; // null=自動判定, true/false=手動指定
+  function activeFilterCount() {
+    var n = 0;
+    if (state.quality !== "all") n++;
+    if (state.sort !== "score") n++;
+    if (currentFilter.tag) n++;
+    return n;
+  }
+  function filterOpen() {
+    if (filterOpenManual !== null) return filterOpenManual;
+    return activeFilterCount() > 0;
+  }
+  function activeFilterBadge() {
+    var n = activeFilterCount();
+    return n ? ' <i class="fcount">' + n + "</i>" : "";
+  }
+  function bindFilterToggle() {
+    var btn = document.getElementById("filterToggle");
+    var panel = document.getElementById("filterPanel");
+    if (!btn || !panel) return;
+    btn.onclick = function () {
+      filterOpenManual = panel.hidden;
+      panel.hidden = !panel.hidden;
+      btn.classList.toggle("open", !panel.hidden);
+      btn.setAttribute("aria-expanded", panel.hidden ? "false" : "true");
+    };
+  }
+
+  // 🎲 おまかせ: いまの絞り込み結果からランダムに1件開く
+  function bindRandom() {
+    var btn = document.getElementById("randomBtn");
+    if (!btn) return;
+    btn.onclick = function () {
+      var list = matchedContents();
+      if (!list.length) list = DATA.contents;
+      var c = list[Math.floor(Math.random() * list.length)];
+      if (c) location.hash = "#/c/" + c.id;
+    };
+  }
+
+  // ── トップへ戻るボタン（全ページ共通・一度だけ生成） ──
+  (function initTopFab() {
+    var fab = document.createElement("button");
+    fab.className = "topfab";
+    fab.type = "button";
+    fab.setAttribute("aria-label", "back to top");
+    fab.textContent = "↑";
+    fab.onclick = function () { window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" }); };
+    document.body.appendChild(fab);
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        fab.classList.toggle("show", window.scrollY > 600);
+        ticking = false;
+      });
+    }, { passive: true });
+  })();
+
+  // ── マイ記録（保存・やってみた・体感の記録） ──
+  function renderMe() {
+    var savedList = DATA.contents.filter(function (c) { return isSaved(c.id); })
+      .sort(function (a, b) { return scoreOf(b) - scoreOf(a); });
+    var triedList = DATA.contents.filter(function (c) {
+      var u = state.user[c.id];
+      return u && u.tried;
+    });
+    var workedN = triedList.filter(function (c) { return state.user[c.id].feedback === "resonated"; }).length;
+
+    function triedCard(c) {
+      var u = state.user[c.id];
+      var fb = u.feedback === "resonated" ? '<span class="mefb yes">👍 ' + esc(t("resonated")) + "</span>" :
+               u.feedback === "not_now" ? '<span class="mefb no">🤔 ' + esc(t("notNow")) + "</span>" : "";
+      return miniCard(c).replace("</a>", fb + "</a>");
+    }
+
+    app.innerHTML = "";
+    app.appendChild(el(header()));
+    app.appendChild(el(
+      '<main class="wrap detail">' +
+        '<a class="back" href="#/">' + esc(t("back")) + "</a>" +
+        "<h1>📒 " + esc(t("myPage")) + "</h1>" +
+        '<div class="mystats">' +
+          '<div class="pstat"><b>' + savedList.length + '</b><small>★ ' + esc(t("meSavedN")) + "</small></div>" +
+          '<div class="pstat"><b>' + triedList.length + '</b><small>✓ ' + esc(t("meTriedN")) + "</small></div>" +
+          '<div class="pstat"><b>' + workedN + '</b><small>👍 ' + esc(t("meWorkedN")) + "</small></div>" +
+        "</div>" +
+        ((savedList.length === 0 && triedList.length === 0) ?
+          '<p class="empty">' + esc(t("meEmpty")) + "</p>" : "") +
+        (savedList.length ?
+          '<div class="listhead"><span>★ ' + esc(t("meSavedSec")) + '</span><b>' + savedList.length + esc(t("itemsUnit")) + "</b></div>" +
+          '<div class="minilist">' + savedList.map(miniCard).join("") + "</div>" : "") +
+        (triedList.length ?
+          '<div class="listhead"><span>✓ ' + esc(t("meTriedSec")) + '</span><b>' + triedList.length + esc(t("itemsUnit")) + "</b></div>" +
+          '<div class="minilist">' + triedList.map(triedCard).join("") + "</div>" : "") +
+        '<p class="disclaimer">⚠ ' + esc(t("notMedical")) + "</p>" +
+      "</main>"
+    ));
+    bindLang();
     window.scrollTo(0, 0);
   }
 
@@ -821,6 +958,12 @@
   function bindLang() {
     var b = document.getElementById("langToggle");
     if (b) b.onclick = function () { state.lang = state.lang === "ja" ? "en" : "ja"; save(); route(); };
+    var th = document.getElementById("themeToggle");
+    if (th) th.onclick = function () {
+      state.theme = state.theme === "dark" ? "light" : "dark";
+      save(); applyTheme();
+      th.textContent = state.theme === "dark" ? "☀️" : "🌙";
+    };
   }
 
   function bindDetail(c) {
