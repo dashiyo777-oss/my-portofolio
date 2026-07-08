@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>酒手帖 — 世界の酒を巡る旅</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#12121E;      /* 夜の藍 */
+  --lacquer:#1B1B2B;    /* 漆の紺 */
+  --amber:#D9973B;      /* 琥珀 */
+  --gold:#C9A227;       /* 金 */
+  --shu:#B33A3A;        /* 朱 */
+  --paper:#F7F1E3;      /* 和紙 */
+  --cream:#EFE6D2;
+  --ink:#241F1A;
+  --faint:#8B8398;
+  --green:#3E5641;
+  --serif:'Shippori Mincho', Georgia, serif;
+  --sans:'Zen Kaku Gothic New', 'Helvetica Neue', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--night);
+  color:var(--ink);
+  line-height:1.75;
+  padding-bottom:80px;
+}
+/* ===== ヘッダー ===== */
+header{
+  background:linear-gradient(180deg,#0C0C16 0%, var(--night) 100%);
+  color:var(--cream);
+  text-align:center;
+  padding:36px 16px 20px;
+  border-bottom:3px double var(--amber);
+  position:relative;
+  overflow:hidden;
+}
+header .eyebrow{
+  font-size:11px;letter-spacing:.4em;color:var(--amber);
+  margin-bottom:8px;
+}
+header h1{
+  font-family:var(--serif);font-weight:800;font-size:30px;letter-spacing:.14em;
+}
+header h1 .cup{display:inline-block;animation:sway 4s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+header .sub{font-size:12px;color:var(--faint);margin-top:6px;letter-spacing:.15em}
+/* 泡の演出 */
+.bubble{
+  position:absolute;bottom:-12px;border-radius:50%;
+  border:1px solid rgba(217,151,59,.4);
+  animation:rise linear infinite;pointer-events:none;
+}
+@keyframes rise{
+  0%{transform:translateY(0);opacity:0}
+  15%{opacity:.7}
+  100%{transform:translateY(-140px);opacity:0}
+}
+@media (prefers-reduced-motion: reduce){
+  .bubble,header h1 .cup{animation:none}
+}
+/* ===== タブナビ ===== */
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:#0C0C16;
+  border-top:1px solid rgba(217,151,59,.35);
+  display:flex;justify-content:space-around;
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+}
+nav button{
+  background:none;border:none;color:var(--faint);
+  font-family:var(--sans);font-size:10px;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  cursor:pointer;min-width:48px;padding:2px;
+}
+nav button .ic{font-size:20px;line-height:1}
+nav button.on{color:var(--amber)}
+nav button:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px}
+/* ===== セクション共通 ===== */
+main{max-width:680px;margin:0 auto;padding:18px 14px 30px}
+section{display:none}
+section.show{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2.sec{
+  font-family:var(--serif);color:var(--cream);font-size:20px;
+  letter-spacing:.12em;margin:8px 0 4px;
+}
+p.lead{color:var(--faint);font-size:12.5px;margin-bottom:14px}
+.card{
+  background:var(--paper);border-radius:12px;
+  padding:16px 16px 14px;margin-bottom:14px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 3px 10px rgba(0,0,0,.35);
+}
+.card h3{
+  font-family:var(--serif);font-size:17px;letter-spacing:.06em;
+  color:var(--ink);margin-bottom:4px;
+}
+.tag{
+  display:inline-block;font-size:10.5px;letter-spacing:.08em;
+  background:var(--night);color:var(--amber);
+  padding:2px 9px;border-radius:99px;margin-bottom:8px;
+}
+.tag.shu{background:var(--shu);color:#fff}
+.tag.green{background:var(--green);color:#fff}
+.meta{font-size:11px;color:#7B6F5E;margin-bottom:6px;letter-spacing:.05em}
+.card p{font-size:13.5px}
+.how{
+  margin-top:10px;padding:9px 12px;border-left:3px solid var(--amber);
+  background:rgba(217,151,59,.09);font-size:12.5px;border-radius:0 8px 8px 0;
+}
+.how b{color:#8A5A18}
+/* 酒メーター */
+.meter{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 0 2px}
+.meter .m{font-size:11.5px;color:#5B5142;letter-spacing:.04em}
+.meter .dots{color:var(--amber);letter-spacing:2px}
+.meter .dots .off{color:#D8CDB6}
+/* フィルター */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filters button{
+  font-family:var(--sans);font-size:12px;letter-spacing:.05em;
+  padding:6px 14px;border-radius:99px;cursor:pointer;
+  border:1px solid rgba(217,151,59,.5);
+  background:transparent;color:var(--cream);
+}
+.filters button.on{background:var(--amber);color:#1B1208;font-weight:700;border-color:var(--amber)}
+/* 今日 */
+.today-hero{
+  background:linear-gradient(160deg,#221B33,#1B1B2B);
+  border:1px solid rgba(217,151,59,.45);
+  border-radius:14px;color:var(--cream);
+  padding:20px 18px;margin-bottom:16px;
+}
+.today-hero .lbl{font-size:11px;color:var(--amber);letter-spacing:.3em;margin-bottom:6px}
+.today-hero .fact{font-family:var(--serif);font-size:15.5px;line-height:2}
+.btn{
+  display:inline-block;font-family:var(--sans);
+  background:var(--amber);color:#1B1208;font-weight:700;
+  border:none;border-radius:99px;padding:9px 20px;font-size:13px;
+  cursor:pointer;letter-spacing:.05em;
+}
+.btn.ghost{background:transparent;color:var(--amber);border:1px solid var(--amber)}
+.btn:focus-visible{outline:2px solid var(--cream);outline-offset:2px}
+/* 診断 */
+.qbox{background:var(--paper);border-radius:12px;padding:18px;margin-bottom:14px}
+.qbox .qn{font-size:11px;color:var(--shu);letter-spacing:.15em;margin-bottom:4px}
+.qbox h3{font-family:var(--serif);font-size:16px;margin-bottom:12px}
+.opt{
+  display:block;width:100%;text-align:left;
+  font-family:var(--sans);font-size:13.5px;
+  background:#fff;border:1px solid #DDD2BC;border-radius:10px;
+  padding:11px 14px;margin-bottom:8px;cursor:pointer;
+}
+.opt:active{background:#F3E9D2}
+.result{
+  background:linear-gradient(160deg,#221B33,#1B1B2B);
+  border:1px solid var(--amber);border-radius:14px;
+  color:var(--cream);padding:22px 18px;text-align:center;
+}
+.result .type{font-family:var(--serif);font-size:22px;color:var(--amber);letter-spacing:.1em;margin:6px 0 10px}
+.result p{font-size:13.5px;text-align:left}
+/* 記録帳 */
+.check{
+  display:flex;align-items:center;gap:12px;
+  background:var(--paper);border-radius:10px;
+  padding:12px 14px;margin-bottom:8px;cursor:pointer;
+  border:1px solid rgba(0,0,0,.05);
+}
+.check .st{
+  min-width:64px;text-align:center;font-size:11px;font-weight:700;
+  padding:5px 0;border-radius:99px;letter-spacing:.05em;
+  background:#E5DCC6;color:#6B6050;
+}
+.check.curious .st{background:var(--gold);color:#241C05}
+.check.done .st{background:var(--shu);color:#fff}
+.check .nm{font-size:13.5px}
+.check.done .nm{text-decoration:line-through;color:#8A7F6C}
+.count{
+  font-family:var(--serif);color:var(--cream);font-size:14px;
+  margin:6px 0 14px;letter-spacing:.08em;
+}
+.count b{color:var(--amber);font-size:20px}
+/* 物語 */
+.story-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+details.tale{
+  background:var(--paper);border-radius:12px;margin-bottom:10px;
+  border:1px solid rgba(0,0,0,.06);overflow:hidden;
+}
+details.tale summary{
+  cursor:pointer;list-style:none;padding:14px 16px;
+  font-family:var(--serif);font-size:15px;letter-spacing:.04em;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+details.tale summary::-webkit-details-marker{display:none}
+details.tale summary .arw{color:var(--amber);transition:transform .25s}
+details.tale[open] summary .arw{transform:rotate(90deg)}
+details.tale .body{padding:0 16px 14px;font-size:13.5px}
+details.tale .body .src{font-size:11px;color:#8A7F6C;margin-top:6px}
+/* 注意書き */
+.notice{
+  margin-top:22px;padding:14px;border-radius:10px;
+  border:1px dashed rgba(217,151,59,.5);
+  color:var(--faint);font-size:11.5px;line-height:1.9;
+}
+.notice b{color:var(--amber)}
+/* トップへ */
+#totop{
+  position:fixed;right:14px;bottom:86px;z-index:40;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--amber);color:#1B1208;border:none;
+  font-size:20px;cursor:pointer;display:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.5);
+}
+#totop.show{display:block}
+/* BGM */
+#bgm{
+  position:fixed;left:14px;bottom:86px;z-index:40;
+  width:44px;height:44px;border-radius:50%;
+  background:#0C0C16;color:var(--amber);
+  border:1px solid var(--amber);font-size:18px;cursor:pointer;
+}
+#bgm.on{background:var(--amber);color:#1B1208}
+.flash{animation:flashcard 1.6s ease}
+@keyframes flashcard{0%,100%{box-shadow:0 3px 10px rgba(0,0,0,.35)}30%{box-shadow:0 0 0 4px var(--amber)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">A NOTEBOOK OF WORLD DRINKS</div>
+  <h1><span class="cup">🏮</span> 酒手帖</h1>
+  <div class="sub">世界の酒を巡る、夜の読みもの</div>
+</header>
+
+<main>
+
+<!-- ===== 今日 ===== -->
+<section id="sec-today" class="show">
+  <h2 class="sec">今日の一献</h2>
+  <p class="lead">日付ごとに変わる、酒のちいさな知識と今宵の一本。</p>
+  <div class="today-hero">
+    <div class="lbl">今日の豆知識</div>
+    <div class="fact" id="todayFact"></div>
+  </div>
+  <div id="todayDrink"></div>
+  <button class="btn ghost" id="btnStory" style="margin-top:4px">今日の一話を読む 📖</button>
+
+  <div class="notice">
+    <b>おことわり</b><br>
+    このページはお酒の文化と知識を愉しむための読みものです。<b>20歳未満の飲酒は法律で禁じられています。</b>飲酒は適量を心がけ、休肝日を。妊娠中・授乳期の飲酒、飲酒運転は絶対にやめましょう。お酒は、ゆっくり、たのしく、ほどほどに。
+  </div>
+</section>
+
+<!-- ===== 世界の酒 ===== -->
+<section id="sec-world">
+  <h2 class="sec">世界の酒図鑑</h2>
+  <p class="lead">香り・コク・甘み・強さの四つの目盛りで巡る、十八の酒。</p>
+  <div class="filters" id="regionFilters"></div>
+  <div id="drinkList"></div>
+</section>
+
+<!-- ===== 愉しみ方 ===== -->
+<section id="sec-serve">
+  <h2 class="sec">愉しみ方の手引き</h2>
+  <p class="lead">温度、器、注ぎ方。ひと手間で酒は化けます。</p>
+  <div id="serveList"></div>
+</section>
+
+<!-- ===== 物語 ===== -->
+<section id="sec-story">
+  <h2 class="sec">酒と物語</h2>
+  <p class="lead">映画に、文学に、歴史に。酒は名脇役でした。</p>
+  <div class="story-nav filters" id="storyFilters"></div>
+  <div id="storyList"></div>
+</section>
+
+<!-- ===== 診断 ===== -->
+<section id="sec-quiz">
+  <h2 class="sec">今宵の酒 診断</h2>
+  <p class="lead">五つの質問で、あなたに合う酒のタイプを見立てます。</p>
+  <div id="quizArea"></div>
+</section>
+
+<!-- ===== 記録帳 ===== -->
+<section id="sec-log">
+  <h2 class="sec">呑み録</h2>
+  <p class="lead">気になる酒に印を。「呑んだ！」だけが達成に数えられます。タップで切り替え。</p>
+  <div class="count">制覇 <b id="doneCount">0</b> / <span id="totalCount"></span></div>
+  <div id="logList"></div>
+</section>
+
+</main>
+
+<button id="totop" aria-label="ページの先頭へ">↑</button>
+<button id="bgm" aria-label="BGMを再生・停止">♪</button>
+
+<nav>
+  <button data-sec="today" class="on"><span class="ic">🌙</span>今日</button>
+  <button data-sec="world"><span class="ic">🌍</span>世界の酒</button>
+  <button data-sec="serve"><span class="ic">🍶</span>愉しみ方</button>
+  <button data-sec="story"><span class="ic">📖</span>物語</button>
+  <button data-sec="quiz"><span class="ic">🔮</span>診断</button>
+  <button data-sec="log"><span class="ic">✒️</span>呑み録</button>
+</nav>
+
+<script>
+/* ================= データ ================= */
+const FACTS = [
+"「乾杯」の起源は、杯を打ち合わせて酒を飛沫で混ぜ、毒が入っていないことを示し合ったから——という説があります。信頼のしるしだったのですね。",
+"シャンパンと名乗れるのはフランス・シャンパーニュ地方で造られた発泡ワインだけ。ほかは「スパークリングワイン」と呼びます。",
+"ウイスキーの琥珀色は樽から。蒸留したての原酒はじつは無色透明です。樽の中で長い眠りにつくうちに、色と香りをまといます。",
+"日本酒の「辛口」は唐辛子の辛さではなく、糖分が少なくすっきりした味わいのこと。日本酒度がプラスに大きいほど辛口です。",
+"ビールの泡は「蓋」の役目。香りを閉じ込め、酸化を防ぎます。泡と液体の黄金比は3対7と言われます。",
+"エンジェルズ・シェア(天使の分け前)——樽熟成中に蒸発して失われるウイスキーのこと。スコットランドでは年に約2%が天使に持っていかれます。",
+"世界でいちばん飲まれている蒸留酒は、じつは中国の白酒(バイジウ)。年間消費量はウイスキーやウォッカを大きく上回ります。",
+"ワインのボトルの底のくぼみは「パント」。澱(おり)を集め、瓶の強度を高めるための工夫です。",
+"日本酒造りの「三段仕込み」は、麹と蒸米と水を三回に分けて加える方法。一気に入れないのは、酵母を守るためのやさしさです。",
+"テキーラの原料アガベ(竜舌蘭)は、収穫まで6年以上かかります。一杯の裏に、メキシコの太陽と長い歳月。",
+"「とりあえずビール」は日本独特の文化。乾杯を素早く揃えるための、宴席の知恵でもあります。",
+"ホットワインは欧州の冬の風物詩。ドイツでは「グリューワイン」、北欧では「グロッグ」。クリスマス市の香りの主役です。",
+"泡盛の古酒(クース)は、寝かせるほどまろやかに。沖縄では子が生まれた年の泡盛を甕で育て、成人の祝いに開ける風習があります。",
+"ジンの香りの主役はジュニパーベリー(杜松の実)。もとは薬酒として生まれ、のちにカクテルの王様の座に就きました。",
+"ボジョレー・ヌーヴォーの解禁日は11月第3木曜日。時差の関係で、日本は本国フランスより早く飲める国のひとつです。",
+"「和らぎ水」は日本酒の合間に飲む水のこと。悪酔いを防ぎ、次の一口の味を立て直してくれる名脇役です。",
+"ラム酒はサトウキビから。カリブの海賊たちの酒として知られますが、お菓子の香りづけでも大活躍します。",
+"ギネスビールの泡のきめ細かさの秘密は窒素。缶の中の小さなカプセル(ウィジェット)が、あのクリーミーな泡を再現します。",
+"シェリーもポートも「酒精強化ワイン」。ブランデーを加えて度数を高め、大航海時代の長い船旅に耐えられるようにした知恵の酒です。",
+"日本酒の温度には名前があります。5度は「雪冷え」、40度は「ぬる燗」、50度は「熱燗」。温度で名前が変わる酒は世界でも珍しい存在。",
+"ウイスキーに数滴の水を垂らすと香りが開きます。プロのブレンダーも加水してテイスティング。「水で割ると薄まる」だけではないのです。",
+"マッコリの微発泡は生きた乳酸菌と酵母のしわざ。韓国では雨の日にチヂミとマッコリ、という定番の取り合わせがあります。",
+"ホップがビールに使われる前、欧州では薬草ミックス「グルート」で香りづけしていました。ホップの防腐力が歴史を変えました。",
+"「醸造酒」は発酵のまま(ワイン・ビール・日本酒)、「蒸留酒」は蒸留して度数を高めた酒(ウイスキー・焼酎)。この二つが酒の世界の大きな幹です。"
+];
+
+const DRINKS = [
+{n:"日本酒",r:"日本",a:4,b:3,s:3,st:2,f:"米と水と麹から生まれる、世界でも稀な並行複発酵の酒。吟醸の果実香から生酛の深みまで、幅の広さは無限。",how:"冷やと燗で別の顔に。まずは冷やで香り、次にぬる燗で甘みを。",tag:"国酒"},
+{n:"焼酎",r:"日本",a:3,b:3,s:2,st:3,f:"芋・麦・米・黒糖——原料で香りがまるで変わる蒸留酒。九州の食文化と歩んできた、食中酒の名手。",how:"芋はお湯割りで香りが開花。前割り(前日に水で割る)は通の技。",tag:"九州の魂"},
+{n:"泡盛",r:"日本",a:3,b:4,s:2,st:4,f:"タイ米と黒麹で造る、日本最古の蒸留酒。甕で寝かせた古酒(クース)はバニラのような甘香に。",how:"水割りでゆっくり。古酒はストレートを少しずつ。",tag:"琉球の宝"},
+{n:"スコッチウイスキー",r:"ヨーロッパ",a:5,b:4,s:2,st:5,f:"スコットランドの誇り。アイラ島の潮とピートの煙、スペイサイドの華やか——地域で個性が際立ちます。",how:"まずストレート、次に数滴の加水。香りの変化を愉しんで。",tag:"モルトの聖地"},
+{n:"ジャパニーズウイスキー",r:"日本",a:4,b:4,s:3,st:5,f:"繊細でバランスの妙。いまや世界の品評会の常連で、入手困難な銘柄も。ハイボール文化を生んだ立役者。",how:"ハイボールは氷を満たし、炭酸を静かに。混ぜるのは一回だけ。",tag:"世界が注目"},
+{n:"バーボン",r:"アメリカ大陸",a:3,b:4,s:4,st:5,f:"トウモロコシ主体、内側を焦がした新樽で熟成。バニラとキャラメルの甘香はアメリカの大らかさ。",how:"ロックで甘みを、コーラ割りで気軽に。",tag:"ケンタッキー"},
+{n:"赤ワイン",r:"ヨーロッパ",a:4,b:4,s:2,st:3,f:"葡萄の皮ごと発酵させた、渋みと果実味の酒。産地・品種・年で表情が変わる「畑の記憶」。",how:"少し大きめのグラスで、開栓後しばらく置いて。肉料理と。",tag:"テロワール"},
+{n:"白ワイン",r:"ヨーロッパ",a:4,b:2,s:3,st:3,f:"すっきりした酸と果実香。よく冷やして魚介と合わせれば、食卓が一段明るくなります。",how:"8〜12度に冷やして。和食との相性も抜群。",tag:"食卓の陽light"},
+{n:"シャンパーニュ",r:"ヨーロッパ",a:5,b:3,s:3,st:3,f:"瓶内二次発酵が生む、きめ細かな泡。祝いの席の主役にして、じつは和食にも寄り添う万能選手。",how:"フルート型グラスで泡の立ち上りを眺めながら。",tag:"祝祭の泡"},
+{n:"ビール(ピルスナー)",r:"ヨーロッパ",a:2,b:2,s:1,st:1,f:"チェコ・ピルゼン生まれの黄金のラガー。世界のビールの主流派。喉ごしとホップの苦みが身上。",how:"グラスは洗いたてを。三度注ぎで泡の蓋を作ると香りが長持ち。",tag:"黄金の源流"},
+{n:"クラフトビール(IPA)",r:"アメリカ大陸",a:5,b:3,s:2,st:2,f:"ホップを贅沢に使った、柑橘やトロピカルの香り。クラフトビール革命の旗手。",how:"缶から直接ではなくグラスへ。香りが主役です。",tag:"ホップの祭典"},
+{n:"ベルギービール",r:"ヨーロッパ",a:5,b:4,s:4,st:3,f:"修道院醸造の伝統。酵母が生むスパイス香と果実味、銘柄ごとの専用グラス文化も見どころ。",how:"専用グラスがあれば必ずそれで。温度もやや高めが吉。",tag:"修道院の恵み"},
+{n:"ジン",r:"ヨーロッパ",a:5,b:2,s:1,st:5,f:"ジュニパーベリーが香る蒸留酒。近年はボタニカルにこだわるクラフトジンが百花繚乱。",how:"まずはジントニック。ライムをぎゅっと。",tag:"カクテルの王"},
+{n:"ウォッカ",r:"ヨーロッパ",a:1,b:1,s:1,st:5,f:"雑味を削ぎ落とした純粋さが身上。ロシア・北欧では冷凍庫でとろりと冷やして小さな杯で。",how:"カクテルの土台に。モスコミュールは銅マグで。",tag:"純粋の美学"},
+{n:"テキーラ",r:"アメリカ大陸",a:3,b:3,s:2,st:5,f:"アガベ100%の「プレミアムテキーラ」は別物のまろやかさ。一気飲みの酒という誤解を解きたい一本。",how:"良いものはストレートでゆっくり。塩とライムはお好みで。",tag:"アガベの蜜"},
+{n:"ラム",r:"アメリカ大陸",a:4,b:3,s:4,st:5,f:"サトウキビの甘香。ホワイトはカクテルに、樽熟成のダークはウイスキーのように。",how:"ダークラムのロックか、モヒートで爽やかに。",tag:"カリブの風"},
+{n:"紹興酒",r:"アジア・その他",a:4,b:4,s:3,st:3,f:"もち米を甕で熟成させる中国の醸造酒。干し果実のような複雑な甘香は、中華の油と好相性。",how:"常温か軽く温めて。氷砂糖は本場では入れません。",tag:"甕の熟成"},
+{n:"マッコリ",r:"アジア・その他",a:2,b:2,s:4,st:1,f:"米の乳酸発酵が生む、やさしい酸味と微発泡。にごりの白さは韓国の家庭の味。",how:"よく振ってから。チヂミと合わせれば雨の日の定番。",tag:"雨の日の友"}
+];
+
+const SERVES = [
+{t:"日本酒 — 温度の魔法",tag:"🍶 燗と冷や",b:"同じ一本が温度で別の酒になります。吟醸系は10度前後の「花冷え」で香りを、純米や生酛は40度の「ぬる燗」で旨みを。燗は徳利を湯せんで2〜3分、瓶ごと電子レンジは香りが飛ぶので急ぐ日だけに。合間の和らぎ水を忘れずに。"},
+{t:"ウイスキー — 五段活用",tag:"🥃 一杯で五度おいしい",b:"①ストレートで素顔 ②数滴の加水で香りが開く ③ロックで冷たさと時間の変化 ④ハーフロック(1:1の水割り) ⑤ハイボール。一本でこれだけ遊べる酒はそうありません。氷は大きく透明なものほど溶けにくく、味が薄まりません。"},
+{t:"ワイン — 三つの動作",tag:"🍷 見る・回す・嗅ぐ",b:"色を見る(縁の色で熟成がわかる)、グラスを回す(空気に触れて香りが開く)、香りを嗅ぐ(果実か、花か、樽の香りか)。この三動作だけで一杯の情報量が倍になります。難しい言葉は不要、「好きか、どんな香りか」だけで十分。"},
+{t:"ビール — 三度注ぎ",tag:"🍺 泡は蓋",b:"チェコ・ドイツ流の注ぎ方。①高い位置から勢いよく注ぎ泡を立てる ②泡が落ち着いたら静かに二度目 ③最後に泡を持ち上げるように三度目。泡3:液7の黄金比になれば、最後の一口まで香りが残ります。グラスの油分は泡の敵、洗いたてを。"},
+{t:"カクテル — 家で始める三種",tag:"🍸 道具は不要",b:"①ハイボール(ウイスキー1:炭酸4、混ぜるのは縦に一回) ②ジントニック(ジン1:トニック3、ライムを搾って落とす) ③モヒート(ラム+ミント+ライム+砂糖+炭酸、ミントは叩かず軽く握って香りを出す)。冷えたグラスと大きな氷、それだけで店の味に近づきます。"},
+{t:"和らぎ水とチェイサー",tag:"💧 いちばん大事な話",b:"強い酒と同量の水を飲むのが世界共通の作法。悪酔いを防ぎ、舌をリセットし、翌朝を守ります。ウイスキーの国スコットランドでも、日本酒の蔵元も、みな水を傍らに置きます。酒を長く愉しむ人ほど、水の飲み方が上手です。"}
+];
+
+const STORIES = {
+"映画":[
+{t:"『カサブランカ』とシャンパンカクテル",b:"「君の瞳に乾杯」。リックの店で交わされるこの台詞の傍らには、いつもシャンパングラスがありました。原語は Here's looking at you, kid——名訳が一杯の酒をさらに名酒にした例です。"},
+{t:"『007』のマティーニ",b:"「ステアせず、シェイクで」。ジェームズ・ボンドの注文は、じつはカクテルの常識の逆張り。マティーニは通常ステア(かき混ぜ)ですが、あえてシェイクで頼む台詞が、型破りな男の記号になりました。"},
+{t:"『ロスト・イン・トランスレーション』",b:"ビル・マーレイ演じる俳優が東京でウイスキーのCM撮影に臨む物語。「リラックスして、サントリータイム」。日本のウイスキーと東京の夜の空気が、そのまま映画の主役でした。"},
+{t:"『男はつらいよ』と燗酒",b:"寅さんの団子屋の茶の間には、いつも徳利がありました。「労働者諸君!」と啖呵を切る寅の傍らの燗酒は、昭和の下町の温度そのもの。"},
+{t:"『サイドウェイ』とピノ・ノワール",b:"ワイン好きの中年二人の珍道中。主人公がピノ・ノワールへの愛を語る場面は名高く、公開後アメリカでピノの売上が急増、逆に劇中でけなされたメルローが落ち込む「サイドウェイ効果」まで生まれました。"},
+{t:"『ショーシャンクの空に』の屋上のビール",b:"囚人たちが屋上作業の報酬に勝ち取った、冷えたビールの休憩。「太陽の下で仲間と飲むビール」の尊さをこれほど描いた場面はありません。主人公は一口も飲まず、仲間を眺めて微笑むのです。"}
+],
+"文学":[
+{t:"李白 — 月と酒の詩人",b:"「花間一壺の酒 独り酌みて相親しむ無し」。唐の詩仙・李白は、月を友に一人酒を詠みました。酒を詩に高めた元祖であり、月を取ろうとして水に落ちたという伝説まで、酒色に彩られています。"},
+{t:"ヘミングウェイとモヒート・ダイキリ",b:"キューバに暮らした文豪は、ハバナの酒場ラ・ボデギータでモヒートを、フロリディータでダイキリを愛したと伝えられます。店には今も彼の指定席が残ります。"},
+{t:"『人間失格』と酒",b:"太宰治の主人公・葉蔵にとって酒は逃避であり薬でした。酒の明るさと危うさの両面を、日本文学でもっとも深く描いた一冊かもしれません。"},
+{t:"村上春樹とビールとウイスキー",b:"「完璧な文章などといったものは存在しない。完璧な絶望が存在しないようにね」——デビュー作の主人公たちは夏じゅうビールを飲み続けます。後年にはウイスキーの聖地を巡る紀行文も。小説の中の酒の登場回数では現代日本屈指。"},
+{t:"『竹取物語』の翁の酒",b:"日本最古の物語にも宴の酒は登場します。古事記のヤマタノオロチ退治では、八つの甕の強い酒で大蛇を酔わせました。日本神話は、酒がすでに「知恵の道具」だったことを伝えます。"}
+],
+"歴史":[
+{t:"ビールはピラミッドを建てた",b:"古代エジプトでは、ピラミッド建設労働者への配給にパンとビールが含まれていました。当時のビールは栄養豊富な「飲むパン」。文明の礎は酒とともにありました。"},
+{t:"修道院がビールを育てた",b:"中世欧州の修道士たちは断食期間の栄養源としてビールを醸造。「液体のパンは断食を破らない」という理屈でした。ベルギーの修道院ビールはその末裔です。"},
+{t:"大航海時代とラム・シェリー",b:"長い船旅では水が腐るため、酒が命綱でした。英国海軍は水兵にラムを配給し、ワインはブランデーで強化されてシェリーやポートに。酒の歴史は保存の知恵の歴史です。"},
+{t:"禁酒法がカクテルを進化させた",b:"1920年代アメリカの禁酒法時代、粗悪な密造酒の味をごまかすためにカクテル技術が発達し、腕のいいバーテンダーは欧州へ渡って技を広めました。禁止が文化を洗練させた皮肉な例です。"},
+{t:"日本酒と杜氏の冬",b:"かつて酒造りは冬の出稼ぎ仕事でした。農閑期の農民たちが蔵に住み込み、杜氏を頂点とする職人集団で酒を醸す——「寒造り」の伝統は、雪国の暮らしが生んだ文化です。"},
+{t:"ウイスキーと密造の谷",b:"18世紀スコットランドでは重税を逃れた密造者が谷に隠れ、樽に隠した酒が偶然熟成して美味くなることを発見しました。ウイスキーの樽熟成は、密造の副産物だったという説があります。"}
+],
+"日本の酒場":[
+{t:"居酒屋の始まりは酒屋の店先",b:"江戸時代、酒屋の店先で升酒を立ち飲みさせたのが「居酒(いざけ)」の始まり。「酒屋に居て飲む」から居酒屋。つまみは味噌や田楽でした。"},
+{t:"赤提灯はなぜ赤い",b:"提灯は江戸の看板代わり。赤は遠くからよく見え、火の温かさを連想させる色でした。今も「赤提灯」は気取らない酒場の代名詞です。"},
+{t:"「お通し」の由来",b:"注文を厨房に「通した」しるしに出す小皿——だから「お通し」。関西では「突き出し」。待ち時間に手持ち無沙汰にさせない、酒場のもてなしの知恵です。",},
+{t:"角打ち — 酒屋で一杯",b:"酒屋の一角で買った酒をその場で飲む「角打ち」。北九州の労働者文化から広まったとされ、升の角に口をつけて飲む姿が語源という説も。近年は若い世代に再発見されています。"},
+{t:"横丁文化とハシゴ酒",b:"新宿ゴールデン街、京都の先斗町、広島の流川——狭い路地に小さな店がひしめく横丁は、日本独特の酒場風景。一軒で長居せず二三軒を巡る「ハシゴ酒」は横丁だからこその愉しみです。"},
+{t:"ホッピーと焼酎ハイボール",b:"戦後、ビールが高嶺の花だった時代に生まれた「ビール風味の割り材」ホッピー。焼酎を注いで飲む下町の知恵は、今やレトロな魅力として愛されています。「中」が焼酎、「外」がホッピーの符丁も乙なもの。"},
+{t:"日本のバー文化と銀座",b:"日本のバーテンディングは世界的に評価が高く、ていねいな氷の細工やステアの美学は「おもてなし」の延長。銀座の老舗バーには一世紀近い歴史を持つ店もあります。"},
+{t:"「とりあえず生」の経済学",b:"宴会の最初にビールで揃える文化は、乾杯を早く成立させる合理性から。近年は「最初から好きなものを」という「ソバーキュリアス」や微アル派も増え、乾杯の風景は多様になりつつあります。"}
+]
+};
+
+const QUIZ = [
+{q:"休日の夜、理想の過ごし方は？",o:[
+["静かな部屋で本や音楽と","malt"],
+["気の合う仲間とわいわい","tap"],
+["おいしい料理をゆっくり味わう","terroir"],
+["新しい店や趣味を開拓","craft"],
+["季節の移ろいを感じる散歩","ginjo"]]},
+{q:"香りで選ぶなら？",o:[
+["燻したような深い香り","malt"],
+["柑橘のはじける香り","craft"],
+["果実と花の華やかな香り","terroir"],
+["米や穀物のやさしい香り","ginjo"],
+["香りより喉ごし派","tap"]]},
+{q:"旅行するならどこ？",o:[
+["スコットランドの蒸留所巡り","malt"],
+["フランスのワイナリー","terroir"],
+["京都の酒蔵と町歩き","ginjo"],
+["ポートランドのブルワリー","craft"],
+["ビアガーデンのある街ならどこでも","tap"]]},
+{q:"食事との合わせ方は？",o:[
+["酒が主役、つまみは少しで","malt"],
+["料理と酒の組み合わせを考えるのが好き","terroir"],
+["和食にはやっぱり和の酒","ginjo"],
+["ピザや揚げ物とゴクゴク","tap"],
+["珍しい組み合わせに挑戦したい","craft"]]},
+{q:"あなたの性格に近いのは？",o:[
+["じっくり型・こだわり派","malt"],
+["ロマンチスト・物語好き","terroir"],
+["繊細・きれい好き","ginjo"],
+["社交的・ノリがいい","tap"],
+["好奇心旺盛・流行に敏感","craft"]]}
+];
+
+const TYPES = {
+ginjo:{t:"吟醸タイプ",e:"🍶",b:"繊細な香りと余韻を愛でるあなたには、日本酒の吟醸・大吟醸がぴったり。花冷え(10度)でワイングラスに注げば、果実のような香りが立ちます。ジンのボタニカル香や白ワインにも縁があります。"},
+malt:{t:"モルトタイプ",e:"🥃",b:"深みと時間の味を求めるあなたは、ウイスキー向き。まずはスペイサイドの華やかなシングルモルトから、慣れたらアイラの煙へ。泡盛の古酒やダークラムも同じ世界の住人です。"},
+terroir:{t:"テロワールタイプ",e:"🍷",b:"土地と物語ごと味わいたいあなたはワインの人。産地の地図を眺めながらの一杯は格別です。紹興酒やシェリーなど「熟成の物語」を持つ酒にも相性あり。"},
+tap:{t:"タップタイプ",e:"🍺",b:"仲間と乾杯の瞬間がいちばんのごちそう。ピルスナーの喉ごし、ハイボールの爽快感があなたの味方。三度注ぎを覚えれば家飲みが化けます。"},
+craft:{t:"クラフトタイプ",e:"🍸",b:"新しいもの好きのあなたにはIPAやクラフトジン、カクテルの世界を。醸造所やバーの「作り手の顔が見える一杯」を追いかける愉しみは尽きません。"}
+};
+
+const LOG_ITEMS = [
+"燗酒を徳利とお猪口で",
+"ワイングラスで大吟醸",
+"アイラモルトの煙の一杯",
+"ハイボールを黄金比で自作",
+"シャンパーニュで乾杯",
+"三度注ぎのピルスナー",
+"修道院ビールを専用グラスで",
+"IPAの柑橘香を利き比べ",
+"アガベ100%テキーラをストレートで",
+"モヒートを自分で作る",
+"ジントニックをライム搾りたてで",
+"泡盛の古酒(クース)",
+"紹興酒と中華の晩酌",
+"雨の日にマッコリとチヂミ",
+"ボジョレー解禁日に一杯",
+"冬のホットワイン",
+"角打ちで升酒",
+"横丁でハシゴ酒",
+"バーでカウンターの一杯",
+"和らぎ水を欠かさず呑めた夜"
+];
+
+/* ================= 今日 ================= */
+const today = new Date();
+const seed = today.getFullYear()*10000 + (today.getMonth()+1)*100 + today.getDate();
+document.getElementById('todayFact').textContent = FACTS[seed % FACTS.length];
+
+const td = DRINKS[seed % DRINKS.length];
+document.getElementById('todayDrink').innerHTML =
+ '<div class="card"><span class="tag shu">今宵の一本</span>' + drinkCardInner(td) + '</div>';
+
+function meterDots(v){
+  let s='';
+  for(let i=1;i<=5;i++) s += i<=v ? '●' : '<span class="off">○</span>';
+  return s;
+}
+function drinkCardInner(d){
+  return '<h3>'+d.n+'</h3><div class="meta">'+d.r+' ｜ '+d.tag+'</div>'+
+  '<div class="meter">'+
+  '<span class="m">香り <span class="dots">'+meterDots(d.a)+'</span></span>'+
+  '<span class="m">コク <span class="dots">'+meterDots(d.b)+'</span></span>'+
+  '<span class="m">甘み <span class="dots">'+meterDots(d.s)+'</span></span>'+
+  '<span class="m">強さ <span class="dots">'+meterDots(d.st)+'</span></span>'+
+  '</div><p>'+d.f+'</p>'+
+  '<div class="how"><b>愉しみ方:</b> '+d.how+'</div>';
+}
+
+/* 今日の一話 */
+document.getElementById('btnStory').addEventListener('click',()=>{
+  const cats = Object.keys(STORIES);
+  const all = [];
+  cats.forEach(c=>STORIES[c].forEach(s=>all.push({c:c,s:s})));
+  const pick = all[Math.floor(Math.random()*all.length)];
+  showSec('story');
+  renderStories(pick.c);
+  setTimeout(()=>{
+    const cards = document.querySelectorAll('#storyList details.tale');
+    cards.forEach(el=>{
+      if(el.querySelector('summary span.tt').textContent === pick.s.t){
+        el.open = true;
+        el.scrollIntoView({behavior:'smooth',block:'center'});
+        el.classList.add('flash');
+        setTimeout(()=>el.classList.remove('flash'),1700);
+      }
+    });
+  },120);
+});
+
+/* ================= 世界の酒 ================= */
+const REGIONS = ["すべて","日本","ヨーロッパ","アメリカ大陸","アジア・その他"];
+let curRegion = "すべて";
+const rf = document.getElementById('regionFilters');
+REGIONS.forEach(r=>{
+  const b=document.createElement('button');
+  b.textContent=r;
+  if(r===curRegion)b.classList.add('on');
+  b.addEventListener('click',()=>{
+    curRegion=r;
+    rf.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    renderDrinks();
+  });
+  rf.appendChild(b);
+});
+function renderDrinks(){
+  const box=document.getElementById('drinkList');
+  box.innerHTML='';
+  DRINKS.filter(d=>curRegion==="すべて"||d.r===curRegion).forEach(d=>{
+    const c=document.createElement('div');
+    c.className='card';
+    c.innerHTML='<span class="tag">'+d.r+'</span>'+drinkCardInner(d);
+    box.appendChild(c);
+  });
+}
+renderDrinks();
+
+/* ================= 愉しみ方 ================= */
+const sv=document.getElementById('serveList');
+SERVES.forEach(s=>{
+  const c=document.createElement('div');
+  c.className='card';
+  c.innerHTML='<span class="tag green">'+s.tag+'</span><h3>'+s.t+'</h3><p>'+s.b+'</p>';
+  sv.appendChild(c);
+});
+
+/* ================= 物語 ================= */
+const sf=document.getElementById('storyFilters');
+let curStory="映画";
+Object.keys(STORIES).forEach(k=>{
+  const b=document.createElement('button');
+  b.textContent=k;
+  if(k===curStory)b.classList.add('on');
+  b.addEventListener('click',()=>{
+    curStory=k;
+    sf.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    renderStories(k);
+  });
+  sf.appendChild(b);
+});
+function renderStories(cat){
+  curStory=cat;
+  sf.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.textContent===cat));
+  const box=document.getElementById('storyList');
+  box.innerHTML='';
+  STORIES[cat].forEach(s=>{
+    const d=document.createElement('details');
+    d.className='tale';
+    d.innerHTML='<summary><span class="tt">'+s.t+'</span><span class="arw">▶</span></summary>'+
+      '<div class="body"><p>'+s.b+'</p></div>';
+    box.appendChild(d);
+  });
+}
+renderStories(curStory);
+
+/* ================= 診断 ================= */
+let qi=0, scores={};
+function resetQuiz(){
+  qi=0;scores={ginjo:0,malt:0,terroir:0,tap:0,craft:0};
+  renderQuiz();
+}
+function renderQuiz(){
+  const box=document.getElementById('quizArea');
+  if(qi>=QUIZ.length){
+    let best='ginjo',bv=-1;
+    Object.keys(scores).forEach(k=>{if(scores[k]>bv){bv=scores[k];best=k}});
+    const t=TYPES[best];
+    box.innerHTML='<div class="result"><div style="font-size:40px">'+t.e+'</div>'+
+      '<div class="type">あなたは「'+t.t+'」</div><p>'+t.b+'</p>'+
+      '<button class="btn" style="margin-top:14px" onclick="resetQuiz()">もう一度診断する</button></div>';
+    return;
+  }
+  const q=QUIZ[qi];
+  let html='<div class="qbox"><div class="qn">問 '+(qi+1)+' / '+QUIZ.length+'</div><h3>'+q.q+'</h3>';
+  q.o.forEach((o,idx)=>{
+    html+='<button class="opt" data-i="'+idx+'">'+o[0]+'</button>';
+  });
+  html+='</div>';
+  box.innerHTML=html;
+  box.querySelectorAll('.opt').forEach(b=>{
+    b.addEventListener('click',()=>{
+      scores[q.o[+b.dataset.i][1]]++;
+      qi++;renderQuiz();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+}
+resetQuiz();
+
+/* ================= 呑み録 ================= */
+const LS_KEY='sake-techo-log-v1';
+let logState={};
+try{logState=JSON.parse(localStorage.getItem(LS_KEY))||{}}catch(e){logState={}}
+function saveLog(){try{localStorage.setItem(LS_KEY,JSON.stringify(logState))}catch(e){}}
+function renderLog(){
+  const box=document.getElementById('logList');
+  box.innerHTML='';
+  let done=0;
+  LOG_ITEMS.forEach((nm,i)=>{
+    const st=logState[i]||0; // 0=未 1=気になる 2=呑んだ
+    if(st===2)done++;
+    const d=document.createElement('div');
+    d.className='check'+(st===1?' curious':(st===2?' done':''));
+    d.setAttribute('role','button');
+    d.setAttribute('tabindex','0');
+    const lbl = st===0?'未':(st===1?'気になる':'呑んだ！');
+    d.innerHTML='<span class="st">'+lbl+'</span><span class="nm">'+nm+'</span>';
+    const toggle=()=>{
+      logState[i]=((logState[i]||0)+1)%3;
+      saveLog();renderLog();
+    };
+    d.addEventListener('click',toggle);
+    d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+    box.appendChild(d);
+  });
+  document.getElementById('doneCount').textContent=done;
+  document.getElementById('totalCount').textContent=LOG_ITEMS.length;
+}
+renderLog();
+
+/* ================= ナビ ================= */
+function showSec(name){
+  document.querySelectorAll('main section').forEach(s=>s.classList.remove('show'));
+  document.getElementById('sec-'+name).classList.add('show');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.sec===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav button').forEach(b=>{
+  b.addEventListener('click',()=>showSec(b.dataset.sec));
+});
+
+/* ================= トップへ ================= */
+const totop=document.getElementById('totop');
+window.addEventListener('scroll',()=>{
+  totop.classList.toggle('show',window.scrollY>500);
+});
+totop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ================= 泡の演出 ================= */
+(function(){
+  const h=document.querySelector('header');
+  for(let i=0;i<7;i++){
+    const b=document.createElement('span');
+    b.className='bubble';
+    const sz=4+Math.random()*8;
+    b.style.width=sz+'px';b.style.height=sz+'px';
+    b.style.left=(8+Math.random()*84)+'%';
+    b.style.animationDuration=(5+Math.random()*6)+'s';
+    b.style.animationDelay=(Math.random()*6)+'s';
+    h.appendChild(b);
+  }
+})();
+
+/* ================= BGM(バーの静かな和音) ================= */
+let audioCtx=null, bgmOn=false, bgmTimer=null;
+const bgmBtn=document.getElementById('bgm');
+bgmBtn.addEventListener('click',()=>{
+  if(!bgmOn){startBgm();}else{stopBgm();}
+});
+function startBgm(){
+  try{
+    if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended')audioCtx.resume();
+    bgmOn=true;bgmBtn.classList.add('on');
+    playLoop();
+  }catch(e){}
+}
+function stopBgm(){
+  bgmOn=false;bgmBtn.classList.remove('on');
+  if(bgmTimer){clearTimeout(bgmTimer);bgmTimer=null;}
+}
+const CHORDS=[
+  [220.00,261.63,329.63,392.00], // Am7
+  [174.61,220.00,261.63,349.23], // Dm7ぽく
+  [196.00,246.94,293.66,349.23], // G7
+  [130.81,196.00,246.94,329.63]  // Cmaj7
+];
+let chordIdx=0;
+function playLoop(){
+  if(!bgmOn)return;
+  const now=audioCtx.currentTime;
+  const chord=CHORDS[chordIdx%CHORDS.length];
+  chordIdx++;
+  chord.forEach((f,i)=>{
+    const o=audioCtx.createOscillator();
+    const g=audioCtx.createGain();
+    o.type='sine';o.frequency.value=f;
+    g.gain.setValueAtTime(0,now);
+    g.gain.linearRampToValueAtTime(0.035,now+0.4+i*0.08);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+3.4);
+    o.connect(g);g.connect(audioCtx.destination);
+    o.start(now);o.stop(now+3.6);
+  });
+  bgmTimer=setTimeout(playLoop,3400);
+}
+</script>
+</body>
+</html>
