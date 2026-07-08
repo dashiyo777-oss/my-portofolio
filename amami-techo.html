@@ -110,6 +110,16 @@ h2{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.45rem;lett
   padding:20px 18px 14px;margin-bottom:18px;
   box-shadow:0 1px 0 rgba(55,39,28,.05);
 }
+.photo{
+  position:relative;height:112px;border-radius:10px;margin-bottom:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:56px;overflow:hidden;border:1px solid var(--line);
+}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph-trend{background:linear-gradient(135deg,#E6ECD6,#C3D69B)}
+.ph-fruit{background:linear-gradient(135deg,#FFF2C4,#D9E8B4)}
+.ph-luxury{background:linear-gradient(135deg,#F8E8D0,#F2D2DC)}
+.ph-conv{background:linear-gradient(135deg,#E2E7F0,#EFEADA)}
 .card .tag{
   font-size:.66rem;font-weight:700;letter-spacing:.12em;
   padding:2px 9px;border-radius:99px;margin-right:6px;
@@ -172,18 +182,28 @@ h2{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.45rem;lett
 .quiz-rank{font-size:.95rem;font-weight:700;margin-bottom:8px}
 .quiz-result p{font-size:.85rem;color:var(--ink-soft)}
 
-/* ===== 食べたいリスト ===== */
+/* ===== 食べたい帖（未 → 気になる → 食べた！）===== */
 .want-list{display:grid;gap:10px}
 .want{
   display:flex;align-items:center;gap:12px;background:#FFFDF6;
-  border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;
+  border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;
+  width:100%;text-align:left;font-family:inherit;color:var(--ink);
 }
-.want input{width:20px;height:20px;accent-color:var(--pistachio-deep);flex-shrink:0}
-.want .w-name{font-weight:700;font-size:.9rem}
+.want:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:2px}
+.want .w-emoji{font-size:1.5rem;flex-shrink:0}
+.want .w-body{flex:1}
+.want .w-name{font-weight:700;font-size:.9rem;display:block}
 .want .w-note{font-size:.76rem;color:var(--ink-soft)}
-.want.checked{background:var(--pistachio-pale)}
-.want.checked .w-name{text-decoration:line-through;color:var(--ink-soft)}
-.want-count{margin-top:14px;font-size:.85rem;text-align:center;color:var(--pistachio-deep);font-weight:700}
+.want .w-state{
+  flex-shrink:0;font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  border-radius:99px;padding:4px 11px;border:1.5px solid var(--line);color:var(--ink-soft);
+}
+.want.st-1{border-color:var(--kaki)}
+.want.st-1 .w-state{border-color:var(--kaki);background:#FAEDDC;color:#9A5A1E}
+.want.st-2{border-color:var(--pistachio-deep);background:var(--pistachio-pale)}
+.want.st-2 .w-state{border-color:var(--pistachio-deep);background:var(--pistachio-deep);color:#fff}
+.want-legend{font-size:.76rem;color:var(--ink-soft);margin-bottom:14px;line-height:1.9}
+.want-count{margin-top:14px;font-size:.85rem;text-align:center;color:var(--pistachio-deep);font-weight:700;line-height:1.9}
 
 footer{
   margin-top:48px;padding:26px 20px 40px;border-top:1px solid var(--line);
@@ -287,6 +307,48 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
     <p>私たちが食べている赤い部分は、植物学的には茎の先端がふくらんだ「花托（かたく）」。本当の果実は、表面にある小さなつぶつぶ（痩果）のほうで、その一粒一粒の中に種が入っています。ちなみに「初恋の香り」「淡雪」などの<b>白いイチゴ</b>は、赤い色素アントシアニンをほとんど作らないよう育種された品種です。</p>
     <div class="hee-row"><button class="hee" data-key="ichigo">へぇ +1</button></div>
   </div>
+
+  <div class="card">
+    <span class="tag fruit">パイナップル</span>
+    <h3>舌がピリピリするのは「消化されている」から</h3>
+    <p>生のパイナップルに含まれる酵素<b>ブロメライン</b>は、タンパク質を分解する力を持ちます。食べたときに舌がピリピリするのは、舌の表面のタンパク質がわずかに分解されているサイン。酢豚にパイナップルを入れると肉が柔らかくなるのも、生のパイナップルではゼラチンのゼリーが固まらないのも、同じ酵素の仕業です（加熱すれば酵素は働かなくなります）。</p>
+    <div class="hee-row"><button class="hee" data-key="pine">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">りんご</span>
+    <h3>りんごの「蜜」は、実は甘くない</h3>
+    <p>蜜入りりんごの半透明の部分の正体は<b>ソルビトール</b>という糖アルコール。意外にも、それ自体の甘さは砂糖の6割程度しかありません。葉で作られた養分が果糖などに変換しきれないほど熟した──つまり<b>「完熟の証明書」</b>なのです。蜜そのものが甘いのではなく、蜜が入るほど熟した果肉全体が甘い、というのが正解。</p>
+    <div class="hee-row"><button class="hee" data-key="apple">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">ぶどう</span>
+    <h3>皮の白い粉は、汚れでも農薬でもない</h3>
+    <p>ぶどうやブルーベリーの表面につく白い粉は<b>「ブルーム（果粉）」</b>。果実が自分で作り出すロウ状の物質で、水分の蒸発を防ぎ、病気から実を守るバリアの役割をしています。むしろ<b>新鮮さの証</b>なので、洗い落とすのは食べる直前に。ちなみにチョコレートの表面が白くなる現象も同じ「ブルーム」と呼ばれますが、こちらは脂肪や糖の再結晶で、別ものです。</p>
+    <div class="hee-row"><button class="hee" data-key="bloom">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">バナナ</span>
+    <h3>黒い点々は「食べ頃」の合図</h3>
+    <p>バナナの皮に現れる黒い斑点は<b>シュガースポット</b>。デンプンが糖に変わりきった完熟のサインで、甘さはこの時期がピークです。青いバナナはデンプン質でさっぱり、シュガースポットが出たら濃厚な甘さ──同じ一本で味の変化を楽しめる果物は意外と貴重。買ってすぐは房のまま吊るし、置くときは山型に置くと接地面の傷みを防げます。</p>
+    <div class="hee-row"><button class="hee" data-key="spot">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">スイカ</span>
+    <h3>スイカは野菜か、果物か</h3>
+    <p>園芸学の分類では、スイカやメロン、イチゴは草本（草）に実るため<b>「野菜」</b>。しかし流通や栄養学の世界では果物として扱われ、農林水産省は「果実的野菜」という折衷の呼び方をしています。つまり「どちらも正解」。ちなみにスイカの縞模様は、鳥に見つけてもらい種を運んでもらうための目立つ服、という説があります。</p>
+    <div class="hee-row"><button class="hee" data-key="suika">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">みかん</span>
+    <h3>食べすぎると手が黄色くなる、は本当</h3>
+    <p>みかんの色素<b>β-クリプトキサンチン</b>などのカロテノイドは、摂りすぎると皮膚の角質にたまり、手のひらや足の裏が黄色くなります（柑皮症）。病気ではなく、食べる量を減らせば自然に戻ります。このβ-クリプトキサンチン、骨の健康との関わりが研究されている注目成分でもあり、温州みかんはその含有量が世界トップクラスです。</p>
+    <div class="hee-row"><button class="hee" data-key="mikan">へぇ +1</button></div>
+  </div>
 </section>
 
 <!-- ===== 高級果実の世界 ===== -->
@@ -316,6 +378,20 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
     <p>静岡のクラウンメロンに代表される高級マスクメロンは、一株に実を一玉だけ残して他をすべて摘み取る<b>「一茎一果」</b>で育てられます。養分を一玉に集中させるための、究極の引き算。表面の網目は、実の成長に皮が追いつかず「ひび割れて、かさぶたのように治った跡」──つまり美しい網目は、傷の芸術なのです。</p>
     <div class="hee-row"><button class="hee" data-key="melon">へぇ +1</button></div>
   </div>
+
+  <div class="card">
+    <span class="tag luxury">マンゴー</span>
+    <h3>収穫は「落ちるのを待つ」──太陽のタマゴ</h3>
+    <p>宮崎の完熟マンゴー<b>「太陽のタマゴ」</b>は、糖度15度以上・重さ350g以上などの基準を満たした最上級品だけのブランド。ハサミで収穫せず、木で完熟して<b>自然に落ちた実をネットで受け止める</b>という独特の方法で採られます。初競りでは2玉で数十万円の値がつくのが恒例行事。「完熟を人間が判断せず、木に決めさせる」という発想が価値の源泉です。</p>
+    <div class="hee-row"><button class="hee" data-key="mango">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">初競り</span>
+    <h3>ご祝儀相場という日本の文化</h3>
+    <p>夕張メロンの初競りでは2玉500万円という記録も。もちろん普段の何百倍もの価格ですが、これは「ご祝儀相場」と呼ばれる日本独特の商習慣。落札する側は産地への応援と宣伝効果を込めて競り、ニュースになることで産地全体のブランド価値が上がる──果物が主役の、年に一度のお祭りなのです。マグロの初競りと同じ構図ですね。</p>
+    <div class="hee-row"><button class="hee" data-key="seri">へぇ +1</button></div>
+  </div>
 </section>
 
 <!-- ===== コンビニスイーツ ===== -->
@@ -338,12 +414,20 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
     <p>セブンの「イタリアンプリン」が固めプリンブームを再燃させ、ローソンの「バスチー」はバスクチーズケーキという言葉自体を全国区にしました。ファミマの「スフレ・プリン」、シュー生地の「もこ」シリーズなど、コンビニ発のヒットが世の中のスイーツトレンドを作る──喫茶店や洋菓子店が流行を作った時代からの、大きな地殻変動です。</p>
     <div class="hee-row"><button class="hee" data-key="basque">へぇ +1</button></div>
   </div>
+
+  <div class="card">
+    <span class="tag conv">プロの審査</span>
+    <h3>「一流パティシエが合格判定」という文化</h3>
+    <p>超一流の料理人やパティシエがコンビニ商品を実際に食べ、合格・不合格をその場で判定する──そんなテレビ企画が定着し、「プロが認めたスイーツ」は売り切れが続出する現象も生まれました。厳しい不合格判定が逆に商品改良につながり、リベンジで満場一致の合格を勝ち取る、という物語まで含めて楽しまれています。プロの舌が、コンビニスイーツの品質競争をさらに加速させました。</p>
+    <div class="point"><b>見どころ：</b>不合格になった商品がその後リニューアルされて店頭に並ぶことも。「審査される→進化する」のサイクルは、消費者にとって一番の利益かもしれません。</div>
+    <div class="hee-row"><button class="hee" data-key="judge">へぇ +1</button></div>
+  </div>
 </section>
 
 <!-- ===== クイズ ===== -->
 <section id="quiz">
   <span class="eyebrow">QUIZ</span>
-  <h2>あまみ検定・全8問</h2>
+  <h2>あまみ検定・全12問</h2>
   <p class="sec-lead">ここまで読んだあなたなら、きっと解けるはず。</p>
 
   <div class="quiz-box">
@@ -356,7 +440,7 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
     </div>
     <div class="quiz-result" id="quizResult">
       <div style="font-size:.8rem;letter-spacing:.2em;color:var(--ink-soft);font-weight:700">あなたの成績</div>
-      <div class="quiz-score"><span id="qScore">0</span><span style="font-size:1.1rem"> / 8</span></div>
+      <div class="quiz-score"><span id="qScore">0</span><span style="font-size:1.1rem" id="qTotal"> / 12</span></div>
       <div class="quiz-rank" id="qRank"></div>
       <p id="qComment"></p>
       <button class="quiz-next show" id="qRetry" style="margin-top:18px">もう一度挑戦する</button>
@@ -368,7 +452,8 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
 <section id="want">
   <span class="eyebrow">MY LIST</span>
   <h2>食べたい帖</h2>
-  <p class="sec-lead">気になったものにチェック。食べたら外して、次の一品へ。</p>
+  <p class="sec-lead">タップするたびに切り替わります：<b>未 → ☆気になる → ✔食べた！</b></p>
+  <div class="want-legend">「食べた！」にした品だけが制覇にカウントされます。まだ食べていないものは「気になる」で狙いを定めておきましょう。</div>
 
   <div class="want-list" id="wantList"></div>
   <div class="want-count" id="wantCount"></div>
@@ -385,6 +470,35 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
 var mem = {};
 function sget(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k]||null; } }
 function sset(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
+
+/* ========= 各カードに写真枠を自動挿入 =========
+   images/amami/◯◯.jpg（◯◯はへぇボタンのdata-key名）を置くと
+   自動的に本物の写真に切り替わります。無ければ絵文字イラストを表示。 */
+var EMOJI={
+  dubai:'🍫', mochi:'🍡', ice:'🍦',
+  banana:'🍌', miracle:'🍋', kaki:'🩺', ichigo:'🍓',
+  pine:'🍍', apple:'🍎', bloom:'🍇', spot:'🍌', suika:'🍉', mikan:'🍊',
+  tenkafubu:'🎁', ruby:'🍇', melon:'🍈', mango:'🥭', seri:'💴',
+  chef:'👨‍🍳', basque:'🍮', judge:'📺'
+};
+var SEC_CLASS={trend:'ph-trend', fruit:'ph-fruit', luxury:'ph-luxury', conv:'ph-conv'};
+document.querySelectorAll('.card .hee').forEach(function(btn){
+  var key=btn.dataset.key;
+  var card=btn.closest('.card');
+  var sec=btn.closest('section');
+  if(!card||!sec) return;
+  var div=document.createElement('div');
+  div.className='photo '+(SEC_CLASS[sec.id]||'ph-fruit');
+  div.setAttribute('aria-hidden','true');
+  div.textContent=EMOJI[key]||'🍰';
+  var img=document.createElement('img');
+  img.alt='';
+  img.loading='lazy';
+  img.onerror=function(){ img.remove(); };
+  img.src='images/amami/'+key+'.jpg';
+  div.appendChild(img);
+  card.insertBefore(div, card.firstChild);
+});
 
 /* ========= へぇボタン ========= */
 document.querySelectorAll('.hee').forEach(function(btn){
@@ -423,7 +537,19 @@ var QUIZ = [
    e:'実の成長に皮が追いつかずひび割れ、それがかさぶた状に治った跡が網目に。傷が芸術になった例です。'},
   {q:'2026年、「次に来る」と注目されるトルコ菓子由来のチョコは？',
    o:['エンジェルヘアーチョコ','スノーホワイトチョコ','サンドストームチョコ','マーメイドチョコ'], a:0,
-   e:'綿菓子のような伝統菓子ピシュマニエを使った「エンジェルヘアーチョコ」。外はパリッ、中はふわっ──食感のコントラストがヒットの方程式です。'}
+   e:'綿菓子のような伝統菓子ピシュマニエを使った「エンジェルヘアーチョコ」。外はパリッ、中はふわっ──食感のコントラストがヒットの方程式です。'},
+  {q:'生のパイナップルを食べると舌がピリピリする理由は？',
+   o:['酸が強すぎるから','タンパク質分解酵素ブロメラインの働き','小さなトゲが刺さるから','冷たすぎるから'], a:1,
+   e:'ブロメラインが舌の表面のタンパク質をわずかに分解しているサイン。酢豚の肉を柔らかくするのも同じ酵素です。'},
+  {q:'蜜入りりんごの「蜜」の正体は？',
+   o:['砂糖より甘い特別な糖','あまり甘くないソルビトール','はちみつと同じ成分','りんごの樹液'], a:1,
+   e:'蜜の正体ソルビトールの甘さは砂糖の6割程度。蜜そのものが甘いのではなく、蜜が入るほど完熟した果肉全体が甘いのです。'},
+  {q:'ぶどうの皮につく白い粉「ブルーム」の正体は？',
+   o:['農薬の残り','カビの一種','果実が自分で作る保護膜','ほこり'], a:2,
+   e:'果実自身が作るロウ状のバリアで、新鮮さの証。水分の蒸発や病気から実を守っています。'},
+  {q:'宮崎の高級マンゴー「太陽のタマゴ」の収穫方法は？',
+   o:['ハサミで一つずつ切る','木を揺らして落とす','完熟して自然に落ちた実をネットで受ける','機械で吸い取る'], a:2,
+   e:'完熟の判断を木に任せ、自然落下した実をネットで受け止めます。糖度15度以上などの基準を満たした実だけが名乗れるブランドです。'}
 ];
 var qi=0, score=0;
 var qText=document.getElementById('qText'), qOpts=document.getElementById('qOpts'),
@@ -465,10 +591,11 @@ qNext.addEventListener('click',function(){
     var r=document.getElementById('quizResult');
     r.classList.add('show');
     document.getElementById('qScore').textContent=score;
+    document.getElementById('qTotal').textContent=' / '+QUIZ.length;
     var rank,com;
-    if(score===8){rank='師範｜あまみ博士';com='完璧です。もう果物売り場で講釈できます。';}
-    else if(score>=6){rank='上級｜あまみ通';com='かなりの知識量。惜しかった問題をもう一度どうぞ。';}
-    else if(score>=4){rank='中級｜あまみ好き';com='いい線です。記事を読み返せば満点も近い。';}
+    if(score===QUIZ.length){rank='師範｜あまみ博士';com='完璧です。もう果物売り場で講釈できます。';}
+    else if(score>=9){rank='上級｜あまみ通';com='かなりの知識量。惜しかった問題をもう一度どうぞ。';}
+    else if(score>=6){rank='中級｜あまみ好き';com='いい線です。記事を読み返せば満点も近い。';}
     else{rank='入門｜のびしろ十分';com='ここからが楽しいところ。もう一周いかがですか。';}
     document.getElementById('qRank').textContent=rank;
     document.getElementById('qComment').textContent=com;
@@ -482,39 +609,58 @@ document.getElementById('qRetry').addEventListener('click',function(){
 });
 renderQ();
 
-/* ========= 食べたい帖 ========= */
+/* ========= 食べたい帖（0=未 / 1=気になる / 2=食べた！）========= */
 var WANTS=[
-  {id:'w1', name:'ドバイチョコレート（本家系）', note:'割る瞬間の音まで味わう'},
-  {id:'w2', name:'ドバイチョコ餅', note:'もちもち×ザクザクの二重食感'},
-  {id:'w3', name:'エンジェルヘアーチョコ', note:'2026年注目・パリッ＆ふわっ'},
-  {id:'w4', name:'もんげーバナナ（皮ごと）', note:'国産・凍結解凍覚醒法'},
-  {id:'w5', name:'ミラクルフルーツ＋レモン体験', note:'味覚の錯覚を試す'},
-  {id:'w6', name:'天下富舞（柿）', note:'桐箱入り・糖度20度超の世界'},
-  {id:'w7', name:'ルビーロマン', note:'一粒500円玉サイズ'},
-  {id:'w8', name:'白いイチゴ（初恋の香り など）', note:'香りは完熟、色は純白'},
-  {id:'w9', name:'シェフ監修コンビニスイーツ', note:'数百円で一流の技を'},
-  {id:'w10',name:'ドンドルマ（伸びるトルコアイス）', note:'伸びる秘密はサーレップ'}
+  {id:'w1', emoji:'🍫', name:'ドバイチョコレート（本家系）', note:'割る瞬間の音まで味わう'},
+  {id:'w2', emoji:'🍡', name:'ドバイチョコ餅', note:'もちもち×ザクザクの二重食感'},
+  {id:'w3', emoji:'🧚', name:'エンジェルヘアーチョコ', note:'2026年注目・パリッ＆ふわっ'},
+  {id:'w4', emoji:'🍌', name:'もんげーバナナ（皮ごと）', note:'国産・凍結解凍覚醒法'},
+  {id:'w5', emoji:'🍋', name:'ミラクルフルーツ＋レモン体験', note:'味覚の錯覚を試す'},
+  {id:'w6', emoji:'🎁', name:'天下富舞（柿）', note:'桐箱入り・糖度20度超の世界'},
+  {id:'w7', emoji:'🍇', name:'ルビーロマン', note:'一粒500円玉サイズ'},
+  {id:'w8', emoji:'🤍', name:'白いイチゴ（初恋の香り など）', note:'香りは完熟、色は純白'},
+  {id:'w9', emoji:'🥭', name:'太陽のタマゴ（完熟マンゴー）', note:'木が完熟を決める'},
+  {id:'w10',emoji:'🍈', name:'クラウンメロン（一茎一果）', note:'一株に一玉だけの贅沢'},
+  {id:'w11',emoji:'👨‍🍳', name:'シェフ監修コンビニスイーツ', note:'数百円で一流の技を'},
+  {id:'w12',emoji:'🍦', name:'ドンドルマ（伸びるトルコアイス）', note:'伸びる秘密はサーレップ'}
 ];
+var STATE_LABEL=['未','☆ 気になる','✔ 食べた！'];
 var list=document.getElementById('wantList');
+function wstate(id){
+  var v=sget('want_'+id);
+  if(v==='2') return 2;
+  if(v==='1') return 1;
+  return 0;
+}
 function renderWants(){
   list.innerHTML='';
-  var done=0;
+  var eaten=0, curious=0;
   WANTS.forEach(function(w){
-    var checked = sget('want_'+w.id)==='1';
-    if(checked) done++;
-    var label=document.createElement('label');
-    label.className='want'+(checked?' checked':'');
-    label.innerHTML='<input type="checkbox" '+(checked?'checked':'')+' aria-label="'+w.name+'">'+
-      '<span><span class="w-name">'+w.name+'</span><br><span class="w-note">'+w.note+'</span></span>';
-    label.querySelector('input').addEventListener('change',function(e){
-      sset('want_'+w.id, e.target.checked?'1':'0');
+    var st=wstate(w.id);
+    if(st===2) eaten++;
+    if(st===1) curious++;
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='want st-'+st;
+    btn.setAttribute('aria-label', w.name+'：現在「'+STATE_LABEL[st]+'」。タップで切り替え');
+    btn.innerHTML='<span class="w-emoji">'+w.emoji+'</span>'+
+      '<span class="w-body"><span class="w-name">'+w.name+'</span><span class="w-note">'+w.note+'</span></span>'+
+      '<span class="w-state">'+STATE_LABEL[st]+'</span>';
+    btn.addEventListener('click',function(){
+      sset('want_'+w.id, String((st+1)%3));
       renderWants();
     });
-    list.appendChild(label);
+    list.appendChild(btn);
   });
-  document.getElementById('wantCount').textContent =
-    done===0 ? 'まだこれから。気になるものにチェックを。'
-             : done+' / '+WANTS.length+' 品を制覇しました';
+  var msg;
+  if(eaten===WANTS.length){
+    msg='🎉 全 '+WANTS.length+' 品制覇！あまみ道、極めました。';
+  }else if(eaten===0 && curious===0){
+    msg='まだこれから。気になるものにタップで印を。';
+  }else{
+    msg='☆ 気になる：'+curious+' 品　／　✔ 食べた：'+eaten+' / '+WANTS.length+' 品';
+  }
+  document.getElementById('wantCount').textContent=msg;
 }
 renderWants();
 
