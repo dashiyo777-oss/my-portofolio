@@ -120,6 +120,9 @@ h2{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.45rem;lett
 .ph-fruit{background:linear-gradient(135deg,#FFF2C4,#D9E8B4)}
 .ph-luxury{background:linear-gradient(135deg,#F8E8D0,#F2D2DC)}
 .ph-conv{background:linear-gradient(135deg,#E2E7F0,#EFEADA)}
+.ph-place{background:linear-gradient(135deg,#EFE8D5,#E3D3AE)}
+.ph-scene{background:linear-gradient(135deg,#F2E4F1,#DCC9E8)}
+.ph-beauty{background:linear-gradient(135deg,#DCEEEC,#C7E3EA)}
 .card .tag{
   font-size:.66rem;font-weight:700;letter-spacing:.12em;
   padding:2px 9px;border-radius:99px;margin-right:6px;
@@ -128,6 +131,9 @@ h2{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.45rem;lett
 .tag.fruit{background:var(--pistachio-pale);color:var(--pistachio-deep)}
 .tag.luxury{background:#F3DEE3;color:#9A2E4B}
 .tag.conv{background:#E2E7F0;color:#3D5578}
+.tag.place{background:#E8E2D2;color:#6B5320}
+.tag.scene{background:#EFE2EE;color:#7A3D74}
+.tag.beauty{background:#DCEBEA;color:#2C6B66}
 .card h3{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.08rem;margin:10px 0 8px;line-height:1.5}
 .card p{font-size:.9rem;color:#4A3B2F}
 .card .point{
@@ -210,6 +216,43 @@ footer{
   text-align:center;font-size:.74rem;color:var(--ink-soft);line-height:2;
 }
 footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:.95rem;color:var(--ink);letter-spacing:.14em}
+
+/* ===== 今日の一話 ===== */
+.daily-wrap{max-width:640px;margin:0 auto;padding:22px 20px 0}
+.daily{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  background:#FFFDF6;border:1.5px solid var(--kaki);border-radius:var(--radius);
+  padding:14px 16px;cursor:pointer;font-family:inherit;color:var(--ink);
+  box-shadow:0 2px 0 rgba(217,139,63,.18);
+}
+.daily:focus-visible{outline:2px solid var(--kaki);outline-offset:2px}
+.daily .d-emoji{font-size:2rem;flex-shrink:0}
+.daily .d-label{
+  font-size:.64rem;font-weight:700;letter-spacing:.2em;color:#9A5A1E;display:block;margin-bottom:2px;
+}
+.daily .d-title{
+  font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:.95rem;line-height:1.55;display:block;
+}
+.daily .d-go{flex-shrink:0;font-size:.72rem;font-weight:700;color:#9A5A1E;white-space:nowrap}
+@keyframes cardFlash{
+  0%{box-shadow:0 0 0 3px var(--kaki)}
+  100%{box-shadow:0 1px 0 rgba(55,39,28,.05)}
+}
+.card.flash{animation:cardFlash 1.6s ease-out}
+
+/* ===== ページ先頭へ戻る ===== */
+.totop{
+  position:fixed;right:16px;bottom:20px;z-index:60;
+  width:46px;height:46px;border-radius:50%;border:1.5px solid var(--pistachio-deep);
+  background:var(--pistachio-deep);color:#fff;font-size:1.15rem;line-height:1;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 3px 10px rgba(55,39,28,.25);
+  opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity .25s,transform .25s;
+}
+.totop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.totop:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.totop{transition:none}.card.flash{animation:none}}
 </style>
 </head>
 <body>
@@ -238,9 +281,25 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
   <a href="#fruit">果物の意外な話</a>
   <a href="#luxury">高級果実の世界</a>
   <a href="#conv">コンビニスイーツ</a>
+  <a href="#place">名店・聖地</a>
+  <a href="#scene">名シーン・小話</a>
+  <a href="#beauty">美しいデザート</a>
   <a href="#quiz">検定クイズ</a>
   <a href="#want">食べたい帖</a>
 </nav>
+
+<div class="daily-wrap">
+  <button type="button" class="daily" id="dailyBtn">
+    <span class="d-emoji" id="dailyEmoji">🍰</span>
+    <span style="flex:1">
+      <span class="d-label">今日の一話</span>
+      <span class="d-title" id="dailyTitle"></span>
+    </span>
+    <span class="d-go">読む ▶</span>
+  </button>
+</div>
+
+<button type="button" class="totop" id="toTop" aria-label="ページの先頭へ戻る">▲</button>
 
 <!-- ===== いま話題 ===== -->
 <section id="trend">
@@ -424,10 +483,152 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
   </div>
 </section>
 
+<!-- ===== 名店・聖地 ===== -->
+<section id="place">
+  <span class="eyebrow">PLACES</span>
+  <h2>名店と聖地</h2>
+  <p class="sec-lead">甘いものの歴史が生まれた場所を訪ねる、小さな巡礼。</p>
+
+  <div class="card">
+    <span class="tag place">日本橋</span>
+    <h3>千疋屋総本店──果物を「贈り物」にした店</h3>
+    <p>創業は1834年（天保5年）。武蔵国千疋村から果物を運んで売り始めたのが起こりで、明治初期には果物を店内で食べさせる「果物食堂」を開き、日本の<b>フルーツパーラー文化の草分け</b>となりました。一玉数万円のマスクメロンが恭しく並ぶ売り場は、果物が「宝石」になる日本の贈答文化の総本山。名物のフルーツサンドやパフェを目当てに、今も行列ができます。</p>
+    <div class="hee-row"><button class="hee" data-key="senbikiya">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">銀座</span>
+    <h3>資生堂パーラー──ソーダ水から始まった洋食文化</h3>
+    <p>化粧品の資生堂は、もともと銀座の薬局。1902年、その店内に日本初期の<b>ソーダファウンテン</b>を設け、アイスクリームソーダを出したのが資生堂パーラーの始まりです。当時アイスクリームは超のつく贅沢品。銀座のモダン文化とともに歩んだこの店は、いまも「ストロベリーパフェ」や「花椿ビスケット」で愛され続けています。</p>
+    <div class="hee-row"><button class="hee" data-key="shiseido">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">横浜</span>
+    <h3>プリン・ア・ラ・モードは横浜のホテル生まれ</h3>
+    <p>プリンにアイス、果物、生クリームを豪華に盛り合わせたプリン・ア・ラ・モードは、戦後の<b>横浜・ホテルニューグランド</b>で誕生。ホテルに滞在していた進駐軍将校夫人たちを喜ばせるために考案された、れっきとした<b>日本生まれの洋風デザート</b>です。ちなみにスパゲッティナポリタンとドリアも同じホテルが発祥。一軒のホテルから国民食が三つも生まれました。</p>
+    <div class="hee-row"><button class="hee" data-key="alamode">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">京都・祇園</span>
+    <h3>鍵善良房のくずきり──江戸から続く涼</h3>
+    <p>祇園の甘味の名店・鍵善良房は江戸中期創業。名物の<b>くずきり</b>は、注文を受けてから吉野本葛を練って作り、黒蜜にくぐらせていただきます。氷水に泳ぐ透明なくずきりの美しさは「食べる涼」そのもの。舞妓さんや文人たちに愛されてきた、京都の夏の風物詩です。</p>
+    <div class="hee-row"><button class="hee" data-key="kuzukiri">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">全国</span>
+    <h3>果物王国マップ──旅の口実になる産地たち</h3>
+    <p>岡山は白桃とマスカットの王国（「晴王」ブランドのシャインマスカットも）。山形はさくらんぼ<b>佐藤錦</b>の故郷で、生産者・佐藤栄助氏の名が品種名に。山梨は桃とぶどうの生産量日本一、和歌山はみかん、青森はりんご、宮崎はマンゴー。<b>収穫期に産地で食べる完熟果物</b>は、輸送を前提に早採りされた店頭のものとは別物──果物好きの旅は、カレンダーが決めるのです。</p>
+    <div class="point"><b>旅のコツ：</b>観光農園の「食べ放題」より、直売所の「規格外・完熟もぎたて」が実は狙い目。見た目が悪いだけで味は最上級、値段は半分以下ということも。</div>
+    <div class="hee-row"><button class="hee" data-key="map">へぇ +1</button></div>
+  </div>
+</section>
+
+<!-- ===== 名シーン・こぼれ話 ===== -->
+<section id="scene">
+  <span class="eyebrow">STORIES</span>
+  <h2>名シーンとこぼれ話</h2>
+  <p class="sec-lead">物語と歴史の中の甘いもの。笑える話も、じんとくる話も。</p>
+
+  <div class="card">
+    <span class="tag scene">文学</span>
+    <h3>マドレーヌひとつで、7巻の物語が始まった</h3>
+    <p>プルーストの大長編『失われた時を求めて』は、主人公が<b>紅茶に浸したマドレーヌ</b>を口にした瞬間、幼い日の記憶が鮮やかに蘇る場面から動き出します。この描写から、香りや味が突然記憶を呼び覚ます現象は<b>「プルースト効果」</b>と呼ばれるように。焼き菓子ひとつが心理学用語になった、文学史上いちばん有名なおやつです。</p>
+    <div class="point"><b>身に覚え：</b>給食のミルメーク、屋台のベビーカステラ、祖母の家の缶入りクッキー──誰にでも「記憶のスイッチになる甘いもの」がありますよね。</div>
+    <div class="hee-row"><button class="hee" data-key="proust">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">映画</span>
+    <h3>ジェラートの名シーンが、法律を変えた</h3>
+    <p>映画『ローマの休日』で王女がスペイン階段でジェラートを頬張る場面は、映画史に残る名シーン。以来70年、世界中の観光客が同じ場所でジェラートを食べ続けた結果──汚れや損傷が深刻になり、ローマ市は<b>スペイン階段での飲食や座り込みを罰金付きで禁止</b>してしまいました。名シーンの再現、いまやると数万円の出費になります。</p>
+    <div class="hee-row"><button class="hee" data-key="roma">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">歴史の誤解</span>
+    <h3>「パンがなければお菓子を」は言っていない</h3>
+    <p>マリー・アントワネットの代名詞のようなこの台詞、実は<b>本人の言葉という記録はありません</b>。ルソーの『告白』に「ある大公妃が言った」として登場しますが、執筆されたのはアントワネットがまだ子どもでフランスに嫁ぐ前のこと。しかも原文は「ケーキ」ではなく<b>ブリオッシュ</b>（バターたっぷりのパン）。革命期のプロパガンダで彼女の台詞にされてしまった、歴史的な「言った言わない」です。</p>
+    <div class="hee-row"><button class="hee" data-key="antoinette">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">文豪の奇食</span>
+    <h3>森鴎外は、饅頭をご飯にのせて食べた</h3>
+    <p>軍医にして文豪の森鴎外の好物は<b>「饅頭茶漬け」</b>。ご飯に饅頭をのせ、煎茶をかけて食べるという豪快な甘味飯です。細菌学を学んだ鴎外は生ものを極度に警戒し、<b>果物さえ煮て食べた</b>という徹底ぶり。最先端の科学知識が生んだ、なんとも文豪らしい食卓でした。試した人によると「意外といける」そうですが、真偽はぜひご自身の舌で。</p>
+    <div class="hee-row"><button class="hee" data-key="ogai">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">国民的論争</span>
+    <h3>きのこ・たけのこ戦争──45年続く「内戦」</h3>
+    <p>きのこの山（1975年）とたけのこの里（1979年）。どちらが美味しいかという論争は<b>半世紀近く続く国民的ネタ</b>となり、ついにメーカー自身が「国民総選挙」を公式開催する事態に。数百万票を集めた選挙ではたけのこ党が勝利しましたが、きのこ党はいまも地下で再起を狙っている──とかいないとか。対立を煽って両方売る、平和で見事な商売でもあります。</p>
+    <div class="hee-row"><button class="hee" data-key="kinotake">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">日本独自</span>
+    <h3>イチゴのショートケーキは、日本にしかない</h3>
+    <p>ふわふわのスポンジに生クリームとイチゴ──あの姿は<b>日本で独自進化した洋菓子</b>で、欧米の「ショートケーキ」はビスケット状の生地が主流。「ショート」の語源は、サクサクを意味する古い英語やショートニング由来という説が有力で、「短時間で作れるから」ではありません。クリスマスにイチゴのショートケーキを食べる習慣も日本独特。私たちの「定番」は、世界では珍しい風景なのです。</p>
+    <div class="hee-row"><button class="hee" data-key="short">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">里帰り不能</span>
+    <h3>カステラは、ポルトガルに「存在しない」</h3>
+    <p>16世紀にポルトガル人が長崎に伝えたカステラ。ところが現在のポルトガルに<b>「カステラ」というお菓子はありません</b>。名前は「カスティーリャ地方のパン」に由来するとされ、原型に近い菓子はあるものの、卵と糖をたっぷり使いしっとり焼き上げる今の姿は日本で完成したもの。故郷に帰っても誰も知らない──カステラは、日本が育てた「帰る家のない子」なのです。</p>
+    <div class="hee-row"><button class="hee" data-key="castella">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">名前の由来</span>
+    <h3>パフェは「完璧」、サンデーは「日曜日」</h3>
+    <p>パフェの語源はフランス語の<b>parfait＝完璧</b>。「完璧なデザート」という、なんとも自信満々な名前です。一方サンデーは米国生まれで、<b>日曜日（Sunday）</b>に由来。安息日にソーダ水を売ることが規制された時代、ソーダ抜きでアイスにシロップをかけて出したのが始まり──という説が有名です。綴りをSundaeと変えたのは、聖なる日曜日の名を菓子に使うのは畏れ多いから、とも。</p>
+    <div class="hee-row"><button class="hee" data-key="parfait">へぇ +1</button></div>
+  </div>
+</section>
+
+<!-- ===== 美しいデザート ===== -->
+<section id="beauty">
+  <span class="eyebrow">BEAUTY</span>
+  <h2>美しいデザート</h2>
+  <p class="sec-lead">食べるのがもったいない──でも食べる。それが甘いものの宿命です。</p>
+
+  <div class="card">
+    <span class="tag beauty">和菓子</span>
+    <h3>琥珀糖──食べられる宝石</h3>
+    <p>寒天と砂糖を煮て固め、<b>約1週間かけて表面だけを結晶化</b>させる伝統菓子。外はシャリッ、中はぷるんとした二重の食感で、光にかざすと鉱物のように輝きます。SNSでは「食べられる宝石」として海外からも注目される存在に。職人が色を重ねた一粒は、まさに小さな芸術品です。</p>
+    <div class="hee-row"><button class="hee" data-key="kohaku">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">賞味期限30分</span>
+    <h3>水信玄餅──雨粒のような一皿</h3>
+    <p>山梨・金精軒の<b>水信玄餅</b>は、水を極限まで固めたような透明の菓子。常温では形を保てないため<b>賞味期限はわずか30分</b>、販売は夏の週末に店頭のみ。持ち帰りも通販も不可能という潔さです。海外では「raindrop cake（雨粒のケーキ）」と呼ばれ話題に。消えてしまうからこそ美しい──桜のような日本的美学のデザートです。</p>
+    <div class="hee-row"><button class="hee" data-key="mizu">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">萌え断</span>
+    <h3>フルーツサンドの断面は「設計」されている</h3>
+    <p>切った瞬間に花のような断面が現れるフルーツサンド。あれは偶然ではなく、<b>切る位置から逆算して果物を配置する</b>緻密な設計の産物です。イチゴの向き、キウイの角度、クリームの厚み──すべて断面のため。「萌え断」という言葉を生んだこの文化は、断面という一瞬の美のために仕込みを尽くす、日本のお弁当文化の親戚かもしれません。</p>
+    <div class="hee-row"><button class="hee" data-key="dan">へぇ +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">パティシエの技</span>
+    <h3>鏡のケーキと、飴の彫刻</h3>
+    <p>顔が映るほど艶やかな<b>ミラーグレーズ</b>のケーキは、チョコとゼラチンの糖衣を正確な温度で流しかける温度管理の芸術。コンクールで見られる<b>飴細工</b>は、160℃超の飴を素手に近い状態で引き、冷めて固まるまでの数十秒で花や鳥を生み出す時間との勝負です。美しいデザートの裏には、必ず物理と化学と、火傷寸前の職人がいます。</p>
+    <div class="hee-row"><button class="hee" data-key="mirror">へぇ +1</button></div>
+  </div>
+</section>
+
 <!-- ===== クイズ ===== -->
 <section id="quiz">
   <span class="eyebrow">QUIZ</span>
-  <h2>あまみ検定・全12問</h2>
+  <h2>あまみ検定・全16問</h2>
   <p class="sec-lead">ここまで読んだあなたなら、きっと解けるはず。</p>
 
   <div class="quiz-box">
@@ -479,9 +680,13 @@ var EMOJI={
   banana:'🍌', miracle:'🍋', kaki:'🩺', ichigo:'🍓',
   pine:'🍍', apple:'🍎', bloom:'🍇', spot:'🍌', suika:'🍉', mikan:'🍊',
   tenkafubu:'🎁', ruby:'🍇', melon:'🍈', mango:'🥭', seri:'💴',
-  chef:'👨‍🍳', basque:'🍮', judge:'📺'
+  chef:'👨‍🍳', basque:'🍮', judge:'📺',
+  senbikiya:'🍈', shiseido:'🥤', alamode:'🍮', kuzukiri:'🍵', map:'🗾',
+  proust:'☕', roma:'🍨', antoinette:'👑', ogai:'🍚', kinotake:'🍄',
+  short:'🍰', castella:'🍯', parfait:'🍨',
+  kohaku:'💎', mizu:'💧', dan:'🥪', mirror:'✨'
 };
-var SEC_CLASS={trend:'ph-trend', fruit:'ph-fruit', luxury:'ph-luxury', conv:'ph-conv'};
+var SEC_CLASS={trend:'ph-trend', fruit:'ph-fruit', luxury:'ph-luxury', conv:'ph-conv', place:'ph-place', scene:'ph-scene', beauty:'ph-beauty'};
 document.querySelectorAll('.card .hee').forEach(function(btn){
   var key=btn.dataset.key;
   var card=btn.closest('.card');
@@ -549,7 +754,19 @@ var QUIZ = [
    e:'果実自身が作るロウ状のバリアで、新鮮さの証。水分の蒸発や病気から実を守っています。'},
   {q:'宮崎の高級マンゴー「太陽のタマゴ」の収穫方法は？',
    o:['ハサミで一つずつ切る','木を揺らして落とす','完熟して自然に落ちた実をネットで受ける','機械で吸い取る'], a:2,
-   e:'完熟の判断を木に任せ、自然落下した実をネットで受け止めます。糖度15度以上などの基準を満たした実だけが名乗れるブランドです。'}
+   e:'完熟の判断を木に任せ、自然落下した実をネットで受け止めます。糖度15度以上などの基準を満たした実だけが名乗れるブランドです。'},
+  {q:'香りや味で突然記憶が蘇る「プルースト効果」。きっかけになったお菓子は？',
+   o:['マカロン','マドレーヌ','エクレア','カヌレ'], a:1,
+   e:'『失われた時を求めて』で、紅茶に浸したマドレーヌが幼い日の記憶を呼び覚まします。焼き菓子が心理学用語になった珍しい例です。'},
+  {q:'「パンがなければお菓子を食べればいい」という台詞、実際のところは？',
+   o:['マリー・アントワネットが法廷で言った','本人が言った記録はなく、ルソーの本に先に登場する','ルイ16世の言葉だった','日本で作られた台詞'], a:1,
+   e:'ルソー『告白』に「ある大公妃の言葉」として登場しますが、書かれたのはアントワネットの嫁入り前。原文は「ケーキ」ではなくブリオッシュです。'},
+  {q:'山梨の銘菓「水信玄餅」の賞味期限は？',
+   o:['約30分','約3時間','約3日','約3週間'], a:0,
+   e:'常温では形を保てないため約30分。持ち帰りも通販もできず、夏の週末に店頭で食べるしかない「消える菓子」です。'},
+  {q:'プリン・ア・ラ・モードが誕生した場所は？',
+   o:['パリの老舗カフェ','銀座の百貨店','横浜のホテル','京都の甘味処'], a:2,
+   e:'戦後の横浜・ホテルニューグランドで、進駐軍将校夫人たちのために考案された日本生まれのデザート。ナポリタンとドリアも同じホテル発祥です。'}
 ];
 var qi=0, score=0;
 var qText=document.getElementById('qText'), qOpts=document.getElementById('qOpts'),
@@ -594,8 +811,8 @@ qNext.addEventListener('click',function(){
     document.getElementById('qTotal').textContent=' / '+QUIZ.length;
     var rank,com;
     if(score===QUIZ.length){rank='師範｜あまみ博士';com='完璧です。もう果物売り場で講釈できます。';}
-    else if(score>=9){rank='上級｜あまみ通';com='かなりの知識量。惜しかった問題をもう一度どうぞ。';}
-    else if(score>=6){rank='中級｜あまみ好き';com='いい線です。記事を読み返せば満点も近い。';}
+    else if(score>=12){rank='上級｜あまみ通';com='かなりの知識量。惜しかった問題をもう一度どうぞ。';}
+    else if(score>=8){rank='中級｜あまみ好き';com='いい線です。記事を読み返せば満点も近い。';}
     else{rank='入門｜のびしろ十分';com='ここからが楽しいところ。もう一周いかがですか。';}
     document.getElementById('qRank').textContent=rank;
     document.getElementById('qComment').textContent=com;
@@ -622,7 +839,11 @@ var WANTS=[
   {id:'w9', emoji:'🥭', name:'太陽のタマゴ（完熟マンゴー）', note:'木が完熟を決める'},
   {id:'w10',emoji:'🍈', name:'クラウンメロン（一茎一果）', note:'一株に一玉だけの贅沢'},
   {id:'w11',emoji:'👨‍🍳', name:'シェフ監修コンビニスイーツ', note:'数百円で一流の技を'},
-  {id:'w12',emoji:'🍦', name:'ドンドルマ（伸びるトルコアイス）', note:'伸びる秘密はサーレップ'}
+  {id:'w12',emoji:'🍦', name:'ドンドルマ（伸びるトルコアイス）', note:'伸びる秘密はサーレップ'},
+  {id:'w13',emoji:'🍨', name:'老舗フルーツパーラーのパフェ', note:'千疋屋・資生堂パーラーの系譜'},
+  {id:'w14',emoji:'💧', name:'水信玄餅（現地で30分以内に）', note:'夏の週末・山梨限定'},
+  {id:'w15',emoji:'💎', name:'琥珀糖', note:'食べられる宝石'},
+  {id:'w16',emoji:'🥪', name:'萌え断フルーツサンド', note:'断面は設計の芸術'}
 ];
 var STATE_LABEL=['未','☆ 気になる','✔ 食べた！'];
 var list=document.getElementById('wantList');
@@ -664,14 +885,36 @@ function renderWants(){
 }
 renderWants();
 
-/* ========= ナビのアクティブ切替 ========= */
+/* ========= 今日の一話（開くたびにランダム） ========= */
+(function(){
+  var hees=document.querySelectorAll('.card .hee');
+  if(!hees.length) return;
+  var pick=hees[Math.floor(Math.random()*hees.length)];
+  var card=pick.closest('.card');
+  var title=card.querySelector('h3');
+  document.getElementById('dailyEmoji').textContent=EMOJI[pick.dataset.key]||'🍰';
+  document.getElementById('dailyTitle').textContent=title?title.textContent:'';
+  document.getElementById('dailyBtn').addEventListener('click',function(){
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+    card.classList.remove('flash');
+    void card.offsetWidth;
+    card.classList.add('flash');
+  });
+})();
+
+/* ========= ナビのアクティブ切替＋先頭へ戻る ========= */
 var links=document.querySelectorAll('nav a');
 var secs=Array.prototype.map.call(links,function(a){return document.querySelector(a.getAttribute('href'));});
+var toTop=document.getElementById('toTop');
 window.addEventListener('scroll',function(){
   var y=window.scrollY+120, idx=0;
   secs.forEach(function(s,i){ if(s && s.offsetTop<=y) idx=i; });
   links.forEach(function(a,i){ a.classList.toggle('active',i===idx); });
+  toTop.classList.toggle('show', window.scrollY>500);
 },{passive:true});
+toTop.addEventListener('click',function(){
+  window.scrollTo({top:0,behavior:'smooth'});
+});
 </script>
 </body>
 </html>
