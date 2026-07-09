@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>話題かるた — 木戸に立ちかけし衣食住</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ai:#22456e;        /* 藍 */
+  --ai-fukai:#16304f;  /* 深藍 */
+  --shu:#b8422f;       /* 朱(印章にのみ使用) */
+  --kami:#f4f1e9;      /* 和紙 */
+  --kami-kage:#e7e2d4; /* 和紙の陰 */
+  --sumi:#2b2a26;      /* 墨 */
+  --display:'Shippori Mincho',serif;
+  --body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:var(--body);
+  background:var(--ai-fukai);
+  color:var(--sumi);
+  min-height:100vh;
+}
+header{
+  padding:28px 20px 18px;
+  text-align:center;
+  color:var(--kami);
+}
+header .yomi{
+  font-size:11px;
+  letter-spacing:.35em;
+  opacity:.75;
+  margin-bottom:8px;
+}
+header h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:26px;
+  letter-spacing:.12em;
+}
+header p{
+  margin-top:10px;
+  font-size:12.5px;
+  opacity:.8;
+  line-height:1.7;
+}
+.draw-wrap{
+  text-align:center;
+  padding:6px 20px 22px;
+}
+#drawBtn{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:17px;
+  letter-spacing:.2em;
+  color:var(--ai-fukai);
+  background:var(--kami);
+  border:none;
+  border-radius:6px;
+  padding:14px 44px;
+  cursor:pointer;
+  box-shadow:0 3px 0 rgba(0,0,0,.35);
+}
+#drawBtn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+#drawBtn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+main{
+  background:var(--kami);
+  border-radius:18px 18px 0 0;
+  padding:22px 16px 120px;
+  min-height:60vh;
+}
+.grid-label{
+  font-size:11px;
+  letter-spacing:.3em;
+  color:var(--ai);
+  text-align:center;
+  margin-bottom:14px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  max-width:520px;
+  margin:0 auto;
+}
+.fuda{
+  aspect-ratio:5/7;
+  background:#fdfbf5;
+  border:1.5px solid var(--ai);
+  border-radius:5px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  cursor:pointer;
+  font-family:var(--display);
+  box-shadow:2px 2px 0 var(--kami-kage);
+  transition:transform .12s;
+}
+.fuda:active{transform:scale(.94)}
+.fuda:focus-visible{outline:3px solid var(--ai);outline-offset:2px}
+.fuda .kana{
+  font-size:30px;
+  font-weight:800;
+  color:var(--ai-fukai);
+  line-height:1;
+}
+.fuda .cat{
+  font-size:9.5px;
+  color:var(--ai);
+  letter-spacing:.05em;
+  writing-mode:vertical-rl;
+  max-height:52px;
+}
+.fuda.ishokuju .kana{font-size:22px}
+/* 引いた札(下から出る紙) */
+#sheet{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  background:#fdfbf5;
+  border-top:3px solid var(--ai);
+  border-radius:16px 16px 0 0;
+  padding:22px 22px 28px;
+  transform:translateY(110%);
+  transition:transform .28s ease;
+  box-shadow:0 -8px 30px rgba(0,0,0,.3);
+  max-width:560px;
+  margin:0 auto;
+  z-index:10;
+}
+#sheet.open{transform:translateY(0)}
+#sheet .head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+#sheet .stamp{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:22px;
+  color:#fdfbf5;
+  background:var(--shu);
+  width:44px;height:44px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+#sheet .catname{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:16px;
+  color:var(--ai-fukai);
+  letter-spacing:.1em;
+}
+#sheet .q{
+  font-family:var(--display);
+  font-size:19px;
+  font-weight:700;
+  line-height:1.8;
+  color:var(--sumi);
+  min-height:70px;
+  margin-bottom:10px;
+}
+#sheet .tip{
+  font-size:12.5px;
+  color:#6b665c;
+  line-height:1.7;
+  border-left:3px solid var(--kami-kage);
+  padding-left:10px;
+  margin-bottom:18px;
+}
+#sheet .btns{display:flex;gap:10px}
+#sheet button{
+  flex:1;
+  font-family:var(--body);
+  font-weight:700;
+  font-size:14px;
+  padding:12px;
+  border-radius:6px;
+  cursor:pointer;
+  border:1.5px solid var(--ai);
+}
+#anotherBtn{background:var(--ai);color:#fdfbf5}
+#closeBtn{background:transparent;color:var(--ai)}
+#sheet button:focus-visible{outline:3px solid var(--ai);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+  #sheet{transition:none}
+  .fuda{transition:none}
+}
+@media (min-width:480px){
+  .grid{grid-template-columns:repeat(6,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="yomi">き ど に た て か け し ・ い しょく じゅう</div>
+  <h1>話題かるた</h1>
+  <p>会話に困ったら、札を一枚。<br>「木戸に立ちかけし衣食住」から話のきっかけを引きます。</p>
+</header>
+
+<div class="draw-wrap">
+  <button id="drawBtn">話題を引く</button>
+</div>
+
+<main>
+  <div class="grid-label">札 を え ら ぶ</div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div id="sheet" role="dialog" aria-modal="false" aria-label="引いた話題">
+  <div class="head">
+    <div class="stamp" id="stamp">き</div>
+    <div class="catname" id="catname">気候・季節</div>
+  </div>
+  <div class="q" id="question"></div>
+  <div class="tip" id="tip"></div>
+  <div class="btns">
+    <button id="anotherBtn">別の話題を引く</button>
+    <button id="closeBtn">閉じる</button>
+  </div>
+</div>
+
+<script>
+const month = new Date().getMonth() + 1;
+
+// 月ごとの季節ネタ(き:気候・季節に混ぜる)
+const seasonal = {
+  1:["お正月はゆっくりできましたか?","寒の入りですね。今年は冷えますね"],
+  2:["立春とはいえ、まだまだ寒いですね","花粉、もう来てませんか?"],
+  3:["だいぶ日が長くなりましたね","桜の開花、今年は早いみたいですね"],
+  4:["すっかり春ですね。お花見はされました?","新年度、なんとなく気持ちが改まりますね"],
+  5:["新緑が気持ちいい季節ですね","連休はどう過ごされました?"],
+  6:["そろそろ梅雨入りですかね","紫陽花がきれいな時期になりましたね"],
+  7:["いよいよ夏本番ですね。暑さ対策、何かされてますか?","セミが鳴き始めましたね"],
+  8:["毎日暑いですね。夏バテされてませんか?","お盆はどこかへ行かれますか?"],
+  9:["朝晩は少し涼しくなってきましたね","今年は台風が多いですね"],
+  10:["すっかり秋めいてきましたね","紅葉、どこかへ見に行かれますか?"],
+  11:["日が暮れるのが早くなりましたね","そろそろコートの出番ですね"],
+  12:["今年もあと少しですね。一年早いですね","年末はお忙しいですか?"]
+};
+
+const data = [
+  {kana:"き", cat:"気候・季節", qs:[
+    "この時期、体調を崩しやすいですよね。大丈夫ですか?",
+    "季節の変わり目って、あっという間ですね",
+    "一年で好きな季節ってありますか?",
+    ...(seasonal[month]||[])
+  ], tip:"季節の話は誰にでも通じる入口。共感の相づちだけで会話が続きます。"},
+  {kana:"ど", cat:"道楽・趣味", qs:[
+    "お休みの日は何をされてることが多いですか?",
+    "最近ハマっているもの、何かありますか?",
+    "音楽はお聴きになりますか?",
+    "テレビや動画で、最近面白かったものありました?",
+    "若い頃に夢中になったことって何ですか?"
+  ], tip:"相手が答えたら「いつ頃から?」「きっかけは?」と広げると盛り上がります。"},
+  {kana:"に", cat:"ニュース", qs:[
+    "最近のニュースで気になったもの、ありますか?",
+    "スポーツはご覧になりますか?",
+    "物価、また上がりましたね",
+    "最近のAIのニュース、すごいですよね"
+  ], tip:"政治・宗教の深入りは避けて、スポーツやエンタメ寄りが安全です。"},
+  {kana:"た", cat:"旅", qs:[
+    "最近どこかへお出かけになりました?",
+    "行ってよかった旅行先って、どちらですか?",
+    "一度は行ってみたい場所、ありますか?",
+    "ご出身はどちらなんですか?"
+  ], tip:"出身地の話は旅の話題の隠れた入口。ご当地の食べ物の話につながります。"},
+  {kana:"て", cat:"天気", qs:[
+    "今日はいい天気ですね",
+    "週末は天気が崩れるみたいですね",
+    "最近、天気が読めませんね",
+    "洗濯物がよく乾く日ですね"
+  ], tip:"天気は最初の一言に最適。ここから「き(季節)」の話題へ自然に移れます。"},
+  {kana:"か", cat:"家庭・家族", qs:[
+    "ご家族でどこかへ出かける予定はありますか?",
+    "ペットは飼っていらっしゃいますか?",
+    "最近、家で何か新しく始めたことありますか?",
+    "お孫さん(お子さん)は大きくなられました?"
+  ], tip:"家族構成には触れず、相手が話した範囲だけ広げるのがマナーです。"},
+  {kana:"け", cat:"健康", qs:[
+    "健康のために何かされてますか?",
+    "最近よく眠れてますか?",
+    "歩くのって、やっぱり体にいいみたいですね",
+    "健康診断、そろそろの時期ですね"
+  ], tip:"自分の軽い失敗談(寝不足・運動不足)から入ると相手も話しやすくなります。"},
+  {kana:"し", cat:"仕事", qs:[
+    "お仕事は長いんですか?",
+    "最近お忙しいですか?",
+    "お仕事で一番やりがいを感じるのはどんな時ですか?",
+    "この業界も変わりましたか?"
+  ], tip:"仕事の愚痴には深入りせず「大変ですね」で受け止めるのが無難です。"},
+  {kana:"衣", cat:"衣服", qs:[
+    "もう衣替えはされました?",
+    "その色、お似合いですね",
+    "最近の服は機能的になりましたよね",
+    "暑さ(寒さ)対策の服装、工夫されてますか?"
+  ], tip:"持ち物や服は「褒めて質問」がセット。「素敵ですね、どちらで?」の形で。"},
+  {kana:"食", cat:"食べ物", qs:[
+    "最近おいしかったもの、何かありました?",
+    "この辺でおすすめのお店、ありますか?",
+    "好きな食べ物って何ですか?",
+    "自炊はされるんですか?"
+  ], tip:"食の話題は外れなし。おすすめを聞くと相手が「教える側」になれて話が弾みます。"},
+  {kana:"住", cat:"住まい", qs:[
+    "このあたりは住みやすいですか?",
+    "お住まいは長いんですか?",
+    "最近、片付けや模様替えってされました?",
+    "住むなら都会と田舎、どちら派ですか?"
+  ], tip:"「住みやすいですか?」は地域の話・お店の話へ広がる万能の一枚です。"}
+];
+
+const grid = document.getElementById('grid');
+const sheet = document.getElementById('sheet');
+const stamp = document.getElementById('stamp');
+const catname = document.getElementById('catname');
+const question = document.getElementById('question');
+const tipEl = document.getElementById('tip');
+
+let current = null;
+let lastQ = "";
+
+data.forEach((d,i)=>{
+  const b = document.createElement('button');
+  b.className = 'fuda' + (d.kana.length>0 && "衣食住".includes(d.kana) ? ' ishokuju' : '');
+  b.innerHTML = `<span class="kana">${d.kana}</span><span class="cat">${d.cat}</span>`;
+  b.addEventListener('click',()=>open(i));
+  grid.appendChild(b);
+});
+
+function pick(d){
+  if(d.qs.length===1) return d.qs[0];
+  let q;
+  do{ q = d.qs[Math.floor(Math.random()*d.qs.length)]; }while(q===lastQ);
+  lastQ = q;
+  return q;
+}
+
+function open(i){
+  current = i;
+  const d = data[i];
+  stamp.textContent = d.kana;
+  catname.textContent = d.cat;
+  question.textContent = "「" + pick(d) + "」";
+  tipEl.textContent = d.tip;
+  sheet.classList.add('open');
+}
+
+document.getElementById('drawBtn').addEventListener('click',()=>{
+  open(Math.floor(Math.random()*data.length));
+});
+document.getElementById('anotherBtn').addEventListener('click',()=>{
+  if(current===null) return;
+  // 同じ札からもう一枚。たまに別の札に飛ぶと発見がある
+  if(Math.random()<0.25) open(Math.floor(Math.random()*data.length));
+  else open(current);
+});
+document.getElementById('closeBtn').addEventListener('click',()=>{
+  sheet.classList.remove('open');
+});
+</script>
+</body>
+</html>
