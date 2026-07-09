@@ -346,7 +346,7 @@ footer a{color:var(--gold);text-decoration:none}
       全<strong id="payTotal"></strong>冊の名作要約と<strong>AI書斎</strong>（新規要約の作成）が使い放題。<br>
       合言葉（パスコード）を入力してください。
     </p>
-    <input class="pass-input" id="passInput" placeholder="MEISAKU-XXXX" autocapitalize="characters" autocomplete="off">
+    <input class="pass-input" id="passInput" placeholder="TOMO-XXXX" autocapitalize="characters" autocomplete="off">
     <div class="pay-err" id="payErr"></div>
     <div class="btnrow">
       <button class="btn shu" onclick="checkPass()" id="payUnlock">解錠する</button>
@@ -370,7 +370,23 @@ footer a{color:var(--gold);text-decoration:none}
    ▼▼ 設定（ここだけ書き換えれば運用できます） ▼▼
    ===================================================== */
 const CONFIG = {
-  PASSCODE: "MEISAKU-2026",                 // 会員合言葉（叡智の灯火方式・月替え可）
+  MASTER_PASSCODE: "MEISAKU-2026",          // マスター合言葉（常に有効・運用者用。変更可）
+  // 叡智の灯火の月替わり合言葉（TOMO-XXXX）。SHA-256ハッシュで格納しているため
+  // ソースを見られてもコードは分かりません。新しい月を足すときはClaudeに依頼してください。
+  MONTHLY_CODES: {
+   "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+   "2026-07":"67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+   "2026-08":"fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+   "2026-09":"4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+   "2026-10":"266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+   "2026-11":"eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+   "2026-12":"7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+   "2027-01":"a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+   "2027-02":"00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+   "2027-03":"63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+   "2027-04":"d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+   "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+  },
   PURCHASE_URL: "https://eichinohi.com/",   // 合言葉の販売ページ（Gumroad / note などに変更可）
   PROXY_URL: "",                            // Cloudflare Worker のURL（例: https://sekai-proxy.xxx.workers.dev）
                                             // 空欄のままだと claude.ai のプレビュー内でのみAIが動きます。
@@ -400,8 +416,8 @@ ja:{tagline:"世界の名作、三分で。— 読む前に、読んだあとに
  payTitle:"読書会員になる",
  payCopy:t=>`全<strong>${t}</strong>冊の名作要約と<strong>AI書斎</strong>（新規要約の作成）が使い放題。<br>合言葉（パスコード）を入力してください。`,
  unlock:"解錠する", buy:"合言葉を購入する（叡智の灯火）",
- payNote:"購入後すぐに合言葉が発行されます。買い切り・端末を選ばず利用できます。",
- wrong:"合言葉が違います。", welcome:"ようこそ、読書会員へ。",
+ payNote:"合言葉は月替わりです。叡智の灯火の今月の合言葉（TOMO-XXXX）がそのまま使えます。",
+ wrong:"合言葉が違います。今月の合言葉（TOMO-XXXX）をご確認ください。", welcome:"ようこそ、読書会員へ。",
  foot:"要約はすべて当手帖による書き下ろしです。原文の引用は含みません。",
  themesLabel:"主題", aiTag:"AI書斎", del:"削除する",
  rank:"いま読まれている TOP5", rankLocal:"※ この端末での閲覧記録です", rankGlobal:"※ 全読者の閲覧数ランキングです", views:"回",
@@ -422,8 +438,8 @@ en:{tagline:"The world's classics, in three minutes — before you read, or afte
  payTitle:"Become a member",
  payCopy:t=>`Unlock all <strong>${t}</strong> classic summaries plus the <strong>AI Librarian</strong>.<br>Enter your passcode below.`,
  unlock:"Unlock", buy:"Get a passcode (Eichi no Hi)",
- payNote:"Your passcode is issued right after purchase. One-time payment, works on any device.",
- wrong:"That passcode doesn't match.", welcome:"Welcome, member.",
+ payNote:"The passcode rotates monthly. Your current Eichi no Hi passcode (TOMO-XXXX) works here too.",
+ wrong:"That passcode doesn't match this month's code (TOMO-XXXX).", welcome:"Welcome, member.",
  foot:"All summaries are original write-ups. No text is quoted from the works.",
  themesLabel:"Themes", aiTag:"AI Shelf", del:"Delete",
  rank:"TRENDING · TOP 5", rankLocal:"* Based on views on this device", rankGlobal:"* Based on views from all readers", views:"views",
@@ -535,7 +551,10 @@ let LANG='ja', GENRE='ALL', CUR=null;
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},
  set(k,v){try{localStorage.setItem(k,v)}catch(e){}},
  del(k){try{localStorage.removeItem(k)}catch(e){}}};
-const isMember=()=>store.get('meisaku_member')==='1';
+const curYM=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
+const isMember=()=>{const v=store.get('meisaku_member');return v==='master'||v===curYM()};
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 const readSet=()=>{try{return new Set(JSON.parse(store.get('meisaku_read')||'[]'))}catch(e){return new Set()}};
 const saveRead=s=>store.set('meisaku_read',JSON.stringify([...s]));
 const aiShelf=()=>{try{return JSON.parse(store.get('meisaku_ai')||'[]')}catch(e){return[]}};
@@ -739,10 +758,16 @@ function openPay(){document.getElementById('payErr').textContent='';
   document.getElementById('payTotal')&&(document.getElementById('payTotal').textContent=BOOKS.length);
   document.getElementById('payOverlay').classList.add('show');}
 function closePay(){document.getElementById('payOverlay').classList.remove('show');}
-function checkPass(){const v=(document.getElementById('passInput').value||'').trim().toUpperCase();
-  if(v===CONFIG.PASSCODE.toUpperCase()){store.set('meisaku_member','1');closePay();applyText();render();
-    document.getElementById('aiStatus').textContent=T[LANG].welcome;}
-  else{document.getElementById('payErr').textContent=T[LANG].wrong;}}
+async function checkPass(){const v=(document.getElementById('passInput').value||'').trim().toUpperCase();
+  if(!v)return;
+  if(v===CONFIG.MASTER_PASSCODE.toUpperCase()){grantMember('master');return;}
+  const hash=CONFIG.MONTHLY_CODES[curYM()];
+  if(hash){try{
+    if((await sha256(v))===hash){grantMember(curYM());return;}
+  }catch(e){console.error(e);}}
+  document.getElementById('payErr').textContent=T[LANG].wrong;}
+function grantMember(val){store.set('meisaku_member',val);closePay();applyText();render();
+  document.getElementById('aiStatus').textContent=T[LANG].welcome;}
 
 /* ---------- AI librarian ---------- */
 async function aiSummarize(){const t=T[LANG];
