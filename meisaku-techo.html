@@ -87,7 +87,11 @@ main{max-width:720px;margin:0 auto;padding:20px 16px calc(env(safe-area-inset-bo
   border:1px solid var(--line);border-radius:10px;padding:11px 14px;box-shadow:var(--shadow)
 }
 .search input{border:none;background:none;outline:none;flex:1;font-size:15px;color:var(--ink)}
+.search input::-webkit-search-cancel-button{display:none}
 .search span{color:var(--mute)}
+.clear-q{display:none;border:none;background:var(--line);color:var(--ink);width:24px;height:24px;
+  border-radius:50%;font-size:15px;line-height:1;flex-shrink:0;align-items:center;justify-content:center}
+.clear-q.show{display:flex}
 .count{font-size:11px;color:var(--mute);margin:14px 2px 10px;letter-spacing:.1em}
 
 /* ---------- book card ---------- */
@@ -236,7 +240,7 @@ footer a{color:var(--gold);text-decoration:none}
   <div class="brand-row">
     <div>
       <h1 id="brandTitle">名作手帖</h1>
-      <div class="brand-en">MEISAKU · WORLD CLASSICS NOTEBOOK</div>
+      <div class="brand-en" id="brandSub">MEISAKU · WORLD CLASSICS NOTEBOOK</div>
     </div>
     <div class="lang-toggle">
       <button id="btnJa" class="on" onclick="setLang('ja')">日本語</button>
@@ -266,6 +270,7 @@ footer a{color:var(--gold);text-decoration:none}
   <div class="search">
     <span>🔎</span>
     <input id="q" type="search" placeholder="題名・作者で探す" oninput="render()">
+    <button class="clear-q" id="clearQ" onclick="clearSearch()" aria-label="clear">×</button>
   </div>
 
   <!-- アクセスランキング -->
@@ -521,6 +526,12 @@ function setLang(l){LANG=l;store.set('meisaku_lang',l);
   document.documentElement.lang=l;applyText();render();renderShelf();renderSaved();renderBungo();
   if(LAST_RANK)renderRank(LAST_RANK.counts,LAST_RANK.isLocal);}
 function applyText(){const t=T[LANG];
+  document.getElementById('brandTitle').textContent=LANG==='ja'?'名作手帖':'MEISAKU';
+  document.getElementById('brandSub').textContent=LANG==='ja'
+    ?'MEISAKU · WORLD CLASSICS NOTEBOOK':'名作手帖 · WORLD CLASSICS NOTEBOOK';
+  document.title=LANG==='ja'
+    ?'名作手帖 | MEISAKU — 世界の名作、三分で。'
+    :'MEISAKU | 名作手帖 — The world\'s classics, in three minutes.';
   document.getElementById('tagline').textContent=t.tagline;
   document.getElementById('shelfLabel').textContent=t.shelf;
   document.getElementById('q').placeholder=t.search;
@@ -548,7 +559,10 @@ function renderShelf(){const sh=document.getElementById('shelf');const t=T[LANG]
   let h=`<button class="spine ${GENRE==='ALL'?'on':''}" onclick="setGenre('ALL')">${t.all}</button>`;
   genres().forEach(g=>{h+=`<button class="spine ${GENRE===g.en?'on':''}" onclick="setGenre('${g.en}')">${g[LANG]}</button>`});
   sh.innerHTML=h;}
-function setGenre(g){GENRE=g;renderShelf();render();}
+function setGenre(g){GENRE=g;
+  if(g==='ALL')document.getElementById('q').value='';  // 「全て」で検索もリセット
+  renderShelf();render();}
+function clearSearch(){document.getElementById('q').value='';render();}
 
 /* ---------- アクセスランキング ---------- */
 const bookId=b=>b.t.en;
@@ -649,6 +663,7 @@ function masterTap(i){const m=MASTERS[i];
 
 /* ---------- library ---------- */
 function render(){const t=T[LANG];const q=(document.getElementById('q').value||'').toLowerCase();
+  document.getElementById('clearQ').classList.toggle('show',q.length>0);
   const rs=readSet();let shown=0,h='';
   BOOKS.forEach((b,i)=>{
     if(GENRE!=='ALL'&&b.g.en!==GENRE)return;
