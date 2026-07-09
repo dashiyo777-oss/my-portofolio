@@ -253,6 +253,21 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
 .totop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 .totop:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){.totop{transition:none}.card.flash{animation:none}}
+
+/* ===== BGM ===== */
+.bgm{
+  position:fixed;left:16px;bottom:20px;z-index:60;
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--choco);background:#FFFDF6;color:var(--choco);
+  font-size:1.15rem;line-height:1;cursor:pointer;font-family:inherit;
+  box-shadow:0 3px 10px rgba(55,39,28,.22);
+}
+.bgm.on{background:var(--choco);color:#fff}
+.bgm:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:2px}
+@media (prefers-reduced-motion: no-preference){
+  .bgm.on{animation:bgmPulse 2.4s ease-in-out infinite}
+  @keyframes bgmPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+}
 </style>
 </head>
 <body>
@@ -300,6 +315,8 @@ footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:
 </div>
 
 <button type="button" class="totop" id="toTop" aria-label="ページの先頭へ戻る">▲</button>
+<button type="button" class="bgm" id="bgmBtn" aria-label="BGMを再生・停止" aria-pressed="false">♪</button>
+<audio id="bgmAudio" src="images/amami/bgm.mp3" loop preload="none"></audio>
 
 <!-- ===== いま話題 ===== -->
 <section id="trend">
@@ -915,6 +932,29 @@ window.addEventListener('scroll',function(){
 toTop.addEventListener('click',function(){
   window.scrollTo({top:0,behavior:'smooth'});
 });
+
+/* ========= BGM（♪ボタンで再生・停止、音量15%） ========= */
+(function(){
+  var btn=document.getElementById('bgmBtn');
+  var audio=document.getElementById('bgmAudio');
+  if(!btn||!audio) return;
+  audio.volume=0.15;
+  btn.addEventListener('click',function(){
+    if(audio.paused){
+      audio.play().then(function(){
+        btn.classList.add('on');
+        btn.setAttribute('aria-pressed','true');
+      }).catch(function(){
+        btn.textContent='×';
+        setTimeout(function(){btn.textContent='♪';},1500);
+      });
+    }else{
+      audio.pause();
+      btn.classList.remove('on');
+      btn.setAttribute('aria-pressed','false');
+    }
+  });
+})();
 </script>
 </body>
 </html>

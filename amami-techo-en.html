@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sweet Notebook | Amami Techō — sweets & fruit worth knowing</title>
+<meta name="description" content="From Dubai chocolate to Japan's $5,000 melons: a little field guide to the world's most fascinating sweets and fruit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F4E9;
+  --ink:#37271C;
+  --ink-soft:#6B584A;
+  --pistachio:#7C9A55;
+  --pistachio-deep:#4E6B36;
+  --pistachio-pale:#E6ECD6;
+  --berry:#CE4A66;
+  --kaki:#D98B3F;
+  --choco:#4A3323;
+  --line:#D9D2BC;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Zen Kaku Gothic New",-apple-system,"Segoe UI",sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.75;font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+header{padding:14px 20px 10px;display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.2rem;letter-spacing:.06em}
+.brand em{font-style:normal;color:var(--pistachio-deep)}
+.brand-sub{font-size:.66rem;color:var(--ink-soft);letter-spacing:.06em}
+
+.hero{padding:44px 22px 30px;text-align:center;overflow:hidden}
+.hero h1{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:clamp(1.6rem,6.6vw,2.5rem);letter-spacing:.02em;line-height:1.4}
+.hero h1 .green{color:var(--pistachio-deep)}
+.hero p.lead{max-width:560px;margin:16px auto 0;color:var(--ink-soft);font-size:.92rem;text-align:left}
+.choco-art{width:min(320px,82vw);height:96px;margin:30px auto 6px;position:relative}
+.choco-half{position:absolute;top:0;width:50%;height:100%;background:var(--choco);box-shadow:inset 0 -8px 0 rgba(0,0,0,.18), inset 0 6px 0 rgba(255,255,255,.07)}
+.choco-half.left{left:0;border-radius:12px 0 0 12px;transform:rotate(-2.5deg);transform-origin:right center}
+.choco-half.right{right:0;border-radius:0 12px 12px 0;transform:rotate(2.5deg);transform-origin:left center}
+.choco-fill{position:absolute;top:12px;height:72px;width:26%;background:repeating-linear-gradient(115deg,#B9CE8A 0 3px,#9DBA69 3px 6px,#CDDCA4 6px 9px);border-radius:4px}
+.choco-fill.l{left:24.5%;border-radius:4px 10px 10px 4px}
+.choco-fill.r{right:24.5%;border-radius:10px 4px 4px 10px}
+.choco-caption{font-size:.68rem;color:var(--ink-soft);letter-spacing:.14em}
+@media (prefers-reduced-motion: no-preference){
+  .choco-half.left{animation:crackL 1.1s cubic-bezier(.2,.8,.3,1) .3s both}
+  .choco-half.right{animation:crackR 1.1s cubic-bezier(.2,.8,.3,1) .3s both}
+  @keyframes crackL{from{transform:rotate(0)}to{transform:rotate(-2.5deg)}}
+  @keyframes crackR{from{transform:rotate(0)}to{transform:rotate(2.5deg)}}
+}
+
+nav{position:sticky;top:0;z-index:50;background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch}
+nav a{flex:1 0 auto;text-align:center;padding:11px 15px;white-space:nowrap;text-decoration:none;color:var(--ink-soft);font-size:.8rem;font-weight:700;letter-spacing:.04em;border-bottom:3px solid transparent}
+nav a:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:-2px}
+nav a.active{color:var(--pistachio-deep);border-bottom-color:var(--pistachio)}
+nav a .lock{font-size:.7rem}
+
+section{padding:40px 20px 12px;max-width:640px;margin:0 auto}
+.eyebrow{display:inline-block;font-size:.66rem;letter-spacing:.22em;font-weight:700;color:var(--pistachio-deep);border:1px solid var(--pistachio);border-radius:99px;padding:2px 12px;margin-bottom:10px;background:var(--pistachio-pale)}
+h2{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.45rem;letter-spacing:.02em;margin-bottom:6px}
+.sec-lead{color:var(--ink-soft);font-size:.88rem;margin-bottom:22px}
+
+.card{background:#FFFDF6;border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px 14px;margin-bottom:18px;box-shadow:0 1px 0 rgba(55,39,28,.05)}
+.photo{position:relative;height:112px;border-radius:10px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:56px;overflow:hidden;border:1px solid var(--line)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph-trend{background:linear-gradient(135deg,#E6ECD6,#C3D69B)}
+.ph-fruit{background:linear-gradient(135deg,#FFF2C4,#D9E8B4)}
+.ph-luxury{background:linear-gradient(135deg,#F8E8D0,#F2D2DC)}
+.ph-place{background:linear-gradient(135deg,#EFE8D5,#E3D3AE)}
+.ph-scene{background:linear-gradient(135deg,#F2E4F1,#DCC9E8)}
+.ph-beauty{background:linear-gradient(135deg,#DCEEEC,#C7E3EA)}
+.card .tag{font-size:.64rem;font-weight:700;letter-spacing:.1em;padding:2px 9px;border-radius:99px;margin-right:6px}
+.tag.trend{background:#F4E3D3;color:#9A5A1E}
+.tag.fruit{background:var(--pistachio-pale);color:var(--pistachio-deep)}
+.tag.luxury{background:#F3DEE3;color:#9A2E4B}
+.tag.place{background:#E8E2D2;color:#6B5320}
+.tag.scene{background:#EFE2EE;color:#7A3D74}
+.tag.beauty{background:#DCEBEA;color:#2C6B66}
+.card h3{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.08rem;margin:10px 0 8px;line-height:1.45}
+.card p{font-size:.9rem;color:#4A3B2F}
+.card .point{margin-top:12px;padding:10px 12px;background:var(--pistachio-pale);border-radius:8px;font-size:.83rem;line-height:1.65}
+.card .point b{color:var(--pistachio-deep)}
+.hee-row{display:flex;justify-content:flex-end;margin-top:10px}
+.hee{border:1.5px solid var(--pistachio);background:#fff;color:var(--pistachio-deep);border-radius:99px;padding:6px 16px;font-size:.8rem;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .1s}
+.hee:active{transform:scale(.94)}
+.hee.done{background:var(--pistachio-deep);border-color:var(--pistachio-deep);color:#fff}
+.hee:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ===== Premium lock ===== */
+.premium .card{display:none}
+.premium.unlocked .card{display:block}
+.premium.unlocked .paywall{display:none}
+.paywall{
+  background:#FFFDF6;border:1.5px dashed var(--kaki);border-radius:var(--radius);
+  padding:26px 20px;text-align:center;
+}
+.paywall .pw-emoji{font-size:2.2rem}
+.paywall h3{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.05rem;margin:8px 0 6px}
+.paywall p{font-size:.84rem;color:var(--ink-soft);text-align:left;margin-bottom:14px}
+.paywall .buy{
+  display:inline-block;background:var(--kaki);color:#fff;text-decoration:none;
+  font-weight:700;font-size:.9rem;border-radius:99px;padding:11px 26px;margin-bottom:16px;
+}
+.paywall .buy:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.pw-form{display:flex;gap:8px;max-width:340px;margin:0 auto}
+.pw-form input{
+  flex:1;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
+  font-family:inherit;font-size:.9rem;background:#fff;min-width:0;
+}
+.pw-form input:focus-visible{outline:2px solid var(--pistachio-deep)}
+.pw-form button{
+  padding:10px 18px;border:none;border-radius:10px;background:var(--pistachio-deep);
+  color:#fff;font-family:inherit;font-weight:700;font-size:.85rem;cursor:pointer;
+}
+.pw-msg{font-size:.78rem;margin-top:8px;color:var(--berry);min-height:1.2em}
+.pw-msg.ok{color:var(--pistachio-deep)}
+
+/* ===== Quiz ===== */
+.quiz-box{background:#FFFDF6;border:1.5px solid var(--choco);border-radius:var(--radius);padding:22px 18px}
+.quiz-progress{font-size:.72rem;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:8px;font-weight:700}
+.quiz-q{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.02rem;line-height:1.6;margin-bottom:16px}
+.quiz-opts{display:grid;gap:10px}
+.quiz-opts button{text-align:left;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-family:inherit;font-size:.88rem;color:var(--ink);cursor:pointer;line-height:1.5}
+.quiz-opts button:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:1px}
+.quiz-opts button.correct{border-color:var(--pistachio-deep);background:var(--pistachio-pale);font-weight:700}
+.quiz-opts button.wrong{border-color:var(--berry);background:#F9E7EB;color:var(--berry)}
+.quiz-opts button:disabled{cursor:default}
+.quiz-explain{margin-top:14px;padding:12px 14px;background:var(--pistachio-pale);border-radius:10px;font-size:.84rem;display:none}
+.quiz-explain.show{display:block}
+.quiz-explain .verdict{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:.98rem;margin-bottom:4px}
+.quiz-next{margin-top:14px;width:100%;padding:12px;border:none;border-radius:10px;background:var(--choco);color:#fff;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;display:none;letter-spacing:.06em}
+.quiz-next.show{display:block}
+.quiz-next:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:2px}
+.quiz-result{text-align:center;display:none}
+.quiz-result.show{display:block}
+.quiz-score{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:2.4rem;color:var(--pistachio-deep);margin:8px 0 2px}
+.quiz-rank{font-size:.95rem;font-weight:700;margin-bottom:8px}
+.quiz-result p{font-size:.85rem;color:var(--ink-soft)}
+
+/* ===== Tasting list ===== */
+.want-list{display:grid;gap:10px}
+.want{display:flex;align-items:center;gap:12px;background:#FFFDF6;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;width:100%;text-align:left;font-family:inherit;color:var(--ink)}
+.want:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:2px}
+.want .w-emoji{font-size:1.5rem;flex-shrink:0}
+.want .w-body{flex:1}
+.want .w-name{font-weight:700;font-size:.88rem;display:block}
+.want .w-note{font-size:.74rem;color:var(--ink-soft)}
+.want .w-state{flex-shrink:0;font-size:.7rem;font-weight:700;letter-spacing:.04em;border-radius:99px;padding:4px 11px;border:1.5px solid var(--line);color:var(--ink-soft)}
+.want.st-1{border-color:var(--kaki)}
+.want.st-1 .w-state{border-color:var(--kaki);background:#FAEDDC;color:#9A5A1E}
+.want.st-2{border-color:var(--pistachio-deep);background:var(--pistachio-pale)}
+.want.st-2 .w-state{border-color:var(--pistachio-deep);background:var(--pistachio-deep);color:#fff}
+.want-legend{font-size:.76rem;color:var(--ink-soft);margin-bottom:14px;line-height:1.8}
+.want-count{margin-top:14px;font-size:.85rem;text-align:center;color:var(--pistachio-deep);font-weight:700;line-height:1.8}
+
+footer{margin-top:48px;padding:26px 20px 40px;border-top:1px solid var(--line);text-align:center;font-size:.74rem;color:var(--ink-soft);line-height:2}
+footer .fbrand{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:.95rem;color:var(--ink);letter-spacing:.08em}
+
+/* ===== Daily pick ===== */
+.daily-wrap{max-width:640px;margin:0 auto;padding:22px 20px 0}
+.daily{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#FFFDF6;border:1.5px solid var(--kaki);border-radius:var(--radius);padding:14px 16px;cursor:pointer;font-family:inherit;color:var(--ink);box-shadow:0 2px 0 rgba(217,139,63,.18)}
+.daily:focus-visible{outline:2px solid var(--kaki);outline-offset:2px}
+.daily .d-emoji{font-size:2rem;flex-shrink:0}
+.daily .d-label{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:#9A5A1E;display:block;margin-bottom:2px}
+.daily .d-title{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:.92rem;line-height:1.5;display:block}
+.daily .d-go{flex-shrink:0;font-size:.72rem;font-weight:700;color:#9A5A1E;white-space:nowrap}
+@keyframes cardFlash{0%{box-shadow:0 0 0 3px var(--kaki)}100%{box-shadow:0 1px 0 rgba(55,39,28,.05)}}
+.card.flash{animation:cardFlash 1.6s ease-out}
+
+.totop{position:fixed;right:16px;bottom:20px;z-index:60;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--pistachio-deep);background:var(--pistachio-deep);color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;font-family:inherit;box-shadow:0 3px 10px rgba(55,39,28,.25);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.totop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.totop:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.totop{transition:none}.card.flash{animation:none}}
+
+/* ===== BGM ===== */
+.bgm{
+  position:fixed;left:16px;bottom:20px;z-index:60;
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--choco);background:#FFFDF6;color:var(--choco);
+  font-size:1.15rem;line-height:1;cursor:pointer;font-family:inherit;
+  box-shadow:0 3px 10px rgba(55,39,28,.22);
+}
+.bgm.on{background:var(--choco);color:#fff}
+.bgm:focus-visible{outline:2px solid var(--pistachio-deep);outline-offset:2px}
+@media (prefers-reduced-motion: no-preference){
+  .bgm.on{animation:bgmPulse 2.4s ease-in-out infinite}
+  @keyframes bgmPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="brand">The Sweet <em>Notebook</em></div>
+    <div class="brand-sub">amami techō — sweets & fruit worth knowing</div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>It cracked open,<br>and the whole world <span class="green">looked</span>.</h1>
+  <div class="choco-art" aria-hidden="true">
+    <div class="choco-half left"></div>
+    <div class="choco-half right"></div>
+    <div class="choco-fill l"></div>
+    <div class="choco-fill r"></div>
+  </div>
+  <div class="choco-caption">── the famous Dubai chocolate cross-section ──</div>
+  <p class="lead">Snap a chocolate bar in half and reveal a bright pistachio-green filling with a satisfying crunch — that single moment conquered the internet. From Dubai chocolate to Japan's melons that sell for thousands of dollars, this is a little field guide to the sweets and fruit stories worth knowing.</p>
+</div>
+
+<nav id="nav">
+  <a href="#trend" class="active">Trending</a>
+  <a href="#fruit">Fruit Facts</a>
+  <a href="#scene">Stories</a>
+  <a href="#luxury">Luxury Fruit <span class="lock">🔒</span></a>
+  <a href="#place">Sacred Places <span class="lock">🔒</span></a>
+  <a href="#beauty">Beautiful Desserts <span class="lock">🔒</span></a>
+  <a href="#quiz">Quiz</a>
+  <a href="#want">Tasting List</a>
+</nav>
+
+<div class="daily-wrap">
+  <button type="button" class="daily" id="dailyBtn">
+    <span class="d-emoji" id="dailyEmoji">🍰</span>
+    <span style="flex:1">
+      <span class="d-label">TODAY'S STORY</span>
+      <span class="d-title" id="dailyTitle"></span>
+    </span>
+    <span class="d-go">Read ▶</span>
+  </button>
+</div>
+
+<button type="button" class="totop" id="toTop" aria-label="Back to top">▲</button>
+<button type="button" class="bgm" id="bgmBtn" aria-label="Play or pause background music" aria-pressed="false">♪</button>
+<audio id="bgmAudio" src="images/amami/bgm.mp3" loop preload="none"></audio>
+
+<!-- ===== Trending (FREE) ===== -->
+<section id="trend">
+  <span class="eyebrow">TRENDING</span>
+  <h2>What everyone's eating</h2>
+  <p class="sec-lead">The pipeline is now familiar: born somewhere, goes viral in Korea, then conquers the world.</p>
+
+  <div class="card">
+    <span class="tag trend">THE ORIGINAL</span>
+    <h3>Dubai chocolate</h3>
+    <p>Created by Dubai brand FIX Dessert Chocolatier: a chocolate bar filled with <b>pistachio cream</b> and <b>kadayif</b> — shredded pastry threads so fine they're nicknamed "angel hair." The vivid green cross-section and the crunchy ASMR snap made it a TikTok phenomenon. Its roots lie in knafeh, a beloved Middle Eastern dessert of kadayif, cheese, and syrup.</p>
+    <div class="point"><b>Fun fact:</b> in Japan, where kadayif is hard to find, home bakers famously recreate it using crispy fried noodles meant for a Nagasaki noodle dish — and it works surprisingly well.</div>
+    <div class="hee-row"><button class="hee" data-key="dubai">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag trend">THE 2026 SEQUELS</span>
+    <h3>Dubai chocolate mochi & angel hair chocolate</h3>
+    <p>The boom keeps evolving. Korea's <b>Dubai chocolate mochi</b> — chewy rice cake meets crunchy kadayif — topped teen trend surveys. Next in line: <b>angel hair chocolate</b>, built around pişmaniye, a Turkish confection like fine cotton candy. Crisp outside, cloud-soft inside.</p>
+    <div class="point"><b>The hit formula:</b> one texture is nice, but two opposing textures in one bite — crunchy + chewy, crisp + fluffy — is what makes the brain fall in love.</div>
+    <div class="hee-row"><button class="hee" data-key="mochi">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag trend">ICE CREAM</span>
+    <h3>The return of "heavy" ice cream</h3>
+    <p>The pistachio wave hit ice cream too: ultra-dense pistachio gelato is everywhere. Meanwhile Turkey's stretchy ice cream <b>dondurma</b> is back in the spotlight — its elasticity comes from salep, a flour made from orchid roots. After years of "light and refreshing," the pendulum has swung back to rich, dense, and gloriously indulgent.</p>
+    <div class="hee-row"><button class="hee" data-key="ice">Neat! +1</button></div>
+  </div>
+</section>
+
+<!-- ===== Fruit Facts (FREE) ===== -->
+<section id="fruit">
+  <span class="eyebrow">FRUIT FACTS</span>
+  <h2>Fruit is stranger than you think</h2>
+  <p class="sec-lead">The fruit bowl on your table is full of secrets.</p>
+
+  <div class="card">
+    <span class="tag fruit">JAPAN-GROWN</span>
+    <h3>A banana you can eat — peel and all</h3>
+    <p>Japan's "Mongee Banana" is grown from seeds and saplings <b>frozen to −60°C, then thawed</b> — a technique called freeze-thaw awakening that lets this tropical plant thrive in Japan's climate. Grown domestically with no post-harvest chemicals, its peel is thin, tender, and <b>completely edible</b>.</p>
+    <div class="point"><b>Bonus:</b> botanically, a banana is a berry. A strawberry, by definition, is not.</div>
+    <div class="hee-row"><button class="hee" data-key="banana">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">TASTE HACK</span>
+    <h3>The fruit that makes lemons taste sweet</h3>
+    <p>The <b>miracle fruit</b> of West Africa contains a protein called <b>miraculin</b> that binds to your tongue's sweetness receptors — and switches them on only when acid arrives. Eat one, then bite a lemon or passion fruit: it tastes like someone dusted it with sugar. The effect lasts 30 minutes to two hours.</p>
+    <div class="point"><b>Fun fact:</b> the berry itself is barely sweet. It doesn't make food sweeter — it makes your brain <b>believe</b> it is. Chefs use it to build sugar-free dessert experiences.</div>
+    <div class="hee-row"><button class="hee" data-key="miracle">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">PERSIMMON</span>
+    <h3>"When persimmons turn red, doctors turn pale"</h3>
+    <p>So goes the Japanese proverb — and it holds up: one persimmon carries roughly a full day's vitamin C. Another quirk: the astringent tannin in bitter persimmons doesn't disappear when they're dried — it just changes into a form your tongue can't detect. The bitterness isn't removed; it's hidden.</p>
+    <div class="hee-row"><button class="hee" data-key="kaki">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">STRAWBERRY</span>
+    <h3>The real strawberry "fruit" is the seeds on the outside</h3>
+    <p>The juicy red part is technically a swollen stem tip. The true fruits are the tiny specks on the surface, each containing a seed. Japan also breeds <b>white strawberries</b> — varieties like "Scent of First Love" that barely produce red pigment: fully ripe in fragrance, snow-white in color.</p>
+    <div class="hee-row"><button class="hee" data-key="ichigo">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">PINEAPPLE</span>
+    <h3>That tingle means the pineapple is eating you back</h3>
+    <p>Fresh pineapple contains <b>bromelain</b>, an enzyme that breaks down protein. The tingling on your tongue is that enzyme mildly digesting your tongue's surface. It's also why pineapple tenderizes meat, and why fresh pineapple ruins gelatin desserts. Cooking deactivates the enzyme.</p>
+    <div class="hee-row"><button class="hee" data-key="pine">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">APPLE</span>
+    <h3>The "honey core" in apples isn't actually sweet</h3>
+    <p>Those translucent patches prized in Japanese apples are <b>sorbitol</b> — a sugar alcohol only about 60% as sweet as sugar. It appears when an apple is so ripe it can't convert nutrients into fructose anymore. The honey core isn't sweetness itself; it's a <b>certificate of full ripeness</b>.</p>
+    <div class="hee-row"><button class="hee" data-key="apple">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">GRAPES</span>
+    <h3>The white powder on grapes is a good sign</h3>
+    <p>That dusty coating is <b>bloom</b> — a waxy layer the fruit produces itself to seal in moisture and fend off disease. It's a mark of freshness, so wash it off only right before eating. (Chocolate turning white is also called "bloom," but that's fat or sugar recrystallizing — a different story.)</p>
+    <div class="hee-row"><button class="hee" data-key="bloom">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">BANANA</span>
+    <h3>The black spots are an invitation</h3>
+    <p>Those dark speckles are <b>sugar spots</b> — the sign that starch has fully converted to sugar and sweetness has peaked. A green banana is starchy and mild; a spotted one is dessert. Few fruits let you taste an entire flavor journey in a single piece.</p>
+    <div class="hee-row"><button class="hee" data-key="spot">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">WATERMELON</span>
+    <h3>Vegetable or fruit? Both, officially</h3>
+    <p>In horticultural terms, watermelon, melon, and strawberry grow on herbaceous plants, making them <b>vegetables</b>. But markets and nutritionists treat them as fruit, so Japan's agriculture ministry uses the diplomatic term "fruit-like vegetables." Everyone wins. One theory says the stripes evolved as a billboard for birds — free seed delivery.</p>
+    <div class="hee-row"><button class="hee" data-key="suika">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag fruit">MANDARIN</span>
+    <h3>Yes, eating too many mandarins turns your palms yellow</h3>
+    <p>The pigment <b>β-cryptoxanthin</b> accumulates in the skin's outer layer if you overindulge — a harmless condition that fades once you slow down. The same pigment is being studied for its links to bone health, and Japan's satsuma mandarins contain some of the highest levels in the world.</p>
+    <div class="hee-row"><button class="hee" data-key="mikan">Neat! +1</button></div>
+  </div>
+</section>
+
+<!-- ===== Stories (FREE) ===== -->
+<section id="scene">
+  <span class="eyebrow">STORIES</span>
+  <h2>Famous scenes & funny tales</h2>
+  <p class="sec-lead">Sweets in literature, film, and history — some hilarious, some heartwarming.</p>
+
+  <div class="card">
+    <span class="tag scene">LITERATURE</span>
+    <h3>One madeleine launched a 4,000-page novel</h3>
+    <p>Proust's <i>In Search of Lost Time</i> truly begins when the narrator tastes a <b>madeleine dipped in tea</b> and childhood memories come flooding back. The phenomenon — scent and taste unlocking vivid memory — is now called <b>the Proust effect</b> in psychology. A small sponge cake became a scientific term.</p>
+    <div class="point"><b>You have one too:</b> everyone owns a taste that acts as a memory switch — a grandmother's cookie tin, a childhood candy, a festival snack.</div>
+    <div class="hee-row"><button class="hee" data-key="proust">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">FILM</span>
+    <h3>The gelato scene that changed the law</h3>
+    <p>In <i>Roman Holiday</i>, the princess eats gelato on the Spanish Steps — one of cinema's most imitated moments. Seventy years of tourists recreating it took a toll: Rome eventually <b>banned eating and sitting on the Steps</b>, with fines. Recreating the scene today costs considerably more than the gelato.</p>
+    <div class="hee-row"><button class="hee" data-key="roma">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">HISTORY, CORRECTED</span>
+    <h3>"Let them eat cake" — she never said it</h3>
+    <p>There is <b>no record of Marie Antoinette ever saying it</b>. The line appears in Rousseau's <i>Confessions</i>, attributed to "a great princess" — written when Antoinette was still a child in Austria. And the original word wasn't even cake: it was <b>brioche</b>. Revolutionary propaganda pinned the quote on her, and it stuck for 250 years.</p>
+    <div class="hee-row"><button class="hee" data-key="antoinette">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">LITERARY ECCENTRIC</span>
+    <h3>The great novelist who put bean-paste buns on rice</h3>
+    <p>Mori Ōgai — army surgeon and one of Japan's greatest writers — loved <b>"manjū chazuke"</b>: a sweet bean-paste bun plopped onto rice, with green tea poured over it. Trained in bacteriology, he so feared raw food that he <b>even ate fruit boiled</b>. Cutting-edge 19th-century science, applied with total commitment, produced one of history's oddest dessert habits. Those who've tried it report it's "surprisingly okay."</p>
+    <div class="hee-row"><button class="hee" data-key="ogai">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">NATIONAL DEBATE</span>
+    <h3>Japan's 45-year chocolate civil war</h3>
+    <p>Kinoko no Yama (chocolate "mushrooms," 1975) versus Takenoko no Sato (chocolate "bamboo shoots," 1979): which is superior has been a <b>national running joke for nearly half a century</b>. The maker eventually held official "general elections" drawing millions of votes — Team Bamboo won. Stoking a rivalry while selling both sides: peaceful, brilliant business.</p>
+    <div class="hee-row"><button class="hee" data-key="kinotake">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">ONLY IN JAPAN</span>
+    <h3>The strawberry shortcake you know doesn't exist abroad</h3>
+    <p>Fluffy sponge, whipped cream, glistening strawberries — that iconic cake is a <b>uniquely Japanese evolution</b>; Western "shortcake" is typically a crumbly biscuit. The "short" likely comes from old English for "crumbly" (as in shortening), not "quick to make." Eating strawberry shortcake at Christmas? Also purely Japanese. Your "classic" is someone else's exotic.</p>
+    <div class="hee-row"><button class="hee" data-key="short">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">NO WAY HOME</span>
+    <h3>Castella: the Portuguese cake Portugal doesn't have</h3>
+    <p>Portuguese traders brought castella's ancestor to Nagasaki in the 1500s. But today, <b>no cake called "castella" exists in Portugal</b> — the name likely derives from "bread of Castile," and the moist, honeyed loaf sold in Japan was perfected there over centuries. A beloved cake with no home to return to.</p>
+    <div class="hee-row"><button class="hee" data-key="castella">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag scene">NAME ORIGINS</span>
+    <h3>Parfait means "perfect." Sundae means... Sunday</h3>
+    <p>The parfait takes its name from the French for <b>"perfect"</b> — a supremely confident dessert. The sundae was born in America: when selling soda water on the Sabbath was restricted, shops served the ice cream and syrup <b>without the soda</b> — a "Sunday." The spelling changed to "sundae," the story goes, because naming a dessert after the holy day felt a bit cheeky.</p>
+    <div class="hee-row"><button class="hee" data-key="parfait">Neat! +1</button></div>
+  </div>
+</section>
+
+<!-- ===== Luxury Fruit (PREMIUM) ===== -->
+<section id="luxury" class="premium">
+  <span class="eyebrow">PREMIUM</span>
+  <h2>Japan's luxury fruit world</h2>
+  <p class="sec-lead">The country where fruit becomes jewelry. Members-only chapter.</p>
+
+  <div class="paywall">
+    <div class="pw-emoji">🔒🍈</div>
+    <h3>Unlock the Premium Chapters</h3>
+    <p>Three members-only chapters: <b>Luxury Fruit</b> ($500 grapes, persimmons enshrined in paulownia boxes, the mango harvested by letting it fall), <b>Sacred Places</b> (the 190-year-old fruit shop that invented the fruit parlor), and <b>Beautiful Desserts</b> (the cake with a 30-minute lifespan). One passcode opens all three.</p>
+    <a class="buy" href="https://YOUR-GUMROAD-LINK-HERE" target="_blank" rel="noopener">Get the passcode →</a>
+    <div class="pw-form">
+      <input type="text" id="pwInput" placeholder="Enter passcode" autocomplete="off" aria-label="Passcode">
+      <button type="button" id="pwBtn">Unlock</button>
+    </div>
+    <div class="pw-msg" id="pwMsg"></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">PERSIMMON</span>
+    <h3>The persimmon that comes in a wooden treasure box</h3>
+    <p>Japan's most exclusive persimmon, <b>Tenka Fubu</b>, must pass strict sugar-content standards — top specimens reach a sugar level around 25 Brix, sweeter than most melons. The finest grade, "Tenkabito," is presented in a <b>paulownia box</b>, the same wood used to store kimono and swords. At the season's first auction, a pair has sold for hundreds of thousands of yen.</p>
+    <div class="point"><b>Why paulownia?</b> The wood regulates humidity and repels insects — Japan's traditional vault for precious things. Some luxury fruit gifts use hinoki cypress boxes instead. Fruit treated like heirlooms: that's Japan's gift culture.</div>
+    <div class="hee-row"><button class="hee" data-key="tenkafubu">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">GRAPES</span>
+    <h3>Ruby Roman: the $10,000 bunch</h3>
+    <p>Developed over 14 years in Ishikawa Prefecture, each grape is bigger than a large coin. Size, weight, sugar, and color standards are ruthless — fail any one and it can't bear the name. First-auction prices have exceeded <b>¥1.5 million (over $10,000) for a single bunch</b>, and saplings are strictly controlled to prevent the variety leaving the prefecture.</p>
+    <div class="hee-row"><button class="hee" data-key="ruby">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">MELON</span>
+    <h3>One vine, one melon</h3>
+    <p>Japan's crown muskmelons are grown by the <b>"one vine, one fruit"</b> method: every other melon on the plant is culled so all nutrients pour into a single chosen fruit. And that beautiful netting? It's the scar tissue of the skin <b>cracking as the flesh outgrows it</b>, healing over like a lattice of tiny scabs. The pattern collectors prize is, literally, the art of wounds.</p>
+    <div class="hee-row"><button class="hee" data-key="melon">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">MANGO</span>
+    <h3>The mango that decides its own harvest day</h3>
+    <p>Miyazaki's <b>"Egg of the Sun"</b> mango isn't cut from the tree. Each fruit hangs in a small net and is harvested only when it <b>ripens fully and drops on its own</b>. Humans don't judge ripeness — the tree does. Add strict standards (15+ Brix, 350g+), and you get first-auction prices of hundreds of thousands of yen for a pair.</p>
+    <div class="hee-row"><button class="hee" data-key="mango">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag luxury">FIRST AUCTION</span>
+    <h3>Why anyone pays $30,000 for two melons</h3>
+    <p>Yubari melons have fetched <b>¥5 million for a pair</b> at the season's first auction. It's not madness — it's "goshūgi sōba," Japan's celebratory-bid culture. The buyer pays a fortune as applause for the farmers and earns national news coverage; the region's brand value soars. The same ritual crowns the year's first tuna. A festival where fruit is the star.</p>
+    <div class="hee-row"><button class="hee" data-key="seri">Neat! +1</button></div>
+  </div>
+</section>
+
+<!-- ===== Sacred Places (PREMIUM) ===== -->
+<section id="place" class="premium">
+  <span class="eyebrow">PREMIUM</span>
+  <h2>Sacred places for the sweet tooth</h2>
+  <p class="sec-lead">A small pilgrimage through the birthplaces of dessert history.</p>
+
+  <div class="paywall">
+    <div class="pw-emoji">🔒🗾</div>
+    <h3>Members-only chapter</h3>
+    <p>Unlock with your passcode at the Luxury Fruit section above — one code opens all three premium chapters.</p>
+  </div>
+
+  <div class="card">
+    <span class="tag place">TOKYO · NIHONBASHI</span>
+    <h3>Sembikiya: the shop that turned fruit into gifts</h3>
+    <p>Founded in <b>1834</b>, Tokyo's Sembikiya began as a fruit stall and in the early Meiji era opened a "fruit dining room" — the ancestor of Japan's <b>fruit parlor culture</b>. Today its flagship displays muskmelons priced like jewelry, and its fruit sandwiches and parfaits still draw lines. This is ground zero for Japan treating fruit as treasure.</p>
+    <div class="hee-row"><button class="hee" data-key="senbikiya">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">TOKYO · GINZA</span>
+    <h3>Shiseido Parlour: the cosmetics giant that started with soda</h3>
+    <p>Shiseido began as a Ginza pharmacy. In <b>1902</b> it installed one of Japan's first <b>soda fountains</b>, serving ice cream sodas when ice cream was an extravagant rarity. That corner grew into Shiseido Parlour, still beloved for its strawberry parfait — a dessert salon born inside a drugstore.</p>
+    <div class="hee-row"><button class="hee" data-key="shiseido">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">YOKOHAMA</span>
+    <h3>The hotel that invented pudding à la mode (and two national dishes)</h3>
+    <p>Pudding à la mode — custard pudding surrounded by ice cream, fruit, and cream — was created after WWII at Yokohama's <b>Hotel New Grand</b> to delight the wives of occupation officers. A <b>Japanese-born "Western" dessert</b>. The same kitchen also invented spaghetti Napolitan and rice doria: one hotel, three national comfort foods.</p>
+    <div class="hee-row"><button class="hee" data-key="alamode">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">KYOTO · GION</span>
+    <h3>Kagizen Yoshifusa: edible coolness since the Edo period</h3>
+    <p>This Gion confectionery, founded in the mid-Edo era, is famous for <b>kuzukiri</b>: translucent ribbons of kudzu starch, made to order and swum through ice water, dipped in dark sugar syrup before eating. Beloved by geiko and literati for generations — the taste of a Kyoto summer.</p>
+    <div class="hee-row"><button class="hee" data-key="kuzukiri">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag place">NATIONWIDE</span>
+    <h3>The fruit-kingdom map: an excuse to travel</h3>
+    <p>Okayama for white peaches and muscat grapes; Yamagata for Sato Nishiki cherries (named after the farmer who bred them); Yamanashi, Japan's top producer of peaches and grapes; Wakayama for mandarins; Aomori for apples; Miyazaki for mangoes. <b>Fully ripened fruit eaten at the source</b> is a different food from the early-picked versions in stores. A fruit lover's itinerary is written by the harvest calendar.</p>
+    <div class="point"><b>Traveler's tip:</b> skip the all-you-can-eat farms and hit the roadside farmers' markets for "imperfect" fully-ripe rejects — ugly, half the price, and often the best fruit you'll ever taste.</div>
+    <div class="hee-row"><button class="hee" data-key="map">Neat! +1</button></div>
+  </div>
+</section>
+
+<!-- ===== Beautiful Desserts (PREMIUM) ===== -->
+<section id="beauty" class="premium">
+  <span class="eyebrow">PREMIUM</span>
+  <h2>Beautiful desserts</h2>
+  <p class="sec-lead">Too pretty to eat. You eat them anyway. That's the deal.</p>
+
+  <div class="paywall">
+    <div class="pw-emoji">🔒💎</div>
+    <h3>Members-only chapter</h3>
+    <p>Unlock with your passcode at the Luxury Fruit section above — one code opens all three premium chapters.</p>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">WAGASHI</span>
+    <h3>Kohakutō: jewels you can eat</h3>
+    <p>Agar and sugar are boiled, set, and then left for <b>about a week while only the surface crystallizes</b> — creating a shell that shatters delicately over a soft jelly heart. Held to the light, the shards glow like minerals. Japanese artisans layer colors into each piece; the internet calls them "edible gemstones," and it's not wrong.</p>
+    <div class="hee-row"><button class="hee" data-key="kohaku">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">30-MINUTE LIFESPAN</span>
+    <h3>The raindrop cake that expires in 30 minutes</h3>
+    <p>Yamanashi's <b>mizu shingen mochi</b> looks like a giant raindrop that somehow holds its shape. Barely more than water, it collapses at room temperature, so its shelf life is <b>about 30 minutes</b> — no takeout, no shipping, sold only at the shop on summer weekends. It went viral abroad as the "raindrop cake." Beauty that exists because it vanishes: very Japanese, very cherry-blossom.</p>
+    <div class="hee-row"><button class="hee" data-key="mizu">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">CROSS-SECTION ART</span>
+    <h3>Fruit sandwiches are engineered, not sliced</h3>
+    <p>The flower-like cross-section of a Japanese fruit sandwich is no accident: every strawberry's orientation, every kiwi's angle, the cream's thickness — all are <b>arranged in reverse from the exact line of the future cut</b>. Japan even coined a word for the pleasure: "moe-dan," roughly "cross-section love." Hours of hidden design for one perfect reveal — a close cousin of bento culture.</p>
+    <div class="hee-row"><button class="hee" data-key="dan">Neat! +1</button></div>
+  </div>
+
+  <div class="card">
+    <span class="tag beauty">PASTRY CRAFT</span>
+    <h3>Mirror cakes and sugar sculpture</h3>
+    <p>A mirror glaze so glossy you can check your hair in it is pure temperature control — chocolate and gelatin poured at precisely the right degree. Competition <b>sugar sculpture</b> is more brutal still: pulling 160°C molten sugar nearly bare-handed, shaping flowers and birds in the seconds before it hardens. Behind every beautiful dessert stands physics, chemistry, and a pastry chef flirting with burns.</p>
+    <div class="hee-row"><button class="hee" data-key="mirror">Neat! +1</button></div>
+  </div>
+</section>
+
+<!-- ===== Quiz (FREE) ===== -->
+<section id="quiz">
+  <span class="eyebrow">QUIZ</span>
+  <h2>The Sweet Exam — 16 questions</h2>
+  <p class="sec-lead">If you've read this far, you're ready.</p>
+
+  <div class="quiz-box">
+    <div id="quizPlay">
+      <div class="quiz-progress" id="qProgress">Question 1 / 16</div>
+      <div class="quiz-q" id="qText"></div>
+      <div class="quiz-opts" id="qOpts"></div>
+      <div class="quiz-explain" id="qExplain"></div>
+      <button class="quiz-next" id="qNext">Next question</button>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div style="font-size:.8rem;letter-spacing:.2em;color:var(--ink-soft);font-weight:700">YOUR SCORE</div>
+      <div class="quiz-score"><span id="qScore">0</span><span style="font-size:1.1rem" id="qTotal"> / 16</span></div>
+      <div class="quiz-rank" id="qRank"></div>
+      <p id="qComment"></p>
+      <button class="quiz-next show" id="qRetry" style="margin-top:18px">Try again</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Tasting List (FREE) ===== -->
+<section id="want">
+  <span class="eyebrow">MY LIST</span>
+  <h2>Tasting list</h2>
+  <p class="sec-lead">Tap to cycle: <b>— → ☆ Want to try → ✔ Tried it!</b></p>
+  <div class="want-legend">Only items marked "Tried it!" count toward completing the list. Mark the rest "Want to try" and start hunting.</div>
+
+  <div class="want-list" id="wantList"></div>
+  <div class="want-count" id="wantCount"></div>
+</section>
+
+<footer>
+  <div class="fbrand">The Sweet Notebook</div>
+  <div>Little stories about sweets & fruit, collected in one place.</div>
+  <div>Prices and availability change; enjoy this as reading material.</div>
+</footer>
+
+<script>
+/* ========= Safe storage ========= */
+var mem = {};
+function sget(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k]||null; } }
+function sset(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
+
+/* ========= Premium unlock =========
+   Change the passcode below, and replace the Gumroad link in the paywall. */
+var PASSCODE = 'SWEET-2026';
+function applyUnlock(){
+  document.querySelectorAll('.premium').forEach(function(s){ s.classList.add('unlocked'); });
+  document.querySelectorAll('nav a .lock').forEach(function(l){ l.textContent='✓'; });
+}
+if(sget('sn_unlocked')==='1') applyUnlock();
+var pwBtn=document.getElementById('pwBtn');
+if(pwBtn){
+  pwBtn.addEventListener('click',function(){
+    var v=(document.getElementById('pwInput').value||'').trim().toUpperCase();
+    var msg=document.getElementById('pwMsg');
+    if(v===PASSCODE.toUpperCase()){
+      sset('sn_unlocked','1');
+      msg.textContent='Unlocked! Welcome to the members\u2019 chapters.';
+      msg.className='pw-msg ok';
+      applyUnlock();
+    }else{
+      msg.textContent='That passcode doesn\u2019t match. Check your purchase email.';
+      msg.className='pw-msg';
+    }
+  });
+}
+
+/* ========= Photo frames ========= 
+   Drop a real photo at images/amami/KEY.jpg to replace the emoji automatically. */
+var EMOJI={
+  dubai:'🍫', mochi:'🍡', ice:'🍦',
+  banana:'🍌', miracle:'🍋', kaki:'🩺', ichigo:'🍓',
+  pine:'🍍', apple:'🍎', bloom:'🍇', spot:'🍌', suika:'🍉', mikan:'🍊',
+  tenkafubu:'🎁', ruby:'🍇', melon:'🍈', mango:'🥭', seri:'💴',
+  senbikiya:'🍈', shiseido:'🥤', alamode:'🍮', kuzukiri:'🍵', map:'🗾',
+  proust:'☕', roma:'🍨', antoinette:'👑', ogai:'🍚', kinotake:'🍄',
+  short:'🍰', castella:'🍯', parfait:'🍨',
+  kohaku:'💎', mizu:'💧', dan:'🥪', mirror:'✨'
+};
+var SEC_CLASS={trend:'ph-trend', fruit:'ph-fruit', luxury:'ph-luxury', place:'ph-place', scene:'ph-scene', beauty:'ph-beauty'};
+document.querySelectorAll('.card .hee').forEach(function(btn){
+  var key=btn.dataset.key;
+  var card=btn.closest('.card');
+  var sec=btn.closest('section');
+  if(!card||!sec) return;
+  var div=document.createElement('div');
+  div.className='photo '+(SEC_CLASS[sec.id]||'ph-fruit');
+  div.setAttribute('aria-hidden','true');
+  div.textContent=EMOJI[key]||'🍰';
+  var img=document.createElement('img');
+  img.alt='';
+  img.loading='lazy';
+  img.onerror=function(){ img.remove(); };
+  img.src='images/amami/'+key+'.jpg';
+  div.appendChild(img);
+  card.insertBefore(div, card.firstChild);
+});
+
+/* ========= "Neat!" buttons ========= */
+document.querySelectorAll('.hee').forEach(function(btn){
+  var key = 'heen_'+btn.dataset.key;
+  var n = parseInt(sget(key)||'0',10);
+  if(n>0){ btn.textContent = 'Neat! ×'+n; btn.classList.add('done'); }
+  btn.addEventListener('click', function(){
+    n++; sset(key, String(n));
+    btn.textContent = 'Neat! ×'+n;
+    btn.classList.add('done');
+  });
+});
+
+/* ========= Quiz ========= */
+var QUIZ = [
+  {q:'What are the shredded pastry threads inside Dubai chocolate called?',
+   o:['Kadayif','Pho','Vermicelli','Capellini'], a:0,
+   e:'Kadayif — so fine it\u2019s nicknamed "angel hair." Roasted in butter, it creates that famous crunch.'},
+  {q:'How does the miracle fruit make lemons taste sweet?',
+   o:['It contains huge amounts of sugar','A protein called miraculin acts on your tongue','It neutralizes the lemon\u2019s acid','It tricks you with aroma'], a:1,
+   e:'Miraculin binds to sweetness receptors and switches them on only when acid arrives. The berry itself is barely sweet.'},
+  {q:'How is Japan\u2019s peel-and-all "Mongee Banana" grown?',
+   o:['In midsummer greenhouses','From seeds frozen to −60°C then thawed','With seawater','Germinated in space'], a:1,
+   e:'The freeze-thaw awakening method lets this tropical plant grow in Japan\u2019s climate — no post-harvest chemicals, edible peel.'},
+  {q:'Top-grade Tenka Fubu persimmons are presented in a box made of…',
+   o:['Lacquered wood','Paulownia wood','Glass','Bamboo'], a:1,
+   e:'Paulownia — the humidity-regulating, insect-repelling wood traditionally used to store kimono and swords.'},
+  {q:'Which is botanically a berry?',
+   o:['Strawberry','Banana'], a:1,
+   e:'Surprise: the banana qualifies as a berry. The strawberry\u2019s red flesh is a swollen stem tip; its true fruits are the seeds outside.'},
+  {q:'Ruby Roman grapes\u2019 record first-auction price is closest to…',
+   o:['About $100 a bunch','About $1,000 a bunch','Over $10,000 a bunch','$100,000 a bunch'], a:2,
+   e:'A single bunch has exceeded ¥1.5 million. Each grape must be larger than a big coin to qualify.'},
+  {q:'The netting pattern on a luxury muskmelon is actually…',
+   o:['Bred into the variety','Healed cracks from the flesh outgrowing the skin','Sun damage','Hand-carved decoration'], a:1,
+   e:'The skin cracks as the flesh grows, then heals into that prized lattice. The art of wounds.'},
+  {q:'Which Turkish-confection chocolate is tipped as 2026\u2019s next big thing?',
+   o:['Angel hair chocolate','Snow white chocolate','Sandstorm chocolate','Mermaid chocolate'], a:0,
+   e:'Built on pişmaniye, a cotton-candy-like Turkish sweet. Crisp outside, cloud-soft inside — the texture-contrast formula.'},
+  {q:'Why does fresh pineapple make your tongue tingle?',
+   o:['Too much acid','The enzyme bromelain is digesting protein','Tiny thorns','It\u2019s too cold'], a:1,
+   e:'Bromelain breaks down protein — mildly including your tongue\u2019s. It\u2019s also why fresh pineapple ruins gelatin desserts.'},
+  {q:'The translucent "honey core" in ripe apples is…',
+   o:['Sweeter than sugar','Sorbitol, which isn\u2019t very sweet','The same as real honey','Tree sap'], a:1,
+   e:'Sorbitol is only about 60% as sweet as sugar. It\u2019s not sweetness — it\u2019s a certificate of full ripeness.'},
+  {q:'The white powder on grape skins is…',
+   o:['Pesticide residue','A type of mold','A protective wax the fruit makes itself','Dust'], a:2,
+   e:'It\u2019s called bloom — the grape\u2019s own moisture-sealing, disease-blocking armor, and a sign of freshness.'},
+  {q:'How is Miyazaki\u2019s "Egg of the Sun" mango harvested?',
+   o:['Cut one by one with shears','Shaking the tree','Caught in a net when it ripens and falls on its own','Vacuum-harvested'], a:2,
+   e:'The tree decides when it\u2019s ripe. Each fruit falls naturally into a waiting net — plus 15+ Brix and 350g+ standards.'},
+  {q:'The "Proust effect" — memories unlocked by taste — is named after a scene involving…',
+   o:['A macaron','A madeleine','An éclair','A canelé'], a:1,
+   e:'In "In Search of Lost Time," a madeleine dipped in tea floods the narrator with childhood memories.'},
+  {q:'"Let them eat cake" — the truth is…',
+   o:['Marie Antoinette said it in court','No record she said it; it appears in Rousseau\u2019s book first','It was Louis XVI\u2019s line','It was invented in Japan'], a:1,
+   e:'Rousseau attributed it to "a great princess" while Antoinette was still a child in Austria — and the word was brioche, not cake.'},
+  {q:'The shelf life of Yamanashi\u2019s raindrop cake (mizu shingen mochi) is…',
+   o:['About 30 minutes','About 3 hours','About 3 days','About 3 weeks'], a:0,
+   e:'It collapses at room temperature. No takeout, no shipping — you eat it at the shop, on a summer weekend, or not at all.'},
+  {q:'Pudding à la mode was invented at…',
+   o:['A Paris café','A Ginza department store','A Yokohama hotel','A Kyoto teahouse'], a:2,
+   e:'Hotel New Grand in Yokohama created it after WWII — the same hotel that invented spaghetti Napolitan and doria.'}
+];
+var qi=0, score=0;
+var qText=document.getElementById('qText'), qOpts=document.getElementById('qOpts'),
+    qExplain=document.getElementById('qExplain'), qNext=document.getElementById('qNext'),
+    qProgress=document.getElementById('qProgress');
+
+function renderQ(){
+  var Q=QUIZ[qi];
+  qProgress.textContent='Question '+(qi+1)+' / '+QUIZ.length;
+  qText.textContent=Q.q;
+  qOpts.innerHTML='';
+  qExplain.className='quiz-explain'; qNext.className='quiz-next';
+  Q.o.forEach(function(opt,i){
+    var b=document.createElement('button');
+    b.textContent=opt;
+    b.addEventListener('click',function(){ answer(i,b); });
+    qOpts.appendChild(b);
+  });
+}
+function answer(i,btn){
+  var Q=QUIZ[qi];
+  var ok=(i===Q.a);
+  if(ok) score++;
+  Array.prototype.forEach.call(qOpts.children,function(b,j){
+    b.disabled=true;
+    if(j===Q.a) b.classList.add('correct');
+  });
+  if(!ok) btn.classList.add('wrong');
+  qExplain.innerHTML='<div class="verdict">'+(ok?'○ Correct!':'× Not quite…')+'</div>'+Q.e;
+  qExplain.classList.add('show');
+  qNext.textContent=(qi===QUIZ.length-1)?'See results':'Next question';
+  qNext.classList.add('show');
+}
+qNext.addEventListener('click',function(){
+  qi++;
+  if(qi<QUIZ.length){ renderQ(); }
+  else{
+    document.getElementById('quizPlay').style.display='none';
+    var r=document.getElementById('quizResult');
+    r.classList.add('show');
+    document.getElementById('qScore').textContent=score;
+    document.getElementById('qTotal').textContent=' / '+QUIZ.length;
+    var rank,com;
+    if(score===QUIZ.length){rank='Master | Doctor of Sweetness';com='Perfect. You may now lecture strangers in the fruit aisle.';}
+    else if(score>=12){rank='Expert | Sweet Scholar';com='Impressive. One more read and the crown is yours.';}
+    else if(score>=8){rank='Adept | Sweet Enthusiast';com='Solid. The answers are all hiding in the chapters above.';}
+    else{rank='Novice | Delicious Potential';com='The fun part starts here. Go around again?';}
+    document.getElementById('qRank').textContent=rank;
+    document.getElementById('qComment').textContent=com;
+  }
+});
+document.getElementById('qRetry').addEventListener('click',function(){
+  qi=0;score=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizPlay').style.display='block';
+  renderQ();
+});
+renderQ();
+
+/* ========= Tasting list (0=blank / 1=want / 2=tried) ========= */
+var WANTS=[
+  {id:'w1', emoji:'🍫', name:'Dubai chocolate (the original style)', note:'Savor the snap, not just the taste'},
+  {id:'w2', emoji:'🍡', name:'Dubai chocolate mochi', note:'Chewy × crunchy double texture'},
+  {id:'w3', emoji:'🧚', name:'Angel hair chocolate', note:'2026\u2019s tipped successor'},
+  {id:'w4', emoji:'🍌', name:'Mongee Banana (peel and all)', note:'Japan-grown, −60°C technique'},
+  {id:'w5', emoji:'🍋', name:'Miracle fruit + lemon experiment', note:'Hack your own taste buds'},
+  {id:'w6', emoji:'🎁', name:'Tenka Fubu persimmon', note:'Sweeter than melon, boxed like treasure'},
+  {id:'w7', emoji:'🍇', name:'Ruby Roman grapes', note:'Each grape bigger than a coin'},
+  {id:'w8', emoji:'🤍', name:'White strawberries', note:'Ripe in fragrance, snow-white in color'},
+  {id:'w9', emoji:'🥭', name:'Egg of the Sun mango', note:'The tree picks the harvest day'},
+  {id:'w10',emoji:'🍈', name:'Crown muskmelon (one vine, one fruit)', note:'A plant\u2019s entire life in one melon'},
+  {id:'w11',emoji:'👨‍🍳', name:'Chef-supervised convenience store sweets', note:'Michelin technique for pocket change'},
+  {id:'w12',emoji:'🍦', name:'Dondurma (stretchy Turkish ice cream)', note:'Orchid-root magic'},
+  {id:'w13',emoji:'🍨', name:'A parfait at a historic Tokyo fruit parlor', note:'Sembikiya / Shiseido Parlour lineage'},
+  {id:'w14',emoji:'💧', name:'Raindrop cake (eaten within 30 min, on site)', note:'Summer weekends, Yamanashi only'},
+  {id:'w15',emoji:'💎', name:'Kohakutō crystal candy', note:'Edible gemstones'},
+  {id:'w16',emoji:'🥪', name:'Japanese fruit sandwich', note:'Engineered cross-section art'}
+];
+var STATE_LABEL=['—','☆ Want to try','✔ Tried it!'];
+var list=document.getElementById('wantList');
+function wstate(id){
+  var v=sget('wanten_'+id);
+  if(v==='2') return 2;
+  if(v==='1') return 1;
+  return 0;
+}
+function renderWants(){
+  list.innerHTML='';
+  var eaten=0, curious=0;
+  WANTS.forEach(function(w){
+    var st=wstate(w.id);
+    if(st===2) eaten++;
+    if(st===1) curious++;
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='want st-'+st;
+    btn.setAttribute('aria-label', w.name+': currently "'+STATE_LABEL[st]+'". Tap to change');
+    btn.innerHTML='<span class="w-emoji">'+w.emoji+'</span>'+
+      '<span class="w-body"><span class="w-name">'+w.name+'</span><span class="w-note">'+w.note+'</span></span>'+
+      '<span class="w-state">'+STATE_LABEL[st]+'</span>';
+    btn.addEventListener('click',function(){
+      sset('wanten_'+w.id, String((st+1)%3));
+      renderWants();
+    });
+    list.appendChild(btn);
+  });
+  var msg;
+  if(eaten===WANTS.length){
+    msg='🎉 All '+WANTS.length+' tried! You have achieved sweetness.';
+  }else if(eaten===0 && curious===0){
+    msg='A blank page. Tap anything that tempts you.';
+  }else{
+    msg='☆ Want to try: '+curious+'   /   ✔ Tried: '+eaten+' of '+WANTS.length;
+  }
+  document.getElementById('wantCount').textContent=msg;
+}
+renderWants();
+
+/* ========= Today's story (random each visit) ========= */
+(function(){
+  var hees=document.querySelectorAll('.card .hee');
+  if(!hees.length) return;
+  var pick=hees[Math.floor(Math.random()*hees.length)];
+  var card=pick.closest('.card');
+  var title=card.querySelector('h3');
+  document.getElementById('dailyEmoji').textContent=EMOJI[pick.dataset.key]||'🍰';
+  document.getElementById('dailyTitle').textContent=title?title.textContent:'';
+  document.getElementById('dailyBtn').addEventListener('click',function(){
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+    card.classList.remove('flash');
+    void card.offsetWidth;
+    card.classList.add('flash');
+  });
+})();
+
+/* ========= Nav highlight + back to top ========= */
+var links=document.querySelectorAll('nav a');
+var secs=Array.prototype.map.call(links,function(a){return document.querySelector(a.getAttribute('href'));});
+var toTop=document.getElementById('toTop');
+window.addEventListener('scroll',function(){
+  var y=window.scrollY+120, idx=0;
+  secs.forEach(function(s,i){ if(s && s.offsetTop<=y) idx=i; });
+  links.forEach(function(a,i){ a.classList.toggle('active',i===idx); });
+  toTop.classList.toggle('show', window.scrollY>500);
+},{passive:true});
+toTop.addEventListener('click',function(){
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* ========= BGM (toggle with the ♪ button, volume 15%) ========= */
+(function(){
+  var btn=document.getElementById('bgmBtn');
+  var audio=document.getElementById('bgmAudio');
+  if(!btn||!audio) return;
+  audio.volume=0.15;
+  btn.addEventListener('click',function(){
+    if(audio.paused){
+      audio.play().then(function(){
+        btn.classList.add('on');
+        btn.setAttribute('aria-pressed','true');
+      }).catch(function(){
+        btn.textContent='×';
+        setTimeout(function(){btn.textContent='♪';},1500);
+      });
+    }else{
+      audio.pause();
+      btn.classList.remove('on');
+      btn.setAttribute('aria-pressed','false');
+    }
+  });
+})();
+</script>
+</body>
+</html>
