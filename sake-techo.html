@@ -533,10 +533,6 @@ const today = new Date();
 const seed = today.getFullYear()*10000 + (today.getMonth()+1)*100 + today.getDate();
 document.getElementById('todayFact').textContent = FACTS[seed % FACTS.length];
 
-const td = DRINKS[seed % DRINKS.length];
-document.getElementById('todayDrink').innerHTML =
- '<div class="card"><span class="tag shu">今宵の一本</span>' + drinkCardInner(td) + '</div>';
-
 function meterDots(v){
   let s='';
   for(let i=1;i<=5;i++) s += i<=v ? '●' : '<span class="off">○</span>';
@@ -579,6 +575,9 @@ function drinkCardInner(d){
   '</div><p>'+d.f+'</p>'+
   '<div class="how"><b>愉しみ方:</b> '+d.how+'</div>';
 }
+const td = DRINKS[seed % DRINKS.length];
+document.getElementById('todayDrink').innerHTML =
+ '<div class="card"><span class="tag shu">今宵の一本</span>' + drinkCardInner(td) + '</div>';
 
 /* 今日の一話 */
 document.getElementById('btnStory').addEventListener('click',()=>{
@@ -824,7 +823,7 @@ totop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 /* ================= BGM(バーの静かな和音) ================= */
 let bgmOn=false;
 const bgmBtn=document.getElementById('bgm');
-const BGM_SRC='images/sake-bgm.mp3';
+const BGM_SRC='sake-bgm.mp3';
 const BGM_VOL=0.22; // 小さめの音量(0〜1)
 let bgmAudio=null, bgmBroken=false, fadeTimer=null;
 bgmBtn.addEventListener('click',()=>{
