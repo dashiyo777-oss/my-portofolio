@@ -102,6 +102,11 @@ nav button.on{color:var(--amber)}
 nav button:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px}
 /* ===== Sections ===== */
 main{max-width:680px;margin:0 auto;padding:18px 14px 30px}
+.photo{
+  width:100%;height:180px;object-fit:cover;
+  border-radius:8px;margin-bottom:10px;display:block;
+  background:#E8DFC9;
+}
 section{display:none}
 section.show{display:block;animation:fadein .35s ease}
 @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -568,8 +573,35 @@ function meterDots(v){
   for(let i=1;i<=5;i++) s += i<=v ? '●' : '<span class="off">○</span>';
   return s;
 }
+/* Photo map: filenames in the images/ folder. Missing photos are hidden automatically */
+const PHOTOS = {
+"Sake (Nihonshu)":"sake-nihonshu.jpg",
+"Shochu":"sake-shochu.jpg",
+"Awamori":"sake-awamori.jpg",
+"Scotch Whisky":"sake-scotch.jpg",
+"Japanese Whisky":"sake-jwhisky.jpg",
+"Bourbon":"sake-bourbon.jpg",
+"Red Wine":"sake-redwine.jpg",
+"White Wine":"sake-whitewine.jpg",
+"Champagne":"sake-champagne.jpg",
+"Beer (Pilsner)":"sake-pilsner.jpg",
+"Craft Beer (IPA)":"sake-ipa.jpg",
+"Belgian Beer":"sake-belgian.jpg",
+"Gin":"sake-gin.jpg",
+"Vodka":"sake-vodka.jpg",
+"Tequila":"sake-tequila.jpg",
+"Rum":"sake-rum.jpg",
+"Shaoxing Wine":"sake-shaoxing.jpg",
+"Makgeolli":"sake-makgeolli.jpg"
+};
+function photoTag(name){
+  const f=PHOTOS[name];
+  if(!f)return '';
+  return '<img class="photo" src="images/'+f+'" alt="'+name+'" loading="lazy" onerror="this.remove()">';
+}
 function drinkCardInner(d){
-  return '<h3>'+d.n+'</h3><div class="meta">'+d.r+' ｜ '+d.tag+'</div>'+
+  return photoTag(d.n)+
+  '<h3>'+d.n+'</h3><div class="meta">'+d.r+' ｜ '+d.tag+'</div>'+
   '<div class="meter">'+
   '<span class="m">Aroma <span class="dots">'+meterDots(d.a)+'</span></span>'+
   '<span class="m">Body <span class="dots">'+meterDots(d.b)+'</span></span>'+
@@ -669,13 +701,27 @@ function renderMeishu(){
 renderMeishu();
 
 /* ================= Serving ================= */
+const SERVE_PHOTOS = {0:"sake-kan.jpg",1:"sake-highball.jpg"};
 const sv=document.getElementById('serveList');
-SERVES.forEach(s=>{
+SERVES.forEach((s,i)=>{
   const c=document.createElement('div');
   c.className='card';
-  c.innerHTML='<span class="tag green">'+s.tag+'</span><h3>'+s.t+'</h3><p>'+s.b+'</p>';
+  const ph = SERVE_PHOTOS[i] ? '<img class="photo" src="images/'+SERVE_PHOTOS[i]+'" alt="'+s.t+'" loading="lazy" onerror="this.remove()">' : '';
+  c.innerHTML=ph+'<span class="tag green">'+s.tag+'</span><h3>'+s.t+'</h3><p>'+s.b+'</p>';
   sv.appendChild(c);
 });
+
+/* Header hero photo (applied if present) */
+(function(){
+  const img=new Image();
+  img.onload=function(){
+    const h=document.querySelector('header');
+    h.style.backgroundImage='linear-gradient(180deg,rgba(12,12,22,.82),rgba(18,18,30,.9)), url(images/sake-hero.jpg)';
+    h.style.backgroundSize='cover';
+    h.style.backgroundPosition='center';
+  };
+  img.src='images/sake-hero.jpg';
+})();
 
 /* ================= Stories ================= */
 const sf=document.getElementById('storyFilters');
@@ -806,22 +852,46 @@ totop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 })();
 
 /* ================= BGM (quiet bar chords) ================= */
-let audioCtx=null, bgmOn=false, bgmTimer=null;
+let bgmOn=false;
 const bgmBtn=document.getElementById('bgm');
+const BGM_SRC='images/sake-bgm.mp3';
+const BGM_VOL=0.22; // quiet background level (0-1)
+let bgmAudio=null, bgmBroken=false, fadeTimer=null;
 bgmBtn.addEventListener('click',()=>{
   if(!bgmOn){startBgm();}else{stopBgm();}
 });
 function startBgm(){
-  try{
-    if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    if(audioCtx.state==='suspended')audioCtx.resume();
-    bgmOn=true;bgmBtn.classList.add('on');
-    playLoop();
-  }catch(e){}
+  bgmOn=true;bgmBtn.classList.add('on');
+  if(bgmBroken){startChords();return;}
+  if(!bgmAudio){
+    bgmAudio=new Audio(BGM_SRC);
+    bgmAudio.loop=true;
+    bgmAudio.addEventListener('error',()=>{bgmBroken=true;if(bgmOn)startChords();});
+  }
+  bgmAudio.volume=0;
+  const p=bgmAudio.play();
+  if(p&&p.catch)p.catch(()=>{bgmBroken=true;if(bgmOn)startChords();});
+  if(fadeTimer)clearInterval(fadeTimer);
+  fadeTimer=setInterval(()=>{
+    if(!bgmAudio||!bgmOn){clearInterval(fadeTimer);return;}
+    if(bgmAudio.volume < BGM_VOL) bgmAudio.volume=Math.min(BGM_VOL,bgmAudio.volume+0.02);
+    else clearInterval(fadeTimer);
+  },120);
 }
 function stopBgm(){
   bgmOn=false;bgmBtn.classList.remove('on');
+  if(fadeTimer){clearInterval(fadeTimer);fadeTimer=null;}
+  if(bgmAudio)bgmAudio.pause();
   if(bgmTimer){clearTimeout(bgmTimer);bgmTimer=null;}
+}
+/* --- Fallback: quiet chords (only if the MP3 is missing) --- */
+let audioCtx=null, bgmTimer=null;
+function startChords(){
+  try{
+    if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended')audioCtx.resume();
+    playLoop();
+  }catch(e){}
 }
 const CHORDS=[
   [220.00,261.63,329.63,392.00],
