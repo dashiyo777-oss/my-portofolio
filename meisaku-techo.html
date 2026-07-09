@@ -216,6 +216,14 @@ main{max-width:720px;margin:0 auto;padding:20px 16px calc(env(safe-area-inset-bo
 .bungo-h{font-family:var(--disp);color:#F3F1E9;font-size:17px;font-weight:800;letter-spacing:.2em;
   display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .bungo-h small{font-family:var(--body);font-size:10px;color:#8E97AC;letter-spacing:.12em;font-weight:400}
+.bungo-scroller{position:relative}
+.bungo-nav{display:none;position:absolute;top:78px;z-index:5;width:38px;height:38px;border-radius:50%;
+  border:1px solid rgba(201,168,92,.6);background:rgba(29,44,80,.85);color:#C9A85C;
+  font-size:22px;line-height:1;align-items:center;justify-content:center;padding-bottom:3px}
+.bungo-nav.prev{left:-6px}
+.bungo-nav.next{right:-6px}
+.bungo-nav:hover{background:var(--gold);color:#1D2C50}
+@media (hover:hover) and (pointer:fine){.bungo-nav{display:flex}}
 .bungo-row{display:flex;gap:14px;overflow-x:auto;margin-top:16px;padding-bottom:6px;
   scrollbar-width:none;-ms-overflow-style:none}
 .bungo-row::-webkit-scrollbar{display:none}
@@ -228,6 +236,14 @@ main{max-width:720px;margin:0 auto;padding:20px 16px calc(env(safe-area-inset-bo
   letter-spacing:.06em;line-height:1.35}
 .bungo .bs{font-size:10px;color:#8E97AC;margin-top:2px;letter-spacing:.08em}
 .bungo-cr{font-size:9.5px;color:#66708A;margin-top:12px;letter-spacing:.1em;text-align:right}
+
+/* ---------- トースト通知 ---------- */
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translate(-50%,20px);
+  background:var(--ai-deep);color:#F3F1E9;font-size:13px;padding:11px 18px;border-radius:99px;
+  border:1px solid rgba(201,168,92,.5);box-shadow:0 4px 16px rgba(29,44,80,.35);
+  opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:60;
+  max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
 
 footer{max-width:720px;margin:40px auto 0;padding:0 16px 30px;font-size:10.5px;color:var(--mute);
   text-align:center;letter-spacing:.08em;line-height:2}
@@ -261,7 +277,11 @@ footer a{color:var(--gold);text-decoration:none}
 <section class="bungo-wrap">
   <div class="bungo-inner">
     <div class="bungo-h"><span id="bungoH">文豪の間</span><small id="bungoNote">肖像に触れると、その作家の世界へ</small></div>
-    <div class="bungo-row" id="bungoRow"></div>
+    <div class="bungo-scroller">
+      <button class="bungo-nav prev" onclick="bungoScroll(-1)" aria-label="prev">‹</button>
+      <div class="bungo-row" id="bungoRow"></div>
+      <button class="bungo-nav next" onclick="bungoScroll(1)" aria-label="next">›</button>
+    </div>
     <div class="bungo-cr" id="bungoCr"></div>
   </div>
 </section>
@@ -337,6 +357,8 @@ footer a{color:var(--gold);text-decoration:none}
     <p class="pay-note" id="payNote">購入後すぐに合言葉が発行されます。買い切り・端末を選ばず利用できます。</p>
   </div>
 </div>
+
+<div id="toast"></div>
 
 <footer>
   <span id="footNote">要約はすべて当手帖による書き下ろしです。原文の引用は含みません。</span><br>
@@ -650,15 +672,30 @@ function renderBungo(){const t=T[LANG];
     return `<div class="bungo${m.wide?' wide':''}" onclick="masterTap(${i})">
       <div class="frame"><img src="${src}" alt="${m.n[LANG]}" loading="lazy"></div>
       <div class="bn">${m.n[LANG]}</div><div class="bs">${m.s[LANG]}</div></div>`}).join('');}
+function bungoScroll(dir){document.getElementById('bungoRow')
+  .scrollBy({left:dir*340,behavior:'smooth'});}
+// PCの縦ホイールで横スクロールできるように（文豪の間・ジャンルの棚）
+function wheelToX(el){el.addEventListener('wheel',e=>{
+  if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&el.scrollWidth>el.clientWidth){
+    e.preventDefault();el.scrollLeft+=e.deltaY;}},{passive:false});}
+wheelToX(document.getElementById('bungoRow'));
+wheelToX(document.getElementById('shelf'));
+
+let TOAST_T=null;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;
+  el.classList.add('show');clearTimeout(TOAST_T);
+  TOAST_T=setTimeout(()=>el.classList.remove('show'),2600);}
 function masterTap(i){const m=MASTERS[i];
   if(m.q){ // 蔵書にある作家 → 検索して本棚へ
     GENRE='ALL';renderShelf();
     document.getElementById('q').value=m.q[LANG];render();
     document.getElementById('count').scrollIntoView({behavior:'smooth'});
+    toast(LANG==='ja'?`「${m.n.ja}」の蔵書に絞り込みました`:`Showing books by ${m.n.en}`);
   }else{ // 蔵書にない作家 → AI書斎に代表作をセット
     document.getElementById('aiBook').value=m.ai[LANG];
     document.getElementById('aiAuthor').value=m.an?m.an[LANG]:'';
     document.getElementById('aiPanel').scrollIntoView({behavior:'smooth'});
+    toast(LANG==='ja'?`AI書斎に『${m.ai.ja}』をセットしました（会員機能）`:`Set "${m.ai.en}" in the AI Librarian (members)`);
   }}
 
 /* ---------- library ---------- */
