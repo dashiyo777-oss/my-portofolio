@@ -613,74 +613,24 @@ function switchTo(id){
 }
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>switchTo(b.dataset.sec)));
 
-/* =================== 喫茶BGM (Web Audio 生成) =================== */
-let actx=null, master=null, crackle=null, barTimer=null, bgmOn=false, barIdx=0;
-const midi2f = m => 440*Math.pow(2,(m-69)/12);
-/* Dm9 → G7(9) → Cmaj7 → Am7 の循環 */
-const CHORDS = [
-  {notes:[62,65,69,72], bass:38},
-  {notes:[59,62,65,69], bass:43},
-  {notes:[60,64,67,71], bass:36},
-  {notes:[57,60,64,67], bass:45}
-];
-const MELODY = [72,74,76,79,81,84];
-const BAR = 60/72*4; /* 72BPM 4拍 = 約3.33秒 */
-
-function playNote(midi,t,dur,vol,type){
-  const o=actx.createOscillator(), g=actx.createGain();
-  o.type=type||'triangle';
-  o.frequency.value=midi2f(midi)*(1+(Math.random()-.5)*0.002); /* 微妙な揺らぎ */
-  g.gain.setValueAtTime(0,t);
-  g.gain.linearRampToValueAtTime(vol,t+0.35);
-  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-  o.connect(g); g.connect(master);
-  o.start(t); o.stop(t+dur+0.1);
-}
-
-function playBar(){
-  const t=actx.currentTime+0.05;
-  const c=CHORDS[barIdx%CHORDS.length];
-  c.notes.forEach((n,i)=>playNote(n, t+i*0.03, BAR*0.95, 0.05, 'triangle')); /* コードを柔らかくずらして */
-  playNote(c.bass, t, BAR*0.9, 0.09, 'sine');                                /* ベース */
-  playNote(c.bass, t+BAR/2, BAR*0.45, 0.055, 'sine');
-  const mn=1+Math.floor(Math.random()*2);                                     /* まばらなメロディ */
-  for(let i=0;i<mn;i++){
-    const when=t+(Math.random()*0.6+0.15)*BAR;
-    playNote(MELODY[Math.floor(Math.random()*MELODY.length)], when, 1.6, 0.035, 'sine');
-  }
-  barIdx++;
-}
-
-function startCrackle(){ /* レコードのパチパチ音 */
-  const len=actx.sampleRate*2;
-  const buf=actx.createBuffer(1,len,actx.sampleRate);
-  const d=buf.getChannelData(0);
-  for(let i=0;i<len;i++){ d[i]=Math.random()<0.0012 ? (Math.random()*2-1)*0.6 : (Math.random()*2-1)*0.012; }
-  const src=actx.createBufferSource(); src.buffer=buf; src.loop=true;
-  const hp=actx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1200;
-  const g=actx.createGain(); g.gain.value=0.05;
-  src.connect(hp); hp.connect(g); g.connect(master);
-  src.start(); return src;
-}
+/* =================== 喫茶BGM (オリジナル楽曲) =================== */
+const bgm = new Audio('coffee-bgm.mp3');
+bgm.loop = true;
+bgm.volume = 0.2; /* 小さめの音量 (0.0〜1.0) */
+bgm.preload = 'none';
+let bgmOn = false;
 
 function toggleBGM(){
   const btn=document.getElementById('bgmBtn');
   if(!bgmOn){
-    if(!actx){
-      actx=new (window.AudioContext||window.webkitAudioContext)();
-      master=actx.createGain(); master.gain.value=0.9;
-      const lp=actx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2600; /* 温かみ */
-      master.connect(lp); lp.connect(actx.destination);
-    }
-    actx.resume();
-    crackle=startCrackle();
-    barIdx=0; playBar();
-    barTimer=setInterval(playBar, BAR*1000);
-    bgmOn=true; btn.classList.add('playing'); btn.textContent='◼';
+    bgm.play().then(()=>{
+      bgmOn=true; btn.classList.add('playing'); btn.textContent='◼';
+    }).catch(err=>{
+      console.error('BGM再生エラー:', err);
+      document.title='BGM読み込み失敗 - 珈琲手帖';
+    });
   }else{
-    clearInterval(barTimer);
-    if(crackle){try{crackle.stop();}catch(e){}}
-    actx.suspend();
+    bgm.pause();
     bgmOn=false; btn.classList.remove('playing'); btn.textContent='♪';
   }
 }
