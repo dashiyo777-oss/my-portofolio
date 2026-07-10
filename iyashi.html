@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AIと作った 癒しのコーナー | 叡智の灯火</title>
+<meta name="description" content="暮らしと知性に効く、小さなウェブの道具たち。名作手帖・賢人会議・効く・酒手帖・あまみ手帖・話題かるた——すべてブラウザだけで使えます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E7;     /* 生成り */
+  --card:#FDFBF4;
+  --ink:#3A2E24;       /* 墨茶 */
+  --brown:#6E4423;     /* 焦げ茶 */
+  --brown-deep:#4A2E17;
+  --line:#E2D7C3;
+  --stamp:#A6502E;     /* 朱茶 */
+  --gold:#B08D4F;
+  --disp:'Shippori Mincho',serif;
+  --body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:var(--body);background:var(--paper);color:var(--ink);
+  line-height:1.85;font-size:15px;
+  background-image:radial-gradient(rgba(110,68,35,.045) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+a{color:var(--brown);text-decoration:none}
+
+/* ---------- hero ---------- */
+.hero{max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 64px) 22px 46px;text-align:center;position:relative}
+.candle{width:60px;margin:0 auto 22px;position:relative}
+.candle .wax{width:16px;height:34px;background:linear-gradient(#EFE6D2,#D9C9A8);margin:0 auto;border-radius:3px 3px 2px 2px;
+  box-shadow:inset -3px 0 4px rgba(110,68,35,.25)}
+.candle .flame{
+  width:14px;height:22px;margin:0 auto -4px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;
+  background:#F0B24A;
+  background:radial-gradient(circle at 50% 72%, #FFF3C4 0 28%, #F0B24A 60%, #C96F2E 100%);
+  box-shadow:0 0 22px 8px rgba(240,178,74,.35);
+  transform-origin:50% 90%;animation:flicker 2.8s ease-in-out infinite;
+}
+.candle .halo{position:absolute;inset:-60px -140px auto;height:200px;pointer-events:none;
+  background:radial-gradient(closest-side, rgba(240,178,74,.16), transparent 70%)}
+@keyframes flicker{0%,100%{transform:scaleX(1) rotate(0deg)}30%{transform:scaleX(.92) rotate(-2deg)}60%{transform:scaleX(1.05) rotate(1.6deg)}80%{transform:scaleX(.96) rotate(-1deg)}}
+@media (prefers-reduced-motion:reduce){.candle .flame{animation:none}}
+h1{font-family:var(--disp);font-weight:800;font-size:36px;font-size:clamp(28px,7vw,44px);letter-spacing:.08em;line-height:1.4}
+.hero .sub{font-family:var(--disp);font-size:15px;color:#7A6A56;margin-top:16px;letter-spacing:.06em}
+.hero .badge{display:inline-block;margin-top:22px;font-size:12px;color:var(--stamp);
+  border:1px solid rgba(166,80,46,.4);border-radius:99px;padding:6px 16px;letter-spacing:.08em;background:rgba(166,80,46,.05)}
+
+/* ---------- 棚 ---------- */
+main{max-width:760px;margin:0 auto;padding:8px 18px 30px}
+.shelf-label{font-family:var(--disp);font-size:13px;letter-spacing:.34em;color:var(--brown);
+  text-align:center;margin:14px 0 22px;display:flex;align-items:center;gap:16px}
+.shelf-label::before,.shelf-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line));}
+.shelf-label::after{background:linear-gradient(90deg,var(--line),transparent)}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+
+.tool{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  display:flex;box-shadow:0 2px 10px rgba(110,68,35,.07);
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.tool:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(110,68,35,.13)}
+.tool .spine{width:14px;flex-shrink:0;position:relative}
+.tool .spine::after{ /* 綴じ糸 */
+  content:"";position:absolute;top:10px;bottom:10px;left:50%;width:0;
+  border-left:2px dotted rgba(253,251,244,.65);transform:translateX(-50%);
+}
+.tool .bd{padding:18px 18px 16px;flex:1;display:flex;flex-direction:column}
+.tool .name{font-family:var(--disp);font-size:19px;font-weight:800;letter-spacing:.04em;display:flex;align-items:center;gap:9px}
+.tool .name .em{font-size:22px}
+.pill{display:inline-block;margin-top:9px;font-size:11px;letter-spacing:.05em;color:var(--brown);
+  background:rgba(110,68,35,.07);border:1px solid rgba(110,68,35,.18);border-radius:99px;padding:3px 11px;align-self:flex-start}
+.tool p{font-size:13.5px;margin-top:11px;color:#54473A;flex:1}
+.tool .en{font-size:11px;color:#8A7A64;margin-top:8px}
+.tool .en a{border-bottom:1px dotted var(--gold)}
+.open{
+  margin-top:14px;align-self:flex-start;font-family:var(--disp);font-weight:700;font-size:14px;
+  color:var(--brown);letter-spacing:.06em;
+  border-bottom:2px solid var(--brown);padding-bottom:3px;
+}
+.open::after{content:" →"}
+
+/* ---------- メンバーシップ ---------- */
+.member{
+  max-width:760px;margin:34px auto 0;padding:0 18px;
+}
+.member-inner{
+  background:linear-gradient(135deg,var(--brown-deep),var(--brown));color:#F7F2E7;
+  border-radius:14px;padding:32px 24px;position:relative;overflow:hidden;
+}
+.member-inner::before{ /* 鍵穴の透かし */
+  content:"";position:absolute;right:-30px;top:50%;transform:translateY(-50%);
+  width:170px;height:170px;border-radius:50%;
+  border:2px solid rgba(247,242,231,.12);
+}
+.member-inner::after{
+  content:"";position:absolute;right:34px;top:50%;transform:translateY(-46%);
+  width:42px;height:42px;border-radius:50%;
+  box-shadow:0 46px 0 -8px rgba(247,242,231,.12);
+  border:2px solid rgba(247,242,231,.12);
+}
+.member .eyebrow{font-size:11px;letter-spacing:.34em;color:#D9BE8C;margin-bottom:8px}
+.member h2{font-family:var(--disp);font-size:23px;font-weight:800;letter-spacing:.04em}
+.member .lead{font-family:var(--disp);font-size:15px;color:#EAD9BC;margin-top:12px}
+.member ul{list-style:none;margin-top:16px}
+.member li{font-size:13.5px;padding-left:24px;position:relative;margin-top:8px;color:#F1E7D2}
+.member li::before{content:"✓";position:absolute;left:0;color:#D9BE8C;font-weight:700}
+.member .cta{
+  display:block;text-align:center;margin-top:22px;background:#F7F2E7;color:var(--brown-deep);
+  font-family:var(--disp);font-weight:800;font-size:15.5px;letter-spacing:.1em;
+  border-radius:10px;padding:15px;box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+.member .note{font-size:11px;color:#C9B694;margin-top:12px;text-align:center;letter-spacing:.05em}
+
+/* ---------- 結び ---------- */
+.close-words{max-width:760px;margin:0 auto;padding:64px 22px 40px;text-align:center}
+.close-words h3{font-family:var(--disp);font-size:clamp(20px,5.4vw,28px);font-weight:800;line-height:2;letter-spacing:.08em}
+.close-words p{font-family:var(--disp);font-size:13.5px;color:#7A6A56;margin-top:16px}
+footer{max-width:760px;margin:0 auto;padding:0 22px calc(env(safe-area-inset-bottom) + 34px);
+  text-align:center;font-size:11px;color:#9A8A72;letter-spacing:.1em}
+footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin-bottom:18px}
+footer a{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="candle">
+    <div class="halo"></div>
+    <div class="flame"></div>
+    <div class="wax"></div>
+  </div>
+  <h1>AIと作った<br>癒しのコーナー</h1>
+  <p class="sub">暮らしと知性に効く、小さなウェブの道具たち</p>
+  <span class="badge">🔖 ブックマーク推奨｜インストール不要・ブラウザ専用</span>
+</header>
+
+<main>
+  <div class="shelf-label">道具の棚</div>
+  <div class="grid">
+
+    <article class="tool">
+      <div class="spine" style="background:#2A4073"></div>
+      <div class="bd">
+        <div class="name"><span class="em">📖</span>名作手帖</div>
+        <span class="pill">文学 × 三分要約 × AI司書</span>
+        <p>世界の名作24冊をわずか三分で。要約・主題・結末までの詳しいあらすじの二段構え。文豪27人の肖像ギャラリーから作品世界へ旅立てます。会員はAI書斎で、好きな小説の要約をその場で作成できます。</p>
+        <a class="open" href="https://eichinohi.com/meisaku-techo.html" target="_blank" rel="noopener">名作手帖を開く</a>
+      </div>
+    </article>
+
+    <article class="tool">
+      <div class="spine" style="background:#6E4423"></div>
+      <div class="bd">
+        <div class="name"><span class="em">🕯️</span>叡智の灯火／賢人会議</div>
+        <span class="pill">偉人チャット × 人生相談</span>
+        <p>歴史上の賢人たちと語らう相談の間。人生の悩みや迷いごとに、古の知恵が応えてくれます。7日間の実行計画づくりまで、賢人が伴走します。</p>
+        <a class="open" href="https://eichinohi.com/kenjin/" target="_blank" rel="noopener">知恵を借りる</a>
+      </div>
+    </article>
+
+    <article class="tool">
+      <div class="spine" style="background:#5B3A29"></div>
+      <div class="bd">
+        <div class="name"><span class="em">☕</span>珈琲手帖</div>
+        <span class="pill">珈琲記録 × 一杯の記憶</span>
+        <p>飲んだ豆の産地、焙煎、淹れ方、その朝の気分。一杯ごとの記憶を書き留めるコーヒーの記録帖。自分の「好みの一杯」の輪郭が、記録の中から立ちのぼります。</p>
+        <a class="open" href="https://eichinohi.com/coffee-techo.html" target="_blank" rel="noopener">一杯を記す</a>
+      </div>
+    </article>
+
+    <article class="tool">
+      <div class="spine" style="background:#7A5230"></div>
+      <div class="bd">
+        <div class="name"><span class="em">🍶</span>酒手帖</div>
+        <span class="pill">呑み記録 × 好みの発見</span>
+        <p>「あの一本、なんだっけ」を二度と起こさない呑み記録帖。銘柄・味・肴・気分を書き留めるほど、自分の好みの輪郭が見えてきます。過去の自分が、いちばんの利き酒師です。</p>
+        <div class="en">English edition: <a href="https://eichinohi.com/sake-notebook-en.html" target="_blank" rel="noopener">IZAKAYA</a></div>
+        <a class="open" href="https://eichinohi.com/sake-techo.html" target="_blank" rel="noopener">記録を始める</a>
+      </div>
+    </article>
+
+    <article class="tool">
+      <div class="spine" style="background:#B06A3C"></div>
+      <div class="bd">
+        <div class="name"><span class="em">🍮</span>あまみ手帖</div>
+        <span class="pill">甘味録 × 一期一会</span>
+        <p>出会った甘いものを書き留める甘味録。季節限定との一期一会も、手帖の中では永遠に。手土産選びにも、自分へのご褒美選びにも効きます。</p>
+        <div class="en">English edition: <a href="https://eichinohi.com/amami-techo-en.html" target="_blank" rel="noopener">KISSATEN</a></div>
+        <a class="open" href="https://eichinohi.com/amami-techo.html" target="_blank" rel="noopener">甘味を綴る</a>
+      </div>
+    </article>
+
+    <article class="tool">
+      <div class="spine" style="background:#8A3038"></div>
+      <div class="bd">
+        <div class="name"><span class="em">🎴</span>話題かるた</div>
+        <span class="pill">会話の糸口 × 沈黙対策</span>
+        <p>一枚引くだけで会話が始まる小さなウェブかるた。初対面、親戚の集まり、会議前の数分に。スマホ一台で、その場が温かな社交場になります。</p>
+        <a class="open" href="https://eichinohi.com/wadai-karuta.html" target="_blank" rel="noopener">話題を引く</a>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<section class="member">
+  <div class="member-inner">
+    <div class="eyebrow">MEMBERSHIP</div>
+    <h2>🔑 Noteメンバーシップ</h2>
+    <p class="lead">月300円 × 合言葉ひとつで、全サイト解錠。</p>
+    <ul>
+      <li>メンバー限定の特典記事が読み放題</li>
+      <li>各サイトの会員機能を、月替わりの合言葉ひとつで解錠</li>
+      <li>叡智の灯火／賢人会議のロック解除は、noteメンバー内で公開中</li>
+      <li>道具が増えても追加料金なし</li>
+    </ul>
+    <!-- ▼▼ noteメンバーシップのURLに差し替えてください ▼▼ -->
+    <a class="cta" href="https://note.com/" target="_blank" rel="noopener">Noteメンバーシップに加入する</a>
+    <p class="note">合言葉（TOMO-◯◯◯◯）は、noteメンバー限定記事で毎月公開しています</p>
+  </div>
+</section>
+
+<section class="close-words">
+  <h3>あなたの日常に、<br>小さな「知の癒やし」を。</h3>
+  <p>お気に入りの道具が見つかりますように。</p>
+</section>
+
+<footer>
+  <div class="rule"></div>
+  AIと作った 癒しのコーナー<br>
+  © 叡智の灯火 <a href="https://eichinohi.com" target="_blank" rel="noopener">eichinohi.com</a>
+</footer>
+
+</body>
+</html>
