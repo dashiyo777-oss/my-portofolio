@@ -833,16 +833,46 @@ let HG=null;
 function hSnapshot(){return{score:HG.score,tiles:HG.tiles.filter(t=>!t.dead).map(t=>({x:t.x,y:t.y,lv:t.lv}))};}
 function hSave(){DB.hanaState=hSnapshot();save();}
 
+function hTutorial(cb){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🌸 あそびかた");
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      <div class="card" style="margin-bottom:10px">
+        <p style="font-size:14.5px;margin-bottom:6px"><b>1. 指でなぞる（スワイプ）と、花が<u>ぜんぶ一斉に</u>その方向へすべる</b></p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌱</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌱</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span></span>
+        </div>
+        <div style="text-align:center;font-weight:800;color:var(--ai);margin:4px 0">⬅ 左へスワイプすると…</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌿</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span></span>
+        </div>
+        <p style="font-size:14.5px;margin-top:6px;text-align:center"><b>おなじ花どうしが ぶつかると合体！</b><br>🌱＋🌱＝🌿、🌿＋🌿＝🍀、🍀＋🍀＝🌷…</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <p style="font-size:14.5px"><b>2. 間にちがう花があると合体しない</b><br>🌱🌸🌱 のように挟まっていると、桜が壁になって芽どうしは出会えません。同じ花を<b>同じ列にそろえてから</b>その方向へスワイプ。</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <div style="font-size:30px;text-align:center">🌱→🌸→🌕→💮</div>
+        <p style="font-size:14.5px"><b>3. めざせ「大輪・冴」</b><br>動かすたび新しい芽が生えます。盤が埋まって動けなくなったら終了。</p>
+      </div>
+      <p class="muted small" style="margin-bottom:12px">💡 コツ：いちばん育った花をカドに置いて、スワイプは2方向中心に。</p>
+      <button class="btn" id="tutGo">わかった、はじめる</button>
+    </div>`;
+  $("#tutGo").onclick=cb;
+}
 function startHana(){
+  if(!DB.hanaTut){hTutorial(()=>{DB.hanaTut=1;save();startHana();});return;}
   gResolve=()=>{};clearGTimers();
   openOverlay("🌸 花あわせ");
   gArea().innerHTML=`
     <div class="hana-wrap">
-      <div class="hana-head"><span>スコア <b id="hScore">0</b></span><span class="muted small">ベスト ${(DB.hana.best||0).toLocaleString()}</span></div>
+      <div class="hana-head"><span>スコア <b id="hScore">0</b></span><span class="muted small" id="hBest">ベスト ${(DB.hana.best||0).toLocaleString()}</span></div>
       <div id="hanaBoard"></div>
       <div style="display:flex;gap:10px;width:min(360px,88vw)">
         <button class="btn ghost" style="flex:1" id="hUndo">↩ 1手もどす</button>
         <button class="btn ghost" style="flex:1" id="hNew">🌱 はじめから</button>
+        <button class="btn ghost" style="flex:0 0 52px" id="hHelp">？</button>
       </div>
       <p class="muted small">スワイプで動かす。同じ花がかさなると、ひとつ上の花に。</p>
     </div>`;
@@ -889,6 +919,7 @@ function startHana(){
     u.tiles.forEach(t=>HG.tiles.push({id:HG.nid++,x:t.x,y:t.y,lv:t.lv,neu:true}));
     hRender();hSave();
   };
+  $("#hHelp").onclick=()=>{hTutorial(()=>startHana());};
   $("#hNew").onclick=()=>{
     Object.values(HG.nodes).forEach(el=>el.remove());
     HG.nodes={};HG.tiles=[];HG.score=0;HG.undo=null;HG.maxLv=1;HG.over=false;
@@ -908,6 +939,7 @@ function hSpawn(){
 function hRender(){
   const board=$("#hanaBoard");if(!board||!HG)return;
   $("#hScore").textContent=HG.score.toLocaleString();
+  const hb=$("#hBest");if(hb)hb.textContent="ベスト "+Math.max(DB.hana.best||0,HG.score).toLocaleString();
   const {cs,P,G}=HG;
   HG.tiles.forEach(t=>{
     let el=HG.nodes[t.id];
