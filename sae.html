@@ -266,6 +266,66 @@ nav.tabbar{
 @keyframes hpop{0%{transform:scale(.5)}60%{transform:scale(1.14)}100%{transform:scale(1)}}
 .hin.pop{animation:hpop .18s ease}
 .hana-toast{position:absolute;top:8px;left:0;right:0;text-align:center;font-weight:800;font-size:17px;color:var(--shu);animation:floatUp 1.1s ease forwards;pointer-events:none;z-index:9;text-shadow:0 1px 0 #fff}
+
+/* ===== Premium polish ===== */
+body{background:
+  radial-gradient(1200px 500px at 50% -200px, #FBF9F1 0%, transparent 60%),
+  repeating-linear-gradient(0deg, rgba(120,110,90,.022) 0 1px, transparent 1px 3px),
+  repeating-linear-gradient(90deg, rgba(120,110,90,.018) 0 1px, transparent 1px 3px),
+  var(--paper);}
+header.appbar{box-shadow:0 1px 0 var(--line),0 2px 0 rgba(233,196,106,.55),0 6px 14px -8px rgba(30,42,56,.15)}
+.hanko{box-shadow:0 2px 6px rgba(200,69,44,.35),inset 0 0 0 2px rgba(255,255,255,.35);border-radius:8px}
+.card{box-shadow:0 1px 2px rgba(30,42,56,.05),0 6px 18px -6px rgba(30,42,56,.10)}
+.card h2{letter-spacing:.03em}
+.btn{box-shadow:0 3px 0 rgba(23,42,84,.55),0 6px 14px -6px rgba(42,77,143,.55);
+  background:linear-gradient(180deg,#3560AD 0%,var(--ai) 55%,#24437D 100%)}
+.btn:active{transform:translateY(2px) scale(.985);box-shadow:0 1px 0 rgba(23,42,84,.55)}
+.btn.shu{background:linear-gradient(180deg,#D75A3F 0%,var(--shu) 55%,#A93A24 100%);
+  box-shadow:0 3px 0 rgba(120,35,20,.55),0 6px 14px -6px rgba(200,69,44,.5)}
+.btn.secondary{background:var(--white);box-shadow:0 2px 0 rgba(30,42,56,.10),0 4px 10px -6px rgba(30,42,56,.18)}
+.btn.ghost{box-shadow:none}
+.hero{box-shadow:0 10px 26px -10px rgba(23,42,84,.55),inset 0 1px 0 rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.14)}
+.hero::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(420px 160px at 85% -30%,rgba(233,196,106,.28),transparent 70%)}
+.hero .btn{box-shadow:0 3px 0 rgba(180,170,140,.7),0 6px 16px -8px rgba(0,0,0,.4)}
+nav.tabbar{box-shadow:0 -1px 0 var(--line),0 -8px 18px -12px rgba(30,42,56,.18);
+  backdrop-filter:blur(6px);background:rgba(244,242,235,.92)}
+.tabbar button{position:relative;transition:color .15s}
+.tabbar button.active::after{content:"";position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:26px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--shu))}
+.tabbar button:active .ticon{transform:scale(.85)}
+.game-tile{transition:transform .1s ease,box-shadow .15s}
+.game-tile:active{transform:scale(.96)}
+/* 花あわせ */
+#hanaBoard{box-shadow:inset 0 2px 8px rgba(30,42,56,.14),0 2px 0 rgba(255,255,255,.6),0 10px 24px -12px rgba(30,42,56,.3);
+  border:1px solid #D5CEBB}
+.htile{box-shadow:0 2px 4px rgba(30,42,56,.20),inset 0 1px 0 rgba(255,255,255,.55)}
+.htile[data-lv="8"] .hin,.htile[data-lv="9"] .hin{box-shadow:0 0 12px rgba(120,170,220,.55)}
+.htile[data-lv="10"] .hin,.htile[data-lv="11"] .hin{box-shadow:0 0 14px rgba(233,196,106,.75)}
+.htile[data-lv="12"] .hin{box-shadow:0 0 18px rgba(200,69,44,.65),0 0 34px rgba(233,196,106,.5);animation:hglow 1.6s ease-in-out infinite}
+@keyframes hglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
+.hfloat{position:absolute;left:50%;transform:translateX(-50%);top:-6px;font-weight:800;color:var(--shu);
+  font-size:20px;text-shadow:0 1px 0 #fff;pointer-events:none;animation:hfloat .8s ease-out forwards;z-index:5;font-family:'Shippori Mincho B1',serif}
+@keyframes hfloat{0%{opacity:0;transform:translate(-50%,6px) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-34px) scale(1.15)}}
+.petal{position:fixed;top:-30px;pointer-events:none;z-index:1;font-size:18px;opacity:.5;animation:pfall linear infinite}
+@keyframes pfall{0%{transform:translateY(-4vh) translateX(0) rotate(0deg)}
+  100%{transform:translateY(106vh) translateX(60px) rotate(320deg)}}
+body.ingame .petal{display:none}
+/* ラッシュ */
+#rtb{transition:background .2s}
+#rtb.warn{background:linear-gradient(90deg,#E9C46A,#D9822B)}
+#rtb.danger{background:linear-gradient(90deg,#D9534F,var(--shu));animation:rpulse .5s ease-in-out infinite}
+@keyframes rpulse{50%{filter:brightness(1.35)}}
+.rcombo.fire{font-size:17px;background:linear-gradient(90deg,var(--shu),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:rpulse .6s ease-in-out infinite}
+/* 番付 */
+.rank-1{background:linear-gradient(90deg,#FFF3C4,#FFE9A0)!important;box-shadow:inset 0 0 0 1px rgba(233,196,106,.9)}
+.rank-2{background:linear-gradient(90deg,#F3F3F3,#E7E7E7)}
+.rank-3{background:linear-gradient(90deg,#F6E7DC,#EED9C8)}
+.rec-row{border-radius:8px}
+@media (prefers-reduced-motion:reduce){.petal{display:none}.hin.pop,#rtb.danger,.rcombo.fire,.htile[data-lv="12"] .hin{animation:none}}
+
 </style>
 </head>
 <body>
@@ -730,7 +790,7 @@ function rushHud(){
   return `<div class="rush-hud">
     <span class="hearts">${"❤️".repeat(RS.lives)}${"🖤".repeat(3-RS.lives)}</span>
     <span class="rscore">${RS.score.toLocaleString()}</span>
-    <span class="rcombo">${RS.combo>=2?"🔥"+RS.combo:""}</span>
+    <span class="rcombo${RS.combo>=8?" fire":""}">${RS.combo>=2?"🔥"+RS.combo:""}</span>
   </div>
   <div class="rush-timebar"><div id="rtb"></div></div>
   <div class="redflash" id="rflash"></div>
@@ -768,6 +828,9 @@ function rushQ(g){
     ${g.html}
     ${grid}`;
   const bar=$("#rtb");
+  if(bar)bar.classList.remove("warn","danger");
+  const w1=gT(()=>{if(bar)bar.classList.add("warn");},tmax*0.6);
+  const w2=gT(()=>{if(bar)bar.classList.add("danger");},tmax*0.85);
   requestAnimationFrame(()=>{requestAnimationFrame(()=>{
     if(!bar.isConnected)return;
     bar.style.transition=`width ${tmax}ms linear`;
@@ -778,7 +841,7 @@ function rushQ(g){
   const expiry=gT(()=>{if(!done){done=true;rushMiss();}},tmax);
   gArea().querySelectorAll("[data-ok]").forEach(b=>{
     b.onclick=()=>{
-      if(done)return;done=true;clearTimeout(expiry);
+      if(done)return;done=true;clearTimeout(expiry);clearTimeout(w1);clearTimeout(w2);
       if(b.dataset.ok==="true"){
         const frac=clamp(1-(Date.now()-t0)/tmax,0,1);
         rushHit(frac);
@@ -975,6 +1038,7 @@ function hRender(){
       el.style.width=cs+"px";el.style.height=cs+"px";
       el.innerHTML=`<div class="hin"><div class="he"></div><div class="hn"></div></div>`;
       el.style.transform=`translate(${tx}px,${ty}px)`;
+      el.dataset.lv=t.lv;
       if(t.neu)el.querySelector(".hin").classList.add("pop");
       board.appendChild(el);HG.nodes[t.id]=el;
     }
@@ -984,6 +1048,7 @@ function hRender(){
     el.querySelector(".he").textContent=f.e;
     el.querySelector(".hn").textContent=f.n;
     el.querySelector(".hin").style.background=HCOL[Math.min(t.lv,HCOL.length-1)];
+    el.dataset.lv=t.lv;
     if(t.popNext){t.popNext=false;const h=el.querySelector(".hin");h.classList.remove("pop");void h.offsetWidth;h.classList.add("pop");}
     t.neu=false;
   });
@@ -1033,7 +1098,10 @@ function hMove(dir){
   if(!moved)return;
   HG.undo=snap;
   HG.score+=gained;
-  if(gained>0)beep(360+Math.min(HG.maxLv,12)*28,.08,"triangle",.09);
+  if(gained>0){beep(360+Math.min(HG.maxLv,12)*28,.08,"triangle",.09);
+    const b=$("#hanaBoard");
+    if(b){const f=document.createElement("div");f.className="hfloat";f.textContent="+"+gained;
+      b.appendChild(f);setTimeout(()=>f.remove(),850);}}
   hSpawn();
   hRender();
   hSave();
@@ -1140,7 +1208,7 @@ async function showRanking(g){
   const myBest=g==="hana"?(DB.hana.best||0):(DB.rush.best||0);
   const medals=["🥇","🥈","🥉"];
   const rows=data.top.map((r,i)=>`
-    <div class="rec-row" style="${r.id===me?"background:#FFF3C4;border-radius:8px;padding-left:8px;padding-right:8px;":""}">
+    <div class="rec-row ${i<3?"rank-"+(i+1):""}" style="padding-left:8px;padding-right:8px;${r.id===me?"box-shadow:inset 0 0 0 2px var(--gold);border-radius:8px;":""}">
       <span>${i===0?"🥇<b style='color:var(--shu)'>"+P("横綱(暫定)","Yokozuna","Yokozuna")+"</b>":medals[i]||"<b>"+(i+1)+"</b>"}　${esc(r.n)}${r.id===me?P("（あなた）"," (you)"," (tú)"):""}</span><b>${Number(r.s).toLocaleString()}</b>
     </div>`).join("");
   gArea().innerHTML=`
@@ -1198,6 +1266,11 @@ document.querySelectorAll(".tabbar button").forEach(b=>{const ic=b.querySelector
 $("#quitBtn").textContent=P("やめる","Quit","Salir");
 $("#gTitle").textContent=P("ゲーム","Game","Juego");
 (function(){const lb=$("#langBtn");lb.textContent="🌐 "+LANG.toUpperCase();lb.onclick=cycleLang;})();
+(function(){const pe=["🌸","🌸","🌺","🌸","💮","🌸"];
+for(let i=0;i<6;i++){const s=document.createElement("span");s.className="petal";s.textContent=pe[i];
+s.style.left=(8+i*16+Math.random()*8)+"%";s.style.animationDuration=(11+Math.random()*9)+"s";
+s.style.animationDelay=(-Math.random()*18)+"s";s.style.fontSize=(13+Math.random()*9)+"px";
+document.body.appendChild(s);}})();
 updateStreakChip();
 renderHome();
 
@@ -1208,8 +1281,8 @@ let gResolve=null,gTimers=[];
 const gArea=()=>$("#gameArea");
 function gT(fn,ms){const t=setTimeout(fn,ms);gTimers.push(t);return t;}
 function clearGTimers(){gTimers.forEach(clearTimeout);gTimers=[];}
-function openOverlay(title){$("#gTitle").textContent=title;setProg(0);$("#gameOverlay").classList.add("open");}
-function closeOverlay(){$("#gameOverlay").classList.remove("open");clearGTimers();gArea().innerHTML="";}
+function openOverlay(title){$("#gTitle").textContent=title;setProg(0);$("#gameOverlay").classList.add("open");document.body.classList.add("ingame");}
+function closeOverlay(){$("#gameOverlay").classList.remove("open");document.body.classList.remove("ingame");clearGTimers();gArea().innerHTML="";}
 function quitGame(){const r=gResolve;gResolve=null;closeOverlay();if(r)r(null);}
 function setProg(f){$("#gProg").style.width=(f*100)+"%";}
 function finishWith(score){const r=gResolve;gResolve=null;if(r)r(score);}
