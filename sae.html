@@ -54,7 +54,7 @@ header.appbar{
 .appbar h1{font-family:'Shippori Mincho B1',serif;font-size:19px;font-weight:800;letter-spacing:.06em}
 .appbar h1 small{font-size:11px;font-weight:600;color:var(--ai);letter-spacing:.14em;display:block;line-height:1.2}
 .streak-chip{
-  margin-left:auto;background:var(--white);border:1px solid var(--line);
+  margin-left:0;background:var(--white);border:1px solid var(--line);
   border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--shu);
   white-space:nowrap;
 }
@@ -272,8 +272,9 @@ nav.tabbar{
 <div id="app">
   <header class="appbar">
     <div class="hanko">冴</div>
-    <h1>冴え手帖<small>SAE — 脳活道場</small></h1>
-    <div class="streak-chip" id="streakChip">🔥 0日</div>
+    <h1 style="flex:1">冴え手帖<small>SAE — 脳活道場</small></h1>
+    <button class="streak-chip" id="langBtn" style="border:1px solid var(--line);background:var(--white);cursor:pointer;font-family:inherit;color:var(--ai)"></button>
+    <div class="streak-chip" id="streakChip" style="margin-left:6px">🔥 0</div>
   </header>
   <main id="main"></main>
   <nav class="tabbar">
@@ -288,7 +289,7 @@ nav.tabbar{
   <div class="g-head">
     <div class="g-title" id="gTitle">ゲーム</div>
     <button class="g-quit" id="muteBtn" style="margin-left:auto">🔊</button>
-    <button class="g-quit" style="margin-left:8px" onclick="quitGame()">やめる</button>
+    <button class="g-quit" id="quitBtn" style="margin-left:8px" onclick="quitGame()">やめる</button>
   </div>
   <div class="g-prog"><div id="gProg"></div></div>
   <div id="gameArea"></div>
@@ -303,7 +304,7 @@ nav.tabbar{
 /* ---------- utilities ---------- */
 const $=s=>document.querySelector(s);
 const todayStr=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
-const jpDate=()=>{const d=new Date();const w=["日","月","火","水","木","金","土"][d.getDay()];return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${w}）`;};
+const jpDate=()=>new Date().toLocaleDateString(LANG==="ja"?"ja-JP":LANG==="es"?"es-ES":"en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const dateSeed=()=>{const s=todayStr();let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h;};
@@ -336,38 +337,47 @@ function markPractice(gid,score){
   if(!(gid in DB.best)||score>DB.best[gid])DB.best[gid]=score;
   save();updateStreakChip();
 }
-function updateStreakChip(){$("#streakChip").textContent="🔥 "+streakCount()+"日";}
+function updateStreakChip(){$("#streakChip").textContent="🔥 "+streakCount()+P("日","d","d");}
+
+/* ---------- i18n ---------- */
+const LANGS=["ja","en","es"];
+let LANG=DB.lang||((navigator.language||"en").slice(0,2));
+if(!LANGS.includes(LANG))LANG="en";
+const P=(ja,en,es)=>({ja,en,es})[LANG];
+function setLang(l){DB.lang=l;save();location.reload();}
+function cycleLang(){setLang(LANGS[(LANGS.indexOf(LANG)+1)%LANGS.length]);}
 
 /* ---------- game meta ---------- */
 const GAMES={
-  calc:{name:"けいさん道場",icon:"🧮",dom:"処理速度",domKey:"speed",desc:"かんたんな計算を素早く"},
-  digit:{name:"数字おぼえ",icon:"🔢",dom:"記憶力",domKey:"memory",desc:"数字を見て覚えて入力"},
-  trail:{name:"順番タッチ",icon:"👆",dom:"注意・切替",domKey:"attention",desc:"数字を順にタッチ"},
-  stroop:{name:"いろよみ",icon:"🎨",dom:"集中・抑制",domKey:"inhibition",desc:"文字の「色」を答える"},
-  janken:{name:"後出しじゃんけん",icon:"✊",dom:"判断・反射",domKey:"judge",desc:"指示どおりに後出し"}
+  calc:{name:P("けいさん道場","Math Dash","Cálculo Rápido"),icon:"🧮",dom:P("処理速度","Speed","Rapidez"),domKey:"speed",desc:P("かんたんな計算を素早く","Quick mental math","Cálculo mental veloz")},
+  digit:{name:P("数字おぼえ","Number Recall","Memoria Numérica"),icon:"🔢",dom:P("記憶力","Memory","Memoria"),domKey:"memory",desc:P("数字を見て覚えて入力","Memorize and type digits","Memoriza y escribe")},
+  trail:{name:P("順番タッチ","Trail Touch","Toque en Orden"),icon:"👆",dom:P("注意・切替","Attention","Atención"),domKey:"attention",desc:P("数字を順にタッチ","Tap numbers in order","Toca en orden")},
+  stroop:{name:P("いろよみ","Color Match","Color y Palabra"),icon:"🎨",dom:P("集中・抑制","Focus","Concentración"),domKey:"inhibition",desc:P("文字の「色」を答える","Name the ink color","Di el color de la tinta")},
+  janken:{name:P("後出しじゃんけん","RPS Reflex","Reflejo Manos"),icon:"✊",dom:P("判断・反射","Reflex","Reflejos"),domKey:"judge",desc:P("指示どおりに後出し","Win or lose on command","Gana o pierde a la orden")}
 };
-const DOMS={speed:"処理速度",memory:"記憶力",attention:"注意・切替",inhibition:"集中・抑制",judge:"判断・反射"};
+const DOMS={speed:P("処理速度","Speed","Rapidez"),memory:P("記憶力","Memory","Memoria"),attention:P("注意・切替","Attention","Atención"),inhibition:P("集中・抑制","Focus","Concentración"),judge:P("判断・反射","Reflex","Reflejos")};
 
 /* ---------- tips ---------- */
+const TIPCATS=[P("すべて","All","Todos"),P("運動","Exercise","Ejercicio"),P("食事","Diet","Alimentación"),P("睡眠","Sleep","Sueño"),P("交流","Social","Social"),P("脳の使い方","Brain habits","Hábitos mentales")];
+const C_EX=TIPCATS[1],C_DI=TIPCATS[2],C_SL=TIPCATS[3],C_SO=TIPCATS[4],C_BR=TIPCATS[5];
 const TIPS=[
- {cat:"運動",title:"1日20〜30分の早歩き",body:"軽く息がはずむ程度の有酸素運動は、記憶を担う脳の「海馬」の働きを支えると報告されています。買い物や散歩を少しだけ速く歩くのがコツ。",ev:"参考：Erickson ら(2011) 有酸素運動と海馬体積の研究／WHO身体活動ガイドライン"},
- {cat:"運動",title:"「歩きながらしりとり」デュアルタスク",body:"体を動かしながら頭も使う二重課題（デュアルタスク）は、注意を切り替える力のトレーニングとして介護予防の現場でも使われています。家族との散歩で試してみましょう。",ev:"参考：国立長寿医療研究センター「コグニサイズ」"},
- {cat:"運動",title:"座りっぱなしを30分ごとに中断",body:"長時間の座位は脳と体の血流を滞らせます。30分〜1時間に一度立ち上がって伸びをするだけでも違います。テレビCMを合図にするのがおすすめ。",ev:"参考：WHO身体活動・座位行動ガイドライン(2020)"},
- {cat:"食事",title:"魚・野菜・豆・オリーブ油を中心に",body:"地中海式に近い食事パターン（魚、緑黄色野菜、豆類、ナッツ、オリーブ油）は、認知機能の維持と関連することが複数の研究で示されています。和食に青魚と野菜を足すイメージで十分です。",ev:"参考：地中海食・MIND食に関する観察研究群"},
- {cat:"食事",title:"水分をこまめに",body:"軽い脱水でも注意力や気分は低下します。特に夏場と起床後は意識してコップ一杯の水を。お茶や汁物も水分です。",ev:"参考：軽度脱水と認知パフォーマンスに関する研究"},
- {cat:"食事",title:"よく噛んで食べる",body:"咀嚼は脳への血流を高める行為でもあります。一口の回数を少し増やす、歯の健康を保つことは、食を楽しみ続ける土台にもなります。",ev:"参考：咀嚼機能と認知機能の関連に関する疫学研究"},
- {cat:"睡眠",title:"7時間前後の睡眠を守る",body:"睡眠中に脳は日中の記憶を整理し、老廃物を洗い流すと考えられています。極端な寝不足も寝すぎも認知機能低下と関連します。まずは就寝・起床時刻をそろえることから。",ev:"参考：睡眠時間と認知機能に関する大規模疫学研究"},
- {cat:"睡眠",title:"寝る前1時間はスマホの光を控えめに",body:"強い光は眠りを促すメラトニンの分泌を妨げます。画面を暗くする、紙の本に切り替えるなど、脳に「夜」を知らせる工夫を。",ev:"参考：光曝露と睡眠の質に関する研究"},
- {cat:"睡眠",title:"昼寝は20分まで",body:"短い昼寝は午後の集中力を回復させますが、30分を超える昼寝や夕方の昼寝は夜の睡眠を浅くします。「座ったまま20分」が目安です。",ev:"参考：短時間仮眠と覚醒度に関する研究"},
- {cat:"交流",title:"1日1回、誰かと言葉を交わす",body:"会話は「聞く・考える・話す」を同時に行う高度な脳トレです。社会的なつながりが多い人ほど認知機能低下のリスクが低いという報告が多数あります。電話やあいさつでもOK。",ev:"参考：社会的孤立と認知症リスクに関する疫学研究"},
- {cat:"交流",title:"人に教える・話して聞かせる",body:"覚えたことを人に説明すると、記憶はぐっと定着します。今日のニュースや本の内容を家族にひとこと紹介してみましょう。",ev:"参考：想起練習（テスト効果）に関する学習科学研究"},
- {cat:"脳の使い方",title:"「少し難しい」を選ぶ",body:"脳のトレーニングは、簡単すぎても難しすぎても効果が薄れます。正解率7〜8割くらいの「ちょい難」が成長ゾーン。冴え手帖のゲームも同じ設計です。",ev:"参考：認知トレーニングの難易度適応に関する研究"},
- {cat:"脳の使い方",title:"利き手と反対の手を使ってみる",body:"歯みがきやマウス操作を反対の手で行うと、普段使わない運動野が活動します。新しい動きの学習は脳への良い刺激です。",ev:"参考：運動学習と脳の可塑性に関する研究"},
- {cat:"脳の使い方",title:"新しい道・新しいレシピ・新しい曲",body:"「初めて」の体験は脳に最も強い刺激を与えます。いつもの散歩コースを一本ずらす、作ったことのない料理に挑戦する。小さな新しさを毎週ひとつ。",ev:"参考：知的活動・novelty と認知予備力に関する研究"},
- {cat:"脳の使い方",title:"毎日3分、続けることが最強",body:"フィンランドのFINGER研究では、運動・食事・脳トレ・健康管理を「組み合わせて続けた」グループで認知機能の改善が確認されました。一発の頑張りより、小さな毎日を。",ev:"参考：Ngandu ら(2015) FINGER研究（Lancet）"}
+ {cat:C_EX,title:P("1日20〜30分の早歩き","A brisk 20–30 minute walk daily","Camina rápido 20–30 min al día"),body:P("軽く息がはずむ程度の有酸素運動は、記憶を担う脳の「海馬」の働きを支えると報告されています。買い物や散歩を少しだけ速く歩くのがコツ。","Aerobic exercise that gets you slightly out of breath is reported to support the hippocampus — the brain's memory center. Just walk a little faster on errands or strolls.","El ejercicio aeróbico que te deja levemente sin aliento apoya al hipocampo, el centro de la memoria. Basta caminar un poco más rápido al hacer recados."),ev:P("参考：Erickson ら(2011)／WHO身体活動ガイドライン","Ref: Erickson et al. (2011) / WHO physical activity guidelines","Ref.: Erickson et al. (2011) / Guías de actividad física de la OMS")},
+ {cat:C_EX,title:P("「歩きながらしりとり」デュアルタスク","Dual-task walking: count backwards as you go","Camina contando hacia atrás (doble tarea)"),body:P("体を動かしながら頭も使う二重課題は、注意を切り替える力のトレーニングとして介護予防の現場でも使われています。家族との散歩で試してみましょう。","Doing a mental task while moving trains attention switching and is widely used in dementia-prevention programs. Try naming animals or counting down by 3s on your walk.","Hacer una tarea mental mientras te mueves entrena la atención y se usa en programas de prevención. Prueba nombrar animales o restar de 3 en 3 mientras caminas."),ev:P("参考：国立長寿医療研究センター「コグニサイズ」","Ref: NCGG (Japan) Cognicise program","Ref.: programa Cognicise del NCGG (Japón)")},
+ {cat:C_EX,title:P("座りっぱなしを30分ごとに中断","Break up sitting every 30 minutes","Levántate cada 30 minutos"),body:P("長時間の座位は脳と体の血流を滞らせます。30分〜1時間に一度立ち上がって伸びをするだけでも違います。テレビCMを合図にするのがおすすめ。","Long sitting slows blood flow to body and brain. Standing up and stretching once every 30–60 minutes helps. Use TV commercials as your cue.","Estar sentado mucho tiempo reduce el flujo sanguíneo al cuerpo y al cerebro. Levántate y estírate cada 30–60 minutos. Usa los anuncios de TV como señal."),ev:P("参考：WHO身体活動・座位行動ガイドライン(2020)","Ref: WHO guidelines on physical activity and sedentary behaviour (2020)","Ref.: guías de la OMS sobre sedentarismo (2020)")},
+ {cat:C_DI,title:P("魚・野菜・豆・オリーブ油を中心に","Fish, vegetables, beans and olive oil","Pescado, verduras, legumbres y aceite de oliva"),body:P("地中海式に近い食事パターンは、認知機能の維持と関連することが複数の研究で示されています。和食に青魚と野菜を足すイメージで十分です。","Mediterranean-style eating patterns are associated with better cognitive health in multiple studies. Adding oily fish and vegetables to your usual meals is enough.","La dieta de estilo mediterráneo se asocia con mejor salud cognitiva en varios estudios. Basta añadir pescado azul y verduras a tus comidas habituales."),ev:P("参考：地中海食・MIND食に関する観察研究群","Ref: studies on Mediterranean and MIND diets","Ref.: estudios sobre dietas mediterránea y MIND")},
+ {cat:C_DI,title:P("水分をこまめに","Sip water regularly","Bebe agua con frecuencia"),body:P("軽い脱水でも注意力や気分は低下します。特に夏場と起床後は意識してコップ一杯の水を。お茶や汁物も水分です。","Even mild dehydration lowers attention and mood. Have a glass of water first thing in the morning and in hot weather. Tea and soup count too.","Incluso una deshidratación leve reduce la atención y el ánimo. Un vaso de agua al despertar y en días calurosos. El té y la sopa también cuentan."),ev:P("参考：軽度脱水と認知パフォーマンスに関する研究","Ref: studies on mild dehydration and cognitive performance","Ref.: estudios sobre deshidratación leve y cognición")},
+ {cat:C_DI,title:P("よく噛んで食べる","Chew well","Mastica bien"),body:P("咀嚼は脳への血流を高める行為でもあります。一口の回数を少し増やす、歯の健康を保つことは、食を楽しみ続ける土台にもなります。","Chewing also boosts blood flow to the brain. A few more chews per bite — and healthy teeth — are a foundation for enjoying food for life.","Masticar también aumenta el flujo sanguíneo al cerebro. Masticar un poco más cada bocado —y cuidar tus dientes— es la base para disfrutar la comida toda la vida."),ev:P("参考：咀嚼機能と認知機能の関連に関する疫学研究","Ref: epidemiological studies on chewing and cognition","Ref.: estudios epidemiológicos sobre masticación y cognición")},
+ {cat:C_SL,title:P("7時間前後の睡眠を守る","Protect about 7 hours of sleep","Protege unas 7 horas de sueño"),body:P("睡眠中に脳は日中の記憶を整理し、老廃物を洗い流すと考えられています。極端な寝不足も寝すぎも認知機能低下と関連します。まずは就寝・起床時刻をそろえることから。","During sleep the brain consolidates memories and clears waste. Both too little and too much sleep are linked to cognitive decline. Start by fixing your bed and wake times.","Al dormir, el cerebro consolida recuerdos y elimina desechos. Dormir muy poco o demasiado se asocia con deterioro. Empieza fijando tus horarios."),ev:P("参考：睡眠時間と認知機能に関する大規模疫学研究","Ref: large studies on sleep duration and cognition","Ref.: grandes estudios sobre sueño y cognición")},
+ {cat:C_SL,title:P("寝る前1時間はスマホの光を控えめに","Dim the screens 1 hour before bed","Baja las pantallas 1 hora antes de dormir"),body:P("強い光は眠りを促すメラトニンの分泌を妨げます。画面を暗くする、紙の本に切り替えるなど、脳に「夜」を知らせる工夫を。","Bright light suppresses melatonin, the hormone that invites sleep. Dim your screen or switch to a paper book to tell your brain it's night.","La luz intensa suprime la melatonina, la hormona del sueño. Atenúa la pantalla o cambia a un libro de papel para avisarle al cerebro que es de noche."),ev:P("参考：光曝露と睡眠の質に関する研究","Ref: research on light exposure and sleep quality","Ref.: investigación sobre luz y calidad del sueño")},
+ {cat:C_SL,title:P("昼寝は20分まで","Keep naps under 20 minutes","Siestas de menos de 20 minutos"),body:P("短い昼寝は午後の集中力を回復させますが、30分を超える昼寝や夕方の昼寝は夜の睡眠を浅くします。「座ったまま20分」が目安です。","A short nap restores afternoon focus, but naps over 30 minutes or in the evening make night sleep shallow. '20 minutes, sitting up' is the rule.","Una siesta corta recupera la concentración, pero más de 30 minutos o al anochecer vuelve ligero el sueño nocturno. «20 minutos, sentado» es la regla."),ev:P("参考：短時間仮眠と覚醒度に関する研究","Ref: research on brief naps and alertness","Ref.: investigación sobre siestas breves y alerta")},
+ {cat:C_SO,title:P("1日1回、誰かと言葉を交わす","Exchange words with someone once a day","Cruza palabras con alguien cada día"),body:P("会話は「聞く・考える・話す」を同時に行う高度な脳トレです。社会的なつながりが多い人ほど認知機能低下のリスクが低いという報告が多数あります。電話やあいさつでもOK。","Conversation is advanced brain training — listening, thinking and speaking at once. More social connection is linked to lower risk of decline. A call or a greeting counts.","Conversar es entrenamiento cerebral avanzado: escuchar, pensar y hablar a la vez. Más conexión social se asocia con menor riesgo. Una llamada o un saludo cuentan."),ev:P("参考：社会的孤立と認知症リスクに関する疫学研究","Ref: epidemiology of social isolation and dementia risk","Ref.: epidemiología del aislamiento social y demencia")},
+ {cat:C_SO,title:P("人に教える・話して聞かせる","Teach it to someone","Enséñaselo a alguien"),body:P("覚えたことを人に説明すると、記憶はぐっと定着します。今日のニュースや本の内容を家族にひとこと紹介してみましょう。","Explaining what you've learned makes memories stick. Tell your family one thing from today's news or a book you're reading.","Explicar lo aprendido fija la memoria. Cuéntale a tu familia una noticia de hoy o algo del libro que lees."),ev:P("参考：想起練習（テスト効果）に関する学習科学研究","Ref: learning science on retrieval practice","Ref.: ciencia del aprendizaje sobre práctica de recuperación")},
+ {cat:C_BR,title:P("「少し難しい」を選ぶ","Choose 'slightly hard'","Elige lo «un poco difícil»"),body:P("脳のトレーニングは、簡単すぎても難しすぎても効果が薄れます。正解率7〜8割くらいの「ちょい難」が成長ゾーン。冴え手帖のゲームも同じ設計です。","Brain training works best when it's neither too easy nor too hard — around a 70–80% success rate is the growth zone. SAE's games are designed the same way.","El entrenamiento funciona mejor cuando no es ni muy fácil ni muy difícil: acertar el 70–80% es la zona de crecimiento. Los juegos de SAE están diseñados así."),ev:P("参考：認知トレーニングの難易度適応に関する研究","Ref: research on adaptive difficulty in cognitive training","Ref.: investigación sobre dificultad adaptativa")},
+ {cat:C_BR,title:P("利き手と反対の手を使ってみる","Try your non-dominant hand","Usa la mano no dominante"),body:P("歯みがきやマウス操作を反対の手で行うと、普段使わない運動野が活動します。新しい動きの学習は脳への良い刺激です。","Brushing your teeth or using the mouse with your other hand activates rarely used motor areas. Learning new movements is a healthy stimulus.","Cepillarte los dientes o usar el móvil con la otra mano activa zonas motoras poco usadas. Aprender movimientos nuevos estimula el cerebro."),ev:P("参考：運動学習と脳の可塑性に関する研究","Ref: research on motor learning and plasticity","Ref.: investigación sobre aprendizaje motor y plasticidad")},
+ {cat:C_BR,title:P("新しい道・新しいレシピ・新しい曲","A new route, a new recipe, a new song","Una ruta nueva, una receta nueva, una canción nueva"),body:P("「初めて」の体験は脳に最も強い刺激を与えます。いつもの散歩コースを一本ずらす、作ったことのない料理に挑戦する。小さな新しさを毎週ひとつ。","'Firsts' give the brain its strongest stimulation. Shift your walking route by one street, cook something you've never made. One small novelty every week.","Lo «primero» da al cerebro su estímulo más fuerte. Cambia una calle de tu paseo, cocina algo nuevo. Una pequeña novedad por semana."),ev:P("参考：知的活動・novelty と認知予備力に関する研究","Ref: research on novelty and cognitive reserve","Ref.: investigación sobre novedad y reserva cognitiva")},
+ {cat:C_BR,title:P("毎日3分、続けることが最強","Three minutes a day beats one big push","Tres minutos al día ganan a un gran esfuerzo"),body:P("フィンランドのFINGER研究では、運動・食事・脳トレ・健康管理を「組み合わせて続けた」グループで認知機能の改善が確認されました。一発の頑張りより、小さな毎日を。","In Finland's FINGER study, the group that combined exercise, diet, brain training and health management showed improved cognition. Small daily habits win.","En el estudio FINGER de Finlandia, el grupo que combinó ejercicio, dieta, entrenamiento y control de salud mejoró su cognición. Los pequeños hábitos diarios ganan."),ev:P("参考：Ngandu ら(2015) FINGER研究（Lancet）","Ref: Ngandu et al. (2015), the FINGER study (Lancet)","Ref.: Ngandu et al. (2015), estudio FINGER (Lancet)")}
 ];
-const TIPCATS=["すべて","運動","食事","睡眠","交流","脳の使い方"];
-let tipCat="すべて";
+let tipCat=TIPCATS[0];
 
 /* ---------- navigation ---------- */
 const mainEl=$("#main");
@@ -396,34 +406,34 @@ function renderHome(){
       <div class="gicon">${g.icon}</div>
       <div class="gname">${g.name}</div>
       <div class="gdom">${g.dom}</div>
-      <div class="gbest">${id in DB.best?"自己ベスト "+DB.best[id]+"点":g.desc}</div>
+      <div class="gbest">${id in DB.best?P("自己ベスト ","Best ","Récord ")+DB.best[id]+P("点"," pts"," pts"):g.desc}</div>
     </div>`).join("");
   mainEl.innerHTML=`
   <div class="fade-in">
     <div class="hero">
       <div class="date">${jpDate()}</div>
-      <h2>🌸 花あわせ</h2>
-      <p>指でなぞるだけ。同じ花をかさねて、ひとつ上の花に。めざせ幻の「大輪・冴」。</p>
-      ${hb?`<div class="rush-stats"><span>最高 <b>${hb.toLocaleString()}</b></span><span>ここまで咲いた <b>${hf.e}${hf.n}</b></span>${DB.hanaState?`<span><b>つづきあり</b></span>`:``}</div>`:``}
-      <button class="btn" onclick="startHana()">${DB.hanaState?"つづきから遊ぶ":"遊ぶ"}</button>
+      <h2>🌸 ${P("花あわせ","Hana-Awase","Hana-Awase")}</h2>
+      <p>${P("指でなぞるだけ。同じ花をかさねて、ひとつ上の花に。めざせ幻の「大輪・冴」。","Just swipe. Merge matching flowers into the next bloom. Chase the legendary Grand Bloom.","Solo desliza. Une flores iguales para crear la siguiente. Persigue la legendaria Gran Flor.")}</p>
+      ${hb?`<div class="rush-stats"><span>${P("最高","Best","Récord")} <b>${hb.toLocaleString()}</b></span><span>${P("ここまで咲いた","Best bloom","Mejor flor")} <b>${hf.e}${hf.n}</b></span>${DB.hanaState?`<span><b>${P("つづきあり","Game saved","Partida guardada")}</b></span>`:``}</div>`:``}
+      <button class="btn" onclick="startHana()">${DB.hanaState?P("つづきから遊ぶ","Continue","Continuar"):P("遊ぶ","Play","Jugar")}</button>
     </div>
     <div class="card" style="display:flex;align-items:center;gap:12px">
       <div style="font-size:28px">⚡</div>
-      <div style="flex:1"><b>冴えラッシュ</b><div class="muted small">${rb?"最高 "+rb.toLocaleString()+"・段位 "+rk:"反射神経の腕試し。3ミスで終了"}</div></div>
-      <button class="btn shu" style="width:auto;padding:10px 16px;font-size:14px" onclick="startRush()">挑戦</button>
+      <div style="flex:1"><b>${P("冴えラッシュ","SAE Rush","SAE Rush")}</b><div class="muted small">${rb?P("最高 ","Best ","Récord ")+rb.toLocaleString()+P("・段位 "," · Rank "," · Rango ")+rk:P("反射神経の腕試し。3ミスで終了","Test your reflexes. 3 misses and it ends","Pon a prueba tus reflejos. 3 fallos y termina")}</div></div>
+      <button class="btn shu" style="width:auto;padding:10px 16px;font-size:14px" onclick="startRush()">${P("挑戦","Go","Ir")}</button>
     </div>
     <div class="card" style="display:flex;align-items:center;gap:12px">
       <div style="font-size:28px">⛩️</div>
-      <div style="flex:1"><b>今日の稽古</b><div class="muted small">${doneToday?"本日は済み。🔥連続"+streakCount()+"日":"日替わり3種目・約3分"}</div></div>
-      <button class="btn" style="width:auto;padding:10px 18px;font-size:14px" onclick="startDaily()">やる</button>
+      <div style="flex:1"><b>${P("今日の稽古","Daily Training","Entreno Diario")}</b><div class="muted small">${doneToday?P("本日は済み。🔥連続","Done today. 🔥Streak ","Hecho hoy. 🔥Racha ")+streakCount()+P("日","d","d"):P("日替わり3種目・約3分","3 daily games · about 3 min","3 juegos del día · unos 3 min")}</div></div>
+      <button class="btn" style="width:auto;padding:10px 18px;font-size:14px" onclick="startDaily()">${P("やる","Start","Ir")}</button>
     </div>
     <div class="eyebrow">TRAINING</div>
-    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">種目べつ稽古</h2>
+    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">${P("種目べつ稽古","Practice by game","Práctica por juego")}</h2>
     <div class="game-grid">${tiles}</div>
     <div class="card" style="margin-top:16px">
-      <h2>🧠 脳年齢診断</h2>
-      <p class="muted" style="margin-bottom:12px">5種目を通しでプレイして、脳年齢と5つの力を測定します（約5分）。</p>
-      <button class="btn secondary" onclick="switchTab('diag')">診断ページへ</button>
+      <h2>🧠 ${P("脳年齢診断","Brain Age Check","Chequeo de Edad Cerebral")}</h2>
+      <p class="muted" style="margin-bottom:12px">${P("5種目を通しでプレイして、脳年齢と5つの力を測定します（約5分）。","Play all five games in a row to measure your brain age and five abilities (about 5 min).","Juega los cinco juegos seguidos para medir tu edad cerebral y cinco capacidades (unos 5 min).")}</p>
+      <button class="btn secondary" onclick="switchTab('diag')">${P("診断ページへ","Go to Brain Age Check","Ir al chequeo")}</button>
     </div>
   </div>`;
 }
@@ -435,13 +445,13 @@ function switchTab(t){
 /* ---------- tips ---------- */
 function renderTips(){
   const feat=TIPS[dateSeed()%TIPS.length];
-  const list=TIPS.filter(t=>tipCat==="すべて"||t.cat===tipCat);
+  const list=TIPS.filter(t=>tipCat===TIPCATS[0]||t.cat===tipCat);
   mainEl.innerHTML=`
   <div class="fade-in">
     <div class="eyebrow">TODAY'S WISDOM</div>
-    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">今日の知恵</h2>
+    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">${P("今日の知恵","Daily Wisdom","Sabiduría del Día")}</h2>
     <div class="tip-card" style="border-left-color:var(--shu)">
-      <div class="tcat" style="color:var(--shu)">本日のおすすめ・${feat.cat}</div>
+      <div class="tcat" style="color:var(--shu)">${P("本日のおすすめ","Featured","Destacado")} · ${feat.cat}</div>
       <div class="ttitle">${feat.title}</div>
       <p>${feat.body}</p>
       <div class="tev">${feat.ev}</div>
@@ -454,7 +464,7 @@ function renderTips(){
         <p>${t.body}</p>
         <div class="tev">${t.ev}</div>
       </div>`).join("")}
-    <p class="muted small" style="margin-top:6px">※本アプリの助言は一般的な健康情報であり、医療行為・診断に代わるものではありません。気になる症状があるときは医師にご相談ください。</p>
+    <p class="muted small" style="margin-top:6px">${P("※本アプリの助言は一般的な健康情報であり、医療行為・診断に代わるものではありません。気になる症状があるときは医師にご相談ください。","Note: this app offers general health information, not medical care or diagnosis. Please consult a doctor about any symptoms.","Nota: esta app ofrece información general de salud, no atención médica ni diagnóstico. Consulta a un médico ante cualquier síntoma.")}</p>
   </div>`;
 }
 function setTipCat(c){tipCat=c;renderTips();}
@@ -475,28 +485,36 @@ function renderRec(){
   const chart=svgBarChart(days);
   const diagChart=DB.diag.length>=1?svgAgeChart(DB.diag.slice(-10)):"";
   const bests=Object.entries(GAMES).map(([id,g])=>`
-    <div class="rec-row"><span>${g.icon} ${g.name}</span><b>${id in DB.best?DB.best[id]+"点":"—"}</b></div>`).join("");
+    <div class="rec-row"><span>${g.icon} ${g.name}</span><b>${id in DB.best?DB.best[id]+P("点"," pts"," pts"):"—"}</b></div>`).join("");
   mainEl.innerHTML=`
   <div class="fade-in">
     <div class="kpis">
-      <div class="kpi"><div class="kv">${DB.hana.best?DB.hana.best.toLocaleString():"—"}</div><div class="kl">花あわせ</div></div>
-      <div class="kpi"><div class="kv">${DB.rush.best?DB.rush.best.toLocaleString():"—"}</div><div class="kl">ラッシュ</div></div>
-      <div class="kpi"><div class="kv">${streak}</div><div class="kl">連続日数</div></div>
-      <div class="kpi"><div class="kv">${lastDiag?lastDiag.age:"—"}</div><div class="kl">脳年齢</div></div>
+      <div class="kpi"><div class="kv">${DB.hana.best?DB.hana.best.toLocaleString():"—"}</div><div class="kl">Hana</div></div>
+      <div class="kpi"><div class="kv">${DB.rush.best?DB.rush.best.toLocaleString():"—"}</div><div class="kl">Rush</div></div>
+      <div class="kpi"><div class="kv">${streak}</div><div class="kl">${P("連続日数","Streak","Racha")}</div></div>
+      <div class="kpi"><div class="kv">${lastDiag?lastDiag.age:"—"}</div><div class="kl">${P("脳年齢","Brain age","Edad cerebral")}</div></div>
+    </div>
+    <div class="card">
+      <h2>🏆 ${P("世界番付","World Rankings","Clasificación Mundial")}</h2>
+      <p class="muted small" style="margin-bottom:10px">${P("よびな（ニックネーム）で、世界中のプレイヤーと自己ベストを競えます。","Compete with players worldwide under your nickname.","Compite con jugadores de todo el mundo con tu apodo.")}</p>
+      <div style="display:grid;gap:8px">
+        <button class="btn secondary" onclick="showRanking('hana')">🌸 ${P("花あわせの番付","Hana-Awase Rankings","Clasificación Hana-Awase")}</button>
+        <button class="btn secondary" onclick="showRanking('rush')">⚡ ${P("冴えラッシュの番付","SAE Rush Rankings","Clasificación SAE Rush")}</button>
+      </div>
     </div>
     <div class="chart-box">
-      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">直近14日の平均スコア</h2>
+      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">${P("直近14日の平均スコア","Average score, last 14 days","Promedio, últimos 14 días")}</h2>
       ${chart}
     </div>
     ${DB.diag.length?`<div class="chart-box">
-      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">脳年齢のうつりかわり</h2>
+      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">${P("脳年齢のうつりかわり","Brain age over time","Edad cerebral en el tiempo")}</h2>
       ${diagChart}
     </div>`:""}
     <div class="card">
-      <h2>自己ベスト</h2>
+      <h2>${P("自己ベスト","Personal bests","Récords personales")}</h2>
       ${bests}
     </div>
-    ${plays===0?`<p class="muted center">まだ記録がありません。<br>「道場」から今日の稽古を始めましょう。</p>`:""}
+    ${plays===0?`<p class="muted center">${P("まだ記録がありません。<br>「道場」から今日の稽古を始めましょう。","No records yet.<br>Head to the Dojo and start training.","Aún no hay registros.<br>Ve al Dojo y empieza a entrenar.")}</p>`:""}
   </div>`;
 }
 function svgBarChart(days){
@@ -528,25 +546,25 @@ function renderDiag(){
   mainEl.innerHTML=`
   <div class="fade-in">
     <div class="eyebrow">BRAIN AGE CHECK</div>
-    <h2 class="mincho" style="font-size:18px;margin-bottom:8px">脳年齢診断</h2>
+    <h2 class="mincho" style="font-size:18px;margin-bottom:8px">${P("脳年齢診断","Brain Age Check","Chequeo de Edad Cerebral")}</h2>
     <div class="card">
-      <p style="font-size:14px;margin-bottom:10px">5つのゲームを通しでプレイし、<b>処理速度・記憶力・注意・集中・判断</b>の5つの力から脳年齢を推定します。所要時間は約5分です。</p>
-      <p class="muted small" style="margin-bottom:14px">※楽しみながら傾向を知るためのゲーム上の指標です。医学的な検査・診断ではありません。</p>
-      <button class="btn shu" onclick="startDiagnosis()">診断をはじめる</button>
+      <p style="font-size:14px;margin-bottom:10px">${P("5つのゲームを通しでプレイし、<b>処理速度・記憶力・注意・集中・判断</b>の5つの力から脳年齢を推定します。所要時間は約5分です。","Play five games in a row and we estimate your brain age from five abilities: <b>speed, memory, attention, focus and reflex</b>. About 5 minutes.","Juega cinco juegos seguidos y estimamos tu edad cerebral según cinco capacidades: <b>rapidez, memoria, atención, concentración y reflejos</b>. Unos 5 minutos.")}</p>
+      <p class="muted small" style="margin-bottom:14px">${P("※楽しみながら傾向を知るためのゲーム上の指標です。医学的な検査・診断ではありません。","A fun, game-based indicator. Not a medical test or diagnosis.","Un indicador lúdico. No es una prueba ni un diagnóstico médico.")}</p>
+      <button class="btn shu" onclick="startDiagnosis()">${P("診断をはじめる","Start the check","Empezar el chequeo")}</button>
     </div>
-    ${last?renderDiagResultCard(last,false):`<p class="muted center">まだ診断記録がありません。</p>`}
+    ${last?renderDiagResultCard(last,false):`<p class="muted center">${P("まだ診断記録がありません。","No check results yet.","Aún no hay resultados.")}</p>`}
   </div>`;
   if(last)requestAnimationFrame(()=>animateBars());
 }
 function renderDiagResultCard(diag,fresh){
-  const rank=diag.comp>=85?"冴えわたる":diag.comp>=70?"好調":diag.comp>=55?"まずまず":"伸びしろ大";
+  const rank=stampFor(diag.comp);
   const weakest=Object.entries(diag.scores).sort((a,b)=>a[1]-b[1])[0];
   const advice=domainAdvice(weakest[0]);
   const circ=2*Math.PI*105;
   const frac=clamp(diag.comp/100,0.08,1);
   return `
   <div class="card ${fresh?"fade-in":""}">
-    <div class="center"><span class="eyebrow">前回の診断（${diag.d}）</span></div>
+    <div class="center"><span class="eyebrow">${P("前回の診断","Last check","Último chequeo")} (${diag.d})</span></div>
     <div class="enso-wrap">
       <svg viewBox="0 0 230 230">
         <circle cx="115" cy="115" r="105" fill="none" stroke="#ECE8DC" stroke-width="9"/>
@@ -554,7 +572,7 @@ function renderDiagResultCard(diag,fresh){
           stroke-dasharray="${circ}" stroke-dashoffset="${circ*(1-frac)}" transform="rotate(-90 115 115)"
           style="transition:stroke-dashoffset 1.2s ease"/>
       </svg>
-      <div class="enso-num"><div class="l">脳年齢</div><div class="n">${diag.age}</div><div class="u">歳（総合 ${diag.comp}点）</div></div>
+      <div class="enso-num"><div class="l">${P("脳年齢","BRAIN AGE","EDAD CEREBRAL")}</div><div class="n">${diag.age}</div><div class="u">${P("歳（総合 ","yrs · overall ","años · total ")}${diag.comp}${P("点）"," pts"," pts")}</div></div>
     </div>
     <div class="center"><span class="stamp">${rank}</span></div>
     <div style="margin-top:14px">
@@ -562,7 +580,7 @@ function renderDiagResultCard(diag,fresh){
         <div class="domain-row"><span class="dn">${DOMS[k]}</span><div class="bar"><div data-w="${v}"></div></div><span class="dv">${v}</span></div>`).join("")}
     </div>
     <div class="tip-card" style="margin-top:14px;margin-bottom:0">
-      <div class="tcat">きたえどころ：${DOMS[weakest[0]]}</div>
+      <div class="tcat">${P("きたえどころ","Focus area","Punto a mejorar")}: ${DOMS[weakest[0]]}</div>
       <div class="ttitle">${advice.title}</div>
       <p>${advice.body}</p>
     </div>
@@ -573,11 +591,11 @@ function animateBars(){
 }
 function domainAdvice(k){
   const map={
-    speed:{title:"「けいさん道場」と早歩きで加速",body:"処理速度は日々の反復でいちばん伸びやすい力です。毎日1回のけいさん道場に加え、散歩のスピードを少し上げると、脳の情報処理のテンポも上がるといわれます。"},
-    memory:{title:"「数字おぼえ」＋声に出す",body:"覚えるときに声に出す・指で書くなど、複数の感覚を使うと記憶は強くなります。数字おぼえを毎日1回、買い物リストの暗記にも挑戦を。"},
-    attention:{title:"「順番タッチ」＋ながら家事",body:"注意の切り替えは、順番タッチのような視覚探索と、料理など複数の段取りを同時に進める活動で鍛えられます。"},
-    inhibition:{title:"「いろよみ」で我慢する脳を",body:"つい読んでしまう文字を抑えて色に答える——この「抑制」はブレーキ役の前頭葉の働きです。いろよみを続けつつ、深呼吸してから行動する習慣も効果的。"},
-    judge:{title:"「後出しじゃんけん」＋会話",body:"素早い判断は、後出しじゃんけんのような反応課題と、テンポのよい会話で磨かれます。家族との雑談も立派なトレーニングです。"}
+    speed:{title:P("「けいさん道場」と早歩きで加速","Math Dash + brisk walking","Cálculo Rápido + caminar deprisa"),body:P("処理速度は日々の反復でいちばん伸びやすい力です。毎日1回のけいさん道場に加え、散歩のスピードを少し上げると、脳の情報処理のテンポも上がるといわれます。","Processing speed responds fastest to daily repetition. One Math Dash a day, plus walking a little quicker, raises your mental tempo too.","La rapidez mejora con la repetición diaria. Un Cálculo Rápido al día, y caminar un poco más deprisa, también acelera el tempo mental.")},
+    memory:{title:P("「数字おぼえ」＋声に出す","Number Recall + say it out loud","Memoria Numérica + dilo en voz alta"),body:P("覚えるときに声に出す・指で書くなど、複数の感覚を使うと記憶は強くなります。数字おぼえを毎日1回、買い物リストの暗記にも挑戦を。","Using several senses — saying digits aloud or tracing them — makes memories stronger. Play daily and memorize your shopping list too.","Usar varios sentidos —decir los números en voz alta o trazarlos— fortalece la memoria. Practica a diario y memoriza tu lista de la compra.")},
+    attention:{title:P("「順番タッチ」＋ながら家事","Trail Touch + multitask cooking","Toque en Orden + cocinar varias cosas"),body:P("注意の切り替えは、順番タッチのような視覚探索と、料理など複数の段取りを同時に進める活動で鍛えられます。","Attention switching is trained by visual-search games like Trail Touch, and by real-world juggling like cooking several dishes at once.","La atención se entrena con juegos de búsqueda visual y con tareas reales como cocinar varios platos a la vez.")},
+    inhibition:{title:P("「いろよみ」で我慢する脳を","Color Match trains your brakes","Color y Palabra entrena tus frenos"),body:P("つい読んでしまう文字を抑えて色に答える——この「抑制」はブレーキ役の前頭葉の働きです。いろよみを続けつつ、深呼吸してから行動する習慣も効果的。","Suppressing the urge to read the word and answering the color — that inhibition is your frontal lobe's brake pedal. Keep playing, and breathe before acting.","Reprimir el impulso de leer y responder el color: esa inhibición es el freno del lóbulo frontal. Sigue jugando y respira hondo antes de actuar.")},
+    judge:{title:P("「後出しじゃんけん」＋会話","RPS Reflex + lively conversation","Reflejo Manos + conversación ágil"),body:P("素早い判断は、後出しじゃんけんのような反応課題と、テンポのよい会話で磨かれます。家族との雑談も立派なトレーニングです。","Fast judgment is sharpened by reaction games — and by quick back-and-forth conversation. Chatting with family is real training.","El juicio rápido se afila con juegos de reacción y con conversación dinámica. Charlar con la familia es entrenamiento real.")}
   };
   return map[k];
 }
@@ -586,7 +604,7 @@ function domainAdvice(k){
 /* ======================================================
    ⚡ 冴えラッシュ (SAE RUSH) — endless arcade mode
 ====================================================== */
-const RANKS=[[0,"見習い"],[2000,"白帯"],[5000,"茶帯"],[9000,"黒帯"],[14000,"師範代"],[20000,"師範"],[28000,"達人"],[38000,"名人"],[50000,"冴えの極み"]];
+const RANKS=[[0,P("見習い","Novice","Novato")],[2000,P("白帯","White Belt","Cinta Blanca")],[5000,P("茶帯","Brown Belt","Cinta Marrón")],[9000,P("黒帯","Black Belt","Cinta Negra")],[14000,P("師範代","Instructor","Instructor")],[20000,P("師範","Master","Maestro")],[28000,P("達人","Expert","Experto")],[38000,P("名人","Grandmaster","Gran Maestro")],[50000,P("冴えの極み","Peak SAE","Cima SAE")]];
 function rankFor(s){let r=RANKS[0][1];for(const[t,n]of RANKS)if(s>=t)r=n;return r;}
 function nextRank(s){for(const[t,n]of RANKS)if(s<t)return[t,n];return null;}
 const rnd=n=>Math.floor(Math.random()*n);
@@ -613,7 +631,7 @@ mb.textContent=muted?"🔇":"🔊";
 mb.onclick=()=>{muted=!muted;DB.muted=muted;save();mb.textContent=muted?"🔇":"🔊";};
 
 /* --- question generators: return {pill,pillColor,html,buttons:[{label,ok}],cols,extra,flash} --- */
-const CN=[{n:"あか",c:"#C8452C"},{n:"あお",c:"#2A4D8F"},{n:"みどり",c:"#3E7C4F"},{n:"きいろ",c:"#C99B2D"}];
+const CN=[{n:P("あか","RED","ROJO"),c:"#C8452C"},{n:P("あお","BLUE","AZUL"),c:"#2A4D8F"},{n:P("みどり","GREEN","VERDE"),c:"#3E7C4F"},{n:P("きいろ","YELLOW","AMARILLO"),c:"#C99B2D"}];
 const KPAIRS=[["旅","族"],["未","末"],["土","士"],["矢","失"],["体","休"],["網","綱"],["徴","微"],["崇","祟"],["瓜","爪"],["天","夭"],["若","苦"],["右","石"],["田","由"],["王","玉"]];
 
 function qCalcTF(L){
@@ -623,7 +641,7 @@ function qCalcTF(L){
   else{a=2+rnd(hard?8:6);b=2+rnd(hard?8:6);res=a*b;q=`${a} × ${b}`;}
   const truth=Math.random()<.5;let shown=res;
   if(!truth){do{shown=res+(rnd(7)-3);}while(shown===res||shown<0);}
-  return{pill:"正しい？",pillColor:"var(--ai)",html:`<div class="rush-q">${q} ＝ ${shown}</div>`,
+  return{pill:P("正しい？","Correct?","¿Correcto?"),pillColor:"var(--ai)",html:`<div class="rush-q">${q} ＝ ${shown}</div>`,
     buttons:[{label:"○",ok:truth},{label:"✕",ok:!truth}],cols:2};
 }
 function qCompare(L){
@@ -638,25 +656,25 @@ function qCompare(L){
   if(B.t.indexOf("+")<0&&B.t.indexOf("×")<0)B.v=Number(B.t);
   if(A.v===B.v)B.v+=1,B.t=String(B.v);
   const bigA=A.v>B.v;
-  return{pill:rev?"小さい方！":"大きい方！",pillColor:rev?"var(--shu)":"var(--ai)",
+  return{pill:rev?P("小さい方！","Smaller!","¡Menor!"):P("大きい方！","Bigger!","¡Mayor!"),pillColor:rev?"var(--shu)":"var(--ai)",
     html:``,buttons:[{label:A.t,ok:bigA!==rev},{label:B.t,ok:bigA===rev}],cols:2,extra:300};
 }
 function qColorTF(){
   const w=CN[rnd(4)],ink=Math.random()<.5?w:CN[rnd(4)];
-  return{pill:"文字と色、一致？",pillColor:"var(--ai)",
+  return{pill:P("文字と色、一致？","Word = color?","¿Palabra = color?"),pillColor:"var(--ai)",
     html:`<div class="rush-q" style="color:${ink.c}">${w.n}</div>`,
     buttons:[{label:"○",ok:w.n===ink.n},{label:"✕",ok:w.n!==ink.n}],cols:2};
 }
 function qColorTap(){
   const w=CN[rnd(4)],ink=CN[rnd(4)];
-  return{pill:"インクの色は？",pillColor:"var(--ai)",
+  return{pill:P("インクの色は？","Ink color?","¿Color de tinta?"),pillColor:"var(--ai)",
     html:`<div class="rush-q" style="color:${ink.c}">${w.n}</div>`,
     buttons:shuffle(CN.slice()).map(c=>({label:c.n,ok:c.n===ink.n})),cols:2,extra:400};
 }
 function qJanken(){
   const H=["✊","✌️","✋"],winTo={0:2,1:0,2:1},loseTo={0:1,1:2,2:0};
   const opp=rnd(3),win=Math.random()<.5,target=win?winTo[opp]:loseTo[opp];
-  return{pill:win?"かって！":"まけて！",pillColor:win?"var(--ai)":"var(--shu)",
+  return{pill:win?P("かって！","WIN!","¡GANA!"):P("まけて！","LOSE!","¡PIERDE!"),pillColor:win?"var(--ai)":"var(--shu)",
     html:`<div class="rush-q" style="font-size:64px">${H[opp]}</div>`,
     buttons:H.map((h,i)=>({label:h,ok:i===target})),cols:3,extra:300};
 }
@@ -664,7 +682,7 @@ function qArrow(L){
   const AR=["⬅️","➡️","⬆️","⬇️"],OPP={0:1,1:0,2:3,3:2};
   const rev=L>=6&&Math.random()<.4;
   const a=rnd(4),target=rev?OPP[a]:a;
-  return{pill:rev?"逆の向き！":"同じ向き！",pillColor:rev?"var(--shu)":"var(--ai)",
+  return{pill:rev?P("逆の向き！","OPPOSITE way!","¡Dirección OPUESTA!"):P("同じ向き！","SAME way!","¡MISMA dirección!"),pillColor:rev?"var(--shu)":"var(--ai)",
     html:`<div class="rush-q" style="font-size:60px">${AR[a]}</div>`,
     buttons:AR.map((x,i)=>({label:x,ok:i===target})),cols:2,extra:200};
 }
@@ -673,7 +691,7 @@ function qOdd(){
   const flip=Math.random()<.5,base=flip?p[1]:p[0],odd=flip?p[0]:p[1];
   const pos=rnd(12);
   const cells=Array.from({length:12},(_,i)=>({label:i===pos?odd:base,ok:i===pos}));
-  return{pill:"ひとつだけ違う字は？",pillColor:"var(--gold)",html:``,buttons:cells,cols:"odd",extra:1600};
+  return{pill:P("ひとつだけ違う字は？","Find the odd one!","¡Encuentra el distinto!"),pillColor:"var(--gold)",html:``,buttons:cells,cols:"odd",extra:1600};
 }
 function qFlash(L){
   const len=L>=6?4:3;
@@ -686,7 +704,7 @@ function qFlash(L){
     set.add(d.join(""));
   }
   return{flash:{text:v.split("").join(" "),ms:850},
-    pill:"さっきの数字は？",pillColor:"var(--gold)",html:``,
+    pill:P("さっきの数字は？","What was the number?","¿Cuál era el número?"),pillColor:"var(--gold)",html:``,
     buttons:shuffle([...set]).map(x=>({label:x,ok:x===v})),cols:3,extra:600};
 }
 function pickGen(L,last){
@@ -705,7 +723,7 @@ function startRush(){
   RS={score:0,combo:0,maxCombo:0,lives:3,q:0,level:1,lastGen:null};
   gResolve=()=>{};       // makes やめる work
   clearGTimers();
-  openOverlay("⚡ 冴えラッシュ");
+  openOverlay("⚡ "+P("冴えラッシュ","SAE Rush","SAE Rush"));
   rushNext();
 }
 function rushHud(){
@@ -733,7 +751,7 @@ function rushShow(){
   const gen=pickGen(RS.level,RS.lastGen);RS.lastGen=gen;
   const g=gen(RS.level);
   if(g.flash){
-    gArea().innerHTML=rushHud()+`<p class="instruction">おぼえて！</p><div class="rush-q" style="letter-spacing:.15em">${g.flash.text}</div>`;
+    gArea().innerHTML=rushHud()+`<p class="instruction">${P("おぼえて！","Memorize!","¡Memoriza!")}</p><div class="rush-q" style="letter-spacing:.15em">${g.flash.text}</div>`;
     gT(()=>rushQ(g),g.flash.ms);
   }else rushQ(g);
 }
@@ -794,24 +812,26 @@ function rushEnd(){
   DB.rush.plays++;
   DB.daily[todayStr()]=true;
   save();updateStreakChip();
+  submitScore('rush',s);
   RS=null;setProg(1);
   const rk=rankFor(s),nx=nextRank(s);
   gArea().innerHTML=`
     <div class="fade-in" style="width:min(340px,88vw)">
-      <p class="instruction center">ここまで！</p>
+      <p class="instruction center">${P("ここまで！","Time to stop!","¡Hasta aquí!")}</p>
       <div class="center"><div class="score-big" id="cntup">0</div>
       <span class="stamp">${rk}</span>
-      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:8px">🎉 自己ベスト更新！</p>`:""}
+      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:8px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:""}
       </div>
       <div style="margin-top:14px">
-        <div class="rec-row"><span>最大コンボ</span><b>🔥${mc}</b></div>
-        <div class="rec-row"><span>こなした問題</span><b>${qn}問</b></div>
-        <div class="rec-row"><span>到達レベル</span><b>LV.${lv}</b></div>
-        ${nx?`<div class="rec-row"><span>次の段位「${nx[1]}」まで</span><b>${(nx[0]-s).toLocaleString()}</b></div>`:""}
+        <div class="rec-row"><span>${P("最大コンボ","Max combo","Combo máx.")}</span><b>🔥${mc}</b></div>
+        <div class="rec-row"><span>${P("こなした問題","Questions","Preguntas")}</span><b>${qn}</b></div>
+        <div class="rec-row"><span>${P("到達レベル","Level reached","Nivel alcanzado")}</span><b>LV.${lv}</b></div>
+        ${nx?`<div class="rec-row"><span>${P("次の段位","Next rank","Próximo rango")}「${nx[1]}」</span><b>${(nx[0]-s).toLocaleString()}</b></div>`:""}
       </div>
       <div style="display:grid;gap:10px;margin-top:18px">
-        <button class="btn shu" onclick="startRush()">もう一度挑戦</button>
-        <button class="btn ghost" onclick="quitAndRefresh()">とじる</button>
+        <button class="btn shu" onclick="startRush()">${P("もう一度挑戦","Try again","Otra vez")}</button>
+        <button class="btn secondary" onclick="joinRank('rush',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
     </div>`;
   const el=$("#cntup");let cur=0;const step=Math.max(1,Math.round(s/40));
@@ -824,9 +844,9 @@ function rushEnd(){
    🌸 花あわせ (HANA-AWASE) — merge puzzle
 ====================================================== */
 const HLV=[null,
- {e:"🌱",n:"芽"},{e:"🌿",n:"双葉"},{e:"🍀",n:"若葉"},{e:"🌷",n:"つぼみ"},
- {e:"🌸",n:"桜"},{e:"🌺",n:"牡丹"},{e:"🌻",n:"向日葵"},{e:"🍁",n:"紅葉"},
- {e:"❄️",n:"雪華"},{e:"🌕",n:"満月"},{e:"✨",n:"暁光"},{e:"💮",n:"大輪・冴"}];
+ {e:"🌱",n:P("芽","Sprout","Brote")},{e:"🌿",n:P("双葉","Seedling","Plantita")},{e:"🍀",n:P("若葉","Clover","Trébol")},{e:"🌷",n:P("つぼみ","Tulip","Tulipán")},
+ {e:"🌸",n:P("桜","Sakura","Sakura")},{e:"🌺",n:P("牡丹","Peony","Peonía")},{e:"🌻",n:P("向日葵","Sunflower","Girasol")},{e:"🍁",n:P("紅葉","Maple","Arce")},
+ {e:"❄️",n:P("雪華","Snowflake","Nieve")},{e:"🌕",n:P("満月","Full Moon","Luna Llena")},{e:"✨",n:P("暁光","Dawn Light","Aurora")},{e:"💮",n:P("大輪・冴","Grand Bloom","Gran Flor")}];
 const HCOL=["","#FFFFFF","#FBF6E7","#F1ECD5","#EFE0AC","#F7D9DE","#F0BFCB","#F6D2A0","#EFB48A","#D7E6F5","#F7ECC0","#FFF3C4","#F6C8C0"];
 let HG=null;
 
@@ -835,59 +855,62 @@ function hSave(){DB.hanaState=hSnapshot();save();}
 
 function hTutorial(cb){
   gResolve=()=>{};clearGTimers();
-  openOverlay("🌸 あそびかた");
+  openOverlay("🌸 "+P("あそびかた","How to play","Cómo jugar"));
   gArea().innerHTML=`
     <div class="fade-in" style="width:min(340px,88vw)">
       <div class="card" style="margin-bottom:10px">
-        <p style="font-size:14.5px;margin-bottom:6px"><b>1. 指でなぞる（スワイプ）と、花が<u>ぜんぶ一斉に</u>その方向へすべる</b></p>
+        <p style="font-size:14.5px;margin-bottom:6px"><b>${P("1. 指でなぞる（スワイプ）と、花が<u>ぜんぶ一斉に</u>その方向へすべる","1. Swipe and <u>all</u> flowers slide that way","1. Desliza y <u>todas</u> las flores se mueven")}</b></p>
         <div style="display:flex;align-items:center;justify-content:center;gap:8px">
           <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌱</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌱</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span></span>
         </div>
-        <div style="text-align:center;font-weight:800;color:var(--ai);margin:4px 0">⬅ 左へスワイプすると…</div>
+        <div style="text-align:center;font-weight:800;color:var(--ai);margin:4px 0">⬅ ${P("左へスワイプすると…","Swipe left and…","Desliza a la izquierda y…")}</div>
         <div style="display:flex;align-items:center;justify-content:center;gap:8px">
           <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌿</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span></span>
         </div>
-        <p style="font-size:14.5px;margin-top:6px;text-align:center"><b>おなじ花どうしが ぶつかると合体！</b><br>🌱＋🌱＝🌿、🌿＋🌿＝🍀、🍀＋🍀＝🌷…</p>
+        <p style="font-size:14.5px;margin-top:6px;text-align:center"><b>${P("おなじ花どうしが ぶつかると合体！","Matching flowers merge!","¡Las flores iguales se unen!")}</b><br>🌱＋🌱＝🌿、🌿＋🌿＝🍀、🍀＋🍀＝🌷…</p>
       </div>
       <div class="card" style="margin-bottom:10px">
-        <p style="font-size:14.5px"><b>2. 間にちがう花があると合体しない</b><br>🌱🌸🌱 のように挟まっていると、桜が壁になって芽どうしは出会えません。同じ花を<b>同じ列にそろえてから</b>その方向へスワイプ。</p>
+        <p style="font-size:14.5px"><b>${P("2. 間にちがう花があると合体しない","2. A different flower in between blocks the merge","2. Una flor distinta en medio bloquea la unión")}</b><br>${P("🌱🌸🌱 のように挟まっていると、桜が壁になって芽どうしは出会えません。同じ花を<b>同じ列にそろえてから</b>その方向へスワイプ。","Like 🌱🌸🌱 — the sakura is a wall. Line up matching flowers in the <b>same row or column</b>, then swipe.","Como 🌱🌸🌱: la sakura es un muro. Alinea flores iguales en la <b>misma fila o columna</b> y desliza.")}</p>
       </div>
       <div class="card" style="margin-bottom:10px">
-        <div style="font-size:30px;text-align:center">🌱→🌸→🌕→💮</div>
-        <p style="font-size:14.5px"><b>3. めざせ「大輪・冴」</b><br>動かすたび新しい芽が生えます。盤が埋まって動けなくなったら終了。</p>
+        <p style="font-size:14.5px;margin-bottom:8px"><b>${P("3. 花のそだつ順番（全12段階）","3. The 12 stages of bloom","3. Las 12 etapas de la flor")}</b></p>
+        <div id="tutChain" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px 4px;text-align:center"></div>
       </div>
-      <p class="muted small" style="margin-bottom:12px">💡 コツ：いちばん育った花をカドに置いて、スワイプは2方向中心に。</p>
-      <button class="btn" id="tutGo">わかった、はじめる</button>
+      <p class="muted small" style="margin-bottom:12px">💡 ${P("コツ：いちばん育った花をカドに置く。<b>上へはスワイプしない</b>（下・左・右だけ）と長生きします。","Tip: keep your biggest flower in a corner. <b>Never swipe up</b> (only down, left, right) and you will last much longer.","Consejo: mantén tu flor más grande en una esquina. <b>Nunca deslices hacia arriba</b> (solo abajo, izquierda, derecha).")}</p>
+      <button class="btn" id="tutGo">${P("わかった、はじめる","Got it, play!","¡Entendido, a jugar!")}</button>
     </div>`;
+  const tc=$("#tutChain");
+  if(tc)tc.innerHTML=HLV.slice(1).map((f,i)=>`<div><div style="font-size:24px">${f.e}</div><div style="font-size:11px;font-weight:700;color:#6B6857">${i+1}. ${f.n}</div></div>`).join("");
   $("#tutGo").onclick=cb;
 }
 function startHana(){
   if(!DB.hanaTut){hTutorial(()=>{DB.hanaTut=1;save();startHana();});return;}
   gResolve=()=>{};clearGTimers();
-  openOverlay("🌸 花あわせ");
+  openOverlay("🌸 "+P("花あわせ","Hana-Awase","Hana-Awase"));
   gArea().innerHTML=`
     <div class="hana-wrap">
-      <div class="hana-head"><span>スコア <b id="hScore">0</b></span><span class="muted small" id="hBest">ベスト ${(DB.hana.best||0).toLocaleString()}</span></div>
+      <div class="hana-head"><span>${P("スコア","Score","Puntos")} <b id="hScore">0</b></span><span class="muted small" id="hBest">${P("ベスト ","Best ","Récord ")}${(DB.hana.best||0).toLocaleString()}</span></div>
       <div id="hanaBoard"></div>
       <div style="display:flex;gap:10px;width:min(360px,88vw)">
-        <button class="btn ghost" style="flex:1" id="hUndo">↩ 1手もどす</button>
-        <button class="btn ghost" style="flex:1" id="hNew">🌱 はじめから</button>
+        <button class="btn ghost" style="flex:1" id="hUndo">↩ ${P("1手もどす","Undo","Deshacer")}</button>
+        <button class="btn ghost" style="flex:1" id="hNew">🌱 ${P("はじめから","New game","Reiniciar")}</button>
         <button class="btn ghost" style="flex:0 0 52px" id="hHelp">？</button>
       </div>
-      <p class="muted small">スワイプで動かす。同じ花がかさなると、ひとつ上の花に。</p>
+      <div id="hChain" style="text-align:center;font-size:15px;line-height:1.9;width:min(360px,88vw)"></div>
+      <p class="muted small" style="margin-top:-4px">${P("スワイプで動かす。同じ花がかさなると、ひとつ上の花に。","Swipe to move. Matching flowers merge into the next bloom.","Desliza para mover. Las flores iguales se unen en la siguiente.")}</p>
     </div>`;
   const board=$("#hanaBoard");
   const W=board.clientWidth||320;
   board.style.height=W+"px";
-  const P=10,G=8,cs=(W-2*P-3*G)/4;
+  const PAD=10,G=8,cs=(W-2*PAD-3*G)/4;
   for(let y=0;y<4;y++)for(let x=0;x<4;x++){
     const c=document.createElement("div");c.className="hcell";
     c.style.width=cs+"px";c.style.height=cs+"px";
-    c.style.left=(P+x*(cs+G))+"px";c.style.top=(P+y*(cs+G))+"px";
+    c.style.left=(PAD+x*(cs+G))+"px";c.style.top=(PAD+y*(cs+G))+"px";
     board.appendChild(c);
   }
   // state: resume or new
-  HG={tiles:[],score:0,nid:1,nodes:{},undo:null,maxLv:1,bloom:null,over:false,cs,P,G};
+  HG={tiles:[],score:0,nid:1,nodes:{},undo:null,maxLv:1,bloom:null,over:false,cs,PAD,G};
   const st=DB.hanaState;
   if(st&&st.tiles&&st.tiles.length){
     HG.score=st.score;
@@ -939,11 +962,14 @@ function hSpawn(){
 function hRender(){
   const board=$("#hanaBoard");if(!board||!HG)return;
   $("#hScore").textContent=HG.score.toLocaleString();
-  const hb=$("#hBest");if(hb)hb.textContent="ベスト "+Math.max(DB.hana.best||0,HG.score).toLocaleString();
-  const {cs,P,G}=HG;
+  const hb=$("#hBest");if(hb)hb.textContent=P("ベスト ","Best ","Récord ")+Math.max(DB.hana.best||0,HG.score).toLocaleString();
+  const hc=$("#hChain");
+  if(hc){const seen=Math.max(DB.hana.bestLv||1,HG.maxLv||1);
+    hc.innerHTML=HLV.slice(1).map((f,i)=>`<span style="opacity:${i+1<=seen?1:.28}" title="${f.n}">${f.e}</span>`).join(`<span style="opacity:.35;font-size:11px">→</span>`);}
+  const {cs,PAD,G}=HG;
   HG.tiles.forEach(t=>{
     let el=HG.nodes[t.id];
-    const tx=P+t.x*(cs+G),ty=P+t.y*(cs+G);
+    const tx=PAD+t.x*(cs+G),ty=PAD+t.y*(cs+G);
     if(!el){
       el=document.createElement("div");el.className="htile";
       el.style.width=cs+"px";el.style.height=cs+"px";
@@ -964,7 +990,7 @@ function hRender(){
   if(HG.bloom){
     const f=HLV[HG.bloom];HG.bloom=null;
     const d=document.createElement("div");d.className="hana-toast";
-    d.textContent=`${f.e} ${f.n}、開花！`;
+    d.textContent=`${f.e} ${f.n}${P("、開花！"," blooms!"," ¡florece!")}`;
     board.appendChild(d);gT(()=>d.remove(),1100);
     beep(700,.12,"triangle",.12);gT(()=>beep(1050,.16,"triangle",.12),110);
   }
@@ -1036,18 +1062,20 @@ function hGameOver(){
   DB.hanaState=null;
   DB.daily[todayStr()]=true;
   save();updateStreakChip();
+  submitScore('hana',s);
   const f=HLV[top];
   HG=null;
   gArea().innerHTML=`
     <div class="fade-in center" style="width:min(340px,88vw)">
-      <p class="instruction">これ以上うごかせません</p>
+      <p class="instruction">${P("これ以上うごかせません","No more moves!","¡No hay más movimientos!")}</p>
       <div style="font-size:64px">${f.e}</div>
-      <p style="font-weight:800;margin-bottom:6px">いちばん咲いた花：${f.n}</p>
+      <p style="font-weight:800;margin-bottom:6px">${P("いちばん咲いた花","Best bloom","Mejor flor")}: ${f.n}</p>
       <div class="score-big">${s.toLocaleString()}</div>
-      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:6px">🎉 自己ベスト更新！</p>`:``}
+      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:6px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:``}
       <div style="display:grid;gap:10px;margin-top:20px">
-        <button class="btn" onclick="startHana()">もう一度さかせる</button>
-        <button class="btn ghost" onclick="quitAndRefresh()">とじる</button>
+        <button class="btn" onclick="startHana()">${P("もう一度さかせる","Bloom again","Florecer otra vez")}</button>
+        <button class="btn secondary" onclick="joinRank('hana',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
     </div>`;
 }
@@ -1058,7 +1086,118 @@ document.addEventListener("keydown",e=>{
   if(k!==undefined){e.preventDefault();hMove(k);}
 });
 
+
+/* ======================================================
+   🏆 世界番付 (global ranking via Cloudflare Worker)
+====================================================== */
+const RANK_URL="https://sae-rank.dashiyo777.workers.dev";
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function rankId(){
+  if(!DB.rankId){
+    let id="";
+    try{id=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>b.toString(16).padStart(2,"0")).join("");}
+    catch(e){id=String(Date.now())+String(Math.floor(Math.random()*1e6));}
+    DB.rankId=id;save();
+  }
+  return DB.rankId;
+}
+function askName(){
+  const v=window.prompt(P("番付に載せる「よびな」を入力してください（8文字まで）","Enter your nickname for the rankings (max 8 chars)","Escribe tu apodo para la clasificación (máx. 8)"),DB.rankName||"");
+  if(v===null)return null;
+  const name=v.replace(/[<>&"'`]/g,"").trim().slice(0,8);
+  if(!name)return null;
+  DB.rankName=name;save();return name;
+}
+async function submitScore(g,s){
+  if(!DB.rankName||!(s>0))return;
+  try{
+    await fetch(RANK_URL+"/submit",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({g,id:rankId(),n:DB.rankName,s})});
+  }catch(e){}
+}
+function joinRank(g,s){
+  const n=DB.rankName||askName();
+  if(!n){showRanking(g);return;}
+  submitScore(g,s).then(()=>showRanking(g));
+}
+function renameRank(g){
+  const n=askName();
+  if(n){const s=g==="hana"?(DB.hana.best||0):(DB.rush.best||0);submitScore(g,s).then(()=>showRanking(g));}
+}
+const curYear=()=>new Date().getFullYear();
+async function showRanking(g){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🏆 "+curYear()+P("年 ",""," ")+(g==="hana"?"Hana-Awase":"SAE Rush")+" "+P("番付","Rankings","Clasificación"));
+  gArea().innerHTML=`<p class="muted">${P("番付を読み込み中…","Loading rankings…","Cargando clasificación…")}</p>`;
+  let data=null;
+  try{const r=await fetch(RANK_URL+"/top?g="+g+"&y="+curYear()+"&n=20");data=await r.json();}catch(e){}
+  if(!data||!data.top){
+    gArea().innerHTML=`<div class="center fade-in"><p class="muted">${P("番付を取得できませんでした。<br>通信環境をご確認のうえ、もう一度お試しください。","Could not load the rankings.<br>Please check your connection and try again.","No se pudo cargar la clasificación.<br>Revisa tu conexión e inténtalo de nuevo.")}</p>
+      <button class="btn ghost" style="margin-top:16px;width:min(280px,78vw)" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button></div>`;
+    return;
+  }
+  const me=rankId();
+  const myBest=g==="hana"?(DB.hana.best||0):(DB.rush.best||0);
+  const medals=["🥇","🥈","🥉"];
+  const rows=data.top.map((r,i)=>`
+    <div class="rec-row" style="${r.id===me?"background:#FFF3C4;border-radius:8px;padding-left:8px;padding-right:8px;":""}">
+      <span>${i===0?"🥇<b style='color:var(--shu)'>"+P("横綱(暫定)","Yokozuna","Yokozuna")+"</b>":medals[i]||"<b>"+(i+1)+"</b>"}　${esc(r.n)}${r.id===me?P("（あなた）"," (you)"," (tú)"):""}</span><b>${Number(r.s).toLocaleString()}</b>
+    </div>`).join("");
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      ${rows||'<p class="muted center">'+P("まだ記録がありません。一番乗りのチャンス！","No records yet. Be the first!","Aún no hay registros. ¡Sé el primero!")+'</p>'}
+      <p class="muted small center" style="margin-top:10px">${P("参加 ","Players: ","Jugadores: ")}${data.total}${DB.rankName?P("人・よびな「"," · nickname "," · apodo ")+esc(DB.rankName)+P("」","",""):""}</p>
+      <p class="muted small center">${P("12月末時点の1位が、その年の<b>横綱</b>として殿堂入りします。","The #1 at the end of December becomes that year&#39;s <b>Yokozuna</b> — enshrined forever.","El nº1 a fin de diciembre se convierte en el <b>Yokozuna</b> del año, para siempre.")}</p>
+      <div style="display:grid;gap:10px;margin-top:12px">
+        <button class="btn secondary" onclick="showHall('${g}')">🏛 ${P("歴代横綱の殿堂","Hall of Yokozuna","Salón de los Yokozuna")}</button>
+        ${DB.rankName?`<button class="btn ghost" onclick="renameRank('${g}')">${P("よびなを変える","Change nickname","Cambiar apodo")}</button>`
+                     :`<button class="btn shu" onclick="joinRank('${g}',${myBest})">${P("番付に参加する（よびな登録）","Join the rankings","Unirse a la clasificación")}</button>`}
+        <button class="btn" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+}
+async function showHall(g){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🏛 "+(g==="hana"?"Hana-Awase":"SAE Rush")+" "+P("歴代横綱","Hall of Yokozuna","Salón de Yokozuna"));
+  gArea().innerHTML=`<p class="muted">${P("殿堂を開いています…","Opening the hall…","Abriendo el salón…")}</p>`;
+  let data=null;
+  try{const r=await fetch(RANK_URL+"/champions?g="+g);data=await r.json();}catch(e){}
+  if(!data||!data.champions){
+    gArea().innerHTML=`<div class="center fade-in"><p class="muted">${P("殿堂を取得できませんでした。","Could not load the hall.","No se pudo cargar el salón.")}</p>
+      <button class="btn ghost" style="margin-top:16px;width:min(280px,78vw)" onclick="showRanking('${g}')">${P("番付にもどる","Back to rankings","Volver a la clasificación")}</button></div>`;
+    return;
+  }
+  const past=data.champions.filter(c=>c.y<data.currentYear);
+  const cur=data.champions.find(c=>c.y===data.currentYear);
+  gArea().innerHTML=`
+    <div class="fade-in center" style="width:min(340px,88vw)">
+      ${past.length?past.map(c=>`
+        <div class="card" style="margin-bottom:10px">
+          <div class="eyebrow">${c.y}${P("年 横綱"," Yokozuna"," Yokozuna")}</div>
+          <div class="mincho" style="font-size:26px;font-weight:800">👑 ${esc(c.n)}</div>
+          <div class="muted">${Number(c.s).toLocaleString()} ${P("点","pts","pts")}</div>
+        </div>`).join("")
+      :`<div class="card" style="margin-bottom:10px">
+          <div style="font-size:40px">👑</div>
+          <p style="font-weight:700;margin-top:6px">${P("初代横綱の座は、まだ空位。","The first Yokozuna throne is still vacant.","El trono del primer Yokozuna sigue vacante.")}</p>
+          <p class="muted small">${P("今年","This year, ","Este año, ")}${data.currentYear}${P("年の王者が、歴史に名を刻む最初の一人になります。"," — its champion will be the first name in history."," — su campeón será el primer nombre en la historia.")}</p>
+        </div>`}
+      ${cur?`<p class="muted small">${P("現在の暫定王者","Current interim champion","Campeón interino actual")}: ${esc(cur.n)}（${Number(cur.s).toLocaleString()}${P("点","pts","pts")}）</p>`:""}
+      <div style="display:grid;gap:10px;margin-top:12px">
+        <button class="btn" onclick="showRanking('${g}')">${P("番付にもどる","Back to rankings","Volver a la clasificación")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+}
+
 /* ---------- init ---------- */
+document.title=P("冴え手帖 -SAE- 脳活道場｜叡智の灯火","SAE Techo — Brain Dojo | Eichi no Hi","SAE Techo — Dojo Cerebral | Eichi no Hi");
+document.querySelector(".appbar h1").innerHTML=P("冴え手帖","SAE Techo","SAE Techo")+`<small>${P("SAE — 脳活道場","BRAIN DOJO","DOJO CEREBRAL")}</small>`;
+(function(){const TB={home:P("道場","Dojo","Dojo"),diag:P("診断","Check","Chequeo"),rec:P("記録","Stats","Datos"),tips:P("知恵","Tips","Consejos")};
+document.querySelectorAll(".tabbar button").forEach(b=>{const ic=b.querySelector(".ticon").textContent;b.innerHTML=`<span class="ticon">${ic}</span>${TB[b.dataset.tab]}`;});})();
+$("#quitBtn").textContent=P("やめる","Quit","Salir");
+$("#gTitle").textContent=P("ゲーム","Game","Juego");
+(function(){const lb=$("#langBtn");lb.textContent="🌐 "+LANG.toUpperCase();lb.onclick=cycleLang;})();
 updateStreakChip();
 renderHome();
 
@@ -1123,7 +1262,7 @@ GAME_IMPL.calc=function(finish){
     setProg(i/N);
     const p=gen();
     gArea().innerHTML=`
-      <p class="instruction">こたえを えらんでください（${i+1}/${N}）</p>
+      <p class="instruction">${P("こたえを えらんでください","Pick the answer","Elige la respuesta")}（${i+1}/${N}）</p>
       <div class="big-display">${p.q}</div>
       <div class="choice-grid cols3">
         ${p.opts.map(o=>`<button class="choice-btn" data-v="${o}">${o}</button>`).join("")}
@@ -1136,7 +1275,7 @@ GAME_IMPL.calc=function(finish){
       };
     });
   };
-  countdown("できるだけ速く、正確に。",()=>{t0=Date.now();next();});
+  countdown(P("できるだけ速く、正確に。","As fast and accurate as you can.","Lo más rápido y preciso posible."),()=>{t0=Date.now();next();});
 };
 
 /* ----- 数字おぼえ (記憶力) ----- */
@@ -1147,18 +1286,18 @@ GAME_IMPL.digit=function(finish){
     let digits="";
     for(let k=0;k<level;k++)digits+=Math.floor(Math.random()*10);
     gArea().innerHTML=`
-      <p class="instruction">${level}けたの数字を おぼえてください</p>
+      <p class="instruction">${level}${P("けたの数字を おぼえてください"," digits — memorize them!"," dígitos — ¡memorízalos!")}</p>
       <div class="big-display" id="dg" style="letter-spacing:.18em">${digits.split("").join(" ")}</div>`;
     gT(()=>askInput(digits),level*650+500);
   };
   const askInput=(digits)=>{
     let entered="";
     gArea().innerHTML=`
-      <p class="instruction">おぼえた数字を 入力してください</p>
+      <p class="instruction">${P("おぼえた数字を 入力してください","Enter the digits you memorized","Escribe los dígitos memorizados")}</p>
       <div class="digit-input" id="din">&nbsp;</div>
       <div class="numpad">
         ${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-n="${n}">${n}</button>`).join("")}
-        <button class="util" data-n="del">けす</button>
+        <button class="util" data-n="del">${P("けす","DEL","BORR")}</button>
         <button data-n="0">0</button>
         <button class="util" data-n="ok" style="color:var(--ai)">OK</button>
       </div>`;
@@ -1184,7 +1323,7 @@ GAME_IMPL.digit=function(finish){
       }else{
         lives--;
         if(lives>0){
-          gArea().innerHTML=`<p class="instruction">おしい！ もう一度 ${level}けたに挑戦</p><div class="countN">✍️</div>`;
+          gArea().innerHTML=`<p class="instruction">${P("おしい！ もう一度","So close! Try again:","¡Casi! Otra vez:")} ${level}${P("けたに挑戦"," digits"," dígitos")}</p><div class="countN">✍️</div>`;
           gT(round,900);
         }else end();
       }
@@ -1194,16 +1333,16 @@ GAME_IMPL.digit=function(finish){
     const score=maxSpan===0?10:clamp((maxSpan-3)*16+20,10,100);
     finish(score);
   };
-  countdown("表示された数字を おぼえて入力。",round);
+  countdown(P("表示された数字を おぼえて入力。","Memorize the digits, then type them in.","Memoriza los dígitos y escríbelos."),round);
 };
 
 /* ----- 順番タッチ (注意・切替) ----- */
 GAME_IMPL.trail=function(finish,opts={}){
   const modeB=!!opts.modeB;
-  const labels=modeB?["1","あ","2","い","3","う","4","え","5","お","6","か"]:["1","2","3","4","5","6","7","8","9","10","11","12"];
-  countdown(modeB?"数字と ひらがなを こうごに：1→あ→2→い…":"1 から 12 まで じゅんばんにタッチ！",()=>{
+  const labels=modeB?(LANG==="ja"?["1","あ","2","い","3","う","4","え","5","お","6","か"]:["1","A","2","B","3","C","4","D","5","E","6","F"]):["1","2","3","4","5","6","7","8","9","10","11","12"];
+  countdown(modeB?P("数字と ひらがなを こうごに：1→あ→2→い…","Alternate numbers and letters: 1→A→2→B…","Alterna números y letras: 1→A→2→B…"):P("1 から 12 まで じゅんばんにタッチ！","Tap 1 to 12 in order!","¡Toca del 1 al 12 en orden!"),()=>{
     gArea().innerHTML=`
-      <p class="instruction" id="trailHint">つぎ：<b style="color:var(--ai);font-size:19px">${labels[0]}</b></p>
+      <p class="instruction" id="trailHint">${P("つぎ","Next","Sig.")}: <b style="color:var(--ai);font-size:19px">${labels[0]}</b></p>
       <div id="trailField"></div>`;
     const field=$("#trailField");
     const W=field.clientWidth,H=field.clientHeight;
@@ -1224,7 +1363,7 @@ GAME_IMPL.trail=function(finish,opts={}){
           node.classList.add("done");next++;
           setProg(next/labels.length);
           const hint=$("#trailHint");
-          if(next<labels.length){if(hint)hint.innerHTML=`つぎ：<b style="color:var(--ai);font-size:19px">${labels[next]}</b>`;}
+          if(next<labels.length){if(hint)hint.innerHTML=`${P("つぎ","Next","Sig.")}: <b style="color:var(--ai);font-size:19px">${labels[next]}</b>`;}
           else{
             const t=(Date.now()-t0)/1000;
             const best=modeB?16:12,worst=modeB?55:45;
@@ -1240,7 +1379,7 @@ GAME_IMPL.trail=function(finish,opts={}){
 
 /* ----- いろよみ (集中・抑制) ----- */
 GAME_IMPL.stroop=function(finish){
-  const COLORS=[{n:"あか",c:"#C8452C"},{n:"あお",c:"#2A4D8F"},{n:"みどり",c:"#3E7C4F"},{n:"きいろ",c:"#C99B2D"}];
+  const COLORS=[{n:P("あか","RED","ROJO"),c:"#C8452C"},{n:P("あお","BLUE","AZUL"),c:"#2A4D8F"},{n:P("みどり","GREEN","VERDE"),c:"#3E7C4F"},{n:P("きいろ","YELLOW","AMARILLO"),c:"#C99B2D"}];
   const N=16;let i=0,correct=0,rts=[];
   const next=()=>{
     if(i>=N){
@@ -1254,8 +1393,8 @@ GAME_IMPL.stroop=function(finish){
     const ink=Math.random()<0.5?word:COLORS[Math.floor(Math.random()*4)];
     const t0=Date.now();
     gArea().innerHTML=`
-      <p class="instruction">文字の《 いろ 》を えらんで！（${i+1}/${N}）</p>
-      <div class="stroop-word" style="color:${ink.c}">${word.n}</div>
+      <p class="instruction">${P("文字の《 いろ 》を えらんで！","Choose the ink COLOR!","¡Elige el COLOR de la tinta!")}（${i+1}/${N}）</p>
+      <div class="stroop-word" style="color:${ink.c};font-size:${LANG==="ja"?56:40}px">${word.n}</div>
       <div class="choice-grid">
         ${shuffle(COLORS.slice()).map(c=>`<button class="choice-btn" data-n="${c.n}">${c.n}</button>`).join("")}
       </div>`;
@@ -1268,7 +1407,7 @@ GAME_IMPL.stroop=function(finish){
       };
     });
   };
-  countdown("文字を「読む」のではなく、インクの「色」を答えます。",next);
+  countdown(P("文字を「読む」のではなく、インクの「色」を答えます。","Do not read the word. Answer the COLOR of the ink.","No leas la palabra. Responde el COLOR de la tinta."),next);
 };
 
 /* ----- 後出しじゃんけん (判断・反射) ----- */
@@ -1290,7 +1429,7 @@ GAME_IMPL.janken=function(finish){
     const target=win?winTo[opp]:loseTo[opp];
     const t0=Date.now();
     gArea().innerHTML=`
-      <div class="janken-order" style="background:${win?"var(--ai)":"var(--shu)"}">${win?"かって！":"まけて！"}</div>
+      <div class="janken-order" style="background:${win?"var(--ai)":"var(--shu)"}">${win?P("かって！","WIN!","¡GANA!"):P("まけて！","LOSE!","¡PIERDE!")}</div>
       <div class="janken-hand">${HANDS[opp].e}</div>
       <p class="instruction small" style="margin-top:6px">${i+1}/${N}</p>
       <div class="choice-grid cols3">
@@ -1306,13 +1445,13 @@ GAME_IMPL.janken=function(finish){
     timer=gT(()=>done(-1),3200);
     gArea().querySelectorAll(".choice-btn").forEach(b=>{b.onclick=()=>done(Number(b.dataset.i));});
   };
-  countdown("指示が「かって」なら勝つ手、「まけて」なら負ける手を後出し！",next);
+  countdown(P("指示が「かって」なら勝つ手、「まけて」なら負ける手を後出し！","If it says WIN, throw the winning hand. If LOSE, the losing one!","Si dice GANA, saca la mano ganadora. Si dice PIERDE, ¡la perdedora!"),next);
 };
 
 /* ======================================================
    single game / daily course / diagnosis
 ====================================================== */
-function stampFor(s){return s>=85?"冴えわたる":s>=70?"好調":s>=55?"まずまず":"伸びしろ大";}
+function stampFor(s){return s>=85?P("冴えわたる","Razor sharp","Brillante"):s>=70?P("好調","In good form","En forma"):s>=55?P("まずまず","Not bad","Nada mal"):P("伸びしろ大","Room to grow","A crecer");}
 
 async function startGame(id){
   const score=await runGame(id);
@@ -1323,12 +1462,12 @@ async function startGame(id){
   gArea().innerHTML=`
     <div class="fade-in">
       <p class="instruction">${GAMES[id].icon} ${GAMES[id].name} — ${GAMES[id].dom}</p>
-      <div class="score-big">${score}<span style="font-size:22px">点</span></div>
+      <div class="score-big">${score}<span style="font-size:22px">${P("点"," pts"," pts")}</span></div>
       <div><span class="stamp">${stampFor(score)}</span></div>
-      ${isBest?`<p style="color:var(--shu);font-weight:800;margin-top:10px">🎉 自己ベスト更新！</p>`:""}
+      ${isBest?`<p style="color:var(--shu);font-weight:800;margin-top:10px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:""}
       <div style="width:min(300px,80vw);margin-top:22px;display:grid;gap:10px">
-        <button class="btn" onclick="retryGame('${id}')">もう一度</button>
-        <button class="btn ghost" onclick="quitAndRefresh()">とじる</button>
+        <button class="btn" onclick="retryGame('${id}')">${P("もう一度","Play again","Otra vez")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
     </div>`;
 }
@@ -1342,16 +1481,16 @@ async function startDaily(){
   const scores=[];
   for(let i=0;i<picks.length;i++){
     const id=picks[i];
-    openOverlay("今日の稽古 "+(i+1)+"/3");
+    openOverlay(P("今日の稽古 ","Training ","Entreno ")+(i+1)+"/3");
     await new Promise(res=>{
       gArea().innerHTML=`
         <div class="fade-in">
-          <p class="instruction">${i+1}種目め</p>
+          <p class="instruction">${P("種目","Game","Juego")} ${i+1}/3</p>
           <div style="font-size:52px">${GAMES[id].icon}</div>
           <h2 class="mincho" style="font-size:24px;margin:6px 0 2px">${GAMES[id].name}</h2>
-          <p class="muted">${GAMES[id].dom}をきたえます</p>
+          <p class="muted">${P("きたえる力","Trains","Entrena")}: ${GAMES[id].dom}</p>
           <div style="width:min(280px,78vw);margin-top:22px">
-            <button class="btn" id="goBtn">はじめる</button>
+            <button class="btn" id="goBtn">${P("はじめる","Start","Empezar")}</button>
           </div>
         </div>`;
       gResolve=res;
@@ -1363,23 +1502,23 @@ async function startDaily(){
     scores.push({id,sc});
   }
   const avg=Math.round(scores.reduce((a,b)=>a+b.sc,0)/scores.length);
-  openOverlay("本日の結果");setProg(1);
+  openOverlay(P("本日の結果","Results","Resultados"));setProg(1);
   const tip=TIPS[dateSeed()%TIPS.length];
   gArea().innerHTML=`
     <div class="fade-in" style="width:min(340px,88vw)">
-      <p class="instruction center">本日の稽古、おつかれさまでした</p>
-      <div class="center"><div class="score-big">${avg}<span style="font-size:22px">点</span></div>
+      <p class="instruction center">${P("本日の稽古、おつかれさまでした","Nice work today!","¡Buen trabajo hoy!")}</p>
+      <div class="center"><div class="score-big">${avg}<span style="font-size:22px">${P("点"," pts"," pts")}</span></div>
       <span class="stamp">${stampFor(avg)}</span></div>
       <div style="margin-top:16px;text-align:left">
-        ${scores.map(x=>`<div class="rec-row"><span>${GAMES[x.id].icon} ${GAMES[x.id].name}</span><b>${x.sc}点</b></div>`).join("")}
+        ${scores.map(x=>`<div class="rec-row"><span>${GAMES[x.id].icon} ${GAMES[x.id].name}</span><b>${x.sc}${P("点"," pts"," pts")}</b></div>`).join("")}
       </div>
       <div class="tip-card" style="margin-top:16px;text-align:left">
-        <div class="tcat">今日の知恵・${tip.cat}</div>
+        <div class="tcat">${P("今日の知恵","Tip of the day","Consejo del día")} · ${tip.cat}</div>
         <div class="ttitle">${tip.title}</div>
         <p>${tip.body}</p>
       </div>
-      <p class="center" style="font-weight:700;color:var(--shu)">🔥 連続 ${streakCount()}日目！</p>
-      <button class="btn" style="margin-top:8px" onclick="quitAndRefresh()">道場にもどる</button>
+      <p class="center" style="font-weight:700;color:var(--shu)">🔥 ${P("連続 ","Streak: ","Racha: ")}${streakCount()}${P("日目！","d!","d!")}</p>
+      <button class="btn" style="margin-top:8px" onclick="quitAndRefresh()">${P("道場にもどる","Back to Dojo","Volver al Dojo")}</button>
     </div>`;
 }
 // startDailyのquit例外の握りつぶし
@@ -1396,16 +1535,16 @@ async function startDiagnosis(){
   const scores={};
   for(let i=0;i<seq.length;i++){
     const {id,opts}=seq[i];
-    openOverlay("脳年齢診断 "+(i+1)+"/5");
+    openOverlay(P("脳年齢診断 ","Brain Age Check ","Chequeo ")+(i+1)+"/5");
     const go=await new Promise(res=>{
       gArea().innerHTML=`
         <div class="fade-in">
-          <p class="instruction">測定 ${i+1}/5</p>
+          <p class="instruction">${P("測定","Test","Prueba")} ${i+1}/5</p>
           <div style="font-size:52px">${GAMES[id].icon}</div>
           <h2 class="mincho" style="font-size:24px;margin:6px 0 2px">${GAMES[id].name}</h2>
-          <p class="muted">${GAMES[id].dom}を測定します${id==="trail"?"（診断版：数字⇔かな）":""}</p>
+          <p class="muted">${P("測定する力","Measures","Mide")}: ${GAMES[id].dom}${id==="trail"?P("（診断版：数字⇔かな）"," (check ver.: numbers⇄letters)"," (versión: números⇄letras)"):""}</p>
           <div style="width:min(280px,78vw);margin-top:22px">
-            <button class="btn shu" id="goBtn">測定スタート</button>
+            <button class="btn shu" id="goBtn">${P("測定スタート","Start test","Empezar prueba")}</button>
           </div>
         </div>`;
       gResolve=res;
