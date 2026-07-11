@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KISSATEN — a little field guide to a deeper cup of coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --roast:#241811;        /* 深煎りの闇 */
+  --wood:#3A2A1E;         /* 店の木壁 */
+  --crema:#F6EEDF;        /* クレマの紙色 */
+  --paper:#FDF8EE;        /* カード紙 */
+  --copper:#C87E3F;       /* 銅ポット */
+  --velvet:#3E5641;       /* ソファの深緑 */
+  --cherry:#A8432C;       /* コーヒーチェリー */
+  --ink:#2B211A;          /* 文字 */
+  --faint:#8A7663;
+  --serif:'Shippori Mincho', serif;
+  --sans:'Zen Kaku Gothic New', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--roast);
+  color:var(--ink);
+  line-height:1.8;
+  padding-bottom:76px;
+}
+/* ===== ヘッダー ===== */
+header{
+  background:linear-gradient(180deg,#1B120C 0%, var(--roast) 100%);
+  color:var(--crema);
+  text-align:center;
+  padding:34px 16px 22px;
+  border-bottom:3px double var(--copper);
+}
+header .eyebrow{
+  font-size:11px;letter-spacing:.35em;color:var(--copper);
+  text-transform:uppercase;margin-bottom:6px;
+}
+header h1{
+  font-family:var(--serif);font-weight:800;font-size:30px;letter-spacing:.14em;
+}
+header h1 .steam{display:inline-block;animation:steam 3.2s ease-in-out infinite;transform-origin:bottom center}
+@keyframes steam{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(4deg)}}
+@media (prefers-reduced-motion: reduce){header h1 .steam{animation:none}}
+.langbar{text-align:center;margin-top:10px}
+.langbar a{font-size:11px;letter-spacing:.08em;color:#BCA88F;text-decoration:none;
+  border:1px solid #8A6A45;border-radius:999px;padding:3px 12px;margin:0 3px;opacity:.9}
+.langbar a.on{background:#8A6A45;color:#F6EEDF;border-color:#8A6A45;font-weight:700}
+header .sub{font-size:12px;color:#BCA88F;letter-spacing:.12em;margin-top:4px}
+/* ===== 写真 ===== */
+.photo{
+  width:100%;display:block;border-radius:12px;
+  border:1px solid #E7D9C2;box-shadow:0 3px 14px rgba(0,0,0,.35);
+  margin-bottom:14px;object-fit:cover;
+}
+.photo.hero{
+  height:190px;border-radius:0;border:none;margin-bottom:0;
+  border-bottom:3px double var(--copper);filter:saturate(1.05) contrast(1.02);
+}
+.photo.banner{height:150px}
+/* ===== BGM ===== */
+#bgmBtn{
+  position:fixed;right:14px;bottom:92px;z-index:60;
+  width:56px;height:56px;border-radius:50%;border:2px solid var(--crema);
+  background:var(--copper);color:#fff;font-size:22px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;
+}
+#bgmBtn.playing{background:var(--velvet);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@media (prefers-reduced-motion: reduce){#bgmBtn.playing{animation:none}}
+#bgmBtn:focus-visible{outline:2px solid var(--crema);outline-offset:2px}
+/* ===== ナビ ===== */
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:#1B120C;border-top:1px solid #4A382A;
+  display:flex;justify-content:space-around;
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+}
+nav button{
+  background:none;border:none;color:#8A7663;font-family:var(--sans);
+  font-size:10.5px;font-weight:500;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 6px;border-radius:8px;min-width:52px;
+}
+nav button .ic{font-size:19px;line-height:1}
+nav button.active{color:var(--copper)}
+nav button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+/* ===== 共通 ===== */
+main{max-width:640px;margin:0 auto;padding:18px 14px 30px}
+section{display:none}
+section.active{display:block;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--paper);border-radius:14px;padding:18px 16px;
+  margin-bottom:14px;box-shadow:0 3px 14px rgba(0,0,0,.35);
+  border:1px solid #E7D9C2;
+}
+.card h2{
+  font-family:var(--serif);font-size:19px;font-weight:700;
+  color:var(--wood);letter-spacing:.08em;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px dashed #D6C4A6;
+}
+.tag{
+  display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  padding:2px 10px;border-radius:999px;margin-right:6px;margin-bottom:4px;
+}
+.tag.copper{background:var(--copper);color:#fff}
+.tag.velvet{background:var(--velvet);color:#fff}
+.tag.cherry{background:var(--cherry);color:#fff}
+.tag.line{background:transparent;border:1px solid var(--copper);color:var(--copper)}
+.note{font-size:12px;color:var(--faint)}
+/* 豆メーター(シグネチャー) */
+.meter{display:flex;align-items:center;gap:8px;margin:3px 0}
+.meter .lbl{font-size:12px;font-weight:700;color:var(--wood);width:3.2em}
+.beans{display:flex;gap:4px}
+.bean{
+  width:15px;height:11px;border-radius:50%;
+  background:#E4D5BC;position:relative;transform:rotate(-18deg);
+}
+.bean::after{
+  content:'';position:absolute;left:50%;top:1px;bottom:1px;width:1.5px;
+  background:var(--paper);transform:translateX(-50%) rotate(6deg);border-radius:2px;
+}
+.bean.on{background:var(--copper)}
+.bean.on.dark{background:#6B4326}
+/* アコーディオン */
+details{border-top:1px solid #E7D9C2;padding:10px 2px}
+details:first-of-type{border-top:none}
+summary{
+  cursor:pointer;font-weight:700;color:var(--wood);font-size:15px;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+summary::-webkit-details-marker{display:none}
+summary .arrow{color:var(--copper);transition:transform .25s;font-size:13px;flex-shrink:0}
+details[open] summary .arrow{transform:rotate(90deg)}
+details .body{padding-top:8px;font-size:14px}
+ol.steps{padding-left:1.4em;font-size:14px}
+ol.steps li{margin-bottom:6px}
+.tip{
+  background:#F1E6CF;border-left:4px solid var(--copper);
+  padding:8px 12px;border-radius:0 8px 8px 0;font-size:13px;margin-top:10px;
+}
+/* 今日の一杯 */
+.today{
+  background:linear-gradient(150deg,#FDF8EE 0%,#F3E5CC 100%);
+  border:1px solid var(--copper);
+}
+.today .date{font-size:11px;letter-spacing:.25em;color:var(--copper);font-weight:700}
+.today h2{border-bottom:none;margin-bottom:4px}
+.today p{font-size:14.5px}
+/* フィルタボタン */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters button{
+  font-family:var(--sans);font-size:12px;font-weight:700;
+  padding:6px 13px;border-radius:999px;border:1px solid var(--copper);
+  background:var(--paper);color:var(--copper);cursor:pointer;
+}
+.filters button.active{background:var(--copper);color:#fff}
+/* 診断 */
+.quiz-q{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--wood);margin-bottom:14px}
+.quiz-opts button{
+  display:block;width:100%;text-align:left;margin-bottom:9px;
+  padding:13px 15px;border-radius:11px;border:1.5px solid #D6C4A6;
+  background:var(--paper);font-family:var(--sans);font-size:14.5px;
+  color:var(--ink);cursor:pointer;transition:border-color .15s, background .15s;
+}
+.quiz-opts button:active{background:#F1E6CF;border-color:var(--copper)}
+.progress{height:5px;background:#E7D9C2;border-radius:99px;margin-bottom:16px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--copper);border-radius:99px;transition:width .3s}
+.karte{
+  border:2px solid var(--copper);border-radius:14px;padding:16px;
+  background:repeating-linear-gradient(0deg,#FDF8EE,#FDF8EE 27px,#F0E4CC 28px);
+}
+.karte h3{font-family:var(--serif);font-size:21px;color:var(--cherry);letter-spacing:.06em}
+.karte .stamp{
+  float:right;border:2px solid var(--cherry);color:var(--cherry);
+  border-radius:50%;width:58px;height:58px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:11px;font-weight:800;transform:rotate(10deg);text-align:center;line-height:1.3;
+}
+.btn{
+  display:inline-block;background:var(--velvet);color:#fff;border:none;
+  font-family:var(--sans);font-weight:700;font-size:14px;
+  padding:11px 26px;border-radius:999px;cursor:pointer;margin-top:12px;
+}
+.btn.copper{background:var(--copper)}
+/* 物語 */
+.episode{padding:12px 0;border-top:1px solid #E7D9C2}
+.episode:first-of-type{border-top:none}
+.episode .who{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--wood)}
+.episode .era{font-size:11px;color:var(--faint);letter-spacing:.1em;margin-left:6px}
+.episode p{font-size:14px;margin-top:4px}
+footer{
+  text-align:center;color:#8A7663;font-size:11px;padding:10px 16px 20px;letter-spacing:.1em;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">THE JAPANESE COFFEE-HOUSE NOTEBOOK</div>
+  <h1>KISSATEN<span class="steam">☕</span></h1>
+  <div class="sub">coffee techō — a little field guide to a deeper cup</div>
+  <div class="langbar">
+    <a href="coffee-techo.html">日本語</a>
+    <a href="coffee-techo-en.html" class="on">English</a>
+  </div>
+</header>
+<img class="photo hero" alt="A cup of coffee with heart latte art" loading="eager" onerror="this.style.display='none'"
+  src="https://images.unsplash.com/photo-1426174840074-541ae41efdb9?fm=jpg&q=70&w=1080&auto=format&fit=crop">
+
+<main>
+
+<!-- ============ Today ============ -->
+<section id="sec-home" class="active">
+  <div class="card today">
+    <div class="date" id="todayDate"></div>
+    <h2>Today's coffee wisdom</h2>
+    <p id="todayTip"></p>
+  </div>
+
+  <div class="card">
+    <h2>Origin of the day</h2>
+    <div id="todayOrigin"></div>
+  </div>
+
+  <div class="card">
+    <h2>How to use this notebook</h2>
+    <p style="font-size:14px">
+      Meet the world's beans in <b style="color:var(--copper)">Origins</b>,
+      craft your own cup in <b style="color:var(--copper)">Brewing</b>,
+      and solve the "washed or natural?" mystery in <b style="color:var(--copper)">Roast &amp; Process</b>.
+      Not sure where to start? Take the <b style="color:var(--cherry)">Quiz</b> and we'll match a cup to you.
+      And when it's time for a break, the <b style="color:var(--velvet)">Stories</b> pour out the world's love affair with coffee.
+    </p>
+  </div>
+</section>
+
+<!-- ============ Origins ============ -->
+<section id="sec-origin">
+  <img class="photo banner" alt="Glossy freshly roasted coffee beans" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1422207109431-97544339f995?fm=jpg&q=70&w=1080&auto=format&fit=crop">
+  <div class="card">
+    <h2>Field guide to the world's origins</h2>
+    <p class="note">More bean marks (<span style="color:var(--copper)">●</span>) means more of that flavor.</p>
+  </div>
+  <div class="filters" id="originFilters"></div>
+  <div id="originList"></div>
+</section>
+
+<!-- ============ Brewing ============ -->
+<section id="sec-brew">
+  <img class="photo banner" alt="Pouring hot water from a kettle into a dripper" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1688366136186-6af7dae834b2?fm=jpg&q=70&w=1080&auto=format&fit=crop">
+  <div class="card">
+    <h2>Brewing guide</h2>
+    <p class="note">Same beans, different gear — a whole different cup. With difficulty and time for each.</p>
+  </div>
+  <div id="brewList"></div>
+</section>
+
+<!-- ============ Roast & Process ============ -->
+<section id="sec-process">
+  <img class="photo banner" alt="Close-up of roasted coffee beans" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1422207109431-97544339f995?fm=jpg&q=70&w=1080&h=400&auto=format&fit=crop&crop=entropy">
+  <div class="card">
+    <h2>Washed? Natural?</h2>
+    <p style="font-size:14px">"Processing" is <b>how the seed (the bean) is taken out of the coffee cherry</b>. Same farm, same beans — a different process makes a completely different cup.</p>
+    <div id="processList" style="margin-top:8px"></div>
+  </div>
+  <div class="card">
+    <h2>Roast level and flavor</h2>
+    <p class="note" style="margin-bottom:8px">Lighter means brighter acidity and character; darker means bitterness and body.</p>
+    <div id="roastList"></div>
+    <div class="tip">☕ Not sure? Start with a <b>medium roast</b> — a friendly balance of acidity and bitterness where each bean's character still shines through.</div>
+  </div>
+</section>
+
+<!-- ============ Quiz ============ -->
+<section id="sec-quiz">
+  <div class="card">
+    <h2>Find your perfect cup</h2>
+    <p class="note" style="margin-bottom:14px">Five questions to match you with a bean and a brew.</p>
+    <div class="progress"><i id="quizBar" style="width:0%"></i></div>
+    <div id="quizArea"></div>
+  </div>
+</section>
+
+<!-- ============ Stories ============ -->
+<section id="sec-story">
+  <img class="photo banner" alt="A calm Japanese coffee house lit by antique lamps" loading="lazy" onerror="this.style.display='none'"
+    src="https://images.unsplash.com/photo-1743342693571-e91a796317f8?fm=jpg&q=70&w=1080&auto=format&fit=crop">
+  <div class="card">
+    <h2>Coffee at the movies</h2>
+    <div id="movieList"></div>
+  </div>
+  <div class="card">
+    <h2>Coffee in literature</h2>
+    <div id="bookList"></div>
+  </div>
+  <div class="card">
+    <h2>Coffee business — hits and misses</h2>
+    <div id="bizList"></div>
+  </div>
+  <div class="card">
+    <h2>Coffee trivia</h2>
+    <div id="funnyList"></div>
+  </div>
+  <div class="card">
+    <h2>Tales of the Japanese kissaten</h2>
+    <div id="kissatenList"></div>
+  </div>
+  <div class="card">
+    <h2>Great minds and their coffee</h2>
+    <div id="episodeList"></div>
+  </div>
+  <div class="card">
+    <h2>Coffee history in five minutes</h2>
+    <div id="historyList"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>KISSATEN · coffee techō — eichinohi.com</footer>
+
+<button id="bgmBtn" aria-label="Play or pause the coffee-house BGM" title="Coffee-house BGM">♪</button>
+
+<nav>
+  <button data-sec="sec-home" class="active"><span class="ic">☕</span>Today</button>
+  <button data-sec="sec-origin"><span class="ic">🌍</span>Origins</button>
+  <button data-sec="sec-brew"><span class="ic">💧</span>Brewing</button>
+  <button data-sec="sec-process"><span class="ic">🔥</span>Roast</button>
+  <button data-sec="sec-quiz"><span class="ic">📋</span>Quiz</button>
+  <button data-sec="sec-story"><span class="ic">📖</span>Stories</button>
+</nav>
+
+<script>
+/* =================== DATA =================== */
+const TIPS = [
+"The coffee fruit is called a cherry — the bean we drink is the seed inside that sweet little fruit.",
+"Aroma peaks between 3 days and 2 weeks after roasting. Freshly bought beans taste best once they have settled a little.",
+"Store beans airtight, in a cool dark place. A sealed container in a dark cupboard beats the fridge; freeze only for long-term storage.",
+"The ideal water temperature is around 90°C (195°F). Let boiling water rest a moment before pouring for a mellower cup.",
+"Light roasts actually carry slightly more caffeine. The idea that darker equals stronger caffeine is a myth.",
+"A shot of espresso has less caffeine than a cup of drip coffee — simply because the serving is smaller.",
+"Brazil is the world's top producer, growing roughly one third of all the coffee on earth.",
+"'Mocha' is both a bean and a Yemeni port town. The chocolate drink borrowed its name from there.",
+"Ground coffee oxidizes fast because of its huge surface area. Grinding just before brewing is the ultimate treat.",
+"Cup temperature is part of the flavor. Pre-warm your cup with hot water and the last sip stays as good as the first.",
+"A coffee tree takes 3 to 5 years to bear fruit. Every cup holds years of patience.",
+"Only beans from a narrow high-altitude zone of Jamaica may be called Blue Mountain — one of the strictest origin rules in the world.",
+"The 30-second bloom at the start of a pour-over releases gas and unlocks flavor. If the grounds puff up, your beans are fresh.",
+"Used grounds make a fine deodorizer — dry them and tuck them into a shoe cabinet or the fridge.",
+"An 'Americano-style' cup is not weak coffee; the original idea was coffee brewed from lightly roasted beans.",
+"Decaf must remove at least 99% of caffeine by international standards — a reliable friend for the evening cup.",
+"The Coffee Belt is the band within 25 degrees of the equator. Almost every origin on earth fits inside it.",
+"The grade 'SHB' (Strictly Hard Bean), used in Guatemala and elsewhere, means high-altitude beans — day-night temperature swings tighten the flavor.",
+"Japan's first coffee house, Kahiichakan, opened in Ueno, Tokyo in 1888. The kanji spelling 珈琲 was beloved by the literary greats.",
+"Cold brew keeps bitterness and astringency low and lets sweetness shine. Delicious iced in summer — or gently reheated in winter.",
+"Geisha is an Ethiopian variety rediscovered in Panama. Its jasmine-like aroma keeps rewriting auction price records.",
+"Specialty coffee means beans traceable from farm to cup — coffee where you can see the grower's name."
+];
+
+const ORIGINS = [
+{n:"Ethiopia",r:"Africa",a:5,b:2,s:5,bt:1,f:"The birthplace of coffee. Floral and tea-like, with notes of berries and blossoms.",how:"Light roast, hand-poured — let the aroma open up completely.",tag:"Home of Mocha"},
+{n:"Kenya",r:"Africa",a:5,b:3,s:4,bt:2,f:"Cassis-like fruit and a bold, bright acidity. Grows sweeter as it cools — a true star pupil.",how:"Light to medium roast. Keeps its crisp outline even over ice.",tag:"King of fruit"},
+{n:"Tanzania",r:"Africa",a:4,b:3,s:3,bt:2,f:"Famous in Japan under the name Kilimanjaro. Clean acidity with a hint of wildness.",how:"Medium roast for balance. A fine morning cup.",tag:"Kilimanjaro"},
+{n:"Colombia",r:"Latin America",a:3,b:4,s:4,bt:2,f:"Sweetness, acidity and body in perfect three-part harmony. The bean you can recommend to anyone.",how:"Medium roast. A blend's backbone — or lovely on its own.",tag:"The all-rounder"},
+{n:"Brazil",r:"Latin America",a:2,b:4,s:4,bt:3,f:"Nutty, chocolatey, gentle in acidity — a cup you never tire of.",how:"Medium to dark roast. World-class with milk in a café au lait.",tag:"No.1 producer"},
+{n:"Guatemala",r:"Latin America",a:4,b:4,s:4,bt:2,f:"A sweet chocolate finish and refined acidity, gifts of volcanic soil.",how:"Medium roast. Perfect after dinner or beside dessert.",tag:"Volcanic bounty"},
+{n:"Costa Rica",r:"Latin America",a:4,b:3,s:5,bt:1,f:"Birthplace of the honey process. Honeyed sweetness and a clean, pretty finish.",how:"Light to medium roast — taste the sweetness itself.",tag:"Honey's holy land"},
+{n:"Panama Geisha",r:"Latin America",a:5,b:2,s:5,bt:1,f:"Jasmine and peach on the nose. The bean that keeps breaking auction records — in a class of its own.",how:"Light roast, brewed with care. For a special day.",tag:"World-record prices"},
+{n:"Jamaica",r:"Latin America",a:3,b:3,s:4,bt:2,f:"Blue Mountain: a silken mouthfeel and flawless harmony.",how:"Medium roast. Add nothing — drink it as it is.",tag:"Blue Mountain"},
+{n:"Indonesia",r:"Asia",a:1,b:5,s:3,bt:4,f:"Mandheling. Earthy depth with an herbal finish — an ally for anyone who dislikes acidity.",how:"Dark roast. A frame sturdy enough to stand up to milk.",tag:"Mandheling"},
+{n:"Vietnam",r:"Asia",a:1,b:4,s:3,bt:5,f:"World's No.2 producer. Mostly robusta, with a powerful bitterness — sublime with condensed milk, Vietnamese style.",how:"Dark roast, Vietnamese style with condensed milk.",tag:"No.2 producer"},
+{n:"Yemen",r:"Africa",a:4,b:4,s:4,bt:2,f:"Home of Mocha Mattari. A wine-like ferment and a body all its own.",how:"Medium roast. Sip slowly, tasting the centuries.",tag:"Mocha Mattari"}
+];
+
+const BREWS = [
+{n:"Paper drip (pour-over)",d:1,t:"~4 min",taste:"Clean and clear",steps:["Medium-fine grind, about 12–13 g per cup","Warm the cup and dripper with hot water","Pour a little ~90°C water over all the grounds and bloom for 30 seconds","Pour in three passes, spiraling out from the center","Remove the dripper before it fully drains, grounds still submerged"],tip:"If the grounds puff up during the bloom, your beans are fresh."},
+{n:"French press",d:1,t:"~4 min",taste:"Mellow, with all the bean's oils",steps:["Coarse grind, 16–18 g per 300 ml of water","Add grounds, pour half the water, wait 30 seconds","Pour the rest, lid on, steep 4 minutes","Press the plunger down slowly and serve"],tip:"The metal filter lets the coffee oils through — rich aroma, and the bean's true ability laid bare."},
+{n:"AeroPress",d:2,t:"~2 min",taste:"Rich yet clear — endlessly tweakable",steps:["Medium-fine grind 15 g, about 200 ml of ~85°C water","Add grounds and water, stir 10 seconds","Wait about a minute, then press slowly over 30 seconds","Dilute with hot water to taste"],tip:"Freedom is its charm — deep enough to have its own world championship."},
+{n:"Siphon",d:3,t:"~5 min",taste:"Aromatic — the classic kissaten cup",steps:["Fill the lower flask with hot water and heat over the burner","When the water rises, add medium-ground coffee and stir with a bamboo paddle","After about a minute, remove the heat and let the coffee draw down"],tip:"The emblem of the classic Japanese coffee house. The science-experiment spectacle is part of the feast."},
+{n:"Cold brew",d:1,t:"8 hours (just wait)",taste:"Low bitterness, sweet and smooth",steps:["Medium-fine grind, 70–80 g per liter of water","Combine grounds and water in a pot, stir lightly","Rest 8 hours in the fridge, then strain"],tip:"Set it up before bed and it's ready by morning. Even the caffeine comes on gently."},
+{n:"Moka pot (stovetop espresso)",d:2,t:"~5 min",taste:"Intense — the taste of an Italian home",steps:["Hot water in the base; level fine grounds in the basket (do not tamp)","Screw on the top and set over gentle-medium heat","When it gurgles and the flow ends, take it off the heat"],tip:"A spoonful of sugar is the Italian way. Froth some milk and you have a homemade cappuccino."}
+];
+
+const PROCESSES = [
+{n:"Washed",body:"The fruit is removed and the seeds washed clean before drying. The result is a <b>clean, transparent cup</b> where the bean's own character and acidity come through straight. The world's most widely used method.",key:"For the clean-cup camp"},
+{n:"Natural (dry process)",body:"The oldest method: the whole cherry is sun-dried, the fruit removed afterwards. Fruit sugars migrate into the seed for a <b>sweet, heady, berry-and-wine character</b>. The tradition of Ethiopia and Brazil.",key:"For the sweet & heady camp"},
+{n:"Honey process",body:"Dried with the sticky mucilage left on. Halfway between washed and natural, with <b>honeyed sweetness and body</b>. Named yellow, red or black honey by how much is left.",key:"Born in Costa Rica"},
+{n:"Anaerobic fermentation",body:"A new-generation method fermenting in sealed, oxygen-free tanks. It creates <b>complex flavors never tasted before</b> — cinnamon, rum — and has become a competition regular.",key:"The cutting-edge lab"}
+];
+
+const ROASTS = [
+{n:"Light – Cinnamon (light roast)",a:5,bt:1,f:"Citrus acidity, almost tea-like. The bean's personality at its most visible."},
+{n:"Medium – High (medium roast)",a:3,bt:3,f:"The balance point of acidity and bitterness. When in doubt, start here."},
+{n:"City – Full City (medium-dark)",a:2,bt:4,f:"Body and toastiness. At home over ice or with milk."},
+{n:"French – Italian (dark roast)",a:1,bt:5,f:"Deep bitterness and a sweet finish. The world of espresso and café au lait."}
+];
+
+const EPISODES = [
+{w:"Beethoven",e:"1770–1827",p:"He is said to have counted out exactly sixty beans for his morning cup, every day. The maestro's day began with a meticulous coffee ritual."},
+{w:"Bach",e:"1685–1750",p:"He composed the Coffee Cantata, a comic piece about a coffee-mad daughter and the father trying to stop her — setting Leipzig's coffee craze to music."},
+{w:"Balzac",e:"1799–1850",p:"The famously prolific novelist was said to down dozens of strong cups while writing. 'When coffee hits the stomach,' he wrote, 'everything begins to move.'"},
+{w:"Voltaire",e:"1694–1778",p:"The Enlightenment's great coffee lover. Warned that coffee was poison, he is said to have replied: then it must be a very slow one."},
+{w:"Napoleon",e:"1769–1821",p:"'Strong coffee wakes me up,' the emperor declared — and legend says he asked for it even in exile on Saint Helena."},
+{w:"Natsume Sōseki",e:"1867–1916",p:"His London years introduced him to Western café culture, and coffee found its way into his novels. For Meiji-era writers, the coffee house was a new room for thought."}
+];
+
+const HISTORY = [
+{y:"c. 9th century",p:"Legend says an Ethiopian goatherd named Kaldi discovered coffee after watching his goats frolic on the red berries."},
+{y:"15th century",p:"Sufi mystics in Yemen drank coffee to stay awake through night prayers. From the port of Mocha it began to travel the world."},
+{y:"1652",p:"Coffee houses arrive in London. Nicknamed 'penny universities' — a penny bought entry to the debate — they hatched newspapers and insurance companies."},
+{y:"1773",p:"The Boston Tea Party. In its backlash against tea, America adopts coffee as the patriotic drink."},
+{y:"1888",p:"Japan's first true coffee house, Kahiichakan, opens in Ueno, Tokyo. Coffee becomes the culture of writers and ordinary people alike."},
+{y:"1960s–70s",p:"The golden age of the junkissa, Japan's classic coffee houses — an aesthetic of siphons, flannel drip, and dark roasts."},
+{y:"2000s–",p:"The Third Wave arrives: specialty coffee, savored down to farm and process. Japan's kissaten culture wins rediscovery from the world."}
+];
+
+const MOVIES = [
+{w:"Twin Peaks",e:"1990 · TV series",p:"Agent Cooper arrives to investigate a murder and instead rhapsodizes over the town's black coffee and cherry pie. His deadpan devotion made 'a damn fine cup of coffee' one of television's immortal lines."},
+{w:"Kamome Diner",e:"2006 · Japan",p:"Set in a small Japanese diner in Helsinki, it made famous the idea of whispering a magic word over the pot before brewing. The film's quiet reverence for a carefully made cup helped fuel Japan's café boom."},
+{w:"Heat",e:"1995 · USA",p:"The bank robber (De Niro) and the detective (Pacino) meet face to face not in a gunfight but across a late-night coffee-shop table — cinema history's first scene between the two giants, played out over steaming cups."},
+{w:"Pulp Fiction",e:"1994 · USA",p:"On the worst morning of their lives, the hitmen pause to solemnly praise their host's brew as 'gourmet' coffee. That gap between crisis and coffee talk is pure Tarantino comedy."},
+{w:"Coffee and Cigarettes",e:"2003 · USA",p:"Jarmusch builds all eleven vignettes from nothing but conversation over coffee. A parade of stars simply drinking and talking — impossible to look away. The monument of coffee cinema."},
+{w:"Casablanca",e:"1942 · USA",p:"Rick's joint is formally the Café Américain: in wartime Morocco, refugees cross fates over coffee and drink. The film that fixed forever the café as a stage for drama."}
+];
+
+const BOOKS = [
+{w:"Terada Torahiko, 'Prolegomena to a Coffee Philosophy'",e:"Essay · 1933",p:"The physicist-essayist wrote that coffee was for him no mere indulgence but a catalyst that turned his mind toward work. A classic of Japanese coffee writing, still free to read on Aozora Bunko."},
+{w:"Hemingway, A Moveable Feast",e:"Memoir",p:"Recollections of the young, poor Paris years: a café au lait in a corner café, a pencil sharpened, a story begun. The eternal dream of 'the writer at the café table' starts here."},
+{w:"Chandler, The Long Goodbye",e:"Novel · 1953",p:"Philip Marlowe silently brews coffee for a friend in trouble — a code of honor expressed in the making of a cup. The book that bound hard-boiled fiction and coffee together for good."},
+{w:"Coffee in Murakami Haruki",e:"Contemporary fiction",p:"Across his novels, characters boil water, grind beans, and brew with care — so consistently that fans trace and catalogue 'the coffee in Murakami' as a subject of its own."},
+{w:"Ikenami Shōtarō's kissaten essays",e:"Food essays",p:"The author of Onihei Hankachō was a devoted lover of Western food and coffee houses, recording in stylish prose a cup at an old Ginza establishment or coffee after the cinema — a precious chronicle of Shōwa-era café culture."}
+];
+
+const BIZ = [
+{k:"Success",w:"The world's first canned coffee (UCC, 1969)",p:"Founder Ueshima Tadao, forced to abandon a half-drunk bottle of milk coffee to catch a train, dreamed up 'coffee you can drink anytime, anywhere.' It exploded at the 1970 Osaka Expo — a world-changing invention born in Japan."},
+{k:"Success",w:"Starbucks and the 'third place'",p:"Struck by the energy of Milan's espresso bars, Howard Schultz pivoted from selling coffee to selling a place that is neither home nor work. Selling the experience of a cup opened the road to tens of thousands of stores."},
+{k:"Success",w:"The rediscovery of Geisha (2004)",p:"Panama's Hacienda La Esmeralda entered a forgotten variety from a corner of the farm into competition; its jasmine aroma stunned the judges and set record prices. One rediscovered variety changed an origin's destiny."},
+{k:"Success",w:"Seven Café (2013)",p:"Freshly brewed coffee for 100 yen at the convenience store became a mega-hit, creating a new market of a billion cups a year — proof that 'good, cheap, everywhere' is as rich a vein as premiumization."},
+{k:"Setback",w:"Starbucks retreats from Australia (2008)",p:"Even the giant that conquered the world struggled against Australia's deep-rooted café culture, built by Italian immigrants, and closed stores en masse. The famous proof that local coffee culture can beat global capital."},
+{k:"Setback",w:"The shadow of the kopi luwak boom",p:"As the rare civet-processed coffee soared in price, fakes flooded the market and caged, mistreated animals followed. A cautionary tale about booms built on rarity alone."}
+];
+
+const FUNNY = [
+{w:"The world's first webcam watched a coffee pot",p:"In 1991, Cambridge researchers, tired of trekking to an empty pot, aimed a camera at it. It became the world's first webcam — and coffee wrote itself into internet history."},
+{w:"The royal 'is coffee poison?' experiment",p:"Sweden's Gustav III, determined to prove coffee harmful, ordered one twin convict to drink coffee daily and the other tea. The two supervising doctors died first, then the king — and the coffee-drinking prisoner, so the story goes, outlived them all."},
+{w:"The Pope baptizes coffee",p:"In the late 16th century, urged to condemn the 'devil's drink of the infidels,' Clement VIII took a sip — and, legend says, declared it far too delicious to leave to the devil, baptizing it instead."},
+{w:"Cappuccino means monk's hood",p:"The name comes from the Capuchin friars' brown hooded robes (cappuccio in Italian). Espresso with milk poured in matched the hood's color exactly — or so the leading theory goes."},
+{w:"The birth of the Americano",p:"During World War II, the story goes, espresso proved too strong for American GIs in Italy; they cut it with hot water to taste of home, and Italians dubbed it 'the American's coffee.'"},
+{w:"The first espresso in space",p:"In 2015 a purpose-built machine, the ISSpresso, reached the International Space Station, and an Italian astronaut drank humanity's first space espresso. Italy refuses a proper cup to no one — not even in zero gravity."},
+{w:"Vienna's coffee legend",p:"In 1683 the retreating Ottoman army abandoned mysterious sacks outside Vienna. Nearly discarded as camel feed, they turned out to be coffee beans — and thus, says the city's beloved founding myth, Viennese café culture began."}
+];
+
+const KISSATEN = [
+{w:"Japan's first coffee house died a dreamer",e:"Kahiichakan · 1888",p:"Japan's first true coffee house in Ueno was conceived as a grand salon of knowledge, offering books and billiards along with coffee. Too far ahead of its time, it closed within years — but founder Tei Eikei's defeated dream was faithfully inherited by the kissaten culture to come."},
+{w:"'Gin-bura' and the Café Paulista",e:"Café Paulista · 1911",p:"Opened in Ginza with beans supplied by the Brazilian government, Paulista served real coffee for a bargain five sen and brought it to the masses. One theory says 'gin-bura' — strolling Ginza — originally meant strolling to Paulista for a Brazilian cup. John Lennon and Yoko Ono later drank here; it still serves in Ginza today."},
+{w:"What the 'jun' in junkissa means",e:"Early Shōwa",p:"In early Shōwa, a 'café' often meant hostess service — closer to a bar. Shops serving purely coffee and light meals took the name junkissa: 'pure coffee house.' That signboard is a century-old declaration: here, we take coffee seriously."},
+{w:"Classical-music cafés and jazz kissa",e:"1926 – postwar",p:"When records and gramophones were beyond most homes, coffee houses arose so people could hear good sound together. Meikyoku Kissa Lion in Shibuya (founded 1926) still keeps its hushed hall for classical listening; after the war, jazz kissa spread nationwide, bathing the young in the newest sounds."},
+{w:"Murakami Haruki ran a jazz kissa",e:"1974–",p:"Before his debut, Murakami ran the jazz café Peter Cat, first in Kokubunji, then Sendagaya — writing late at night after closing. If coffee and jazz soak his fiction, it is because the novelist began as a kissaten master."},
+{w:"Ginza's 'coffee only' shop",e:"Café de l'Ambre · 1948",p:"Under the motto 'coffee and nothing else,' Ginza's Café de l'Ambre draws pilgrims worldwide with flannel drip and long-aged old beans. Founder Sekiguchi Ichirō famously kept roasting past the age of 100 — one wellspring of Japan's home-roasting culture."},
+{w:"The invention called 'morning service'",e:"Born in Aichi · 1950s–",p:"Order a coffee, receive toast and a boiled egg: the morning service is said to have begun around Ichinomiya in Aichi, where textile merchants used coffee houses as offices and the shops obliged with breakfast. Nagoya-born Komeda's Coffee carried the custom nationwide."},
+{w:"The country that raised iced coffee",e:"Meiji era –",p:"Long before cold coffee was common in the West, Meiji-era Japan was drinking kōri kōhī over ice. Iced coffee as a summer fixture is a distinctly Japanese scene — beloved in Kansai coffee houses as 'reikō.'"},
+{w:"When Japan led the world in coffee houses",e:"c. 1981",p:"Japan's kissaten peaked at roughly 150,000 shops in the early 1980s. Before convenience stores or mobile phones, the coffee house was meeting point, boardroom, and youth hangout. Numbers have fallen — but the retro boom now has young fans queueing at the classic doors again."},
+{w:"The mystery of the 'Vienna coffee'",e:"A made-in-Japan menu",p:"Coffee crowned with cream is a Japanese kissaten standard called 'Vienna coffee' — order one in Vienna and no one will understand. Japan raised a drink resembling the Einspänner under a name of its own; the kissaten menu is full of such Western dishes that evolved in Japan."}
+];
+
+const RESULTS = {
+sunny:{t:"The Sunlit Cup",o:"Ethiopia or Costa Rica",b:"Paper drip (light–medium roast)",p:"You drink for aroma and brightness. Take a fruity light roast slowly, in the morning light. Choose a natural-process bean and the sweetness opens even further."},
+balance:{t:"The Harmonious Cup",o:"Colombia or Guatemala",b:"Paper drip or French press (medium roast)",p:"You value balance above all. A medium roast with sweetness, acidity and body in step will be your daily companion. Start with the classic: Colombia."},
+deep:{t:"The Twilight Cup",o:"Indonesia (Mandheling) or dark-roast Brazil",b:"French press or moka pot (dark roast)",p:"You savor body and afterglow. A hefty dark roast, taken with your evening reading. Pour in milk — these beans will not yield."},
+adventure:{t:"The Explorer's Cup",o:"Panama Geisha or an anaerobic-process bean",b:"AeroPress (experiment with recipes)",p:"You hunt for flavors you have never met. The joy of tasting varieties and processes side by side awaits. Ask your roaster: got anything unusual?"},
+gentle:{t:"The Moonlit Cup",o:"Brazil or a decaf Colombia",b:"Cold brew",p:"You seek calm and gentleness. Cold brew rounds off every sharp edge of bitterness. Make it decaf at night, and coffee hour never disturbs your sleep."}
+};
+
+const QUIZ = [
+{q:"When do you most crave a coffee?",o:[["Morning, at the start of the day","sunny"],["Midday, between tasks","balance"],["Evening or night, winding down","deep"],["Any time — whenever an interesting bean appears","adventure"]]},
+{q:"Which fruit do you love?",o:[["Citrus and berries","sunny"],["Apples and peaches","balance"],["Dark chocolate (over fruit)","deep"],["Lychee, mango — the rare stuff","adventure"]]},
+{q:"Honestly, how do you feel about bitterness?",o:[["Not my strong suit, honestly","gentle"],["Pleasant in moderation","balance"],["Bitterness IS coffee","deep"],["I care more about flavors I've never met","adventure"]]},
+{q:"What do you order at a coffee house?",o:[["The aromatic coffee of the day","sunny"],["The house blend","balance"],["Café au lait or cappuccino","deep"],["Whatever on the menu looks least familiar","adventure"]]},
+{q:"What do you want from coffee?",o:[["Wakefulness and energy","sunny"],["A moment of comfort","gentle"],["Focus and immersion","deep"],["Discovery and surprise","adventure"]]}
+];
+
+/* =================== RENDER =================== */
+function beansHTML(n,dark){let h='<span class="beans">';for(let i=1;i<=5;i++)h+=`<span class="bean${i<=n?' on':''}${dark?' dark':''}"></span>`;return h+'</span>';}
+function meter(lbl,n,dark){return `<div class="meter"><span class="lbl">${lbl}</span>${beansHTML(n,dark)}</div>`;}
+
+function originCard(o){
+  return `<div class="card" data-region="${o.r}">
+    <h2>${o.n} <span class="tag copper" style="vertical-align:middle">${o.tag}</span></h2>
+    ${meter("Acidity",o.a)}${meter("Body",o.b,true)}${meter("Sweetness",o.s)}${meter("Bitterness",o.bt,true)}
+    <p style="font-size:14px;margin-top:8px">${o.f}</p>
+    <div class="tip">☕ ${o.how}</div>
+  </div>`;
+}
+
+function renderOrigins(region){
+  document.getElementById('originList').innerHTML =
+    ORIGINS.filter(o=>region==='All'||o.r===region).map(originCard).join('');
+}
+
+function initOriginFilters(){
+  const regions=['All','Africa','Latin America','Asia'];
+  const wrap=document.getElementById('originFilters');
+  wrap.innerHTML=regions.map((r,i)=>`<button class="${i===0?'active':''}" data-r="${r}">${r}</button>`).join('');
+  wrap.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    wrap.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderOrigins(b.dataset.r);
+  }));
+  renderOrigins('All');
+}
+
+function renderBrews(){
+  const dstr=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+  document.getElementById('brewList').innerHTML = BREWS.map(b=>`
+  <div class="card">
+    <details>
+      <summary>${b.n}<span class="arrow">▶</span></summary>
+      <div class="body">
+        <span class="tag velvet">Difficulty ${dstr(b.d)}</span>
+        <span class="tag line">${b.t}</span>
+        <span class="tag cherry">${b.taste}</span>
+        <ol class="steps" style="margin-top:10px">${b.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <div class="tip">☕ ${b.tip}</div>
+      </div>
+    </details>
+  </div>`).join('');
+}
+
+function renderProcess(){
+  document.getElementById('processList').innerHTML = PROCESSES.map(p=>`
+    <details><summary>${p.n}<span class="arrow">▶</span></summary>
+    <div class="body"><span class="tag copper">${p.key}</span><p style="margin-top:6px">${p.body}</p></div></details>`).join('');
+  document.getElementById('roastList').innerHTML = ROASTS.map(r=>`
+    <div style="padding:8px 0;border-top:1px solid #E7D9C2">
+      <b style="color:var(--wood);font-size:14px">${r.n}</b>
+      ${meter("Acidity",r.a)}${meter("Bitterness",r.bt,true)}
+      <p style="font-size:13px;color:var(--faint)">${r.f}</p>
+    </div>`).join('');
+}
+
+function renderStories(){
+  const acc=(list,withEra,withTag)=>list.map(x=>`
+    <details><summary>${x.w}<span class="arrow">▶</span></summary>
+    <div class="body">
+      ${withTag?`<span class="tag ${x.k==='Success'?'velvet':'cherry'}">${x.k}</span>`:''}
+      ${withEra&&x.e?`<span class="tag line">${x.e}</span>`:''}
+      <p style="margin-top:6px">${x.p}</p>
+    </div></details>`).join('');
+  document.getElementById('movieList').innerHTML = acc(MOVIES,true,false);
+  document.getElementById('bookList').innerHTML = acc(BOOKS,true,false);
+  document.getElementById('bizList').innerHTML = acc(BIZ,false,true);
+  document.getElementById('funnyList').innerHTML = acc(FUNNY,false,false);
+  document.getElementById('kissatenList').innerHTML = acc(KISSATEN,true,false);
+  document.getElementById('episodeList').innerHTML = EPISODES.map(e=>`
+    <div class="episode"><span class="who">${e.w}</span><span class="era">${e.e}</span><p>${e.p}</p></div>`).join('');
+  document.getElementById('historyList').innerHTML = HISTORY.map(h=>`
+    <div class="episode"><span class="who" style="color:var(--cherry)">${h.y}</span><p>${h.p}</p></div>`).join('');
+}
+
+/* =================== QUIZ =================== */
+let qIdx=0, scores={};
+function startQuiz(){qIdx=0;scores={};showQ();}
+function showQ(){
+  document.getElementById('quizBar').style.width=(qIdx/QUIZ.length*100)+'%';
+  const q=QUIZ[qIdx];
+  document.getElementById('quizArea').innerHTML=`
+    <div class="quiz-q">Q${qIdx+1}. ${q.q}</div>
+    <div class="quiz-opts">${q.o.map((o,i)=>`<button data-i="${i}">${o[0]}</button>`).join('')}</div>`;
+  document.querySelectorAll('#quizArea .quiz-opts button').forEach(b=>b.addEventListener('click',()=>{
+    const key=q.o[+b.dataset.i][1];scores[key]=(scores[key]||0)+1;
+    qIdx++; qIdx<QUIZ.length?showQ():showResult();
+  }));
+}
+function showResult(){
+  document.getElementById('quizBar').style.width='100%';
+  let best='balance',bv=-1;
+  for(const k in scores){if(scores[k]>bv){bv=scores[k];best=k;}}
+  const r=RESULTS[best];
+  document.getElementById('quizArea').innerHTML=`
+    <div class="karte">
+      <div class="stamp">Your<br>match</div>
+      <p class="note" style="letter-spacing:.2em">TASTING CHART</p>
+      <h3>“${r.t}”</h3>
+      <p style="font-size:14px;margin-top:10px"><b>Beans for you:</b> ${r.o}</p>
+      <p style="font-size:14px"><b>How to brew:</b> ${r.b}</p>
+      <p style="font-size:14px;margin-top:8px">${r.p}</p>
+    </div>
+    <button class="btn copper" id="retryQuiz">Take the quiz again</button>
+    <button class="btn" id="goOrigin">Browse the origins guide</button>`;
+  document.getElementById('retryQuiz').addEventListener('click',startQuiz);
+  document.getElementById('goOrigin').addEventListener('click',()=>switchTo('sec-origin'));
+}
+
+/* =================== TODAY =================== */
+function renderToday(){
+  const now=new Date();
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('todayDate').textContent=
+    `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()} (${days[now.getDay()]})`;
+  const seed=Math.floor(now.getTime()/86400000);
+  document.getElementById('todayTip').textContent=TIPS[seed%TIPS.length];
+  const o=ORIGINS[seed%ORIGINS.length];
+  document.getElementById('todayOrigin').innerHTML=originCard(o).replace('class="card"','class=""');
+}
+
+/* =================== NAV =================== */
+function switchTo(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.sec===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>switchTo(b.dataset.sec)));
+
+/* =================== BGM (original composition) =================== */
+const bgm = new Audio('coffee-bgm.mp3');
+bgm.loop = true;
+bgm.volume = 0.2;
+bgm.preload = 'none';
+let bgmOn = false;
+
+function toggleBGM(){
+  const btn=document.getElementById('bgmBtn');
+  if(!bgmOn){
+    bgm.play().then(()=>{
+      bgmOn=true; btn.classList.add('playing'); btn.textContent='◼';
+    }).catch(err=>{
+      console.error('BGM error:', err);
+      document.title='BGM failed to load - KISSATEN';
+    });
+  }else{
+    bgm.pause();
+    bgmOn=false; btn.classList.remove('playing'); btn.textContent='♪';
+  }
+}
+document.getElementById('bgmBtn').addEventListener('click',toggleBGM);
+
+/* =================== INIT =================== */
+renderToday();initOriginFilters();renderBrews();renderProcess();renderStories();startQuiz();
+</script>
+</body>
+</html>

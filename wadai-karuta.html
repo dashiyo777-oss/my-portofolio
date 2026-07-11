@@ -17,6 +17,12 @@ body{font-family:var(--body);background:var(--ai-fukai);color:var(--sumi);min-he
 header{padding:22px 20px 10px;text-align:center;color:var(--kami)}
 header .yomi{font-size:10.5px;letter-spacing:.35em;opacity:.75;margin-bottom:6px}
 header h1{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:.12em}
+.langbar{text-align:center;margin-top:12px}
+.langbar a{
+  font-size:11px;letter-spacing:.08em;color:var(--kami);text-decoration:none;
+  border:1px solid rgba(244,241,233,.4);border-radius:999px;padding:4px 12px;opacity:.85;
+}
+.langbar a.on{background:var(--kami);color:var(--ai-fukai);border-color:var(--kami);opacity:1;font-weight:700}
 /* タブ */
 nav{display:flex;gap:6px;justify-content:center;padding:12px 14px 16px}
 nav button{
@@ -141,6 +147,10 @@ main{background:var(--kami);border-radius:18px 18px 0 0;padding:18px 16px 140px;
 <header>
   <div class="yomi">き ど に た て か け し ・ い しょく じゅう</div>
   <h1>話題かるた</h1>
+  <div class="langbar">
+    <a href="wadai-karuta.html" class="on">日本語</a>
+    <a href="wadai-karuta-en.html">English</a>
+  </div>
 </header>
 
 <nav>
