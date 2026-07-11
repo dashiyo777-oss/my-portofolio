@@ -680,7 +680,7 @@ function closeBook(){document.getElementById('bookOverlay').classList.remove('sh
 function openPay(){document.getElementById('payErr').textContent='';
   document.getElementById('payOverlay').classList.add('show');}
 function closePay(){document.getElementById('payOverlay').classList.remove('show');}
-async function checkPass(){const v=(document.getElementById('passInput').value||'').trim().toUpperCase();
+async function checkPass(){const v=(document.getElementById('passInput').value||'').normalize('NFKC').replace(/[\u2010-\u2015\u2212\u30FC\uFF0D\uFF70]/g,'-').replace(/\s+/g,'').toUpperCase();
   if(!v)return;
   if(v===CONFIG.MASTER_PASSCODE.toUpperCase()){grantMember('master');return;}
   const hash=CONFIG.MONTHLY_CODES[curYM()];
