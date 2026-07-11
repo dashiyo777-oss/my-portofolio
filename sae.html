@@ -228,6 +228,30 @@ nav.tabbar{
 .fade-in{animation:fadein .4s ease}
 @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== SAE RUSH ===== */
+.rush-hud{position:absolute;top:10px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:17px}
+.rush-hud .hearts{letter-spacing:2px;font-size:15px}
+.rush-hud .rscore{font-family:'Shippori Mincho B1',serif;font-size:22px}
+.rush-hud .rcombo{color:var(--shu);min-width:56px;text-align:right;font-size:15px}
+.rush-timebar{position:absolute;top:46px;left:16px;right:16px;height:8px;background:var(--paper2);border-radius:99px;overflow:hidden}
+#rtb{height:100%;width:100%;background:linear-gradient(90deg,var(--gold),var(--shu))}
+.rush-q{font-family:'Shippori Mincho B1',serif;font-size:42px;font-weight:800;min-height:70px;display:flex;align-items:center;justify-content:center;letter-spacing:.04em}
+.pill{display:inline-block;color:#fff;border-radius:999px;padding:5px 20px;font-weight:800;font-size:17px;margin-bottom:10px}
+.rush-lvl{position:absolute;bottom:12px;right:18px;font-size:12px;font-weight:800;color:#8B8878}
+.odd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(320px,84vw);margin-top:12px}
+.odd-grid button{font-size:26px;padding:12px 0;border-radius:10px;border:1px solid var(--line);background:var(--white);font-family:'Shippori Mincho B1',serif;cursor:pointer;color:var(--ink)}
+@keyframes shakeArea{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.shake{animation:shakeArea .35s}
+.redflash{position:absolute;inset:0;background:rgba(200,69,44,.18);opacity:0;pointer-events:none;transition:opacity .1s;z-index:5}
+.redflash.on{opacity:1}
+.ptfloat{position:absolute;top:24%;left:0;right:0;text-align:center;font-weight:800;font-size:24px;color:var(--green);animation:floatUp .55s ease forwards;pointer-events:none;z-index:6}
+@keyframes floatUp{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-28px)}}
+.lvup{position:absolute;top:36%;left:0;right:0;text-align:center;font-family:'Shippori Mincho B1',serif;font-size:36px;font-weight:800;color:var(--ai);animation:fadein .3s;z-index:6}
+.rush-stats{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-bottom:12px;opacity:.95}
+.rush-stats b{font-size:16px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.kpi .kv{font-size:20px}
 </style>
 </head>
 <body>
@@ -249,7 +273,8 @@ nav.tabbar{
 <div id="gameOverlay">
   <div class="g-head">
     <div class="g-title" id="gTitle">ゲーム</div>
-    <button class="g-quit" onclick="quitGame()">やめる</button>
+    <button class="g-quit" id="muteBtn" style="margin-left:auto">🔊</button>
+    <button class="g-quit" style="margin-left:8px" onclick="quitGame()">やめる</button>
   </div>
   <div class="g-prog"><div id="gProg"></div></div>
   <div id="gameArea"></div>
@@ -277,6 +302,7 @@ DB.history=DB.history||[];   // {d,g,s}
 DB.daily=DB.daily||{};       // {"2026-07-11":true}
 DB.diag=DB.diag||[];         // {d,age,comp,scores:{}}
 DB.best=DB.best||{};
+DB.rush=DB.rush||{best:0,plays:0};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
 
 function streakCount(){
@@ -347,8 +373,9 @@ function render(tab){
 
 /* ---------- home ---------- */
 function renderHome(){
-  const lastDiag=DB.diag[DB.diag.length-1];
   const doneToday=!!DB.daily[todayStr()];
+  const best=DB.rush.best||0;
+  const rk=rankFor(best), nx=nextRank(best);
   const tiles=Object.entries(GAMES).map(([id,g])=>`
     <div class="game-tile" onclick="startGame('${id}')">
       <div class="gicon">${g.icon}</div>
@@ -360,10 +387,15 @@ function renderHome(){
   <div class="fade-in">
     <div class="hero">
       <div class="date">${jpDate()}</div>
-      ${lastDiag?`<div class="brainage-mini"><span style="font-size:12px;opacity:.85">現在の脳年齢</span><span class="num">${lastDiag.age}</span><span class="unit">歳</span></div>`:""}
-      <h2>${doneToday?"本日の稽古、済み。":"今日の3分脳トレ"}</h2>
-      <p>${doneToday?"もう一稽古で、さらに冴える。":"日替わり3種目で、脳をあたためましょう。"}</p>
-      <button class="btn" onclick="startDaily()">${doneToday?"もう一度やる":"今日の稽古を始める"}</button>
+      <h2>⚡ 冴えラッシュ</h2>
+      <p>計算・色・記憶・反射——次々かわる出題を、3ミスまでにどこまで捌けるか。コンボで得点倍増。</p>
+      ${best?`<div class="rush-stats"><span>最高 <b>${best.toLocaleString()}</b></span><span>段位 <b>${rk}</b></span>${nx?`<span>次の段位まで <b>${(nx[0]-best).toLocaleString()}</b></span>`:`<span><b>最高段位！</b></span>`}</div>`:``}
+      <button class="btn" onclick="startRush()">挑戦する</button>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:28px">⛩️</div>
+      <div style="flex:1"><b>今日の稽古</b><div class="muted small">${doneToday?"本日は済み。🔥連続"+streakCount()+"日":"日替わり3種目・約3分"}</div></div>
+      <button class="btn" style="width:auto;padding:10px 18px;font-size:14px" onclick="startDaily()">やる</button>
     </div>
     <div class="eyebrow">TRAINING</div>
     <h2 class="mincho" style="font-size:17px;margin-bottom:10px">種目べつ稽古</h2>
@@ -427,6 +459,7 @@ function renderRec(){
   mainEl.innerHTML=`
   <div class="fade-in">
     <div class="kpis">
+      <div class="kpi"><div class="kv">${DB.rush.best?DB.rush.best.toLocaleString():"—"}</div><div class="kl">ラッシュ最高</div></div>
       <div class="kpi"><div class="kv">${streak}</div><div class="kl">連続日数</div></div>
       <div class="kpi"><div class="kv">${plays}</div><div class="kl">総プレイ数</div></div>
       <div class="kpi"><div class="kv">${lastDiag?lastDiag.age:"—"}</div><div class="kl">脳年齢</div></div>
@@ -527,6 +560,243 @@ function domainAdvice(k){
     judge:{title:"「後出しじゃんけん」＋会話",body:"素早い判断は、後出しじゃんけんのような反応課題と、テンポのよい会話で磨かれます。家族との雑談も立派なトレーニングです。"}
   };
   return map[k];
+}
+
+
+/* ======================================================
+   ⚡ 冴えラッシュ (SAE RUSH) — endless arcade mode
+====================================================== */
+const RANKS=[[0,"見習い"],[2000,"白帯"],[5000,"茶帯"],[9000,"黒帯"],[14000,"師範代"],[20000,"師範"],[28000,"達人"],[38000,"名人"],[50000,"冴えの極み"]];
+function rankFor(s){let r=RANKS[0][1];for(const[t,n]of RANKS)if(s>=t)r=n;return r;}
+function nextRank(s){for(const[t,n]of RANKS)if(s<t)return[t,n];return null;}
+const rnd=n=>Math.floor(Math.random()*n);
+
+/* --- sound (WebAudio, mutable) --- */
+let AC=null,muted=!!DB.muted;
+function beep(f,d,type,vol){
+  if(muted)return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type=type||"sine";o.frequency.value=f;
+    g.gain.setValueAtTime(vol||.14,AC.currentTime);
+    o.connect(g);g.connect(AC.destination);o.start();
+    g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);
+    o.stop(AC.currentTime+d);
+  }catch(e){}
+}
+const sfxOK=c=>beep(500+Math.min(c,12)*55,.09,"triangle");
+const sfxNG=()=>beep(130,.28,"sawtooth",.12);
+const sfxLv=()=>{beep(660,.1,"triangle");setTimeout(()=>beep(880,.16,"triangle"),100);};
+const mb=$("#muteBtn");
+mb.textContent=muted?"🔇":"🔊";
+mb.onclick=()=>{muted=!muted;DB.muted=muted;save();mb.textContent=muted?"🔇":"🔊";};
+
+/* --- question generators: return {pill,pillColor,html,buttons:[{label,ok}],cols,extra,flash} --- */
+const CN=[{n:"あか",c:"#C8452C"},{n:"あお",c:"#2A4D8F"},{n:"みどり",c:"#3E7C4F"},{n:"きいろ",c:"#C99B2D"}];
+const KPAIRS=[["旅","族"],["未","末"],["土","士"],["矢","失"],["体","休"],["網","綱"],["徴","微"],["崇","祟"],["瓜","爪"],["天","夭"],["若","苦"],["右","石"],["田","由"],["王","玉"]];
+
+function qCalcTF(L){
+  const hard=L>=4;const t=rnd(3);let a,b,res,q;
+  if(t===0){a=3+rnd(hard?26:12);b=3+rnd(hard?26:12);res=a+b;q=`${a} ＋ ${b}`;}
+  else if(t===1){a=10+rnd(hard?60:30);b=1+rnd(Math.min(a-1,hard?25:12));res=a-b;q=`${a} − ${b}`;}
+  else{a=2+rnd(hard?8:6);b=2+rnd(hard?8:6);res=a*b;q=`${a} × ${b}`;}
+  const truth=Math.random()<.5;let shown=res;
+  if(!truth){do{shown=res+(rnd(7)-3);}while(shown===res||shown<0);}
+  return{pill:"正しい？",pillColor:"var(--ai)",html:`<div class="rush-q">${q} ＝ ${shown}</div>`,
+    buttons:[{label:"○",ok:truth},{label:"✕",ok:!truth}],cols:2};
+}
+function qCompare(L){
+  const rev=L>=6&&Math.random()<.4;
+  const mk=()=>{
+    if(L>=3&&Math.random()<.5){const a=2+rnd(8),b=2+rnd(8);return{t:`${a}×${b}`,v:a*b};}
+    if(Math.random()<.5){const a=5+rnd(30),b=3+rnd(20);return{t:`${a}+${b}`,v:a+b};}
+    return{t:String(10+rnd(70)),v:0};
+  };
+  let A=mk(),B=mk();
+  if(A.t.indexOf("+")<0&&A.t.indexOf("×")<0)A.v=Number(A.t);
+  if(B.t.indexOf("+")<0&&B.t.indexOf("×")<0)B.v=Number(B.t);
+  if(A.v===B.v)B.v+=1,B.t=String(B.v);
+  const bigA=A.v>B.v;
+  return{pill:rev?"小さい方！":"大きい方！",pillColor:rev?"var(--shu)":"var(--ai)",
+    html:``,buttons:[{label:A.t,ok:bigA!==rev},{label:B.t,ok:bigA===rev}],cols:2,extra:300};
+}
+function qColorTF(){
+  const w=CN[rnd(4)],ink=Math.random()<.5?w:CN[rnd(4)];
+  return{pill:"文字と色、一致？",pillColor:"var(--ai)",
+    html:`<div class="rush-q" style="color:${ink.c}">${w.n}</div>`,
+    buttons:[{label:"○",ok:w.n===ink.n},{label:"✕",ok:w.n!==ink.n}],cols:2};
+}
+function qColorTap(){
+  const w=CN[rnd(4)],ink=CN[rnd(4)];
+  return{pill:"インクの色は？",pillColor:"var(--ai)",
+    html:`<div class="rush-q" style="color:${ink.c}">${w.n}</div>`,
+    buttons:shuffle(CN.slice()).map(c=>({label:c.n,ok:c.n===ink.n})),cols:2,extra:400};
+}
+function qJanken(){
+  const H=["✊","✌️","✋"],winTo={0:2,1:0,2:1},loseTo={0:1,1:2,2:0};
+  const opp=rnd(3),win=Math.random()<.5,target=win?winTo[opp]:loseTo[opp];
+  return{pill:win?"かって！":"まけて！",pillColor:win?"var(--ai)":"var(--shu)",
+    html:`<div class="rush-q" style="font-size:64px">${H[opp]}</div>`,
+    buttons:H.map((h,i)=>({label:h,ok:i===target})),cols:3,extra:300};
+}
+function qArrow(L){
+  const AR=["⬅️","➡️","⬆️","⬇️"],OPP={0:1,1:0,2:3,3:2};
+  const rev=L>=6&&Math.random()<.4;
+  const a=rnd(4),target=rev?OPP[a]:a;
+  return{pill:rev?"逆の向き！":"同じ向き！",pillColor:rev?"var(--shu)":"var(--ai)",
+    html:`<div class="rush-q" style="font-size:60px">${AR[a]}</div>`,
+    buttons:AR.map((x,i)=>({label:x,ok:i===target})),cols:2,extra:200};
+}
+function qOdd(){
+  const p=KPAIRS[rnd(KPAIRS.length)];
+  const flip=Math.random()<.5,base=flip?p[1]:p[0],odd=flip?p[0]:p[1];
+  const pos=rnd(12);
+  const cells=Array.from({length:12},(_,i)=>({label:i===pos?odd:base,ok:i===pos}));
+  return{pill:"ひとつだけ違う字は？",pillColor:"var(--gold)",html:``,buttons:cells,cols:"odd",extra:1600};
+}
+function qFlash(L){
+  const len=L>=6?4:3;
+  let n="";for(let i=0;i<len;i++)n+=rnd(10);
+  const v=n;
+  const set=new Set([v]);
+  while(set.size<3){
+    let d=v.split("");
+    const i=rnd(len);d[i]=String((Number(d[i])+1+rnd(8))%10);
+    set.add(d.join(""));
+  }
+  return{flash:{text:v.split("").join(" "),ms:850},
+    pill:"さっきの数字は？",pillColor:"var(--gold)",html:``,
+    buttons:shuffle([...set]).map(x=>({label:x,ok:x===v})),cols:3,extra:600};
+}
+function pickGen(L,last){
+  const pool=[qCalcTF,qCompare];
+  if(L>=2)pool.push(qColorTF);
+  if(L>=3)pool.push(qJanken,qOdd);
+  if(L>=4)pool.push(qArrow,qColorTap);
+  if(L>=5)pool.push(qFlash);
+  let g;do{g=pool[rnd(pool.length)];}while(pool.length>1&&g===last);
+  return g;
+}
+
+/* --- rush state machine --- */
+let RS=null;
+function startRush(){
+  RS={score:0,combo:0,maxCombo:0,lives:3,q:0,level:1,lastGen:null};
+  gResolve=()=>{};       // makes やめる work
+  clearGTimers();
+  openOverlay("⚡ 冴えラッシュ");
+  rushNext();
+}
+function rushHud(){
+  return `<div class="rush-hud">
+    <span class="hearts">${"❤️".repeat(RS.lives)}${"🖤".repeat(3-RS.lives)}</span>
+    <span class="rscore">${RS.score.toLocaleString()}</span>
+    <span class="rcombo">${RS.combo>=2?"🔥"+RS.combo:""}</span>
+  </div>
+  <div class="rush-timebar"><div id="rtb"></div></div>
+  <div class="redflash" id="rflash"></div>
+  <div class="rush-lvl">LV.${RS.level}</div>`;
+}
+function rushNext(){
+  if(!RS)return;
+  RS.q++;
+  if(RS.q>1&&(RS.q-1)%8===0){
+    RS.level++;sfxLv();
+    gArea().innerHTML=rushHud()+`<div class="lvup">LEVEL ${RS.level}</div>`;
+    gT(()=>rushShow(),750);
+    return;
+  }
+  rushShow();
+}
+function rushShow(){
+  const gen=pickGen(RS.level,RS.lastGen);RS.lastGen=gen;
+  const g=gen(RS.level);
+  if(g.flash){
+    gArea().innerHTML=rushHud()+`<p class="instruction">おぼえて！</p><div class="rush-q" style="letter-spacing:.15em">${g.flash.text}</div>`;
+    gT(()=>rushQ(g),g.flash.ms);
+  }else rushQ(g);
+}
+function rushQ(g){
+  const tmax=(g.extra||0)+Math.max(1500,3500-(RS.level-1)*250);
+  let grid;
+  if(g.cols==="odd"){
+    grid=`<div class="odd-grid">${g.buttons.map((b,i)=>`<button data-i="${i}" data-ok="${b.ok}">${b.label}</button>`).join("")}</div>`;
+  }else{
+    grid=`<div class="choice-grid ${g.cols===3?"cols3":""}">${g.buttons.map((b,i)=>`<button class="choice-btn ${g.cols===3?"":"big"}" style="font-size:${String(g.buttons[0].label).length>3?22:28}px" data-i="${i}" data-ok="${b.ok}">${b.label}</button>`).join("")}</div>`;
+  }
+  gArea().innerHTML=rushHud()+`
+    <div class="pill" style="background:${g.pillColor}">${g.pill}</div>
+    ${g.html}
+    ${grid}`;
+  const bar=$("#rtb");
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{
+    if(!bar.isConnected)return;
+    bar.style.transition=`width ${tmax}ms linear`;
+    bar.style.width="0%";
+  });});
+  const t0=Date.now();
+  let done=false;
+  const expiry=gT(()=>{if(!done){done=true;rushMiss();}},tmax);
+  gArea().querySelectorAll("[data-ok]").forEach(b=>{
+    b.onclick=()=>{
+      if(done)return;done=true;clearTimeout(expiry);
+      if(b.dataset.ok==="true"){
+        const frac=clamp(1-(Date.now()-t0)/tmax,0,1);
+        rushHit(frac);
+      }else rushMiss();
+    };
+  });
+}
+function rushHit(frac){
+  RS.combo++;RS.maxCombo=Math.max(RS.maxCombo,RS.combo);
+  const mult=1+Math.min(Math.floor(RS.combo/5),6)*0.5;
+  const pts=Math.round((100+100*frac)*mult);
+  RS.score+=pts;
+  sfxOK(RS.combo);
+  if(RS.combo>0&&RS.combo%5===0)sfxLv();
+  const f=document.createElement("div");f.className="ptfloat";f.textContent="+"+pts+(mult>1?"（×"+mult+"）":"");
+  gArea().appendChild(f);
+  gT(rushNext,200);
+}
+function rushMiss(){
+  RS.lives--;RS.combo=0;sfxNG();
+  const fl=$("#rflash");if(fl)fl.classList.add("on");
+  gArea().classList.add("shake");
+  gT(()=>{gArea().classList.remove("shake");},360);
+  if(RS.lives<=0)gT(rushEnd,550);
+  else gT(rushNext,480);
+}
+function rushEnd(){
+  const s=RS.score,mc=RS.maxCombo,qn=RS.q,lv=RS.level;
+  const newBest=s>(DB.rush.best||0);
+  if(newBest)DB.rush.best=s;
+  DB.rush.plays++;
+  DB.daily[todayStr()]=true;
+  save();updateStreakChip();
+  RS=null;setProg(1);
+  const rk=rankFor(s),nx=nextRank(s);
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      <p class="instruction center">ここまで！</p>
+      <div class="center"><div class="score-big" id="cntup">0</div>
+      <span class="stamp">${rk}</span>
+      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:8px">🎉 自己ベスト更新！</p>`:""}
+      </div>
+      <div style="margin-top:14px">
+        <div class="rec-row"><span>最大コンボ</span><b>🔥${mc}</b></div>
+        <div class="rec-row"><span>こなした問題</span><b>${qn}問</b></div>
+        <div class="rec-row"><span>到達レベル</span><b>LV.${lv}</b></div>
+        ${nx?`<div class="rec-row"><span>次の段位「${nx[1]}」まで</span><b>${(nx[0]-s).toLocaleString()}</b></div>`:""}
+      </div>
+      <div style="display:grid;gap:10px;margin-top:18px">
+        <button class="btn shu" onclick="startRush()">もう一度挑戦</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">とじる</button>
+      </div>
+    </div>`;
+  const el=$("#cntup");let cur=0;const step=Math.max(1,Math.round(s/40));
+  const iv=setInterval(()=>{cur=Math.min(s,cur+step);el.textContent=cur.toLocaleString();if(cur>=s)clearInterval(iv);},22);
+  gTimers.push(iv);
 }
 
 /* ---------- init ---------- */
