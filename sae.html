@@ -453,9 +453,33 @@ async function tryUnlock(raw){
   return false;
 }
 
-/* ====== 禅BGM（平調子の琴・生成音楽） ====== */
-let BGT=null,BGGain=null;
+/* ====== BGM：オリジナル曲「百億年前のパズル」＋琴フォールバック ====== */
+let BGMAudio=null,BGMFade=null;
 function bgmStart(){
+  if(muted)return;
+  if(BGMAudio){try{BGMAudio.play().catch(()=>{});bgmFadeTo(0.30);}catch(e){}return;}
+  try{
+    const a=new Audio("sae-bgm.mp3");
+    a.loop=true;a.preload="auto";a.volume=0;
+    a.addEventListener("error",()=>{BGMAudio=null;bgmKotoStart();},{once:true});
+    const p=a.play();
+    if(p&&p.catch)p.catch(()=>{/* 自動再生不可などは無音のまま。琴も鳴らさない（次のタップで再開） */});
+    BGMAudio=a;
+    bgmFadeTo(0.30);
+  }catch(e){bgmKotoStart();}
+}
+function bgmFadeTo(target){
+  if(!BGMAudio)return;
+  if(BGMFade)clearInterval(BGMFade);
+  BGMFade=setInterval(()=>{
+    if(!BGMAudio){clearInterval(BGMFade);return;}
+    const v=BGMAudio.volume,step=0.03;
+    if(Math.abs(v-target)<=step){BGMAudio.volume=target;clearInterval(BGMFade);if(target===0){BGMAudio.pause();}}
+    else BGMAudio.volume=v+(target>v?step:-step);
+  },70);
+}
+let BGT=null,BGGain=null;
+function bgmKotoStart(){
   if(muted||BGT)return;
   try{
     AC=AC||new (window.AudioContext||window.webkitAudioContext)();
@@ -484,6 +508,7 @@ function bgmStart(){
   }catch(e){}
 }
 function bgmStop(){
+  if(BGMAudio)bgmFadeTo(0);
   if(BGT){clearTimeout(BGT);BGT=null;}
   if(BGGain){try{const g=BGGain;g.gain.linearRampToValueAtTime(0.0001,AC.currentTime+0.4);setTimeout(()=>{try{g.disconnect();}catch(e){}},500);}catch(e){}BGGain=null;}
 }
