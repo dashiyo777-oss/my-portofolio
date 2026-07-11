@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#2A4D8F">
+<title>冴え手帖 -SAE- 脳活道場｜叡智の灯火</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F2EB;
+  --paper2:#ECE8DC;
+  --ink:#1E2A38;
+  --ai:#2A4D8F;
+  --ai-deep:#1D3765;
+  --shu:#C8452C;
+  --gold:#C99B2D;
+  --green:#3E7C4F;
+  --line:#D9D4C5;
+  --white:#FFFFFF;
+  --radius:14px;
+  --shadow:0 2px 10px rgba(30,42,56,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.6;
+  overscroll-behavior:none;
+}
+.mincho{font-family:'Shippori Mincho B1',serif}
+
+/* ===== App shell ===== */
+#app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;position:relative}
+header.appbar{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px 10px;
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:var(--paper);z-index:20;
+}
+.hanko{
+  width:34px;height:34px;flex:0 0 34px;
+  background:var(--shu);color:#fff;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:20px;
+  box-shadow:0 1px 3px rgba(200,69,44,.4);
+  transform:rotate(-4deg);
+}
+.appbar h1{font-family:'Shippori Mincho B1',serif;font-size:19px;font-weight:800;letter-spacing:.06em}
+.appbar h1 small{font-size:11px;font-weight:600;color:var(--ai);letter-spacing:.14em;display:block;line-height:1.2}
+.streak-chip{
+  margin-left:auto;background:var(--white);border:1px solid var(--line);
+  border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--shu);
+  white-space:nowrap;
+}
+main{flex:1;padding:18px 18px 90px;overflow-x:hidden}
+
+/* ===== Bottom nav ===== */
+nav.tabbar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:520px;
+  display:flex;background:var(--white);border-top:1px solid var(--line);
+  z-index:30;padding-bottom:env(safe-area-inset-bottom);
+}
+.tabbar button{
+  flex:1;background:none;border:none;padding:9px 0 7px;
+  font-family:inherit;font-size:10.5px;font-weight:700;color:#8B8878;
+  display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;
+}
+.tabbar button .ticon{font-size:20px;line-height:1}
+.tabbar button.active{color:var(--ai)}
+.tabbar button.active .ticon{transform:translateY(-1px)}
+
+/* ===== Cards & common ===== */
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+.card h2{font-family:'Shippori Mincho B1',serif;font-size:16px;font-weight:800;margin-bottom:8px;letter-spacing:.04em}
+.eyebrow{font-size:11px;font-weight:700;color:var(--ai);letter-spacing:.18em;margin-bottom:4px}
+.btn{
+  display:block;width:100%;border:none;border-radius:12px;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:16px;padding:15px;
+  background:var(--ai);color:#fff;letter-spacing:.05em;
+  transition:transform .08s ease, filter .15s;
+}
+.btn:active{transform:scale(.97)}
+.btn.secondary{background:var(--white);color:var(--ai);border:1.5px solid var(--ai)}
+.btn.shu{background:var(--shu)}
+.btn.ghost{background:none;color:#8B8878;border:1px solid var(--line);font-size:14px;padding:11px}
+.btn:disabled{opacity:.4;pointer-events:none}
+.muted{color:#7C7A6E;font-size:13px}
+.small{font-size:12px}
+.center{text-align:center}
+
+/* ===== Home ===== */
+.hero{
+  background:linear-gradient(160deg,var(--ai) 0%,var(--ai-deep) 100%);
+  color:#fff;border-radius:var(--radius);padding:20px 18px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"冴";font-family:'Shippori Mincho B1',serif;font-weight:800;
+  position:absolute;right:-14px;bottom:-38px;font-size:130px;color:rgba(255,255,255,.07);
+  pointer-events:none;
+}
+.hero .date{font-size:12px;opacity:.85;letter-spacing:.1em;margin-bottom:6px}
+.hero h2{font-family:'Shippori Mincho B1',serif;font-size:21px;font-weight:800;margin-bottom:4px}
+.hero p{font-size:13px;opacity:.9;margin-bottom:14px}
+.hero .btn{background:#fff;color:var(--ai-deep)}
+.brainage-mini{
+  display:flex;align-items:baseline;gap:6px;margin-bottom:10px;
+}
+.brainage-mini .num{font-family:'Shippori Mincho B1',serif;font-size:44px;font-weight:800;line-height:1}
+.brainage-mini .unit{font-size:14px;opacity:.9}
+
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.game-tile{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 12px;cursor:pointer;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:4px;transition:transform .08s;
+}
+.game-tile:active{transform:scale(.97)}
+.game-tile .gicon{font-size:26px}
+.game-tile .gname{font-weight:700;font-size:14px}
+.game-tile .gdom{font-size:11px;color:var(--ai);font-weight:700}
+.game-tile .gbest{font-size:11px;color:#8B8878}
+
+/* ===== Game overlay ===== */
+#gameOverlay{
+  position:fixed;inset:0;background:var(--paper);z-index:100;display:none;
+  flex-direction:column;max-width:520px;margin:0 auto;
+}
+#gameOverlay.open{display:flex}
+.g-head{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+.g-head .g-title{font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:17px}
+.g-head .g-quit{margin-left:auto;background:none;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-family:inherit;font-size:13px;color:#8B8878;cursor:pointer}
+.g-prog{height:4px;background:var(--paper2)}
+.g-prog>div{height:100%;background:var(--gold);width:0%;transition:width .25s}
+#gameArea{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;position:relative}
+
+.big-display{font-family:'Shippori Mincho B1',serif;font-size:52px;font-weight:800;letter-spacing:.12em;min-height:80px;display:flex;align-items:center;justify-content:center}
+.instruction{font-size:15px;color:#5C5A4E;margin-bottom:14px}
+.countN{font-family:'Shippori Mincho B1',serif;font-size:70px;font-weight:800;color:var(--ai)}
+
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:min(300px,80vw);margin-top:14px}
+.numpad button{
+  font-family:'Shippori Mincho B1',serif;font-size:26px;font-weight:700;
+  padding:14px 0;border-radius:12px;border:1px solid var(--line);background:var(--white);
+  cursor:pointer;color:var(--ink);
+}
+.numpad button:active{background:var(--paper2)}
+.numpad button.util{font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;color:var(--shu)}
+.digit-input{font-family:'Shippori Mincho B1',serif;font-size:36px;letter-spacing:.2em;min-height:52px;border-bottom:3px solid var(--ai);width:min(300px,80vw);display:flex;align-items:center;justify-content:center}
+
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(340px,86vw);margin-top:18px}
+.choice-grid.cols3{grid-template-columns:repeat(3,1fr)}
+.choice-btn{
+  font-family:inherit;font-weight:700;font-size:20px;padding:18px 0;border-radius:12px;
+  border:1.5px solid var(--line);background:var(--white);cursor:pointer;color:var(--ink);
+}
+.choice-btn:active{background:var(--paper2)}
+.choice-btn.big{font-size:34px;padding:20px 0}
+
+#trailField{position:relative;width:min(340px,88vw);height:min(430px,62dvh);background:var(--white);border:1px solid var(--line);border-radius:var(--radius)}
+.trail-node{
+  position:absolute;width:52px;height:52px;border-radius:50%;
+  background:var(--white);border:2px solid var(--ai);color:var(--ai);
+  font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:21px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  user-select:none;transition:transform .1s, opacity .3s;
+}
+.trail-node.done{background:var(--ai);color:#fff;opacity:.35;pointer-events:none}
+.trail-node.miss{animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.stroop-word{font-family:'Shippori Mincho B1',serif;font-size:56px;font-weight:800;min-height:90px;display:flex;align-items:center;justify-content:center}
+.janken-hand{font-size:86px;line-height:1;min-height:100px}
+.janken-order{font-size:22px;font-weight:800;border-radius:999px;padding:5px 24px;display:inline-block;margin-bottom:10px;color:#fff}
+.feedback{position:absolute;top:14%;left:0;right:0;font-size:40px;font-weight:800;pointer-events:none;opacity:0;transition:opacity .15s}
+.feedback.show{opacity:1}
+
+/* ===== Result / diagnosis ===== */
+.enso-wrap{position:relative;width:230px;height:230px;margin:6px auto 10px}
+.enso-wrap svg{position:absolute;inset:0}
+.enso-num{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.enso-num .n{font-family:'Shippori Mincho B1',serif;font-size:74px;font-weight:800;line-height:1;color:var(--ink)}
+.enso-num .u{font-size:14px;font-weight:700;color:#7C7A6E}
+.enso-num .l{font-size:12px;font-weight:700;color:var(--ai);letter-spacing:.2em;margin-bottom:2px}
+.score-big{font-family:'Shippori Mincho B1',serif;font-size:64px;font-weight:800;color:var(--ai);line-height:1.1}
+.domain-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+.domain-row .dn{width:88px;font-size:12.5px;font-weight:700;flex:0 0 88px}
+.domain-row .bar{flex:1;height:10px;background:var(--paper2);border-radius:99px;overflow:hidden}
+.domain-row .bar>div{height:100%;border-radius:99px;background:var(--ai);width:0;transition:width .8s ease}
+.domain-row .dv{width:34px;text-align:right;font-weight:700;font-size:13px;flex:0 0 34px}
+.stamp{
+  display:inline-block;border:3px solid var(--shu);color:var(--shu);border-radius:8px;
+  font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px;
+  padding:6px 16px;transform:rotate(-5deg);letter-spacing:.1em;margin-top:8px;
+}
+
+/* ===== Advice ===== */
+.tip-card{border-left:4px solid var(--gold);background:var(--white);border-radius:0 var(--radius) var(--radius) 0;padding:14px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.tip-card .tcat{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--gold);margin-bottom:3px}
+.tip-card .ttitle{font-weight:700;font-size:15px;margin-bottom:4px}
+.tip-card p{font-size:13.5px;color:#4A493F}
+.tip-card .tev{font-size:11px;color:#8B8878;margin-top:6px}
+.cat-tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px}
+.cat-tabs button{
+  flex:0 0 auto;border:1px solid var(--line);background:var(--white);border-radius:999px;
+  padding:6px 14px;font-family:inherit;font-size:12.5px;font-weight:700;color:#7C7A6E;cursor:pointer;
+}
+.cat-tabs button.active{background:var(--ai);border-color:var(--ai);color:#fff}
+
+/* ===== Records ===== */
+.chart-box{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow)}
+.rec-row{display:flex;justify-content:space-between;padding:9px 2px;border-bottom:1px dashed var(--line);font-size:13.5px}
+.rec-row:last-child{border-bottom:none}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:12px 8px;text-align:center;box-shadow:var(--shadow)}
+.kpi .kv{font-family:'Shippori Mincho B1',serif;font-size:24px;font-weight:800;color:var(--ai)}
+.kpi .kl{font-size:10.5px;color:#8B8878;font-weight:700}
+
+.fade-in{animation:fadein .4s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="appbar">
+    <div class="hanko">冴</div>
+    <h1>冴え手帖<small>SAE — 脳活道場</small></h1>
+    <div class="streak-chip" id="streakChip">🔥 0日</div>
+  </header>
+  <main id="main"></main>
+  <nav class="tabbar">
+    <button data-tab="home" class="active"><span class="ticon">⛩️</span>道場</button>
+    <button data-tab="diag"><span class="ticon">🧠</span>診断</button>
+    <button data-tab="rec"><span class="ticon">📈</span>記録</button>
+    <button data-tab="tips"><span class="ticon">💡</span>知恵</button>
+  </nav>
+</div>
+
+<div id="gameOverlay">
+  <div class="g-head">
+    <div class="g-title" id="gTitle">ゲーム</div>
+    <button class="g-quit" onclick="quitGame()">やめる</button>
+  </div>
+  <div class="g-prog"><div id="gProg"></div></div>
+  <div id="gameArea"></div>
+</div>
+
+<script>
+/* ======================================================
+   冴え手帖 -SAE- 脳活道場
+   叡智の灯火 (eichinohi.com)
+   単一ファイル / GitHub Pages 用 / localStorage保存
+====================================================== */
+/* ---------- utilities ---------- */
+const $=s=>document.querySelector(s);
+const todayStr=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+const jpDate=()=>{const d=new Date();const w=["日","月","火","水","木","金","土"][d.getDay()];return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${w}）`;};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const dateSeed=()=>{const s=todayStr();let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h;};
+
+/* ---------- persistent state ---------- */
+const KEY="sae_v1";
+let DB;
+try{DB=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){DB={};}
+DB.history=DB.history||[];   // {d,g,s}
+DB.daily=DB.daily||{};       // {"2026-07-11":true}
+DB.diag=DB.diag||[];         // {d,age,comp,scores:{}}
+DB.best=DB.best||{};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
+
+function streakCount(){
+  let n=0;const d=new Date();
+  if(!DB.daily[todayStr()])d.setDate(d.getDate()-1); // 今日未実施なら昨日から数える
+  for(;;){
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    if(DB.daily[k]){n++;d.setDate(d.getDate()-1);}else break;
+  }
+  return n;
+}
+function markPractice(gid,score){
+  DB.history.push({d:todayStr(),g:gid,s:score});
+  if(DB.history.length>400)DB.history=DB.history.slice(-400);
+  DB.daily[todayStr()]=true;
+  if(!(gid in DB.best)||score>DB.best[gid])DB.best[gid]=score;
+  save();updateStreakChip();
+}
+function updateStreakChip(){$("#streakChip").textContent="🔥 "+streakCount()+"日";}
+
+/* ---------- game meta ---------- */
+const GAMES={
+  calc:{name:"けいさん道場",icon:"🧮",dom:"処理速度",domKey:"speed",desc:"かんたんな計算を素早く"},
+  digit:{name:"数字おぼえ",icon:"🔢",dom:"記憶力",domKey:"memory",desc:"数字を見て覚えて入力"},
+  trail:{name:"順番タッチ",icon:"👆",dom:"注意・切替",domKey:"attention",desc:"数字を順にタッチ"},
+  stroop:{name:"いろよみ",icon:"🎨",dom:"集中・抑制",domKey:"inhibition",desc:"文字の「色」を答える"},
+  janken:{name:"後出しじゃんけん",icon:"✊",dom:"判断・反射",domKey:"judge",desc:"指示どおりに後出し"}
+};
+const DOMS={speed:"処理速度",memory:"記憶力",attention:"注意・切替",inhibition:"集中・抑制",judge:"判断・反射"};
+
+/* ---------- tips ---------- */
+const TIPS=[
+ {cat:"運動",title:"1日20〜30分の早歩き",body:"軽く息がはずむ程度の有酸素運動は、記憶を担う脳の「海馬」の働きを支えると報告されています。買い物や散歩を少しだけ速く歩くのがコツ。",ev:"参考：Erickson ら(2011) 有酸素運動と海馬体積の研究／WHO身体活動ガイドライン"},
+ {cat:"運動",title:"「歩きながらしりとり」デュアルタスク",body:"体を動かしながら頭も使う二重課題（デュアルタスク）は、注意を切り替える力のトレーニングとして介護予防の現場でも使われています。家族との散歩で試してみましょう。",ev:"参考：国立長寿医療研究センター「コグニサイズ」"},
+ {cat:"運動",title:"座りっぱなしを30分ごとに中断",body:"長時間の座位は脳と体の血流を滞らせます。30分〜1時間に一度立ち上がって伸びをするだけでも違います。テレビCMを合図にするのがおすすめ。",ev:"参考：WHO身体活動・座位行動ガイドライン(2020)"},
+ {cat:"食事",title:"魚・野菜・豆・オリーブ油を中心に",body:"地中海式に近い食事パターン（魚、緑黄色野菜、豆類、ナッツ、オリーブ油）は、認知機能の維持と関連することが複数の研究で示されています。和食に青魚と野菜を足すイメージで十分です。",ev:"参考：地中海食・MIND食に関する観察研究群"},
+ {cat:"食事",title:"水分をこまめに",body:"軽い脱水でも注意力や気分は低下します。特に夏場と起床後は意識してコップ一杯の水を。お茶や汁物も水分です。",ev:"参考：軽度脱水と認知パフォーマンスに関する研究"},
+ {cat:"食事",title:"よく噛んで食べる",body:"咀嚼は脳への血流を高める行為でもあります。一口の回数を少し増やす、歯の健康を保つことは、食を楽しみ続ける土台にもなります。",ev:"参考：咀嚼機能と認知機能の関連に関する疫学研究"},
+ {cat:"睡眠",title:"7時間前後の睡眠を守る",body:"睡眠中に脳は日中の記憶を整理し、老廃物を洗い流すと考えられています。極端な寝不足も寝すぎも認知機能低下と関連します。まずは就寝・起床時刻をそろえることから。",ev:"参考：睡眠時間と認知機能に関する大規模疫学研究"},
+ {cat:"睡眠",title:"寝る前1時間はスマホの光を控えめに",body:"強い光は眠りを促すメラトニンの分泌を妨げます。画面を暗くする、紙の本に切り替えるなど、脳に「夜」を知らせる工夫を。",ev:"参考：光曝露と睡眠の質に関する研究"},
+ {cat:"睡眠",title:"昼寝は20分まで",body:"短い昼寝は午後の集中力を回復させますが、30分を超える昼寝や夕方の昼寝は夜の睡眠を浅くします。「座ったまま20分」が目安です。",ev:"参考：短時間仮眠と覚醒度に関する研究"},
+ {cat:"交流",title:"1日1回、誰かと言葉を交わす",body:"会話は「聞く・考える・話す」を同時に行う高度な脳トレです。社会的なつながりが多い人ほど認知機能低下のリスクが低いという報告が多数あります。電話やあいさつでもOK。",ev:"参考：社会的孤立と認知症リスクに関する疫学研究"},
+ {cat:"交流",title:"人に教える・話して聞かせる",body:"覚えたことを人に説明すると、記憶はぐっと定着します。今日のニュースや本の内容を家族にひとこと紹介してみましょう。",ev:"参考：想起練習（テスト効果）に関する学習科学研究"},
+ {cat:"脳の使い方",title:"「少し難しい」を選ぶ",body:"脳のトレーニングは、簡単すぎても難しすぎても効果が薄れます。正解率7〜8割くらいの「ちょい難」が成長ゾーン。冴え手帖のゲームも同じ設計です。",ev:"参考：認知トレーニングの難易度適応に関する研究"},
+ {cat:"脳の使い方",title:"利き手と反対の手を使ってみる",body:"歯みがきやマウス操作を反対の手で行うと、普段使わない運動野が活動します。新しい動きの学習は脳への良い刺激です。",ev:"参考：運動学習と脳の可塑性に関する研究"},
+ {cat:"脳の使い方",title:"新しい道・新しいレシピ・新しい曲",body:"「初めて」の体験は脳に最も強い刺激を与えます。いつもの散歩コースを一本ずらす、作ったことのない料理に挑戦する。小さな新しさを毎週ひとつ。",ev:"参考：知的活動・novelty と認知予備力に関する研究"},
+ {cat:"脳の使い方",title:"毎日3分、続けることが最強",body:"フィンランドのFINGER研究では、運動・食事・脳トレ・健康管理を「組み合わせて続けた」グループで認知機能の改善が確認されました。一発の頑張りより、小さな毎日を。",ev:"参考：Ngandu ら(2015) FINGER研究（Lancet）"}
+];
+const TIPCATS=["すべて","運動","食事","睡眠","交流","脳の使い方"];
+let tipCat="すべて";
+
+/* ---------- navigation ---------- */
+const mainEl=$("#main");
+document.querySelectorAll(".tabbar button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".tabbar button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    render(b.dataset.tab);
+  });
+});
+function render(tab){
+  if(tab==="home")renderHome();
+  else if(tab==="diag")renderDiag();
+  else if(tab==="rec")renderRec();
+  else renderTips();
+  mainEl.scrollTop=0;window.scrollTo(0,0);
+}
+
+/* ---------- home ---------- */
+function renderHome(){
+  const lastDiag=DB.diag[DB.diag.length-1];
+  const doneToday=!!DB.daily[todayStr()];
+  const tiles=Object.entries(GAMES).map(([id,g])=>`
+    <div class="game-tile" onclick="startGame('${id}')">
+      <div class="gicon">${g.icon}</div>
+      <div class="gname">${g.name}</div>
+      <div class="gdom">${g.dom}</div>
+      <div class="gbest">${id in DB.best?"自己ベスト "+DB.best[id]+"点":g.desc}</div>
+    </div>`).join("");
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="hero">
+      <div class="date">${jpDate()}</div>
+      ${lastDiag?`<div class="brainage-mini"><span style="font-size:12px;opacity:.85">現在の脳年齢</span><span class="num">${lastDiag.age}</span><span class="unit">歳</span></div>`:""}
+      <h2>${doneToday?"本日の稽古、済み。":"今日の3分脳トレ"}</h2>
+      <p>${doneToday?"もう一稽古で、さらに冴える。":"日替わり3種目で、脳をあたためましょう。"}</p>
+      <button class="btn" onclick="startDaily()">${doneToday?"もう一度やる":"今日の稽古を始める"}</button>
+    </div>
+    <div class="eyebrow">TRAINING</div>
+    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">種目べつ稽古</h2>
+    <div class="game-grid">${tiles}</div>
+    <div class="card" style="margin-top:16px">
+      <h2>🧠 脳年齢診断</h2>
+      <p class="muted" style="margin-bottom:12px">5種目を通しでプレイして、脳年齢と5つの力を測定します（約5分）。</p>
+      <button class="btn secondary" onclick="switchTab('diag')">診断ページへ</button>
+    </div>
+  </div>`;
+}
+function switchTab(t){
+  document.querySelectorAll(".tabbar button").forEach(x=>x.classList.toggle("active",x.dataset.tab===t));
+  render(t);
+}
+
+/* ---------- tips ---------- */
+function renderTips(){
+  const feat=TIPS[dateSeed()%TIPS.length];
+  const list=TIPS.filter(t=>tipCat==="すべて"||t.cat===tipCat);
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="eyebrow">TODAY'S WISDOM</div>
+    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">今日の知恵</h2>
+    <div class="tip-card" style="border-left-color:var(--shu)">
+      <div class="tcat" style="color:var(--shu)">本日のおすすめ・${feat.cat}</div>
+      <div class="ttitle">${feat.title}</div>
+      <p>${feat.body}</p>
+      <div class="tev">${feat.ev}</div>
+    </div>
+    <div class="cat-tabs">${TIPCATS.map(c=>`<button class="${c===tipCat?"active":""}" onclick="setTipCat('${c}')">${c}</button>`).join("")}</div>
+    ${list.map(t=>`
+      <div class="tip-card">
+        <div class="tcat">${t.cat}</div>
+        <div class="ttitle">${t.title}</div>
+        <p>${t.body}</p>
+        <div class="tev">${t.ev}</div>
+      </div>`).join("")}
+    <p class="muted small" style="margin-top:6px">※本アプリの助言は一般的な健康情報であり、医療行為・診断に代わるものではありません。気になる症状があるときは医師にご相談ください。</p>
+  </div>`;
+}
+function setTipCat(c){tipCat=c;renderTips();}
+
+/* ---------- records ---------- */
+function renderRec(){
+  const plays=DB.history.length;
+  const streak=streakCount();
+  const lastDiag=DB.diag[DB.diag.length-1];
+  // 直近14日の日別平均スコア
+  const byDay={};
+  DB.history.forEach(h=>{(byDay[h.d]=byDay[h.d]||[]).push(h.s);});
+  const days=[];
+  for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    days.push({k,label:(d.getMonth()+1)+"/"+d.getDate(),avg:byDay[k]?Math.round(byDay[k].reduce((a,b)=>a+b,0)/byDay[k].length):null});
+  }
+  const chart=svgBarChart(days);
+  const diagChart=DB.diag.length>=1?svgAgeChart(DB.diag.slice(-10)):"";
+  const bests=Object.entries(GAMES).map(([id,g])=>`
+    <div class="rec-row"><span>${g.icon} ${g.name}</span><b>${id in DB.best?DB.best[id]+"点":"—"}</b></div>`).join("");
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="kpis">
+      <div class="kpi"><div class="kv">${streak}</div><div class="kl">連続日数</div></div>
+      <div class="kpi"><div class="kv">${plays}</div><div class="kl">総プレイ数</div></div>
+      <div class="kpi"><div class="kv">${lastDiag?lastDiag.age:"—"}</div><div class="kl">脳年齢</div></div>
+    </div>
+    <div class="chart-box">
+      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">直近14日の平均スコア</h2>
+      ${chart}
+    </div>
+    ${DB.diag.length?`<div class="chart-box">
+      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">脳年齢のうつりかわり</h2>
+      ${diagChart}
+    </div>`:""}
+    <div class="card">
+      <h2>自己ベスト</h2>
+      ${bests}
+    </div>
+    ${plays===0?`<p class="muted center">まだ記録がありません。<br>「道場」から今日の稽古を始めましょう。</p>`:""}
+  </div>`;
+}
+function svgBarChart(days){
+  const W=340,H=140,pad=6,bw=W/days.length;
+  let bars="";
+  days.forEach((d,i)=>{
+    if(d.avg!==null){
+      const h=(d.avg/100)*(H-30);
+      bars+=`<rect x="${i*bw+4}" y="${H-20-h}" width="${bw-8}" height="${h}" rx="3" fill="${d.avg>=70?"#2A4D8F":d.avg>=45?"#C99B2D":"#C8452C"}"/>`;
+      bars+=`<text x="${i*bw+bw/2}" y="${H-24-h}" font-size="9" text-anchor="middle" fill="#555">${d.avg}</text>`;
+    }
+    if(i%3===0)bars+=`<text x="${i*bw+bw/2}" y="${H-6}" font-size="8.5" text-anchor="middle" fill="#999">${d.label}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%"><line x1="0" y1="${H-20}" x2="${W}" y2="${H-20}" stroke="#D9D4C5"/>${bars}</svg>`;
+}
+function svgAgeChart(diags){
+  const W=340,H=140;
+  const min=Math.min(...diags.map(d=>d.age))-4, max=Math.max(...diags.map(d=>d.age))+4;
+  const x=i=>diags.length===1?W/2:20+(W-40)*i/(diags.length-1);
+  const y=v=>15+(H-45)*(v-min)/(max-min||1);
+  const pts=diags.map((d,i)=>`${x(i)},${y(d.age)}`).join(" ");
+  const dots=diags.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.age)}" r="4" fill="#C8452C"/><text x="${x(i)}" y="${y(d.age)-9}" font-size="10" text-anchor="middle" fill="#333" font-weight="700">${d.age}</text><text x="${x(i)}" y="${H-6}" font-size="8.5" text-anchor="middle" fill="#999">${d.d.slice(5).replace("-","/")}</text>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%"><polyline points="${pts}" fill="none" stroke="#2A4D8F" stroke-width="2.5"/>${dots}</svg>`;
+}
+
+/* ---------- diagnosis page ---------- */
+function renderDiag(){
+  const last=DB.diag[DB.diag.length-1];
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="eyebrow">BRAIN AGE CHECK</div>
+    <h2 class="mincho" style="font-size:18px;margin-bottom:8px">脳年齢診断</h2>
+    <div class="card">
+      <p style="font-size:14px;margin-bottom:10px">5つのゲームを通しでプレイし、<b>処理速度・記憶力・注意・集中・判断</b>の5つの力から脳年齢を推定します。所要時間は約5分です。</p>
+      <p class="muted small" style="margin-bottom:14px">※楽しみながら傾向を知るためのゲーム上の指標です。医学的な検査・診断ではありません。</p>
+      <button class="btn shu" onclick="startDiagnosis()">診断をはじめる</button>
+    </div>
+    ${last?renderDiagResultCard(last,false):`<p class="muted center">まだ診断記録がありません。</p>`}
+  </div>`;
+  if(last)requestAnimationFrame(()=>animateBars());
+}
+function renderDiagResultCard(diag,fresh){
+  const rank=diag.comp>=85?"冴えわたる":diag.comp>=70?"好調":diag.comp>=55?"まずまず":"伸びしろ大";
+  const weakest=Object.entries(diag.scores).sort((a,b)=>a[1]-b[1])[0];
+  const advice=domainAdvice(weakest[0]);
+  const circ=2*Math.PI*105;
+  const frac=clamp(diag.comp/100,0.08,1);
+  return `
+  <div class="card ${fresh?"fade-in":""}">
+    <div class="center"><span class="eyebrow">前回の診断（${diag.d}）</span></div>
+    <div class="enso-wrap">
+      <svg viewBox="0 0 230 230">
+        <circle cx="115" cy="115" r="105" fill="none" stroke="#ECE8DC" stroke-width="9"/>
+        <circle cx="115" cy="115" r="105" fill="none" stroke="#2A4D8F" stroke-width="9" stroke-linecap="round"
+          stroke-dasharray="${circ}" stroke-dashoffset="${circ*(1-frac)}" transform="rotate(-90 115 115)"
+          style="transition:stroke-dashoffset 1.2s ease"/>
+      </svg>
+      <div class="enso-num"><div class="l">脳年齢</div><div class="n">${diag.age}</div><div class="u">歳（総合 ${diag.comp}点）</div></div>
+    </div>
+    <div class="center"><span class="stamp">${rank}</span></div>
+    <div style="margin-top:14px">
+      ${Object.entries(diag.scores).map(([k,v])=>`
+        <div class="domain-row"><span class="dn">${DOMS[k]}</span><div class="bar"><div data-w="${v}"></div></div><span class="dv">${v}</span></div>`).join("")}
+    </div>
+    <div class="tip-card" style="margin-top:14px;margin-bottom:0">
+      <div class="tcat">きたえどころ：${DOMS[weakest[0]]}</div>
+      <div class="ttitle">${advice.title}</div>
+      <p>${advice.body}</p>
+    </div>
+  </div>`;
+}
+function animateBars(){
+  document.querySelectorAll(".domain-row .bar>div").forEach(b=>{b.style.width=b.dataset.w+"%";});
+}
+function domainAdvice(k){
+  const map={
+    speed:{title:"「けいさん道場」と早歩きで加速",body:"処理速度は日々の反復でいちばん伸びやすい力です。毎日1回のけいさん道場に加え、散歩のスピードを少し上げると、脳の情報処理のテンポも上がるといわれます。"},
+    memory:{title:"「数字おぼえ」＋声に出す",body:"覚えるときに声に出す・指で書くなど、複数の感覚を使うと記憶は強くなります。数字おぼえを毎日1回、買い物リストの暗記にも挑戦を。"},
+    attention:{title:"「順番タッチ」＋ながら家事",body:"注意の切り替えは、順番タッチのような視覚探索と、料理など複数の段取りを同時に進める活動で鍛えられます。"},
+    inhibition:{title:"「いろよみ」で我慢する脳を",body:"つい読んでしまう文字を抑えて色に答える——この「抑制」はブレーキ役の前頭葉の働きです。いろよみを続けつつ、深呼吸してから行動する習慣も効果的。"},
+    judge:{title:"「後出しじゃんけん」＋会話",body:"素早い判断は、後出しじゃんけんのような反応課題と、テンポのよい会話で磨かれます。家族との雑談も立派なトレーニングです。"}
+  };
+  return map[k];
+}
+
+/* ---------- init ---------- */
+updateStreakChip();
+renderHome();
+
+/* ======================================================
+   game engine
+====================================================== */
+let gResolve=null,gTimers=[];
+const gArea=()=>$("#gameArea");
+function gT(fn,ms){const t=setTimeout(fn,ms);gTimers.push(t);return t;}
+function clearGTimers(){gTimers.forEach(clearTimeout);gTimers=[];}
+function openOverlay(title){$("#gTitle").textContent=title;setProg(0);$("#gameOverlay").classList.add("open");}
+function closeOverlay(){$("#gameOverlay").classList.remove("open");clearGTimers();gArea().innerHTML="";}
+function quitGame(){const r=gResolve;gResolve=null;closeOverlay();if(r)r(null);}
+function setProg(f){$("#gProg").style.width=(f*100)+"%";}
+function finishWith(score){const r=gResolve;gResolve=null;if(r)r(score);}
+function runGame(id,opts={}){
+  return new Promise(res=>{
+    gResolve=res;clearGTimers();openOverlay(GAMES[id].icon+" "+GAMES[id].name);
+    GAME_IMPL[id](finishWith,opts);
+  });
+}
+function countdown(intro,cb){
+  gArea().innerHTML=`<div class="fade-in"><p class="instruction">${intro}</p><div class="countN" id="cnt">3</div></div>`;
+  let n=3;
+  const tick=()=>{n--;if(n>0){const c=$("#cnt");if(c)c.textContent=n;gT(tick,750);}else cb();};
+  gT(tick,750);
+}
+function flashFeedback(ok){
+  const el=document.createElement("div");
+  el.className="feedback show";
+  el.style.color=ok?"var(--green)":"var(--shu)";
+  el.textContent=ok?"○":"✕";
+  gArea().appendChild(el);
+  gT(()=>{el.remove();},260);
+}
+
+/* ======================================================
+   game implementations  (finish(score 0-100))
+====================================================== */
+const GAME_IMPL={};
+
+/* ----- けいさん道場 (処理速度) ----- */
+GAME_IMPL.calc=function(finish){
+  const N=15;let i=0,correct=0,t0=0;
+  const gen=()=>{
+    const type=Math.floor(Math.random()*3);
+    let a,b,q,ans;
+    if(type===0){a=3+Math.floor(Math.random()*27);b=3+Math.floor(Math.random()*27);q=`${a} ＋ ${b}`;ans=a+b;}
+    else if(type===1){a=10+Math.floor(Math.random()*40);b=1+Math.floor(Math.random()*Math.min(a,20));q=`${a} − ${b}`;ans=a-b;}
+    else{a=2+Math.floor(Math.random()*8);b=2+Math.floor(Math.random()*8);q=`${a} × ${b}`;ans=a*b;}
+    const set=new Set([ans]);
+    while(set.size<3){const d=ans+(Math.floor(Math.random()*7)-3);if(d>=0&&d!==ans)set.add(d);}
+    return{q,ans,opts:shuffle([...set])};
+  };
+  const next=()=>{
+    if(i>=N){
+      const total=(Date.now()-t0)/1000;
+      const speed=clamp((70-total)/(70-18),0,1);
+      finish(Math.round((correct/N)*60+speed*40));
+      return;
+    }
+    setProg(i/N);
+    const p=gen();
+    gArea().innerHTML=`
+      <p class="instruction">こたえを えらんでください（${i+1}/${N}）</p>
+      <div class="big-display">${p.q}</div>
+      <div class="choice-grid cols3">
+        ${p.opts.map(o=>`<button class="choice-btn" data-v="${o}">${o}</button>`).join("")}
+      </div>`;
+    gArea().querySelectorAll(".choice-btn").forEach(b=>{
+      b.onclick=()=>{
+        const ok=Number(b.dataset.v)===p.ans;
+        if(ok)correct++;flashFeedback(ok);
+        i++;gT(next,240);
+      };
+    });
+  };
+  countdown("できるだけ速く、正確に。",()=>{t0=Date.now();next();});
+};
+
+/* ----- 数字おぼえ (記憶力) ----- */
+GAME_IMPL.digit=function(finish){
+  let level=4,lives=2,maxSpan=0;
+  const round=()=>{
+    setProg(clamp((level-3)/6,0,1));
+    let digits="";
+    for(let k=0;k<level;k++)digits+=Math.floor(Math.random()*10);
+    gArea().innerHTML=`
+      <p class="instruction">${level}けたの数字を おぼえてください</p>
+      <div class="big-display" id="dg" style="letter-spacing:.18em">${digits.split("").join(" ")}</div>`;
+    gT(()=>askInput(digits),level*650+500);
+  };
+  const askInput=(digits)=>{
+    let entered="";
+    gArea().innerHTML=`
+      <p class="instruction">おぼえた数字を 入力してください</p>
+      <div class="digit-input" id="din">&nbsp;</div>
+      <div class="numpad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-n="${n}">${n}</button>`).join("")}
+        <button class="util" data-n="del">けす</button>
+        <button data-n="0">0</button>
+        <button class="util" data-n="ok" style="color:var(--ai)">OK</button>
+      </div>`;
+    const din=$("#din");
+    gArea().querySelectorAll(".numpad button").forEach(b=>{
+      b.onclick=()=>{
+        const v=b.dataset.n;
+        if(v==="del")entered=entered.slice(0,-1);
+        else if(v==="ok"){judge(entered,digits);return;}
+        else if(entered.length<level)entered+=v;
+        din.textContent=entered?entered.split("").join(" "):"\u00A0";
+      };
+    });
+  };
+  const judge=(entered,digits)=>{
+    const ok=entered===digits;
+    flashFeedback(ok);
+    gT(()=>{
+      if(ok){
+        maxSpan=Math.max(maxSpan,level);
+        if(level>=9){end();return;}
+        level++;round();
+      }else{
+        lives--;
+        if(lives>0){
+          gArea().innerHTML=`<p class="instruction">おしい！ もう一度 ${level}けたに挑戦</p><div class="countN">✍️</div>`;
+          gT(round,900);
+        }else end();
+      }
+    },350);
+  };
+  const end=()=>{
+    const score=maxSpan===0?10:clamp((maxSpan-3)*16+20,10,100);
+    finish(score);
+  };
+  countdown("表示された数字を おぼえて入力。",round);
+};
+
+/* ----- 順番タッチ (注意・切替) ----- */
+GAME_IMPL.trail=function(finish,opts={}){
+  const modeB=!!opts.modeB;
+  const labels=modeB?["1","あ","2","い","3","う","4","え","5","お","6","か"]:["1","2","3","4","5","6","7","8","9","10","11","12"];
+  countdown(modeB?"数字と ひらがなを こうごに：1→あ→2→い…":"1 から 12 まで じゅんばんにタッチ！",()=>{
+    gArea().innerHTML=`
+      <p class="instruction" id="trailHint">つぎ：<b style="color:var(--ai);font-size:19px">${labels[0]}</b></p>
+      <div id="trailField"></div>`;
+    const field=$("#trailField");
+    const W=field.clientWidth,H=field.clientHeight;
+    const cols=3,rows=4,cw=W/cols,ch=H/rows;
+    const cells=shuffle(Array.from({length:12},(_,i)=>i));
+    let next=0,errors=0;
+    const t0=Date.now();
+    labels.forEach((lb,idx)=>{
+      const cell=cells[idx],cx=cell%cols,cy=Math.floor(cell/cols);
+      const x=cx*cw+4+Math.random()*Math.max(cw-60,1);
+      const y=cy*ch+4+Math.random()*Math.max(ch-60,1);
+      const node=document.createElement("div");
+      node.className="trail-node";node.textContent=lb;
+      node.style.left=x+"px";node.style.top=y+"px";
+      node.onclick=()=>{
+        if(labels.indexOf(lb)===-1)return;
+        if(lb===labels[next]){
+          node.classList.add("done");next++;
+          setProg(next/labels.length);
+          const hint=$("#trailHint");
+          if(next<labels.length){if(hint)hint.innerHTML=`つぎ：<b style="color:var(--ai);font-size:19px">${labels[next]}</b>`;}
+          else{
+            const t=(Date.now()-t0)/1000;
+            const best=modeB?16:12,worst=modeB?55:45;
+            const score=clamp(Math.round(clamp((worst-t)/(worst-best),0,1)*100-errors*4),5,100);
+            gT(()=>finish(score),380);
+          }
+        }else{errors++;node.classList.add("miss");gT(()=>node.classList.remove("miss"),320);}
+      };
+      field.appendChild(node);
+    });
+  });
+};
+
+/* ----- いろよみ (集中・抑制) ----- */
+GAME_IMPL.stroop=function(finish){
+  const COLORS=[{n:"あか",c:"#C8452C"},{n:"あお",c:"#2A4D8F"},{n:"みどり",c:"#3E7C4F"},{n:"きいろ",c:"#C99B2D"}];
+  const N=16;let i=0,correct=0,rts=[];
+  const next=()=>{
+    if(i>=N){
+      const avg=rts.length?rts.reduce((a,b)=>a+b,0)/rts.length:2200;
+      const speed=clamp((2200-avg)/(2200-800),0,1);
+      finish(Math.round((correct/N)*65+speed*35));
+      return;
+    }
+    setProg(i/N);
+    const word=COLORS[Math.floor(Math.random()*4)];
+    const ink=Math.random()<0.5?word:COLORS[Math.floor(Math.random()*4)];
+    const t0=Date.now();
+    gArea().innerHTML=`
+      <p class="instruction">文字の《 いろ 》を えらんで！（${i+1}/${N}）</p>
+      <div class="stroop-word" style="color:${ink.c}">${word.n}</div>
+      <div class="choice-grid">
+        ${shuffle(COLORS.slice()).map(c=>`<button class="choice-btn" data-n="${c.n}">${c.n}</button>`).join("")}
+      </div>`;
+    gArea().querySelectorAll(".choice-btn").forEach(b=>{
+      b.onclick=()=>{
+        const ok=b.dataset.n===ink.n;
+        if(ok){correct++;rts.push(Date.now()-t0);}
+        flashFeedback(ok);
+        i++;gT(next,240);
+      };
+    });
+  };
+  countdown("文字を「読む」のではなく、インクの「色」を答えます。",next);
+};
+
+/* ----- 後出しじゃんけん (判断・反射) ----- */
+GAME_IMPL.janken=function(finish){
+  const HANDS=[{e:"✊",n:"グー"},{e:"✌️",n:"チョキ"},{e:"✋",n:"パー"}];
+  const winTo={0:2,1:0,2:1};  // 相手idx → 勝てる手idx (✊に✋, ✌に✊, ✋に✌)
+  const loseTo={0:1,1:2,2:0}; // 相手idx → 負ける手idx
+  const N=15;let i=0,correct=0,rts=[],timer=null;
+  const next=()=>{
+    if(i>=N){
+      const avg=rts.length?rts.reduce((a,b)=>a+b,0)/rts.length:2200;
+      const speed=clamp((2000-avg)/(2000-700),0,1);
+      finish(Math.round((correct/N)*70+speed*30));
+      return;
+    }
+    setProg(i/N);
+    const opp=Math.floor(Math.random()*3);
+    const win=Math.random()<0.5;
+    const target=win?winTo[opp]:loseTo[opp];
+    const t0=Date.now();
+    gArea().innerHTML=`
+      <div class="janken-order" style="background:${win?"var(--ai)":"var(--shu)"}">${win?"かって！":"まけて！"}</div>
+      <div class="janken-hand">${HANDS[opp].e}</div>
+      <p class="instruction small" style="margin-top:6px">${i+1}/${N}</p>
+      <div class="choice-grid cols3">
+        ${HANDS.map((h,idx)=>`<button class="choice-btn big" data-i="${idx}">${h.e}</button>`).join("")}
+      </div>`;
+    const done=(idx)=>{
+      clearTimeout(timer);
+      const ok=idx===target;
+      if(ok){correct++;rts.push(Date.now()-t0);}
+      flashFeedback(ok);
+      i++;gT(next,260);
+    };
+    timer=gT(()=>done(-1),3200);
+    gArea().querySelectorAll(".choice-btn").forEach(b=>{b.onclick=()=>done(Number(b.dataset.i));});
+  };
+  countdown("指示が「かって」なら勝つ手、「まけて」なら負ける手を後出し！",next);
+};
+
+/* ======================================================
+   single game / daily course / diagnosis
+====================================================== */
+function stampFor(s){return s>=85?"冴えわたる":s>=70?"好調":s>=55?"まずまず":"伸びしろ大";}
+
+async function startGame(id){
+  const score=await runGame(id);
+  if(score===null)return;
+  const isBest=!(id in DB.best)||score>DB.best[id];
+  markPractice(id,score);
+  setProg(1);
+  gArea().innerHTML=`
+    <div class="fade-in">
+      <p class="instruction">${GAMES[id].icon} ${GAMES[id].name} — ${GAMES[id].dom}</p>
+      <div class="score-big">${score}<span style="font-size:22px">点</span></div>
+      <div><span class="stamp">${stampFor(score)}</span></div>
+      ${isBest?`<p style="color:var(--shu);font-weight:800;margin-top:10px">🎉 自己ベスト更新！</p>`:""}
+      <div style="width:min(300px,80vw);margin-top:22px;display:grid;gap:10px">
+        <button class="btn" onclick="retryGame('${id}')">もう一度</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">とじる</button>
+      </div>
+    </div>`;
+}
+function retryGame(id){startGame(id);}
+function quitAndRefresh(){closeOverlay();render(document.querySelector(".tabbar button.active").dataset.tab);}
+
+async function startDaily(){
+  const keys=Object.keys(GAMES);
+  const s=dateSeed();
+  const picks=[keys[s%5],keys[(s+2)%5],keys[(s+4)%5]];
+  const scores=[];
+  for(let i=0;i<picks.length;i++){
+    const id=picks[i];
+    openOverlay("今日の稽古 "+(i+1)+"/3");
+    await new Promise(res=>{
+      gArea().innerHTML=`
+        <div class="fade-in">
+          <p class="instruction">${i+1}種目め</p>
+          <div style="font-size:52px">${GAMES[id].icon}</div>
+          <h2 class="mincho" style="font-size:24px;margin:6px 0 2px">${GAMES[id].name}</h2>
+          <p class="muted">${GAMES[id].dom}をきたえます</p>
+          <div style="width:min(280px,78vw);margin-top:22px">
+            <button class="btn" id="goBtn">はじめる</button>
+          </div>
+        </div>`;
+      gResolve=res;
+      $("#goBtn").onclick=()=>{const r=gResolve;gResolve=null;r(true);};
+    }).then(v=>{if(v===null)throw"quit";});
+    const sc=await runGame(id);
+    if(sc===null)return;
+    markPractice(id,sc);
+    scores.push({id,sc});
+  }
+  const avg=Math.round(scores.reduce((a,b)=>a+b.sc,0)/scores.length);
+  openOverlay("本日の結果");setProg(1);
+  const tip=TIPS[dateSeed()%TIPS.length];
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      <p class="instruction center">本日の稽古、おつかれさまでした</p>
+      <div class="center"><div class="score-big">${avg}<span style="font-size:22px">点</span></div>
+      <span class="stamp">${stampFor(avg)}</span></div>
+      <div style="margin-top:16px;text-align:left">
+        ${scores.map(x=>`<div class="rec-row"><span>${GAMES[x.id].icon} ${GAMES[x.id].name}</span><b>${x.sc}点</b></div>`).join("")}
+      </div>
+      <div class="tip-card" style="margin-top:16px;text-align:left">
+        <div class="tcat">今日の知恵・${tip.cat}</div>
+        <div class="ttitle">${tip.title}</div>
+        <p>${tip.body}</p>
+      </div>
+      <p class="center" style="font-weight:700;color:var(--shu)">🔥 連続 ${streakCount()}日目！</p>
+      <button class="btn" style="margin-top:8px" onclick="quitAndRefresh()">道場にもどる</button>
+    </div>`;
+}
+// startDailyのquit例外の握りつぶし
+window.addEventListener("unhandledrejection",e=>{if(e.reason==="quit")e.preventDefault();});
+
+async function startDiagnosis(){
+  const seq=[
+    {id:"calc",opts:{}},
+    {id:"digit",opts:{}},
+    {id:"trail",opts:{modeB:true}},
+    {id:"stroop",opts:{}},
+    {id:"janken",opts:{}}
+  ];
+  const scores={};
+  for(let i=0;i<seq.length;i++){
+    const {id,opts}=seq[i];
+    openOverlay("脳年齢診断 "+(i+1)+"/5");
+    const go=await new Promise(res=>{
+      gArea().innerHTML=`
+        <div class="fade-in">
+          <p class="instruction">測定 ${i+1}/5</p>
+          <div style="font-size:52px">${GAMES[id].icon}</div>
+          <h2 class="mincho" style="font-size:24px;margin:6px 0 2px">${GAMES[id].name}</h2>
+          <p class="muted">${GAMES[id].dom}を測定します${id==="trail"?"（診断版：数字⇔かな）":""}</p>
+          <div style="width:min(280px,78vw);margin-top:22px">
+            <button class="btn shu" id="goBtn">測定スタート</button>
+          </div>
+        </div>`;
+      gResolve=res;
+      $("#goBtn").onclick=()=>{const r=gResolve;gResolve=null;r(true);};
+    });
+    if(go===null)return;
+    const sc=await runGame(id,opts);
+    if(sc===null)return;
+    markPractice(id,sc);
+    scores[GAMES[id].domKey]=sc;
+  }
+  const comp=Math.round(Object.values(scores).reduce((a,b)=>a+b,0)/5);
+  const age=Math.round(clamp(20+(100-comp)*0.72,20,88));
+  const diag={d:todayStr(),age,comp,scores};
+  DB.diag.push(diag);
+  if(DB.diag.length>60)DB.diag=DB.diag.slice(-60);
+  save();
+  closeOverlay();
+  switchTab("diag");
+  gT(()=>{window.scrollTo({top:0});},50);
+}
+
+</script>
+</body>
+</html>
