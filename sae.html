@@ -252,6 +252,20 @@ nav.tabbar{
 .rush-stats b{font-size:16px}
 .kpis{grid-template-columns:repeat(4,1fr)}
 .kpi .kv{font-size:20px}
+
+/* ===== 花あわせ (HANA) ===== */
+.hana-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.hana-head{display:flex;justify-content:space-between;align-items:baseline;width:min(360px,88vw);font-weight:800;font-size:15px}
+.hana-head b{font-family:'Shippori Mincho B1',serif;font-size:24px}
+#hanaBoard{position:relative;width:min(360px,88vw);background:#E4DECB;border-radius:14px;touch-action:none;user-select:none;box-shadow:inset 0 2px 6px rgba(30,42,56,.12)}
+.hcell{position:absolute;background:rgba(255,255,255,.45);border-radius:10px}
+.htile{position:absolute;border-radius:10px;transition:transform .13s ease;will-change:transform;box-shadow:0 1px 3px rgba(30,42,56,.18)}
+.htile .hin{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px}
+.htile .he{font-size:30px;line-height:1.1}
+.htile .hn{font-size:9.5px;color:#6B6857;font-weight:800;letter-spacing:.05em}
+@keyframes hpop{0%{transform:scale(.5)}60%{transform:scale(1.14)}100%{transform:scale(1)}}
+.hin.pop{animation:hpop .18s ease}
+.hana-toast{position:absolute;top:8px;left:0;right:0;text-align:center;font-weight:800;font-size:17px;color:var(--shu);animation:floatUp 1.1s ease forwards;pointer-events:none;z-index:9;text-shadow:0 1px 0 #fff}
 </style>
 </head>
 <body>
@@ -303,6 +317,7 @@ DB.daily=DB.daily||{};       // {"2026-07-11":true}
 DB.diag=DB.diag||[];         // {d,age,comp,scores:{}}
 DB.best=DB.best||{};
 DB.rush=DB.rush||{best:0,plays:0};
+DB.hana=DB.hana||{best:0,bestLv:1,plays:0};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
 
 function streakCount(){
@@ -374,8 +389,8 @@ function render(tab){
 /* ---------- home ---------- */
 function renderHome(){
   const doneToday=!!DB.daily[todayStr()];
-  const best=DB.rush.best||0;
-  const rk=rankFor(best), nx=nextRank(best);
+  const hb=DB.hana.best||0, hf=HLV[DB.hana.bestLv||1];
+  const rb=DB.rush.best||0, rk=rankFor(rb);
   const tiles=Object.entries(GAMES).map(([id,g])=>`
     <div class="game-tile" onclick="startGame('${id}')">
       <div class="gicon">${g.icon}</div>
@@ -387,10 +402,15 @@ function renderHome(){
   <div class="fade-in">
     <div class="hero">
       <div class="date">${jpDate()}</div>
-      <h2>⚡ 冴えラッシュ</h2>
-      <p>計算・色・記憶・反射——次々かわる出題を、3ミスまでにどこまで捌けるか。コンボで得点倍増。</p>
-      ${best?`<div class="rush-stats"><span>最高 <b>${best.toLocaleString()}</b></span><span>段位 <b>${rk}</b></span>${nx?`<span>次の段位まで <b>${(nx[0]-best).toLocaleString()}</b></span>`:`<span><b>最高段位！</b></span>`}</div>`:``}
-      <button class="btn" onclick="startRush()">挑戦する</button>
+      <h2>🌸 花あわせ</h2>
+      <p>指でなぞるだけ。同じ花をかさねて、ひとつ上の花に。めざせ幻の「大輪・冴」。</p>
+      ${hb?`<div class="rush-stats"><span>最高 <b>${hb.toLocaleString()}</b></span><span>ここまで咲いた <b>${hf.e}${hf.n}</b></span>${DB.hanaState?`<span><b>つづきあり</b></span>`:``}</div>`:``}
+      <button class="btn" onclick="startHana()">${DB.hanaState?"つづきから遊ぶ":"遊ぶ"}</button>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:28px">⚡</div>
+      <div style="flex:1"><b>冴えラッシュ</b><div class="muted small">${rb?"最高 "+rb.toLocaleString()+"・段位 "+rk:"反射神経の腕試し。3ミスで終了"}</div></div>
+      <button class="btn shu" style="width:auto;padding:10px 16px;font-size:14px" onclick="startRush()">挑戦</button>
     </div>
     <div class="card" style="display:flex;align-items:center;gap:12px">
       <div style="font-size:28px">⛩️</div>
@@ -459,9 +479,9 @@ function renderRec(){
   mainEl.innerHTML=`
   <div class="fade-in">
     <div class="kpis">
-      <div class="kpi"><div class="kv">${DB.rush.best?DB.rush.best.toLocaleString():"—"}</div><div class="kl">ラッシュ最高</div></div>
+      <div class="kpi"><div class="kv">${DB.hana.best?DB.hana.best.toLocaleString():"—"}</div><div class="kl">花あわせ</div></div>
+      <div class="kpi"><div class="kv">${DB.rush.best?DB.rush.best.toLocaleString():"—"}</div><div class="kl">ラッシュ</div></div>
       <div class="kpi"><div class="kv">${streak}</div><div class="kl">連続日数</div></div>
-      <div class="kpi"><div class="kv">${plays}</div><div class="kl">総プレイ数</div></div>
       <div class="kpi"><div class="kv">${lastDiag?lastDiag.age:"—"}</div><div class="kl">脳年齢</div></div>
     </div>
     <div class="chart-box">
@@ -798,6 +818,213 @@ function rushEnd(){
   const iv=setInterval(()=>{cur=Math.min(s,cur+step);el.textContent=cur.toLocaleString();if(cur>=s)clearInterval(iv);},22);
   gTimers.push(iv);
 }
+
+
+/* ======================================================
+   🌸 花あわせ (HANA-AWASE) — merge puzzle
+====================================================== */
+const HLV=[null,
+ {e:"🌱",n:"芽"},{e:"🌿",n:"双葉"},{e:"🍀",n:"若葉"},{e:"🌷",n:"つぼみ"},
+ {e:"🌸",n:"桜"},{e:"🌺",n:"牡丹"},{e:"🌻",n:"向日葵"},{e:"🍁",n:"紅葉"},
+ {e:"❄️",n:"雪華"},{e:"🌕",n:"満月"},{e:"✨",n:"暁光"},{e:"💮",n:"大輪・冴"}];
+const HCOL=["","#FFFFFF","#FBF6E7","#F1ECD5","#EFE0AC","#F7D9DE","#F0BFCB","#F6D2A0","#EFB48A","#D7E6F5","#F7ECC0","#FFF3C4","#F6C8C0"];
+let HG=null;
+
+function hSnapshot(){return{score:HG.score,tiles:HG.tiles.filter(t=>!t.dead).map(t=>({x:t.x,y:t.y,lv:t.lv}))};}
+function hSave(){DB.hanaState=hSnapshot();save();}
+
+function startHana(){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🌸 花あわせ");
+  gArea().innerHTML=`
+    <div class="hana-wrap">
+      <div class="hana-head"><span>スコア <b id="hScore">0</b></span><span class="muted small">ベスト ${(DB.hana.best||0).toLocaleString()}</span></div>
+      <div id="hanaBoard"></div>
+      <div style="display:flex;gap:10px;width:min(360px,88vw)">
+        <button class="btn ghost" style="flex:1" id="hUndo">↩ 1手もどす</button>
+        <button class="btn ghost" style="flex:1" id="hNew">🌱 はじめから</button>
+      </div>
+      <p class="muted small">スワイプで動かす。同じ花がかさなると、ひとつ上の花に。</p>
+    </div>`;
+  const board=$("#hanaBoard");
+  const W=board.clientWidth||320;
+  board.style.height=W+"px";
+  const P=10,G=8,cs=(W-2*P-3*G)/4;
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++){
+    const c=document.createElement("div");c.className="hcell";
+    c.style.width=cs+"px";c.style.height=cs+"px";
+    c.style.left=(P+x*(cs+G))+"px";c.style.top=(P+y*(cs+G))+"px";
+    board.appendChild(c);
+  }
+  // state: resume or new
+  HG={tiles:[],score:0,nid:1,nodes:{},undo:null,maxLv:1,bloom:null,over:false,cs,P,G};
+  const st=DB.hanaState;
+  if(st&&st.tiles&&st.tiles.length){
+    HG.score=st.score;
+    st.tiles.forEach(t=>{HG.tiles.push({id:HG.nid++,x:t.x,y:t.y,lv:t.lv});HG.maxLv=Math.max(HG.maxLv,t.lv);});
+  }else{hSpawn();hSpawn();}
+  hRender();
+  hSave();
+  // input
+  let ts=null;
+  board.addEventListener("touchstart",e=>{ts=[e.touches[0].clientX,e.touches[0].clientY];},{passive:true});
+  board.addEventListener("touchend",e=>{
+    if(!ts)return;
+    const dx=e.changedTouches[0].clientX-ts[0],dy=e.changedTouches[0].clientY-ts[1];ts=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;
+    hMove(Math.abs(dx)>Math.abs(dy)?(dx>0?1:0):(dy>0?3:2));
+  });
+  let ms=null;
+  board.addEventListener("mousedown",e=>{ms=[e.clientX,e.clientY];});
+  board.addEventListener("mouseup",e=>{
+    if(!ms)return;const dx=e.clientX-ms[0],dy=e.clientY-ms[1];ms=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;
+    hMove(Math.abs(dx)>Math.abs(dy)?(dx>0?1:0):(dy>0?3:2));
+  });
+  $("#hUndo").onclick=()=>{
+    if(!HG||!HG.undo)return;
+    const u=HG.undo;HG.undo=null;
+    Object.values(HG.nodes).forEach(el=>el.remove());
+    HG.nodes={};HG.tiles=[];HG.score=u.score;HG.over=false;
+    u.tiles.forEach(t=>HG.tiles.push({id:HG.nid++,x:t.x,y:t.y,lv:t.lv,neu:true}));
+    hRender();hSave();
+  };
+  $("#hNew").onclick=()=>{
+    Object.values(HG.nodes).forEach(el=>el.remove());
+    HG.nodes={};HG.tiles=[];HG.score=0;HG.undo=null;HG.maxLv=1;HG.over=false;
+    hSpawn();hSpawn();hRender();hSave();
+  };
+}
+
+function hSpawn(){
+  const occ={};HG.tiles.forEach(t=>{if(!t.dead)occ[t.x+","+t.y]=1;});
+  const empty=[];
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++)if(!occ[x+","+y])empty.push([x,y]);
+  if(!empty.length)return;
+  const [x,y]=empty[rnd(empty.length)];
+  HG.tiles.push({id:HG.nid++,x,y,lv:Math.random()<0.9?1:2,neu:true});
+}
+
+function hRender(){
+  const board=$("#hanaBoard");if(!board||!HG)return;
+  $("#hScore").textContent=HG.score.toLocaleString();
+  const {cs,P,G}=HG;
+  HG.tiles.forEach(t=>{
+    let el=HG.nodes[t.id];
+    const tx=P+t.x*(cs+G),ty=P+t.y*(cs+G);
+    if(!el){
+      el=document.createElement("div");el.className="htile";
+      el.style.width=cs+"px";el.style.height=cs+"px";
+      el.innerHTML=`<div class="hin"><div class="he"></div><div class="hn"></div></div>`;
+      el.style.transform=`translate(${tx}px,${ty}px)`;
+      if(t.neu)el.querySelector(".hin").classList.add("pop");
+      board.appendChild(el);HG.nodes[t.id]=el;
+    }
+    el.style.transform=`translate(${tx}px,${ty}px)`;
+    el.style.zIndex=t.dead?1:2;
+    const f=HLV[Math.min(t.lv,HLV.length-1)];
+    el.querySelector(".he").textContent=f.e;
+    el.querySelector(".hn").textContent=f.n;
+    el.querySelector(".hin").style.background=HCOL[Math.min(t.lv,HCOL.length-1)];
+    if(t.popNext){t.popNext=false;const h=el.querySelector(".hin");h.classList.remove("pop");void h.offsetWidth;h.classList.add("pop");}
+    t.neu=false;
+  });
+  if(HG.bloom){
+    const f=HLV[HG.bloom];HG.bloom=null;
+    const d=document.createElement("div");d.className="hana-toast";
+    d.textContent=`${f.e} ${f.n}、開花！`;
+    board.appendChild(d);gT(()=>d.remove(),1100);
+    beep(700,.12,"triangle",.12);gT(()=>beep(1050,.16,"triangle",.12),110);
+  }
+  gT(()=>{
+    if(!HG)return;
+    HG.tiles.filter(t=>t.dead).forEach(t=>{const el=HG.nodes[t.id];if(el)el.remove();delete HG.nodes[t.id];});
+    HG.tiles=HG.tiles.filter(t=>!t.dead);
+  },150);
+}
+
+function hMove(dir){
+  if(!HG||HG.over||!$("#hanaBoard"))return;
+  const v=[[-1,0],[1,0],[0,-1],[0,1]][dir];
+  const ord=[0,1,2,3];
+  const xo=v[0]===1?[3,2,1,0]:ord, yo=v[1]===1?[3,2,1,0]:ord;
+  const at={};HG.tiles.forEach(t=>{if(!t.dead)at[t.x+","+t.y]=t;});
+  let moved=false,gained=0;const merged=new Set();
+  const snap=hSnapshot();
+  for(const y of yo)for(const x of xo){
+    const t=at[x+","+y];if(!t)continue;
+    let cx=x,cy=y,didMerge=false;
+    for(;;){
+      const nx=cx+v[0],ny=cy+v[1];
+      if(nx<0||nx>3||ny<0||ny>3)break;
+      const o=at[nx+","+ny];
+      if(!o){cx=nx;cy=ny;continue;}
+      if(o.lv===t.lv&&!merged.has(o.id)&&o.lv<12){
+        delete at[x+","+y];
+        t.x=nx;t.y=ny;t.dead=true;
+        o.lv++;o.popNext=true;merged.add(o.id);
+        gained+=Math.pow(2,o.lv);
+        if(o.lv>HG.maxLv){HG.maxLv=o.lv;HG.bloom=o.lv;}
+        moved=true;didMerge=true;
+      }
+      break;
+    }
+    if(didMerge)continue;
+    if(cx!==x||cy!==y){delete at[x+","+y];t.x=cx;t.y=cy;at[cx+","+cy]=t;moved=true;}
+  }
+  if(!moved)return;
+  HG.undo=snap;
+  HG.score+=gained;
+  if(gained>0)beep(360+Math.min(HG.maxLv,12)*28,.08,"triangle",.09);
+  hSpawn();
+  hRender();
+  hSave();
+  if(hIsOver()){HG.over=true;gT(hGameOver,400);}
+}
+
+function hIsOver(){
+  const g={};let cnt=0;
+  HG.tiles.forEach(t=>{if(!t.dead){g[t.x+","+t.y]=t.lv;cnt++;}});
+  if(cnt<16)return false;
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++){
+    const l=g[x+","+y];
+    if(x<3&&g[(x+1)+","+y]===l)return false;
+    if(y<3&&g[x+","+(y+1)]===l)return false;
+  }
+  return true;
+}
+
+function hGameOver(){
+  if(!HG)return;
+  const s=HG.score,top=HG.maxLv;
+  const newBest=s>(DB.hana.best||0);
+  if(newBest)DB.hana.best=s;
+  DB.hana.bestLv=Math.max(DB.hana.bestLv||1,top);
+  DB.hana.plays++;
+  DB.hanaState=null;
+  DB.daily[todayStr()]=true;
+  save();updateStreakChip();
+  const f=HLV[top];
+  HG=null;
+  gArea().innerHTML=`
+    <div class="fade-in center" style="width:min(340px,88vw)">
+      <p class="instruction">これ以上うごかせません</p>
+      <div style="font-size:64px">${f.e}</div>
+      <p style="font-weight:800;margin-bottom:6px">いちばん咲いた花：${f.n}</p>
+      <div class="score-big">${s.toLocaleString()}</div>
+      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:6px">🎉 自己ベスト更新！</p>`:``}
+      <div style="display:grid;gap:10px;margin-top:20px">
+        <button class="btn" onclick="startHana()">もう一度さかせる</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">とじる</button>
+      </div>
+    </div>`;
+}
+
+document.addEventListener("keydown",e=>{
+  if(!HG||!$("#hanaBoard"))return;
+  const k={ArrowLeft:0,ArrowRight:1,ArrowUp:2,ArrowDown:3}[e.key];
+  if(k!==undefined){e.preventDefault();hMove(k);}
+});
 
 /* ---------- init ---------- */
 updateStreakChip();
