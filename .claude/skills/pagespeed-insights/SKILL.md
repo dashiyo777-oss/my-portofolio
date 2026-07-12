@@ -110,6 +110,10 @@ Any green score (90+). Note: good lab data does **not** guarantee good real-user
 **Why is CrUX data unavailable for a URL/origin?**
 CrUX aggregates data from [opted-in users](https://developer.chrome.com/docs/crux/methodology) and requires the URL to be public ([crawlable and indexable](https://developer.chrome.com/docs/lighthouse/seo/is-crawlable/)) with enough distinct samples for a representative, anonymized view.
 
+## Version history
+
+The API is versioned as **v5**; the underlying Lighthouse version is independent and updated regularly (most recently Lighthouse 13.0 as of Oct 20, 2025). For the full release history of both the PSI API and UI — Lighthouse version bumps, breaking API changes, metric additions (INP, TTFB), and historical API versions — see [reference/release-notes.md](reference/release-notes.md).
+
 ## Further resources
 
 - Specific, answerable questions: [Stack Overflow (pagespeed-insights)](https://stackoverflow.com/questions/tagged/pagespeed-insights)
