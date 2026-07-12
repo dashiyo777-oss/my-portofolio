@@ -41,6 +41,11 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(23px,6vw,32px);letter
 .xaxis{display:flex;gap:14px;padding:8px 6px 0}
 .xaxis span{flex:1;text-align:center;font-size:11.5px;color:#7A6A56;max-width:56px;margin:0 auto}
 
+/* embed */
+.embed{position:relative;width:100%;height:560px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.embed iframe{width:100%;height:100%;border:0;display:block}
+.embed-open{display:inline-block;margin-top:10px;font-size:12px;color:var(--brown);border-bottom:1px dotted var(--gold)}
+
 /* table */
 table{border-collapse:collapse;width:100%;margin-top:4px;font-size:13.5px}
 thead th{font-family:var(--disp);font-weight:700;color:var(--brown-deep);text-align:right;padding:9px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
@@ -87,8 +92,17 @@ tbody tr.today{background:rgba(176,141,79,.10)}
   </div>
 
   <div class="card">
-    <h2>📊 日次アクセス（政治家ランク＝メイン）</h2>
-    <p class="cap">「昨日のアクセス」の推移（api.eichinohi.com｜site=politicians）</p>
+    <h2>📈 30日間の推移（ライブ）</h2>
+    <p class="cap">開くたびに最新。政治家ランクの日次アクセス推移（api.eichinohi.com｜site=politicians）</p>
+    <div class="embed">
+      <iframe src="https://api.eichinohi.com/dashboard?key=eichi-2026&site=politicians" title="政治家ランク 30日推移" loading="lazy"></iframe>
+    </div>
+    <a class="embed-open" href="https://api.eichinohi.com/dashboard?key=eichi-2026&site=politicians" target="_blank" rel="noopener">グラフが表示されないときはこちら（別タブで開く）↗</a>
+  </div>
+
+  <div class="card">
+    <h2>📊 記録した日次アクセス（政治家ランク）</h2>
+    <p class="cap">日次レポート（07:00 JST）から転記した確定値の推移</p>
     <div class="chart">
       <div class="col"><span class="val">38</span><div class="bar" style="height:78%"></div></div>
       <div class="col"><span class="val">17</span><div class="bar" style="height:35%"></div></div>
