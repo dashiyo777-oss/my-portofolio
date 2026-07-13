@@ -1,4 +1,21 @@
 <!doctype html><html><head><meta charset="utf-8">
 <meta http-equiv="refresh" content="0;url=sake-techo.html?lang=en">
 <script>location.replace('sake-techo.html?lang=en');</script>
-<title>IZAKAYA — The Sake &amp;amp; Spirits Notebook</title></head><body>Redirecting to <a href="sake-techo.html?lang=en">IZAKAYA — The Sake &amp;amp; Spirits Notebook</a>…</body></html>
+<title>IZAKAYA — The Sake &amp;amp; Spirits Notebook</title></head><body>Redirecting to <a href="sake-techo.html?lang=en">IZAKAYA — The Sake &amp;amp; Spirits Notebook</a>…
+<!-- 訪問カウンター：ページ読込ごとに +1／?admin 付きURLで数値バッジ表示（counterapi.dev） -->
+<script id="eichi-counter" data-ns="sake-en">
+(function(){
+  var NS='sake-en';
+  fetch('https://api.counterapi.dev/v1/dashiyo777oss/'+NS+'/up')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(location.search.indexOf('admin')===-1) return;
+      var b=document.createElement('div');
+      b.textContent='\uD83D\uDC41 '+NS+': '+((d&&d.count!=null)?Number(d.count).toLocaleString():'---');
+      b.style.cssText='position:fixed;bottom:16px;right:16px;background:rgba(26,37,47,.92);color:#fff;padding:10px 14px;border-radius:10px;font:13px/1.2 sans-serif;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,.3)';
+      document.body.appendChild(b);
+    })
+    .catch(function(){});
+})();
+</script>
+</body></html>

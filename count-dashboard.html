@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>カウント一覧 ― 毎朝の実績ダッシュボード | 叡智の灯火</title>
+<meta name="description" content="全アプリの訪問カウント（累計）を1画面で一覧。毎朝ひらくだけ。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E7;--card:#FDFBF4;--ink:#3A2E24;--brown:#6E4423;--brown-deep:#4A2E17;
+  --line:#E2D7C3;--stamp:#A6502E;--gold:#B08D4F;--up:#3E7C4F;
+  --disp:'Shippori Mincho',serif;--body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.8;font-size:15px;
+  background-image:radial-gradient(rgba(110,68,35,.045) 1px,transparent 1px);background-size:22px 22px}
+a{color:var(--brown);text-decoration:none}
+.wrap{max-width:860px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 48px) 18px 40px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(24px,6vw,34px);letter-spacing:.05em;text-align:center;line-height:1.4}
+.sub{font-family:var(--disp);font-size:13.5px;color:#7A6A56;text-align:center;margin-top:10px}
+.meta{text-align:center;margin-top:14px;font-size:12px;color:#8A7A64}
+.meta button{font-family:var(--body);font-size:12px;color:var(--brown);background:rgba(110,68,35,.07);
+  border:1px solid rgba(110,68,35,.2);border-radius:99px;padding:5px 14px;margin-left:8px;cursor:pointer}
+.back{display:block;text-align:center;margin-top:10px;font-size:12px}
+.back a::before{content:"← "}
+
+.total{background:linear-gradient(135deg,var(--brown-deep),var(--brown));color:#F7F2E7;border-radius:14px;
+  padding:20px 22px;margin-top:22px;text-align:center}
+.total .lbl{font-size:11px;letter-spacing:.3em;color:#D9BE8C}
+.total .big{font-family:var(--disp);font-size:38px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:4px}
+.total .dlt{font-size:12px;color:#EAD9BC;margin-top:4px}
+
+.group-label{font-family:var(--disp);font-size:13px;letter-spacing:.14em;color:var(--brown);
+  margin:26px 0 8px;display:flex;align-items:center;gap:12px}
+.group-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(110,68,35,.07)}
+.row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .em{font-size:19px;width:24px;text-align:center;flex-shrink:0}
+.row .nm{flex:1;font-weight:700;font-size:14px}
+.row .nm small{display:block;font-weight:400;font-size:11px;color:#9A8A72;letter-spacing:.02em}
+.row .ct{font-family:var(--disp);font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+.row .ct.load{color:#C3B69E;font-size:15px;font-family:var(--body)}
+.row .ct.err{color:var(--stamp);font-size:13px;font-family:var(--body)}
+.row .dl{min-width:52px;text-align:right;font-size:12px;color:var(--up);font-variant-numeric:tabular-nums}
+.row .dl.zero{color:#B6A78E}
+.row a.ext{font-size:12px;color:var(--gold);border-bottom:1px dotted var(--gold)}
+
+.note{font-size:11.5px;color:#8A7A64;margin-top:16px;line-height:1.9}
+.note code{background:rgba(110,68,35,.08);border-radius:5px;padding:1px 6px;font-size:11px}
+footer{text-align:center;margin-top:34px;font-size:11px;color:#9A8A72;letter-spacing:.08em}
+footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📊 カウント一覧</h1>
+  <p class="sub">全アプリの訪問カウント（累計）を1画面で。毎朝ひらくだけ。</p>
+  <div class="meta">
+    <span id="stamp">読み込み中…</span>
+    <button id="reload">↻ 更新</button>
+  </div>
+  <p class="back"><a href="access-jisseki.html">日次モニタリング台帳へ</a> ｜ <a href="iyashi.html">癒しのコーナー</a></p>
+
+  <div class="total">
+    <div class="lbl">計測対象アプリ 累計合計</div>
+    <div class="big" id="total">—</div>
+    <div class="dlt" id="total-delta">前回来訪比：—</div>
+  </div>
+
+  <div class="group-label">癒しのコーナー（日本語版）</div>
+  <div class="card" id="grp-jp"></div>
+
+  <div class="group-label">英語版・その他ページ</div>
+  <div class="card" id="grp-other"></div>
+
+  <div class="group-label">外部（手入力・別ダッシュボード）</div>
+  <div class="card" id="grp-ext"></div>
+
+  <p class="note">
+    ・数字は counterapi.dev の<strong>累計値</strong>です（読み取り専用取得のため、この画面を開いてもカウントは増えません）。<br>
+    ・「＋N」は<strong>この端末で前回この画面を開いた時からの増加数</strong>（端末ごとに記録）。日々の増減の目安にどうぞ。<br>
+    ・外部（政治家ランク／世界の見方／冴え手帖・叡智の灯火／賢人会議）は counterapi 対象外のため、各ダッシュボード・itch.io Analytics・Discord日次レポートを参照して <a href="access-jisseki.html">台帳</a> に手入力してください。
+  </p>
+
+  <footer>
+    <div class="rule"></div>
+    カウント一覧ダッシュボード ｜ © 叡智の灯火
+  </footer>
+</div>
+
+<script>
+// ===== 計測対象（counterapi のネームスペース）=====
+var WORKSPACE = 'dashiyo777oss';
+var JP = [
+  {ns:'meisaku',      em:'📖', nm:'名作手帖',            sub:'meisaku-techo.html'},
+  {ns:'meien',        em:'🎬', nm:'名演手帖',            sub:'meien-techo.html'},
+  {ns:'coffee',       em:'☕', nm:'珈琲手帖',            sub:'coffee-techo.html'},
+  {ns:'sake',         em:'🍶', nm:'酒手帖',              sub:'sake-techo.html'},
+  {ns:'amami',        em:'🍮', nm:'あまみ手帖',          sub:'amami-techo.html'},
+  {ns:'wadai-karuta', em:'🎴', nm:'話題かるた',          sub:'wadai-karuta.html'},
+  {ns:'sae',          em:'🧠', nm:'冴え手帖 SAE',        sub:'sae.html'}
+];
+var OTHER = [
+  {ns:'iyashi',         em:'🕯️', nm:'癒しのコーナー（ハブ）', sub:'iyashi.html'},
+  {ns:'kiku',           em:'💊', nm:'効く（Kiku）',           sub:'health-tips-rating-app/'},
+  {ns:'jinsei-game',    em:'🎲', nm:'人生の岐路ゲーム',        sub:'life-wisdom-game/'},
+  {ns:'hirameki',       em:'💡', nm:'ひらめき工房',            sub:'hirameki-kobo/'},
+  {ns:'portfolio',      em:'🏠', nm:'ポートフォリオ トップ',    sub:'index.html'},
+  {ns:'coffee-en',      em:'☕', nm:'KISSATEN (EN)',           sub:'coffee-techo-en.html'},
+  {ns:'sake-en',        em:'🍶', nm:'IZAKAYA (EN)',            sub:'sake-notebook-en.html'},
+  {ns:'amami-en',       em:'🍮', nm:'Sweet Notebook (EN)',     sub:'amami-techo-en.html'},
+  {ns:'wadai-karuta-en',em:'🎴', nm:'Conversation Cards (EN)', sub:'wadai-karuta-en.html'},
+  {ns:'works',          em:'🗂️', nm:'実績ページ',              sub:'works/'},
+  {ns:'profile',        em:'👤', nm:'プロフィール',            sub:'profile/'},
+  {ns:'portfolio-b',    em:'📄', nm:'ポートフォリオB',          sub:'portfolio-b/'}
+];
+var EXT = [
+  {em:'🏛️', nm:'政治家ランク',            sub:'api.eichinohi.com（site=politicians）', url:'https://dashiyo777-oss.github.io/politicians.html'},
+  {em:'🌏', nm:'世界の見方',              sub:'eichinohi.com/sekai.html',              url:'https://eichinohi.com/sekai.html'},
+  {em:'📝', nm:'冴え手帖（itch.io）',       sub:'itch.io Analytics',                     url:'https://ryuzaburo7.itch.io/sae-techo'},
+  {em:'🕯️', nm:'叡智の灯火／賢人会議',      sub:'Discord日次レポート / dashboard',        url:'https://eichinohi.com/'}
+];
+
+function fmt(n){ return Number(n).toLocaleString(); }
+function readCount(ns){
+  // counterapi v1: 末尾なしGET＝読み取り専用（インクリメントしない）
+  return fetch('https://api.counterapi.dev/v1/'+WORKSPACE+'/'+ns)
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){ var c=(d&&(d.count!=null?d.count:(d.data&&d.data.count))); if(c==null) throw new Error('no count'); return Number(c); });
+}
+
+function renderRows(container, items){
+  container.innerHTML='';
+  return items.map(function(it){
+    var row=document.createElement('div'); row.className='row';
+    row.innerHTML='<span class="em">'+it.em+'</span>'+
+      '<span class="nm">'+it.nm+'<small>'+it.sub+'</small></span>'+
+      '<span class="dl" data-dl></span>'+
+      '<span class="ct load" data-ct>…</span>';
+    container.appendChild(row);
+    return {it:it, ct:row.querySelector('[data-ct]'), dl:row.querySelector('[data-dl]')};
+  });
+}
+function renderExt(container, items){
+  container.innerHTML='';
+  items.forEach(function(it){
+    var row=document.createElement('div'); row.className='row';
+    row.innerHTML='<span class="em">'+it.em+'</span>'+
+      '<span class="nm">'+it.nm+'<small>'+it.sub+'</small></span>'+
+      '<a class="ext" href="'+it.url+'" target="_blank" rel="noopener">開く ↗</a>';
+    container.appendChild(row);
+  });
+}
+
+function load(){
+  document.getElementById('stamp').textContent='読み込み中…';
+  var jpRows=renderRows(document.getElementById('grp-jp'), JP);
+  var otRows=renderRows(document.getElementById('grp-other'), OTHER);
+  renderExt(document.getElementById('grp-ext'), EXT);
+  var all=jpRows.concat(otRows);
+
+  var prev={}; try{ prev=JSON.parse(localStorage.getItem('eichi-counts')||'{}'); }catch(e){}
+  var snap={}, total=0, totalPrev=0, done=0, okAny=false;
+
+  all.forEach(function(r){
+    readCount(r.it.ns).then(function(c){
+      okAny=true; snap[r.it.ns]=c; total+=c;
+      r.ct.className='ct'; r.ct.textContent=fmt(c);
+      if(prev[r.it.ns]!=null){
+        var d=c-prev[r.it.ns]; totalPrev+=prev[r.it.ns];
+        r.dl.textContent=(d>0?'＋'+fmt(d):(d<0?fmt(d):'±0'));
+        if(d===0) r.dl.className='dl zero';
+      } else { r.dl.textContent='new'; r.dl.className='dl zero'; }
+    }).catch(function(){
+      r.ct.className='ct err'; r.ct.textContent='取得不可';
+      r.dl.textContent='';
+    }).then(function(){
+      done++;
+      if(done===all.length){
+        document.getElementById('total').textContent = okAny? fmt(total) : '取得不可';
+        var td=total-totalPrev;
+        document.getElementById('total-delta').textContent = okAny? ('前回来訪比：'+(td>0?'＋'+fmt(td):(td<0?fmt(td):'±0'))) : '—';
+        var now=new Date();
+        var p=function(x){return (x<10?'0':'')+x;};
+        document.getElementById('stamp').textContent='最終取得：'+now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate())+' '+p(now.getHours())+':'+p(now.getMinutes());
+        if(okAny){ try{ localStorage.setItem('eichi-counts', JSON.stringify(snap)); localStorage.setItem('eichi-counts-at', now.toISOString()); }catch(e){} }
+      }
+    });
+  });
+}
+document.getElementById('reload').addEventListener('click', load);
+load();
+</script>
+</body>
+</html>

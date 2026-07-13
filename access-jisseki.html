@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>アクセス実績 ― 日次モニタリング | 叡智の灯火</title>
+<meta name="description" content="癒しのコーナーの7システムと、政治家ランク・世界の見方・冴え手帖の、毎日のアクセス実績を記録する台帳です。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E7;
+  --card:#FDFBF4;
+  --ink:#3A2E24;
+  --brown:#6E4423;
+  --brown-deep:#4A2E17;
+  --line:#E2D7C3;
+  --stamp:#A6502E;
+  --gold:#B08D4F;
+  --disp:'Shippori Mincho',serif;
+  --body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:var(--body);background:var(--paper);color:var(--ink);
+  line-height:1.85;font-size:15px;
+  background-image:radial-gradient(rgba(110,68,35,.045) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+a{color:var(--brown);text-decoration:none}
+
+/* ---------- hero ---------- */
+.hero{max-width:920px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 56px) 22px 30px;text-align:center;position:relative}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(25px,6vw,37px);letter-spacing:.05em;line-height:1.4}
+.hero .sub{font-family:var(--disp);font-size:14px;color:#7A6A56;margin-top:14px;letter-spacing:.05em}
+.hero .badge{display:inline-block;margin-top:18px;font-size:12px;color:var(--stamp);
+  border:1px solid rgba(166,80,46,.4);border-radius:99px;padding:6px 16px;letter-spacing:.06em;background:rgba(166,80,46,.05)}
+.back{display:inline-block;margin-top:16px;font-size:12px;color:var(--brown)}
+.back::before{content:"← "}
+
+main{max-width:920px;margin:0 auto;padding:8px 18px 30px}
+
+/* ---------- 記録日カード ---------- */
+.day{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 2px 10px rgba(110,68,35,.07);
+  padding:22px 18px 20px;margin-top:22px;
+}
+.day-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.day-date{font-family:var(--disp);font-size:20px;font-weight:800;letter-spacing:.04em}
+.day-tag{font-size:11px;color:var(--brown);background:rgba(110,68,35,.07);
+  border:1px solid rgba(110,68,35,.18);border-radius:99px;padding:3px 11px}
+.day-note{font-size:12px;color:#8A7A64;margin:2px 0 16px}
+
+.group-label{font-family:var(--disp);font-size:13px;letter-spacing:.14em;color:var(--brown);
+  margin:18px 0 8px;display:flex;align-items:center;gap:12px}
+.group-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.group-label:first-of-type{margin-top:4px}
+
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:13.5px}
+thead th{
+  font-family:var(--disp);font-weight:700;letter-spacing:.03em;color:var(--brown-deep);
+  text-align:right;padding:9px 12px;border-bottom:2px solid var(--line);white-space:nowrap;
+}
+thead th:first-child{text-align:left}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+tbody td:first-child{text-align:left;font-weight:700;white-space:normal}
+tbody td:last-child{text-align:left;font-weight:400;font-size:11.5px;color:#8A7A64;white-space:normal}
+tbody tr:last-child td{border-bottom:none}
+.app-name{display:flex;align-items:center;gap:8px}
+.app-name .em{font-size:17px}
+.muted{color:#B6A78E}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- 対象一覧 ---------- */
+.targets{max-width:920px;margin:26px auto 0;padding:0 18px}
+.targets-inner{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px}
+.targets h2{font-family:var(--disp);font-size:17px;font-weight:800;letter-spacing:.03em;margin-bottom:10px}
+.targets ul{list-style:none}
+.targets li{font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line);color:#54473A}
+.targets li:last-child{border-bottom:none}
+.targets li a{border-bottom:1px dotted var(--gold)}
+.targets .ext::after{content:" ↗";font-size:10px;color:var(--gold)}
+
+/* ---------- 追記のしかた ---------- */
+.howto{max-width:920px;margin:26px auto 0;padding:0 18px}
+.howto-inner{
+  background:linear-gradient(135deg,var(--brown-deep),var(--brown));color:#F7F2E7;
+  border-radius:14px;padding:24px 22px;
+}
+.howto .eyebrow{font-size:11px;letter-spacing:.3em;color:#D9BE8C;margin-bottom:8px}
+.howto h2{font-family:var(--disp);font-size:19px;font-weight:800;letter-spacing:.03em}
+.howto ol{margin:14px 0 0 20px}
+.howto li{font-size:13px;margin-top:7px;color:#F1E7D2}
+.howto code{background:rgba(247,242,231,.14);border-radius:5px;padding:1px 6px;font-size:12px}
+.howto a{color:#EAD9BC;border-bottom:1px dotted var(--gold)}
+
+footer{max-width:920px;margin:0 auto;padding:44px 22px calc(env(safe-area-inset-bottom) + 34px);
+  text-align:center;font-size:11px;color:#9A8A72;letter-spacing:.08em}
+footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin-bottom:18px}
+footer a{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>📈 アクセス実績 ― 日次モニタリング</h1>
+  <p class="sub">癒しのコーナー7システム ＋ 政治家ランク・世界の見方・冴え手帖</p>
+  <span class="badge">🔖 毎日、最新の数値を一行ずつ追記</span>
+  <br>
+  <a class="back" href="count-dashboard.html">📊 カウント一覧（毎朝のワンビュー）を開く</a>
+  <a class="back" href="iyashi.html">癒しのコーナーへ戻る</a>
+</header>
+
+<main>
+
+  <!-- ▼ 新しい日付は、この直下にこの .day ブロックを丸ごとコピーして追記してください -->
+
+  <section class="day">
+    <div class="day-head">
+      <span class="day-date">2026-07-13</span>
+      <span class="day-tag">日次レポート 07:00 JST</span>
+    </div>
+    <p class="day-note">出典：Discord 日次レポート（2026-07-13 07:00 JST）＋ライブダッシュボード（08:34 取得）。手帖系の累計は <a href="count-dashboard.html">📊 カウント一覧</a> を参照。</p>
+
+    <div class="group-label">癒しのコーナー 7システム</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>システム</th><th>昨日</th><th>7日</th><th>累計</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="app-name"><span class="em">📖</span>名作手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=meisaku</td></tr>
+          <tr><td><span class="app-name"><span class="em">🎬</span>名演手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=meien</td></tr>
+          <tr><td><span class="app-name"><span class="em">🕯️</span>叡智の灯火／賢人会議</span></td><td class="num">0</td><td class="num">0</td><td class="num">141</td><td>反応(feedback)。ライセンス累計15／賢人会議 無料 累計13・会員 累計0</td></tr>
+          <tr><td><span class="app-name"><span class="em">☕</span>珈琲手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=coffee</td></tr>
+          <tr><td><span class="app-name"><span class="em">🍶</span>酒手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=sake</td></tr>
+          <tr><td><span class="app-name"><span class="em">🍮</span>あまみ手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=amami</td></tr>
+          <tr><td><span class="app-name"><span class="em">🎴</span>話題かるた</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=wadai-karuta</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-label">追加モニタリング</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>システム</th><th>昨日</th><th>7日</th><th>累計</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="app-name"><span class="em">🏛️</span>政治家ランク</span></td><td class="num">17</td><td class="num">252</td><td class="num">477</td><td>ユニーク17。ライブ累計479（08:34）。api.eichinohi.com（site=politicians）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🌏</span>世界の見方</span></td><td class="num">3</td><td class="num muted">―</td><td class="num muted">―</td><td>直近24hのInvocations（Cloudflare Workers・sekai-proxy）。累計・7日は非提供</td></tr>
+          <tr><td><span class="app-name"><span class="em">📝</span>冴え手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>itch.io アナリティクス参照（ryuzaburo7.itch.io/sae-techo）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <span class="day-date">2026-07-12</span>
+      <span class="day-tag">日次レポート 07:00 JST</span>
+    </div>
+    <p class="day-note">出典：Discord 日次レポート（2026-07-12 07:00 JST）。本日より癒しのコーナー全ページで訪問カウンター計測を開始（手帖系の累計は <a href="count-dashboard.html">📊 カウント一覧</a> を参照）。</p>
+
+    <div class="group-label">癒しのコーナー 7システム</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>システム</th><th>昨日</th><th>7日</th><th>累計</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="app-name"><span class="em">📖</span>名作手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=meisaku</td></tr>
+          <tr><td><span class="app-name"><span class="em">🎬</span>名演手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=meien</td></tr>
+          <tr><td><span class="app-name"><span class="em">🕯️</span>叡智の灯火／賢人会議</span></td><td class="num">0</td><td class="num">0</td><td class="num">141</td><td>反応(feedback)。ライセンス累計15／賢人会議 無料 累計13・会員 累計0</td></tr>
+          <tr><td><span class="app-name"><span class="em">☕</span>珈琲手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=coffee</td></tr>
+          <tr><td><span class="app-name"><span class="em">🍶</span>酒手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=sake</td></tr>
+          <tr><td><span class="app-name"><span class="em">🍮</span>あまみ手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=amami</td></tr>
+          <tr><td><span class="app-name"><span class="em">🎴</span>話題かるた</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">計測中</td><td>ダッシュボード参照 / ns=wadai-karuta</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-label">追加モニタリング</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>システム</th><th>昨日</th><th>7日</th><th>累計</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="app-name"><span class="em">🏛️</span>政治家ランク</span></td><td class="num">17</td><td class="num">262</td><td class="num">460</td><td>ユニーク13。api.eichinohi.com（site=politicians）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🌏</span>世界の見方</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>Cloudflare Workers（sekai-proxy）で計測。日次内訳は7/13行に記載</td></tr>
+          <tr><td><span class="app-name"><span class="em">📝</span>冴え手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>itch.io アナリティクス参照（ryuzaburo7.itch.io/sae-techo）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <span class="day-date">2026-07-11</span>
+      <span class="day-tag">日次レポート 07:00 JST</span>
+    </div>
+    <p class="day-note">出典：Discord 日次レポート（2026-07-11 07:00 JST）／各ダッシュボード（api.eichinohi.com）。「―」は当該システムに計測が未接続で数値未取得。</p>
+
+    <div class="group-label">癒しのコーナー 7システム</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>システム</th><th>昨日</th><th>7日</th><th>累計</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="app-name"><span class="em">📖</span>名作手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>カウンター設置済（?admin表示 / ns=meisaku）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🎬</span>名演手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>カウンター設置済（?admin表示 / ns=meien）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🕯️</span>叡智の灯火／賢人会議</span></td><td class="num">0</td><td class="num">0</td><td class="num">141</td><td>反応(feedback)。ライセンス累計15／賢人会議 無料 累計13・会員 累計0</td></tr>
+          <tr><td><span class="app-name"><span class="em">☕</span>珈琲手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>カウンター設置済（?admin表示 / ns=coffee）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🍶</span>酒手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>カウンター設置済（?admin表示 / ns=sake）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🍮</span>あまみ手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>カウンター設置済（?admin表示 / ns=amami）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🎴</span>話題かるた</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>カウンター設置済（?admin表示 / ns=wadai-karuta）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-label">追加モニタリング</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>システム</th><th>昨日</th><th>7日</th><th>累計</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="app-name"><span class="em">🏛️</span>政治家ランク</span></td><td class="num">38</td><td class="num">296</td><td class="num">443</td><td>ユニーク36。api.eichinohi.com（site=politicians）</td></tr>
+          <tr><td><span class="app-name"><span class="em">🌏</span>世界の見方</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>計測未接続（外部・eichinohi.com/sekai.html）</td></tr>
+          <tr><td><span class="app-name"><span class="em">📝</span>冴え手帖</span></td><td class="num muted">―</td><td class="num muted">―</td><td class="num muted">―</td><td>itch.io アナリティクス参照（ryuzaburo7.itch.io/sae-techo）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<section class="targets">
+  <div class="targets-inner">
+    <h2>🎯 モニタリング対象</h2>
+    <ul>
+      <li>📖 名作手帖 … <a href="meisaku-techo.html">meisaku-techo.html</a></li>
+      <li>🎬 名演手帖 … <a href="meien-techo.html">meien-techo.html</a></li>
+      <li>🕯️ 叡智の灯火／賢人会議 … <a class="ext" href="https://eichinohi.com/" target="_blank" rel="noopener">eichinohi.com</a></li>
+      <li>☕ 珈琲手帖 … <a href="coffee-techo.html">coffee-techo.html</a></li>
+      <li>🍶 酒手帖 … <a href="sake-techo.html">sake-techo.html</a></li>
+      <li>🍮 あまみ手帖 … <a href="amami-techo.html">amami-techo.html</a></li>
+      <li>🎴 話題かるた … <a href="wadai-karuta.html">wadai-karuta.html</a></li>
+      <li>🏛️ 政治家ランク … <a class="ext" href="https://dashiyo777-oss.github.io/politicians.html" target="_blank" rel="noopener">politicians.html</a></li>
+      <li>🌏 世界の見方 … <a class="ext" href="https://eichinohi.com/sekai.html" target="_blank" rel="noopener">eichinohi.com/sekai.html</a></li>
+      <li>📝 冴え手帖 … <a class="ext" href="https://ryuzaburo7.itch.io/sae-techo" target="_blank" rel="noopener">ryuzaburo7.itch.io/sae-techo</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="howto">
+  <div class="howto-inner">
+    <div class="eyebrow">毎日の追記手順</div>
+    <h2>アプリが増えても、この台帳ひとつで</h2>
+    <ol>
+      <li>Discord の日次レポート（毎朝 07:00 JST）と各ダッシュボードを開く。</li>
+      <li>上の <code>&lt;section class="day"&gt;…&lt;/section&gt;</code> ブロックを丸ごとコピーし、<strong>いちばん上</strong>に貼り付ける。</li>
+      <li>日付を新しい日に書き換え、各システムの「昨日／7日／累計」を最新値に更新する。</li>
+      <li>新しいシステムが増えたら <code>&lt;tbody&gt;</code> に <code>&lt;tr&gt;</code> を1行足すだけ。</li>
+    </ol>
+    <p style="font-size:12px;margin-top:12px;color:#EAD9BC">※ 癒しのコーナー各ページには訪問カウンター（counterapi.dev）を設置済みです。累計値は各ページを <code>?admin</code> 付きで開くと右下にバッジ表示されます（例: <code>coffee-techo.html?admin</code>）。翌日以降、この昨日／7日／累計欄へ転記してください。世界の見方は外部（eichinohi.com）、冴え手帖は itch.io の Analytics から手入力してください。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="rule"></div>
+  アクセス実績 ― 日次モニタリング<br>
+  © 叡智の灯火 <a href="iyashi.html">癒しのコーナー</a>
+</footer>
+
+</body>
+</html>
