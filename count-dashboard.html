@@ -128,10 +128,17 @@ var EXT = [
 
 function fmt(n){ return Number(n).toLocaleString(); }
 function readCount(ns){
-  // counterapi v1: 末尾なしGET＝読み取り専用（インクリメントしない）
-  return fetch('https://api.counterapi.dev/v1/'+WORKSPACE+'/'+ns)
+  // counterapi v1 の末尾なしGETは cross-origin fetch に非対応のため、
+  // 動作実績のある /up で取得し、直後に /down で自分の +1 を打ち消す（実質・読み取り専用）。
+  var base='https://api.counterapi.dev/v1/'+WORKSPACE+'/'+ns;
+  return fetch(base+'/up')
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function(d){ var c=(d&&(d.count!=null?d.count:(d.data&&d.data.count))); if(c==null) throw new Error('no count'); return Number(c); });
+    .then(function(d){
+      var c=(d&&(d.count!=null?d.count:(d.data&&d.data.count)));
+      if(c==null) throw new Error('no count');
+      fetch(base+'/down').catch(function(){}); // 自分の加算を戻す
+      return Math.max(0, Number(c)-1);
+    });
 }
 
 function renderRows(container, items){
