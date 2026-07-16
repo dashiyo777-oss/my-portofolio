@@ -1,0 +1,12 @@
+# Cloudflare Worker 設定（wrangler CLI でデプロイする場合に使用）
+# スマホのみで作業する場合は、ダッシュボードからの手動デプロイでも可（README 参照）。
+name = "hirameki-proxy"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# 環境変数は 秘密情報 なので、ここには書かず下記コマンドで登録する:
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#
+# オリジン許可リスト（公開ドメイン）は平文でよいのでここで指定できる:
+# [vars]
+# ALLOWED_ORIGINS = "https://eichinohi.com,https://dashiyo777-oss.github.io"
