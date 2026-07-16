@@ -76,69 +76,34 @@ tbody tr.today{background:rgba(176,141,79,.10)}
 <body>
 <div class="wrap">
   <h1>🎮 ゲーム アクセス集計</h1>
-  <p class="sub">毎日のゲームのアクセス数を、ひと目で。（最終更新：2026-07-13）</p>
-
-  <div class="kpis">
-    <div class="kpi">
-      <div class="big">17</div>
-      <div class="lbl">昨日のアクセス（政治家ランク）</div>
-      <div class="dlt flat">前日 17 → 横ばい</div>
-    </div>
-    <div class="kpi">
-      <div class="big">477</div>
-      <div class="lbl">累計アクセス</div>
-      <div class="dlt up">前日比 ＋17</div>
-    </div>
-  </div>
+  <p class="sub">毎日のゲームのアクセス数と推移を、常に最新で。</p>
 
   <div class="card">
-    <h2>📈 30日間の推移（ライブ）</h2>
-    <p class="cap">開くたびに最新。政治家ランクの日次アクセス推移（api.eichinohi.com｜site=politicians）</p>
+    <h2>🏛️ 政治家ランク（メイン）</h2>
+    <p class="cap">昨日／7日／累計＋30日推移。開くたびに最新（api.eichinohi.com｜site=politicians）</p>
     <div class="embed">
-      <iframe src="https://api.eichinohi.com/dashboard?key=eichi-2026&site=politicians" title="政治家ランク 30日推移" loading="lazy"></iframe>
+      <iframe src="https://api.eichinohi.com/dashboard?key=eichi-2026&site=politicians" title="政治家ランク ダッシュボード" loading="lazy"></iframe>
     </div>
     <a class="embed-open" href="https://api.eichinohi.com/dashboard?key=eichi-2026&site=politicians" target="_blank" rel="noopener">グラフが表示されないときはこちら（別タブで開く）↗</a>
   </div>
 
   <div class="card">
-    <h2>📊 記録した日次アクセス（政治家ランク）</h2>
-    <p class="cap">日次レポート（07:00 JST）から転記した確定値の推移</p>
-    <div class="chart">
-      <div class="col"><span class="val">38</span><div class="bar" style="height:78%"></div></div>
-      <div class="col"><span class="val">17</span><div class="bar" style="height:35%"></div></div>
-      <div class="col"><span class="val">17</span><div class="bar" style="height:35%"></div></div>
+    <h2>🏮 叡智の灯火（反応）</h2>
+    <p class="cap">開くたびに最新（api.eichinohi.com）</p>
+    <div class="embed">
+      <iframe src="https://api.eichinohi.com/dashboard?key=eichi-2026" title="叡智の灯火 ダッシュボード" loading="lazy"></iframe>
     </div>
-    <div class="xaxis"><span>7/11</span><span>7/12</span><span>7/13</span></div>
-
-    <table>
-      <thead><tr><th>日付</th><th>アクセス</th><th>ユニーク</th><th>累計</th></tr></thead>
-      <tbody>
-        <tr><td>7/11</td><td>38</td><td>36</td><td>443</td></tr>
-        <tr><td>7/12</td><td>17</td><td>13</td><td>460</td></tr>
-        <tr class="today"><td>7/13</td><td>17</td><td>17</td><td>477</td></tr>
-      </tbody>
-    </table>
-    <p class="small" style="margin-top:8px">※ 数値は日次レポート（07:00 JST）基準。7/13 のライブ累計は 479（08:34）。</p>
-  </div>
-
-  <div class="card">
-    <h2>🕯️ そのほかのゲーム（累計）</h2>
-    <div class="mini"><span class="n">🏮 叡智の灯火（反応 feedback）</span><span class="v">141</span></div>
-    <div class="mini"><span class="n">🧙 賢人会議（無料）</span><span class="v">13</span></div>
-    <div class="mini"><span class="n">🧙 賢人会議（会員）</span><span class="v">0</span></div>
-    <div class="mini"><span class="n">🔑 ライセンス利用</span><span class="v">15</span></div>
+    <a class="embed-open" href="https://api.eichinohi.com/dashboard?key=eichi-2026" target="_blank" rel="noopener">別タブで開く ↗</a>
   </div>
 
   <div class="live">
-    <div class="eyebrow">最新をその場で（開くたびに最新）</div>
-    <a href="https://api.eichinohi.com/dashboard?key=eichi-2026&site=politicians" target="_blank" rel="noopener">🏛️ 政治家ランク ダッシュボード<span class="go">開く ↗</span></a>
-    <a href="https://api.eichinohi.com/dashboard?key=eichi-2026" target="_blank" rel="noopener">🏮 叡智の灯火（反応）<span class="go">開く ↗</span></a>
+    <div class="eyebrow">その他のゲーム（タップで最新ダッシュボード）</div>
     <a href="https://api.eichinohi.com/dashboard?key=eichi-2026&site=sage_free" target="_blank" rel="noopener">🧙 賢人会議（無料）<span class="go">開く ↗</span></a>
     <a href="https://api.eichinohi.com/dashboard?key=eichi-2026&site=sage_member" target="_blank" rel="noopener">🧙 賢人会議（会員）<span class="go">開く ↗</span></a>
   </div>
 
   <p class="foot">
-    毎朝ここだけ見ればOK。数値は日次レポート／各ダッシュボードから転記します。<br>
+    毎朝ここだけ見ればOK。表示される数字はすべて「開くたびに最新」です（手入力なし）。<br>
     <a href="access-jisseki.html">📈 全システムの台帳</a> ｜ <a href="count-dashboard.html">📊 手帖系カウント一覧</a> ｜ <a href="iyashi.html">癒しのコーナー</a>
   </p>
 </div>
