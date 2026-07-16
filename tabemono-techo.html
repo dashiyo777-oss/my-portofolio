@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>食べ物ふしぎ手帖 | GUSTO — 食卓が楽しくなる、味の裏がわ。</title>
+<meta name="description" content="クロワッサンの形は中身のサイン——食卓が楽しくなる、食べ物のふしぎな事実を日本語と英語で集めた手帖。AI料理長が新しい食べ物の豆知識も書き下ろします。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --field:#3A2A22;      /* 焙煎した木の色 */
+  --field-deep:#2A1E18;
+  --card:#F6EFE2;       /* クラフト紙 */
+  --card-line:#E2D6C2;
+  --ink:#33261E;        /* インク */
+  --moss:#B4432E;       /* トマト赤（主役） */
+  --moss-deep:#8E3222;
+  --clay:#C67A2E;       /* パプリカ橙（スタンプ） */
+  --amber:#C89A3E;      /* 蜂蜜色（数値強調） */
+  --mute:#8A7B6A;
+  --disp:'Shippori Mincho',serif;
+  --body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--body);background:var(--field);color:var(--ink);line-height:1.8;font-size:15px}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- header ---------- */
+header{background:var(--field-deep);color:var(--card);padding:calc(env(safe-area-inset-top) + 22px) 20px 20px;
+  position:relative;overflow:hidden}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:repeating-linear-gradient(90deg,var(--moss) 0 18px,transparent 18px 30px)}
+.brand-row{display:flex;justify-content:space-between;align-items:flex-start;max-width:720px;margin:0 auto}
+h1{font-family:var(--disp);font-weight:800;font-size:29px;letter-spacing:.1em}
+.brand-en{font-size:10px;letter-spacing:.4em;color:var(--moss);margin-top:5px;text-transform:uppercase}
+.lang-toggle{display:flex;border:1px solid rgba(241,238,223,.3);border-radius:99px;overflow:hidden;flex-shrink:0}
+.lang-toggle button{background:none;border:none;color:#B8BBA6;font-size:12px;font-weight:700;padding:6px 13px}
+.lang-toggle button.on{background:var(--card);color:var(--field-deep)}
+.tagline{font-family:var(--disp);font-size:13px;color:#B8BBA6;max-width:720px;margin:12px auto 0}
+.member-line{max-width:720px;margin:10px auto 0;font-size:11px;color:#8A8C77;display:flex;align-items:center;gap:6px}
+.member-line .dot{width:7px;height:7px;border-radius:50%;background:#5A5C4A}
+.member-line.is-member{color:var(--amber)}
+.member-line.is-member .dot{background:var(--amber)}
+
+/* ---------- 生態の棚（分類フィルタ） ---------- */
+.shelf-wrap{max-width:720px;margin:18px auto 0;padding:0 16px}
+.shelf-label{font-size:10px;letter-spacing:.3em;color:var(--mute);margin-bottom:8px}
+.shelf{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.shelf::-webkit-scrollbar{display:none}
+.tag-btn{flex-shrink:0;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.06em;
+  color:var(--mute);background:var(--card);border:1px solid var(--card-line);border-radius:8px;padding:7px 14px}
+.tag-btn.on{background:var(--moss);border-color:var(--moss);color:var(--card)}
+
+/* ---------- main ---------- */
+main{max-width:720px;margin:0 auto;padding:18px 16px calc(env(safe-area-inset-bottom) + 90px)}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--card-line);
+  border-radius:10px;padding:11px 14px}
+.search input{border:none;background:none;outline:none;flex:1;font-size:15px;color:var(--ink)}
+.search input::placeholder{color:var(--mute)}
+.search input::-webkit-search-cancel-button{display:none}
+.search span{color:var(--mute)}
+.clear-q{display:none;border:none;background:var(--card-line);color:var(--ink);width:24px;height:24px;
+  border-radius:50%;font-size:15px;line-height:1;flex-shrink:0;align-items:center;justify-content:center}
+.clear-q.show{display:flex}
+.count{font-size:11px;color:#8A8C77;margin:14px 2px 10px;letter-spacing:.1em}
+
+/* ---------- ランキング ---------- */
+.rank-row{display:flex;flex-direction:column;gap:8px}
+.rank-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--card-line);
+  border-radius:10px;padding:10px 14px;cursor:pointer}
+.rank-no{font-family:var(--disp);font-weight:800;width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
+  border:1.5px solid var(--card-line);color:var(--mute)}
+.rank-item:nth-child(1) .rank-no{background:var(--amber);border-color:var(--amber);color:#20291F}
+.rank-item:nth-child(2) .rank-no{background:#9AA089;border-color:#9AA089;color:#20291F}
+.rank-item:nth-child(3) .rank-no{background:#A9714B;border-color:#A9714B;color:var(--card)}
+.rank-item .ttl{font-family:var(--disp);font-weight:700;font-size:14.5px;flex:1;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-item .vc{font-size:11px;color:var(--mute);flex-shrink:0}
+.rank-note{font-size:10px;color:#8A8C77;margin-top:6px;text-align:right}
+.saved-h{font-family:var(--disp);font-size:16px;font-weight:700;color:var(--card);margin:26px 2px 12px;
+  display:flex;align-items:center;gap:8px}
+.saved-h::after{content:"";flex:1;height:1px;background:rgba(241,238,223,.2)}
+
+/* ---------- 標本カード ---------- */
+.spec{background:var(--card);border:1px solid var(--card-line);border-radius:10px;margin-bottom:12px;
+  overflow:hidden;display:flex;cursor:pointer;transition:transform .15s ease;
+  box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.spec:active{transform:scale(.985)}
+.spec .tab{width:44px;flex-shrink:0;background:var(--moss-deep);color:var(--card);
+  display:flex;align-items:center;justify-content:center;font-size:22px}
+.spec .bd{padding:13px 15px;flex:1;min-width:0}
+.spec h3{font-family:var(--disp);font-size:17px;font-weight:700;line-height:1.4}
+.spec .hook{font-size:13px;color:var(--moss-deep);margin-top:5px;font-weight:500}
+.spec .tags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.tag{font-size:10.5px;padding:2px 9px;border-radius:99px;border:1px solid var(--card-line);color:var(--mute)}
+.tag.cat{border-color:var(--moss);color:var(--moss-deep)}
+.lockbadge{align-self:center;margin-right:14px;flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  border:1.5px solid var(--clay);color:var(--clay);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-size:11px;font-weight:700;transform:rotate(-8deg)}
+.read-mark{align-self:center;margin-right:14px;flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  background:var(--clay);color:var(--card);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-size:11px;font-weight:700;transform:rotate(-8deg)}
+
+/* ---------- modal ---------- */
+.overlay{position:fixed;inset:0;background:rgba(10,14,9,.68);backdrop-filter:blur(3px);
+  display:none;align-items:flex-end;justify-content:center;z-index:50}
+.overlay.show{display:flex}
+.sheet{background:var(--card);width:100%;max-width:720px;max-height:88vh;overflow-y:auto;
+  border-radius:18px 18px 0 0;padding:24px 22px calc(env(safe-area-inset-bottom) + 28px);
+  border-top:3px solid var(--moss);animation:up .28s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet .grip{width:42px;height:4px;border-radius:99px;background:var(--card-line);margin:0 auto 18px}
+.sheet .eyebrow{font-size:10px;letter-spacing:.3em;color:var(--clay);margin-bottom:6px}
+.sheet h2{font-family:var(--disp);font-size:23px;font-weight:800;line-height:1.4}
+.sheet .sub{font-size:13px;color:var(--mute);margin-top:5px}
+.sheet .rule{height:1px;background:linear-gradient(90deg,var(--moss),transparent);margin:16px 0}
+.sheet .headline{font-family:var(--disp);font-size:18px;font-weight:700;color:var(--clay);line-height:1.6;margin-bottom:12px}
+.sheet .summary{font-size:15px;line-height:2.05;text-align:justify}
+.sheet .why{margin-top:16px;font-size:13px;color:var(--moss-deep);background:rgba(92,115,70,.1);
+  border-left:3px solid var(--moss);padding:11px 13px;border-radius:0 8px 8px 0}
+.sheet .why b{color:var(--moss-deep)}
+.btnrow{display:flex;gap:10px;margin-top:22px}
+.btn{flex:1;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;letter-spacing:.05em}
+.btn.primary{background:var(--moss);color:var(--card)}
+.btn.ghost{background:none;border:1.5px solid var(--card-line);color:var(--mute)}
+.btn.clay{background:var(--clay);color:var(--card)}
+.btn:disabled{opacity:.5}
+.pay-seal{width:74px;height:74px;border-radius:50%;border:2px solid var(--clay);color:var(--clay);
+  display:flex;align-items:center;justify-content:center;margin:4px auto 14px;
+  font-family:var(--disp);font-weight:800;font-size:15px;transform:rotate(-8deg)}
+.pay-copy{text-align:center;font-size:13.5px;color:var(--mute)}
+.pay-copy strong{color:var(--ink)}
+.pass-input{width:100%;margin-top:16px;padding:13px;border:1.5px solid var(--card-line);border-radius:10px;
+  font-size:16px;text-align:center;letter-spacing:.2em;background:#FBF9EF;color:var(--ink);outline:none}
+.pass-input:focus{border-color:var(--moss)}
+.pay-err{color:var(--clay);font-size:12px;text-align:center;margin-top:8px;min-height:18px}
+.pay-note{font-size:11px;color:var(--mute);text-align:center;margin-top:14px;line-height:1.7}
+
+/* ---------- AI飼育員 ---------- */
+.ai-panel{background:linear-gradient(135deg,var(--moss-deep),#2E3D22);border:1px solid rgba(241,238,223,.12);
+  border-radius:14px;padding:22px 18px;margin-top:26px;color:var(--card)}
+.ai-panel .eyebrow{font-size:10px;letter-spacing:.3em;color:#C9D3B4;margin-bottom:6px}
+.ai-panel h2{font-family:var(--disp);font-size:20px;font-weight:800}
+.ai-panel p{font-size:12.5px;color:#B8BBA6;margin-top:8px}
+.ai-form{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.ai-form input{padding:13px;border-radius:10px;border:1px solid rgba(241,238,223,.2);
+  background:rgba(22,29,21,.5);color:var(--card);font-size:15px;outline:none}
+.ai-form input::placeholder{color:#8A8C77}
+.ai-form input:focus{border-color:#C9D3B4}
+.ai-status{font-size:12px;color:#C9D3B4;min-height:18px;margin-top:8px}
+.empty{font-size:12.5px;color:#8A8C77;text-align:center;padding:18px;border:1px dashed rgba(241,238,223,.2);border-radius:10px}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translate(-50%,20px);
+  background:var(--field-deep);color:var(--card);font-size:13px;padding:11px 18px;border-radius:99px;
+  border:1px solid var(--moss);opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease;z-index:60;max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+footer{max-width:720px;margin:40px auto 0;padding:0 16px 30px;font-size:10.5px;color:#8A8C77;
+  text-align:center;letter-spacing:.08em;line-height:2}
+footer a{color:var(--moss);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-row">
+    <div>
+      <h1 id="brandTitle">食べ物ふしぎ手帖</h1>
+      <div class="brand-en" id="brandSub">GUSTO · THE HIDDEN SIDE OF FOOD</div>
+    </div>
+    <div class="lang-toggle">
+      <button id="btnJa" class="on" onclick="setLang('ja')">日本語</button>
+      <button id="btnEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <p class="tagline" id="tagline">食卓が楽しくなる、味の裏がわ。</p>
+  <div class="member-line" id="memberLine"><span class="dot"></span><span id="memberText"></span></div>
+</header>
+
+<div class="shelf-wrap">
+  <div class="shelf-label" id="shelfLabel">味の棚</div>
+  <div class="shelf" id="shelf"></div>
+</div>
+
+<main>
+  <div class="search">
+    <span>🔎</span>
+    <input id="q" type="search" placeholder="食べ物の名前で探す" oninput="render()">
+    <button class="clear-q" id="clearQ" onclick="clearSearch()" aria-label="clear">×</button>
+  </div>
+
+  <section id="rankBox" style="display:none">
+    <div class="saved-h" id="rankH" style="color:var(--ink)"></div>
+    <div class="rank-row" id="rankList"></div>
+  </section>
+
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+
+  <section class="ai-panel" id="aiPanel">
+    <div class="eyebrow">AI KEEPER</div>
+    <h2 id="aiTitle">AI飼育員 — 気になる動物のふしぎを調べる</h2>
+    <p id="aiDesc">棚にいない動物も、名前を入れるだけでAI飼育員が日英で「へえ！」なひみつを書き下ろします。（会員機能）</p>
+    <div class="ai-form">
+      <input id="aiBook" placeholder="動物名（例：ハダカデバネズミ）">
+      <button class="btn clay" id="aiBtn" onclick="aiSummarize()">ふしぎを調べる</button>
+    </div>
+    <div class="ai-status" id="aiStatus"></div>
+  </section>
+
+  <div class="saved-h" id="savedH">AI観察日誌</div>
+  <div id="savedList"></div>
+</main>
+
+<div class="overlay" id="bookOverlay" onclick="if(event.target===this)closeBook()">
+  <div class="sheet">
+    <div class="grip"></div>
+    <div class="eyebrow" id="mEyebrow"></div>
+    <h2 id="mTitle"></h2>
+    <div class="sub" id="mSub"></div>
+    <div class="rule"></div>
+    <div class="headline" id="mHeadline"></div>
+    <div class="summary" id="mSummary"></div>
+    <div class="why" id="mWhy"></div>
+    <div class="btnrow">
+      <button class="btn ghost" onclick="closeBook()" id="mClose">閉じる</button>
+      <button class="btn primary" id="mReadBtn" onclick="toggleRead()"></button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="payOverlay" onclick="if(event.target===this)closePay()">
+  <div class="sheet">
+    <div class="grip"></div>
+    <div class="pay-seal">會員</div>
+    <h2 style="text-align:center;font-family:var(--disp)" id="payTitle">観察会員になる</h2>
+    <p class="pay-copy" id="payCopy" style="margin-top:10px"></p>
+    <input class="pass-input" id="passInput" placeholder="TOMO-XXXX" autocapitalize="characters" autocomplete="off">
+    <div class="pay-err" id="payErr"></div>
+    <div class="btnrow"><button class="btn clay" onclick="checkPass()" id="payUnlock">解錠する</button></div>
+    <div class="btnrow" style="margin-top:10px">
+      <button class="btn primary" onclick="window.open(CONFIG.PURCHASE_URL,'_blank')" id="payBuy">合言葉を入手する（Noteメンバー）</button>
+    </div>
+    <p class="pay-note" id="payNote"></p>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<footer>
+  <span id="footNote">事実はすべて信頼できる資料をもとに書き下ろしています。俗説には「諸説あり」と明記しています。</span><br>
+  © 叡智の灯火 <a href="iyashi.html">AIと作った 癒しのコーナー</a>
+</footer>
+
+<script>
+const CONFIG = {
+  MASTER_PASSCODE: "GUSTO-2026",
+  MONTHLY_CODES: {
+   "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+   "2026-07":"67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+   "2026-08":"fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+   "2026-09":"4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+   "2026-10":"266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+   "2026-11":"eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+   "2026-12":"7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+   "2027-01":"a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+   "2027-02":"00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+   "2027-03":"63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+   "2027-04":"d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+   "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+  },
+  PURCHASE_URL: "https://note.com/leo77777/membership",
+  PROXY_URL: "https://meisaku-ai.dashiyo777.workers.dev",
+  RANKING_URL: "https://meisaku-rank.dashiyo777.workers.dev",
+  MODEL: "claude-sonnet-4-6",
+  FREE_COUNT: 8
+};
+
+const T={
+ja:{tagline:"食卓が楽しくなる、味の裏がわ。",
+ shelf:"味の棚", all:"全て", search:"食べ物の名前で探す",
+ count:c=>`${c} 品`, member:"食通会員 · 全品＋AI料理長が利用できます",
+ free:`無料 · ${CONFIG.FREE_COUNT}品まで味わえます`,
+ locked:"會員", read:"制覇", close:"閉じる", markRead:"食べた印を押す", unmark:"食べた印を消す",
+ aiTitle:"AI料理長 — 気になる食べ物のふしぎを調べる",
+ aiDesc:"棚にない食べ物も、名前を入れるだけでAI料理長が日英で「へえ！」なひみつを書き下ろします。（会員機能）",
+ aiPhBook:"食べ物の名前（例：こんにゃく）", aiBtn:"ふしぎを調べる",
+ aiNeedTitle:"食べ物の名前を入力してください。", aiWorking:"AI料理長が調理中です…（20秒ほど）",
+ aiDone:"完成しました。下の観察日誌に追加されています。",
+ aiErr:"うまく調べられませんでした。時間をおいて再度お試しください。",
+ savedH:"AI味の記録", savedEmpty:"まだ記録はありません。上のAI料理長から調べられます。",
+ payTitle:"食通会員になる",
+ payCopy:t=>`全<strong>${t}</strong>品のふしぎと<strong>AI料理長</strong>が使い放題。<br>今月の合言葉（TOMO-◯◯◯◯）を入力してください。`,
+ unlock:"解錠する", buy:"合言葉を入手する（Noteメンバー）",
+ payNote:"合言葉は月替わりです。叡智の灯火の今月の合言葉（TOMO-XXXX）がそのまま使えます。",
+ wrong:"合言葉が違います。今月の合言葉（TOMO-XXXX）をご確認ください。", welcome:"ようこそ、食通会員へ。",
+ foot:"事実はすべて信頼できる資料をもとに書き下ろしています。俗説には「諸説あり」と明記しています。",
+ whyLabel:"なぜ？", aiTag:"AI厨房", del:"削除する",
+ rank:"いま読まれている TOP5", rankLocal:"※ この端末での閲覧記録です", rankGlobal:"※ 全読者の閲覧数ランキングです", views:"回"},
+en:{tagline:"The tasty backstories behind your table.",
+ shelf:"THE PANTRY", all:"All", search:"Search by food",
+ count:c=>`${c} items`, member:"Member · all items + AI Chef unlocked",
+ free:`Free · first ${CONFIG.FREE_COUNT} items`,
+ locked:"LOCK", read:"EATEN", close:"Close", markRead:"Stamp as tasted", unmark:"Remove stamp",
+ aiTitle:"AI Chef — look up any food's secret",
+ aiDesc:"Not in the pantry? Type any food and the AI Chef writes a fresh JP/EN 'wow' fact. (Members only)",
+ aiPhBook:"Food (e.g., konjac)", aiBtn:"Look it up",
+ aiNeedTitle:"Please enter a food.", aiWorking:"The chef is cooking… (about 20 sec)",
+ aiDone:"Done — added to your field journal below.",
+ aiErr:"Something went wrong. Please try again shortly.",
+ savedH:"AI TASTING LOG", savedEmpty:"No records yet. Use the AI Chef above to look one up.",
+ payTitle:"Become a member",
+ payCopy:t=>`Unlock all <strong>${t}</strong> food secrets plus the <strong>AI Chef</strong>.<br>Enter this month's passcode below.`,
+ unlock:"Unlock", buy:"Get a passcode (Note membership)",
+ payNote:"The passcode rotates monthly. Your current Eichi no Hi passcode (TOMO-XXXX) works here too.",
+ wrong:"That passcode doesn't match this month's code (TOMO-XXXX).", welcome:"Welcome, member.",
+ foot:"Every fact is written from reliable sources. Folk beliefs are clearly marked as such.",
+ whyLabel:"WHY?", aiTag:"AI Kitchen", del:"Delete",
+ rank:"TRENDING · TOP 5", rankLocal:"* Based on views on this device", rankGlobal:"* Based on views from all readers", views:"views"}
+};
+
+/* ---------- 動物データ（すべて裏取り済み・書き下ろし） ---------- */
+const BOOKS=[
+{t:{ja:"クロワッサン",en:"Croissant"},cat:{ja:"パン",en:"Bread"},emo:"🥐",col:"#C89A3E",
+ hook:{ja:"フランスでは、まっすぐがバター・三日月型がマーガリン。",en:"In France, straight means butter; crescent means margarine."},
+ s:{ja:"本場フランスのパン屋では、まっすぐな形がバター（croissant au beurre）、三日月型がマーガリンなど別の油脂（ordinaire）——という見分けの慣習がある。名前は「三日月」なのに、上等なバター製ほど、まっすぐ。よく「法律で決まっている」と言われるが、実はフランスのパン職人の全国組織は「形の規則は存在しない」と明言している。あくまで客が見分けるための業界の目印だ。",
+ en:"In French bakeries there's a custom: a straight croissant is all-butter (croissant au beurre), while a crescent one uses margarine or other fats (ordinaire). The word means 'crescent,' yet the finer butter version is the straight one. It's often said to be 'the law,' but France's national bakers' organization has stated there is in fact no rule about croissant shape — it's simply a trade convention to help customers tell them apart."},
+ why:{ja:"バターは風味が豊かで価格も高いため、まっすぐにして「これは上等なバター製」と示すのが通例になった。マーガリン製は三日月型にして区別し、値段も少し安い。ただしバター製をあえて三日月型にすることもあり、「三日月＝必ずマーガリン」とは限らない。近年はバター製が主流になり、多くのクロワッサンがまっすぐになっている。",
+ en:"Butter is richer and costlier, so making it straight became the signal for 'this is the fine, all-butter one.' Margarine versions are curved and priced a little lower. But an all-butter croissant can also be made curved, so 'crescent = always margarine' isn't guaranteed. These days butter versions dominate, and most croissants are now straight."}},
+{t:{ja:"ハチミツ",en:"Honey"},cat:{ja:"甘味",en:"Sweets"},emo:"🍯",col:"#C89A3E",
+ hook:{ja:"腐らない食べ物。3000年前のものが今も食べられる。",en:"The food that never spoils — 3,000-year-old jars are still edible."},
+ s:{ja:"ハチミツは、正しく密閉して乾いた場所に置けば、事実上「腐らない」数少ない食べ物だ。古代エジプトの墓からは、3000年以上前に納められたハチミツが無傷で見つかっており、今も食べられる状態だという。ツタンカーメンの墓の副葬品にもハチミツがあった。時間だけが色を琥珀色に深め、風味をカラメルのように変えていく。",
+ en:"Honey is one of the very few foods that, kept sealed and dry, essentially never spoils. Jars of honey placed in ancient Egyptian tombs over 3,000 years ago have been found intact — and reportedly still edible. Honey was even among the grave goods in Tutankhamun's tomb. Only time itself deepens its color toward amber and shifts its flavor toward caramel."},
+ why:{ja:"ハチミツは水分が2割以下と極端に少なく、糖分が濃いため、細菌やカビが繁殖するのに必要な水を得られない。さらにミツバチの酵素が微量の過酸化水素を生み、天然の殺菌剤として働く。この「乾いていて・甘くて・弱酸性で・殺菌力もある」四重の守りが、微生物を寄せつけず、何千年もの保存を可能にしている。",
+ en:"Honey has under 20% water and is so sugar-dense that microbes can't get the water they need to grow. On top of that, bee enzymes produce trace hydrogen peroxide, a natural antiseptic. This fourfold defense — dry, sugary, slightly acidic, and self-sterilizing — keeps microbes out and makes millennia of preservation possible."}},
+{t:{ja:"わさび",en:"Wasabi"},cat:{ja:"薬味",en:"Condiment"},emo:"🌿",col:"#5C7346",
+ hook:{ja:"寿司屋の「わさび」、その多くは本物のわさびではない。",en:"Most 'wasabi' you eat isn't real wasabi at all."},
+ s:{ja:"回転寿司やチューブで使われる「わさび」の多くは、本物の本わさびではなく、西洋わさび（ホースラディッシュ）に色と香りをつけたもの。本わさびは栽培が難しく高価なため、安価な代用品が広く使われている。しかも本わさびの辛味成分は非常に揮発しやすく、すりおろして数分でピークを過ぎる——だから寿司屋は出す直前にすりおろす。",
+ en:"Most 'wasabi' in conveyor-belt sushi shops and tubes isn't real wasabi at all, but horseradish dyed green and flavored to imitate it. True wasabi is hard to grow and expensive, so the cheaper stand-in is used almost everywhere. And real wasabi's pungency is so volatile that it peaks within minutes of grating — which is why good sushi chefs grate it just before serving."},
+ why:{ja:"わさびの辛味は「アリルイソチオシアネート」という揮発性の成分で、すりおろして細胞が壊れた瞬間に生まれ、空気中へどんどん逃げていく。だから作り置きできず、鼻に抜けるあの刺激も時間とともに弱まる。舌の痛みではなく鼻に来るのは、この成分が気体になって鼻の奥の神経を刺激するためだ。",
+ en:"Wasabi's heat comes from a volatile compound (allyl isothiocyanate) created the instant grating ruptures its cells — and it escapes into the air fast. That's why it can't be made ahead, and why the nose-hit fades over time. It stings the nose rather than the tongue because the compound turns to gas and irritates nerves high in the nasal passage."}},
+{t:{ja:"じゃがいも",en:"Potato"},cat:{ja:"野菜",en:"Vegetable"},emo:"🥔",col:"#C67A2E",
+ hook:{ja:"芽と緑の皮には毒がある。宇宙で最初に育った野菜でもある。",en:"Its sprouts and green skin are toxic — and it was the first vegetable grown in space."},
+ s:{ja:"身近なじゃがいもだが、芽や、光に当たって緑がかった皮には「ソラニン」という天然の毒があり、大量に食べると中毒を起こす。だから芽はしっかり取り除く。一方でじゃがいもは人類の飢えを何度も救った偉大な作物で、1995年にはスペースシャトルの実験で「宇宙で栽培された最初の野菜」にもなった。ヨーロッパでは当初、悪魔の植物と疑われ普及に時間がかかった。",
+ en:"The humble potato hides a catch: its sprouts and any skin turned green by light contain a natural toxin, solanine, which can poison you in quantity — so the sprouts must be cut away. Yet the potato has saved humanity from famine again and again, and in 1995 a space-shuttle experiment made it the first vegetable ever grown in space. In Europe it was once suspected of being a devil's plant, and took time to catch on."},
+ why:{ja:"じゃがいもはトマトやナスと同じナス科で、この仲間は身を守るために有毒なアルカロイドを作る。芽や緑の部分にソラニンが集中するのは、これから育つ大事な部分を虫や動物から守るため。加熱してもソラニンは壊れにくいので、調理より「取り除く」ことが基本。緑化を防ぐには、暗く涼しい場所での保存が効く。",
+ en:"The potato belongs to the nightshade family, like tomatoes and eggplant, which defend themselves with toxic alkaloids. Solanine concentrates in sprouts and green parts to protect the plant's future growth from insects and animals. Since solanine resists heat, the rule is to remove it rather than cook it out — and storing potatoes cool and dark prevents the greening."}},
+{t:{ja:"チョコレート",en:"Chocolate"},cat:{ja:"甘味",en:"Sweets"},emo:"🍫",col:"#8E3222",
+ hook:{ja:"かつては「飲み物」で、通貨としても使われていた。",en:"It was once a drink — and served as money."},
+ s:{ja:"チョコレートは、その歴史のほとんどで固形ではなく「飲み物」だった。古代マヤやアステカでは、カカオを砕いて水や唐辛子と混ぜた苦い飲み物として珍重され、カカオ豆は貨幣としても使われた。豆100粒ほどで奴隷一人が買えたという記録もある。今のように甘く固めた板チョコが生まれたのは、19世紀のヨーロッパでのことだ。",
+ en:"For most of its history, chocolate was not a solid but a drink. The ancient Maya and Aztecs prized cacao as a bitter beverage of ground beans, water, and chili, and cacao beans were used as money — one record suggests about a hundred beans could buy a slave. The sweet, solid chocolate bar we know today wasn't invented until 19th-century Europe."},
+ why:{ja:"カカオ豆は乾燥させれば長く保存でき、数を数えやすく、誰もが欲しがる価値があった——貨幣の条件をよく満たしていた。板チョコが遅れて生まれたのは、カカオから脂肪分（ココアバター）を分離し、砂糖と混ぜてなめらかに固める技術が必要だったから。この技術革新が、苦い神々の飲み物を、世界中で愛される甘いお菓子に変えた。",
+ en:"Dried cacao beans stored well, were easy to count, and were universally desired — good qualities for money. The bar came late because it required technology to separate the fat (cocoa butter) from cacao and blend it smoothly with sugar into a solid. That innovation turned a bitter drink of the gods into the sweet treat loved worldwide."}},
+{t:{ja:"卵",en:"Egg"},cat:{ja:"食材",en:"Ingredient"},emo:"🥚",col:"#C89A3E",
+ hook:{ja:"殻の色（白か赤）は味と栄養に関係なく、鶏の種類で決まる。",en:"Shell color — white or brown — says nothing about taste; it's just the breed."},
+ s:{ja:"「赤玉（茶色い卵）は白玉より栄養があって高級」と思われがちだが、殻の色は栄養にも味にもほとんど関係ない。単に鶏の品種の違いで、羽毛の色とだいたい連動している。赤玉が高いのは、そういう品種の鶏が体が大きく、たくさん餌を食べるため、生産コストが少し高いから。黄身の色も、実は餌に含まれる色素で変わるだけだ。",
+ en:"Brown eggs are often assumed to be more nutritious or upscale than white ones, but shell color has almost nothing to do with taste or nutrition. It simply reflects the hen's breed, roughly matching feather color. Brown eggs cost more because the hens that lay them tend to be larger and eat more feed. Even the yolk's color merely reflects pigments in the hen's diet."},
+ why:{ja:"殻の色は、鶏が卵を作るときに分泌する色素で決まり、これは遺伝的な品種の特徴。白い羽の鶏はたいてい白玉を、赤褐色の羽の鶏は赤玉を産む。黄身の濃いオレンジ色は「濃厚で栄養豊富」の印と思われがちだが、これも餌にパプリカやトウモロコシなど色素の多いものを混ぜれば濃くなる、いわば見た目の演出だ。",
+ en:"Shell color is set by pigments the hen secretes while forming the egg — a genetic, breed-based trait. White-feathered hens usually lay white eggs; reddish-brown hens lay brown ones. A deep-orange yolk is often taken as a sign of richness, but it too just reflects the feed: add pigment-rich paprika or corn and the yolk darkens — largely a matter of appearance."}},
+{t:{ja:"唐辛子",en:"Chili Pepper"},cat:{ja:"薬味",en:"Spice"},emo:"🌶️",col:"#B4432E",
+ hook:{ja:"「辛い」は味ではなく痛み。鳥は辛さを感じない。",en:"'Spicy' isn't a taste but pain — and birds can't feel it."},
+ s:{ja:"唐辛子の「辛さ」は、甘い・酸っぱいのような味覚ではなく、実は「痛み」や「熱さ」を感じる神経が刺激されて起きる錯覚だ。舌が火傷したと勘違いして脳に警報を送る。ところが鳥はこの刺激をまったく感じない。だから唐辛子は、種を噛み砕いてしまう哺乳類を辛さで遠ざけ、種を丸ごと遠くへ運んでくれる鳥にだけ食べさせる——という巧妙な戦略を持っている。",
+ en:"A chili's 'heat' isn't a taste like sweet or sour — it's an illusion created when the nerves that sense pain and temperature are triggered, fooling the tongue into thinking it's burned and sending an alarm to the brain. Birds, however, feel none of it. So the chili has a clever strategy: repel mammals, who would crush the seeds, with heat, while letting birds — who swallow seeds whole and carry them far — eat freely."},
+ why:{ja:"辛味成分カプサイシンは、43℃以上の熱に反応する神経受容体にくっつき、実際には熱くないのに「熱い！」という信号を出させる。だから水では流れにくく、牛乳の脂肪分の方が和らぐ。鳥にはこの受容体がカプサイシンに反応しない仕組みがあり、辛さを感じない。植物にとって、種を遠くへ運ぶ鳥だけを味方につける、理にかなった防御なのだ。",
+ en:"Capsaicin, the heat compound, binds to a nerve receptor that normally responds to temperatures above 43°C, making it fire a 'hot!' signal though nothing is actually hot. That's why water doesn't help but milk's fat does. In birds, this receptor doesn't react to capsaicin, so they feel no heat — a sensible plant defense that recruits only the seed-spreading birds as allies."}},
+{t:{ja:"バナナ",en:"Banana"},cat:{ja:"果物",en:"Fruit"},emo:"🍌",col:"#C89A3E",
+ hook:{ja:"世界中のバナナはほぼ全部クローン。種のない不思議な果物。",en:"Nearly every banana on earth is a clone — a seedless mystery fruit."},
+ s:{ja:"私たちが食べる甘いバナナ（キャベンディッシュ種）は、ほとんどが遺伝的に同一の「クローン」だ。種がないため、株分けで殖やすしかなく、世界中のバナナがほぼ同じDNAを持つ。だから一つの病気が広がると全滅の危機になる。実際、20世紀半ばまで主流だった別品種は病害でほぼ絶滅した。今のバナナも新たな病気に脅かされている。",
+ en:"The sweet bananas we eat (the Cavendish) are nearly all genetic clones. Because they have no seeds, they can only be propagated by cuttings, so bananas worldwide share almost identical DNA. That means a single disease can threaten them all at once. In fact, the variety that dominated until the mid-20th century was all but wiped out by blight — and today's banana faces a new disease of its own."},
+ why:{ja:"野生のバナナは硬い種がぎっしり詰まっていて食べにくい。人類は種のない突然変異を選び育ててきたが、種がないと有性生殖ができず、遺伝的な多様性が生まれない。多様性がないと、ある病気に一株が弱ければ全部が弱い。だから科学者たちは、病気に強い新しいバナナ品種の開発を急いでいる。",
+ en:"Wild bananas are packed with hard seeds and barely edible. Humans selected and bred seedless mutants, but without seeds there's no sexual reproduction and no genetic diversity. With no diversity, if one plant is vulnerable to a disease, they all are. That's why scientists are racing to develop new banana varieties that can resist disease."}},
+{t:{ja:"寿司",en:"Sushi"},cat:{ja:"料理",en:"Dish"},emo:"🍣",col:"#B4432E",
+ hook:{ja:"もとは「保存食」。ご飯は捨てて魚だけ食べる料理だった。",en:"It began as preserved food — the rice was thrown away."},
+ s:{ja:"今の寿司は握りたてが命だが、寿司の起源は正反対の「保存食」だった。魚を炊いた米に漬け込み、数ヶ月〜年単位で発酵させて保存する「なれずし」が原型で、食べるのは魚だけ、酸っぱくなったご飯は捨てていた。滋賀の鮒ずしにその名残がある。酢飯に新鮮な魚をのせる今の握り寿司が生まれたのは、江戸時代後期のファストフードとしてだった。",
+ en:"Today sushi lives or dies by freshness, but its origin was the opposite: preserved food. The ancestor, narezushi, packed fish into cooked rice and fermented it for months or years; people ate only the fish and discarded the sour rice. Shiga's funazushi still preserves this tradition. The nigiri sushi we know — fresh fish on vinegared rice — was born as fast food in late-Edo-period Tokyo."},
+ why:{ja:"冷蔵庫のない時代、米を発酵させて出る乳酸が魚を腐敗から守った。つまり米は「天然の冷蔵庫」だった。やがて発酵を待たず、酢でご飯をすぐ酸っぱくして魚をのせる工夫が生まれ、これが握り寿司に。忙しい江戸っ子が屋台で立ち食いする軽食として広まり、今や世界中で愛される料理になった。ご飯を捨てていた料理が、ご飯ごと味わう料理へと変わったのだ。",
+ en:"Before refrigeration, the lactic acid from fermenting rice protected fish from rotting — the rice was a natural refrigerator. Eventually people skipped the wait, souring the rice quickly with vinegar and topping it with fish; that became nigiri. It spread as a stand-up snack for busy Edo townsfolk and is now beloved worldwide. A dish that once threw the rice away became one savored rice and all."}},
+{t:{ja:"アイスクリーム",en:"Ice Cream"},cat:{ja:"甘味",en:"Sweets"},emo:"🍦",col:"#C67A2E",
+ hook:{ja:"頭がキーンと痛むのは、脳が「寒さで凍える」と勘違いするから。",en:"Brain freeze is your brain mistaking a cold mouth for a freezing body."},
+ s:{ja:"冷たいアイスを急いで食べると、額の奥がキーンと痛む「アイスクリーム頭痛」。これは、冷たさが口の上あご（口蓋）の血管を急に冷やし、体が「凍えている」と勘違いして慌てて血液を送り込むために起きる、と考えられている。近くを通る神経が、その血管の急な変化を「頭の痛み」と取り違えて脳に伝えてしまうのだ。ゆっくり食べれば防げる。",
+ en:"Eat cold ice cream too fast and you get that sharp stab behind the forehead — 'brain freeze.' It's thought to happen when the cold suddenly chills blood vessels in the roof of your mouth (the palate); the body, sensing 'we're freezing,' rushes warm blood in. A nearby nerve misreads this abrupt change as pain and reports it to the brain as a headache. Eating slowly prevents it."},
+ why:{ja:"冷たさで縮んだ血管が、体の防御反応で一気に広がる。この急な血管の変化を、上あごの近くを通る三叉神経という大きな神経が感知するが、脳はその痛みの出どころを「額のあたり」と勘違いして感じてしまう（関連痛）。だから痛いのは口なのに、感じるのはおでこ。舌を上あごに押し当てて温めると、早く治まる。",
+ en:"Vessels narrowed by cold suddenly widen as the body defends itself, and this abrupt change is picked up by the trigeminal, a major nerve running near the palate. The brain misplaces the pain's source to the forehead (referred pain) — so the cold is in your mouth but you feel it in your brow. Pressing your tongue to the roof of your mouth to warm it helps it pass faster."}},
+{t:{ja:"はちみつと乳児",en:"Honey & Infants"},cat:{ja:"注意",en:"Caution"},emo:"⚠️",col:"#B4432E",
+ hook:{ja:"腐らないハチミツも、1歳未満の赤ちゃんには絶対に与えてはいけない。",en:"The food that never spoils must never be given to babies under one."},
+ s:{ja:"何千年も腐らないハチミツだが、たった一つ大きな注意がある——1歳未満の赤ちゃんには絶対に与えてはいけない。ハチミツにはごく稀にボツリヌス菌の芽胞が含まれることがあり、腸内環境が未熟な乳児が口にすると「乳児ボツリヌス症」を起こす危険がある。大人や1歳以上の子どもの腸では問題にならないが、赤ちゃんだけは別だ。これは世界中の保健機関が強く警告している。",
+ en:"Honey may last millennia, but there is one crucial warning: it must never be given to a baby under one year old. Honey can rarely contain spores of the bacterium that causes botulism, and an infant's immature gut can let them grow, causing 'infant botulism.' The same honey is harmless to adults and children over one, whose developed gut handles it fine — but not to babies. Health authorities worldwide warn strongly about this."},
+ why:{ja:"ボツリヌス菌の芽胞は、大人の腸内では他の善玉菌に押さえ込まれて増えられない。だが赤ちゃんの腸はまだ菌のバランスが整っておらず、芽胞が発芽して毒素を出してしまうことがある。加熱してもこの芽胞は死なないため、「火を通せば大丈夫」も通用しない。だから1歳になるまでは、ハチミツもハチミツ入りの飲料・お菓子も避けるのが世界共通のルールだ。",
+ en:"In an adult gut, botulism spores are kept in check by other beneficial bacteria and can't multiply. But a baby's gut lacks that balance, so the spores can germinate and release toxin. Heating doesn't kill the spores, so 'just cook it' doesn't help either. That's why the universal rule is to avoid honey — and any drink or sweet containing it — until a child turns one."}},
+{t:{ja:"パイナップル",en:"Pineapple"},cat:{ja:"果物",en:"Fruit"},emo:"🍍",col:"#C89A3E",
+ hook:{ja:"食べると舌がヒリヒリするのは、パイナップルが「あなたを消化している」から。",en:"It stings your tongue because the pineapple is digesting you back."},
+ s:{ja:"生のパイナップルをたくさん食べると舌や唇がヒリヒリする。これは酸のせいだと思われがちだが、本当の犯人は「ブロメライン」というタンパク質分解酵素。肉を柔らかくするのに使われるほど強力で、あなたの舌の表面のタンパク質を実際に少しずつ分解している。つまり食べている間、パイナップルもあなたを「消化」し返しているのだ。加熱すると酵素が壊れ、缶詰では起きない。",
+ en:"Eat a lot of fresh pineapple and your tongue and lips start to sting. People blame the acid, but the real culprit is bromelain, a protein-digesting enzyme so powerful it's used to tenderize meat — and it's literally breaking down the proteins on the surface of your tongue. In other words, while you eat the pineapple, it is 'digesting' you right back. Heat destroys the enzyme, so canned pineapple doesn't do it."},
+ why:{ja:"ブロメラインはタンパク質をバラバラにする酵素で、舌や口の粘膜（タンパク質でできている）に触れると、その表面をわずかに溶かす。だからヒリヒリする。ゼラチン（タンパク質）で生パインのゼリーが固まらないのも同じ理由。ただし酵素は熱に弱いので、缶詰や加熱したパインなら平気。塩水に浸けたり乳製品と合わせたりしても刺激は和らぐ。",
+ en:"Bromelain is an enzyme that dismantles proteins, so when it meets the protein-based lining of your tongue and mouth, it slightly dissolves the surface — hence the sting. It's also why fresh pineapple won't let gelatin (a protein) set. But the enzyme is heat-sensitive, so canned or cooked pineapple is fine, and soaking in salt water or pairing with dairy eases the sting."}},
+{t:{ja:"トマト",en:"Tomato"},cat:{ja:"野菜",en:"Vegetable"},emo:"🍅",col:"#B4432E",
+ hook:{ja:"果物か野菜か、アメリカの最高裁が「野菜」と判決した。",en:"Fruit or vegetable? The US Supreme Court ruled: vegetable."},
+ s:{ja:"植物学的には、トマトは種を持つ「果実」だ。しかし1893年、アメリカ最高裁判所はトマトを法律上「野菜」と判決した。当時、輸入野菜には関税がかかり果物にはかからなかったため、トマトの分類が裁判で争われたのだ。裁判所は「トマトは食後のデザートではなく、料理の一部として食べられる」という日常感覚を理由に、野菜と結論づけた。科学より生活実感が勝った珍しい判例だ。",
+ en:"Botanically, a tomato is a fruit — it holds seeds. But in 1893 the US Supreme Court ruled it a vegetable in the eyes of the law. Imported vegetables were taxed while fruits weren't, so the tomato's classification ended up in court. The justices reasoned that tomatoes are eaten as part of the meal, not as dessert, and declared them vegetables — a rare case where everyday common sense beat science."},
+ why:{ja:"植物学の定義では「花が実って種を包むもの」が果実で、トマト・きゅうり・かぼちゃもみな果実にあたる。だが料理の世界では、甘くて食後に食べるものが果物、おかずにするものが野菜、と区別される。最高裁はこの「台所の常識」を採用した。ちなみに同じ理由で、きゅうりやナスも法律・日常では野菜として扱われている。",
+ en:"By botanical definition a fruit is what forms from a flower and encloses seeds — so tomatoes, cucumbers, and squash are all fruits. But in cooking, sweet after-dinner foods are 'fruit' and savory sides are 'vegetables.' The Supreme Court adopted this kitchen common sense. For the same reason, cucumbers and eggplants are also treated as vegetables in law and daily life."}},
+{t:{ja:"コーンフレーク",en:"Corn Flakes"},cat:{ja:"朝食",en:"Breakfast"},emo:"🥣",col:"#C67A2E",
+ hook:{ja:"うっかり放置したご飯から偶然生まれた、失敗作の朝食。",en:"Born by accident from forgotten, stale grain — a happy mistake."},
+ s:{ja:"世界中で食べられているコーンフレークは、狙って作られたものではなく「偶然の失敗」から生まれた。19世紀末、ケロッグ兄弟が療養施設の患者食を作る途中、煮た小麦を放置してしまい、乾いてボロボロになった。もったいないのでローラーで伸ばして焼いたところ、薄いフレークができた——これが健康的な朝食シリアルの始まりだ。当初は宗教的な理由から「刺激の少ない食事」を目指していた。",
+ en:"Corn flakes, eaten around the world, weren't designed on purpose — they came from a lucky accident. In the late 1800s, the Kellogg brothers were making patient food at a sanitarium when they left boiled wheat sitting out and it dried into flakes. Unwilling to waste it, they rolled and baked it, and thin flakes emerged — the beginning of the healthy breakfast cereal. It was originally meant to be a plain, unstimulating food for religious reasons."},
+ why:{ja:"放置した穀物は水分が抜けて糊のような状態になり、これをローラーで薄く伸ばすと一粒ずつ薄片になった。焼けばパリッとした保存のきくフレークになる。兄弟はこの製法を改良し、消化に良い健康食として売り出した。後に弟が砂糖を加えて甘くし、大衆向けの朝食として爆発的に広まった——失敗が、巨大な食品産業を生んだのだ。",
+ en:"The forgotten grain lost moisture and turned paste-like; rolled thin, it broke into individual flakes, and baking made them crisp and shelf-stable. The brothers refined the method and sold it as a wholesome, easy-to-digest health food. Later one brother added sugar to sweeten it, and it exploded into a mass-market breakfast — a mistake that launched a giant food industry."}},
+{t:{ja:"塩",en:"Salt"},cat:{ja:"調味料",en:"Seasoning"},emo:"🧂",col:"#8A7B6A",
+ hook:{ja:"「サラリー（給料）」の語源は塩。かつて給料は塩で払われた。",en:"The word 'salary' comes from salt — once, wages were paid in it."},
+ s:{ja:"英語の「サラリー（salary＝給料）」の語源は、ラテン語の「サラリウム」＝塩を買うためのお金、だとされる。古代ローマの兵士は、給料の一部を塩や塩を買う手当として受け取っていた、という説が有名だ。冷蔵庫のない時代、塩は食料を保存する唯一の手段であり、命に関わる貴重品だった。「その仕事は塩に値する（worth his salt）」という英語表現も、ここから生まれている。",
+ en:"The English word 'salary' is said to come from the Latin salarium — money for buying salt. A famous story holds that Roman soldiers received part of their pay as salt, or an allowance to buy it. Before refrigeration, salt was the only way to preserve food and a precious, life-sustaining commodity. The phrase 'worth his salt' comes from this same idea."},
+ why:{ja:"塩は食料を腐敗から守る保存料であり、人間や家畜が生きるのに不可欠なミネラルでもある。産地が限られ、運ぶのも大変だったため、金や銀に匹敵する価値を持った時代もあった。塩を運ぶ「塩の道」が各地に築かれ、塩をめぐって国が争い、税がかけられた。ありふれた白い結晶が、かつては経済と権力を動かす「白い金」だったのだ。",
+ en:"Salt is both a preservative that protects food from rot and an essential mineral for humans and livestock. Because sources were limited and it was hard to transport, salt once rivaled gold and silver in value. 'Salt roads' were built to carry it, nations fought over it, and it was heavily taxed. That ordinary white crystal was once 'white gold' that moved economies and power."}},
+{t:{ja:"きゅうり",en:"Cucumber"},cat:{ja:"野菜",en:"Vegetable"},emo:"🥒",col:"#5C7346",
+ hook:{ja:"95%が水。ギネス認定「世界一栄養の少ない果実」の記録も。",en:"95% water — once cited as the least nutritious fruit."},
+ s:{ja:"きゅうりは実にその約95%が水分でできている。栄養価が非常に低いことでも知られ、かつては「世界一カロリーの低い果実」としてギネスブックに載ったこともある。だが逆に言えば、暑い日の水分補給やダイエットには理想的。パリッとした食感と青い香りは、料理に涼しさを添える。ちなみにきゅうりも植物学的には種を持つ「果実」の仲間だ。",
+ en:"A cucumber is about 95% water. It's famous for being extremely low in nutrition — it was once listed in the Guinness Book as the 'least calorific fruit' in the world. But that also makes it ideal for hydration on a hot day and for dieting. Its crisp texture and green, cooling aroma add freshness to a dish. And botanically, the cucumber is a fruit too, since it holds seeds."},
+ why:{ja:"きゅうりの細胞は水を多く含み、栄養分（糖やタンパク質）はごくわずか。だからカロリーがほとんどない。この「ほぼ水」という性質が、体を冷やし、みずみずしい食感を生む。栄養の宝庫というより「食べる清涼飲料水」に近い。ぬか漬けや酢の物にすると、水分が抜けて味が染み、栄養以外の「おいしさの役割」を存分に発揮する。",
+ en:"A cucumber's cells hold mostly water, with only trace nutrients (sugars, protein) — so it has almost no calories. This 'basically water' quality is what cools you and gives the crisp, juicy bite. It's less a nutrition powerhouse than an 'edible cool drink.' Pickled or dressed in vinegar, it loses water and soaks up flavor, playing a delicious role that has nothing to do with nutrients."}},
+{t:{ja:"チーズ",en:"Cheese"},cat:{ja:"乳製品",en:"Dairy"},emo:"🧀",col:"#C89A3E",
+ hook:{ja:"偶然、動物の胃袋で運んだミルクが固まってできた——という起源説。",en:"Legend says it was born when milk curdled in an animal-stomach flask."},
+ s:{ja:"チーズの起源には有名な言い伝えがある。大昔、乾いた動物の胃袋を水筒代わりにしてミルクを運んでいた旅人が、目的地で開けると中身が固形（カード）と液体（ホエイ）に分かれていた——胃の内側に残っていた酵素がミルクを固めたのだ。これがチーズの始まりとされる。真偽はともかく、チーズ作りの本質「ミルクを酵素で固める」を見事に言い当てた説だ。今も8000年以上前のチーズ作りの痕跡が見つかっている。",
+ en:"Cheese has a famous origin legend. Long ago, a traveler carrying milk in a flask made from a dried animal stomach opened it at journey's end to find the contents split into solid (curds) and liquid (whey) — an enzyme left inside the stomach lining had curdled the milk. This, the story goes, was the birth of cheese. True or not, it perfectly captures cheesemaking's essence: curdling milk with an enzyme. Traces of cheesemaking over 8,000 years old have been found."},
+ why:{ja:"動物の胃袋には「レンネット」という、ミルクのタンパク質を固める酵素が残っている。この酵素がミルクを固形のカードと液体のホエイに分け、カードを熟成させたものがチーズだ。今もチーズ作りにはレンネットが使われる。ミルクという腐りやすい液体を、固めて水分を抜くことで長く保存できる形に変える——チーズは「飲み物を保存食に変える」古代の知恵の結晶なのだ。",
+ en:"An animal's stomach retains rennet, an enzyme that curdles milk's proteins. This enzyme splits milk into solid curds and liquid whey; aging the curds gives cheese, and rennet is still used in cheesemaking today. By curdling perishable liquid milk and draining its water, cheese becomes storable — it is, in essence, an ancient technology for turning a drink into preserved food."}},
+{t:{ja:"米",en:"Rice"},cat:{ja:"主食",en:"Staple"},emo:"🍚",col:"#8A7B6A",
+ hook:{ja:"世界人口の半分以上が主食にする、一粒から数千粒。",en:"The staple of over half the planet — one seed yields thousands."},
+ s:{ja:"米は世界人口の半分以上が主食とする、地球で最も多くの人を養う穀物のひとつだ。一粒の種もみから育った一株が、数千粒の米を実らせる驚異の生産力を持つ。日本語では、稲・米・ご飯と、状態によって呼び名が変わるほど生活に密着している。「米」という漢字は「八十八」に分解でき、収穫まで八十八もの手間がかかるから、という言い伝えもある（諸説あり）。",
+ en:"Rice is the staple for more than half the world's people — one of the grains that feeds the most humans on Earth. A single plant grown from one seed grain can yield thousands of grains, a remarkable productivity. In Japanese it's so woven into daily life that the plant, the raw grain, and the cooked food each have different names. One saying holds that the kanji for rice can be split into '八十八' (eighty-eight), for the eighty-eight steps of labor a harvest takes — though this is folklore."},
+ why:{ja:"稲は水を張った田んぼで育つため、雑草に強く、連作にも耐え、限られた土地で多くの人を養える。この効率の良さが、アジアで密度の高い文明と大きな人口を支えてきた。米は乾燥させれば長期保存でき、炊けば主食になり、酒・酢・餅にも姿を変える万能さも持つ。一粒から数千粒という増え方が、飢えと隣り合わせだった人類にとって、何より頼もしい命綱だった。",
+ en:"Rice grows in flooded paddies, which suppress weeds and tolerate repeated planting, feeding many people on limited land. This efficiency has supported dense civilizations and large populations across Asia. Rice stores long when dried, becomes a staple when cooked, and transforms into sake, vinegar, and mochi. That one-seed-to-thousands increase made it, for a humanity always near famine, the most dependable lifeline of all."}},
+{t:{ja:"炭酸飲料",en:"Soda"},cat:{ja:"飲み物",en:"Drink"},emo:"🥤",col:"#B4432E",
+ hook:{ja:"シュワシュワの正体は、水に溶かして閉じ込めた二酸化炭素。",en:"The fizz is carbon dioxide gas dissolved and trapped under pressure."},
+ s:{ja:"炭酸飲料のあの爽快な刺激は、二酸化炭素という気体を、高い圧力で水に無理やり溶かし込んだもの。栓を開けると圧力が下がり、溶けきれなくなった気体が一斉に泡となって飛び出す——これがシュワシュワの正体だ。もともと炭酸水は、体に良い天然の鉱泉水を人工的に再現しようとして生まれた「薬」だった。あの舌を刺す感覚も、実は味ではなく、弱い酸による刺激だ。",
+ en:"That refreshing bite in fizzy drinks is carbon dioxide gas forced into water under high pressure. Open the cap, the pressure drops, and the gas that can no longer stay dissolved rushes out as bubbles all at once — that's the fizz. Carbonated water was originally created as a 'medicine,' an attempt to artificially reproduce healthful natural mineral springs. Even the tingle on your tongue isn't a taste but the sting of a weak acid."},
+ why:{ja:"気体は圧力が高いほど水によく溶ける。だから工場では強い圧力をかけて二酸化炭素を溶かし込み、密閉して閉じ込める。栓を開けて圧力が抜けると、溶けていた気体が耐えきれず泡になって逃げ出す。ぬるくなると炭酸が抜けやすいのは、温度が高いほど気体が水に溶けにくくなるから。振ると噴き出すのも、泡の逃げ道（核）が一気に増えるためだ。",
+ en:"Gas dissolves better in water at higher pressure, so factories force carbon dioxide in under strong pressure and seal it. Open the cap, the pressure escapes, and the dissolved gas can't stay — it flees as bubbles. Soda goes flat faster when warm because gas dissolves less in warmer water. And shaking makes it erupt because it suddenly creates many escape points (nucleation sites) for the bubbles."}},
+{t:{ja:"マシュマロ",en:"Marshmallow"},cat:{ja:"甘味",en:"Sweets"},emo:"🍡",col:"#C67A2E",
+ hook:{ja:"名前は「植物」。もとは薬草の根から作る、のどの薬だった。",en:"Named after a plant — it began as throat medicine from a root."},
+ s:{ja:"マシュマロの名は、「マーシュ・マロウ（ウスベニタチアオイ）」という湿地に育つ薬草に由来する。古代エジプトの時代から、この植物の根に含まれるネバネバした成分が、のどの痛みや咳を鎮める薬として使われていた。19世紀のフランスで、その根の成分に砂糖と卵白を混ぜて菓子にしたのがマシュマロの始まり。今は薬草の代わりにゼラチンを使うが、名前だけが植物の記憶をとどめている。",
+ en:"Marshmallow is named after the marsh mallow, a medicinal plant that grows in wetlands. Since ancient Egypt, the gooey substance in its root was used as medicine to soothe sore throats and coughs. In 19th-century France, cooks mixed that root extract with sugar and egg white to make a confection — the first marshmallow. Today gelatin replaces the herb, but the name still keeps the memory of the plant."},
+ why:{ja:"マーシュ・マロウの根には、水を含むとゼリー状になる粘液質があり、これが喉の粘膜を覆って炎症を和らげた。菓子にするとき、この粘液が砂糖菓子をふんわり固める役割も果たした。やがて大量生産のためにゼラチン（動物由来のタンパク質）へ置き換わり、薬草は姿を消した。焚き火で炙ると外は香ばしく中はとろけるのは、糖が焦げて熱で構造が緩むからだ。",
+ en:"The marsh mallow root holds a mucilage that turns jelly-like with water, coating the throat's lining and easing inflammation. In candy-making, that mucilage also helped set the sugar sweet into a fluffy solid. For mass production it was eventually replaced by gelatin (an animal protein), and the herb disappeared. Toasted over a fire, the outside caramelizes while the inside melts, because the sugar browns and heat loosens the structure."}},
+{t:{ja:"アボカド",en:"Avocado"},cat:{ja:"果物",en:"Fruit"},emo:"🥑",col:"#5C7346",
+ hook:{ja:"種を運ぶはずの巨大動物が絶滅した「時代遅れの果実」。",en:"An 'evolutionary anachronism' whose seed-spreaders went extinct."},
+ s:{ja:"アボカドのあの大きな種は、じつは「時代遅れ」の名残だと考えられている。かつて中南米には、地上ナマケモノやゾウのような巨大動物がいて、アボカドを丸ごと飲み込み、種を遠くへ運んでいた。ところがその巨大動物たちは1万年以上前に絶滅。種を運ぶ相手を失ったアボカドは、本来なら滅びるはずだった。人類が栽培し始めたおかげで、この「進化の生き残り」は今も食卓にある。",
+ en:"The avocado's huge seed is thought to be an evolutionary leftover — an anachronism. Long ago, giant animals like ground sloths and gomphotheres roamed the Americas, swallowing avocados whole and carrying the seeds far away. But those megafauna went extinct over 10,000 years ago. Having lost its seed-spreaders, the avocado should have vanished — and only survived because humans began cultivating it. This 'evolutionary survivor' is still on our tables thanks to us."},
+ why:{ja:"果実が大きな種を甘い果肉で包むのは、動物に丸ごと食べさせ、遠くで種を排出してもらうための戦略。だがアボカドの種は大きすぎて、今の中南米の動物には飲み込めない。本来の運び屋だった巨大動物が絶滅した後、この果実は自然界では子孫を広げる術を失った。皮肉にも、それを「おいしい」と気づいた人間が、世界中で栽培することで救ったのだ。",
+ en:"A fruit wraps a big seed in sweet flesh so an animal will swallow it whole and deposit the seed far away. But the avocado's seed is too large for any animal in the Americas today to swallow. After its original couriers — the megafauna — went extinct, the fruit lost its natural way to spread. Ironically, the humans who found it 'delicious' saved it by cultivating it across the world."}},
+{t:{ja:"インスタントラーメン",en:"Instant Noodles"},cat:{ja:"料理",en:"Dish"},emo:"🍜",col:"#C67A2E",
+ hook:{ja:"「20世紀最大の発明」に選ばれ、宇宙食にもなった。",en:"Voted a top invention of the century — and it went to space."},
+ s:{ja:"お湯を注ぐだけのインスタントラーメンは、1958年に日本で生まれた。開発者・安藤百福が、戦後の食糧難の中「家庭で手軽に食べられる温かい麺を」と、自宅の小屋で一年かけて完成させた。麺を油で揚げて乾燥させ、お湯で戻す発想が鍵だった。日本ではこの発明が「20世紀最大の発明」に選ばれる調査もあり、2005年には改良版がついに宇宙食（スペース・ラム）として宇宙へ運ばれた。",
+ en:"Instant noodles, ready with just hot water, were invented in Japan in 1958. Facing postwar food shortages, developer Momofuku Ando spent a year in a backyard shed to create a warm, easy noodle for the home. The key was frying the noodles to dry them so they'd rehydrate in hot water. In Japan this invention has topped polls as the greatest of the 20th century, and in 2005 an improved version finally went to space as 'Space Ram.'"},
+ why:{ja:"油で揚げると麺の水分が飛び、無数の小さな穴が空く。この穴にお湯がすばやく染み込むから、数分で麺が元通りに戻る。乾燥させることで常温で長く保存でき、軽くて運びやすい。この「揚げて乾かす」一手で、麺は保存食にも非常食にもなった。宇宙では汁が飛び散らないよう、とろみをつけ一口大に固める工夫が加えられている。",
+ en:"Frying drives out the noodles' water and leaves countless tiny holes. Hot water soaks quickly into these holes, so the noodles rehydrate in minutes. Drying makes them shelf-stable at room temperature, light, and easy to carry — with that one 'fry and dry' step, noodles became both a pantry item and emergency food. For space, the broth is thickened and the noodles shaped into bite-sized clumps so nothing floats away."}},
+];
+
+/* ---------- state ---------- */
+let LANG='ja', GENRE='ALL', CUR=null;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+ set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const curYM=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
+const isMember=()=>{const v=store.get('food_member');return v==='master'||v===curYM()};
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const readSet=()=>{try{return new Set(JSON.parse(store.get('food_read')||'[]'))}catch(e){return new Set()}};
+const saveRead=s=>store.set('food_read',JSON.stringify([...s]));
+const aiShelf=()=>{try{return JSON.parse(store.get('food_ai')||'[]')}catch(e){return[]}};
+const saveShelf=a=>store.set('food_ai',JSON.stringify(a));
+
+function setLang(l){LANG=l;store.set('food_lang',l);
+  document.getElementById('btnJa').classList.toggle('on',l==='ja');
+  document.getElementById('btnEn').classList.toggle('on',l==='en');
+  document.documentElement.lang=l;applyText();render();renderShelf();renderSaved();
+  if(LAST_RANK)renderRank(LAST_RANK.counts,LAST_RANK.isLocal);}
+function applyText(){const t=T[LANG];
+  document.getElementById('brandTitle').textContent=LANG==='ja'?'食べ物ふしぎ手帖':'GUSTO';
+  document.getElementById('brandSub').textContent=LANG==='ja'
+    ?'GUSTO · THE HIDDEN SIDE OF FOOD':'食べ物ふしぎ手帖 · THE HIDDEN SIDE OF FOOD';
+  document.title=LANG==='ja'
+    ?'食べ物ふしぎ手帖 | GUSTO — 食卓が楽しくなる、味の裏がわ。'
+    :'GUSTO | 食べ物ふしぎ手帖 — The tasty backstories behind your table.';
+  document.getElementById('tagline').textContent=t.tagline;
+  document.getElementById('shelfLabel').textContent=t.shelf;
+  document.getElementById('q').placeholder=t.search;
+  document.getElementById('aiTitle').textContent=t.aiTitle;
+  document.getElementById('aiDesc').textContent=t.aiDesc;
+  document.getElementById('aiBook').placeholder=t.aiPhBook;
+  document.getElementById('aiBtn').textContent=t.aiBtn;
+  document.getElementById('savedH').textContent=t.savedH;
+  document.getElementById('payTitle').textContent=t.payTitle;
+  document.getElementById('payCopy').innerHTML=t.payCopy(BOOKS.length);
+  document.getElementById('payUnlock').textContent=t.unlock;
+  document.getElementById('payBuy').textContent=t.buy;
+  document.getElementById('payNote').textContent=t.payNote;
+  document.getElementById('footNote').textContent=t.foot;
+  document.getElementById('mClose').textContent=t.close;
+  const ml=document.getElementById('memberLine');
+  ml.classList.toggle('is-member',isMember());
+  document.getElementById('memberText').textContent=isMember()?t.member:t.free;}
+
+function genres(){const seen=new Map();
+  BOOKS.forEach(b=>{if(!seen.has(b.cat.en))seen.set(b.cat.en,b.cat)});return[...seen.values()];}
+function renderShelf(){const sh=document.getElementById('shelf');const t=T[LANG];
+  let h=`<button class="tag-btn ${GENRE==='ALL'?'on':''}" onclick="setGenre('ALL')">${t.all}</button>`;
+  genres().forEach(g=>{h+=`<button class="tag-btn ${GENRE===g.en?'on':''}" onclick="setGenre('${g.en}')">${g[LANG]}</button>`});
+  sh.innerHTML=h;}
+function setGenre(g){GENRE=g;if(g==='ALL')document.getElementById('q').value='';renderShelf();render();}
+function clearSearch(){document.getElementById('q').value='';render();}
+
+/* ---------- ranking（Worker共用・自データのみ表示） ---------- */
+const bookId=b=>'GUSTO:'+b.t.en;
+let LAST_RANK=null;
+function localViews(){try{return JSON.parse(store.get('food_views')||'{}')}catch(e){return{}}}
+function recordView(b){
+  const v=localViews();const id=bookId(b);v[id]=(v[id]||0)+1;store.set('food_views',JSON.stringify(v));
+  if(CONFIG.RANKING_URL){
+    fetch(CONFIG.RANKING_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id})}).then(()=>loadRanking()).catch(()=>{});
+  }else{renderRank(v,true);}
+}
+async function loadRanking(){
+  if(CONFIG.RANKING_URL){
+    try{const r=await fetch(CONFIG.RANKING_URL);if(r.ok){renderRank(await r.json(),false);return}}catch(e){}
+  }
+  renderRank(localViews(),true);
+}
+function renderRank(counts,isLocal){
+  LAST_RANK={counts,isLocal};const t=T[LANG];
+  const arr=BOOKS.map((b,i)=>({b,i,c:counts[bookId(b)]||0}))
+    .filter(x=>x.c>0).sort((a,z)=>z.c-a.c).slice(0,5);
+  const box=document.getElementById('rankBox');
+  if(!arr.length){box.style.display='none';return}
+  box.style.display='';
+  document.getElementById('rankH').textContent=t.rank;
+  document.getElementById('rankList').innerHTML=arr.map((x,n)=>{
+    const locked=!isMember()&&x.i>=CONFIG.FREE_COUNT;
+    return `<div class="rank-item" onclick="${locked?'openPay()':`openBook(${x.i})`}">
+      <div class="rank-no">${n+1}</div><div class="ttl">${x.b.emo} ${x.b.t[LANG]}</div>
+      <div class="vc">${x.c} ${t.views}${locked?' 🔒':''}</div></div>`}).join('')
+    +`<div class="rank-note">${isLocal?t.rankLocal:t.rankGlobal}</div>`;
+}
+
+function render(){const t=T[LANG];const q=(document.getElementById('q').value||'').toLowerCase();
+  document.getElementById('clearQ').classList.toggle('show',q.length>0);
+  const rs=readSet();let shown=0,h='';
+  BOOKS.forEach((b,i)=>{
+    if(GENRE!=='ALL'&&b.cat.en!==GENRE)return;
+    const hay=(b.t.ja+b.t.en+b.hook.ja+b.hook.en).toLowerCase();
+    if(q&&!hay.includes(q))return;
+    shown++;
+    const locked=!isMember()&&i>=CONFIG.FREE_COUNT;
+    const badge=locked?`<div class="lockbadge">${t.locked}</div>`
+      :(rs.has(i)?`<div class="read-mark">${t.read}</div>`:'');
+    h+=`<div class="spec" onclick="${locked?'openPay()':`openBook(${i})`}">
+      <div class="tab" style="background:${b.col}">${b.emo}</div>
+      <div class="bd"><h3>${b.t[LANG]}</h3>
+      <div class="hook">${b.hook[LANG]}</div>
+      <div class="tags"><span class="tag cat">${b.cat[LANG]}</span><span class="tag">${LANG==='ja'?'約2分':'~2 min'}</span></div>
+      </div>${badge}</div>`;});
+  document.getElementById('list').innerHTML=h;
+  document.getElementById('count').textContent=t.count(shown);}
+
+function openBook(i){CUR=i;const b=BOOKS[i];const t=T[LANG];
+  recordView(b);
+  document.getElementById('mEyebrow').textContent=`${b.cat[LANG].toUpperCase()}`;
+  document.getElementById('mTitle').textContent=`${b.emo} ${b.t[LANG]}`;
+  document.getElementById('mSub').textContent=LANG==='ja'?b.t.en:b.t.ja;
+  document.getElementById('mHeadline').textContent=b.hook[LANG];
+  document.getElementById('mSummary').textContent=b.s[LANG];
+  document.getElementById('mWhy').innerHTML=`<b>${t.whyLabel}</b> ${b.why[LANG]}`;
+  const rb=document.getElementById('mReadBtn');rb.style.display='';rb.onclick=toggleRead;
+  rb.textContent=readSet().has(i)?t.unmark:t.markRead;
+  document.getElementById('bookOverlay').classList.add('show');}
+function toggleRead(){if(CUR===null)return;const rs=readSet();
+  rs.has(CUR)?rs.delete(CUR):rs.add(CUR);saveRead(rs);
+  document.getElementById('mReadBtn').textContent=rs.has(CUR)?T[LANG].unmark:T[LANG].markRead;render();}
+function closeBook(){document.getElementById('bookOverlay').classList.remove('show');CUR=null;}
+
+function openPay(){document.getElementById('payErr').textContent='';
+  document.getElementById('payOverlay').classList.add('show');}
+function closePay(){document.getElementById('payOverlay').classList.remove('show');}
+async function checkPass(){const v=(document.getElementById('passInput').value||'').trim().toUpperCase();
+  if(!v)return;
+  if(v===CONFIG.MASTER_PASSCODE.toUpperCase()){grantMember('master');return;}
+  const hash=CONFIG.MONTHLY_CODES[curYM()];
+  if(hash){try{if((await sha256(v))===hash){grantMember(curYM());return;}}catch(e){console.error(e);}}
+  document.getElementById('payErr').textContent=T[LANG].wrong;}
+function grantMember(val){store.set('food_member',val);closePay();applyText();render();
+  document.getElementById('aiStatus').textContent=T[LANG].welcome;}
+
+async function aiSummarize(){const t=T[LANG];
+  if(!isMember()){openPay();return;}
+  const title=(document.getElementById('aiBook').value||'').trim();
+  const st=document.getElementById('aiStatus');const btn=document.getElementById('aiBtn');
+  if(!title){st.textContent=t.aiNeedTitle;return;}
+  st.textContent=t.aiWorking;btn.disabled=true;
+  const prompt=`You are a food-science storyteller. Write an ORIGINAL, surprising-but-TRUE fun fact about the food "${title}".
+Rules: write entirely in your own words. Prioritize accuracy — if something is a popular myth, say so. hook_ja: one punchy sentence, ~30 chars. hook_en: one punchy sentence. summary_ja: 120-180 chars. summary_en: 55-85 words. why_ja: the mechanism/reason, 100-160 chars. why_en: 50-80 words.
+Respond ONLY with valid JSON, no markdown fences, exactly this shape:
+{"name_ja":"","name_en":"","cat_ja":"","cat_en":"","emoji":"","hook_ja":"","hook_en":"","summary_ja":"","summary_en":"","why_ja":"","why_en":""}
+If the food cannot be identified, set every field to "".`;
+  try{
+    const res=await fetch(CONFIG.PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:CONFIG.MODEL,max_tokens:1200,messages:[{role:"user",content:prompt}]})});
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const data=await res.json();
+    const text=(data.content||[]).map(x=>x.text||'').join('').replace(/```json|```/g,'').trim();
+    const j=JSON.parse(text);
+    if(!j.name_ja&&!j.name_en)throw new Error("not found");
+    const entry={t:{ja:j.name_ja||title,en:j.name_en||title},cat:{ja:j.cat_ja||'',en:j.cat_en||''},
+      emo:j.emoji||'🐾',col:['#C08A2E','#5C7346','#8A4A6E','#B4623A','#5A7A8C'][Math.floor(Math.random()*5)],
+      hook:{ja:j.hook_ja||'',en:j.hook_en||''},s:{ja:j.summary_ja||'',en:j.summary_en||''},
+      why:{ja:j.why_ja||'',en:j.why_en||''},ts:Date.now()};
+    const shelf=aiShelf();shelf.unshift(entry);saveShelf(shelf);
+    st.textContent=t.aiDone;document.getElementById('aiBook').value='';renderSaved();
+  }catch(e){console.error(e);st.textContent=t.aiErr;}
+  btn.disabled=false;}
+
+function renderSaved(){const t=T[LANG];const shelf=aiShelf();const el=document.getElementById('savedList');
+  if(!shelf.length){el.innerHTML=`<div class="empty">${t.savedEmpty}</div>`;return;}
+  el.innerHTML=shelf.map((b,i)=>`<div class="spec" onclick="openSaved(${i})">
+    <div class="tab" style="background:${b.col}">${b.emo}</div>
+    <div class="bd"><h3>${b.t[LANG]||b.t.ja||b.t.en}</h3>
+    <div class="hook">${b.hook[LANG]||''}</div>
+    <div class="tags"><span class="tag cat">${t.aiTag}</span>${b.cat[LANG]?`<span class="tag">${b.cat[LANG]}</span>`:''}</div>
+    </div></div>`).join('');}
+function openSaved(i){const b=aiShelf()[i];if(!b)return;const t=T[LANG];CUR=null;
+  document.getElementById('mEyebrow').textContent=t.aiTag;
+  document.getElementById('mTitle').textContent=`${b.emo} ${b.t[LANG]||b.t.ja||b.t.en}`;
+  document.getElementById('mSub').textContent=LANG==='ja'?(b.t.en||''):(b.t.ja||'');
+  document.getElementById('mHeadline').textContent=b.hook[LANG]||'';
+  document.getElementById('mSummary').textContent=b.s[LANG]||'';
+  document.getElementById('mWhy').innerHTML=b.why[LANG]?`<b>${t.whyLabel}</b> ${b.why[LANG]}`:'';
+  const rb=document.getElementById('mReadBtn');rb.style.display='';rb.textContent=t.del;
+  rb.onclick=()=>{const s=aiShelf();s.splice(i,1);saveShelf(s);closeBook();renderSaved();rb.onclick=toggleRead;};
+  document.getElementById('bookOverlay').classList.add('show');}
+
+let TOAST_T=null;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;
+  el.classList.add('show');clearTimeout(TOAST_T);TOAST_T=setTimeout(()=>el.classList.remove('show'),2600);}
+
+(function(){const saved=store.get('food_lang');if(saved==='en')LANG='en';
+  document.getElementById('btnJa').classList.toggle('on',LANG==='ja');
+  document.getElementById('btnEn').classList.toggle('on',LANG==='en');
+  applyText();renderShelf();render();renderSaved();loadRanking();})();
+document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkPass()});
+</script>
+</body>
+</html>

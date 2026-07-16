@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>動物ふしぎ手帖 | FAUNA — 知れば誰かに話したくなる、生きものの秘密。</title>
+<meta name="description" content="ラクダは水を一度に100リットル飲む——知れば誰かに話したくなる動物のふしぎな事実を、日本語と英語で集めた野帳。AI飼育員が新しい動物の豆知識も書き下ろします。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --field:#20291F;      /* 野帳の深緑 */
+  --field-deep:#161D15;
+  --card:#F1EEDF;       /* 生成りの野帳紙 */
+  --card-line:#DAD3BC;
+  --ink:#2C2E24;        /* インク */
+  --moss:#5C7346;       /* 苔 */
+  --moss-deep:#3F5230;
+  --clay:#B4623A;       /* 赤土（見出し・スタンプ） */
+  --amber:#C08A2E;      /* 琥珀（数値強調） */
+  --mute:#7C7A67;
+  --disp:'Shippori Mincho',serif;
+  --body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--body);background:var(--field);color:var(--ink);line-height:1.8;font-size:15px}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- header ---------- */
+header{background:var(--field-deep);color:var(--card);padding:calc(env(safe-area-inset-top) + 22px) 20px 20px;
+  position:relative;overflow:hidden}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:repeating-linear-gradient(90deg,var(--moss) 0 18px,transparent 18px 30px)}
+.brand-row{display:flex;justify-content:space-between;align-items:flex-start;max-width:720px;margin:0 auto}
+h1{font-family:var(--disp);font-weight:800;font-size:29px;letter-spacing:.1em}
+.brand-en{font-size:10px;letter-spacing:.4em;color:var(--moss);margin-top:5px;text-transform:uppercase}
+.lang-toggle{display:flex;border:1px solid rgba(241,238,223,.3);border-radius:99px;overflow:hidden;flex-shrink:0}
+.lang-toggle button{background:none;border:none;color:#B8BBA6;font-size:12px;font-weight:700;padding:6px 13px}
+.lang-toggle button.on{background:var(--card);color:var(--field-deep)}
+.tagline{font-family:var(--disp);font-size:13px;color:#B8BBA6;max-width:720px;margin:12px auto 0}
+.member-line{max-width:720px;margin:10px auto 0;font-size:11px;color:#8A8C77;display:flex;align-items:center;gap:6px}
+.member-line .dot{width:7px;height:7px;border-radius:50%;background:#5A5C4A}
+.member-line.is-member{color:var(--amber)}
+.member-line.is-member .dot{background:var(--amber)}
+
+/* ---------- 生態の棚（分類フィルタ） ---------- */
+.shelf-wrap{max-width:720px;margin:18px auto 0;padding:0 16px}
+.shelf-label{font-size:10px;letter-spacing:.3em;color:var(--mute);margin-bottom:8px}
+.shelf{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.shelf::-webkit-scrollbar{display:none}
+.tag-btn{flex-shrink:0;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.06em;
+  color:var(--mute);background:var(--card);border:1px solid var(--card-line);border-radius:8px;padding:7px 14px}
+.tag-btn.on{background:var(--moss);border-color:var(--moss);color:var(--card)}
+
+/* ---------- main ---------- */
+main{max-width:720px;margin:0 auto;padding:18px 16px calc(env(safe-area-inset-bottom) + 90px)}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--card-line);
+  border-radius:10px;padding:11px 14px}
+.search input{border:none;background:none;outline:none;flex:1;font-size:15px;color:var(--ink)}
+.search input::placeholder{color:var(--mute)}
+.search input::-webkit-search-cancel-button{display:none}
+.search span{color:var(--mute)}
+.clear-q{display:none;border:none;background:var(--card-line);color:var(--ink);width:24px;height:24px;
+  border-radius:50%;font-size:15px;line-height:1;flex-shrink:0;align-items:center;justify-content:center}
+.clear-q.show{display:flex}
+.count{font-size:11px;color:#8A8C77;margin:14px 2px 10px;letter-spacing:.1em}
+
+/* ---------- ランキング ---------- */
+.rank-row{display:flex;flex-direction:column;gap:8px}
+.rank-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--card-line);
+  border-radius:10px;padding:10px 14px;cursor:pointer}
+.rank-no{font-family:var(--disp);font-weight:800;width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
+  border:1.5px solid var(--card-line);color:var(--mute)}
+.rank-item:nth-child(1) .rank-no{background:var(--amber);border-color:var(--amber);color:#20291F}
+.rank-item:nth-child(2) .rank-no{background:#9AA089;border-color:#9AA089;color:#20291F}
+.rank-item:nth-child(3) .rank-no{background:#A9714B;border-color:#A9714B;color:var(--card)}
+.rank-item .ttl{font-family:var(--disp);font-weight:700;font-size:14.5px;flex:1;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-item .vc{font-size:11px;color:var(--mute);flex-shrink:0}
+.rank-note{font-size:10px;color:#8A8C77;margin-top:6px;text-align:right}
+.saved-h{font-family:var(--disp);font-size:16px;font-weight:700;color:var(--card);margin:26px 2px 12px;
+  display:flex;align-items:center;gap:8px}
+.saved-h::after{content:"";flex:1;height:1px;background:rgba(241,238,223,.2)}
+
+/* ---------- 標本カード ---------- */
+.spec{background:var(--card);border:1px solid var(--card-line);border-radius:10px;margin-bottom:12px;
+  overflow:hidden;display:flex;cursor:pointer;transition:transform .15s ease;
+  box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.spec:active{transform:scale(.985)}
+.spec .tab{width:44px;flex-shrink:0;background:var(--moss-deep);color:var(--card);
+  display:flex;align-items:center;justify-content:center;font-size:22px}
+.spec .bd{padding:13px 15px;flex:1;min-width:0}
+.spec h3{font-family:var(--disp);font-size:17px;font-weight:700;line-height:1.4}
+.spec .hook{font-size:13px;color:var(--moss-deep);margin-top:5px;font-weight:500}
+.spec .tags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.tag{font-size:10.5px;padding:2px 9px;border-radius:99px;border:1px solid var(--card-line);color:var(--mute)}
+.tag.cat{border-color:var(--moss);color:var(--moss-deep)}
+.lockbadge{align-self:center;margin-right:14px;flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  border:1.5px solid var(--clay);color:var(--clay);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-size:11px;font-weight:700;transform:rotate(-8deg)}
+.read-mark{align-self:center;margin-right:14px;flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  background:var(--clay);color:var(--card);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-size:11px;font-weight:700;transform:rotate(-8deg)}
+
+/* ---------- modal ---------- */
+.overlay{position:fixed;inset:0;background:rgba(10,14,9,.68);backdrop-filter:blur(3px);
+  display:none;align-items:flex-end;justify-content:center;z-index:50}
+.overlay.show{display:flex}
+.sheet{background:var(--card);width:100%;max-width:720px;max-height:88vh;overflow-y:auto;
+  border-radius:18px 18px 0 0;padding:24px 22px calc(env(safe-area-inset-bottom) + 28px);
+  border-top:3px solid var(--moss);animation:up .28s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet .grip{width:42px;height:4px;border-radius:99px;background:var(--card-line);margin:0 auto 18px}
+.sheet .eyebrow{font-size:10px;letter-spacing:.3em;color:var(--clay);margin-bottom:6px}
+.sheet h2{font-family:var(--disp);font-size:23px;font-weight:800;line-height:1.4}
+.sheet .sub{font-size:13px;color:var(--mute);margin-top:5px}
+.sheet .rule{height:1px;background:linear-gradient(90deg,var(--moss),transparent);margin:16px 0}
+.sheet .headline{font-family:var(--disp);font-size:18px;font-weight:700;color:var(--clay);line-height:1.6;margin-bottom:12px}
+.sheet .summary{font-size:15px;line-height:2.05;text-align:justify}
+.sheet .why{margin-top:16px;font-size:13px;color:var(--moss-deep);background:rgba(92,115,70,.1);
+  border-left:3px solid var(--moss);padding:11px 13px;border-radius:0 8px 8px 0}
+.sheet .why b{color:var(--moss-deep)}
+.btnrow{display:flex;gap:10px;margin-top:22px}
+.btn{flex:1;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;letter-spacing:.05em}
+.btn.primary{background:var(--moss);color:var(--card)}
+.btn.ghost{background:none;border:1.5px solid var(--card-line);color:var(--mute)}
+.btn.clay{background:var(--clay);color:var(--card)}
+.btn:disabled{opacity:.5}
+.pay-seal{width:74px;height:74px;border-radius:50%;border:2px solid var(--clay);color:var(--clay);
+  display:flex;align-items:center;justify-content:center;margin:4px auto 14px;
+  font-family:var(--disp);font-weight:800;font-size:15px;transform:rotate(-8deg)}
+.pay-copy{text-align:center;font-size:13.5px;color:var(--mute)}
+.pay-copy strong{color:var(--ink)}
+.pass-input{width:100%;margin-top:16px;padding:13px;border:1.5px solid var(--card-line);border-radius:10px;
+  font-size:16px;text-align:center;letter-spacing:.2em;background:#FBF9EF;color:var(--ink);outline:none}
+.pass-input:focus{border-color:var(--moss)}
+.pay-err{color:var(--clay);font-size:12px;text-align:center;margin-top:8px;min-height:18px}
+.pay-note{font-size:11px;color:var(--mute);text-align:center;margin-top:14px;line-height:1.7}
+
+/* ---------- AI飼育員 ---------- */
+.ai-panel{background:linear-gradient(135deg,var(--moss-deep),#2E3D22);border:1px solid rgba(241,238,223,.12);
+  border-radius:14px;padding:22px 18px;margin-top:26px;color:var(--card)}
+.ai-panel .eyebrow{font-size:10px;letter-spacing:.3em;color:#C9D3B4;margin-bottom:6px}
+.ai-panel h2{font-family:var(--disp);font-size:20px;font-weight:800}
+.ai-panel p{font-size:12.5px;color:#B8BBA6;margin-top:8px}
+.ai-form{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.ai-form input{padding:13px;border-radius:10px;border:1px solid rgba(241,238,223,.2);
+  background:rgba(22,29,21,.5);color:var(--card);font-size:15px;outline:none}
+.ai-form input::placeholder{color:#8A8C77}
+.ai-form input:focus{border-color:#C9D3B4}
+.ai-status{font-size:12px;color:#C9D3B4;min-height:18px;margin-top:8px}
+.empty{font-size:12.5px;color:#8A8C77;text-align:center;padding:18px;border:1px dashed rgba(241,238,223,.2);border-radius:10px}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translate(-50%,20px);
+  background:var(--field-deep);color:var(--card);font-size:13px;padding:11px 18px;border-radius:99px;
+  border:1px solid var(--moss);opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease;z-index:60;max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+footer{max-width:720px;margin:40px auto 0;padding:0 16px 30px;font-size:10.5px;color:#8A8C77;
+  text-align:center;letter-spacing:.08em;line-height:2}
+footer a{color:var(--moss);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-row">
+    <div>
+      <h1 id="brandTitle">動物ふしぎ手帖</h1>
+      <div class="brand-en" id="brandSub">FAUNA · FIELD NOTES OF WONDER</div>
+    </div>
+    <div class="lang-toggle">
+      <button id="btnJa" class="on" onclick="setLang('ja')">日本語</button>
+      <button id="btnEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <p class="tagline" id="tagline">知れば誰かに話したくなる、生きものの秘密。</p>
+  <div class="member-line" id="memberLine"><span class="dot"></span><span id="memberText"></span></div>
+</header>
+
+<div class="shelf-wrap">
+  <div class="shelf-label" id="shelfLabel">生きものの棚</div>
+  <div class="shelf" id="shelf"></div>
+</div>
+
+<main>
+  <div class="search">
+    <span>🔎</span>
+    <input id="q" type="search" placeholder="動物名で探す" oninput="render()">
+    <button class="clear-q" id="clearQ" onclick="clearSearch()" aria-label="clear">×</button>
+  </div>
+
+  <section id="rankBox" style="display:none">
+    <div class="saved-h" id="rankH" style="color:var(--ink)"></div>
+    <div class="rank-row" id="rankList"></div>
+  </section>
+
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+
+  <section class="ai-panel" id="aiPanel">
+    <div class="eyebrow">AI KEEPER</div>
+    <h2 id="aiTitle">AI飼育員 — 気になる動物のふしぎを調べる</h2>
+    <p id="aiDesc">棚にいない動物も、名前を入れるだけでAI飼育員が日英で「へえ！」なひみつを書き下ろします。（会員機能）</p>
+    <div class="ai-form">
+      <input id="aiBook" placeholder="動物名（例：ハダカデバネズミ）">
+      <button class="btn clay" id="aiBtn" onclick="aiSummarize()">ふしぎを調べる</button>
+    </div>
+    <div class="ai-status" id="aiStatus"></div>
+  </section>
+
+  <div class="saved-h" id="savedH">AI観察日誌</div>
+  <div id="savedList"></div>
+</main>
+
+<div class="overlay" id="bookOverlay" onclick="if(event.target===this)closeBook()">
+  <div class="sheet">
+    <div class="grip"></div>
+    <div class="eyebrow" id="mEyebrow"></div>
+    <h2 id="mTitle"></h2>
+    <div class="sub" id="mSub"></div>
+    <div class="rule"></div>
+    <div class="headline" id="mHeadline"></div>
+    <div class="summary" id="mSummary"></div>
+    <div class="why" id="mWhy"></div>
+    <div class="btnrow">
+      <button class="btn ghost" onclick="closeBook()" id="mClose">閉じる</button>
+      <button class="btn primary" id="mReadBtn" onclick="toggleRead()"></button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="payOverlay" onclick="if(event.target===this)closePay()">
+  <div class="sheet">
+    <div class="grip"></div>
+    <div class="pay-seal">會員</div>
+    <h2 style="text-align:center;font-family:var(--disp)" id="payTitle">観察会員になる</h2>
+    <p class="pay-copy" id="payCopy" style="margin-top:10px"></p>
+    <input class="pass-input" id="passInput" placeholder="TOMO-XXXX" autocapitalize="characters" autocomplete="off">
+    <div class="pay-err" id="payErr"></div>
+    <div class="btnrow"><button class="btn clay" onclick="checkPass()" id="payUnlock">解錠する</button></div>
+    <div class="btnrow" style="margin-top:10px">
+      <button class="btn primary" onclick="window.open(CONFIG.PURCHASE_URL,'_blank')" id="payBuy">合言葉を入手する（Noteメンバー）</button>
+    </div>
+    <p class="pay-note" id="payNote"></p>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<footer>
+  <span id="footNote">事実はすべて信頼できる資料をもとに書き下ろしています。俗説には「諸説あり」と明記しています。</span><br>
+  © 叡智の灯火 <a href="iyashi.html">AIと作った 癒しのコーナー</a>
+</footer>
+
+<script>
+const CONFIG = {
+  MASTER_PASSCODE: "FAUNA-2026",
+  MONTHLY_CODES: {
+   "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+   "2026-07":"67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+   "2026-08":"fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+   "2026-09":"4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+   "2026-10":"266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+   "2026-11":"eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+   "2026-12":"7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+   "2027-01":"a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+   "2027-02":"00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+   "2027-03":"63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+   "2027-04":"d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+   "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+  },
+  PURCHASE_URL: "https://note.com/leo77777/membership",
+  PROXY_URL: "https://meisaku-ai.dashiyo777.workers.dev",
+  RANKING_URL: "https://meisaku-rank.dashiyo777.workers.dev",
+  MODEL: "claude-sonnet-4-6",
+  FREE_COUNT: 8
+};
+
+const T={
+ja:{tagline:"知れば誰かに話したくなる、生きものの秘密。",
+ shelf:"生きものの棚", all:"全て", search:"動物名で探す",
+ count:c=>`${c} 種`, member:"観察会員 · 全種＋AI飼育員が利用できます",
+ free:`無料閲覧 · ${CONFIG.FREE_COUNT}種まで観察できます`,
+ locked:"會員", read:"観察済", close:"閉じる", markRead:"観察印を押す", unmark:"観察印を消す",
+ aiTitle:"AI飼育員 — 気になる動物のふしぎを調べる",
+ aiDesc:"棚にいない動物も、名前を入れるだけでAI飼育員が日英で「へえ！」なひみつを書き下ろします。（会員機能）",
+ aiPhBook:"動物名（例：ハダカデバネズミ）", aiBtn:"ふしぎを調べる",
+ aiNeedTitle:"動物名を入力してください。", aiWorking:"AI飼育員が観察中です…（20秒ほど）",
+ aiDone:"完成しました。下の観察日誌に追加されています。",
+ aiErr:"うまく調べられませんでした。時間をおいて再度お試しください。",
+ savedH:"AI観察日誌", savedEmpty:"まだ記録はありません。上のAI飼育員から調べられます。",
+ payTitle:"観察会員になる",
+ payCopy:t=>`全<strong>${t}</strong>種のふしぎと<strong>AI飼育員</strong>が使い放題。<br>今月の合言葉（TOMO-◯◯◯◯）を入力してください。`,
+ unlock:"解錠する", buy:"合言葉を入手する（Noteメンバー）",
+ payNote:"合言葉は月替わりです。叡智の灯火の今月の合言葉（TOMO-XXXX）がそのまま使えます。",
+ wrong:"合言葉が違います。今月の合言葉（TOMO-XXXX）をご確認ください。", welcome:"ようこそ、観察会員へ。",
+ foot:"事実はすべて信頼できる資料をもとに書き下ろしています。俗説には「諸説あり」と明記しています。",
+ whyLabel:"なぜ？", aiTag:"AI観察", del:"削除する",
+ rank:"いま読まれている TOP5", rankLocal:"※ この端末での閲覧記録です", rankGlobal:"※ 全読者の閲覧数ランキングです", views:"回"},
+en:{tagline:"Creature secrets you'll want to tell someone.",
+ shelf:"THE MENAGERIE", all:"All", search:"Search by animal",
+ count:c=>`${c} species`, member:"Member · all species + AI Keeper unlocked",
+ free:`Free viewing · first ${CONFIG.FREE_COUNT} species`,
+ locked:"LOCK", read:"SEEN", close:"Close", markRead:"Stamp as observed", unmark:"Remove stamp",
+ aiTitle:"AI Keeper — look up any animal's secret",
+ aiDesc:"Not in the menagerie? Type any animal and the AI Keeper writes a fresh JP/EN 'wow' fact. (Members only)",
+ aiPhBook:"Animal (e.g., naked mole-rat)", aiBtn:"Look it up",
+ aiNeedTitle:"Please enter an animal.", aiWorking:"The keeper is observing… (about 20 sec)",
+ aiDone:"Done — added to your field journal below.",
+ aiErr:"Something went wrong. Please try again shortly.",
+ savedH:"AI FIELD JOURNAL", savedEmpty:"No records yet. Use the AI Keeper above to look one up.",
+ payTitle:"Become a member",
+ payCopy:t=>`Unlock all <strong>${t}</strong> creature secrets plus the <strong>AI Keeper</strong>.<br>Enter this month's passcode below.`,
+ unlock:"Unlock", buy:"Get a passcode (Note membership)",
+ payNote:"The passcode rotates monthly. Your current Eichi no Hi passcode (TOMO-XXXX) works here too.",
+ wrong:"That passcode doesn't match this month's code (TOMO-XXXX).", welcome:"Welcome, member.",
+ foot:"Every fact is written from reliable sources. Folk beliefs are clearly marked as such.",
+ whyLabel:"WHY?", aiTag:"AI Field", del:"Delete",
+ rank:"TRENDING · TOP 5", rankLocal:"* Based on views on this device", rankGlobal:"* Based on views from all readers", views:"views"}
+};
+
+/* ---------- 動物データ（すべて裏取り済み・書き下ろし） ---------- */
+const BOOKS=[
+{t:{ja:"ラクダ",en:"Camel"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🐫",col:"#C08A2E",
+ hook:{ja:"一度に100リットル以上の水を、10分ほどで飲み干す。",en:"Drinks over 100 liters of water in about ten minutes."},
+ s:{ja:"砂漠で脱水しきったラクダは、水場で一気に100リットル以上（大きなバスタブの半分ほど）を飲むことがある。人間なら急激な水分で血球が破裂してしまう量だが、ラクダは平気だ。そして俗説と違い、水をためているのはコブではない——コブの中身は脂肪で、いざという時にエネルギーと水に変わる。",
+ en:"A dehydrated camel can gulp over 100 liters at a watering hole in minutes—half a big bathtub. In a human, taking on water that fast would burst the blood cells. And contrary to the myth, the water is not stored in the hump: the hump is fat, which the body can convert into energy and water when needed."},
+ why:{ja:"ラクダの赤血球は楕円形で、水を吸って膨らんでも壊れにくい特殊な作り。だから大量の水を一気に血液へ取り込める。コブの脂肪も、分解されると水と二酸化炭素を生むため、間接的な「水の貯金」になっている。",
+ en:"A camel's red blood cells are oval and unusually elastic, so they swell without bursting as water floods in—letting the blood absorb a huge volume at once. And burning the hump's fat yields water as a by-product, an indirect 'water savings account.'"}},
+{t:{ja:"タコ",en:"Octopus"},cat:{ja:"軟体動物",en:"Mollusk"},emo:"🐙",col:"#8A4A6E",
+ hook:{ja:"心臓が3つ、血液は青い。脳は9つあるとも言える。",en:"Three hearts, blue blood, and arguably nine brains."},
+ s:{ja:"タコの体には心臓が3つある。2つはえらへ、1つは全身へ血液を送る。その血が青いのは、酸素を運ぶ色素が鉄ではなく銅を使っているから。さらに神経細胞の6割近くが8本の腕に分散しており、腕は半ば独立して「考える」。中枢の脳とあわせ、9つの脳を持つ生きものとも言われる。",
+ en:"An octopus has three hearts: two pump blood through the gills, one to the rest of the body. That blood is blue because its oxygen-carrying pigment uses copper, not iron. And nearly two-thirds of its neurons live in its eight arms, which 'think' semi-independently—so it's often described as having nine brains."},
+ why:{ja:"銅を含む色素「ヘモシアニン」は、鉄のヘモグロビンより冷たく酸素の薄い深海で効率よく酸素を運べる。全身に血を送る心臓は、泳ぐと止まってしまうため、タコは歩く方が好き。腕の分散神経は、狭い岩の隙間を8本同時に探るのに向いている。",
+ en:"The copper pigment hemocyanin carries oxygen efficiently in cold, low-oxygen deep water where iron-based hemoglobin struggles. The main heart stops when the octopus swims, which is why it prefers to walk. And distributed arm-neurons let all eight limbs probe crevices at once."}},
+{t:{ja:"クマムシ",en:"Tardigrade"},cat:{ja:"緩歩動物",en:"Micro-animal"},emo:"🐻",col:"#6E7B4A",
+ hook:{ja:"乾いて縮めば、真空の宇宙でも生き延びる。",en:"Dried and shrunk, it can survive the vacuum of space."},
+ s:{ja:"体長1ミリ足らずのクマムシは、水がなくなると体を樽のように縮め「乾眠」に入る。この状態では、絶対零度近くの低温、150℃近い高温、深海の何倍もの圧力、そして宇宙空間の真空と放射線にも耐える。2007年には実際に宇宙へ打ち上げられ、真空にさらされた個体が地上で蘇生した。",
+ en:"Under a millimeter long, the tardigrade curls into a barrel and enters a 'tun' state when water disappears. In it, the creature endures temperatures near absolute zero and close to 150°C, pressures many times the deep sea's, and the vacuum and radiation of open space. In 2007, tardigrades were flown to orbit, exposed to vacuum—and revived back on Earth."},
+ why:{ja:"乾眠に入るとき、クマムシは体内の水をトレハロースなどの糖や特殊なタンパク質に置き換え、細胞をガラスのように固めて壊れないよう守る。代謝はほぼ完全に止まり、時間が凍りついたような状態で数十年も待てる。水が戻れば数時間で元通りに動き出す。",
+ en:"Entering the tun state, the tardigrade replaces its body water with sugars like trehalose and special proteins, setting its cells into a glass-like solid that resists damage. Metabolism nearly stops—time effectively frozen for decades. Add water, and it walks again within hours."}},
+{t:{ja:"ハチドリ",en:"Hummingbird"},cat:{ja:"鳥類",en:"Bird"},emo:"🐦",col:"#3F7A6E",
+ hook:{ja:"心臓は1分1200回。空中で静止も後退もできる唯一の鳥。",en:"1,200 heartbeats a minute—and the only bird that can hover and fly backward."},
+ s:{ja:"ハチドリの翼は1秒に50〜80回も動き、8の字を描くことで、空中に静止する「ホバリング」も、後ろ向きの飛行もできる。鳥の中でこれができるのはハチドリだけ。飛行中の心拍は1分あたり1200回に達し、体重あたりでは全動物で最速級。だが夜や食糧難には体温と心拍を一気に落とす「休眠」で命をつなぐ。",
+ en:"A hummingbird beats its wings 50–80 times a second, tracing a figure-eight that lets it hover in place—and fly backward, something no other bird can do. Its heart can hit 1,200 beats per minute in flight, among the fastest of any animal for its size. Yet at night or in hard times it drops its temperature and heart rate into 'torpor' to survive."},
+ why:{ja:"ハチドリの肩関節は特殊で、翼を上げる時も下げる時も揚力を生める。この構造がホバリングと後退飛行を可能にする。激しい代謝を支えるため花の蜜（糖）を大量に摂るが、夜は蜜が採れない。そこで代謝を1割以下まで落とし、命の燃料を節約して朝を待つ。",
+ en:"A hummingbird's unusual shoulder joint generates lift on both the up- and downstroke, enabling hovering and reverse flight. Its furious metabolism runs on flower nectar, but at night there's none to drink—so it drops its metabolism below a tenth of normal, saving fuel until dawn."}},
+{t:{ja:"アホウドリ",en:"Albatross"},cat:{ja:"鳥類",en:"Bird"},emo:"🕊️",col:"#5A7A8C",
+ hook:{ja:"ほとんど羽ばたかず、数千キロを滑空する。",en:"Glides thousands of kilometers, barely flapping."},
+ s:{ja:"翼を広げれば3メートルを超えるアホウドリは、海面すれすれの風をつかむ「動的滑空」で、ほとんど羽ばたかずに何日も飛び続ける。1回の採餌旅行で1万キロを超えることもある。愚かに見える不器用な着陸から「アホウドリ（阿房鳥）」と名づけられたが、大空では最も効率的な旅人だ。",
+ en:"With a wingspan over three meters, the albatross rides sea-surface winds in 'dynamic soaring,' flying for days almost without flapping—a single foraging trip can exceed 10,000 km. Its Japanese name means 'fool bird,' after its clumsy landings, but in the open sky it is the most efficient traveler alive."},
+ why:{ja:"海面付近は高さによって風速が違う。アホウドリはその風速差の層を斜めに横切ることで、羽ばたかずに速度と高度を得る「動的滑空」を行う。肩の腱には翼を広げたまま固定する仕組みがあり、筋力をほぼ使わずに翼を保てる。だから飛ぶより着陸の方が苦手なのだ。",
+ en:"Wind speed changes with height just above the waves. By slicing diagonally across those layers, the albatross harvests energy in 'dynamic soaring,' gaining speed and altitude without a beat. A tendon lock holds its wings open with almost no muscle effort—which is why flying is easy and landing is not."}},
+{t:{ja:"デンキウナギ",en:"Electric Eel"},cat:{ja:"魚類",en:"Fish"},emo:"⚡",col:"#B4623A",
+ hook:{ja:"体から600〜860ボルトの電気を放つ。",en:"Discharges 600–860 volts from its own body."},
+ s:{ja:"アマゾンに棲むデンキウナギは、体の8割を占める発電器官から、瞬間的に600ボルト超（記録では860ボルト）の電気を放つ。家庭のコンセントの数倍という電圧で、獲物を痺れさせ、身を守る。じつはウナギではなくナマズに近い仲間で、弱い電気を出して濁った水の中の「地図」を描き、仲間との会話にも使う。",
+ en:"The Amazon's electric eel fires over 600 volts—up to a record 860—from electric organs that fill 80% of its body, several times a household outlet, enough to stun prey and repel threats. Despite its name it's closer to catfish than eel, and it also emits weak pulses to 'map' murky water and even to communicate."},
+ why:{ja:"発電器官は「電気細胞」が電池のように何千個も直列に並んだ構造。一斉に放電することで高電圧を生む。獲物の筋肉を電気で強制的に痙攣させて位置を暴き、動きを止める。自分が感電しないのは、重要な臓器が頭部に集まり、脂肪と厚い皮膚で電気から守られているためと考えられている。",
+ en:"Its electric organs are thousands of 'electrocytes' stacked in series like batteries; firing together yields high voltage. The jolt forces prey muscles to twitch, revealing and freezing them. The eel avoids shocking itself because its vital organs cluster in the head, insulated by fat and thick skin."}},
+{t:{ja:"アリ",en:"Ant"},cat:{ja:"昆虫",en:"Insect"},emo:"🐜",col:"#6E4423",
+ hook:{ja:"自分の体重の何十倍も持ち上げ、地球上で最も多い昆虫。",en:"Lifts many times its own weight—and outnumbers us by far."},
+ s:{ja:"アリは自分の体重の数十倍のものを顎で持ち上げられる。人間なら車を口でくわえて運ぶようなものだ。地球上のアリの総数はおよそ2京匹（2の後にゼロが16個）と推定され、その総重量は全人類に匹敵するとも言われる。一匹の脳は砂粒ほどだが、集団になると畑を耕し、家畜を飼い、戦争をする「社会」を営む。",
+ en:"An ant can lift dozens of times its own body weight in its jaws—like a human carrying a car in their mouth. The world holds an estimated 20 quadrillion ants, whose combined weight may rival that of all humanity. One ant's brain is a grain of sand, but together they farm, herd livestock, and wage war—a civilization in miniature."},
+ why:{ja:"小さな体ほど、体重に対して筋肉の力が相対的に強くなる（体が半分になると力は8分の1だが体重は8分の1以下に感じられる、という体格の物理）。だからアリは怪力に見える。個々は単純な行動しかしないが、フェロモンで情報を伝え合うことで、全体として賢い「群知能」が生まれる。",
+ en:"The smaller the body, the stronger its muscles are relative to its weight—a matter of scaling physics—so ants seem superhumanly strong. Each follows only simple rules, but by trading information through pheromones, the colony as a whole produces intelligent 'swarm behavior.'"}},
+{t:{ja:"ナマケモノ",en:"Sloth"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🦥",col:"#7A7A5A",
+ hook:{ja:"動かなすぎて、体の毛に藻が生え、緑色になる。",en:"So still that algae grows in its fur, turning it green."},
+ s:{ja:"ナマケモノはあまりに動かないため、体の毛の溝に藻が生え、体が緑がかって木々の中に溶け込む。食べるのは低カロリーな葉ばかりで、消化に2週間以上かかることもある。トイレのために木を降りるのは週に一度ほど——その時が天敵に最も狙われる危険な瞬間だ。泳ぎは意外と得意で、歩くより速い。",
+ en:"A sloth moves so little that algae grows in the grooves of its fur, tinting it green and helping it vanish into the canopy. It eats only low-calorie leaves that can take over two weeks to digest, and climbs down to relieve itself just once a week—its most dangerous moment, exposed to predators. Oddly, it swims faster than it walks."},
+ why:{ja:"葉は栄養が乏しいため、ナマケモノは徹底した省エネで生きる。代謝を極限まで落とし、筋肉は最小限。緑の藻は迷彩になるだけでなく、藻を食べる蛾が毛に住み着き、その蛾がまた藻の栄養になる——一匹の体の上で小さな生態系が回っている。動かないことは、怠けではなく生存戦略なのだ。",
+ en:"Leaves offer little nutrition, so the sloth survives by extreme thrift: metabolism slowed to a crawl, muscles minimal. The green algae is camouflage—and moths that eat it live in the fur, fertilizing more algae, a tiny ecosystem on one animal's back. Doing nothing isn't laziness; it's strategy."}},
+{t:{ja:"ミツバチ",en:"Honeybee"},cat:{ja:"昆虫",en:"Insect"},emo:"🐝",col:"#C08A2E",
+ hook:{ja:"「8の字ダンス」で、花の場所を仲間に地図として伝える。",en:"Tells hivemates where flowers are with a 'waggle dance' map."},
+ s:{ja:"蜜のありかを見つけたミツバチは、巣に戻って「8の字ダンス」を踊る。まっすぐ進む向きが太陽に対する花の方角を、その振動の長さが距離を表す——踊りで地図を描く言語だ。この発見はノーベル賞に輝いた。さらにハチは花の電気を感じ取り、他のハチが最近訪れた花を見分けることもできる。",
+ en:"Having found nectar, a honeybee returns and dances a figure-eight 'waggle dance': the direction of the straight run encodes the flower's angle relative to the sun, and the length of the waggle encodes distance—a language that draws a map. The discovery won a Nobel Prize. Bees can even sense flowers' electric fields to tell which blooms were recently visited."},
+ why:{ja:"暗い巣の中で、仲間は踊るハチの動きを触角や体の振動で読み取る。太陽を基準にすることで、時間がたって太陽が動いても方角を補正できる。花は羽ばたきで帯びた電気をまとっており、ハチが蜜を吸うとその電気が変わる。次のハチはそれを感じ、無駄足を避けられる。",
+ en:"In the dark hive, others read the dancer through antennae and vibration. Using the sun as reference lets them correct for its movement over time. Flowers carry an electric charge; when a bee feeds, that charge shifts, and the next bee senses it—and skips the already-emptied bloom."}},
+{t:{ja:"シャチ",en:"Orca"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🐋",col:"#2F3D4A",
+ hook:{ja:"群れごとに「方言」と文化があり、母を生涯慕う。",en:"Each pod has its own dialect and culture—and sons follow mother for life."},
+ s:{ja:"シャチは群れ（ポッド）ごとに独自の鳴き声の「方言」を持ち、狩りの方法もそれぞれ違う。波を起こして氷上のアザラシを滑り落とす群れもいれば、砂浜に乗り上げて獲物を捕る群れもいる。こうした技は親から子へ受け継がれる「文化」だ。オスは生涯母親の群れに留まり、閉経後の祖母が群れを導くことも知られている。",
+ en:"Each orca pod has its own vocal 'dialect' and its own hunting techniques—some make waves to wash seals off ice floes, others beach themselves to grab prey. These skills pass from parent to child as culture. Males stay with their mother's pod for life, and post-menopausal grandmothers are known to lead the group."}, 
+ why:{ja:"シャチは人間以外で「おばあちゃん」が閉経後も長く生きる数少ない動物。狩り場や飢饉を生き延びた祖母の知識が、群れの生存を左右するからだと考えられている。方言は群れの絆を保ち、他の群れと区別する「名札」の役割を果たす。文化を持つことが、環境の変化に適応する力になっている。",
+ en:"Orcas are among the very few animals besides humans whose females live long after menopause. A grandmother's memory of feeding grounds and past famines is thought to boost the pod's survival. Dialects bind the group and act as a 'name tag' distinguishing it from others—and this culture helps them adapt to change."}},
+{t:{ja:"カモノハシ",en:"Platypus"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🦫",col:"#6B5A3E",
+ hook:{ja:"卵を産む哺乳類。くちばしで獲物の電気を感じ、毒も持つ。",en:"A mammal that lays eggs, senses prey's electricity, and is venomous."},
+ s:{ja:"カモノハシは哺乳類なのに卵を産み、乳首がなく、汗のように染み出す乳で子を育てる。目を閉じて泳ぎ、代わりに柔らかいくちばしで獲物の筋肉が発する微弱な電気を感知して狩る。オスは後ろ足に毒の爪を持ち、その毒は人を苦しめるほど強い。発見された当時、学者は「ニセモノの標本」だと疑ったほどだ。",
+ en:"The platypus is a mammal that lays eggs, has no nipples, and nurses young with milk that seeps out like sweat. It swims with eyes shut, hunting instead by sensing the faint electricity of prey muscles through its soft bill. Males bear venomous spurs on their hind legs, potent enough to cause a human agony. When first described, scientists suspected a hoax."},
+ why:{ja:"カモノハシは、哺乳類が進化の途中で枝分かれした最も古いグループ「単孔類」の生き残り。だから爬虫類的な特徴（卵・総排出腔）と哺乳類的な特徴（乳・毛）が混在している。電気を感じるくちばしは、濁った川底で目や鼻に頼らず獲物を探すための進化。まさに「進化の実験室」のような動物だ。",
+ en:"The platypus survives from the monotremes, the oldest branch of the mammal family tree—so reptile-like traits (eggs, a single 'vent') mix with mammalian ones (milk, fur). Its electric-sensing bill evolved to find prey on murky riverbeds without eyes or nose. It is, in effect, a living laboratory of evolution."}},
+{t:{ja:"ホッキョクグマ",en:"Polar Bear"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🐻‍❄️",col:"#7A8C9A",
+ hook:{ja:"毛は白くなく透明、皮膚は黒い。",en:"Its fur isn't white but clear—and its skin is black."},
+ s:{ja:"真っ白に見えるホッキョクグマだが、毛は本当は白くない。一本一本が中空の透明な管で、光を乱反射させるから白く見えているだけだ。その下の皮膚は真っ黒——太陽の熱を効率よく吸収するためと考えられている。透明な毛が光を導いて黒い肌を温める、天然のソーラーパネルのような仕組みだ。",
+ en:"The polar bear looks pure white, but its fur isn't white at all: each hair is a hollow, transparent tube that scatters light, which only makes it appear white. The skin beneath is jet black—thought to absorb the sun's warmth efficiently. Clear hairs channel light to the dark skin, like a natural solar panel."},
+ why:{ja:"透明な毛は光を散らして雪原に溶け込む迷彩になると同時に、光を皮膚へ導く。黒い皮膚は吸収した光を熱に変え、極寒の中で体温を保つのに役立つ。分厚い脂肪と二層の毛皮とあわせ、氷点下数十度でも平気。地上最大級の肉食獣は、光の物理まで味方につけているのだ。",
+ en:"Transparent hairs scatter light for snow-field camouflage while also guiding it to the skin. The black skin turns absorbed light into heat, helping maintain body temperature in brutal cold. With thick fat and a double coat, it shrugs off −30°C. One of the largest land carnivores has even enlisted the physics of light."}},
+{t:{ja:"フラミンゴ",en:"Flamingo"},cat:{ja:"鳥類",en:"Bird"},emo:"🦩",col:"#C86A7A",
+ hook:{ja:"生まれた時は白い。ピンク色は食べ物でできている。",en:"Born gray-white; the pink comes entirely from its food."},
+ s:{ja:"フラミンゴのあの鮮やかなピンクは、生まれつきの色ではない。ヒナは白っぽい灰色で生まれ、藻や小さなエビ（甲殻類）に含まれる「カロテノイド」という色素を食べ続けることで、羽が少しずつピンクに染まっていく。餌を変えると色は褪せる。つまりあの色は「食べたものの記録」なのだ。片足で立つのは、その方が体力を使わず楽だから。",
+ en:"A flamingo's vivid pink is not something it's born with. Chicks hatch a pale gray-white and turn pink only by eating algae and tiny shrimp rich in pigments called carotenoids. Change the diet and the color fades—so the pink is literally a record of what it has eaten. And it stands on one leg because doing so actually costs it less energy."},
+ why:{ja:"カロテノイドは、私たちがニンジンやエビで見るのと同じ色素の仲間。フラミンゴは食べた色素を羽や皮膚にため込む。動物園では餌に色素を加えて色を保つ。片足立ちは、筋肉をほとんど使わず骨と関節の構造だけで体を支えられる姿勢で、水中で冷える足を交互に休める意味もあると考えられている。",
+ en:"Carotenoids are the same pigment family that colors carrots and shrimp; flamingos store what they eat in feathers and skin. Zoos add pigment to the feed to keep the color. Standing on one leg lets the bird lock its joints and support itself with almost no muscle effort, perhaps also resting each leg from the cold water in turn."}},
+{t:{ja:"コウモリ",en:"Bat"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🦇",col:"#4A3E55",
+ hook:{ja:"音で「見る」唯一の飛ぶ哺乳類。吸血種は仲間に血を分ける。",en:"The only flying mammal—and vampire bats share blood with friends."},
+ s:{ja:"コウモリは自ら発した超音波の反響で暗闇の中の獲物や障害物を「見る」（反響定位）。飛べる唯一の哺乳類でもある。中でもチスイコウモリには驚く習性がある——狩りに失敗して飢えた仲間に、自分が吸った血を口移しで分け与えるのだ。しかも過去に助けてくれた相手を優先する「恩返し」の記憶を持つ。",
+ en:"A bat 'sees' prey and obstacles in the dark by the echoes of its own ultrasonic calls (echolocation), and it's the only mammal that truly flies. Vampire bats have an astonishing habit: they regurgitate blood to feed a hungry roost-mate who failed to hunt—and they remember who helped them before, preferentially repaying past favors."},
+ why:{ja:"チスイコウモリは2〜3日血にありつけないと餓死してしまう。だから「今日は自分が余分に分け、明日は分けてもらう」という助け合いが、群れ全体の生存率を高める。過去の貸し借りを覚えて公平に振る舞うこの行動は、人間以外での「互恵的な利他」の代表例として、動物行動学で盛んに研究されている。",
+ en:"A vampire bat starves after just two or three nights without blood. So a system of 'I share extra today, you share tomorrow' raises the whole roost's survival. Remembering past favors and acting fairly makes this one of the best-known examples of reciprocal altruism outside humans, and a favorite subject of behavioral science."}},
+{t:{ja:"ペンギン",en:"Penguin"},cat:{ja:"鳥類",en:"Bird"},emo:"🐧",col:"#3A4A5A",
+ hook:{ja:"求愛に小石を贈る。氷の上で身を寄せ、温もりを分け合う。",en:"Woos a mate with a pebble—and huddles to share warmth on the ice."},
+ s:{ja:"アデリーペンギンのオスは、メスへの求愛にとっておきの小石を贈る。巣を作る石は貴重で、隣の巣から盗む「小石泥棒」も日常茶飯事だ。コウテイペンギンはさらに過酷で、氷点下60℃・風速の中、何千羽もが密集して「ハドル」を組み、外側と内側の個体が少しずつ入れ替わりながら、集団全体で暖を分け合って冬を越す。",
+ en:"A male Adélie penguin courts a female by presenting a prized pebble; nesting stones are so valuable that stealing one from a neighbor is routine. Emperor penguins go further: in −60°C winds, thousands pack into a 'huddle,' the birds on the outside and inside slowly rotating so the whole colony shares warmth and survives the winter."},
+ why:{ja:"氷と雪の大地では、巣材の小石も、体温も、貴重な「資源」だ。小石を贈るのは「これだけ良い巣を用意できる」という誠実さの証。ハドルでは中心の温度が20℃を超えることもあり、外側で冷えた個体が中へ、温まった個体が外へと絶えず循環することで、誰も凍えず、誰かだけが得をすることもない。",
+ en:"On a land of ice, both nesting stones and body heat are precious resources. Offering a pebble signals 'I can provide a good nest.' Inside a huddle the center can top 20°C; birds constantly rotate—chilled ones moving in, warmed ones moving out—so none freezes and none hoards the warmth."}},
+{t:{ja:"チーター",en:"Cheetah"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🐆",col:"#B4623A",
+ hook:{ja:"3秒で時速100km。だが長くは走れず、狩りは30秒勝負。",en:"0 to 100 km/h in three seconds—but the hunt is over in half a minute."},
+ s:{ja:"チーターは静止からわずか3秒ほどで時速100kmに達する、地上最速の動物。だが全力疾走は数百メートル・30秒ほどが限界で、それ以上走ると体温が上がりすぎて命に関わる。だから狩りは一瞬の勝負。尻尾は高速で向きを変えるときの舵、爪は引っ込まず地面を掴むスパイクの役割を果たす。",
+ en:"A cheetah reaches 100 km/h from a standstill in about three seconds—the fastest land animal alive. But a full sprint lasts only a few hundred meters and about thirty seconds; run longer and its body overheats dangerously. So the hunt is a single burst. Its tail is a rudder for high-speed turns, and its claws—which don't fully retract—work like a sprinter's spikes."},
+ why:{ja:"チーターの体は速さのために極端に特化している。しなやかな背骨がバネのように伸縮して歩幅を伸ばし、大きな鼻孔と心臓・肺が全力疾走中の酸素をまかなう。だが筋肉が生む熱を逃がしきれず、走りすぎると体温が危険域に達する。速さと引き換えに、持久力とパワーを捨てた——だから獲物を他の肉食獣に横取りされやすい。",
+ en:"A cheetah's body is extreme specialization for speed: a flexible spine that stretches like a spring to lengthen each stride, huge nostrils, heart, and lungs to feed oxygen at full sprint. But it can't shed the heat its muscles make, so a long chase pushes its temperature into the danger zone. Speed came at the cost of stamina and strength—which is why stronger predators often steal its kills."}},
+{t:{ja:"サケ",en:"Salmon"},cat:{ja:"魚類",en:"Fish"},emo:"🐟",col:"#C86A5A",
+ hook:{ja:"生まれた川の「匂い」を覚え、数千キロ先から帰ってくる。",en:"Remembers its birth river's smell and returns from thousands of km away."},
+ s:{ja:"サケは生まれた川を下って海へ出て、数年かけて数千キロを回遊する。そして産卵のとき、生まれた川へ正確に帰ってくる。手がかりは、稚魚の頃に刻み込んだ川の「匂い」の記憶だ。滝や急流を跳ね上り、故郷の川で卵を産むと、多くはそのまま力尽きて一生を終える。その体は森の栄養となり、次の命を育てる。",
+ en:"A salmon swims down from its birth river to the sea, roams thousands of kilometers over years, and then, to spawn, navigates back to the exact river where it hatched. The key is a memory of that river's 'smell,' imprinted as a fry. Leaping up waterfalls and rapids, most spawn in their home stream and then die—their bodies fertilizing the forest and feeding the next generation."},
+ why:{ja:"稚魚の時期、サケは川ごとに異なる微妙な匂い（水に溶けた成分）を脳に焼き付ける。海から戻る時は、まず地磁気を頼りに大まかに沿岸へ、最後はその匂いの記憶をたどって生まれた支流まで正確に帰り着く。産卵後に死ぬのは、全エネルギーを繁殖に注ぎ込む生き方の結果。その死が森と川の生態系を支えている。",
+ en:"As a fry, a salmon burns each river's subtle scent—its dissolved chemistry—into its brain. Returning, it first uses Earth's magnetic field to find the coast, then follows that scent memory to the exact home tributary. Dying after spawning is the result of pouring all its energy into reproduction—and that death sustains the whole forest-and-river ecosystem."}},
+{t:{ja:"ゾウ",en:"Elephant"},cat:{ja:"哺乳類",en:"Mammal"},emo:"🐘",col:"#7A7267",
+ hook:{ja:"足の裏で地面の振動を「聞き」、仲間の死を悼む。",en:"'Hears' through its feet—and appears to mourn its dead."},
+ s:{ja:"ゾウは人間に聞こえない低い音（超低周波）で、数キロ離れた仲間と会話する。その音は地面も伝わり、ゾウは足の裏や鼻で大地の振動を「聞く」。さらにゾウは仲間の死骸のそばで長くたたずみ、骨を鼻でそっと触れる。悲しみや弔いに近い行動として、多くの研究者が注目している。鏡に映る自分を認識できる数少ない動物でもある。",
+ en:"Elephants talk across several kilometers using infrasound too low for humans to hear. That sound also travels through the ground, and elephants 'hear' the vibrations through their feet and trunk. They also linger by the bodies of dead companions, gently touching the bones with their trunks—behavior many researchers see as close to grief and mourning. They are also among the few animals that recognize themselves in a mirror."},
+ why:{ja:"低い音は遠くまで減衰しにくく、森や草原を越えて届く。ゾウの足の裏には振動を感じる特殊な細胞があり、地面を伝う仲間の声や、遠い雷雨（＝水場）の気配まで察知できる。死者を悼む行動や自己認識は、ゾウが高い知能と豊かな感情、そして強い社会の絆を持つことを示す証拠だと考えられている。",
+ en:"Low sounds fade slowly and carry across forest and savanna. Special cells in an elephant's feet sense ground-borne vibrations—the calls of distant kin, even faraway thunderstorms meaning water. Mourning the dead and recognizing itself in a mirror are taken as evidence of high intelligence, deep emotion, and powerful social bonds."}},
+{t:{ja:"ミミズ",en:"Earthworm"},cat:{ja:"環形動物",en:"Annelid"},emo:"🪱",col:"#9A6A5A",
+ hook:{ja:"ダーウィンが最後の著書を捧げた、大地をつくる生きもの。",en:"The soil-maker to which Darwin devoted his final book."},
+ s:{ja:"進化論のダーウィンは、生涯最後の著書をミミズの研究に捧げた。地味なこの生きものが、土を食べて糞として出すことで、何万年もかけて大地を耕し、肥沃な土壌をつくり出していることに気づいたからだ。ミミズには目も耳もないが、皮膚で光と振動を感じる。心臓に当たる器官を5対（10個）持ち、切られても一部は再生できる。",
+ en:"Charles Darwin devoted the last book of his life to earthworms. He realized this humble creature, by eating soil and passing it as castings, tills the land and builds fertile earth over tens of thousands of years. An earthworm has no eyes or ears but senses light and vibration through its skin. It has five pairs (ten) of heart-like organs, and part of it can regenerate if cut."},
+ why:{ja:"ミミズは土を通り抜けながら有機物を分解し、その糞は植物が育つのに理想的な肥料になる。トンネルは土に空気と水を通す。ダーウィンは「人類の歴史において、これほど重要な役割を果たした生きものは他にいないだろう」とまで書いた。目立たない足元の生きものが、私たちの食を支える大地を静かにつくり続けている。",
+ en:"Passing through the soil, an earthworm breaks down organic matter, and its castings are ideal plant fertilizer; its tunnels bring air and water into the earth. Darwin went so far as to write that few other creatures have played so important a part in the history of the world. This unassuming animal beneath our feet quietly builds the very ground that feeds us."}},
+{t:{ja:"クラゲ",en:"Jellyfish"},cat:{ja:"刺胞動物",en:"Cnidarian"},emo:"🎐",col:"#5A8C8C",
+ hook:{ja:"脳も心臓も血もない。一部の種は「不老不死」に近い。",en:"No brain, no heart, no blood—and one species is nearly immortal."},
+ s:{ja:"クラゲには脳も心臓も血液もなく、体の95%は水。それでも神経の網で泳ぎ、獲物を捕らえる。中でも「ベニクラゲ」は驚異的だ——老いたり傷ついたりすると、体を若い段階（ポリプ）へ巻き戻し、再び成長をやり直せる。理論上は死なずに何度も若返れるため、「不老不死のクラゲ」として世界中の研究者が注目している。",
+ en:"A jellyfish has no brain, no heart, no blood, and is 95% water—yet it swims and captures prey through a net of nerves. One species, Turritopsis (the 'immortal jellyfish'), is astonishing: when old or injured, it can wind its body back to a juvenile stage (a polyp) and grow up all over again. In theory it can rejuvenate endlessly without dying, and researchers worldwide are studying it."},
+ why:{ja:"ベニクラゲは、成体の細胞を別の種類の細胞へ作り変える「分化転換」という能力を持つ。これは失われたはずの若さのプログラムを呼び戻す仕組みで、人間の医療や老化研究のヒントになると期待されている。ただし実際には天敵に食べられたり病気になったりするので、「絶対に死なない」わけではない——あくまで老衰で死なない、という意味だ。",
+ en:"The immortal jellyfish can turn adult cells into entirely different cell types—'transdifferentiation'—effectively rebooting a youth program thought to be lost, and it's hoped this may inform human medicine and aging research. In practice it's still eaten by predators and falls ill, so it isn't truly deathless—it simply doesn't die of old age."}},
+{t:{ja:"キツツキ",en:"Woodpecker"},cat:{ja:"鳥類",en:"Bird"},emo:"🐦",col:"#8C3A3A",
+ hook:{ja:"1秒に20回木を叩いても、脳が壊れない仕組みを持つ。",en:"Hammers 20 times a second without concussing its brain."},
+ s:{ja:"キツツキは1秒間に約20回、時速25kmもの速さで木を叩く。人間なら一発で脳震盪を起こす衝撃を、一日に何千回も繰り返しても平気だ。その秘密は頭の構造にある。舌の骨が頭蓋骨をぐるりと一周してクッションになり、脳が頭骨にぴったり収まって揺れず、くちばしの根元がスポンジ状の骨で衝撃を吸収する。",
+ en:"A woodpecker hammers a tree about 20 times a second at speeds up to 25 km/h. It repeats a blow that would concuss a human—thousands of times a day—without harm. The secret is in its skull: a tongue bone that loops all the way around the skull as a cushion, a brain packed snugly so it can't slosh, and spongy bone at the base of the bill that absorbs the shock."},
+ why:{ja:"キツツキの脳は小さく、頭骨との隙間がほとんどないため、衝撃で揺れて壁にぶつかることがない（人間の脳震盪はこの「揺れ」で起きる）。舌を支える細長い骨（舌骨）が頭全体を包み、シートベルトのように脳を守る。この驚異の耐衝撃構造は、ヘルメットや車の安全設計のヒントとしても研究されている。",
+ en:"A woodpecker's brain is small and fits so tightly against the skull that it can't slosh and strike the walls—the sloshing that causes human concussions. The long tongue bone (hyoid) wraps around the whole head, protecting the brain like a seatbelt. This remarkable shock-proofing is studied as inspiration for helmets and car safety design."}},
+{t:{ja:"カラス",en:"Crow"},cat:{ja:"鳥類",en:"Bird"},emo:"🐦‍⬛",col:"#3A3A44",
+ hook:{ja:"道具を作り、人の顔を覚え、仲間に「あいつは悪者」と伝える。",en:"Makes tools, remembers human faces, and warns others about them."},
+ s:{ja:"カラスは針金を曲げて餌を取る釣り針を自作し、車に硬い木の実を轢かせて割るなど、道具を使い作り出す数少ない動物だ。さらに個々の人間の顔を見分けて何年も覚え、自分を捕まえようとした人物を「危険人物」として仲間や子どもにまで警告する。その知能は、道具使用や自己認識の面で類人猿に匹敵するとも言われる。",
+ en:"Crows bend wire into hooks to fish out food and drop hard nuts in front of cars to crack them—among the very few animals that both use and make tools. They also recognize individual human faces and remember them for years, and will warn flockmates and even their own young about a person who once threatened them. Their intelligence is said to rival that of great apes in tool use and self-awareness."},
+ why:{ja:"カラスの脳は体の割に大きく、神経細胞の密度が非常に高い。だから鳥でありながら霊長類に迫る問題解決ができる。人間の顔を覚えて情報を共有するのは、都市で人と共存する上で「誰が安全で誰が危険か」を知ることが生存に直結するから。彼らにとって私たちは、日々観察し学習する対象なのだ。",
+ en:"A crow's brain is large for its body and extremely dense with neurons, so a bird can solve problems approaching a primate's. Remembering and sharing human faces matters because, living among people in cities, knowing who is safe and who is dangerous is a survival skill. To a crow, we are subjects to be watched and learned, every day."}},
+{t:{ja:"ホタル",en:"Firefly"},cat:{ja:"昆虫",en:"Insect"},emo:"✨",col:"#6E7B3A",
+ hook:{ja:"熱をほとんど出さない、効率100%近い「冷たい光」。",en:"Makes 'cold light' at nearly 100% efficiency—almost no heat."},
+ s:{ja:"ホタルの光は、電球と違ってほとんど熱を出さない。エネルギーの90%以上が光になる、効率のほぼ100%に近い「冷たい光」だ（白熱電球は1割程度しか光にならず、残りは熱として逃げる）。この光は求愛の合図で、種ごとに点滅のリズムが違う——夜の草むらで交わされる、光の言葉なのだ。",
+ en:"A firefly's light, unlike a bulb's, gives off almost no heat: over 90% of the energy becomes light, a 'cold light' near 100% efficiency (an incandescent bulb turns only about a tenth into light and loses the rest as heat). The glow is a courtship signal, and each species has its own blink rhythm—a language of light traded in the night grass."},
+ why:{ja:"ホタルの光は、体内の「ルシフェリン」という物質が酸素と結びつくときの化学反応で生まれる（生物発光）。反応がとても精密なため、無駄な熱をほとんど出さずに済む。この仕組みは、省エネ照明や、細胞を光らせて観察する医療研究の技術にも応用されている。小さな虫の光が、人類の科学を照らしている。",
+ en:"A firefly's glow comes from a chemical reaction in which a substance called luciferin combines with oxygen (bioluminescence). The reaction is so precise that it wastes almost no heat. The mechanism is now applied in energy-saving lighting and in medical research that makes cells glow for observation—a tiny insect's light illuminating human science."}},
+];
+
+/* ---------- state ---------- */
+let LANG='ja', GENRE='ALL', CUR=null;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+ set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const curYM=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
+const isMember=()=>{const v=store.get('fauna_member');return v==='master'||v===curYM()};
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const readSet=()=>{try{return new Set(JSON.parse(store.get('fauna_read')||'[]'))}catch(e){return new Set()}};
+const saveRead=s=>store.set('fauna_read',JSON.stringify([...s]));
+const aiShelf=()=>{try{return JSON.parse(store.get('fauna_ai')||'[]')}catch(e){return[]}};
+const saveShelf=a=>store.set('fauna_ai',JSON.stringify(a));
+
+function setLang(l){LANG=l;store.set('fauna_lang',l);
+  document.getElementById('btnJa').classList.toggle('on',l==='ja');
+  document.getElementById('btnEn').classList.toggle('on',l==='en');
+  document.documentElement.lang=l;applyText();render();renderShelf();renderSaved();
+  if(LAST_RANK)renderRank(LAST_RANK.counts,LAST_RANK.isLocal);}
+function applyText(){const t=T[LANG];
+  document.getElementById('brandTitle').textContent=LANG==='ja'?'動物ふしぎ手帖':'FAUNA';
+  document.getElementById('brandSub').textContent=LANG==='ja'
+    ?'FAUNA · FIELD NOTES OF WONDER':'動物ふしぎ手帖 · FIELD NOTES OF WONDER';
+  document.title=LANG==='ja'
+    ?'動物ふしぎ手帖 | FAUNA — 知れば誰かに話したくなる、生きものの秘密。'
+    :'FAUNA | 動物ふしぎ手帖 — Creature secrets you\'ll want to tell someone.';
+  document.getElementById('tagline').textContent=t.tagline;
+  document.getElementById('shelfLabel').textContent=t.shelf;
+  document.getElementById('q').placeholder=t.search;
+  document.getElementById('aiTitle').textContent=t.aiTitle;
+  document.getElementById('aiDesc').textContent=t.aiDesc;
+  document.getElementById('aiBook').placeholder=t.aiPhBook;
+  document.getElementById('aiBtn').textContent=t.aiBtn;
+  document.getElementById('savedH').textContent=t.savedH;
+  document.getElementById('payTitle').textContent=t.payTitle;
+  document.getElementById('payCopy').innerHTML=t.payCopy(BOOKS.length);
+  document.getElementById('payUnlock').textContent=t.unlock;
+  document.getElementById('payBuy').textContent=t.buy;
+  document.getElementById('payNote').textContent=t.payNote;
+  document.getElementById('footNote').textContent=t.foot;
+  document.getElementById('mClose').textContent=t.close;
+  const ml=document.getElementById('memberLine');
+  ml.classList.toggle('is-member',isMember());
+  document.getElementById('memberText').textContent=isMember()?t.member:t.free;}
+
+function genres(){const seen=new Map();
+  BOOKS.forEach(b=>{if(!seen.has(b.cat.en))seen.set(b.cat.en,b.cat)});return[...seen.values()];}
+function renderShelf(){const sh=document.getElementById('shelf');const t=T[LANG];
+  let h=`<button class="tag-btn ${GENRE==='ALL'?'on':''}" onclick="setGenre('ALL')">${t.all}</button>`;
+  genres().forEach(g=>{h+=`<button class="tag-btn ${GENRE===g.en?'on':''}" onclick="setGenre('${g.en}')">${g[LANG]}</button>`});
+  sh.innerHTML=h;}
+function setGenre(g){GENRE=g;if(g==='ALL')document.getElementById('q').value='';renderShelf();render();}
+function clearSearch(){document.getElementById('q').value='';render();}
+
+/* ---------- ranking（Worker共用・自データのみ表示） ---------- */
+const bookId=b=>'FAUNA:'+b.t.en;
+let LAST_RANK=null;
+function localViews(){try{return JSON.parse(store.get('fauna_views')||'{}')}catch(e){return{}}}
+function recordView(b){
+  const v=localViews();const id=bookId(b);v[id]=(v[id]||0)+1;store.set('fauna_views',JSON.stringify(v));
+  if(CONFIG.RANKING_URL){
+    fetch(CONFIG.RANKING_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id})}).then(()=>loadRanking()).catch(()=>{});
+  }else{renderRank(v,true);}
+}
+async function loadRanking(){
+  if(CONFIG.RANKING_URL){
+    try{const r=await fetch(CONFIG.RANKING_URL);if(r.ok){renderRank(await r.json(),false);return}}catch(e){}
+  }
+  renderRank(localViews(),true);
+}
+function renderRank(counts,isLocal){
+  LAST_RANK={counts,isLocal};const t=T[LANG];
+  const arr=BOOKS.map((b,i)=>({b,i,c:counts[bookId(b)]||0}))
+    .filter(x=>x.c>0).sort((a,z)=>z.c-a.c).slice(0,5);
+  const box=document.getElementById('rankBox');
+  if(!arr.length){box.style.display='none';return}
+  box.style.display='';
+  document.getElementById('rankH').textContent=t.rank;
+  document.getElementById('rankList').innerHTML=arr.map((x,n)=>{
+    const locked=!isMember()&&x.i>=CONFIG.FREE_COUNT;
+    return `<div class="rank-item" onclick="${locked?'openPay()':`openBook(${x.i})`}">
+      <div class="rank-no">${n+1}</div><div class="ttl">${x.b.emo} ${x.b.t[LANG]}</div>
+      <div class="vc">${x.c} ${t.views}${locked?' 🔒':''}</div></div>`}).join('')
+    +`<div class="rank-note">${isLocal?t.rankLocal:t.rankGlobal}</div>`;
+}
+
+function render(){const t=T[LANG];const q=(document.getElementById('q').value||'').toLowerCase();
+  document.getElementById('clearQ').classList.toggle('show',q.length>0);
+  const rs=readSet();let shown=0,h='';
+  BOOKS.forEach((b,i)=>{
+    if(GENRE!=='ALL'&&b.cat.en!==GENRE)return;
+    const hay=(b.t.ja+b.t.en+b.hook.ja+b.hook.en).toLowerCase();
+    if(q&&!hay.includes(q))return;
+    shown++;
+    const locked=!isMember()&&i>=CONFIG.FREE_COUNT;
+    const badge=locked?`<div class="lockbadge">${t.locked}</div>`
+      :(rs.has(i)?`<div class="read-mark">${t.read}</div>`:'');
+    h+=`<div class="spec" onclick="${locked?'openPay()':`openBook(${i})`}">
+      <div class="tab" style="background:${b.col}">${b.emo}</div>
+      <div class="bd"><h3>${b.t[LANG]}</h3>
+      <div class="hook">${b.hook[LANG]}</div>
+      <div class="tags"><span class="tag cat">${b.cat[LANG]}</span><span class="tag">${LANG==='ja'?'約2分':'~2 min'}</span></div>
+      </div>${badge}</div>`;});
+  document.getElementById('list').innerHTML=h;
+  document.getElementById('count').textContent=t.count(shown);}
+
+function openBook(i){CUR=i;const b=BOOKS[i];const t=T[LANG];
+  recordView(b);
+  document.getElementById('mEyebrow').textContent=`${b.cat[LANG].toUpperCase()}`;
+  document.getElementById('mTitle').textContent=`${b.emo} ${b.t[LANG]}`;
+  document.getElementById('mSub').textContent=LANG==='ja'?b.t.en:b.t.ja;
+  document.getElementById('mHeadline').textContent=b.hook[LANG];
+  document.getElementById('mSummary').textContent=b.s[LANG];
+  document.getElementById('mWhy').innerHTML=`<b>${t.whyLabel}</b> ${b.why[LANG]}`;
+  const rb=document.getElementById('mReadBtn');rb.style.display='';rb.onclick=toggleRead;
+  rb.textContent=readSet().has(i)?t.unmark:t.markRead;
+  document.getElementById('bookOverlay').classList.add('show');}
+function toggleRead(){if(CUR===null)return;const rs=readSet();
+  rs.has(CUR)?rs.delete(CUR):rs.add(CUR);saveRead(rs);
+  document.getElementById('mReadBtn').textContent=rs.has(CUR)?T[LANG].unmark:T[LANG].markRead;render();}
+function closeBook(){document.getElementById('bookOverlay').classList.remove('show');CUR=null;}
+
+function openPay(){document.getElementById('payErr').textContent='';
+  document.getElementById('payOverlay').classList.add('show');}
+function closePay(){document.getElementById('payOverlay').classList.remove('show');}
+async function checkPass(){const v=(document.getElementById('passInput').value||'').trim().toUpperCase();
+  if(!v)return;
+  if(v===CONFIG.MASTER_PASSCODE.toUpperCase()){grantMember('master');return;}
+  const hash=CONFIG.MONTHLY_CODES[curYM()];
+  if(hash){try{if((await sha256(v))===hash){grantMember(curYM());return;}}catch(e){console.error(e);}}
+  document.getElementById('payErr').textContent=T[LANG].wrong;}
+function grantMember(val){store.set('fauna_member',val);closePay();applyText();render();
+  document.getElementById('aiStatus').textContent=T[LANG].welcome;}
+
+async function aiSummarize(){const t=T[LANG];
+  if(!isMember()){openPay();return;}
+  const title=(document.getElementById('aiBook').value||'').trim();
+  const st=document.getElementById('aiStatus');const btn=document.getElementById('aiBtn');
+  if(!title){st.textContent=t.aiNeedTitle;return;}
+  st.textContent=t.aiWorking;btn.disabled=true;
+  const prompt=`You are a zoologist-storyteller. Write an ORIGINAL, surprising-but-TRUE fun fact about the animal "${title}".
+Rules: write entirely in your own words. Prioritize accuracy — if something is a popular myth, say so. hook_ja: one punchy sentence, ~30 chars. hook_en: one punchy sentence. summary_ja: 120-180 chars. summary_en: 55-85 words. why_ja: the mechanism/reason, 100-160 chars. why_en: 50-80 words.
+Respond ONLY with valid JSON, no markdown fences, exactly this shape:
+{"name_ja":"","name_en":"","cat_ja":"","cat_en":"","emoji":"","hook_ja":"","hook_en":"","summary_ja":"","summary_en":"","why_ja":"","why_en":""}
+If the animal cannot be identified, set every field to "".`;
+  try{
+    const res=await fetch(CONFIG.PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:CONFIG.MODEL,max_tokens:1200,messages:[{role:"user",content:prompt}]})});
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const data=await res.json();
+    const text=(data.content||[]).map(x=>x.text||'').join('').replace(/```json|```/g,'').trim();
+    const j=JSON.parse(text);
+    if(!j.name_ja&&!j.name_en)throw new Error("not found");
+    const entry={t:{ja:j.name_ja||title,en:j.name_en||title},cat:{ja:j.cat_ja||'',en:j.cat_en||''},
+      emo:j.emoji||'🐾',col:['#C08A2E','#5C7346','#8A4A6E','#B4623A','#5A7A8C'][Math.floor(Math.random()*5)],
+      hook:{ja:j.hook_ja||'',en:j.hook_en||''},s:{ja:j.summary_ja||'',en:j.summary_en||''},
+      why:{ja:j.why_ja||'',en:j.why_en||''},ts:Date.now()};
+    const shelf=aiShelf();shelf.unshift(entry);saveShelf(shelf);
+    st.textContent=t.aiDone;document.getElementById('aiBook').value='';renderSaved();
+  }catch(e){console.error(e);st.textContent=t.aiErr;}
+  btn.disabled=false;}
+
+function renderSaved(){const t=T[LANG];const shelf=aiShelf();const el=document.getElementById('savedList');
+  if(!shelf.length){el.innerHTML=`<div class="empty">${t.savedEmpty}</div>`;return;}
+  el.innerHTML=shelf.map((b,i)=>`<div class="spec" onclick="openSaved(${i})">
+    <div class="tab" style="background:${b.col}">${b.emo}</div>
+    <div class="bd"><h3>${b.t[LANG]||b.t.ja||b.t.en}</h3>
+    <div class="hook">${b.hook[LANG]||''}</div>
+    <div class="tags"><span class="tag cat">${t.aiTag}</span>${b.cat[LANG]?`<span class="tag">${b.cat[LANG]}</span>`:''}</div>
+    </div></div>`).join('');}
+function openSaved(i){const b=aiShelf()[i];if(!b)return;const t=T[LANG];CUR=null;
+  document.getElementById('mEyebrow').textContent=t.aiTag;
+  document.getElementById('mTitle').textContent=`${b.emo} ${b.t[LANG]||b.t.ja||b.t.en}`;
+  document.getElementById('mSub').textContent=LANG==='ja'?(b.t.en||''):(b.t.ja||'');
+  document.getElementById('mHeadline').textContent=b.hook[LANG]||'';
+  document.getElementById('mSummary').textContent=b.s[LANG]||'';
+  document.getElementById('mWhy').innerHTML=b.why[LANG]?`<b>${t.whyLabel}</b> ${b.why[LANG]}`:'';
+  const rb=document.getElementById('mReadBtn');rb.style.display='';rb.textContent=t.del;
+  rb.onclick=()=>{const s=aiShelf();s.splice(i,1);saveShelf(s);closeBook();renderSaved();rb.onclick=toggleRead;};
+  document.getElementById('bookOverlay').classList.add('show');}
+
+let TOAST_T=null;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;
+  el.classList.add('show');clearTimeout(TOAST_T);TOAST_T=setTimeout(()=>el.classList.remove('show'),2600);}
+
+(function(){const saved=store.get('fauna_lang');if(saved==='en')LANG='en';
+  document.getElementById('btnJa').classList.toggle('on',LANG==='ja');
+  document.getElementById('btnEn').classList.toggle('on',LANG==='en');
+  applyText();renderShelf();render();renderSaved();loadRanking();})();
+document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkPass()});
+</script>
+</body>
+</html>
