@@ -142,6 +142,10 @@ ol, ul { list-style: none; }
   border-radius: 15px; padding: 12px 8px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .hstat b { display: block; font-size: 1.75rem; font-weight: 800; line-height: 1; letter-spacing: .5px; }
 .hstat small { font-size: 0.64rem; opacity: .88; letter-spacing: .5px; }
+.hero-member { display: inline-block; margin-top: 16px; font-size: 0.78rem; font-weight: 700; color: #fff;
+  background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 999px;
+  padding: 7px 16px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: all .2s var(--ease); }
+.hero-member:hover { background: rgba(255, 255, 255, 0.24); transform: translateY(-1px); }
 .hero-wave { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 62px; display: block; z-index: 2; }
 .hero-wave path { fill: var(--bg); }
 .hero-grid { position: absolute; inset: 0; z-index: 1; opacity: .16;
@@ -386,6 +390,17 @@ a.bigscore:hover .ring-fg { stroke: var(--teal-2); }
   padding: 15px; text-align: center; box-shadow: var(--shadow); }
 .pstat b { display: block; font-size: 1.5rem; color: var(--teal-d); font-weight: 800; }
 .pstat small { font-size: 0.7rem; color: var(--ink-soft); }
+
+/* member (monthly code) */
+.memberform { display: flex; gap: 10px; flex-wrap: wrap; }
+.memberform input { flex: 1 1 160px; font: inherit; font-size: 1rem; padding: 13px 15px;
+  border: 1px solid var(--line); border-radius: 12px; outline: none; letter-spacing: 1px;
+  background: var(--card); color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+.memberform input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 18%, var(--mixbg)); }
+.memberform .trybtn { flex: 0 0 auto; width: auto; padding: 13px 22px; }
+.membermsg { margin-top: 12px; font-size: 0.86rem; font-weight: 700; min-height: 1.2em; }
+.membermsg.ok { color: var(--good); }
+.membermsg.ng { color: var(--warn); }
 
 /* try + feedback */
 .tryblock { text-align: center; }

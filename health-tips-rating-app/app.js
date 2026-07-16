@@ -13,6 +13,8 @@
 
   var DATA = window.APP_DATA;
   var LS_KEY = "kiku.state.v1";
+  // 月替わりコード照合API（sekai-proxy）。賢人会議・世界の見方サーチと共通の MONTHLY_CODE を照合。
+  var VERIFY_URL = "https://sekai-proxy.dashiyo777.workers.dev/verify-code";
 
   // ── 状態（端末内・localStorage 永続） ──
   // 将来サーバ集計に移すとき、この形がそのまま API 入出力になる想定。
@@ -33,11 +35,13 @@
         sort: s.sort || "score",
         // 保存（ブックマーク）: contentId -> true
         saved: s.saved || {},
+        // 会員状態（月替わりコード認証）: null | { month: "YYYY-MM", ts }
+        member: s.member || null,
         // contentId -> { tried:bool, feedback:"resonated"|"not_now"|null, tipped:int }
         user: s.user || {}
       };
     } catch (e) {
-      return { lang: "ja", theme: "light", quality: "all", sort: "score", saved: {}, user: {} };
+      return { lang: "ja", theme: "light", quality: "all", sort: "score", saved: {}, member: null, user: {} };
     }
   }
   function save() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
@@ -63,6 +67,19 @@
     statTips:     { ja: "の知恵", en: "tips" },
     statGenres:   { ja: "ジャンル", en: "genres" },
     statCountries:{ ja: "カ国から発掘", en: "countries" },
+    memberLink:   { ja: "🔑 会員コード", en: "🔑 Member code" },
+    memberOn:     { ja: "✓ 会員です", en: "✓ Member" },
+    memberTitle:  { ja: "会員コード認証", en: "Member code" },
+    memberLead:   { ja: "note会員エリアに掲示された「今月のコード」を入力してください。", en: "Enter this month's code shown in the members' area." },
+    memberPh:     { ja: "今月のコード", en: "This month's code" },
+    memberVerify: { ja: "認証する", en: "Verify" },
+    memberChecking:{ ja: "確認中…", en: "Checking…" },
+    memberOk:     { ja: "認証できました。会員特典が有効です。", en: "Verified. Membership is active." },
+    memberNg:     { ja: "コードが一致しませんでした。", en: "That code didn't match." },
+    memberErr:    { ja: "いま確認できませんでした。時間をおいて再度お試しください。", en: "Couldn't verify right now. Please try again later." },
+    memberActive: { ja: "現在、会員として認証済みです。", en: "You're verified as a member." },
+    memberLogout: { ja: "会員認証を解除", en: "Sign out of membership" },
+    memberNote:   { ja: "コードは毎月更新されます。翌月は新しいコードの入力が必要です。", en: "The code changes monthly; next month needs a new code." },
     all:          { ja: "すべて", en: "All" },
     rankedBy:     { ja: "効くスコア順", en: "By Kiku Score" },
     kikuScore:    { ja: "効くスコア", en: "Kiku Score" },
@@ -270,6 +287,7 @@
     if (parts[0] === "u" && parts[1]) return renderContributor(decodeURIComponent(parts[1]));
     if (parts[0] === "score") return renderScore();
     if (parts[0] === "me") return renderMe();
+    if (parts[0] === "member") return renderMember();
     if (parts[0] === "g" && parts[1]) { currentFilter = { genre: parts[1], tag: null }; return renderHome(); }
     if (parts[0] === "t" && parts[1]) { currentFilter = { genre: null, tag: decodeURIComponent(parts[1]) }; return renderHome(); }
     currentFilter = { genre: null, tag: null };
@@ -324,6 +342,7 @@
             '<div class="hstat"><b class="cup" data-to="' + genres + '">0</b><small>' + esc(t("statGenres")) + "</small></div>" +
             '<div class="hstat"><b class="cup" data-to="' + countries + '">0</b><small>' + esc(t("statCountries")) + "</small></div>" +
           "</div>" +
+          '<a class="hero-member" href="#/member">' + esc(isMember() ? t("memberOn") : t("memberLink")) + "</a>" +
         "</div>" +
         '<svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">' +
           '<path d="M0,40 C240,90 480,0 720,30 C960,60 1200,90 1440,40 L1440,80 L0,80 Z"></path></svg>' +
@@ -890,6 +909,75 @@
   }
 
   // ── 効くスコアの基準ページ ──
+  // ── 会員（月替わりコード認証） ──
+  // 会員状態の判定。将来ここで特典（動画・限定枠など）をゲートできる。
+  function isMember() { return !!(state.member && state.member.month); }
+
+  function renderMember() {
+    var active = isMember();
+    app.innerHTML = "";
+    app.appendChild(el(header()));
+    app.appendChild(el(
+      '<main class="wrap detail">' +
+        '<a class="back" href="#/">' + esc(t("back")) + "</a>" +
+        "<h1>" + esc(t("memberTitle")) + "</h1>" +
+        (active
+          ? '<section class="block"><p class="lead" style="margin:0 0 12px">✓ ' + esc(t("memberActive")) + "</p>" +
+              '<button class="trybtn" id="memberLogout" style="background:var(--tint);color:var(--good)">' + esc(t("memberLogout")) + "</button>" +
+            "</section>"
+          : '<section class="block">' +
+              '<p class="lead" style="margin:0 0 14px">' + esc(t("memberLead")) + "</p>" +
+              '<div class="memberform">' +
+                '<input id="memberCode" type="text" inputmode="text" autocomplete="off" placeholder="' + esc(t("memberPh")) + '">' +
+                '<button class="trybtn" id="memberVerify">' + esc(t("memberVerify")) + "</button>" +
+              "</div>" +
+              '<p class="membermsg" id="memberMsg" role="status"></p>' +
+            "</section>") +
+        '<p class="disclaimer">🔒 ' + esc(t("memberNote")) + "</p>" +
+      "</main>"
+    ));
+    bindLang();
+    bindMember();
+    window.scrollTo(0, 0);
+  }
+
+  function bindMember() {
+    var logout = document.getElementById("memberLogout");
+    if (logout) logout.onclick = function () { state.member = null; save(); renderMember(); };
+
+    var btn = document.getElementById("memberVerify");
+    var input = document.getElementById("memberCode");
+    var msg = document.getElementById("memberMsg");
+    if (!btn || !input) return;
+
+    function setMsg(text, cls) { if (msg) { msg.textContent = text; msg.className = "membermsg " + (cls || ""); } }
+
+    btn.onclick = function () {
+      var code = (input.value || "").trim();
+      if (!code) { input.focus(); return; }
+      btn.disabled = true; setMsg(t("memberChecking"), "");
+      fetch(VERIFY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: code, app: "kiku" })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.ok) {
+            var now = new Date();
+            var month = now.getFullYear() + "-" + String(now.getMonth() + 1);
+            state.member = { month: month, ts: now.toISOString() };
+            save(); setMsg(t("memberOk"), "ok");
+            setTimeout(renderMember, 700);
+          } else {
+            setMsg(t("memberNg"), "ng"); btn.disabled = false;
+          }
+        })
+        .catch(function () { setMsg(t("memberErr"), "ng"); btn.disabled = false; });
+    };
+    input.onkeydown = function (e) { if (e.key === "Enter") btn.click(); };
+  }
+
   function renderScore() {
     var evRows = [
       ["study", EVIDENCE_W.study], ["expert", EVIDENCE_W.expert],
