@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学生でもわかる｜ウェブサイト・アプリで収益化するしくみ｜吉田獅玄</title>
+    <meta name="description" content="Cloudflare・GitHub・Claude（生成AI）を使って、ウェブサイトやアプリを作り、収益化するまでの全体像を、図解つきで小学生にもわかるように説明します。かかる費用の一覧つき。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #1A252F;
+            --navy-light: #2C3E50;
+            --gold: #C8813A;
+            --gold-light: #E0A868;
+            --white: #ffffff;
+            --off-white: #F7F6F3;
+            --cream: #FBFAF7;
+            --text: #333333;
+            --text-light: #888888;
+            --border: #e8e5df;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--off-white);
+            color: var(--text);
+            line-height: 1.9;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(26,37,47,0.96);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+        .header-inner nav a {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+        .header-inner nav a:hover { color: var(--gold-light); }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(150deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+            padding: 140px 24px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 30%, rgba(200,129,58,0.15), transparent 40%),
+                              radial-gradient(circle at 80% 70%, rgba(200,129,58,0.1), transparent 45%);
+        }
+        .hero-inner { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; }
+        .hero .eyebrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--gold-light);
+            border: 1px solid rgba(200,129,58,0.5);
+            border-radius: 40px;
+            padding: 6px 18px;
+            margin-bottom: 28px;
+        }
+        .hero h1 {
+            font-size: clamp(1.7rem, 5vw, 2.7rem);
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .hero h1 .accent { color: var(--gold-light); }
+        .hero p {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            font-weight: 300;
+            color: rgba(255,255,255,0.85);
+        }
+        .hero .emoji-row { font-size: 2rem; margin-top: 30px; letter-spacing: 12px; }
+
+        /* ── Layout ── */
+        main { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+        section:last-of-type { border-bottom: none; }
+
+        .sec-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 8px;
+        }
+        h2 {
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        h2 .em { color: var(--gold); }
+        .lead {
+            font-size: 1.02rem;
+            color: #555;
+            margin-bottom: 36px;
+            max-width: 680px;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 36px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ── Callout ── */
+        .callout {
+            background: var(--cream);
+            border-left: 4px solid var(--gold);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 0.98rem;
+        }
+        .callout strong { color: var(--gold); }
+        .callout.kids {
+            background: #fff7ec;
+            border-left-color: var(--gold-light);
+        }
+        .callout .tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: var(--gold);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* ── TOC ── */
+        .toc {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 48px auto -16px;
+            max-width: 900px;
+            box-shadow: var(--card-shadow);
+        }
+        .toc h4 {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .toc ol { list-style: none; counter-reset: toc; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+        .toc li { counter-increment: toc; }
+        .toc a { display: flex; gap: 10px; font-size: 0.95rem; color: var(--text); transition: var(--transition); }
+        .toc a::before {
+            content: counter(toc);
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            font-weight: 600;
+            min-width: 18px;
+        }
+        .toc a:hover { color: var(--gold); }
+
+        /* ── Big picture / お店の図 ── */
+        .shop-map {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: var(--card-shadow);
+            margin: 8px 0;
+        }
+        .shop-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            justify-content: center;
+            gap: 8px;
+        }
+        .shop-node {
+            flex: 1 1 150px;
+            min-width: 140px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 14px;
+            text-align: center;
+        }
+        .shop-node .ico { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+        .shop-node .role { font-size: 0.72rem; letter-spacing: 1px; color: var(--gold); font-weight: 700; }
+        .shop-node .name { font-weight: 700; color: var(--navy); font-size: 0.98rem; margin: 4px 0; }
+        .shop-node .sub { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; }
+        .shop-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--gold);
+            font-size: 1.4rem;
+            flex: 0 0 auto;
+        }
+
+        /* ── Tool cards ── */
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+        .tool-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.1); }
+        .tool-card .head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+        .tool-card .head .ico { font-size: 1.8rem; }
+        .tool-card .head .nm { font-weight: 700; color: var(--navy); font-size: 1.05rem; }
+        .tool-card .metaphor { font-size: 0.8rem; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
+        .tool-card p { font-size: 0.92rem; color: #555; }
+        .tool-card .cost { margin-top: 12px; font-size: 0.85rem; padding-top: 12px; border-top: 1px dashed var(--border); }
+        .tool-card .cost b { color: var(--navy); }
+
+        /* ── Steps ── */
+        .steps { position: relative; margin-top: 20px; }
+        .step {
+            display: flex;
+            gap: 20px;
+            padding: 0 0 32px;
+            position: relative;
+        }
+        .step:not(:last-child)::before {
+            content: "";
+            position: absolute;
+            left: 23px; top: 48px; bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .step .badge {
+            flex: 0 0 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: var(--white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .step .body { padding-top: 4px; }
+        .step .body h4 { font-size: 1.1rem; color: var(--navy); font-weight: 700; margin-bottom: 6px; }
+        .step .body p { font-size: 0.94rem; color: #555; }
+        .step .body .say {
+            background: #eef4f7;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: var(--navy-light);
+            margin-top: 10px;
+        }
+
+        /* ── Money mechanisms ── */
+        .money-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+        .money-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        .money-card .top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .money-card .top .ico {
+            width: 44px; height: 44px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+            flex: 0 0 auto;
+        }
+        .money-card .top h4 { font-size: 1.05rem; color: var(--navy); }
+        .money-card > p { font-size: 0.9rem; color: #555; flex-grow: 1; }
+        .money-card .how { font-size: 0.85rem; color: var(--navy-light); background: var(--cream); border-radius: 8px; padding: 10px 12px; margin: 12px 0; }
+        .money-card .stats { display: flex; gap: 8px; font-size: 0.75rem; margin-top: auto; }
+        .money-card .pill { background: var(--off-white); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; }
+        .money-card .pill b { color: var(--gold); }
+
+        /* ── Cost table ── */
+        .table-wrap { overflow-x: auto; border-radius: 12px; box-shadow: var(--card-shadow); border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; background: var(--white); min-width: 560px; }
+        thead { background: var(--navy); color: #fff; }
+        th, td { padding: 14px 16px; text-align: left; font-size: 0.9rem; }
+        th { font-weight: 500; letter-spacing: 0.5px; }
+        tbody tr { border-bottom: 1px solid var(--border); }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:nth-child(even) { background: var(--cream); }
+        td .free { color: #2e7d32; font-weight: 700; }
+        td .paid { color: var(--gold); font-weight: 700; }
+        .total-row { background: #fff7ec !important; font-weight: 700; }
+        .total-row td { color: var(--navy); border-top: 2px solid var(--gold); }
+
+        /* ── Prompt boxes ── */
+        .prompt-box {
+            background: var(--navy);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 18px 0;
+            box-shadow: var(--card-shadow);
+        }
+        .prompt-box .bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .prompt-box .bar .ttl { color: var(--gold-light); font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; }
+        .prompt-box .bar button {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.8);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .prompt-box .bar button:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+        .prompt-box pre {
+            padding: 18px 18px 20px;
+            color: #dfe6ea;
+            font-size: 0.86rem;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: 'Noto Sans JP', monospace;
+        }
+
+        /* ── Roadmap ── */
+        .roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 14px; }
+        .rm-card { background: var(--white); border:1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow); }
+        .rm-card .lvl { font-size: 0.72rem; letter-spacing:1px; color: var(--gold); font-weight:700; }
+        .rm-card h4 { color: var(--navy); font-size: 1rem; margin: 4px 0 8px; }
+        .rm-card p { font-size: 0.85rem; color: #555; }
+
+        /* ── FAQ ── */
+        details { background: var(--white); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; box-shadow: var(--card-shadow); }
+        summary { cursor: pointer; padding: 16px 20px; font-weight: 700; color: var(--navy); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; color: var(--gold); font-weight: 700; }
+        details[open] summary::after { content: "－"; }
+        details p { padding: 0 20px 18px; font-size: 0.92rem; color: #555; }
+
+        /* ── Footer ── */
+        footer { background: var(--navy); color: rgba(255,255,255,0.7); text-align: center; padding: 48px 24px; }
+        footer .disc { font-size: 0.78rem; color: rgba(255,255,255,0.45); max-width: 640px; margin: 12px auto 20px; line-height: 1.7; }
+        footer a.back { color: var(--gold-light); font-size: 0.85rem; letter-spacing: 1px; }
+        footer .copy { font-family: 'Cormorant Garamond', serif; letter-spacing: 2px; font-size: 0.85rem; margin-top: 16px; }
+
+        @media (max-width: 640px) {
+            .toc ol { grid-template-columns: 1fr; }
+            .shop-arrow { transform: rotate(90deg); width: 100%; justify-content: center; }
+            .shop-node { flex-basis: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <a href="../index.html" class="logo">Shigen Yoshida</a>
+        <nav><a href="../index.html"><i class="fas fa-arrow-left"></i> ポートフォリオへ戻る</a></nav>
+    </div>
+</header>
+
+<!-- ── HERO ── -->
+<div class="hero">
+    <div class="hero-inner">
+        <span class="eyebrow">GUIDE ・ 図解つき</span>
+        <h1>ウェブサイト・アプリを作って<br><span class="accent">お金を生み出す</span>しくみ</h1>
+        <p>Cloudflare・GitHub・Claude（生成AI）を使って、<br>「作る → 公開する → 広める → 収益化する」までの一連の流れを、<br><strong>小学生でもわかるように</strong>図解で説明します。かかる費用の一覧つき。</p>
+        <div class="emoji-row">🤖 📦 ☁️ 💰</div>
+    </div>
+</div>
+
+<!-- ── TOC ── -->
+<div class="toc">
+    <h4>この記事の目次</h4>
+    <ol>
+        <li><a href="#overview">まずは全体像（お店にたとえると）</a></li>
+        <li><a href="#tools">登場する道具（キャラクター）紹介</a></li>
+        <li><a href="#steps">作って公開するまでの5ステップ</a></li>
+        <li><a href="#money">お金を生む「6つの仕掛け」</a></li>
+        <li><a href="#promote">宣伝して広める（お客さんの集め方）</a></li>
+        <li><a href="#cost">結局いくらかかるの？（費用一覧）</a></li>
+        <li><a href="#prompts">AIに投げるプロンプト集（コピペOK）</a></li>
+        <li><a href="#roadmap">これからの進め方（ロードマップ）</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+    </ol>
+</div>
+
+<main>
+
+<!-- ── 1. 全体像 ── -->
+<section id="overview">
+    <span class="sec-num">01</span>
+    <h2>まずは<span class="em">全体像</span>。<br>「インターネットのお店」にたとえてみよう</h2>
+    <p class="lead">むずかしい言葉がいっぱい出てきますが、じつは「お店を1つ作る」のと同じです。まずはこの図で、だれが何の役をするのかをイメージしてください。</p>
+
+    <div class="shop-map">
+        <div class="shop-flow">
+            <div class="shop-node">
+                <span class="ico">🤖</span>
+                <span class="role">作る人（職人）</span>
+                <div class="name">Claude / 生成AI</div>
+                <div class="sub">おねがいすると<br>お店（プログラム）を<br>作ってくれる</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">📦</span>
+                <span class="role">しまう場所（倉庫）</span>
+                <div class="name">GitHub</div>
+                <div class="sub">作ったものを<br>安全にしまって<br>管理する箱</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">☁️</span>
+                <span class="role">お店を出す土地</span>
+                <div class="name">Cloudflare</div>
+                <div class="sub">世界中の人が<br>見にこられる場所に<br>お店をならべる</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">💰</span>
+                <span class="role">お金が入るしくみ</span>
+                <div class="name">広告・決済など</div>
+                <div class="sub">お客さんが来て<br>広告や買い物で<br>お金が生まれる</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout kids">
+        <span class="tag">ひとことで言うと</span>
+        <p><strong>AI</strong>がお店を作り、<strong>GitHub</strong>がそれをしまい、<strong>Cloudflare</strong>が世界に見せて、<strong>広告や決済</strong>でお金が入る。この4つがぐるっとつながっているだけ、と覚えればOKです。</p>
+    </div>
+</section>
+
+<!-- ── 2. 道具紹介 ── -->
+<section id="tools">
+    <span class="sec-num">02</span>
+    <h2>登場する<span class="em">道具</span>（キャラクター）を<br>ひとりずつ紹介</h2>
+    <p class="lead">それぞれの道具が「何屋さんなのか」を、身近なものにたとえて紹介します。名前は今おぼえなくて大丈夫です。</p>
+
+    <div class="tool-grid">
+        <div class="tool-card">
+            <div class="head"><span class="ico">🤖</span><span class="nm">Claude / 生成AI</span></div>
+            <div class="metaphor">＝ 何でも作れる「魔法の職人さん」</div>
+            <p>「こういうサイトを作って」と日本語でお願いすると、プログラム（お店の中身）を書いてくれます。ChatGPTやGeminiなど、他のAIでも同じことができます。</p>
+            <div class="cost"><b>お金：</b>無料でも使える。もっと使うなら月 約<b>3,000円</b>〜（Proプラン）</div>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">📦</span><span class="nm">GitHub（ギットハブ）</span></div>
+            <div class="metaphor">＝ 作品をしまう「頑丈な宝箱」</div>
+            <p>作ったプログラムをネット上に保存する場所。「いつ・どこを変えたか」の記録も残るので、まちがえても前の状態に戻せます。Cloudflareと自動でつながります。</p>
+            <div class="cost"><b>お金：</b><span style="color:#2e7d32;font-weight:700;">基本ずっと無料</span></div>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">☁️</span><span class="nm">Cloudflare（クラウドフレア）</span></div>
+            <div class="metaphor">＝ お店を出す「世界一等地の土地」</div>
+            <p><b>Pages</b>で作ったサイトを世界に公開し、<b>Workers</b>で「会員だけ見られる」などの賢い動きを追加できます。速くて、世界中どこからでも見られます。</p>
+            <div class="cost"><b>お金：</b><span style="color:#2e7d32;font-weight:700;">個人なら無料枠で十分</span>。使い込むと月 約750円〜</div>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">🏷️</span><span class="nm">ドメイン</span></div>
+            <div class="metaphor">＝ お店の「住所・名前」</div>
+            <p><code>example.com</code> のような、あなただけの住所。無料の住所（〇〇.pages.dev）でも始められますが、自分の名前の住所があると本格的でカッコいい。</p>
+            <div class="cost"><b>お金：</b>1年で 約<b>1,500円</b>〜（なくても始められる）</div>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">💳</span><span class="nm">Stripe（ストライプ）</span></div>
+            <div class="metaphor">＝ お店の「レジ・お会計係」</div>
+            <p>クレジットカードでの支払いを、安全に受け取る仕組み。「月額会員」「1回だけ購入」など、いろいろなお金の受け取り方ができます。</p>
+            <div class="cost"><b>お金：</b>登録は無料。売れたときだけ約<b>3.6%</b>の手数料</div>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">📣</span><span class="nm">Google AdSense</span></div>
+            <div class="metaphor">＝ お店にはる「広告ポスター」</div>
+            <p>サイトに広告を貼ると、見られたりクリックされたりするたびに、少しずつお金がもらえる仕組み。お客さんが多いほど、もらえるお金が増えます。</p>
+            <div class="cost"><b>お金：</b>登録・利用は<span style="color:#2e7d32;font-weight:700;">無料</span>（審査あり）</div>
+        </div>
+    </div>
+</section>
+
+<!-- ── 3. 5ステップ ── -->
+<section id="steps">
+    <span class="sec-num">03</span>
+    <h2>作って公開するまでの<br><span class="em">5ステップ</span></h2>
+    <p class="lead">実際の流れはこの5つだけ。プログラムの知識がなくても、AIにお願いしながら1つずつ進められます。</p>
+
+    <div class="steps">
+        <div class="step">
+            <div class="badge">1</div>
+            <div class="body">
+                <h4>アイデアを決める 💡</h4>
+                <p>「どんな困りごとを解決するサイト・アプリか」を1行で決めます。ここがいちばん大事。小さくてOK。</p>
+                <div class="say">例：「毎日ひとつ、健康の豆知識が読めるアプリ」「昔の偉人の名言でクイズができるゲーム」</div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">2</div>
+            <div class="body">
+                <h4>AIに作ってもらう 🤖</h4>
+                <p>ClaudeなどのAIに「こういうサイトを作って」とお願いします。できあがったコードをコピーして、パソコンに保存します。うまくいかない所は「ここをこう直して」と会話しながら直します。</p>
+                <div class="say">この記事の「07 プロンプト集」に、そのままコピペで使えるお願い文を用意しています。</div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">3</div>
+            <div class="body">
+                <h4>GitHubにしまう 📦</h4>
+                <p>作ったファイルをGitHubの箱（リポジトリ）に入れます。これで作品が安全に保管され、次の公開ステップと自動でつながります。</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">4</div>
+            <div class="body">
+                <h4>Cloudflareで世界に公開 ☁️</h4>
+                <p>CloudflareにGitHubの箱をつなぐと、あなたのサイトがインターネット上に出て、世界中の人が見られるようになります。次からはGitHubを更新するだけで、サイトも自動で新しくなります。</p>
+                <div class="say">ここまでで、かかったお金は<strong>0円</strong>でも可能。もう「自分のサイトを持っている人」です！</div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">5</div>
+            <div class="body">
+                <h4>お金を生む仕掛けをつける 💰</h4>
+                <p>公開できたら、広告を貼ったり、有料の会員機能をつけたりして、収益化します。仕掛けの種類は次の章でくわしく説明します。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── 4. 収益化の仕掛け ── -->
+<section id="money">
+    <span class="sec-num">04</span>
+    <h2>お金を生む<span class="em">「6つの仕掛け」</span></h2>
+    <p class="lead">サイトからお金が生まれる方法はいくつもあります。代表的な6つを、むずかしさ（★の数）と一緒に紹介します。1つだけでなく、組み合わせてもOKです。</p>
+
+    <div class="money-grid">
+        <div class="money-card">
+            <div class="top"><span class="ico">📣</span><h4>① 広告を貼る</h4></div>
+            <p>サイトに広告を表示して、見られたりクリックされるたびに少しずつお金がもらえます。いちばん始めやすい方法。</p>
+            <div class="how"><b>使う道具：</b>Google AdSense</div>
+            <div class="stats"><span class="pill">むずかしさ <b>★☆☆</b></span><span class="pill">元手 <b>0円</b></span></div>
+        </div>
+        <div class="money-card">
+            <div class="top"><span class="ico">🔁</span><h4>② 月額会員（サブスク）</h4></div>
+            <p>「毎月◯円で、特別なコンテンツが見放題」という会員制。安定して続くお金になりやすいのが強み。</p>
+            <div class="how"><b>使う道具：</b>Stripe ＋ Cloudflare Workers</div>
+            <div class="stats"><span class="pill">むずかしさ <b>★★★</b></span><span class="pill">手数料 <b>3.6%</b></span></div>
+        </div>
+        <div class="money-card">
+            <div class="top"><span class="ico">🛒</span><h4>③ デジタル商品を売る</h4></div>
+            <p>電子書籍・テンプレート・音楽・イラストなど、データの商品を1回売り切りで販売します。在庫がいらないのが利点。</p>
+            <div class="how"><b>使う道具：</b>Stripe（決済リンク）</div>
+            <div class="stats"><span class="pill">むずかしさ <b>★★☆</b></span><span class="pill">手数料 <b>3.6%</b></span></div>
+        </div>
+        <div class="money-card">
+            <div class="top"><span class="ico">🔗</span><h4>④ アフィリエイト</h4></div>
+            <p>「この商品いいよ」と紹介し、あなたのリンク経由で買われたら紹介料がもらえる仕組み。記事やレビューと相性◎。</p>
+            <div class="how"><b>使う道具：</b>Amazonアソシエイト 等</div>
+            <div class="stats"><span class="pill">むずかしさ <b>★☆☆</b></span><span class="pill">元手 <b>0円</b></span></div>
+        </div>
+        <div class="money-card">
+            <div class="top"><span class="ico">🎁</span><h4>⑤ 投げ銭・応援</h4></div>
+            <p>作品を気に入った人が「応援」としてお金を送れるボタンを置きます。ファンとの距離が近い作り手向け。</p>
+            <div class="how"><b>使う道具：</b>Stripe / 各種サービス</div>
+            <div class="stats"><span class="pill">むずかしさ <b>★☆☆</b></span><span class="pill">元手 <b>0円</b></span></div>
+        </div>
+        <div class="money-card">
+            <div class="top"><span class="ico">💼</span><h4>⑥ 実績にして仕事を得る</h4></div>
+            <p>作ったサイト自体を「ポートフォリオ（実績集）」にして、「あなたにも作って」という制作の依頼につなげます。単価がいちばん大きくなりやすい。</p>
+            <div class="how"><b>使う道具：</b>このポートフォリオそのもの</div>
+            <div class="stats"><span class="pill">むずかしさ <b>★★☆</b></span><span class="pill">単価 <b>大</b></span></div>
+        </div>
+    </div>
+
+    <div class="callout">
+        <span class="tag">おすすめの順番</span>
+        <p>最初は <strong>①広告</strong> と <strong>④アフィリエイト</strong>（どちらも元手0円）から。人が集まってきたら <strong>②サブスク</strong> や <strong>③商品販売</strong> に広げ、実力がついたら <strong>⑥仕事の受注</strong> へ、と階段をのぼるのが王道です。</p>
+    </div>
+</section>
+
+<!-- ── 5. 宣伝・拡販 ── -->
+<section id="promote">
+    <span class="sec-num">05</span>
+    <h2><span class="em">宣伝して広める</span>。<br>お客さんの集め方（ここが一番大事！）</h2>
+    <p class="lead">じつは、収益化でいちばん差がつくのは「作る力」より「知ってもらう力」です。どんなに良いサイトも、知られなければ<strong>この世に無いのと同じ</strong>。作ったら必ず「広める」までがワンセットです。</p>
+
+    <h3>🎯 お客さんは、この順番でファンになる</h3>
+    <div class="shop-map">
+        <div class="shop-flow">
+            <div class="shop-node">
+                <span class="ico">👀</span>
+                <span class="role">ステップ1</span>
+                <div class="name">知る</div>
+                <div class="sub">存在を<br>知ってもらう</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">💡</span>
+                <span class="role">ステップ2</span>
+                <div class="name">気になる</div>
+                <div class="sub">「おもしろそう」と<br>興味をもつ</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">🖱️</span>
+                <span class="role">ステップ3</span>
+                <div class="name">見にくる</div>
+                <div class="sub">実際に<br>サイトを訪れる</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">❤️</span>
+                <span class="role">ステップ4</span>
+                <div class="name">好きになる</div>
+                <div class="sub">また来たい<br>ファンになる</div>
+            </div>
+            <div class="shop-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="shop-node">
+                <span class="ico">📣</span>
+                <span class="role">ステップ5</span>
+                <div class="name">人に広める</div>
+                <div class="sub">友だちに<br>おすすめしてくれる</div>
+            </div>
+        </div>
+    </div>
+    <div class="callout kids">
+        <span class="tag">ポイント</span>
+        <p>宣伝とは、この矢印の<strong>いちばん左「知る」を増やす</strong>こと。左が増えれば、自然と右のファンや紹介も増えていきます。だから、まずは「知ってもらう」動きを毎日ちょっとずつ。</p>
+    </div>
+
+    <h3>🚀 まず最初にやる宣伝（ぜんぶ元手0円ですぐできる）</h3>
+    <p class="lead" style="margin-bottom:20px;">お金をかける前に、まずこの6つ。「作りました！」と声をあげるだけで、最初のお客さんは十分に呼べます。</p>
+    <div class="tool-grid">
+        <div class="tool-card">
+            <div class="head"><span class="ico">🙋</span><span class="nm">① 身近な人に伝える</span></div>
+            <div class="metaphor">＝ 最初の10人が宝物</div>
+            <p>まずは家族・友だち・知り合いに「これ作ったよ、見て！」と直接シェア。最初の応援団が、感想や改善のヒントをくれます。ここが全部のスタート地点。</p>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">📱</span><span class="nm">② 自分のSNSで投稿</span></div>
+            <div class="metaphor">＝ 一番強い無料の拡声器</div>
+            <p>X（旧Twitter）・Instagram・Facebook・TikTokなどで発表。「何ができるか」だけでなく「なぜ作ったか」も一緒に書くと、共感されて広がりやすくなります。</p>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">🛠️</span><span class="nm">③ 作る過程を見せる</span></div>
+            <div class="metaphor">＝ 完成品より人が集まる</div>
+            <p>「今こういうの作ってます」「ここで苦戦中」など、制作の裏側を発信。応援したくなる人が集まり、完成前からファンがつくことも。</p>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">💬</span><span class="nm">④ 仲間の集まる場で共有</span></div>
+            <div class="metaphor">＝ 興味がぴったり合う人へ</div>
+            <p>note・Qiita・Zenn・Reddit・Discordなど、テーマの近い人が集まる場所で紹介。関心が合う人に届くので、少人数でも反応が濃いのが特長。</p>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">🔍</span><span class="nm">⑤ 検索から来てもらう（SEO）</span></div>
+            <div class="metaphor">＝ 24時間はたらく看板</div>
+            <p>ページのタイトルと説明文に「探されそうな言葉」を入れておくと、GoogleやYouTubeの検索から人が来ます。一度整えれば、寝ている間もお客さんが来ます。</p>
+        </div>
+        <div class="tool-card">
+            <div class="head"><span class="ico">📋</span><span class="nm">⑥ 紹介サイトに載せる</span></div>
+            <div class="metaphor">＝ 人が集まる場所に出す</div>
+            <p>アプリ・サービスのまとめサイトや、募集中のギャラリーに登録・投稿。すでに人が集まっている場所を借りて、一気に知ってもらいます。</p>
+        </div>
+    </div>
+
+    <h3>📈 そこから「拡販」していく5ステップ</h3>
+    <p class="lead" style="margin-bottom:12px;">最初の宣伝で反応が出てきたら、次はそれを大きく育てます。この順番でOK。</p>
+    <div class="steps">
+        <div class="step">
+            <div class="badge">1</div>
+            <div class="body">
+                <h4>反応を見て改善する 🔎</h4>
+                <p>どの投稿が伸びたか、どのページがよく見られたかを観察。「刺さった言い方」を見つけて、そこを伸ばします。数字は正直な先生。</p>
+                <div class="say">見る数字の例：投稿の「いいね」数／サイトの訪問者数／どこから来たか</div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">2</div>
+            <div class="body">
+                <h4>コツコツ続けて発信する 🔁</h4>
+                <p>宣伝は1回では届きません。週2〜3回など、無理のないペースで続けるのが勝ち。1回でやめず「続けた人」だけが伸びていきます。</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">3</div>
+            <div class="body">
+                <h4>クチコミが生まれる仕掛けを置く 🗣️</h4>
+                <p>サイトに「シェアボタン」や「友だちに教える」ボタンを設置。お客さん自身が宣伝してくれると、コストをかけずに輪が広がります。</p>
+                <div class="say">AIに「このページにXとLINEのシェアボタンを付けて」と頼めば、すぐ追加できます。</div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">4</div>
+            <div class="body">
+                <h4>少額の広告を試す 💴</h4>
+                <p>無料の宣伝で手ごたえが出たら、1日数百円からSNS広告を試します。反応が良かったところ「だけ」お金を足すのが、失敗しないコツ。</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="badge">5</div>
+            <div class="body">
+                <h4>人に紹介してもらう 🤝</h4>
+                <p>発信力のある人にレビューを頼んだり、「紹介したら報酬」の仕組み（アフィリエイト）を用意して、自分の代わりに広めてくれる仲間を増やします。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout">
+        <span class="tag">最初の宣伝でいちばん大事なコツ</span>
+        <p><strong>「たくさんの人」より「ぴったりの1人」を狙う。</strong> 1000人にスルーされるより、10人に届けて2人が本気で喜ぶ方がずっと価値があります。投稿するたびに「この言葉を、どんな1人に届けたいか」を思い浮かべて書きましょう。それが結局、いちばん速く広がります。</p>
+    </div>
+</section>
+
+<!-- ── 6. 費用 ── -->
+<section id="cost">
+    <span class="sec-num">06</span>
+    <h2>結局<span class="em">いくらかかるの？</span></h2>
+    <p class="lead">結論から言うと、<strong>0円で始めて、うまくいってから少しずつお金をかける</strong>のが正解です。下の表は、月ごとの目安（1ドル＝約150円で計算）です。</p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>道具</th>
+                    <th>役割</th>
+                    <th>無料で始める</th>
+                    <th>本格的にやる（月あたり）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Claude / 生成AI</b></td>
+                    <td>作る職人</td>
+                    <td><span class="free">0円</span>（無料版）</td>
+                    <td><span class="paid">約3,000円</span>（Pro）</td>
+                </tr>
+                <tr>
+                    <td><b>GitHub</b></td>
+                    <td>保存する箱</td>
+                    <td><span class="free">0円</span></td>
+                    <td><span class="free">0円</span>（個人はずっと無料）</td>
+                </tr>
+                <tr>
+                    <td><b>Cloudflare Pages / Workers</b></td>
+                    <td>公開する土地</td>
+                    <td><span class="free">0円</span></td>
+                    <td><span class="paid">約750円</span>（Workers有料）</td>
+                </tr>
+                <tr>
+                    <td><b>ドメイン</b></td>
+                    <td>住所・名前</td>
+                    <td><span class="free">0円</span>（無料の住所を使う）</td>
+                    <td><span class="paid">約130円</span>（年1,500円ほどを月割）</td>
+                </tr>
+                <tr>
+                    <td><b>Stripe</b></td>
+                    <td>レジ・決済</td>
+                    <td><span class="free">0円</span></td>
+                    <td>売れた分の<span class="paid">3.6%</span>だけ</td>
+                </tr>
+                <tr>
+                    <td><b>Google AdSense</b></td>
+                    <td>広告</td>
+                    <td><span class="free">0円</span></td>
+                    <td><span class="free">0円</span></td>
+                </tr>
+                <tr class="total-row">
+                    <td>合計</td>
+                    <td>—</td>
+                    <td><span style="color:#2e7d32;">0円 でスタート可能</span></td>
+                    <td>月 約 4,000円 ＋ 売上の手数料</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="callout kids">
+        <span class="tag">たとえ話</span>
+        <p>お小づかい0円でも「お店ごっこ」を始められて、お客さんが増えてから、ちょっといい看板（ドメイン）やレジ（決済）を足していく——というイメージです。<strong>最初から全部そろえる必要はまったくありません。</strong></p>
+    </div>
+</section>
+
+<!-- ── 7. プロンプト集 ── -->
+<section id="prompts">
+    <span class="sec-num">07</span>
+    <h2>AIに投げる<span class="em">プロンプト集</span><br><small style="font-size:0.6em;color:var(--text-light);font-weight:400;">（Claude・ChatGPT・Geminiなど、どのAIでもOK）</small></h2>
+    <p class="lead">下の文章をコピーして、そのままAIに貼り付けるだけ。〈　〉の中を、あなたのアイデアに置きかえて使ってください。「コピー」ボタンでコピーできます。</p>
+
+    <div class="prompt-box">
+        <div class="bar"><span class="ttl">① サイトをゼロから作ってもらう</span><button onclick="copyPrompt(this)">コピー</button></div>
+        <pre>あなたはプロのWebエンジニア兼デザイナーです。
+以下の条件で、1枚のHTMLファイル（HTML/CSS/JavaScriptを1つにまとめたもの）を作ってください。
+
+- 目的：〈毎日ひとつ健康の豆知識が読めるサイト〉
+- ターゲット：〈健康に興味のある30〜50代〉
+- デザイン：スマホでも見やすく、シンプルで上品に
+- 必要な機能：〈ボタンを押すと今日の豆知識が表示される〉
+- 追加でおすすめの機能があれば提案もしてください
+
+まず全体の構成を説明し、そのあと完成したコードをすべて出力してください。</pre>
+    </div>
+
+    <div class="prompt-box">
+        <div class="bar"><span class="ttl">② 公開のやり方を教えてもらう</span><button onclick="copyPrompt(this)">コピー</button></div>
+        <pre>作ったHTMLファイルを、GitHubに保存してCloudflare Pagesで
+インターネットに無料公開したいです。
+
+プログラミング初心者にもわかるように、
+1つずつ順番に、クリックする場所まで具体的に教えてください。
+専門用語が出てきたら、そのつど一言で説明を添えてください。</pre>
+    </div>
+
+    <div class="prompt-box">
+        <div class="bar"><span class="ttl">③ 収益化の作戦を相談する</span><button onclick="copyPrompt(this)">コピー</button></div>
+        <pre>次のサイトを収益化したいです。
+- サイト内容：〈　　　〉
+- 現在の1日の訪問者数：〈だいたい○人〉
+
+このサイトに合う収益化の方法を、
+「始めやすい順」に3つ提案してください。
+それぞれ「必要な準備・かかる費用・想定できる月の収入」も、
+初心者向けに具体的に教えてください。</pre>
+    </div>
+
+    <div class="prompt-box">
+        <div class="bar"><span class="ttl">④ 会員だけ見られる機能をつける</span><button onclick="copyPrompt(this)">コピー</button></div>
+        <pre>Cloudflare Workers と Stripe を使って、
+「月額500円を払った会員だけが見られるページ」を
+作りたいです。
+
+全体の仕組みを図でイメージできるように説明したうえで、
+必要な手順と、Workers側のコードのサンプルを、
+初心者にもわかるコメント付きで書いてください。</pre>
+    </div>
+
+    <div class="prompt-box">
+        <div class="bar"><span class="ttl">⑤ 宣伝用のSNS投稿文を作ってもらう</span><button onclick="copyPrompt(this)">コピー</button></div>
+        <pre>次のサイト（アプリ）を宣伝したいです。
+- 内容：〈　　　〉
+- 届けたい人：〈　　　〉
+- サイトのURL：〈　　　〉
+
+これを広めるためのSNS投稿文を、
+X（Twitter）用・Instagram用・Facebook用に1つずつ、
+つい見たくなるように作ってください。
+それぞれ、おすすめのハッシュタグも5個ずつ付けてください。</pre>
+    </div>
+
+    <div class="callout">
+        <span class="tag">上達のコツ</span>
+        <p>AIは<strong>1回で完ぺきを目指さず、会話でだんだん良くしていく</strong>のがコツ。「もっとかわいくして」「スマホで文字が小さいから大きく」など、感想を伝えるだけで直してくれます。遠慮せずに何度もお願いしましょう。</p>
+    </div>
+</section>
+
+<!-- ── 8. ロードマップ ── -->
+<section id="roadmap">
+    <span class="sec-num">08</span>
+    <h2>これからの<span class="em">進め方</span>（ロードマップ）</h2>
+    <p class="lead">あせらず、この順番でレベルを上げていきましょう。多くの人が、まず「Lv.1を最後までやりきる」ことでコツをつかみます。</p>
+
+    <div class="roadmap">
+        <div class="rm-card">
+            <span class="lvl">LV.1 ・ 今日</span>
+            <h4>1つ作って公開</h4>
+            <p>小さなサイトをAIと作り、Cloudflareで公開して「作れた！」を体験する。費用0円。</p>
+        </div>
+        <div class="rm-card">
+            <span class="lvl">LV.2 ・ 1か月目</span>
+            <h4>お客さんを呼ぶ</h4>
+            <p>SNSで発信したり、内容を増やして、見にきてくれる人を増やす。広告も貼ってみる。</p>
+        </div>
+        <div class="rm-card">
+            <span class="lvl">LV.3 ・ 3か月目</span>
+            <h4>本格収益化</h4>
+            <p>ドメインを取り、サブスクや商品販売に挑戦。数字を見ながら改善する。</p>
+        </div>
+        <div class="rm-card">
+            <span class="lvl">LV.4 ・ その先</span>
+            <h4>仕事にする</h4>
+            <p>作品を実績にして制作を受注。複数のサイトを育て、収入の柱を増やす。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+    <span class="sec-num">09</span>
+    <h2>よくある<span class="em">質問</span></h2>
+
+    <details>
+        <summary>プログラミングが全くできなくても大丈夫？</summary>
+        <p>大丈夫です。今はAIがコードを書いてくれるので、あなたの仕事は「何を作りたいかを言葉で伝えること」と「できたものを試して感想を返すこと」。この2つができれば始められます。</p>
+    </details>
+    <details>
+        <summary>本当に0円で始められるの？</summary>
+        <p>はい。AIの無料版・GitHub・Cloudflare・AdSenseはすべて無料枠があります。ドメインや決済は「お金を稼げるようになってから」足せばよいので、スタート時点の出費は0円で問題ありません。</p>
+    </details>
+    <details>
+        <summary>どのくらいで稼げるようになる？</summary>
+        <p>人によりますが、収益化は「作ること」より「見にきてくれる人を増やすこと」が9割です。最初の数か月は種まきの期間。1つのサイトに固執せず、いくつか作って反応の良いものを育てるのが近道です。</p>
+    </details>
+    <details>
+        <summary>ClaudeとChatGPT、どっちを使えばいい？</summary>
+        <p>この記事の作り方は、どのAIでも通用します。長めのコードを一気に書いてもらう用途ではClaudeが得意ですが、まずは今使えるものでOK。慣れてきたら両方使って、良い方を選びましょう。</p>
+    </details>
+    <details>
+        <summary>子ども（未成年）でもお金を受け取れる？</summary>
+        <p>広告や決済サービスの多くは、契約に年齢の条件があります。未成年の場合は保護者の名義・同意が必要になることが多いので、収益化の前におうちの人と相談してください。作って公開するところまでは、だれでも楽しめます。</p>
+    </details>
+</section>
+
+</main>
+
+<footer>
+    <p style="font-size:1.1rem;color:#fff;">さあ、あなたの「小さなお店」を作ってみよう 🚀</p>
+    <p class="disc">※ 本ページの費用は2026年時点のおおよその目安（1ドル＝約150円換算）です。各サービスの料金・手数料・利用条件は変わることがあります。実際に契約する前に、必ず公式サイトの最新情報をご確認ください。収益を保証するものではありません。</p>
+    <a href="../index.html" class="back"><i class="fas fa-arrow-left"></i> ポートフォリオトップへ戻る</a>
+    <p class="copy">© Shigen Yoshida</p>
+</footer>
+
+<script>
+    function copyPrompt(btn) {
+        const text = btn.closest('.prompt-box').querySelector('pre').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const old = btn.textContent;
+            btn.textContent = 'コピーしました ✓';
+            setTimeout(() => btn.textContent = old, 1600);
+        }).catch(() => {
+            btn.textContent = 'コピー失敗';
+            setTimeout(() => btn.textContent = 'コピー', 1600);
+        });
+    }
+</script>
+
+</body>
+</html>
