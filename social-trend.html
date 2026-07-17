@@ -82,6 +82,15 @@ h1{font-size:clamp(25px,5.5vw,38px);font-weight:800;letter-spacing:.01em;line-he
 .gauge .pin .lab b{color:var(--ink);font-size:13px}
 .gauge .pin.after .lab{top:22px;bottom:auto}
 .gauge-scale{display:flex;justify-content:space-between;margin-top:7px;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tl{list-style:none;margin:12px 0 0;padding:0}
+.tl li{position:relative;padding:0 0 15px 24px;border-left:2px solid var(--border)}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:'';position:absolute;left:-6px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--series);border:2px solid var(--surface)}
+.tl .yr{font-weight:700;font-size:12.5px;color:var(--ink)}
+.tl .bad{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:700;color:#d03b3b;border:1px solid rgba(208,59,59,.4);border-radius:5px;padding:0 5px}
+.tl p{font-size:12px;color:var(--ink2);margin:3px 0 0;line-height:1.6}
+.box{margin-top:14px;border:1px solid var(--border);border-radius:10px;background:var(--plane);padding:14px 16px}
+.box .h{font-weight:700;font-size:12.5px;margin-bottom:6px;color:var(--ink)}
 .gdp-row .amt{width:92px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .gdp-row .amt b{color:var(--ink)}
 .gdp-hot{font-size:11.5px;color:var(--good);font-weight:700;margin-top:8px}
@@ -254,6 +263,36 @@ footer a{color:var(--accent)}
       <div class="gauge-scale"><span>← 平等 0.2</span><span>0.3</span><span>0.4</span><span>0.5</span><span>0.6 格差大 →</span></div>
     </div>
     <p class="note-txt">出典：厚労省『所得再分配調査』（2023年）。<b>当初所得</b>（税・社会保障の前）のジニ0.586が、<b>再分配後</b>に0.383へ縮小＝再分配が格差を約35%圧縮しています。目盛りは0.2〜0.6。国別のジニ係数の比較は上の「主要指標の国際比較」を参照してください。</p>
+  </section>
+
+  <section class="summary" style="margin-top:16px">
+    <div class="sum-h">💰 特集：予算と、約束の"達成率"</div>
+    <p class="sum-p">「いい事を言って投票してもらい、実際にはやらない」――それは有権者にとって一番こわいことだと思います。そこで <b>「予算はどこまで使われ、約束はどこまで守られたのか」</b> を公式データで確認してみます。結論を先に言うと、<b>予算はほぼ使い切られます（＝執行率は高い）</b>。問題は「使ったかどうか」ではなく <b>「掲げた目標が守られたか」</b> で、こちらは繰り返し先送りされてきました。</p>
+
+    <div class="cmp-h">① 予算執行率（国の一般会計） <span>（支出済 ÷ 歳出予算現額・決算ベース）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl">2020年度</span><span class="track"><span class="fill o" style="width:81%"></span></span><span class="amt"><b>約81</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">2022年度</span><span class="track"><span class="fill o" style="width:81.9%"></span></span><span class="amt"><b>81.9</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">2023年度</span><span class="track"><span class="fill" style="width:87.7%"></span></span><span class="amt"><b>87.7</b>%</span></div>
+    </div>
+    <p class="note-txt">出典：財務省 決算。平常年（〜2019年度）の執行率は概ね90%台とされますが、コロナ以降は超大型の補正予算で巨額の<b>翌年度繰越</b>や<b>不用額</b>が生じ、80%台前半へ低下しました（不用額は2022年度に約11.3兆円で過去最大）。＝「予算が余った・繰り越された」のであって、使い道が消えたわけではありません。なお<b>地方</b>の同様の執行率は、国のような形での公表を確認できなかったため掲載を見送りました。</p>
+
+    <div class="cmp-h">② 基礎的財政収支（PB）黒字化目標の"先送り史" <span>（約束の期限がどう動いたか）</span></div>
+    <ul class="tl">
+      <li><span class="yr">2006年に設定 →「2011年度に黒字化」</span><span class="bad">撤回</span><p>リーマン・ショック後の大型財政出動で撤回・未達。</p></li>
+      <li><span class="yr">2010年に設定 →「2020年度に黒字化」</span><span class="bad">棚上げ</span><p>財政運営戦略で設定し安倍政権も継承したが、2017年頃に事実上棚上げ。</p></li>
+      <li><span class="yr">2018年に設定 →「2025年度」へ5年先送り</span><span class="bad">先送り</span><p>骨太の方針2018で目標年度を2020→2025年度へ後ろ倒し。</p></li>
+      <li><span class="yr">2025年 →「2025〜26年度に可能な限り早期」へ後退</span><span class="bad">後退</span><p>単年度の「2025年度」という表現を弱めた。</p></li>
+      <li><span class="yr">2025年11月 → 単年度目標を撤回する方針と報道</span><span class="bad">要フォロー</span><p>財政健全化方針の転換かが議論に（報道ベース・今後の骨太方針で確定）。</p></li>
+    </ul>
+    <p class="note-txt">出典：財務省・内閣府、各種報道（第一生命経済研・日本経済研究センター・時事通信 等）。<b>実際の赤字（PB対GDP比）は改善</b>しており、▲9.1%（2020年度・コロナ）→ ▲0.5%程度（2025年度見通し）まで縮小、2026年度に黒字化する見込みとの試算もあります。つまり「数字自体は近づいている」一方で、<b>黒字化の"約束の期限"は 2011 → 2020 → 2025 → さらに先、と繰り返し動いてきた</b>――これが「財政の約束」の実態です。※2023年度の▲5.1%は前年より悪化しており要確認（大型経済対策の影響とみられます）。</p>
+
+    <div class="box">
+      <div class="h">③ 政治家の「公約達成率」は、実は一つの数字で言えません</div>
+      <p class="sum-p" style="margin:0">投票の判断材料そのものである <b>公約（マニフェスト）の達成率</b> には、<b>公式の継続統計が存在しません</b>。あるのは民間の個別評価で、<b>「どこまでを"達成"と数えるか」で結果が激変</b>します。<br>
+      たとえば民主党2009年の衆院選公約は、<b>「実現は約3割」</b>（党の自己検証／日経報道）とも、<b>「着手まで含めれば約79%」</b>（党の中間報告）とも、<b>「約4割」</b>（言論NPOの第三者評価）とも評価されました。<b>同じ公約でも3割にも8割にもなる</b>のです。</p>
+      <p class="note-txt" style="margin-top:8px">主な評価主体：早稲田大学マニフェスト研究所（公約の"できばえ"を採点）／言論NPO（形式40点＋内容60点＋実績評価）／NPO法人Mielka「JAPAN CHOICE」（項目ごとの実現度）／各新聞社の検証（単発）。数値は評価者・年・定義（実現か着手か）・自己評価か第三者かで割れるため、本ダッシュボードでは<b>特定の達成率を"事実"として断定せず</b>、「複数の評価が存在し手法で割れる」ことを示すにとどめます（公明党2017年公約を81.7%とする評価〔Mielka・"実施中"を含む〕などもありますが、いずれも定義依存です）。</p>
+    </div>
   </section>
 
   <main id="app"></main>
