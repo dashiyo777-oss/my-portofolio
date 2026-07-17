@@ -66,6 +66,17 @@ h1{font-size:clamp(25px,5.5vw,38px);font-weight:800;letter-spacing:.01em;line-he
 .dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
 .dot.g{background:var(--good)} .dot.b{background:var(--bad)} .dot.n{background:var(--neutral)}
 
+/* GDP breakdown bars */
+.gdp-bars{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.gdp-row{display:flex;align-items:center;gap:10px;font-size:12.5px}
+.gdp-row .lbl{width:88px;flex:none;color:var(--ink2)}
+.gdp-row .track{flex:1;background:var(--plane);border:1px solid var(--border);border-radius:6px;height:16px;overflow:hidden}
+.gdp-row .fill{height:100%;background:var(--series);border-radius:6px}
+.gdp-row .amt{width:92px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.gdp-row .amt b{color:var(--ink)}
+.gdp-hot{font-size:11.5px;color:var(--good);font-weight:700;margin-top:8px}
+@media(max-width:520px){.gdp-row{font-size:11.5px}.gdp-row .lbl{width:70px}.gdp-row .amt{width:78px}}
+
 /* category */
 .cat{margin:34px 0 4px;display:flex;align-items:center;gap:12px}
 .cat h2{font-size:14px;font-weight:800;letter-spacing:.18em;color:var(--ink2)}
@@ -130,6 +141,21 @@ footer a{color:var(--accent)}
     <p class="sum-p">最大の流れは <b>「縮む日本」</b>。人口・出生・婚姻は減り続け、<b>合計特殊出生率は1.15と過去最低</b>、高齢化率は約29%、政府債務は膨張中。一方で、<b>平均寿命は世界最高水準、大学進学率は過去最高、自殺者数は長期的に減少、訪日外国人は過去最高</b>——確実に上向いている面もあります。物価・賃金・GDPなどは伸び悩みや高齢化が絡み <b>良し悪しを一概に言えない中立</b>。総じて「<b>社会の土台（人口）は縮む一方、暮らしの質や国際的な魅力には上向きの芽もある</b>」という姿です。</p>
     <div class="tally" id="tally"></div>
     <p class="sum-p" style="margin-top:12px;color:var(--muted);font-size:12px">※「改善／悪化／中立」は各指標の数字の向きに基づく機械的な目安です。良し悪しの最終判断は指標の性質（例：死亡数の増加は高齢化の反映）にもよります。各カードの注記もご覧ください。</p>
+  </section>
+
+  <section class="summary" style="margin-top:16px">
+    <div class="sum-h">💹 特集：GDPの内訳 ― 何が経済を動かしている？</div>
+    <p class="sum-p">2024年の名目GDP（約634兆円）を需要項目別に見ると、最大は <b>個人消費（約52%）</b>。ただし直近の<b>実質</b>成長を牽引しているのは <b>輸出・インバウンドと設備投資</b>です。<b>設備投資は約30年ぶりの高水準</b>、一方で個人消費は物価高で実質は伸び悩んでいます（＝規模は消費が最大でも、"伸ばしている"のは外需と投資）。</p>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl">個人消費</span><span class="track"><span class="fill" style="width:52%"></span></span><span class="amt"><b>329</b>兆・52%</span></div>
+      <div class="gdp-row"><span class="lbl">政府消費</span><span class="track"><span class="fill" style="width:19.8%"></span></span><span class="amt"><b>126</b>兆・20%</span></div>
+      <div class="gdp-row"><span class="lbl">設備投資 ★</span><span class="track"><span class="fill" style="width:16.7%"></span></span><span class="amt"><b>106</b>兆・17%</span></div>
+      <div class="gdp-row"><span class="lbl">公共投資</span><span class="track"><span class="fill" style="width:4.9%"></span></span><span class="amt"><b>31</b>兆・5%</span></div>
+      <div class="gdp-row"><span class="lbl">住宅投資</span><span class="track"><span class="fill" style="width:3.5%"></span></span><span class="amt"><b>22</b>兆・4%</span></div>
+      <div class="gdp-row"><span class="lbl">純輸出等</span><span class="track"><span class="fill" style="width:3.1%"></span></span><span class="amt"><b>約20</b>兆・3%</span></div>
+    </div>
+    <div class="gdp-hot">★ 設備投資は約30年ぶりの高水準。直近の実質成長の牽引役です。</div>
+    <p class="note-txt">出典：内閣府 国民経済計算（2020年基準・名目・暦年）。構成比は名目GDP約634兆円に対する概算。GDP＝個人消費＋投資＋政府支出＋純輸出。<b>牽引役の要約</b>：2023〜24年の実質成長は外需（輸出・インバウンド）と設備投資が主導、個人消費は物価高で弱い。※長期の項目別系列は2020年基準改定直後で未確定のため、ここでは2024年の内訳と牽引役に絞って掲載しています。</p>
   </section>
 
   <main id="app"></main>
@@ -232,7 +258,13 @@ const DATA = [
  note:"殺人の認知件数。2022=853件が戦後最少水準、2023年912・2024年970と直近2年はやや増。長期は2005年1,392件から大きく減少。2005〜2020は概数。"},
 {key:"traffic_deaths",title:"交通事故死者数",unit:"人",category:"暮らし・安全",src:"警察庁 交通事故統計",url:"https://www.npa.go.jp/publications/statistics/koutsuu/toukeihyo.html",latest_year:2024,latest_value:2663,trend:"down",verdict:"改善",vnote:"長期大幅減・統計上2番目に少",
  series:[[2005,6937],[2010,4948],[2015,4117],[2019,3215],[2020,2839],[2021,2636],[2022,2610],[2023,2678],[2024,2663]],
- note:"事故発生から24時間以内の死者数。2024=2,663人で1948年の統計開始以来2番目の少なさ。1970年の16,765人をピークに大幅減。2025年は2,547人で過去最少更新。高齢者が死者の約57%。"}
+ note:"事故発生から24時間以内の死者数。2024=2,663人で1948年の統計開始以来2番目の少なさ。1970年の16,765人をピークに大幅減。2025年は2,547人で過去最少更新。高齢者が死者の約57%。"},
+{key:"foreign_arrests",title:"来日外国人 刑法犯 検挙人員",unit:"人",category:"暮らし・安全",src:"警察庁／法務省 犯罪白書",url:"https://hakusyo1.moj.go.jp/jp/71/nfm/n71_2_4_9_2_1.html",latest_year:2024,latest_value:6368,trend:"up",verdict:"中立",vnote:"全検挙の約3%・近年やや増",
+ series:[[2019,5563],[2020,5634],[2021,5573],[2022,5014],[2023,5735],[2024,6368]],
+ note:"「来日外国人」は不法滞在等を含む短期滞在の外国人を指し、永住者・特別永住者（いわゆる在日）や定着居住者は除く概念（住民である『在留外国人』とは別）。刑法犯検挙人員 全体の約3%。人員のピークは2004年8,898人。近年ベトナム等による窃盗で2023-2024は増加傾向だが、件数の伸びほど人員は増えておらず組織的事件の比重が高い。"},
+{key:"foreign_share",title:"検挙人員に占める来日外国人の割合",unit:"％",category:"暮らし・安全",src:"警察庁（算出値）",url:"https://hakusyo1.moj.go.jp/jp/71/nfm/n71_2_4_9_2_1.html",latest_year:2024,latest_value:3.32,trend:"up",verdict:"中立",vnote:"約3%前後で小さい",
+ series:[[2019,2.89],[2020,3.09],[2021,3.18],[2022,2.96],[2023,3.13],[2024,3.32]],
+ note:"来日外国人検挙人員 ÷ 刑法犯検挙人員 総数 の算出値。約3%前後で推移（2024=3.32%）。※犯罪白書が示す『外国人（来日＋定着居住者等）全体』の割合は別概念で2023年5.3%とやや高い（混同に注意）。数字は小さく、過度な一般化は禁物。"}
 ];
 
 const CATS = ["人口・家族","経済","教育","健康・いのち","暮らし・安全","観光"];
