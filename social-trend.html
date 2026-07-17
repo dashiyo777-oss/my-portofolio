@@ -75,6 +75,13 @@ h1{font-size:clamp(25px,5.5vw,38px);font-weight:800;letter-spacing:.01em;line-he
 .gdp-row .fill.o{background:var(--muted)}
 .cmp-h{font-weight:700;font-size:12.5px;margin:16px 0 6px}
 .cmp-h span{color:var(--muted);font-weight:400}
+.gauge-wrap{margin:40px 0 4px}
+.gauge{position:relative;height:16px;border-radius:8px;background:linear-gradient(90deg,#2f9e44,#e8b53a,#d03b3b)}
+.gauge .pin{position:absolute;top:50%;width:2px;height:28px;background:var(--ink);transform:translate(-50%,-50%)}
+.gauge .pin .lab{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;white-space:nowrap;font-size:11px;color:var(--ink2);text-align:center;line-height:1.25}
+.gauge .pin .lab b{color:var(--ink);font-size:13px}
+.gauge .pin.after .lab{top:22px;bottom:auto}
+.gauge-scale{display:flex;justify-content:space-between;margin-top:7px;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .gdp-row .amt{width:92px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .gdp-row .amt b{color:var(--ink)}
 .gdp-hot{font-size:11.5px;color:var(--good);font-weight:700;margin-top:8px}
@@ -234,6 +241,19 @@ footer a{color:var(--accent)}
     </div>
 
     <p class="note-txt">出典：一人当たりGDP・高齢化率＝World Bank（2024）、出生率＝World Bank／各国統計（2023、韓国0.72は世界最低）、ジニ係数＝OECD所得分配データベース（0〜1を100倍・調査年は国により異なる／中国はWorld Bankで厳密には非比較）、労働生産性＝日本生産性本部『労働生産性の国際比較2025』。米国・中国の一部は概算。<b>平均賃金の国際比較</b>は同一基準の信頼できる数値を確認できなかったため今回は掲載を見送りました（OECD概算では日本は加盟国で低位）。</p>
+  </section>
+
+  <section class="summary" style="margin-top:16px">
+    <div class="sum-h">📏 特集：ジニ係数の読み方 ― 格差はどのくらい？</div>
+    <p class="sum-p">ジニ係数は「所得の格差」を <b>0〜1の1つの数字</b>で表す指標です。<b>0＝全員が同じ収入（完全平等）</b>、<b>1に近いほど一部の人に富が集中</b>していることを意味します。ふつうの国は0.2〜0.5の範囲。日本は税・社会保障による再分配で <b>0.59 → 0.38</b> まで縮まり、国際的には「中位」です。</p>
+    <div class="gauge-wrap">
+      <div class="gauge">
+        <span class="pin before" style="left:96.4%"><span class="lab">当初所得（前）<br><b>0.586</b></span></span>
+        <span class="pin after" style="left:45.6%"><span class="lab">再分配後<br><b>0.383</b></span></span>
+      </div>
+      <div class="gauge-scale"><span>← 平等 0.2</span><span>0.3</span><span>0.4</span><span>0.5</span><span>0.6 格差大 →</span></div>
+    </div>
+    <p class="note-txt">出典：厚労省『所得再分配調査』（2023年）。<b>当初所得</b>（税・社会保障の前）のジニ0.586が、<b>再分配後</b>に0.383へ縮小＝再分配が格差を約35%圧縮しています。目盛りは0.2〜0.6。国別のジニ係数の比較は上の「主要指標の国際比較」を参照してください。</p>
   </section>
 
   <main id="app"></main>
