@@ -643,6 +643,30 @@
             opacity: 0.45 !important;
             margin-top: 28px !important;
         }
+        .follow-block { margin-top: 44px; }
+        .follow-label {
+            font-size: 0.82rem !important;
+            opacity: 0.6 !important;
+            margin-bottom: 16px !important;
+        }
+        .contact-btn.yt { border-color: rgba(255,80,80,0.55); }
+        .contact-btn.yt:hover { background: #ff0000; border-color: #ff0000; color: #fff; }
+        .contact-btn.note { border-color: rgba(65,199,101,0.55); }
+        .contact-btn.note:hover { background: #41c765; border-color: #41c765; color: #fff; }
+
+        /* ── Footer social ── */
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+        .footer-social a {
+            color: rgba(255,255,255,0.45);
+            font-size: 1.2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .footer-social a:hover { color: var(--gold); transform: translateY(-2px); }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
@@ -858,11 +882,28 @@
                 </a>
             </div>
             <p class="contact-note">制作のご依頼は<a href="profile/" style="color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.35);">プロフィール</a>をご覧ください。／ Overseas clients welcome — feel free to email in English.</p>
+
+            <div class="follow-block">
+                <p class="contact-note follow-label">アプリ・最新コンテンツは、note と YouTube で発信中。フォローが最新情報の入口です。</p>
+                <div class="contact-actions">
+                    <a href="https://www.youtube.com/@datalab-d9u" target="_blank" rel="noopener noreferrer" class="contact-btn yt" data-cta="youtube">
+                        <i class="fab fa-youtube"></i> YouTube（DataLab）
+                    </a>
+                    <a href="https://note.com/leo77777" target="_blank" rel="noopener noreferrer" class="contact-btn note" data-cta="note">
+                        <i class="fas fa-pen-nib"></i> note
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- ── Footer ── -->
     <footer>
+        <div class="footer-social">
+            <a href="https://www.youtube.com/@datalab-d9u" target="_blank" rel="noopener noreferrer" aria-label="YouTube" data-cta="youtube"><i class="fab fa-youtube"></i></a>
+            <a href="https://note.com/leo77777" target="_blank" rel="noopener noreferrer" aria-label="note" data-cta="note"><i class="fas fa-pen-nib"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61558753410397" target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-cta="facebook"><i class="fab fa-facebook-f"></i></a>
+        </div>
         <p>&copy; 2026 Shigen Yoshida. All Rights Reserved.</p>
     </footer>
 
