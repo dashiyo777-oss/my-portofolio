@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>吉田獅玄 | AI×製造業の資料・リサーチ・デザイン制作</title>
-    <meta name="description" content="製造業の現場知見とAIを掛け合わせ、資料作成・市場調査・デザイン・動画制作をワンストップで承ります。ご相談・お見積りは無料。クラウドワークス／メールからどうぞ。">
+    <meta name="description" content="AIと製造業の知見で作るコンテンツサイト集。月300円のnoteメンバーシップで、全サイトの会員機能が使い放題＆特典記事が読み放題。資料作成・リサーチ・デザイン制作のご相談も承ります。">
     <link rel="canonical" href="https://dashiyo777-oss.github.io/my-portofolio/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="吉田獅玄 Portfolio">
@@ -433,6 +433,92 @@
             letter-spacing: 1px;
         }
 
+        /* ── Membership ── */
+        #membership {
+            padding: 110px 0;
+            background: linear-gradient(150deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        #membership::after {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle at 18% 25%, rgba(200,129,58,0.16), transparent 42%),
+                              radial-gradient(circle at 82% 75%, rgba(200,129,58,0.12), transparent 45%);
+            pointer-events: none;
+        }
+        .mbr-wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .mbr-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+        .mbr-wrap h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .mbr-price {
+            font-size: 1.05rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+        }
+        .mbr-benefits {
+            display: inline-block;
+            text-align: left;
+            margin: 0 auto 32px;
+        }
+        .mbr-benefits li {
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 300;
+            line-height: 2.2;
+            padding-left: 26px;
+            position: relative;
+        }
+        .mbr-benefits li::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .mbr-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gold);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+        .mbr-cta:hover {
+            background: #e09a50;
+            transform: translateY(-2px);
+        }
+        .mbr-note {
+            font-size: 0.76rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 18px;
+        }
+
         /* ── Services ── */
         #services {
             padding: 120px 0;
@@ -583,6 +669,7 @@
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="works/" class="nav-works">Works</a></li>
+                    <li><a href="#membership" class="nav-works">Membership</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="monetization-guide/">Guide</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -687,6 +774,29 @@
         </div>
     </section>
 
+    <!-- ── Membership ── -->
+    <section id="membership">
+        <div class="container">
+            <div class="mbr-wrap fade-in">
+                <p class="mbr-eyebrow">Membership</p>
+                <h2>🔑 Noteメンバーシップ</h2>
+                <p class="mbr-price">月300円 × 合言葉ひとつで、全サイト解錠。</p>
+                <ul class="mbr-benefits">
+                    <li>メンバー限定の特典記事が読み放題</li>
+                    <li>各コンテンツサイトの会員機能を、月替わりの合言葉ひとつで解錠</li>
+                    <li>「叡智の灯火」「賢人会議」などのロックを解除</li>
+                    <li>名作手帖・癒しのコーナー等のAI機能が使い放題</li>
+                </ul>
+                <div>
+                    <a href="https://note.com/leo77777/membership" target="_blank" rel="noopener noreferrer" class="mbr-cta" data-cta="membership">
+                        <i class="fas fa-crown"></i> Noteメンバーシップに加入する
+                    </a>
+                </div>
+                <p class="mbr-note">合言葉（TOMO-◯◯◯◯）は、noteメンバー限定記事で毎月公開しています</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ── Services ── -->
     <section id="services">
         <div class="container">
@@ -738,19 +848,16 @@
         <div class="container">
             <p class="section-label" style="color: var(--gold); text-align:center;">Contact</p>
             <h2 class="section-heading">お仕事のご相談・お問い合わせ</h2>
-            <p>資料作成・リサーチ・デザイン・動画のご依頼やご質問など、下記いずれかからお気軽にどうぞ。<strong style="color:var(--gold);">初回のご相談・お見積りは無料</strong>です。</p>
+            <p>ご感想・ご質問、資料作成やデザインのご相談など、お気軽にどうぞ。</p>
             <div class="contact-actions">
-                <a href="https://crowdworks.jp/public/employees/6917865?ref=portfolio" target="_blank" rel="noopener noreferrer" class="contact-btn primary" data-cta="crowdworks">
-                    <i class="fas fa-briefcase"></i> クラウドワークスで依頼する
-                </a>
-                <a href="mailto:dashiyo777@gmail.com?subject=%E3%81%8A%E4%BB%95%E4%BA%8B%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%88%E3%82%8A%EF%BC%89&body=%E2%97%8F%E3%81%94%E4%BE%9D%E9%A0%BC%E5%86%85%E5%AE%B9%EF%BC%9A%0A%E2%97%8F%E3%81%94%E4%BA%88%E7%AE%97%EF%BC%88%E3%81%8A%E3%81%8A%E3%82%88%E3%81%9D%E3%81%A7%E6%A7%8B%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%EF%BC%89%EF%BC%9A%0A%E2%97%8F%E3%81%94%E5%B8%8C%E6%9C%9B%E7%B4%8D%E6%9C%9F%EF%BC%9A%0A%E2%97%8F%E5%8F%82%E8%80%83URL%E3%83%BB%E8%B3%87%E6%96%99%EF%BC%9A%0A" class="contact-btn" data-cta="mail">
-                    <i class="fas fa-envelope"></i> メールで相談する
+                <a href="mailto:dashiyo777@gmail.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%88%E3%82%8A%EF%BC%89&body=%E2%97%8F%E3%81%94%E7%94%A8%E4%BB%B6%EF%BC%9A%0A" class="contact-btn primary" data-cta="mail">
+                    <i class="fas fa-envelope"></i> メールで連絡する
                 </a>
                 <a href="https://www.facebook.com/profile.php?id=61558753410397" target="_blank" rel="noopener noreferrer" class="contact-btn" data-cta="facebook">
                     <i class="fab fa-facebook-f"></i> Facebook
                 </a>
             </div>
-            <p class="contact-note">Overseas clients are welcome — feel free to reach out in English via email.</p>
+            <p class="contact-note">制作のご依頼は<a href="profile/" style="color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.35);">プロフィール</a>をご覧ください。／ Overseas clients welcome — feel free to email in English.</p>
         </div>
     </section>
 
