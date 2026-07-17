@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>吉田獅玄 | Portfolio</title>
+    <title>吉田獅玄 | AI×製造業の資料・リサーチ・デザイン制作</title>
+    <meta name="description" content="AIと製造業の知見で作るコンテンツサイト集。月300円のnoteメンバーシップで、全サイトの会員機能が使い放題＆特典記事が読み放題。資料作成・リサーチ・デザイン制作のご相談も承ります。">
+    <link rel="canonical" href="https://dashiyo777-oss.github.io/my-portofolio/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="吉田獅玄 Portfolio">
+    <meta property="og:title" content="吉田獅玄 | AI×製造業の資料・リサーチ・デザイン制作">
+    <meta property="og:description" content="資料作成・市場調査・デザイン・動画制作をワンストップで。ご相談・お見積りは無料です。">
+    <meta property="og:url" content="https://dashiyo777-oss.github.io/my-portofolio/">
+    <meta property="og:image" content="https://dashiyo777-oss.github.io/my-portofolio/images/proposals/slide-blueprint.jpg">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="吉田獅玄 | AI×製造業の資料・リサーチ・デザイン制作">
+    <meta name="twitter:description" content="資料作成・市場調査・デザイン・動画制作をワンストップで。ご相談・お見積りは無料です。">
+    <meta name="twitter:image" content="https://dashiyo777-oss.github.io/my-portofolio/images/proposals/slide-blueprint.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -420,6 +433,241 @@
             letter-spacing: 1px;
         }
 
+        /* ── Membership ── */
+        #membership {
+            padding: 110px 0;
+            background: linear-gradient(150deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        #membership::after {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle at 18% 25%, rgba(200,129,58,0.16), transparent 42%),
+                              radial-gradient(circle at 82% 75%, rgba(200,129,58,0.12), transparent 45%);
+            pointer-events: none;
+        }
+        .mbr-wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .mbr-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+        .mbr-wrap h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .mbr-price {
+            font-size: 1.05rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+        }
+        .mbr-benefits {
+            display: inline-block;
+            text-align: left;
+            margin: 0 auto 32px;
+        }
+        .mbr-benefits li {
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 300;
+            line-height: 2.2;
+            padding-left: 26px;
+            position: relative;
+        }
+        .mbr-benefits li::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .mbr-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gold);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+        .mbr-cta:hover {
+            background: #e09a50;
+            transform: translateY(-2px);
+        }
+        .mbr-note {
+            font-size: 0.76rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 18px;
+        }
+
+        /* ── Services ── */
+        #services {
+            padding: 120px 0;
+            background-color: var(--white);
+        }
+        .services-head {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 56px;
+        }
+        .services-head .lead {
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.72;
+            font-weight: 300;
+        }
+        .svc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 820px;
+            margin: 0 auto 64px;
+        }
+        .svc-card {
+            border: 1px solid #e8e5df;
+            border-radius: 12px;
+            padding: 28px 26px;
+            background: var(--off-white);
+            transition: var(--transition);
+        }
+        .svc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+        }
+        .svc-card .ico {
+            width: 46px; height: 46px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--gold) 0%, #E0A868 100%);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+        .svc-card h3 {
+            font-size: 1.05rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .svc-card p {
+            font-size: 0.86rem;
+            color: var(--text);
+            opacity: 0.72;
+            font-weight: 300;
+            line-height: 1.9;
+        }
+        .svc-card .price {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px dashed #ddd8cf;
+            font-size: 0.8rem;
+            color: var(--navy-light);
+        }
+        .svc-flow-title {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .svc-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+        .svc-step {
+            flex: 1 1 150px;
+            text-align: center;
+            background: var(--off-white);
+            border-radius: 10px;
+            padding: 20px 14px;
+        }
+        .svc-step .n {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+        .svc-step .t {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 4px 0;
+        }
+        .svc-step .d {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ── Contact actions ── */
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+        .contact-btn.primary {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: var(--white);
+        }
+        .contact-btn.primary:hover {
+            background-color: #e09a50;
+            border-color: #e09a50;
+            color: var(--white);
+        }
+        .contact-note {
+            font-size: 0.78rem !important;
+            opacity: 0.45 !important;
+            margin-top: 28px !important;
+        }
+        .follow-block { margin-top: 44px; }
+        .follow-label {
+            font-size: 0.82rem !important;
+            opacity: 0.6 !important;
+            margin-bottom: 16px !important;
+        }
+        .contact-btn.yt { border-color: rgba(255,80,80,0.55); }
+        .contact-btn.yt:hover { background: #ff0000; border-color: #ff0000; color: #fff; }
+        .contact-btn.note { border-color: rgba(65,199,101,0.55); }
+        .contact-btn.note:hover { background: #41c765; border-color: #41c765; color: #fff; }
+
+        /* ── Footer social ── */
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+        .footer-social a {
+            color: rgba(255,255,255,0.45);
+            font-size: 1.2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .footer-social a:hover { color: var(--gold); transform: translateY(-2px); }
+
         /* ── Responsive ── */
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.4rem; }
@@ -430,6 +678,8 @@
             .works-header { flex-direction: column; align-items: flex-start; gap: 16px; }
             .header-inner { padding: 0 20px; }
             nav ul { gap: 20px; }
+            .svc-grid { grid-template-columns: 1fr; }
+            #services { padding: 90px 0; }
         }
     </style>
 </head>
@@ -443,6 +693,8 @@
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="works/" class="nav-works">Works</a></li>
+                    <li><a href="#membership" class="nav-works">Membership</a></li>
+                    <li><a href="#services">Services</a></li>
                     <li><a href="monetization-guide/">Guide</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><a href="profile/">Profile</a></li>
@@ -546,20 +798,112 @@
         </div>
     </section>
 
+    <!-- ── Membership ── -->
+    <section id="membership">
+        <div class="container">
+            <div class="mbr-wrap fade-in">
+                <p class="mbr-eyebrow">Membership</p>
+                <h2>🔑 Noteメンバーシップ</h2>
+                <p class="mbr-price">月300円 × 合言葉ひとつで、全サイト解錠。</p>
+                <ul class="mbr-benefits">
+                    <li>メンバー限定の特典記事が読み放題</li>
+                    <li>各コンテンツサイトの会員機能を、月替わりの合言葉ひとつで解錠</li>
+                    <li>「叡智の灯火」「賢人会議」などのロックを解除</li>
+                    <li>名作手帖・癒しのコーナー等のAI機能が使い放題</li>
+                </ul>
+                <div>
+                    <a href="https://note.com/leo77777/membership" target="_blank" rel="noopener noreferrer" class="mbr-cta" data-cta="membership">
+                        <i class="fas fa-crown"></i> Noteメンバーシップに加入する
+                    </a>
+                </div>
+                <p class="mbr-note">合言葉（TOMO-◯◯◯◯）は、noteメンバー限定記事で毎月公開しています</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Services ── -->
+    <section id="services">
+        <div class="container">
+            <div class="services-head fade-in">
+                <p class="section-label" style="text-align:center;">Services</p>
+                <h2 class="section-heading" style="margin-bottom:16px;">できること・ご依頼メニュー</h2>
+                <p class="lead">「正確に、丁寧に、最後まで」。AIと製造業の現場知見を掛け合わせ、資料・調査・デザイン・動画までワンストップで承ります。まずはお気軽にご相談ください。</p>
+            </div>
+
+            <div class="svc-grid fade-in">
+                <div class="svc-card">
+                    <div class="ico"><i class="fas fa-file-lines"></i></div>
+                    <h3>資料・レポート作成</h3>
+                    <p>プレゼン資料・提案書・インフォグラフィック・調査レポートを、伝わる構成で作成します。</p>
+                    <div class="price">内容に応じて<b style="color:var(--gold);">お見積り</b>／ご相談無料</div>
+                </div>
+                <div class="svc-card">
+                    <div class="ico"><i class="fas fa-magnifying-glass-chart"></i></div>
+                    <h3>市場調査・リサーチ</h3>
+                    <p>一次情報の裏取りを重視した市場・競合・データ調査と、意思決定に使える整理を行います。</p>
+                    <div class="price">内容に応じて<b style="color:var(--gold);">お見積り</b>／ご相談無料</div>
+                </div>
+                <div class="svc-card">
+                    <div class="ico"><i class="fas fa-pen-nib"></i></div>
+                    <h3>デザイン制作</h3>
+                    <p>ポスター・チラシ・ロゴ・バナーなど、目的に合わせて上品で伝わるビジュアルに。</p>
+                    <div class="price">内容に応じて<b style="color:var(--gold);">お見積り</b>／ご相談無料</div>
+                </div>
+                <div class="svc-card">
+                    <div class="ico"><i class="fas fa-clapperboard"></i></div>
+                    <h3>動画・コンテンツ発信</h3>
+                    <p>ショート動画・テロップ編集・SNS発信用のコンテンツ制作をトータルで支援します。</p>
+                    <div class="price">内容に応じて<b style="color:var(--gold);">お見積り</b>／ご相談無料</div>
+                </div>
+            </div>
+
+            <p class="svc-flow-title">ご依頼の流れ</p>
+            <div class="svc-flow fade-in">
+                <div class="svc-step"><div class="n">1</div><div class="t">ご相談</div><div class="d">内容・ご予算をお聞かせください</div></div>
+                <div class="svc-step"><div class="n">2</div><div class="t">お見積り</div><div class="d">範囲・納期・金額をご提示</div></div>
+                <div class="svc-step"><div class="n">3</div><div class="t">制作</div><div class="d">経過を共有しながら進行</div></div>
+                <div class="svc-step"><div class="n">4</div><div class="t">納品・修正</div><div class="d">ご満足いただくまで調整</div></div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── Contact ── -->
     <section id="contact">
         <div class="container">
             <p class="section-label" style="color: var(--gold); text-align:center;">Contact</p>
-            <h2 class="section-heading">お気軽にどうぞ</h2>
-            <p>情報発信中心ですが、ご意見あればSNSでコメントください。</p>
-            <a href="https://www.facebook.com/profile.php?id=61558753410397" target="_blank" rel="noopener noreferrer" class="contact-btn">
-                <i class="fab fa-facebook-f"></i> Facebookでつながる
-            </a>
+            <h2 class="section-heading">お仕事のご相談・お問い合わせ</h2>
+            <p>ご感想・ご質問、資料作成やデザインのご相談など、お気軽にどうぞ。</p>
+            <div class="contact-actions">
+                <a href="mailto:dashiyo777@gmail.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%88%E3%82%8A%EF%BC%89&body=%E2%97%8F%E3%81%94%E7%94%A8%E4%BB%B6%EF%BC%9A%0A" class="contact-btn primary" data-cta="mail">
+                    <i class="fas fa-envelope"></i> メールで連絡する
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61558753410397" target="_blank" rel="noopener noreferrer" class="contact-btn" data-cta="facebook">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+            </div>
+            <p class="contact-note">制作のご依頼は<a href="profile/" style="color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.35);">プロフィール</a>をご覧ください。／ Overseas clients welcome — feel free to email in English.</p>
+
+            <div class="follow-block">
+                <p class="contact-note follow-label">アプリ・最新コンテンツは、note と YouTube で発信中。フォローが最新情報の入口です。</p>
+                <div class="contact-actions">
+                    <a href="https://www.youtube.com/@datalab-d9u" target="_blank" rel="noopener noreferrer" class="contact-btn yt" data-cta="youtube">
+                        <i class="fab fa-youtube"></i> YouTube（DataLab）
+                    </a>
+                    <a href="https://note.com/leo77777" target="_blank" rel="noopener noreferrer" class="contact-btn note" data-cta="note">
+                        <i class="fas fa-pen-nib"></i> note
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- ── Footer ── -->
     <footer>
+        <div class="footer-social">
+            <a href="https://www.youtube.com/@datalab-d9u" target="_blank" rel="noopener noreferrer" aria-label="YouTube" data-cta="youtube"><i class="fab fa-youtube"></i></a>
+            <a href="https://note.com/leo77777" target="_blank" rel="noopener noreferrer" aria-label="note" data-cta="note"><i class="fas fa-pen-nib"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61558753410397" target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-cta="facebook"><i class="fab fa-facebook-f"></i></a>
+        </div>
         <p>&copy; 2026 Shigen Yoshida. All Rights Reserved.</p>
     </footer>
 
@@ -583,6 +927,14 @@
         }, { threshold: 0.15 });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // CTAクリック計測（どの導線が使われたかを counterapi で集計）
+        document.querySelectorAll('[data-cta]').forEach(el => {
+            el.addEventListener('click', () => {
+                const ns = 'cta-' + el.getAttribute('data-cta');
+                fetch('https://api.counterapi.dev/v1/dashiyo777oss/' + ns + '/up').catch(() => {});
+            });
+        });
 
         // 訪問カウンター（?admin 付きURLでのみ表示）
         fetch('https://api.counterapi.dev/v1/dashiyo777oss/portfolio/up')
