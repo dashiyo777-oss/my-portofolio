@@ -71,7 +71,10 @@ h1{font-size:clamp(25px,5.5vw,38px);font-weight:800;letter-spacing:.01em;line-he
 .gdp-row{display:flex;align-items:center;gap:10px;font-size:12.5px}
 .gdp-row .lbl{width:88px;flex:none;color:var(--ink2)}
 .gdp-row .track{flex:1;background:var(--plane);border:1px solid var(--border);border-radius:6px;height:16px;overflow:hidden}
-.gdp-row .fill{height:100%;background:var(--series);border-radius:6px}
+.gdp-row .fill{display:block;min-width:2px;height:100%;background:var(--series);border-radius:6px}
+.gdp-row .fill.o{background:var(--muted)}
+.cmp-h{font-weight:700;font-size:12.5px;margin:16px 0 6px}
+.cmp-h span{color:var(--muted);font-weight:400}
 .gdp-row .amt{width:92px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .gdp-row .amt b{color:var(--ink)}
 .gdp-hot{font-size:11.5px;color:var(--good);font-weight:700;margin-top:8px}
@@ -156,6 +159,81 @@ footer a{color:var(--accent)}
     </div>
     <div class="gdp-hot">★ 設備投資は約30年ぶりの高水準。直近の実質成長の牽引役です。</div>
     <p class="note-txt">出典：内閣府 国民経済計算（2020年基準・名目・暦年）。構成比は名目GDP約634兆円に対する概算。GDP＝個人消費＋投資＋政府支出＋純輸出。<b>牽引役の要約</b>：2023〜24年の実質成長は外需（輸出・インバウンド）と設備投資が主導、個人消費は物価高で弱い。※長期の項目別系列は2020年基準改定直後で未確定のため、ここでは2024年の内訳と牽引役に絞って掲載しています。</p>
+  </section>
+
+  <section class="summary" style="margin-top:16px">
+    <div class="sum-h">⚡ 特集：日本の電源構成とエネルギー自給</div>
+    <p class="sum-p">2022年度（発電電力量）の電源構成は <b>火力が72.7%</b>と依然主力で、<b>再エネ21.7%・原子力5.6%</b>。再エネは着実に増えていますが、化石燃料の多くを輸入に頼るため <b>エネルギー自給率は約13%とG7最低水準</b>です。</p>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl">火力</span><span class="track"><span class="fill o" style="width:72.7%"></span></span><span class="amt"><b>72.7</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">再エネ ★</span><span class="track"><span class="fill" style="width:21.7%"></span></span><span class="amt"><b>21.7</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">原子力</span><span class="track"><span class="fill o" style="width:5.6%"></span></span><span class="amt"><b>5.6</b>%</span></div>
+    </div>
+    <div class="gdp-hot">★ 再エネ内訳：太陽光9.2・水力7.6・バイオマス3.7・風力0.9・地熱0.3%（計21.7%）／火力内訳：LNG33.7・石炭30.8・石油等8.2%。</div>
+    <div class="cmp-h">再エネ比率の国際比較 <span>（2023年・水力を含む発電電力量ベース）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl" style="color:var(--series)"><b>日本</b></span><span class="track"><span class="fill" style="width:25.7%"></span></span><span class="amt"><b>25.7</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">ドイツ</span><span class="track"><span class="fill o" style="width:52%"></span></span><span class="amt"><b>52</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">イギリス</span><span class="track"><span class="fill o" style="width:46%"></span></span><span class="amt"><b>46</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">中国</span><span class="track"><span class="fill o" style="width:31%"></span></span><span class="amt"><b>31</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">フランス</span><span class="track"><span class="fill o" style="width:27%"></span></span><span class="amt"><b>27</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">アメリカ</span><span class="track"><span class="fill o" style="width:21%"></span></span><span class="amt"><b>21</b>%</span></div>
+    </div>
+    <p class="note-txt">出典：電源構成＝資源エネルギー庁『令和4年度エネルギー需給実績（確報）』（FY2022・3区分合計100.0%）、自給率＝同『エネルギー白書』、国際比較＝Ember／ISEP等（2023年暦年・水力含む）。ドイツは脱原発で再エネが主力、フランスは再エネ27%だが電源の約65%を原子力が占め低炭素電源比率は世界最高水準。中国・フランスは±2ポイント程度の不確実性あり。自給率の推移は「市況・資源」のカードも参照。</p>
+  </section>
+
+  <section class="summary" style="margin-top:16px">
+    <div class="sum-h">🌏 特集：主要指標の国際比較（日・米・中・独・英・韓）</div>
+    <p class="sum-p">日本を6か国と並べると、<b>高齢化は突出して高く</b>、<b>一人当たりGDPは円安で先進国最低クラス（韓国以下）</b>。<b>出生率は低いものの韓国が世界最低</b>、格差（ジニ）は<b>中位</b>です。国際機関ベースの数値で比較しています（棒は各グループの最大値を100%とした相対表示）。</p>
+
+    <div class="cmp-h">一人当たり名目GDP <span>（2024・USドル／World Bank）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl" style="color:var(--series)"><b>日本</b></span><span class="track"><span class="fill" style="width:37.8%"></span></span><span class="amt"><b>3.2</b>万$</span></div>
+      <div class="gdp-row"><span class="lbl">米国</span><span class="track"><span class="fill o" style="width:100%"></span></span><span class="amt"><b>8.6</b>万$</span></div>
+      <div class="gdp-row"><span class="lbl">ドイツ</span><span class="track"><span class="fill o" style="width:65%"></span></span><span class="amt"><b>5.6</b>万$</span></div>
+      <div class="gdp-row"><span class="lbl">英国</span><span class="track"><span class="fill o" style="width:61.3%"></span></span><span class="amt"><b>5.3</b>万$</span></div>
+      <div class="gdp-row"><span class="lbl">韓国</span><span class="track"><span class="fill o" style="width:42.3%"></span></span><span class="amt"><b>3.6</b>万$</span></div>
+      <div class="gdp-row"><span class="lbl">中国</span><span class="track"><span class="fill o" style="width:15.5%"></span></span><span class="amt"><b>1.3</b>万$</span></div>
+    </div>
+
+    <div class="cmp-h">高齢化率（65歳以上） <span>（2024・％／World Bank）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl" style="color:var(--series)"><b>日本</b></span><span class="track"><span class="fill" style="width:100%"></span></span><span class="amt"><b>29.8</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">ドイツ</span><span class="track"><span class="fill o" style="width:77.9%"></span></span><span class="amt"><b>23.2</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">英国</span><span class="track"><span class="fill o" style="width:65.4%"></span></span><span class="amt"><b>19.5</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">韓国</span><span class="track"><span class="fill o" style="width:64.8%"></span></span><span class="amt"><b>19.3</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">米国</span><span class="track"><span class="fill o" style="width:59.7%"></span></span><span class="amt"><b>17.8</b>%</span></div>
+      <div class="gdp-row"><span class="lbl">中国</span><span class="track"><span class="fill o" style="width:48%"></span></span><span class="amt"><b>14.3</b>%</span></div>
+    </div>
+
+    <div class="cmp-h">合計特殊出生率 <span>（2023・女性1人当たり／World Bank等）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl" style="color:var(--series)"><b>日本</b></span><span class="track"><span class="fill" style="width:74.1%"></span></span><span class="amt"><b>1.20</b></span></div>
+      <div class="gdp-row"><span class="lbl">米国</span><span class="track"><span class="fill o" style="width:100%"></span></span><span class="amt"><b>1.62</b></span></div>
+      <div class="gdp-row"><span class="lbl">英国</span><span class="track"><span class="fill o" style="width:88.9%"></span></span><span class="amt"><b>1.44</b></span></div>
+      <div class="gdp-row"><span class="lbl">ドイツ</span><span class="track"><span class="fill o" style="width:83.3%"></span></span><span class="amt"><b>1.35</b></span></div>
+      <div class="gdp-row"><span class="lbl">中国</span><span class="track"><span class="fill o" style="width:61.7%"></span></span><span class="amt"><b>約1.0</b></span></div>
+      <div class="gdp-row"><span class="lbl">韓国</span><span class="track"><span class="fill o" style="width:44.4%"></span></span><span class="amt"><b>0.72</b></span></div>
+    </div>
+
+    <div class="cmp-h">所得格差ジニ係数（可処分所得） <span>（0〜100・OECD／中国はWorld Bank・調査年混在）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl" style="color:var(--series)"><b>日本</b></span><span class="track"><span class="fill" style="width:84.6%"></span></span><span class="amt"><b>33.4</b></span></div>
+      <div class="gdp-row"><span class="lbl">米国</span><span class="track"><span class="fill o" style="width:100%"></span></span><span class="amt"><b>39.5</b></span></div>
+      <div class="gdp-row"><span class="lbl">中国</span><span class="track"><span class="fill o" style="width:90.4%"></span></span><span class="amt"><b>35.7</b></span></div>
+      <div class="gdp-row"><span class="lbl">英国</span><span class="track"><span class="fill o" style="width:89.6%"></span></span><span class="amt"><b>35.4</b></span></div>
+      <div class="gdp-row"><span class="lbl">韓国</span><span class="track"><span class="fill o" style="width:81.8%"></span></span><span class="amt"><b>32.3</b></span></div>
+      <div class="gdp-row"><span class="lbl">ドイツ</span><span class="track"><span class="fill o" style="width:76.2%"></span></span><span class="amt"><b>30.1</b></span></div>
+    </div>
+
+    <div class="cmp-h">時間当たり労働生産性 <span>（2024・USドルPPP／日本生産性本部・確認3か国）</span></div>
+    <div class="gdp-bars">
+      <div class="gdp-row"><span class="lbl" style="color:var(--series)"><b>日本</b></span><span class="track"><span class="fill" style="width:51.6%"></span></span><span class="amt"><b>60.1</b>$</span></div>
+      <div class="gdp-row"><span class="lbl">米国</span><span class="track"><span class="fill o" style="width:100%"></span></span><span class="amt"><b>116.5</b>$</span></div>
+      <div class="gdp-row"><span class="lbl">ドイツ</span><span class="track"><span class="fill o" style="width:84.9%"></span></span><span class="amt"><b>98.9</b>$</span></div>
+    </div>
+
+    <p class="note-txt">出典：一人当たりGDP・高齢化率＝World Bank（2024）、出生率＝World Bank／各国統計（2023、韓国0.72は世界最低）、ジニ係数＝OECD所得分配データベース（0〜1を100倍・調査年は国により異なる／中国はWorld Bankで厳密には非比較）、労働生産性＝日本生産性本部『労働生産性の国際比較2025』。米国・中国の一部は概算。<b>平均賃金の国際比較</b>は同一基準の信頼できる数値を確認できなかったため今回は掲載を見送りました（OECD概算では日本は加盟国で低位）。</p>
   </section>
 
   <main id="app"></main>
@@ -282,10 +360,43 @@ const DATA = [
  note:"北海ブレントのスポット年平均（ドル/バレル）。2015〜2023はEIA/Statistaの年平均を丸めた値（±1ドル以内）、2024・2025は精緻値。2022年はウクライナ侵攻で高騰、以後は落ち着き。エネルギーをほぼ輸入に頼る日本には価格変動の影響が大きい。"},
 {key:"rare_earths",title:"レアアース 中国の世界生産シェア",unit:"％",category:"市況・資源",src:"USGS Mineral Commodity Summaries",url:"https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-rare-earths.pdf",latest_year:2024,latest_value:69,trend:"up",verdict:"中立",vnote:"中国依存が高く供給リスク",
  series:[[2023,68],[2024,69]],
- note:"世界のレアアース鉱山生産量に占める中国のシェア（％、REO換算・USGS推計）。世界生産は2023年 約35万t→2024年 約39万t、うち中国が約27万t。中国は精製・分離工程でさらに支配的で、供給網の偏りは経済安全保障上のリスク。連続系列は2023・2024の2年のみ確認。"}
+ note:"世界のレアアース鉱山生産量に占める中国のシェア（％、REO換算・USGS推計）。世界生産は2023年 約35万t→2024年 約39万t、うち中国が約27万t。中国は精製・分離工程でさらに支配的で、供給網の偏りは経済安全保障上のリスク。連続系列は2023・2024の2年のみ確認。"},
+{key:"labour_productivity",title:"時間当たり労働生産性",unit:"ドル",category:"経済",src:"日本生産性本部 労働生産性の国際比較",url:"https://www.jpc-net.jp/research/list/comparison.html",latest_year:2024,latest_value:60.1,trend:"up",verdict:"中立",vnote:"上昇も主要国で最下位クラス（28位）",
+ series:[[2021,49.9],[2022,52.3],[2023,56.8],[2024,60.1]],
+ note:"就業1時間当たり付加価値（購買力平価換算・米ドル）。2024年は60.1ドルでOECD38カ国中28位。上昇傾向だがG7では最下位クラス（米国の約5割）。各年版でPPP改定・再計算されるため、版をまたぐ厳密な比較はできない点に注意。"},
+{key:"real_wage_index",title:"実質賃金指数",unit:"（2020=100）",category:"経済",src:"厚労省 毎月勤労統計",url:"https://www.mhlw.go.jp/toukei/list/30-1.html",latest_year:2024,latest_value:99.4,trend:"down",verdict:"悪化",vnote:"物価高で3〜4年連続マイナス",
+ series:[[2020,100.0],[2024,99.4]],
+ note:"名目賃金を物価で割り引いた購買力の指標（2020年平均=100）。物価上昇が賃上げを上回り2022〜2024年と3年連続で前年比マイナス、JILPT推計では2025年も-1.3%で4年連続マイナス。中間年（2021〜2023）の指数値は一次表を確認できず本表では省略（部分表示）。"},
+{key:"nonregular_ratio",title:"非正規雇用比率",unit:"％",category:"経済",src:"総務省 労働力調査（詳細集計）",url:"https://www.stat.go.jp/data/roudou/sokuhou/nen/dt/index.html",latest_year:2024,latest_value:36.8,trend:"flat",verdict:"中立",vnote:"雇用者の約4割・近年は横ばい〜微減",
+ series:[[2024,36.8]],
+ note:"役員を除く雇用者に占める非正規（パート・アルバイト・派遣・契約等）の割合。2024年は36.8%（正規3,654万人・非正規2,126万人）。2019年頃に約38%まで上昇後やや低下。過年度の年平均比率は一次表を確認できず本表では最新値のみ（部分表示）。"},
+{key:"rd_gdp",title:"研究費の対GDP比",unit:"％",category:"経済",src:"総務省 科学技術研究調査",url:"https://www.stat.go.jp/data/kagaku/kekka/index.html",latest_year:2023,latest_value:3.70,trend:"up",verdict:"改善",vnote:"過去最高・国際的に高水準（世界5位前後）",
+ series:[[2022,3.65],[2023,3.70]],
+ note:"国内の総研究費÷名目GDP（日本方式）。2023年度は3.70%で過去最高。国際比較用のOECD方式でも約3.44%と、イスラエル・韓国・スウェーデン・米国に次ぐ世界5位前後で高い部類。連続系列は確認できた年のみ（部分表示）。"},
+{key:"imd_rank",title:"IMD世界競争力ランキング（順位）",unit:"位",category:"経済",src:"IMD 世界競争力年鑑",url:"https://www.imd.org/centers/wcc/world-competitiveness-center/rankings/world-competitiveness-ranking/",latest_year:2025,latest_value:35,trend:"up",verdict:"悪化",vnote:"長期低下・2024は過去最低の38位",
+ series:[[2015,27],[2016,26],[2017,26],[2018,25],[2019,30],[2020,34],[2021,31],[2022,34],[2023,35],[2024,38],[2025,35]],
+ note:"数値は順位（小さいほど上位＝グラフが上がるほど競争力は低下）。日本はバブル期に世界1位だったが長期的に低下し、2024年は過去最低38位、2025年は35位へ小反発。対象は年により拡大（2025年は69カ国・地域）。低下の主因はビジネス・政府効率性とデジタル化の遅れ。"},
+{key:"renewable_share",title:"再生可能エネルギー比率（発電）",unit:"％",category:"市況・資源",src:"ISEP 環境エネルギー政策研究所",url:"https://www.isep.or.jp/archives/library/14885",latest_year:2023,latest_value:26.1,trend:"up",verdict:"改善",vnote:"着実に増加・2023年度は約26%",
+ series:[[2010,10.0],[2016,14.8],[2020,19.2],[2022,24.5],[2023,26.1]],
+ note:"年間発電電力量に占める再エネ（大規模水力を含む）の割合・ISEP推計。2023年度は26.1%（内訳：太陽光11.3・水力7.5・バイオマス5.9・風力1.1・地熱0.3）。過年度は暦年/年度・分母定義の差が混在するため近似値を含む。資源エネルギー庁の集計（下の特集の21.7%＝FY2022）とは方法が異なり差が出る。"},
+{key:"energy_self_sufficiency",title:"エネルギー自給率",unit:"％",category:"市況・資源",src:"資源エネルギー庁 エネルギー白書",url:"https://www.enecho.meti.go.jp/about/special/johoteikyo/first_learn_energy_self_sufficiency.html",latest_year:2022,latest_value:12.6,trend:"flat",verdict:"中立",vnote:"G7最低水準・震災後に急落し低迷",
+ series:[[2010,20.2],[2011,11.5],[2012,6.7],[2013,6.5],[2014,6.3],[2015,7.3],[2016,8.1],[2017,9.5],[2018,11.7],[2019,12.1],[2020,11.3],[2021,13.3],[2022,12.6]],
+ note:"一次エネルギー自給率（国産供給÷総供給・年度）。2011年の震災・原発停止で20.2%（2010年度）から急落し2014年度に過去最低6.3%、その後は再エネ拡大と原発再稼働で約12〜13%まで回復するも低迷。G7で最低水準（米国約104%・カナダ約186%）。石油・石炭・天然ガスの大半を輸入に依存。"},
+{key:"it_investment",title:"情報化投資額（民間企業・実質）",unit:"兆円",category:"デジタル・AI",src:"総務省 情報通信白書",url:"https://www.soumu.go.jp/johotsusintokei/whitepaper/",latest_year:2023,latest_value:16.0,trend:"up",verdict:"中立",vnote:"微増もICT投資は米国に大きく劣後",
+ series:[[2019,14.3],[2020,15.2],[2021,15.5],[2022,15.8],[2023,16.0]],
+ note:"民間企業の情報化投資額（実質・2015年価格）。2023年は16.0兆円（前年比-1.1%）、うちソフトウェアが9.8兆円で約6割。ハードは減・ソフトは増の構造だが、ICT投資全体は名目で1997年以降ほぼ横ばいで、継続的に増える米国に大きく劣後している。"},
+{key:"genai_individual",title:"生成AIの個人利用経験率",unit:"％",category:"デジタル・AI",src:"総務省 情報通信白書",url:"https://www.soumu.go.jp/johotsusintokei/whitepaper/",latest_year:2024,latest_value:26.7,trend:"up",verdict:"中立",vnote:"急増も米中に大きく遅れ",
+ series:[[2023,9.1],[2024,26.7]],
+ note:"生成AIを使ったことがある個人の割合（情報通信白書）。日本は2023年度9.1%→2024年度26.7%へ約3倍に急増したが、米国（46.3→68.8%）・中国（56.3→81.2%）・ドイツ（34.6→59.2%）を大きく下回り、普及は米中に明確に遅れる。調査2年分のみの短期系列（部分表示）。"},
+{key:"genai_enterprise",title:"企業の生成AI活用方針",unit:"％",category:"デジタル・AI",src:"総務省 情報通信白書",url:"https://www.soumu.go.jp/johotsusintokei/whitepaper/",latest_year:2024,latest_value:49.7,trend:"up",verdict:"中立",vnote:"約半数・米中独は6〜8割",
+ series:[[2023,42.7],[2024,49.7]],
+ note:"生成AIの活用方針（積極活用＋領域限定活用）を定めている企業の割合（情報通信白書）。2023年度42.7%→2024年度49.7%へ上昇。ただし米国・中国・ドイツでは6〜8割が活用方針を定めており、企業活用でも日本は約半数にとどまり遅れている。調査2年分のみの短期系列（部分表示）。"},
+{key:"gini",title:"所得再分配後ジニ係数",unit:"",category:"暮らし・安全",src:"厚労省 所得再分配調査",url:"https://www.mhlw.go.jp/toukei/list/96-1c.html",latest_year:2023,latest_value:0.3825,trend:"flat",verdict:"中立",vnote:"再分配後はほぼ横ばい",
+ series:[[2021,0.3813],[2023,0.3825]],
+ note:"ジニ係数は0（完全平等）〜1（完全不平等）。当初所得のジニ（2023年0.5855）は税・社会保障による再分配で0.3825まで大きく縮小し、再分配後は近年ほぼ横ばい。3年ごとの調査で、世帯ベースの再分配所得ジニ（等価可処分所得ベースとは定義が異なる）。連続系列は確認できた2調査年（部分表示）。"}
 ];
 
-const CATS = ["人口・家族","経済","市況・資源","教育","健康・いのち","暮らし・安全","観光"];
+const CATS = ["人口・家族","経済","市況・資源","デジタル・AI","教育","健康・いのち","暮らし・安全","観光"];
 const nf = new Intl.NumberFormat("ja-JP");
 const app = document.getElementById("app");
 const tip = document.getElementById("tip");
