@@ -152,7 +152,7 @@ footer a{color:var(--accent)}
   <div class="eyebrow">SOCIAL TREND ・ 日本</div>
   <h1>数字で見る、<br>日本は良くなってる？</h1>
   <p class="lead">人口・出生・物価・賃金・倒産・犯罪・訪日客——公式統計の実データで、社会の「推移」を一望。数字はすべて出典つき（捏造なし）。</p>
-  <p class="lead" style="margin-top:8px;font-size:12px;color:var(--muted)">🗓 最終更新：2026-07-17 ／ 更新のめやす：物価・失業率・為替などは<b>毎月</b>、GDPは<b>四半期</b>、人口動態・各種白書・犯罪などは<b>年1回</b>（詳細は各カードの注記・出典先を参照）。</p>
+  <p class="lead" style="margin-top:8px;font-size:12px;color:var(--muted)">🗓 最終更新：2026-07-18 ／ 更新のめやす：物価・失業率・為替などは<b>毎月</b>、GDPは<b>四半期</b>、人口動態・各種白書・国際ランキングなどは<b>年1回</b>（詳細は各カードの注記・出典先を参照）。</p>
 </header>
 
 <div class="wrap">
@@ -433,7 +433,7 @@ const DATA = [
 {key:"rd_gdp",title:"研究費の対GDP比",unit:"％",category:"経済",src:"総務省 科学技術研究調査",url:"https://www.stat.go.jp/data/kagaku/kekka/index.html",latest_year:2023,latest_value:3.70,trend:"up",verdict:"改善",vnote:"過去最高・国際的に高水準（世界5位前後）",
  series:[[2022,3.65],[2023,3.70]],
  note:"国内の総研究費÷名目GDP（日本方式）。2023年度は3.70%で過去最高。国際比較用のOECD方式でも約3.44%と、イスラエル・韓国・スウェーデン・米国に次ぐ世界5位前後で高い部類。連続系列は確認できた年のみ（部分表示）。"},
-{key:"imd_rank",title:"IMD世界競争力ランキング（順位）",unit:"位",category:"経済",src:"IMD 世界競争力年鑑",url:"https://www.imd.org/centers/wcc/world-competitiveness-center/rankings/world-competitiveness-ranking/",latest_year:2025,latest_value:35,trend:"up",verdict:"悪化",vnote:"長期低下・2024は過去最低の38位",
+{key:"imd_rank",title:"IMD世界競争力ランキング（順位）",unit:"位",category:"国際ランキング",src:"IMD 世界競争力年鑑",url:"https://www.imd.org/centers/wcc/world-competitiveness-center/rankings/world-competitiveness-ranking/",latest_year:2025,latest_value:35,trend:"up",verdict:"悪化",vnote:"長期低下・2024は過去最低の38位",
  series:[[2015,27],[2016,26],[2017,26],[2018,25],[2019,30],[2020,34],[2021,31],[2022,34],[2023,35],[2024,38],[2025,35]],
  note:"数値は順位（小さいほど上位＝グラフが上がるほど競争力は低下）。日本はバブル期に世界1位だったが長期的に低下し、2024年は過去最低38位、2025年は35位へ小反発。対象は年により拡大（2025年は69カ国・地域）。低下の主因はビジネス・政府効率性とデジタル化の遅れ。"},
 {key:"renewable_share",title:"再生可能エネルギー比率（発電）",unit:"％",category:"市況・資源",src:"ISEP 環境エネルギー政策研究所",url:"https://www.isep.or.jp/archives/library/14885",latest_year:2023,latest_value:26.1,trend:"up",verdict:"改善",vnote:"着実に増加・2023年度は約26%",
@@ -453,10 +453,28 @@ const DATA = [
  note:"生成AIの活用方針（積極活用＋領域限定活用）を定めている企業の割合（情報通信白書）。2023年度42.7%→2024年度49.7%へ上昇。ただし米国・中国・ドイツでは6〜8割が活用方針を定めており、企業活用でも日本は約半数にとどまり遅れている。調査2年分のみの短期系列（部分表示）。"},
 {key:"gini",title:"所得再分配後ジニ係数",unit:"",category:"暮らし・安全",src:"厚労省 所得再分配調査",url:"https://www.mhlw.go.jp/toukei/list/96-1c.html",latest_year:2023,latest_value:0.3825,trend:"flat",verdict:"中立",vnote:"再分配後はほぼ横ばい",
  series:[[2021,0.3813],[2023,0.3825]],
- note:"ジニ係数は0（完全平等）〜1（完全不平等）。当初所得のジニ（2023年0.5855）は税・社会保障による再分配で0.3825まで大きく縮小し、再分配後は近年ほぼ横ばい。3年ごとの調査で、世帯ベースの再分配所得ジニ（等価可処分所得ベースとは定義が異なる）。連続系列は確認できた2調査年（部分表示）。"}
+ note:"ジニ係数は0（完全平等）〜1（完全不平等）。当初所得のジニ（2023年0.5855）は税・社会保障による再分配で0.3825まで大きく縮小し、再分配後は近年ほぼ横ばい。3年ごとの調査で、世帯ベースの再分配所得ジニ（等価可処分所得ベースとは定義が異なる）。連続系列は確認できた2調査年（部分表示）。"},
+{key:"rank_happiness",title:"世界幸福度ランキング（日本）",unit:"位",category:"国際ランキング",src:"World Happiness Report（UN SDSN/Gallup/Oxford）",url:"https://worldhappiness.report/",latest_year:2025,latest_value:55,trend:"up",verdict:"中立",vnote:"G7最下位・近年やや後退",
+ series:[[2019,58],[2022,54],[2023,47],[2024,51],[2025,55]],
+ note:"数値は順位（小さいほど上位）。2025年版で147カ国・地域中55位。フィンランドが8年連続1位。日本はG7最下位だが韓国・中国よりは上位。年により対象国数（分母）が変動。2020・2021年版は未確認のため除外。"},
+{key:"rank_university",title:"世界大学ランキング（東京大学・QS）",unit:"位",category:"国際ランキング",src:"QS World University Rankings",url:"https://www.topuniversities.com/world-university-rankings",latest_year:2027,latest_value:39,trend:"up",verdict:"悪化",vnote:"東大のQS順位は低下傾向",
+ series:[[2022,23],[2023,23],[2024,28],[2025,32],[2026,36],[2027,39]],
+ note:"数値は東京大学のQS世界順位（約1,500校中・小さいほど上位／版の年で表記）。2022年23位→2027年版39位と低下傾向。※THE（Times Higher Education）では逆に上昇し2026年版で過去最高26位。世界トップ100の日本の大学数はTHEで2校、QS2026で4校。ランキングにより順位も校数も異なります。"},
+{key:"rank_peace",title:"世界平和度指数（日本）",unit:"位",category:"国際ランキング",src:"Institute for Economics & Peace（Vision of Humanity）",url:"https://www.visionofhumanity.org/maps/",latest_year:2025,latest_value:12,trend:"down",verdict:"中立",vnote:"長年トップ圏・2024に後退も回復",
+ series:[[2019,9],[2022,10],[2023,9],[2024,17],[2025,12]],
+ note:"数値は順位（小さいほど上位）。2025年版で163カ国・地域中12位、アジア太平洋3位。2024年版は17位に後退したが2025年版で持ち直し。低犯罪・国内紛争の少なさが評価。2020・2021年版は未確認のため除外。"},
+{key:"rank_best_countries",title:"世界最高の国ランキング（日本）",unit:"位",category:"国際ランキング",src:"U.S. News & World Report / BAV / Wharton",url:"https://www.usnews.com/news/best-countries",latest_year:2026,latest_value:17,trend:"up",verdict:"中立",vnote:"2026年版で手法刷新・連続比較不可",
+ series:[[2026,17]],
+ note:"数値は順位（小さいほど上位）。2026年版で100カ国中17位（1位スイス、日本はHealth5位・Civic Health2位が高評価）。※2026年版で調査手法が『専門家アンケート型』から『100指標のデータ駆動型』へ全面刷新されたため、2023年6位・2024年2位（旧手法）とは直接比較できません。2025年版は発行なし。連続系列は示せないため最新値のみ（部分表示）。"},
+{key:"rank_passport",title:"パスポートランキング（日本）",unit:"位",category:"国際ランキング",src:"Henley Passport Index（Henley & Partners）",url:"https://www.henleyglobal.com/passport-index",latest_year:2025,latest_value:2,trend:"up",verdict:"中立",vnote:"長年1位→2025に後退",
+ series:[[2022,1],[2023,1],[2024,1],[2025,2]],
+ note:"数値は順位（小さいほど上位）。ビザなし渡航先数の多さで評価（全227カ国）。日本は2018〜2023年ごろ首位圏を維持したが、2025年Q1は193カ国で2位、同年10月には189カ国で3位へ後退。四半期ごとに更新され順位が動く点に注意。"},
+{key:"rank_global_ai",title:"Global AI Index（日本）",unit:"位",category:"国際ランキング",src:"Tortoise Media",url:"https://www.tortoisemedia.com/data/global-ai/",latest_year:2024,latest_value:11,trend:"flat",verdict:"中立",vnote:"83カ国中11位・実力比では過小評価との指摘",
+ series:[[2024,11]],
+ note:"数値は順位（小さいほど上位）。2024年版（第5版）で83カ国中11位。投資・革新・実装の3本柱でAI能力を測定。半導体基盤は上位だが、経済規模・富の割にAIで過小評価（underperformer）との指摘。過去年（2019〜2023）は未確認のため最新値のみ（部分表示）。2025年版は未発行。"}
 ];
 
-const CATS = ["人口・家族","経済","市況・資源","デジタル・AI","教育","健康・いのち","暮らし・安全","観光"];
+const CATS = ["人口・家族","経済","市況・資源","デジタル・AI","国際ランキング","教育","健康・いのち","暮らし・安全","観光"];
 const nf = new Intl.NumberFormat("ja-JP");
 const app = document.getElementById("app");
 const tip = document.getElementById("tip");
