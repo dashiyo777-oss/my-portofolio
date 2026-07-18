@@ -427,7 +427,7 @@ const P=(ja,en,es)=>{if(LANG==="ja")return ja;if(LANG==="es")return es;if(LANG==
 function setLang(l){DB.lang=l;save();location.reload();}
 function cycleLang(){setLang(LANGS[(LANGS.indexOf(LANG)+1)%LANGS.length]);}
 
-/* ====== 會員（大花園）ゲート ====== */
+/* ====== 会員（大花園）ゲート ====== */
 const MEMBER={
  CODES:{
   "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
@@ -604,7 +604,7 @@ function renderHome(){
     </div>
     <div class="card" style="display:flex;align-items:center;gap:12px;border:1px solid rgba(233,196,106,.85);background:linear-gradient(135deg,#FFFDF4,#FFF6DC)">
       <div style="font-size:28px">🌸🌸</div>
-      <div style="flex:1"><b>${P("大花園","Grand Garden","Gran Jardín")} <span style="font-size:10px;background:var(--shu);color:#fff;border-radius:4px;padding:2px 6px;vertical-align:2px;font-family:'Shippori Mincho B1',serif">會員</span></b>
+      <div style="flex:1"><b>${P("大花園","Grand Garden","Gran Jardín")} <span style="font-size:10px;background:var(--shu);color:#fff;border-radius:4px;padding:2px 6px;vertical-align:2px;font-family:'Shippori Mincho B1',serif">会員</span></b>
         <div class="muted small">${isMember()?((DB.hana.best5||0)?P("最高 ","Best ","Récord ")+(DB.hana.best5||0).toLocaleString():P("解錠済み・5×5の静かな別邸","Unlocked — a serene 5×5 retreat","Desbloqueado — un sereno refugio 5×5")):P("5×5の大盤。月替わり合言葉で解錠","A grand 5×5 board. Unlock with the monthly passcode","Tablero 5×5. Desbloquea con la contraseña mensual")}</div></div>
       <button class="btn" style="width:auto;padding:10px 16px;font-size:14px;background:linear-gradient(180deg,#E9C46A,#C99B2D);color:#4A3A16;box-shadow:0 3px 0 rgba(140,100,30,.5)" onclick="startHana5()">${isMember()?P("遊ぶ","Play","Jugar"):P("解錠","Unlock","Abrir")}</button>
     </div>
@@ -1408,7 +1408,7 @@ function showGate(){
   openOverlay("🌸🌸 "+P("大花園","Grand Garden","Gran Jardín"));
   gArea().innerHTML=`
     <div class="fade-in center" style="width:min(340px,88vw)">
-      <div style="width:74px;height:74px;margin:0 auto 10px;border:2px solid var(--shu);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--shu);font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px">會員</div>
+      <div style="width:74px;height:74px;margin:0 auto 10px;border:2px solid var(--shu);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--shu);font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px">会員</div>
       <h2 class="mincho" style="font-size:19px;margin-bottom:6px">${P("大花園に入る","Enter the Grand Garden","Entrar al Gran Jardín")}</h2>
       <p class="muted" style="margin-bottom:4px">${P("5×5の大盤で、じっくり大輪を咲かせる——叡智の灯火の会員特典です。","A serene 5×5 board for slow, grand blooms — a member perk from Eichi no Hi.","Un sereno tablero 5×5 para grandes flores — beneficio para miembros de Eichi no Hi.")}</p>
       <p class="muted small" style="margin-bottom:12px">${P("今月の合言葉（TOMO-XXXX）を入力してください。","Enter this month&#39;s passcode (TOMO-XXXX).","Escribe la contraseña del mes (TOMO-XXXX).")}</p>
