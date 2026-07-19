@@ -98,6 +98,17 @@
     color:var(--ink);max-width:760px;border:none}
   .philo .src{margin-top:20px;color:var(--ink2);font-size:.95rem}
 
+  /* Unlock / members */
+  .unlock-box{margin-top:28px;border:1px solid var(--line);border-radius:18px;background:var(--card);
+    padding:32px 30px;max-width:560px}
+  .price-tag{font-family:var(--serif);font-size:2.6rem;color:var(--amber2);line-height:1}
+  .price-tag span{font-size:.9rem;color:var(--muted);font-family:var(--sans);letter-spacing:.04em}
+  .perks{list-style:none;margin:20px 0 24px;padding:0}
+  .perks li{position:relative;padding-left:26px;margin:9px 0;color:var(--ink2);font-size:.96rem}
+  .perks li::before{content:"🔑";position:absolute;left:0;font-size:.8rem;top:4px}
+  .how{margin-top:18px;color:var(--muted);font-size:.85rem;line-height:1.75}
+  .btn.soon{opacity:.7;pointer-events:none;border-style:dashed}
+
   /* Support */
   .support .lead{margin-bottom:26px}
 
@@ -281,6 +292,28 @@
   </div>
 </section>
 
+<!-- UNLOCK / MEMBERS -->
+<section id="unlock">
+  <div class="wrap">
+    <p class="eyebrow">Members</p>
+    <h2>Unlock Eichi no Tomoshibi</h2>
+    <p class="lead">Beyond the free notebooks lies the full lamp — the members’ area of <b>Eichi no Tomoshibi</b> (叡智の灯火) and <b>Kenjin Kaigi</b>, dialogues with the great minds of history. One key opens them all.</p>
+    <div class="unlock-box">
+      <div class="price-tag">$3 <span>/ month</span></div>
+      <ul class="perks">
+        <li>The members’ area of Eichi no Tomoshibi</li>
+        <li>Kenjin Kaigi — conversations with historical figures</li>
+        <li>Premium features unlocked across the notebooks</li>
+        <li>No extra fees as new tools are added</li>
+      </ul>
+      <div class="cta-row" style="justify-content:flex-start">
+        <a class="btn primary soon" href="#" rel="noopener">🔓 Unlock on Gumroad — opening soon</a>
+      </div>
+      <p class="how"><b>How it works:</b> 1) Join on Gumroad · 2) Receive the monthly passphrase (updated each month) · 3) Enter it on the site to unlock everything. Cancel anytime.</p>
+    </div>
+  </div>
+</section>
+
 <!-- SUPPORT -->
 <section class="support" id="support">
   <div class="wrap">
@@ -328,7 +361,7 @@
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
-  document.querySelectorAll('section h2, section .lead, .release, .videos, .grid, .free-note, .philo blockquote, .philo .src, .support .cta-row')
+  document.querySelectorAll('section h2, section .lead, .release, .videos, .grid, .free-note, .philo blockquote, .philo .src, .unlock-box, .support .cta-row')
     .forEach(el => { el.classList.add('reveal'); io.observe(el); });
 </script>
 
