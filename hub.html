@@ -131,16 +131,21 @@
     filter:drop-shadow(0 0 14px rgba(224,164,75,.22));animation:sway 12s ease-in-out infinite;transform-origin:bottom center}
   .band{font-family:var(--serif);font-size:1.5rem;letter-spacing:.14em;color:var(--amber2);margin-bottom:2px}
   .release{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:36px;align-items:center;margin-top:22px}
+  @keyframes coverGlow{0%,100%{box-shadow:0 24px 64px rgba(0,0,0,.55),0 0 0 rgba(224,164,75,0)}
+    50%{box-shadow:0 24px 64px rgba(0,0,0,.55),0 0 42px rgba(224,164,75,.20)}}
   .cover{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);display:block;
-    box-shadow:0 24px 64px rgba(0,0,0,.55)}
+    box-shadow:0 24px 64px rgba(0,0,0,.55);animation:coverGlow 7.5s ease-in-out infinite}
   .release-info .band{margin-bottom:4px}
   .release-info h2{margin:2px 0 14px}
   @media(max-width:760px){.release{grid-template-columns:1fr;gap:22px}}
-  .videos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;max-width:720px}
-  .vid{position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .yt-more{margin-top:66px;padding-top:40px;border-top:1px solid var(--line)}
+  .yt-label{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    text-align:center;margin-bottom:24px}
+  .videos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:440px;margin:0 auto}
+  .vid{position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
   .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
   @media(prefers-reduced-motion:reduce){
-    .ember,.lantern,.lantern .glow,.wave,.halo,.cat{animation:none}
+    .ember,.lantern,.lantern .glow,.wave,.halo,.cat,.cover{animation:none}
     .reveal{opacity:1;transform:none;transition:none}
     .halo{opacity:.5}
   }
@@ -206,14 +211,16 @@
         </div>
       </div>
     </div>
-    <div class="videos">
-      <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/p3KjsxdFeJw" title="Thinking Cats — jazz (1)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-      <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/G8h9ea7mgh8" title="Thinking Cats — jazz (2)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-      <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/pZAhXWDdT7E" title="Thinking Cats — jazz (3)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-    </div>
-    <div class="follow">
-      <a href="https://www.youtube.com/channel/UCA5KBf68PXn0Y2eUCMyAhcg" target="_blank" rel="noopener">▶ Subscribe · Thinking Cats on YouTube</a>
-      <a class="ph" href="#" rel="noopener">♪ Spotify — from Aug 1</a>
+    <div class="yt-more">
+      <div class="yt-label">More from Thinking Cats · short clips on YouTube</div>
+      <div class="videos">
+        <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/p3KjsxdFeJw" title="Thinking Cats — clip 1" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/G8h9ea7mgh8" title="Thinking Cats — clip 2" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/pZAhXWDdT7E" title="Thinking Cats — clip 3" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      </div>
+      <div class="follow" style="justify-content:center">
+        <a href="https://www.youtube.com/channel/UCA5KBf68PXn0Y2eUCMyAhcg" target="_blank" rel="noopener">▶ Subscribe · Thinking Cats on YouTube</a>
+      </div>
     </div>
   </div>
 </section>
