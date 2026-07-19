@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lampwise 灯火 — Quiet tools & music from Japan</title>
+<meta name="description" content="Lampwise (灯火) — a small studio from Japan. Quiet browser tools for a sharper, calmer mind, and original jazz. Light for the mind.">
+<link rel="canonical" href="https://dashiyo777-oss.github.io/my-portofolio/hub.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lampwise 灯火">
+<meta property="og:title" content="Lampwise 灯火 — Quiet tools & music from Japan">
+<meta property="og:description" content="Light for the mind. Quiet browser tools and original jazz, from Japan.">
+<meta property="og:url" content="https://dashiyo777-oss.github.io/my-portofolio/hub.html">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --bg:#14110d; --bg2:#1c1813; --card:#211c16; --line:#332c22;
+    --ink:#f3ede1; --ink2:#c3b9a7; --muted:#8c8172;
+    --amber:#e0a44b; --amber2:#f0c07a;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.75;
+    -webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .amber{color:var(--amber)}
+
+  /* Hero */
+  header.hero{position:relative;overflow:hidden;text-align:center;
+    padding:120px 24px 96px;
+    background:
+      radial-gradient(700px 380px at 50% -8%, rgba(224,164,75,.22), transparent 70%),
+      linear-gradient(180deg,#17130e,#14110d)}
+  .lamp{font-size:44px;line-height:1;filter:drop-shadow(0 0 22px rgba(224,164,75,.55));margin-bottom:18px}
+  header.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,6vw,4rem);
+    letter-spacing:.02em;line-height:1.1}
+  header.hero h1 .jp{display:block;font-size:.5em;color:var(--amber2);letter-spacing:.5em;
+    margin-top:10px;padding-left:.5em}
+  header.hero p.tag{margin:22px auto 0;max-width:620px;color:var(--ink2);font-size:1.08rem}
+  header.hero p.sub{margin-top:8px;color:var(--muted);font-size:.9rem;letter-spacing:.04em}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:40px;
+    font-size:.92rem;font-weight:600;border:1px solid var(--line);transition:.25s}
+  .btn.primary{background:var(--amber);color:#1a1206;border-color:var(--amber)}
+  .btn.primary:hover{background:var(--amber2);transform:translateY(-2px)}
+  .btn.ghost{color:var(--ink);border-color:#4a4032}
+  .btn.ghost:hover{border-color:var(--amber);color:var(--amber2)}
+
+  section{padding:86px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--amber);
+    margin-bottom:14px}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;
+    margin-bottom:16px}
+  .lead{color:var(--ink2);max-width:640px;font-size:1.05rem}
+
+  /* Music */
+  .music-badge{display:inline-block;margin-bottom:20px;padding:5px 14px;border-radius:30px;
+    background:rgba(224,164,75,.12);border:1px solid rgba(224,164,75,.4);color:var(--amber2);
+    font-size:.8rem;letter-spacing:.06em}
+  .tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+  .track{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+    position:relative;overflow:hidden}
+  .track .no{font-family:var(--serif);font-size:2.4rem;color:#4a4032;line-height:1}
+  .track h3{font-size:1.05rem;margin:10px 0 4px;font-weight:600}
+  .track p{color:var(--muted);font-size:.86rem}
+  .track .soon{margin-top:16px;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+  .follow{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .follow a{font-size:.85rem;color:var(--ink2);border:1px solid var(--line);border-radius:30px;
+    padding:9px 18px;transition:.25s}
+  .follow a:hover{border-color:var(--amber);color:var(--amber2)}
+
+  /* Notebooks */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+  .app{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 24px;transition:.25s}
+  .app:hover{border-color:var(--amber);transform:translateY(-3px)}
+  .app .ico{font-size:30px}
+  .app h3{font-size:1.08rem;margin:14px 0 6px;font-weight:600}
+  .app .en{color:var(--amber2);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+  .app p{color:var(--ink2);font-size:.88rem;margin-top:8px}
+  .app .go{margin-top:14px;color:var(--amber);font-size:.82rem}
+  .free-note{margin-top:26px;color:var(--muted);font-size:.86rem}
+
+  /* Philosophy */
+  .philo{background:linear-gradient(180deg,#1a1610,#16120d)}
+  .philo blockquote{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.8rem);line-height:1.5;
+    color:var(--ink);max-width:760px;border:none}
+  .philo .src{margin-top:20px;color:var(--ink2);font-size:.95rem}
+
+  /* Support */
+  .support .lead{margin-bottom:26px}
+
+  footer{padding:56px 24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);
+    font-size:.85rem}
+  footer .links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  footer a:hover{color:var(--amber2)}
+  .ph{outline:1px dashed #5b4e39}/* marks placeholders to fill later */
+
+  @media(max-width:760px){
+    .tracks,.grid{grid-template-columns:1fr}
+    section{padding:64px 0}
+    header.hero{padding:88px 20px 72px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="lamp">🏮</div>
+    <h1>Lampwise<span class="jp">灯火</span></h1>
+    <p class="tag">Light for the mind — quiet browser tools and original jazz, made in Japan.</p>
+    <p class="sub">A tiny studio for a sharper, calmer everyday.</p>
+    <div class="cta-row">
+      <a href="#music" class="btn primary">🎷 The Music</a>
+      <a href="#tools" class="btn ghost">The Notebooks</a>
+    </div>
+  </div>
+</header>
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="wrap">
+    <p class="eyebrow">The Music</p>
+    <span class="music-badge">🎷 New jazz — arriving August 1, 2026</span>
+    <h2>Three jazz pieces,<br>for quiet hours.</h2>
+    <p class="lead">Three original jazz tracks to sit beside your coffee, your notebook, or the end of a long day. Streaming everywhere from August 1st.</p>
+    <div class="tracks">
+      <div class="track"><div class="no">01</div><h3 class="ph">Track title — TBA</h3><p>A slow, warm opener.</p><div class="soon">Coming Aug 1</div></div>
+      <div class="track"><div class="no">02</div><h3 class="ph">Track title — TBA</h3><p>Late-night piano &amp; brush.</p><div class="soon">Coming Aug 1</div></div>
+      <div class="track"><div class="no">03</div><h3 class="ph">Track title — TBA</h3><p>A quiet, hopeful close.</p><div class="soon">Coming Aug 1</div></div>
+    </div>
+    <div class="follow">
+      <a class="ph" href="#" rel="noopener">▶ YouTube — follow (link Aug 1)</a>
+      <a class="ph" href="#" rel="noopener">♪ Spotify — follow (link Aug 1)</a>
+      <a class="ph" href="#" rel="noopener">◎ Buy / support (Bandcamp — TBA)</a>
+    </div>
+  </div>
+</section>
+
+<!-- NOTEBOOKS -->
+<section id="tools">
+  <div class="wrap">
+    <p class="eyebrow">The Notebooks</p>
+    <h2>Quiet tools for<br>a sharper mind.</h2>
+    <p class="lead">Small browser apps — no install, no account. Train your brain, or simply keep a beautiful record of the things you love. English editions, free to use.</p>
+    <div class="grid">
+      <a class="app" href="https://ryuzaburo7.itch.io/sae-techo" target="_blank" rel="noopener">
+        <div class="ico">🧠</div><span class="en">Brain Dojo</span>
+        <h3>SAE Techo</h3>
+        <p>3-minute daily brain training. Test, track, and sharpen your mind.</p>
+        <div class="go">Play on itch.io →</div></a>
+      <a class="app" href="coffee-techo-en.html" target="_blank" rel="noopener">
+        <div class="ico">☕</div><span class="en">Kissaten</span>
+        <h3>Coffee Notebook</h3>
+        <p>Record every cup — beans, brew, and mood — like your own café journal.</p>
+        <div class="go">Open →</div></a>
+      <a class="app" href="sake-notebook-en.html" target="_blank" rel="noopener">
+        <div class="ico">🍶</div><span class="en">Izakaya</span>
+        <h3>Sake Notebook</h3>
+        <p>Keep tasting notes for sake and drinks, one quiet evening at a time.</p>
+        <div class="go">Open →</div></a>
+      <a class="app" href="amami-techo-en.html" target="_blank" rel="noopener">
+        <div class="ico">🍰</div><span class="en">The Sweet Notebook</span>
+        <h3>Sweets Notebook</h3>
+        <p>A little diary for desserts and small joys worth remembering.</p>
+        <div class="go">Open →</div></a>
+      <a class="app" href="wadai-karuta-en.html" target="_blank" rel="noopener">
+        <div class="ico">🃏</div><span class="en">Conversation Cards</span>
+        <h3>Talk Karuta</h3>
+        <p>Draw a card, spark a conversation. Warm-ups for any table.</p>
+        <div class="go">Open →</div></a>
+      <a class="app" href="doubutsu-techo.html?lang=en" target="_blank" rel="noopener">
+        <div class="ico">🦊</div><span class="en">Fauna</span>
+        <h3>Animal Notebook</h3>
+        <p>Observe, note, and delight in the creatures you meet.</p>
+        <div class="go">Open →</div></a>
+    </div>
+    <p class="free-note">All notebooks are free to use in your browser. A small studio, made with care in Japan.</p>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philo">
+  <div class="wrap">
+    <p class="eyebrow">The Idea</p>
+    <blockquote>“A lamp doesn’t shout. It just makes the next small step visible.”</blockquote>
+    <p class="src">Everything here grows from one idea — <span class="amber">Eichi no Tomoshibi (叡智の灯火)</span>, “the lamp of wisdom”: gentle tools and music that make daily life a little clearer, a little calmer.</p>
+    <div class="cta-row" style="justify-content:flex-start;margin-top:28px">
+      <a href="https://eichinohi.com/" target="_blank" rel="noopener" class="btn ghost">Visit Eichi no Tomoshibi →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section class="support" id="support">
+  <div class="wrap">
+    <p class="eyebrow">Support</p>
+    <h2>Keep the lamp lit.</h2>
+    <p class="lead">If any of this made your day a little better, the kindest support is simple: listen to the music when it arrives, and share a notebook with a friend.</p>
+    <div class="cta-row" style="justify-content:flex-start">
+      <a href="#music" class="btn primary">🎷 Hear the music (Aug 1)</a>
+      <a class="btn ghost ph" href="#" rel="noopener">☕ Tip jar (Ko-fi — TBA)</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="links">
+    <a href="#music">Music</a>
+    <a href="#tools">Notebooks</a>
+    <a href="https://eichinohi.com/" target="_blank" rel="noopener">Eichi no Tomoshibi</a>
+    <a href="https://ryuzaburo7.itch.io/sae-techo" target="_blank" rel="noopener">itch.io</a>
+  </div>
+  Lampwise 灯火 — quiet tools &amp; music from Japan.<br>
+  © 2026 Eichi no Tomoshibi. Light for the mind.
+</footer>
+
+</body>
+</html>
