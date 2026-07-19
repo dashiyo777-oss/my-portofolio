@@ -100,6 +100,35 @@
   footer a:hover{color:var(--amber2)}
   .ph{outline:1px dashed #5b4e39}/* marks placeholders to fill later */
 
+  /* ── ambient motion & decorative art ── */
+  @keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:0}12%{opacity:.85}100%{transform:translateY(-140px) scale(.35);opacity:0}}
+  @keyframes glowPulse{0%,100%{filter:drop-shadow(0 0 16px rgba(224,164,75,.45))}50%{filter:drop-shadow(0 0 30px rgba(224,164,75,.85))}}
+  @keyframes sway{0%,100%{transform:rotate(-2.4deg)}50%{transform:rotate(2.4deg)}}
+  @keyframes waveMove{to{stroke-dashoffset:-400}}
+  @keyframes haloBreathe{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.85;transform:scale(1.08)}}
+  .embers{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .ember{position:absolute;bottom:-12px;border-radius:50%;
+    background:radial-gradient(circle,#f4cd8a,rgba(224,164,75,.15));animation:floatUp linear infinite}
+  header.hero .wrap{position:relative;z-index:1}
+  .halo{position:absolute;top:78px;left:50%;width:280px;height:280px;transform:translateX(-50%);
+    background:radial-gradient(circle,rgba(224,164,75,.28),transparent 68%);
+    animation:haloBreathe 6s ease-in-out infinite;pointer-events:none;z-index:0}
+  .lantern{width:64px;height:auto;margin:0 auto 18px;display:block;transform-origin:top center;
+    animation:sway 6s ease-in-out infinite;position:relative;z-index:1}
+  .lantern .glow{animation:glowPulse 4.2s ease-in-out infinite;transform-origin:center}
+  .wave{width:100%;max-width:520px;height:54px;margin-top:32px;overflow:visible;opacity:.85}
+  .wave path{fill:none;stroke:var(--amber);stroke-width:2;stroke-linecap:round;
+    stroke-dasharray:7 7;animation:waveMove 7s linear infinite}
+  .reveal{transition:opacity .8s ease,transform .8s ease}
+  .js .reveal{opacity:0;transform:translateY(26px)}
+  .reveal.in{opacity:1;transform:none}
+  .note-float{position:absolute;color:rgba(224,164,75,.5);animation:floatUp linear infinite;pointer-events:none}
+  @media(prefers-reduced-motion:reduce){
+    .ember,.lantern,.lantern .glow,.wave path,.halo,.note-float{animation:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    .halo{opacity:.6}
+  }
+
   @media(max-width:760px){
     .tracks,.grid{grid-template-columns:1fr}
     section{padding:64px 0}
@@ -110,8 +139,29 @@
 <body>
 
 <header class="hero">
+  <div class="embers" id="embers"></div>
+  <div class="halo"></div>
   <div class="wrap">
-    <div class="lamp">🏮</div>
+    <svg class="lantern" viewBox="0 0 80 116" aria-hidden="true">
+      <defs>
+        <radialGradient id="lg" cx="50%" cy="42%" r="62%">
+          <stop offset="0%" stop-color="#ffe9b8"/>
+          <stop offset="52%" stop-color="#ec962f"/>
+          <stop offset="100%" stop-color="#b0511a"/>
+        </radialGradient>
+      </defs>
+      <g class="glow">
+        <rect x="33" y="2" width="14" height="7" rx="2.5" fill="#5b4e39"/>
+        <ellipse cx="40" cy="60" rx="30" ry="47" fill="url(#lg)"/>
+        <g stroke="rgba(84,34,8,.42)" stroke-width="1.5" fill="none">
+          <line x1="13" y1="42" x2="67" y2="42"/>
+          <line x1="10" y1="60" x2="70" y2="60"/>
+          <line x1="13" y1="78" x2="67" y2="78"/>
+        </g>
+        <rect x="33" y="103" width="14" height="8" rx="2.5" fill="#5b4e39"/>
+        <line x1="40" y1="111" x2="40" y2="116" stroke="#5b4e39" stroke-width="2"/>
+      </g>
+    </svg>
     <h1>Lampwise<span class="jp">灯火</span></h1>
     <p class="tag">Light for the mind — quiet browser tools and original jazz, made in Japan.</p>
     <p class="sub">A tiny studio for a sharper, calmer everyday.</p>
@@ -129,6 +179,9 @@
     <span class="music-badge">🎷 New jazz — arriving August 1, 2026</span>
     <h2>Three jazz pieces,<br>for quiet hours.</h2>
     <p class="lead">Three original jazz tracks to sit beside your coffee, your notebook, or the end of a long day. Streaming everywhere from August 1st.</p>
+    <svg class="wave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,20 Q25,3 50,20 T100,20 T150,20 T200,20 T250,20 T300,20 T350,20 T400,20"/>
+    </svg>
     <div class="tracks">
       <div class="track"><div class="no">01</div><h3 class="ph">Track title — TBA</h3><p>A slow, warm opener.</p><div class="soon">Coming Aug 1</div></div>
       <div class="track"><div class="no">02</div><h3 class="ph">Track title — TBA</h3><p>Late-night piano &amp; brush.</p><div class="soon">Coming Aug 1</div></div>
@@ -219,6 +272,33 @@
   Lampwise 灯火 — quiet tools &amp; music from Japan.<br>
   © 2026 Eichi no Tomoshibi. Light for the mind.
 </footer>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  document.body.classList.add('js'); // reveal-hiding only applies when JS runs
+
+  // Floating embers rising from the lamp
+  const box = document.getElementById('embers');
+  if (box && !reduce) {
+    for (let i = 0; i < 20; i++) {
+      const s = document.createElement('span');
+      s.className = 'ember';
+      const sz = 3 + Math.random() * 4;
+      s.style.width = s.style.height = sz + 'px';
+      s.style.left = (Math.random() * 100) + '%';
+      s.style.animationDuration = (4.5 + Math.random() * 5) + 's';
+      s.style.animationDelay = (Math.random() * 7) + 's';
+      box.appendChild(s);
+    }
+  }
+
+  // Gentle fade-up on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('section h2, section .lead, .music-badge, .wave, .tracks, .grid, .free-note, .philo blockquote, .philo .src, .support .cta-row')
+    .forEach(el => { el.classList.add('reveal'); io.observe(el); });
+</script>
 
 </body>
 </html>
