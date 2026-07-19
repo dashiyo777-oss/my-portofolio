@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lampwise 灯火 — Quiet tools & music from Japan</title>
-<meta name="description" content="Lampwise (灯火) — a small studio from Japan. Quiet browser tools for a sharper, calmer mind, and original jazz. Light for the mind.">
+<meta name="description" content="Lampwise (灯火) — a small studio from Japan. Quiet browser tools for a sharper, calmer mind, and original jazz by Thinking Cats. Light for the mind.">
 <link rel="canonical" href="https://dashiyo777-oss.github.io/my-portofolio/hub.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lampwise 灯火">
-<meta property="og:title" content="Lampwise 灯火 — Quiet tools & music from Japan">
-<meta property="og:description" content="Light for the mind. Quiet browser tools and original jazz, from Japan.">
+<meta property="og:title" content="Lampwise 灯火 — Quiet tools & jazz from Japan">
+<meta property="og:description" content="Light for the mind. Quiet browser tools and original jazz by Thinking Cats, from Japan.">
 <meta property="og:url" content="https://dashiyo777-oss.github.io/my-portofolio/hub.html">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary_large_image">
@@ -122,14 +122,21 @@
   .reveal{transition:opacity 1.1s cubic-bezier(.22,.61,.36,1),transform 1.1s cubic-bezier(.22,.61,.36,1)}
   .js .reveal{opacity:0;transform:translateY(20px)}
   .reveal.in{opacity:1;transform:none}
+  .cat{width:112px;height:auto;color:var(--amber);display:block;margin:0 0 6px;
+    filter:drop-shadow(0 0 14px rgba(224,164,75,.22));animation:sway 12s ease-in-out infinite;transform-origin:bottom center}
+  .band{font-family:var(--serif);font-size:1.5rem;letter-spacing:.14em;color:var(--amber2);margin-bottom:2px}
+  .videos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;max-width:720px}
+  .vid{position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
   @media(prefers-reduced-motion:reduce){
-    .ember,.lantern,.lantern .glow,.wave,.halo{animation:none}
+    .ember,.lantern,.lantern .glow,.wave,.halo,.cat{animation:none}
     .reveal{opacity:1;transform:none;transition:none}
     .halo{opacity:.5}
   }
 
   @media(max-width:760px){
     .tracks,.grid{grid-template-columns:1fr}
+    .videos{grid-template-columns:1fr;max-width:320px;margin-left:auto;margin-right:auto}
     section{padding:64px 0}
     header.hero{padding:88px 20px 72px}
   }
@@ -174,22 +181,34 @@
 <!-- MUSIC -->
 <section id="music">
   <div class="wrap">
-    <p class="eyebrow">The Music</p>
-    <span class="music-badge">🎷 New jazz — arriving August 1, 2026</span>
-    <h2>Three jazz pieces,<br>for quiet hours.</h2>
-    <p class="lead">Three original jazz tracks to sit beside your coffee, your notebook, or the end of a long day. Streaming everywhere from August 1st.</p>
-    <svg class="wave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0,20 Q25,3 50,20 T100,20 T150,20 T200,20 T250,20 T300,20 T350,20 T400,20"/>
+    <p class="eyebrow">The Music · Thinking Cats</p>
+    <svg class="cat" viewBox="0 0 150 150" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M52 40 L45 15 L70 34"/>
+        <path d="M100 40 L107 15 L82 34"/>
+        <circle cx="76" cy="53" r="27"/>
+        <path d="M60 53 q7 6 14 0"/>
+        <path d="M82 53 q7 6 14 0"/>
+        <path d="M72 61 q4 3 8 0"/>
+        <path d="M54 59 l-18 -4 M54 64 l-18 4"/>
+        <path d="M98 59 l18 -4 M98 64 l18 4"/>
+        <path d="M52 77 q-10 34 8 52 h32 q18 -18 8 -52"/>
+        <path d="M92 129 q30 4 28 -26 q-1 -13 -13 -12"/>
+      </g>
+      <g fill="currentColor"><ellipse cx="116" cy="31" rx="4.4" ry="3.4"/><ellipse cx="127" cy="27" rx="4.4" ry="3.4"/></g>
+      <path d="M120.4 31 v-20 l9 -3 v18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
     </svg>
-    <div class="tracks">
-      <div class="track"><div class="no">01</div><h3 class="ph">Track title — TBA</h3><p>A slow, warm opener.</p><div class="soon">Coming Aug 1</div></div>
-      <div class="track"><div class="no">02</div><h3 class="ph">Track title — TBA</h3><p>Late-night piano &amp; brush.</p><div class="soon">Coming Aug 1</div></div>
-      <div class="track"><div class="no">03</div><h3 class="ph">Track title — TBA</h3><p>A quiet, hopeful close.</p><div class="soon">Coming Aug 1</div></div>
+    <div class="band">Thinking Cats</div>
+    <h2>Jazz for quiet,<br>thinking hours.</h2>
+    <p class="lead">Three original jazz pieces by <b>Thinking Cats</b> — for your coffee, your notebook, or the end of a long day. Watch on YouTube now; full streaming release August 1.</p>
+    <div class="videos">
+      <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/p3KjsxdFeJw" title="Thinking Cats — jazz (1)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/G8h9ea7mgh8" title="Thinking Cats — jazz (2)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/pZAhXWDdT7E" title="Thinking Cats — jazz (3)" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
     </div>
     <div class="follow">
-      <a class="ph" href="#" rel="noopener">▶ YouTube — follow (link Aug 1)</a>
-      <a class="ph" href="#" rel="noopener">♪ Spotify — follow (link Aug 1)</a>
-      <a class="ph" href="#" rel="noopener">◎ Buy / support (Bandcamp — TBA)</a>
+      <a href="https://www.youtube.com/channel/UCA5KBf68PXn0Y2eUCMyAhcg" target="_blank" rel="noopener">▶ Subscribe · Thinking Cats on YouTube</a>
+      <a class="ph" href="#" rel="noopener">♪ Spotify — from Aug 1</a>
     </div>
   </div>
 </section>
@@ -255,7 +274,7 @@
     <h2>Keep the lamp lit.</h2>
     <p class="lead">If any of this made your day a little better, the kindest support is simple: listen to the music when it arrives, and share a notebook with a friend.</p>
     <div class="cta-row" style="justify-content:flex-start">
-      <a href="#music" class="btn primary">🎷 Hear the music (Aug 1)</a>
+      <a href="https://www.youtube.com/channel/UCA5KBf68PXn0Y2eUCMyAhcg" target="_blank" rel="noopener" class="btn primary">🐱 Listen to Thinking Cats</a>
       <a class="btn ghost ph" href="#" rel="noopener">☕ Tip jar (Ko-fi — TBA)</a>
     </div>
   </div>
@@ -295,7 +314,7 @@
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
-  document.querySelectorAll('section h2, section .lead, .music-badge, .wave, .tracks, .grid, .free-note, .philo blockquote, .philo .src, .support .cta-row')
+  document.querySelectorAll('section h2, section .lead, .cat, .band, .videos, .grid, .free-note, .philo blockquote, .philo .src, .support .cta-row')
     .forEach(el => { el.classList.add('reveal'); io.observe(el); });
 </script>
 
