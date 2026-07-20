@@ -332,10 +332,6 @@ body.ingame .petal{display:none}
 </head>
 <body>
 <div id="app">
-  <!-- 癒しのコーナー 相互バナー -->
-  <a href="iyashi.html" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 14px;background:linear-gradient(135deg,#2A4D8F,#1D3765);color:#F4F2EB;text-decoration:none;font:600 12.5px/1.4 'Zen Kaku Gothic New',sans-serif;letter-spacing:.02em;text-align:center">
-    <span>🕯️ 姉妹サイト「癒しのコーナー」— 名作手帖・酒手帖など小さな道具たち</span><span style="opacity:.75">→</span>
-  </a>
   <header class="appbar">
     <div class="hanko">冴</div>
     <h1 style="flex:1">冴え手帖<small>SAE — 脳活道場</small></h1>
@@ -374,6 +370,9 @@ const jpDate=()=>new Date().toLocaleDateString({ja:"ja-JP",es:"es-ES",fr:"fr-FR"
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const dateSeed=()=>{const s=todayStr();let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h;};
+const dayKey=()=>todayStr().replace(/-/g,"");
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+let HDaily=false,HRNG=null;
 
 /* ---------- persistent state ---------- */
 const KEY="sae_v1";
@@ -385,6 +384,8 @@ DB.diag=DB.diag||[];         // {d,age,comp,scores:{}}
 DB.best=DB.best||{};
 DB.rush=DB.rush||{best:0,plays:0};
 DB.hana=DB.hana||{best:0,bestLv:1,plays:0};
+DB.habits=DB.habits||{};
+DB.daily1=DB.daily1||null;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
 
 function streakCount(){
@@ -423,11 +424,35 @@ Object.assign(XT,{
 "A grand 5×5 board. Unlock with the monthly passcode":{"fr":"Un grand plateau 5×5. Déverrouillez avec le mot de passe mensuel","pt":"Um grande tabuleiro 5×5. Desbloqueie com a senha mensal"},
 "Unlocked — a serene 5×5 retreat":{"fr":"Déverrouillé — une retraite sereine en 5×5","pt":"Desbloqueado — um sereno refúgio 5×5"}
 });
+Object.assign(XT,{
+"Daily Duel":{"fr":"Duel du Jour","pt":"Duelo do Dia"},
+"One shared board. One serious attempt a day.":{"fr":"Un plateau mondial. Une tentative sérieuse par jour.","pt":"Um tabuleiro mundial. Uma tentativa séria por dia."},
+"You have played today":{"fr":"Vous avez déjà joué aujourd&#39;hui","pt":"Você já jogou hoje"},
+"See you tomorrow — a brand-new board.":{"fr":"À demain — un plateau tout neuf.","pt":"Até amanhã — um tabuleiro novinho."},
+"Today&#39;s rankings":{"fr":"Classement du jour","pt":"Ranking de hoje"},
+"Daily Duel Rankings":{"fr":"Classement du Duel du Jour","pt":"Ranking do Duelo do Dia"},
+"A new board every midnight. Same board, same luck, for everyone.":{"fr":"Un nouveau plateau chaque minuit. Même plateau, même chance, pour tous.","pt":"Um tabuleiro novo à meia-noite. Mesmo tabuleiro, mesma sorte, para todos."},
+"Result":{"fr":"Résultat","pt":"Ver"},
+" pts — done for today":{"fr":" pts — terminé pour aujourd&#39;hui","pt":" pts — feito por hoje"},
+"Daily Habit Check":{"fr":"Check des Habitudes","pt":"Check de Hábitos"},
+"What works is the combo: exercise × diet × sleep × social. Tap what you did today.":{"fr":"Ce qui marche, c&#39;est le combo : exercice × alimentation × sommeil × social. Cochez ce que vous avez fait.","pt":"O que funciona é a combinação: exercício × dieta × sono × social. Toque no que você fez hoje."},
+"Brisk walk 20 min":{"fr":"Marche rapide 20 min","pt":"Caminhada rápida 20 min"},
+"Fish or veggies":{"fr":"Poisson ou légumes","pt":"Peixe ou verduras"},
+"Sip water often":{"fr":"Boire de l&#39;eau souvent","pt":"Beber água"},
+"Slept ~7 hours":{"fr":"Dormi ~7 heures","pt":"Dormi ~7 horas"},
+"Talked with someone":{"fr":"Parlé à quelqu&#39;un","pt":"Conversei com alguém"},
+"One new thing":{"fr":"Une nouveauté","pt":"Algo novo"},
+"Last 7 days":{"fr":"7 derniers jours","pt":"Últimos 7 dias"},
+"Save bloom certificate":{"fr":"Enregistrer le certificat","pt":"Salvar certificado"},
+"CERTIFICATE OF BLOOM":{"fr":"CERTIFICAT DE FLORAISON","pt":"CERTIFICADO DE FLORAÇÃO"},
+"This certifies the bloom above was achieved":{"fr":"Certifie que la floraison ci-dessus a été accomplie","pt":"Certifica que a flor acima foi alcançada"},
+"A Nameless Gardener":{"fr":"Jardinier Anonyme","pt":"Jardineiro Anônimo"}
+});
 const P=(ja,en,es)=>{if(LANG==="ja")return ja;if(LANG==="es")return es;if(LANG==="en")return en;const x=XT[en];return (x&&x[LANG])||en;};
 function setLang(l){DB.lang=l;save();location.reload();}
 function cycleLang(){setLang(LANGS[(LANGS.indexOf(LANG)+1)%LANGS.length]);}
 
-/* ====== 会員（大花園）ゲート ====== */
+/* ====== 會員（大花園）ゲート ====== */
 const MEMBER={
  CODES:{
   "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
@@ -597,6 +622,11 @@ function renderHome(){
       ${hb?`<div class="rush-stats"><span>${P("最高","Best","Récord")} <b>${hb.toLocaleString()}</b></span><span>${P("ここまで咲いた","Best bloom","Mejor flor")} <b>${hf.e}${hf.n}</b></span>${DB.hanaState?`<span><b>${P("つづきあり","Game saved","Partida guardada")}</b></span>`:``}</div>`:``}
       <button class="btn" onclick="startHana()">${DB.hanaState?P("つづきから遊ぶ","Continue","Continuar"):P("遊ぶ","Play","Jugar")}</button>
     </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px;border:1px solid rgba(42,77,143,.35)">
+      <div style="font-size:28px">🎴</div>
+      <div style="flex:1"><b>${P("今日の一局","Daily Duel","Duelo del Día")}</b><div class="muted small">${(DB.daily1&&DB.daily1.d===todayStr()&&DB.daily1.done)?P("本日 ","Today ","Hoy ")+(DB.daily1.score||0).toLocaleString()+P("点・指し終えました"," pts — done for today"," pts — hecho por hoy"):P("世界共通の盤で、一日一回の真剣勝負","One shared board. One serious attempt a day.","Un tablero mundial. Un intento serio al día.")}</div></div>
+      <button class="btn" style="width:auto;padding:10px 16px;font-size:14px" onclick="startDaily1()">${(DB.daily1&&DB.daily1.d===todayStr()&&DB.daily1.done)?P("結果","Result","Ver"):P("挑戦","Play","Jugar")}</button>
+    </div>
     <div class="card" style="display:flex;align-items:center;gap:12px">
       <div style="font-size:28px">⚡</div>
       <div style="flex:1"><b>${P("冴えラッシュ","SAE Rush","SAE Rush")}</b><div class="muted small">${rb?P("最高 ","Best ","Récord ")+rb.toLocaleString()+P("・段位 "," · Rank "," · Rango ")+rk:P("反射神経の腕試し。3ミスで終了","Test your reflexes. 3 misses and it ends","Pon a prueba tus reflejos. 3 fallos y termina")}</div></div>
@@ -604,7 +634,7 @@ function renderHome(){
     </div>
     <div class="card" style="display:flex;align-items:center;gap:12px;border:1px solid rgba(233,196,106,.85);background:linear-gradient(135deg,#FFFDF4,#FFF6DC)">
       <div style="font-size:28px">🌸🌸</div>
-      <div style="flex:1"><b>${P("大花園","Grand Garden","Gran Jardín")} <span style="font-size:10px;background:var(--shu);color:#fff;border-radius:4px;padding:2px 6px;vertical-align:2px;font-family:'Shippori Mincho B1',serif">会員</span></b>
+      <div style="flex:1"><b>${P("大花園","Grand Garden","Gran Jardín")} <span style="font-size:10px;background:var(--shu);color:#fff;border-radius:4px;padding:2px 6px;vertical-align:2px;font-family:'Shippori Mincho B1',serif">會員</span></b>
         <div class="muted small">${isMember()?((DB.hana.best5||0)?P("最高 ","Best ","Récord ")+(DB.hana.best5||0).toLocaleString():P("解錠済み・5×5の静かな別邸","Unlocked — a serene 5×5 retreat","Desbloqueado — un sereno refugio 5×5")):P("5×5の大盤。月替わり合言葉で解錠","A grand 5×5 board. Unlock with the monthly passcode","Tablero 5×5. Desbloquea con la contraseña mensual")}</div></div>
       <button class="btn" style="width:auto;padding:10px 16px;font-size:14px;background:linear-gradient(180deg,#E9C46A,#C99B2D);color:#4A3A16;box-shadow:0 3px 0 rgba(140,100,30,.5)" onclick="startHana5()">${isMember()?P("遊ぶ","Play","Jugar"):P("解錠","Unlock","Abrir")}</button>
     </div>
@@ -634,6 +664,18 @@ function renderTips(){
   const list=TIPS.filter(t=>tipCat===TIPCATS[0]||t.cat===tipCat);
   mainEl.innerHTML=`
   <div class="fade-in">
+    <div class="card" style="margin-bottom:14px;border:1px solid rgba(42,77,143,.3)">
+      <h2>✅ ${P("きょうの習慣チェック","Daily Habit Check","Chequeo de Hábitos")}</h2>
+      <p class="muted small" style="margin-bottom:10px">${P("脳にいいのは「運動×食事×睡眠×交流」の合わせ技。今日できたものをタップ。","What works is the combo: exercise × diet × sleep × social. Tap what you did today.","Lo que funciona es la combinación: ejercicio × dieta × sueño × social. Toca lo que hiciste hoy.")}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${HABITS.map(h=>{const on=(DB.habits[todayStr()]||[]).includes(h.id);
+          return `<button onclick="toggleHabit('${h.id}')" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;text-align:left;border:1.5px solid ${on?"var(--ai)":"var(--line)"};background:${on?"#E9F0FB":"var(--white)"};color:${on?"var(--ai)":"#6B6857"}">${on?"✅":h.e} ${h.n()}</button>`;}).join("")}
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+        <span class="muted small">${P("直近7日","Last 7 days","Últimos 7 días")}: ${habitDots()}</span>
+        <b style="color:var(--ai)">${(DB.habits[todayStr()]||[]).length}/6</b>
+      </div>
+    </div>
     <div class="eyebrow">TODAY'S WISDOM</div>
     <h2 class="mincho" style="font-size:17px;margin-bottom:10px">${P("今日の知恵","Daily Wisdom","Sabiduría del Día")}</h2>
     <div class="tip-card" style="border-left-color:var(--shu)">
@@ -1040,7 +1082,7 @@ const HCOL=["","#FFFFFF","#FBF6E7","#F1ECD5","#EFE0AC","#F7D9DE","#F0BFCB","#F6D
 let HG=null;
 
 function hSnapshot(){return{score:HG.score,tiles:HG.tiles.filter(t=>!t.dead).map(t=>({x:t.x,y:t.y,lv:t.lv}))};}
-function hSave(){hStSet(hSnapshot());save();}
+function hSave(){if(HDaily)return;hStSet(hSnapshot());save();}
 
 function hTutorial(cb){
   gResolve=()=>{};clearGTimers();
@@ -1080,13 +1122,35 @@ function startHana(){HN=4;
   if(!DB.hanaTut){hTutorial(()=>{DB.hanaTut=1;save();startHana();});return;}
   startHanaCore();
 }
+function startDaily1(){
+  const k=todayStr();
+  if(DB.daily1&&DB.daily1.d===k&&DB.daily1.done){
+    gResolve=()=>{};clearGTimers();
+    openOverlay("🎴 "+P("今日の一局","Daily Duel","Duelo del Día"));
+    const f=HLV[DB.daily1.lv||1];
+    gArea().innerHTML=`
+      <div class="fade-in center" style="width:min(340px,88vw)">
+        <p class="instruction">${P("本日はもう指し終えました","You have played today","Ya jugaste hoy")}</p>
+        <div style="font-size:56px">${f.e}</div>
+        <div class="score-big">${(DB.daily1.score||0).toLocaleString()}</div>
+        <p class="muted small" style="margin-top:6px">${P("また明日、あたらしい盤で。","See you tomorrow — a brand-new board.","Hasta mañana, con un tablero nuevo.")}</p>
+        <div style="display:grid;gap:10px;margin-top:16px">
+          <button class="btn secondary" onclick="joinRank('daily',${DB.daily1.score||0})">🏆 ${P("今日の番付を見る","Today&#39;s rankings","Ranking de hoy")}</button>
+          <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+        </div>
+      </div>`;
+    return;
+  }
+  HN=4;HDaily=true;HRNG=mulberry32(dateSeed());
+  startHanaCore();
+}
 function startHana5(){
   if(!isMember()){showGate();return;}
   HN=5;startHanaCore();
 }
 function startHanaCore(){
   gResolve=()=>{};clearGTimers();
-  openOverlay(HN===5?"🌸🌸 "+P("大花園","Grand Garden","Gran Jardín"):"🌸 "+P("花あわせ","Hana-Awase","Hana-Awase"));
+  openOverlay(HDaily?"🎴 "+P("今日の一局","Daily Duel","Duelo del Día")+" "+todayStr().slice(5).replace("-","/"):HN===5?"🌸🌸 "+P("大花園","Grand Garden","Gran Jardín"):"🌸 "+P("花あわせ","Hana-Awase","Hana-Awase"));
   bgmStart();
   gArea().innerHTML=`
     <div class="hana-wrap">
@@ -1113,7 +1177,7 @@ function startHanaCore(){
   }
   // state: resume or new
   HG={tiles:[],score:0,nid:1,nodes:{},undo:null,maxLv:1,bloom:null,over:false,cs,PAD,G};
-  const st=hStGet();
+  const st=HDaily?null:hStGet();
   if(st&&st.tiles&&st.tiles.length){
     HG.score=st.score;
     st.tiles.forEach(t=>{HG.tiles.push({id:HG.nid++,x:t.x,y:t.y,lv:t.lv});HG.maxLv=Math.max(HG.maxLv,t.lv);});
@@ -1157,8 +1221,9 @@ function hSpawn(){
   const empty=[];
   for(let y=0;y<HN;y++)for(let x=0;x<HN;x++)if(!occ[x+","+y])empty.push([x,y]);
   if(!empty.length)return;
-  const [x,y]=empty[rnd(empty.length)];
-  HG.tiles.push({id:HG.nid++,x,y,lv:Math.random()<0.9?1:2,neu:true});
+  const R=HRNG||Math.random;
+  const [x,y]=empty[Math.floor(R()*empty.length)];
+  HG.tiles.push({id:HG.nid++,x,y,lv:R()<0.9?1:2,neu:true});
 }
 
 function hRender(){
@@ -1273,8 +1338,11 @@ function hGameOver(){
   hStSet(null);
   DB.daily[todayStr()]=true;
   save();updateStreakChip();
-  if(HN===4)submitScore('hana',s);
+  if(HDaily){DB.daily1={d:todayStr(),score:s,lv:top,done:true};save();submitScore('daily',s);}
+  else if(HN===4)submitScore('hana',s);
   const f=HLV[top];
+  window.__cert={lv:top,score:s,mode:HDaily?P("今日の一局","Daily Duel","Duelo del Día"):HN===5?P("大花園","Grand Garden","Gran Jardín"):P("花あわせ","Hana-Awase","Hana-Awase")};
+  const wasDaily=HDaily;HDaily=false;HRNG=null;
   HG=null;
   gArea().innerHTML=`
     <div class="fade-in center" style="width:min(340px,88vw)">
@@ -1284,8 +1352,11 @@ function hGameOver(){
       <div class="score-big">${s.toLocaleString()}</div>
       ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:6px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:``}
       <div style="display:grid;gap:10px;margin-top:20px">
-        <button class="btn" onclick="${HN===5?"startHana5()":"startHana()"}">${P("もう一度さかせる","Bloom again","Florecer otra vez")}</button>
-        ${HN===4?`<button class="btn secondary" onclick="joinRank('hana',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>`
+        ${top>=5?`<button class="btn secondary" onclick="saveCert()">📜 ${P("開花のしるしを保存","Save bloom certificate","Guardar certificado")}</button>`:``}
+        ${wasDaily?`<p class="muted small">${P("また明日、あたらしい盤で。","See you tomorrow — a brand-new board.","Hasta mañana, con un tablero nuevo.")}</p>`
+                  :`<button class="btn" onclick="${HN===5?"startHana5()":"startHana()"}">${P("もう一度さかせる","Bloom again","Florecer otra vez")}</button>`}
+        ${wasDaily?`<button class="btn secondary" onclick="joinRank('daily',${s})">🏆 ${P("今日の番付を見る","Today&#39;s rankings","Ranking de hoy")}</button>`
+         :HN===4?`<button class="btn secondary" onclick="joinRank('hana',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>`
                 :`<p class="muted small">${P("番付は定式盤（4×4）のみ対象です。","World rankings cover the standard 4×4 board only.","La clasificación cubre solo el tablero estándar 4×4.")}</p>`}
         <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
@@ -1298,6 +1369,82 @@ document.addEventListener("keydown",e=>{
   if(k!==undefined){e.preventDefault();hMove(k);}
 });
 
+
+/* ====== 開花証明書 ====== */
+function saveCert(){
+  const c=window.__cert;if(!c)return;
+  try{
+    const cv=document.createElement("canvas");cv.width=1080;cv.height=1350;
+    const x=cv.getContext("2d");if(!x)return;
+    // 和紙背景＋市松
+    x.fillStyle="#F4F2EB";x.fillRect(0,0,1080,1350);
+    x.fillStyle="#EFEDE4";
+    for(let yy=0;yy<1350;yy+=54)for(let xx=0;xx<1080;xx+=54)if(((xx/54)+(yy/54))%2===0)x.fillRect(xx,yy,54,54);
+    // 金枠
+    x.strokeStyle="#C99B2D";x.lineWidth=10;x.strokeRect(40,40,1000,1270);
+    x.strokeStyle="#E9C46A";x.lineWidth=3;x.strokeRect(60,60,960,1230);
+    // 見出し
+    x.fillStyle="#2A4D8F";x.textAlign="center";
+    x.font="800 64px 'Shippori Mincho B1',serif";
+    x.fillText(P("開 花 証 明","CERTIFICATE OF BLOOM","CERTIFICADO DE FLOR"),540,170);
+    x.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+    x.fillStyle="#8A8674";x.fillText(c.mode+" · "+P("冴え手帖","SAE Techo","SAE Techo"),540,225);
+    // 花
+    const f=HLV[c.lv]||HLV[1];
+    x.font="300px serif";x.fillText(f.e,540,610);
+    x.fillStyle="#2A4D8F";x.font="800 58px 'Shippori Mincho B1',serif";
+    x.fillText(f.n,540,720);
+    // スコア
+    x.fillStyle="#C8452C";x.font="800 110px 'Shippori Mincho B1',serif";
+    x.fillText(c.score.toLocaleString(),540,880);
+    x.fillStyle="#8A8674";x.font="700 28px 'Zen Kaku Gothic New',sans-serif";
+    x.fillText(P("この者、みごと上記の花を咲かせたことを証する","This certifies the bloom above was achieved","Certifica que la flor de arriba fue lograda"),540,950);
+    // 名前・日付
+    x.fillStyle="#3D3A30";x.font="800 46px 'Shippori Mincho B1',serif";
+    x.fillText(DB.rankName||P("名無しの庭師","A Nameless Gardener","Jardinero Anónimo"),540,1050);
+    x.fillStyle="#8A8674";x.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+    x.fillText(todayStr(),540,1105);
+    // 朱印
+    x.fillStyle="#C8452C";
+    const rx=860,ry=1130;x.beginPath();if(x.roundRect)x.roundRect(rx,ry,130,130,14);else x.rect(rx,ry,130,130);x.fill();
+    x.fillStyle="#F4F2EB";x.font="800 84px 'Shippori Mincho B1',serif";x.fillText("冴",rx+65,ry+98);
+    // フッター
+    x.fillStyle="#2A4D8F";x.font="700 26px 'Zen Kaku Gothic New',sans-serif";
+    x.fillText("ryuzaburo7.itch.io/sae-techo",540,1270);
+    const a=document.createElement("a");
+    a.download="sae-bloom-"+todayStr()+".png";
+    a.href=cv.toDataURL("image/png");
+    document.body.appendChild(a);a.click();a.remove();
+    beep(880,.12,"triangle",.1);
+  }catch(e){}
+}
+
+/* ====== 生活習慣チェック（FINGER型・複合介入の実践） ====== */
+const HABITS=[
+ {id:"walk",e:"🚶",n:()=>P("早歩き20分","Brisk walk 20 min","Caminar rápido 20 min")},
+ {id:"veg",e:"🐟",n:()=>P("魚か野菜をしっかり","Fish or veggies","Pescado o verduras")},
+ {id:"water",e:"💧",n:()=>P("水をこまめに","Sip water often","Beber agua")},
+ {id:"sleep",e:"😴",n:()=>P("7時間ねむった","Slept ~7 hours","Dormí ~7 horas")},
+ {id:"talk",e:"💬",n:()=>P("誰かと会話した","Talked with someone","Hablé con alguien")},
+ {id:"new",e:"✨",n:()=>P("新しいことひとつ","One new thing","Algo nuevo")}
+];
+function toggleHabit(id){
+  const k=todayStr();
+  const arr=DB.habits[k]||[];
+  const i=arr.indexOf(id);
+  if(i>=0)arr.splice(i,1);else{arr.push(id);beep(600+arr.length*80,.07,"triangle",.08);}
+  DB.habits[k]=arr;save();renderTips();
+}
+function habitDots(){
+  const out=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    const c=(DB.habits[k]||[]).length;
+    out.push(`<span title="${k}" style="display:inline-block;width:16px;height:16px;border-radius:50%;margin:0 3px;background:${c>=4?"var(--shu)":c>=2?"var(--gold)":c>=1?"#CFC9B6":"#EAE6D8"};border:1px solid #D9D4C5"></span>`);
+  }
+  return out.join("");
+}
 
 /* ======================================================
    🏆 世界番付 (global ranking via Cloudflare Worker)
@@ -1334,34 +1481,36 @@ function joinRank(g,s){
 }
 function renameRank(g){
   const n=askName();
-  if(n){const s=g==="hana"?(DB.hana.best||0):(DB.rush.best||0);submitScore(g,s).then(()=>showRanking(g));}
+  if(n){const s=g==="daily"?((DB.daily1&&DB.daily1.score)||0):g==="hana"?(DB.hana.best||0):(DB.rush.best||0);submitScore(g,s).then(()=>showRanking(g));}
 }
 const curYear=()=>new Date().getFullYear();
 async function showRanking(g){
   gResolve=()=>{};clearGTimers();
-  openOverlay("🏆 "+curYear()+P("年 ",""," ")+(g==="hana"?"Hana-Awase":"SAE Rush")+" "+P("番付","Rankings","Clasificación"));
+  const isD=g==="daily";
+  openOverlay(isD?"🎴 "+P("今日の一局 番付","Daily Duel Rankings","Ranking del Día")+" "+todayStr().slice(5).replace("-","/")
+    :"🏆 "+curYear()+P("年 ",""," ")+(g==="hana"?"Hana-Awase":"SAE Rush")+" "+P("番付","Rankings","Clasificación"));
   gArea().innerHTML=`<p class="muted">${P("番付を読み込み中…","Loading rankings…","Cargando clasificación…")}</p>`;
   let data=null;
-  try{const r=await fetch(RANK_URL+"/top?g="+g+"&y="+curYear()+"&n=20");data=await r.json();}catch(e){}
+  try{const r=await fetch(RANK_URL+"/top?g="+g+"&y="+(g==="daily"?dayKey():curYear())+"&n=20");data=await r.json();}catch(e){}
   if(!data||!data.top){
     gArea().innerHTML=`<div class="center fade-in"><p class="muted">${P("番付を取得できませんでした。<br>通信環境をご確認のうえ、もう一度お試しください。","Could not load the rankings.<br>Please check your connection and try again.","No se pudo cargar la clasificación.<br>Revisa tu conexión e inténtalo de nuevo.")}</p>
       <button class="btn ghost" style="margin-top:16px;width:min(280px,78vw)" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button></div>`;
     return;
   }
   const me=rankId();
-  const myBest=g==="hana"?(DB.hana.best||0):(DB.rush.best||0);
+  const myBest=g==="daily"?((DB.daily1&&DB.daily1.score)||0):g==="hana"?(DB.hana.best||0):(DB.rush.best||0);
   const medals=["🥇","🥈","🥉"];
   const rows=data.top.map((r,i)=>`
     <div class="rec-row ${i<3?"rank-"+(i+1):""}" style="padding-left:8px;padding-right:8px;${r.id===me?"box-shadow:inset 0 0 0 2px var(--gold);border-radius:8px;":""}">
-      <span>${i===0?"🥇<b style='color:var(--shu)'>"+P("横綱(暫定)","Yokozuna","Yokozuna")+"</b>":medals[i]||"<b>"+(i+1)+"</b>"}　${esc(r.n)}${r.id===me?P("（あなた）"," (you)"," (tú)"):""}</span><b>${Number(r.s).toLocaleString()}</b>
+      <span>${i===0&&g!=="daily"?"🥇<b style='color:var(--shu)'>"+P("横綱(暫定)","Yokozuna","Yokozuna")+"</b>":medals[i]||"<b>"+(i+1)+"</b>"}　${esc(r.n)}${r.id===me?P("（あなた）"," (you)"," (tú)"):""}</span><b>${Number(r.s).toLocaleString()}</b>
     </div>`).join("");
   gArea().innerHTML=`
     <div class="fade-in" style="width:min(340px,88vw)">
       ${rows||'<p class="muted center">'+P("まだ記録がありません。一番乗りのチャンス！","No records yet. Be the first!","Aún no hay registros. ¡Sé el primero!")+'</p>'}
       <p class="muted small center" style="margin-top:10px">${P("参加 ","Players: ","Jugadores: ")}${data.total}${DB.rankName?P("人・よびな「"," · nickname "," · apodo ")+esc(DB.rankName)+P("」","",""):""}</p>
-      <p class="muted small center">${P("12月末時点の1位が、その年の<b>横綱</b>として殿堂入りします。","The #1 at the end of December becomes that year&#39;s <b>Yokozuna</b> — enshrined forever.","El nº1 a fin de diciembre se convierte en el <b>Yokozuna</b> del año, para siempre.")}</p>
+      <p class="muted small center">${g==="daily"?P("盤は毎日0時にあたらしくなります。全員おなじ盤・おなじ運。","A new board every midnight. Same board, same luck, for everyone.","Un tablero nuevo cada medianoche. El mismo tablero para todos."):P("12月末時点の1位が、その年の<b>横綱</b>として殿堂入りします。","The #1 at the end of December becomes that year&#39;s <b>Yokozuna</b> — enshrined forever.","El nº1 a fin de diciembre se convierte en el <b>Yokozuna</b> del año, para siempre.")}</p>
       <div style="display:grid;gap:10px;margin-top:12px">
-        <button class="btn secondary" onclick="showHall('${g}')">🏛 ${P("歴代横綱の殿堂","Hall of Yokozuna","Salón de los Yokozuna")}</button>
+        ${g==="daily"?``:`<button class="btn secondary" onclick="showHall('${g}')">🏛 ${P("歴代横綱の殿堂","Hall of Yokozuna","Salón de los Yokozuna")}</button>`}
         ${DB.rankName?`<button class="btn ghost" onclick="renameRank('${g}')">${P("よびなを変える","Change nickname","Cambiar apodo")}</button>`
                      :`<button class="btn shu" onclick="joinRank('${g}',${myBest})">${P("番付に参加する（よびな登録）","Join the rankings","Unirse a la clasificación")}</button>`}
         <button class="btn" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
@@ -1408,7 +1557,7 @@ function showGate(){
   openOverlay("🌸🌸 "+P("大花園","Grand Garden","Gran Jardín"));
   gArea().innerHTML=`
     <div class="fade-in center" style="width:min(340px,88vw)">
-      <div style="width:74px;height:74px;margin:0 auto 10px;border:2px solid var(--shu);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--shu);font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px">会員</div>
+      <div style="width:74px;height:74px;margin:0 auto 10px;border:2px solid var(--shu);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--shu);font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px">會員</div>
       <h2 class="mincho" style="font-size:19px;margin-bottom:6px">${P("大花園に入る","Enter the Grand Garden","Entrar al Gran Jardín")}</h2>
       <p class="muted" style="margin-bottom:4px">${P("5×5の大盤で、じっくり大輪を咲かせる——叡智の灯火の会員特典です。","A serene 5×5 board for slow, grand blooms — a member perk from Eichi no Hi.","Un sereno tablero 5×5 para grandes flores — beneficio para miembros de Eichi no Hi.")}</p>
       <p class="muted small" style="margin-bottom:12px">${P("今月の合言葉（TOMO-XXXX）を入力してください。","Enter this month&#39;s passcode (TOMO-XXXX).","Escribe la contraseña del mes (TOMO-XXXX).")}</p>
@@ -1453,7 +1602,7 @@ const gArea=()=>$("#gameArea");
 function gT(fn,ms){const t=setTimeout(fn,ms);gTimers.push(t);return t;}
 function clearGTimers(){gTimers.forEach(clearTimeout);gTimers=[];}
 function openOverlay(title){$("#gTitle").textContent=title;setProg(0);$("#gameOverlay").classList.add("open");document.body.classList.add("ingame");}
-function closeOverlay(){$("#gameOverlay").classList.remove("open");document.body.classList.remove("ingame");bgmStop();clearGTimers();gArea().innerHTML="";}
+function closeOverlay(){$("#gameOverlay").classList.remove("open");document.body.classList.remove("ingame");HDaily=false;HRNG=null;bgmStop();clearGTimers();gArea().innerHTML="";}
 function quitGame(){const r=gResolve;gResolve=null;closeOverlay();if(r)r(null);const ab=document.querySelector(".tabbar button.active");if(ab)render(ab.dataset.tab);}
 function setProg(f){$("#gProg").style.width=(f*100)+"%";}
 function finishWith(score){const r=gResolve;gResolve=null;if(r)r(score);}
