@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Threads キーワード探索 ― 話題アカウント一覧 | 叡智の灯火</title>
+<meta name="description" content="Threads公式APIで、キーワードにヒットした公開投稿を集計し、話題への露出が多い順にアカウントを一覧化。自分用ツール。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E7;--card:#FDFBF4;--ink:#3A2E24;--brown:#6E4423;--brown-deep:#4A2E17;
+  --line:#E2D7C3;--stamp:#A6502E;--gold:#B08D4F;--up:#3E7C4F;--muted:#9A8A72;
+  --disp:'Shippori Mincho',serif;--body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.8;font-size:15px;
+  background-image:radial-gradient(rgba(110,68,35,.045) 1px,transparent 1px);background-size:22px 22px}
+a{color:var(--brown);text-decoration:none}
+.wrap{max-width:920px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 44px) 18px 40px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(23px,6vw,32px);letter-spacing:.05em;text-align:center;line-height:1.4}
+.sub{font-family:var(--disp);font-size:13px;color:#7A6A56;text-align:center;margin-top:10px;line-height:1.7}
+.back{display:block;text-align:center;margin-top:10px;font-size:12px}
+.back a::before{content:"← "}
+
+/* ---- 制約の但し書き ---- */
+.disclaimer{background:#FBF3E4;border:1px solid #E7D3A9;border-radius:12px;padding:13px 16px;margin-top:20px;font-size:12px;color:#7A5A2A;line-height:1.85}
+.disclaimer b{color:var(--brown-deep)}
+
+/* ---- 設定パネル ---- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 6px;margin-top:18px;box-shadow:0 2px 10px rgba(110,68,35,.07)}
+.panel h2{font-family:var(--disp);font-size:14px;letter-spacing:.1em;color:var(--brown);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.panel h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11.5px;color:#8A7A64;letter-spacing:.04em;margin-bottom:5px}
+.field label .req{color:var(--stamp)}
+.field input,.field select{width:100%;font-family:var(--body);font-size:14px;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:9px;padding:9px 11px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field .hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.7}
+.row2{display:flex;gap:12px;flex-wrap:wrap}
+.row2 .field{flex:1;min-width:130px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-bottom:10px}
+button.go{font-family:var(--body);font-weight:700;font-size:14px;color:#F7F2E7;
+  background:linear-gradient(135deg,var(--brown-deep),var(--brown));border:none;border-radius:99px;padding:10px 26px;cursor:pointer}
+button.ghost{font-family:var(--body);font-size:13px;color:var(--brown);background:rgba(110,68,35,.07);
+  border:1px solid rgba(110,68,35,.2);border-radius:99px;padding:9px 18px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.remember{font-size:11.5px;color:#8A7A64;display:flex;align-items:center;gap:6px}
+
+/* ---- ステータス ---- */
+.status{margin-top:14px;font-size:12.5px;color:#8A7A64;text-align:center;min-height:20px}
+.status.err{color:var(--stamp)}
+
+/* ---- 結果ヘッダ ---- */
+.rhead{display:flex;align-items:center;gap:12px;margin:24px 0 8px;font-family:var(--disp);font-size:13px;letter-spacing:.12em;color:var(--brown)}
+.rhead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.rhead .sortsel{font-family:var(--body);font-size:12px;border:1px solid var(--line);border-radius:8px;padding:4px 8px;background:#fff;color:var(--ink)}
+
+/* ---- アカウント一覧 ---- */
+.list{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(110,68,35,.07)}
+.item{padding:14px 16px;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.item .top{display:flex;align-items:baseline;gap:10px}
+.item .rank{font-family:var(--disp);font-size:20px;font-weight:800;color:var(--gold);min-width:30px;font-variant-numeric:tabular-nums}
+.item .who{flex:1;min-width:0}
+.item .who .un{font-weight:700;font-size:15px;word-break:break-all}
+.item .who .un a{color:var(--ink)}
+.item .who .prof{font-size:12px;color:#8A7A64;margin-top:2px;line-height:1.6}
+.item .who .link{font-size:11.5px;color:var(--gold);border-bottom:1px dotted var(--gold);word-break:break-all}
+.item .metrics{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:9px;padding-left:40px}
+.metric{font-size:11.5px;color:#7A6A56}
+.metric b{font-family:var(--disp);font-size:15px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;margin-right:3px}
+.metric.na{color:#B9AC94}
+.metric.na b{color:#C7BBA3;font-size:12px;font-family:var(--body);font-weight:400}
+.item .excerpt{margin-top:9px;padding-left:40px;font-size:12px;color:#6A5A46;line-height:1.7;
+  border-left:2px solid var(--line);padding-left:12px;margin-left:40px}
+.badge{display:inline-block;font-size:10px;letter-spacing:.06em;color:#fff;background:var(--muted);border-radius:5px;padding:1px 6px;vertical-align:middle}
+
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:40px 16px}
+
+.note{font-size:11.5px;color:#8A7A64;margin-top:20px;line-height:1.95}
+.note code{background:rgba(110,68,35,.08);border-radius:5px;padding:1px 6px;font-size:11px}
+.note h3{font-family:var(--disp);font-size:12.5px;color:var(--brown);letter-spacing:.1em;margin:14px 0 5px}
+.note ol{margin:0 0 0 18px}.note li{margin-bottom:3px}
+footer{text-align:center;margin-top:34px;font-size:11px;color:var(--muted);letter-spacing:.08em}
+footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧵 Threads キーワード探索</h1>
+  <p class="sub">キーワードにヒットした公開投稿を集計し、<br>そのテーマで露出が多い順にアカウントを並べます。</p>
+  <p class="back"><a href="hub.html">ハブへ戻る</a> ｜ <a href="count-dashboard.html">カウント一覧</a></p>
+
+  <div class="disclaimer">
+    <b>この道具の正直な限界（公式API準拠）：</b><br>
+    Threads公式APIは「他人のフォロワー数・投稿の閲覧数」を返しません。そのため<b>フォロワー数順の並べ替えはできません</b>。
+    代わりに、公式 <code>keyword_search</code> で取れる<b>「このキーワードでのヒット投稿数（＝話題への露出量）」順</b>に並べています。
+    フォロワー数・閲覧数の欄は「API非対応」と明記しています（スクレイピングは規約違反・アカウント凍結リスクのため不採用）。
+  </div>
+
+  <div class="panel">
+    <h2>検索設定</h2>
+    <div class="field">
+      <label>キーワード <span class="req">*</span></label>
+      <input id="q" type="text" placeholder="例：ポートフォリオ　副業　和菓子　…" autocomplete="off">
+      <div class="hint">Threads公式のキーワード検索に渡す語。スペースで複数語も可。</div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>検索タイプ</label>
+        <select id="stype">
+          <option value="TOP">TOP（話題・人気順）</option>
+          <option value="RECENT">RECENT（新着順）</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>取得ページ数（1ページ≒25件）</label>
+        <select id="pages">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>アクセストークン <span class="req">*</span>（<code>threads_keyword_search</code> 権限つき）</label>
+      <input id="token" type="password" placeholder="THxxxxx... （このブラウザ内だけに保存／送信先はThreads APIのみ）" autocomplete="off">
+      <div class="hint">取得方法は最下部の「準備の手順」を参照。<b>デモを見るだけならトークン不要</b>。</div>
+    </div>
+    <div class="field">
+      <label>APIプロキシURL（任意・CORSで直叩きが失敗する場合のみ）</label>
+      <input id="proxy" type="text" placeholder="例：https://your-worker.workers.dev/?url=  （末尾に対象URLを連結する形式）" autocomplete="off">
+      <div class="hint">ブラウザから <code>graph.threads.net</code> を直接呼べない場合、自分のCloudflare Worker等を経由。空ならプロキシ無しで直叩き。</div>
+    </div>
+    <div class="actions">
+      <button class="go" id="run">この条件で探す</button>
+      <button class="ghost" id="demo">デモを見る</button>
+      <button class="ghost" id="csv" disabled>CSVで書き出す</button>
+      <label class="remember"><input type="checkbox" id="remember"> トークンをこの端末に記憶</label>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="rhead" id="rhead" style="display:none">
+    <span id="rtitle">結果</span>
+    <select class="sortsel" id="sort">
+      <option value="count">ヒット投稿数が多い順</option>
+      <option value="recent">最新投稿が新しい順</option>
+      <option value="name">アカウント名順</option>
+    </select>
+  </div>
+  <div class="list" id="list" style="display:none"></div>
+
+  <div class="note">
+    <h3>▎表示している指標の意味</h3>
+    ・<b>ヒット投稿数</b>：このキーワード検索で、そのアカウントの投稿が結果に何件現れたか（取得ページ数の範囲内）。露出量の目安。<br>
+    ・<b>最新投稿</b>：結果内でそのアカウントの一番新しい投稿の日時。<br>
+    ・<b>投稿頻度</b>：結果内での最古〜最新のあいだの平均間隔（ヒットが2件以上のとき算出）。<br>
+    ・<span class="badge">API非対応</span>：<b>フォロワー数・閲覧数</b>は公式APIで他人分を取得できないため、常に「—」。
+
+    <h3>▎準備の手順（自分用トークンの取り方）</h3>
+    <ol>
+      <li><a href="https://developers.facebook.com/" target="_blank" rel="noopener">Meta for Developers</a> でアプリを作成し、<b>Threads API</b> を追加。</li>
+      <li>権限（スコープ）に <code>threads_basic</code> と <code>threads_keyword_search</code> を含める。</li>
+      <li>自分のThreadsアカウントで認可し、<b>長期アクセストークン</b>を発行。</li>
+      <li>上の「アクセストークン」に貼り付けて実行。※<code>keyword_search</code> はアプリ審査/承認が必要な場合があります。</li>
+    </ol>
+
+    <h3>▎安全とプライバシー</h3>
+    ・トークンはこの端末（localStorage）にのみ保存され、通信先は Threads API（またはあなたが指定したプロキシ）だけです。<br>
+    ・「記憶」を外せば保存しません。共用端末では記憶しないでください。<br>
+    ・少量・低頻度の利用に留めてください。
+  </div>
+
+  <footer>
+    <div class="rule"></div>
+    Threads キーワード探索（自分用・公式API準拠） ｜ © 叡智の灯火
+  </footer>
+</div>
+
+<script>
+"use strict";
+var API_BASE='https://graph.threads.net/v1.0';
+var FIELDS='id,text,permalink,username,timestamp,media_type';
+
+var els={
+  q:document.getElementById('q'), stype:document.getElementById('stype'), pages:document.getElementById('pages'),
+  token:document.getElementById('token'), proxy:document.getElementById('proxy'), remember:document.getElementById('remember'),
+  run:document.getElementById('run'), demo:document.getElementById('demo'), csv:document.getElementById('csv'),
+  status:document.getElementById('status'), rhead:document.getElementById('rhead'), rtitle:document.getElementById('rtitle'),
+  sort:document.getElementById('sort'), list:document.getElementById('list')
+};
+
+/* ---- 保存トークンの復元 ---- */
+try{
+  var saved=localStorage.getItem('threads-token');
+  if(saved){ els.token.value=saved; els.remember.checked=true; }
+  var sp=localStorage.getItem('threads-proxy'); if(sp) els.proxy.value=sp;
+}catch(e){}
+
+var lastAccounts=[]; // 現在の結果（CSV用）
+
+function setStatus(msg,isErr){ els.status.textContent=msg||''; els.status.className='status'+(isErr?' err':''); }
+function fmt(n){ return Number(n).toLocaleString(); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+function buildUrl(q,stype){
+  var u=API_BASE+'/keyword_search?q='+encodeURIComponent(q)+'&search_type='+encodeURIComponent(stype)
+    +'&fields='+encodeURIComponent(FIELDS)+'&limit=25';
+  return u;
+}
+function withToken(url,token){ return url+(url.indexOf('?')>=0?'&':'?')+'access_token='+encodeURIComponent(token); }
+function viaProxy(url,proxy){ return proxy? (proxy+encodeURIComponent(url)) : url; }
+
+/* ---- API取得（ページング）---- */
+function fetchPosts(q,stype,token,proxy,maxPages){
+  var out=[];
+  function step(url,page){
+    if(!url || page>maxPages) return Promise.resolve(out);
+    setStatus('取得中… '+page+'/'+maxPages+' ページ（'+out.length+'件）');
+    var full=viaProxy(withToken(url,token),proxy);
+    return fetch(full,{headers:{'Accept':'application/json'}})
+      .then(function(r){
+        return r.json().catch(function(){ throw new Error('APIの応答をJSONとして解釈できませんでした（プロキシ/権限をご確認ください）'); })
+          .then(function(j){
+            if(!r.ok || (j&&j.error)){
+              var m=(j&&j.error&&j.error.message)||('HTTP '+r.status);
+              throw new Error(m);
+            }
+            return j;
+          });
+      })
+      .then(function(j){
+        if(j.data&&j.data.length) out=out.concat(j.data);
+        var next=j.paging&&j.paging.next; // next は完全URL（token含む）
+        // next は絶対URL。プロキシ利用時は再度包む必要があるため素のURLだけ取り出す。
+        if(next){
+          // next からクエリを維持しつつそのまま辿る（tokenは含まれている）
+          return stepRaw(next,page+1);
+        }
+        return out;
+      });
+  }
+  // paging.next は完全URLなので token 付与不要。プロキシだけ包む。
+  function stepRaw(url,page){
+    if(!url || page>maxPages) return Promise.resolve(out);
+    setStatus('取得中… '+page+'/'+maxPages+' ページ（'+out.length+'件）');
+    var full=viaProxy(url,proxy);
+    return fetch(full,{headers:{'Accept':'application/json'}})
+      .then(function(r){ return r.json().then(function(j){
+        if(!r.ok||(j&&j.error)){ throw new Error((j&&j.error&&j.error.message)||('HTTP '+r.status)); }
+        return j; }); })
+      .then(function(j){
+        if(j.data&&j.data.length) out=out.concat(j.data);
+        var next=j.paging&&j.paging.next;
+        return next? stepRaw(next,page+1) : out;
+      });
+  }
+  return step(buildUrl(q,stype),1);
+}
+
+/* ---- 投稿→アカウント集計 ---- */
+function aggregate(posts){
+  var map={};
+  posts.forEach(function(p){
+    var un=p.username||'(不明)';
+    if(!map[un]) map[un]={username:un,count:0,times:[],posts:[]};
+    var a=map[un];
+    a.count++;
+    if(p.timestamp) a.times.push(new Date(p.timestamp).getTime());
+    a.posts.push(p);
+  });
+  return Object.keys(map).map(function(un){
+    var a=map[un];
+    a.times.sort(function(x,y){return x-y;});
+    a.latest=a.times.length? a.times[a.times.length-1]:null;
+    a.earliest=a.times.length? a.times[0]:null;
+    // 平均間隔（日）
+    if(a.times.length>=2){
+      var span=(a.latest-a.earliest)/86400000;
+      a.freqDays=span/(a.times.length-1);
+    } else a.freqDays=null;
+    // 抜粋（最新投稿本文）
+    var newest=a.posts.slice().sort(function(x,y){
+      return new Date(y.timestamp||0)-new Date(x.timestamp||0); })[0];
+    a.excerpt=newest&&newest.text? newest.text:'';
+    a.permalink=newest&&newest.permalink? newest.permalink:('https://www.threads.net/@'+encodeURIComponent(un));
+    a.profileUrl='https://www.threads.net/@'+encodeURIComponent(un);
+    return a;
+  });
+}
+
+function sortAccounts(list,mode){
+  var a=list.slice();
+  if(mode==='recent') a.sort(function(x,y){return (y.latest||0)-(x.latest||0);});
+  else if(mode==='name') a.sort(function(x,y){return x.username.localeCompare(y.username,'ja');});
+  else a.sort(function(x,y){ return (y.count-x.count) || ((y.latest||0)-(x.latest||0)); });
+  return a;
+}
+
+function relDate(ms){
+  if(!ms) return '—';
+  var d=new Date(ms), p=function(x){return (x<10?'0':'')+x;};
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
+function freqText(days){
+  if(days==null) return '—';
+  if(days<1) return '1日に'+ (Math.round(10/days)/10) +'件超';
+  return '約'+ (Math.round(days*10)/10) +'日に1件';
+}
+
+function render(){
+  var mode=els.sort.value;
+  var sorted=sortAccounts(lastAccounts,mode);
+  if(!sorted.length){
+    els.list.innerHTML='<div class="empty">該当アカウントがありませんでした。キーワードや検索タイプを変えてお試しください。</div>';
+    els.rhead.style.display='flex'; els.list.style.display='block'; return;
+  }
+  var html=sorted.map(function(a,i){
+    var excerpt=a.excerpt? '<div class="excerpt">'+esc(a.excerpt.slice(0,140))+(a.excerpt.length>140?'…':'')+'</div>':'';
+    return '<div class="item">'
+      +'<div class="top">'
+        +'<span class="rank">'+(i+1)+'</span>'
+        +'<span class="who">'
+          +'<div class="un"><a href="'+esc(a.profileUrl)+'" target="_blank" rel="noopener">@'+esc(a.username)+' ↗</a></div>'
+          +'<div class="prof"><a class="link" href="'+esc(a.profileUrl)+'" target="_blank" rel="noopener">'+esc(a.profileUrl)+'</a></div>'
+        +'</span>'
+      +'</div>'
+      +'<div class="metrics">'
+        +'<span class="metric"><b>'+fmt(a.count)+'</b>ヒット投稿</span>'
+        +'<span class="metric"><b>'+relDate(a.latest)+'</b>最新投稿</span>'
+        +'<span class="metric"><b>'+esc(freqText(a.freqDays))+'</b>投稿頻度</span>'
+        +'<span class="metric na"><b>—</b>フォロワー数 <span class="badge">API非対応</span></span>'
+        +'<span class="metric na"><b>—</b>閲覧数 <span class="badge">API非対応</span></span>'
+      +'</div>'
+      +excerpt
+    +'</div>';
+  }).join('');
+  els.list.innerHTML=html;
+  els.rtitle.textContent='結果：'+sorted.length+'アカウント';
+  els.rhead.style.display='flex'; els.list.style.display='block';
+  els.csv.disabled=false;
+}
+
+/* ---- 実行 ---- */
+function run(){
+  var q=els.q.value.trim(), token=els.token.value.trim(),
+      stype=els.stype.value, proxy=els.proxy.value.trim(),
+      maxPages=parseInt(els.pages.value,10)||1;
+  if(!q){ setStatus('キーワードを入力してください。',true); els.q.focus(); return; }
+  if(!token){ setStatus('アクセストークンを入力してください（デモは「デモを見る」から）。',true); els.token.focus(); return; }
+
+  try{
+    if(els.remember.checked){ localStorage.setItem('threads-token',token); }
+    else { localStorage.removeItem('threads-token'); }
+    if(proxy) localStorage.setItem('threads-proxy',proxy); else localStorage.removeItem('threads-proxy');
+  }catch(e){}
+
+  els.run.disabled=true; els.csv.disabled=true;
+  setStatus('取得を開始します…');
+  fetchPosts(q,stype,token,proxy,maxPages)
+    .then(function(posts){
+      lastAccounts=aggregate(posts);
+      setStatus('完了：投稿'+posts.length+'件 → '+lastAccounts.length+'アカウントに集計しました。');
+      render();
+    })
+    .catch(function(err){
+      var m=(err&&err.message)||String(err);
+      var hint='';
+      if(/CORS|Failed to fetch|NetworkError/i.test(m))
+        hint='（ブラウザからの直叩きが遮断された可能性。上の「APIプロキシURL」に自分のWorkerを設定して再試行してください）';
+      setStatus('エラー：'+m+' '+hint,true);
+    })
+    .then(function(){ els.run.disabled=false; });
+}
+
+/* ---- デモ ---- */
+function demo(){
+  var now=Date.now(), d=86400000;
+  var sample=[
+    {username:'washokuya_daily',  text:'今日の和菓子は季節の練り切り。桜あんが上品でした。',      permalink:'#', timestamp:new Date(now-1*d).toISOString()},
+    {username:'washokuya_daily',  text:'和菓子づくり教室、次回は6月開催です。',                    permalink:'#', timestamp:new Date(now-6*d).toISOString()},
+    {username:'washokuya_daily',  text:'あんこの炊き方、火加減がすべて。',                        permalink:'#', timestamp:new Date(now-12*d).toISOString()},
+    {username:'kyoto_wagashi',    text:'京都の老舗巡り。上生菓子の美しさに感動。',                permalink:'#', timestamp:new Date(now-2*d).toISOString()},
+    {username:'kyoto_wagashi',    text:'抹茶と和菓子のペアリング会、満席御礼。',                  permalink:'#', timestamp:new Date(now-9*d).toISOString()},
+    {username:'ocha_to_anko',     text:'和菓子好きさんと繋がりたい。今日はどら焼き。',            permalink:'#', timestamp:new Date(now-3*d).toISOString()},
+    {username:'sweets_memo',      text:'コンビニ和菓子レビュー、みたらし団子編。',                permalink:'#', timestamp:new Date(now-4*d).toISOString()}
+  ];
+  lastAccounts=aggregate(sample);
+  setStatus('デモ表示中（サンプルデータ・実データではありません）。キーワード「和菓子」想定。');
+  render();
+}
+
+els.run.addEventListener('click',run);
+els.demo.addEventListener('click',demo);
+els.sort.addEventListener('change',function(){ if(lastAccounts.length) render(); });
+els.q.addEventListener('keydown',function(e){ if(e.key==='Enter') run(); });
+
+/* ---- CSV ---- */
+els.csv.addEventListener('click',function(){
+  if(!lastAccounts.length) return;
+  var mode=els.sort.value, rows=sortAccounts(lastAccounts,mode);
+  var head=['順位','アカウント名','アカウントURL','プロフィール','フォロワー数','閲覧数','ヒット投稿数','最新投稿','投稿頻度','最新投稿抜粋'];
+  var lines=[head.join(',')];
+  rows.forEach(function(a,i){
+    var cells=[
+      (i+1),
+      '@'+a.username,
+      a.profileUrl,
+      '(API非対応)',
+      '(API非対応)',
+      '(API非対応)',
+      a.count,
+      relDate(a.latest),
+      freqText(a.freqDays),
+      (a.excerpt||'').replace(/\s+/g,' ').slice(0,140)
+    ].map(function(v){ var s=String(v==null?'':v); return '"'+s.replace(/"/g,'""')+'"'; });
+    lines.push(cells.join(','));
+  });
+  var csv='﻿'+lines.join('\r\n'); // BOM付きでExcel文字化け回避
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='threads-keyword-'+(els.q.value.trim()||'demo')+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+});
+</script>
+</body>
+</html>
