@@ -1340,6 +1340,7 @@ function hGameOver(){
   save();updateStreakChip();
   if(HDaily){DB.daily1={d:todayStr(),score:s,lv:top,done:true};save();submitScore('daily',s);}
   else if(HN===4)submitScore('hana',s);
+  else if(HN===5)submitScore('ogarden',s);
   const f=HLV[top];
   window.__cert={lv:top,score:s,mode:HDaily?P("今日の一局","Daily Duel","Duelo del Día"):HN===5?P("大花園","Grand Garden","Gran Jardín"):P("花あわせ","Hana-Awase","Hana-Awase")};
   const wasDaily=HDaily;HDaily=false;HRNG=null;
@@ -1357,6 +1358,7 @@ function hGameOver(){
                   :`<button class="btn" onclick="${HN===5?"startHana5()":"startHana()"}">${P("もう一度さかせる","Bloom again","Florecer otra vez")}</button>`}
         ${wasDaily?`<button class="btn secondary" onclick="joinRank('daily',${s})">🏆 ${P("今日の番付を見る","Today&#39;s rankings","Ranking de hoy")}</button>`
          :HN===4?`<button class="btn secondary" onclick="joinRank('hana',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>`
+         :HN===5?`<button class="btn secondary" onclick="joinRank('ogarden',${s})">🏆 ${P("大花園番付を見る","Grand Garden Rankings","Clasificación del Gran Jardín")}</button>`
                 :`<p class="muted small">${P("番付は定式盤（4×4）のみ対象です。","World rankings cover the standard 4×4 board only.","La clasificación cubre solo el tablero estándar 4×4.")}</p>`}
         <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
@@ -1450,6 +1452,9 @@ function habitDots(){
    🏆 世界番付 (global ranking via Cloudflare Worker)
 ====================================================== */
 const RANK_URL="https://sae-rank.dashiyo777.workers.dev";
+// ogarden=大花園（別集計）。hana/rush の既存データとは別キーで管理される。
+function gameLabel(g){return g==="hana"?"Hana-Awase":g==="ogarden"?P("大花園","Grand Garden","Gran Jardín"):"SAE Rush";}
+function myBestFor(g){return g==="daily"?((DB.daily1&&DB.daily1.score)||0):g==="hana"?(DB.hana.best||0):g==="ogarden"?(DB.hana.best5||0):(DB.rush.best||0);}
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function rankId(){
   if(!DB.rankId){
@@ -1481,14 +1486,14 @@ function joinRank(g,s){
 }
 function renameRank(g){
   const n=askName();
-  if(n){const s=g==="daily"?((DB.daily1&&DB.daily1.score)||0):g==="hana"?(DB.hana.best||0):(DB.rush.best||0);submitScore(g,s).then(()=>showRanking(g));}
+  if(n){const s=myBestFor(g);submitScore(g,s).then(()=>showRanking(g));}
 }
 const curYear=()=>new Date().getFullYear();
 async function showRanking(g){
   gResolve=()=>{};clearGTimers();
   const isD=g==="daily";
   openOverlay(isD?"🎴 "+P("今日の一局 番付","Daily Duel Rankings","Ranking del Día")+" "+todayStr().slice(5).replace("-","/")
-    :"🏆 "+curYear()+P("年 ",""," ")+(g==="hana"?"Hana-Awase":"SAE Rush")+" "+P("番付","Rankings","Clasificación"));
+    :"🏆 "+curYear()+P("年 ",""," ")+gameLabel(g)+" "+P("番付","Rankings","Clasificación"));
   gArea().innerHTML=`<p class="muted">${P("番付を読み込み中…","Loading rankings…","Cargando clasificación…")}</p>`;
   let data=null;
   try{const r=await fetch(RANK_URL+"/top?g="+g+"&y="+(g==="daily"?dayKey():curYear())+"&n=20");data=await r.json();}catch(e){}
@@ -1498,7 +1503,7 @@ async function showRanking(g){
     return;
   }
   const me=rankId();
-  const myBest=g==="daily"?((DB.daily1&&DB.daily1.score)||0):g==="hana"?(DB.hana.best||0):(DB.rush.best||0);
+  const myBest=myBestFor(g);
   const medals=["🥇","🥈","🥉"];
   const rows=data.top.map((r,i)=>`
     <div class="rec-row ${i<3?"rank-"+(i+1):""}" style="padding-left:8px;padding-right:8px;${r.id===me?"box-shadow:inset 0 0 0 2px var(--gold);border-radius:8px;":""}">
@@ -1519,7 +1524,7 @@ async function showRanking(g){
 }
 async function showHall(g){
   gResolve=()=>{};clearGTimers();
-  openOverlay("🏛 "+(g==="hana"?"Hana-Awase":"SAE Rush")+" "+P("歴代横綱","Hall of Yokozuna","Salón de Yokozuna"));
+  openOverlay("🏛 "+gameLabel(g)+" "+P("歴代横綱","Hall of Yokozuna","Salón de Yokozuna"));
   gArea().innerHTML=`<p class="muted">${P("殿堂を開いています…","Opening the hall…","Abriendo el salón…")}</p>`;
   let data=null;
   try{const r=await fetch(RANK_URL+"/champions?g="+g);data=await r.json();}catch(e){}
