@@ -2,8 +2,9 @@
 // 冴え手帖 世界番付 Worker (sae-rank)
 // KVネームスペース「RANK」をバインドして使います
 // エンドポイント:
-//   POST /submit  {g:"hana"|"rush", id, n(よびな), s(スコア)}
+//   POST /submit  {g:"hana"|"rush"|"daily"|"ogarden", id, n(よびな), s(スコア)}
 //   GET  /top?g=hana&n=20
+//   ※ "ogarden" は大花園（5×5）専用の別集計。hana/rush の既存データには一切影響しない
 // =====================================================
 export default {
   async fetch(req, env) {
@@ -16,7 +17,7 @@ export default {
     const url = new URL(req.url);
     const json = (o, s = 200) =>
       new Response(JSON.stringify(o), { status: s, headers: { ...cors, "Content-Type": "application/json" } });
-    const GAMES = ["hana", "rush"];
+    const GAMES = ["hana", "rush", "daily", "ogarden"];  // ogarden=大花園（別集計）
     const yearJST = () => new Date(Date.now() + 9 * 3600 * 1000).getUTCFullYear(); // 日本時間の年
 
     // ---- スコア送信 ----
