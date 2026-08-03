@@ -1,0 +1,6 @@
+name = "kenjin-proxy"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+# Secrets（Gitにはコミットしない。ターミナルで設定する）:
+#   wrangler secret put ANTHROPIC_API_KEY
