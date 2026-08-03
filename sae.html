@@ -1154,7 +1154,7 @@ function startHanaCore(){
   bgmStart();
   gArea().innerHTML=`
     <div class="hana-wrap">
-      <div class="hana-head"><span>${P("スコア","Score","Puntos")} <b id="hScore">0</b></span><span class="muted small" id="hBest">${P("ベスト ","Best ","Récord ")}${hBestVal().toLocaleString()}</span></div>
+      <div class="hana-head"><span>${P("スコア","Score","Puntos")} <b id="hScore">0</b></span><span class="muted small"><span id="hBest">${P("ベスト ","Best ","Récord ")}${hBestVal().toLocaleString()}</span>${HDaily?"":` <span id="hBestReset" role="button" title="${P("この端末の自己ベストをリセット（番付には無影響）","Reset this device's best (rankings unaffected)","Reiniciar mejor local (no afecta la clasificación)")}" style="cursor:pointer;opacity:.5;padding:0 4px">↺</span>`}</span></div>
       <div id="hanaBoard"></div>
       <div style="display:flex;gap:10px;width:min(360px,88vw)">
         <button class="btn ghost" style="flex:1" id="hUndo">↩ ${P("1手もどす","Undo","Deshacer")}</button>
@@ -1214,6 +1214,16 @@ function startHanaCore(){
     HG.nodes={};HG.tiles=[];HG.score=0;HG.undo=null;HG.maxLv=1;HG.over=false;
     hSpawn();hSpawn();hRender();hSave();
   };
+  const hbr=$("#hBestReset");if(hbr)hbr.onclick=hResetBest;
+}
+// この端末の自己ベスト表示だけをリセット（サーバー番付には一切影響しない）
+function hResetBest(){
+  const isG=HN===5;
+  const label=isG?P("大花園","Grand Garden","Gran Jardín"):P("花あわせ","Hana-Awase","Hana-Awase");
+  if(!confirm(P("この端末の「"+label+"」の自己ベスト表示をリセットします。オンライン番付には影響しません。よろしいですか？","Reset this device's "+label+" best score? This does NOT affect the online rankings.","¿Restablecer tu mejor puntuación local de "+label+"? No afecta la clasificación en línea.")))return;
+  if(isG){DB.hana.best5=0;DB.hana.bestLv5=1;}else{DB.hana.best=0;DB.hana.bestLv=1;}
+  save();
+  const hb=$("#hBest");if(hb)hb.textContent=P("ベスト ","Best ","Récord ")+(HG?Math.max(hBestVal(),HG.score):hBestVal()).toLocaleString();
 }
 
 function hSpawn(){
