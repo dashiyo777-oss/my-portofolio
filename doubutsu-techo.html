@@ -17,19 +17,15 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 #hdr{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--bdr);padding:12px 14px 0;}
 .hrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .brand{display:flex;align-items:center;gap:8px}
-.bi{font-size:26px;line-height:1}
-.bjp{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:.04em}
-.ben{font-size:8px;font-weight:300;color:var(--mut);letter-spacing:.25em}
+.bi{font-size:26px;line-height:1}.bjp{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:.04em}.ben{font-size:8px;font-weight:300;color:var(--mut);letter-spacing:.25em}
 .hbtns{display:flex;gap:6px}
 .hbtn{background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;line-height:1.2;}
 .hbtn.on{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
-.sbar{margin-bottom:8px;display:none}
-.sbar.show{display:block}
+.hbtn.tomo-on{background:var(--wow);color:var(--bg);border-color:var(--wow);font-weight:700}
+.sbar{margin-bottom:8px;display:none}.sbar.show{display:block}
 .sbar input{width:100%;background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:8px 14px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;}
-.sbar input:focus{border-color:var(--ac)}
-.sbar input::placeholder{color:var(--mut)}
-.ctabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;}
-.ctabs::-webkit-scrollbar{display:none}
+.sbar input:focus{border-color:var(--ac)}.sbar input::placeholder{color:var(--mut)}
+.ctabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;}.ctabs::-webkit-scrollbar{display:none}
 .ctab{flex-shrink:0;background:transparent;border:1px solid var(--bdr);color:var(--mut);border-radius:20px;padding:4px 11px;font-size:11px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
 .ctab.on{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
 #main{padding:14px}
@@ -37,71 +33,83 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .cnt{font-size:10px;color:var(--mut);margin-bottom:10px}
 .feat{background:linear-gradient(140deg,var(--card) 0%,#0A2535 100%);border:1px solid var(--acd);border-radius:16px;padding:18px 18px 14px;margin-bottom:20px;cursor:pointer;position:relative;transition:transform .15s;}
 .feat:active{transform:scale(.99)}
-.fe{font-size:52px;line-height:1;display:block;margin-bottom:8px}
-.fn{font-size:24px;font-weight:900;margin-bottom:2px}
-.fc{font-size:11px;color:var(--mut);margin-bottom:10px}
-.wrow{display:flex;align-items:center;gap:6px}
-.wlbl{font-size:10px;color:var(--mut);flex-shrink:0}
-.wdots{display:flex;gap:1px}
-.wd{font-size:14px;opacity:.2}
-.wd.on{opacity:1}
+.fe{font-size:52px;line-height:1;display:block;margin-bottom:8px}.fn{font-size:24px;font-weight:900;margin-bottom:2px}.fc{font-size:11px;color:var(--mut);margin-bottom:10px}
+.wrow{display:flex;align-items:center;gap:6px}.wlbl{font-size:10px;color:var(--mut);flex-shrink:0}.wdots{display:flex;gap:1px}
+.wd{font-size:14px;opacity:.2}.wd.on{opacity:1}
 .fhint{font-size:11px;color:var(--ac);margin-top:10px}
-.fstar{position:absolute;top:12px;right:12px;font-size:16px;cursor:pointer;background:none;border:none;opacity:.5;transition:opacity .15s;}
-.fstar.on{opacity:1}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:80px}
+.fstar{position:absolute;top:12px;right:12px;font-size:16px;cursor:pointer;background:none;border:none;opacity:.5;transition:opacity .15s;}.fstar.on{opacity:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
 .acard{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:12px 11px 10px;cursor:pointer;position:relative;transition:transform .15s,border-color .15s;min-height:110px;}
-.acard:active{transform:scale(.97)}
-.acard:hover{border-color:var(--acd)}
-.ce{font-size:30px;line-height:1;margin-bottom:6px;display:block}
-.cn{font-size:13px;font-weight:700;margin-bottom:1px}
-.cen{font-size:9px;color:var(--mut);margin-bottom:5px}
+.acard:active{transform:scale(.97)}.acard:hover{border-color:var(--acd)}
+.ce{font-size:30px;line-height:1;margin-bottom:6px;display:block}.cn{font-size:13px;font-weight:700;margin-bottom:1px}.cen{font-size:9px;color:var(--mut);margin-bottom:5px}
 .cbadge{display:inline-block;font-size:8px;border-radius:4px;padding:2px 6px;margin-bottom:4px;font-weight:700;}
-.c-mammal{background:rgba(255,138,101,.15);color:var(--mammal)}
-.c-sea{background:rgba(79,195,247,.15);color:var(--sea)}
-.c-bird{background:rgba(206,147,216,.15);color:var(--bird)}
-.c-reptile{background:rgba(165,214,167,.15);color:var(--reptile)}
-.c-insect{background:rgba(255,224,130,.15);color:var(--insect)}
-.cwow{display:flex;gap:2px;margin-top:2px}
-.cwd{font-size:9px;opacity:.2}
-.cwd.on{opacity:1}
+.c-mammal{background:rgba(255,138,101,.15);color:var(--mammal)}.c-sea{background:rgba(79,195,247,.15);color:var(--sea)}.c-bird{background:rgba(206,147,216,.15);color:var(--bird)}.c-reptile{background:rgba(165,214,167,.15);color:var(--reptile)}.c-insect{background:rgba(255,224,130,.15);color:var(--insect)}
+.cwow{display:flex;gap:2px;margin-top:2px}.cwd{font-size:9px;opacity:.2}.cwd.on{opacity:1}
 .acard .fstar{font-size:13px;top:7px;right:7px}
 .empty{text-align:center;padding:50px 20px;color:var(--mut)}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
-.ov.show{display:block}
-.sh{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--sf);border-radius:20px 20px 0 0;padding:16px 18px 30px;z-index:100;max-height:72vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}
-.sh.show{transform:translateY(0)}
+/* AI飼育員 */
+.ai-section{border:1px solid var(--bdr);border-radius:16px;overflow:hidden;margin-bottom:60px;}
+.ai-section.unlocked{border-color:rgba(255,208,84,.5);}
+.ai-hd{background:var(--card);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bdr);}
+.ai-title{font-size:14px;font-weight:700;color:var(--wow);}.ai-sub{font-size:10px;color:var(--mut);}
+.tomo-badge{background:rgba(255,208,84,.15);color:var(--wow);font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;}
+.ai-lock-body{padding:24px 16px;text-align:center;}.lock-icon{font-size:36px;margin-bottom:10px;}
+.lock-desc{font-size:12px;color:var(--mut);line-height:1.7;margin-bottom:16px;white-space:pre-line;}
+.unlock-btn{background:var(--wow);color:var(--bg);border:none;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-bottom:10px;display:block;width:100%;}
+.member-link{color:var(--ac);font-size:11px;text-decoration:none;display:block;}
+.ai-panel-body{padding:14px 16px;}
+.ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.ai-chip{background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:16px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.ai-chip:hover{background:rgba(255,208,84,.12);border-color:rgba(255,208,84,.4);color:var(--wow);}
+.ai-input-row{display:flex;gap:8px;margin-bottom:12px;}
+.ai-input{flex:1;background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:10px 12px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;min-height:44px;}
+.ai-input:focus{border-color:rgba(255,208,84,.5);}.ai-input::placeholder{color:var(--mut);}
+.ai-send{background:var(--wow);color:var(--bg);border:none;border-radius:10px;padding:0 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;flex-shrink:0;transition:opacity .15s;}
+.ai-send:disabled{opacity:.4;cursor:default;}
+.ai-response{min-height:80px;background:var(--sf);border-radius:10px;padding:14px;font-size:13px;line-height:1.85;color:var(--txt);white-space:pre-line;font-weight:300;}
+.ai-loading-txt{color:var(--mut);font-size:12px;}
+.ai-hist-lbl{font-size:10px;color:var(--mut);margin:10px 0 6px;letter-spacing:.1em;}
+.ai-hist-item{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--txt);margin-bottom:4px;cursor:pointer;transition:border-color .15s;}
+.ai-hist-item:hover{border-color:var(--acd);}
+/* ボトムシート */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}.ov.show{display:block}
+.sh{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--sf);border-radius:20px 20px 0 0;padding:16px 18px 30px;z-index:100;max-height:72vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}.sh.show{transform:translateY(0)}
 .shhd{width:36px;height:4px;background:var(--bdr);border-radius:2px;margin:0 auto 14px}
 .shcl{position:absolute;top:12px;right:14px;background:var(--card);border:1px solid var(--bdr);color:var(--mut);border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;}
-.she{font-size:52px;line-height:1;display:block;margin-bottom:8px}
-.shn{font-size:22px;font-weight:900;margin-bottom:2px}
-.shen{font-size:12px;color:var(--mut);margin-bottom:8px}
-.shwrow{display:flex;align-items:center;gap:6px;margin:10px 0 14px}
-.shwlbl{font-size:10px;color:var(--mut)}
-.shwd{font-size:20px;opacity:.2}
-.shwd.on{opacity:1}
+.she{font-size:52px;line-height:1;display:block;margin-bottom:8px}.shn{font-size:22px;font-weight:900;margin-bottom:2px}.shen{font-size:12px;color:var(--mut);margin-bottom:8px}
+.shwrow{display:flex;align-items:center;gap:6px;margin:10px 0 14px}.shwlbl{font-size:10px;color:var(--mut)}
+.shwd{font-size:20px;opacity:.2}.shwd.on{opacity:1}
 .shdiv{border:none;border-top:1px solid var(--bdr);margin:0 0 14px}
-.shfact{font-size:14px;line-height:1.85;color:var(--txt);margin-bottom:10px;font-weight:300}
-.shsrc{font-size:10px;color:var(--ac);margin-bottom:16px}
+.shfact{font-size:14px;line-height:1.85;color:var(--txt);margin-bottom:10px;font-weight:300}.shsrc{font-size:10px;color:var(--ac);margin-bottom:10px}
+.sh-ai-btn{width:100%;padding:11px;border-radius:10px;border:1px solid rgba(255,208,84,.4);background:rgba(255,208,84,.08);color:var(--wow);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;}
 .shfav{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;}
 .shfav.on{background:rgba(0,229,204,.12);border-color:var(--ac);color:var(--ac)}
+/* TOMOモーダル */
+.tomo-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}.tomo-modal.show{display:flex}
+.tomo-box{background:var(--sf);border:1px solid rgba(255,208,84,.5);border-radius:18px;padding:24px;width:100%;max-width:320px;position:relative;}
+.tomo-title{font-size:16px;font-weight:900;color:var(--wow);margin-bottom:4px;}.tomo-desc{font-size:12px;color:var(--mut);line-height:1.6;margin-bottom:16px;}
+.tomo-inp{width:100%;background:var(--card);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:11px 14px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;margin-bottom:10px;letter-spacing:.08em;text-transform:uppercase;}
+.tomo-inp:focus{border-color:rgba(255,208,84,.5);}.tomo-inp::placeholder{text-transform:none;color:var(--mut);}
+.tomo-auth{width:100%;background:var(--wow);color:var(--bg);border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-bottom:12px;}
+.tomo-mem{display:block;text-align:center;color:var(--ac);font-size:12px;text-decoration:none;}
+.tomo-cl{position:absolute;top:12px;right:14px;background:var(--card);border:1px solid var(--bdr);color:var(--mut);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;}
+/* トースト */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--bdr);color:var(--txt);border-radius:20px;padding:10px 20px;font-size:13px;z-index:300;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 <header id="hdr">
   <div class="hrow">
-    <div class="brand">
-      <span class="bi">🦁</span>
-      <div><div class="bjp">面白動物手帖</div><div class="ben">WILDLIFE</div></div>
-    </div>
+    <div class="brand"><span class="bi">🦁</span><div><div class="bjp">面白動物手帖</div><div class="ben">WILDLIFE</div></div></div>
     <div class="hbtns">
       <button class="hbtn" id="btnS" onclick="toggleSearch()">🔍</button>
       <button class="hbtn" id="btnL" onclick="toggleLang()">EN</button>
       <button class="hbtn" id="btnF" onclick="toggleFavF()">🤍</button>
+      <button class="hbtn" id="btnTOMO" onclick="onTomoBtn()">🔑</button>
     </div>
   </div>
-  <div class="sbar" id="sbar">
-    <input type="search" id="si" placeholder="動物名・特徴で検索…" oninput="onSearch(this.value)" autocomplete="off">
-  </div>
+  <div class="sbar" id="sbar"><input type="search" id="si" placeholder="動物名・特徴で検索…" oninput="onSearch(this.value)" autocomplete="off"></div>
   <div class="ctabs">
     <button class="ctab on" onclick="setcat(this,'all')">🌍 すべて</button>
     <button class="ctab" onclick="setcat(this,'mammal')">🦁 哺乳類</button>
@@ -112,74 +120,160 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
   </div>
 </header>
 <main id="main">
-  <div class="shd" id="tlbl"></div>
-  <div id="feat"></div>
-  <div class="shd" id="albl"></div>
-  <div class="cnt" id="cnt"></div>
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" style="display:none"></div>
+  <div class="shd" id="tlbl"></div><div id="feat"></div>
+  <div class="shd" id="albl"></div><div class="cnt" id="cnt"></div>
+  <div class="grid" id="grid"></div><div class="empty" id="empty" style="display:none"></div>
+  <div class="shd" id="ailbl"></div><div class="ai-section" id="aiSection"></div>
 </main>
-<div class="ov" id="ov" onclick="closeSheet()"></div>
-<div class="sh" id="sh">
-  <div class="shhd"></div>
-  <button class="shcl" onclick="closeSheet()">✕</button>
-  <div id="shc"></div>
+<div class="tomo-modal" id="tomoModal">
+  <div class="tomo-box">
+    <button class="tomo-cl" onclick="closeTomoModal()">✕</button>
+    <div class="tomo-title">🔑 TOMO認証</div>
+    <div class="tomo-desc">月替わりパスコードを入力すると<br>AI飼育員が利用できます</div>
+    <input type="text" class="tomo-inp" id="tomoInput" placeholder="TOMO-XXXX" autocomplete="off">
+    <button class="tomo-auth" onclick="authTOMO()">認証する</button>
+    <a href="https://note.com/leo77777/membership" target="_blank" rel="noopener" class="tomo-mem">TOMO会員登録はこちら →</a>
+  </div>
 </div>
+<div class="toast" id="toast"></div>
+<div class="ov" id="ov" onclick="closeSheet()"></div>
+<div class="sh" id="sh"><div class="shhd"></div><button class="shcl" onclick="closeSheet()">✕</button><div id="shc"></div></div>
 <script>
 const DATA=[
   {id:1,e:"🐪",n:"ラクダ",ne:"Camel",c:"mammal",w:5,f:"一度に100リットル以上の水を10分で飲める。水分は血液中に直接蓄積し、楕円形の赤血球が急激な希釈にも耐える。コブの正体は脂肪の貯蔵庫で、水ではない。",fe:"A camel can drink over 100 liters in 10 minutes. Water is stored in the bloodstream — the hump stores fat, not water. Oval red blood cells withstand sudden dilution.",s:"生理学"},
   {id:2,e:"🐙",n:"タコ",ne:"Octopus",c:"sea",w:5,f:"心臓が3つ、「脳」が9つある。2つの心臓がえらへ、1つが全身へ血液を送る。血液はヘモシアニンを含むため青色。各腕が独立して動作できる。",fe:"Octopuses have 3 hearts, 9 brains, and blue blood. Two hearts pump to the gills, one to the body. Each arm has its own mini-brain and can act independently.",s:"頭足類生態学"},
   {id:3,e:"🐌",n:"カタツムリ",ne:"Snail",c:"insect",w:4,f:"歯の数は25,000本以上。「歯舌（しぜつ）」と呼ばれるヤスリ状の器官に並んでいる。食べ物をすりおろすように食べる、意外に武装した生き物。",fe:"Snails have 25,000+ teeth arranged on a ribbon-like radula. They grate food rather than bite — a surprisingly well-armed creature despite their leisurely pace.",s:"軟体動物学"},
   {id:4,e:"🐻‍❄️",n:"ホッキョクグマ",ne:"Polar Bear",c:"mammal",w:5,f:"毛は白く見えるが実は透明な中空管。皮膚は黒い。黒い皮膚が太陽熱を吸収し、透明な毛が光を皮膚まで導く自然のソーラーシステム。",fe:"Polar bear fur looks white but is actually transparent and hollow. Their black skin absorbs sunlight guided through the fur — a natural solar heating system.",s:"北極生態学"},
-  {id:5,e:"🦦",n:"カワウソ",ne:"Sea Otter",c:"mammal",w:4,f:"眠るとき流されないよう海藻に体を巻き付ける。仲間と手をつないで眠る「ラフト（いかだ）」行動でも知られる、自然界で最も愛らしい習性の一つ。",fe:"Sea otters hold hands while sleeping to avoid drifting apart — called 'rafting'. They also wrap themselves in kelp as an anchor. One of nature's most endearing behaviors.",s:"海洋哺乳類研究"},
+  {id:5,e:"🦦",n:"カワウソ",ne:"Sea Otter",c:"mammal",w:4,f:"眠るとき流されないよう海藻に体を巻き付ける。仲間と手をつないで眠る「ラフト（いかだ）」行動でも知られる、自然界で最も愛らしい習性の一つ。",fe:"Sea otters hold hands while sleeping to avoid drifting apart — called 'rafting'. They also wrap themselves in kelp as an anchor.",s:"海洋哺乳類研究"},
   {id:6,e:"🐋",n:"ザトウクジラ",ne:"Humpback Whale",c:"sea",w:4,f:"雄の歌は毎年進化し、同じ「流行歌」が太平洋全体に広まることが判明。人間以外で「音楽の文化的伝播」が確認された数少ない事例の一つ。",fe:"Humpback whale songs evolve yearly, and the same 'hit song' spreads across the Pacific — one of the few confirmed cases of cultural transmission outside humans.",s:"鯨類行動学"},
-  {id:7,e:"🦩",n:"フラミンゴ",ne:"Flamingo",c:"bird",w:3,f:"ピンク色はエサの藻・甲殻類のカロテノイド色素による。食事が変わると白くなる。生まれたときは白かグレーで、色は後天的に変化する。",fe:"Flamingos are born white or gray. Their pink color comes entirely from carotenoids in their diet. Change the diet and they turn white.",s:"鳥類生態学"},
+  {id:7,e:"🦩",n:"フラミンゴ",ne:"Flamingo",c:"bird",w:3,f:"ピンク色はエサの藻・甲殻類のカロテノイド色素による。食事が変わると白くなる。生まれたときは白かグレーで、色は後天的に変化する。",fe:"Flamingos are born white or gray. Their pink color comes from carotenoids in their diet. Change the diet and they turn white.",s:"鳥類生態学"},
   {id:8,e:"🐘",n:"ゾウ",ne:"Elephant",c:"mammal",w:4,f:"仲間の死を悼む行動が観察されており、数年後に骸骨の前で立ち尽くす事例も記録されている。脳重5kg超で、記憶は数十年に及ぶ。",fe:"Elephants mourn their dead, returning years later to stand silently before remains. With brains weighing over 5kg, their memories span decades.",s:"象の認知行動研究"},
   {id:9,e:"🪼",n:"ベニクラゲ",ne:"Immortal Jellyfish",c:"sea",w:5,f:"老化・ストレスで体を若いポリプ状態に戻す能力を持つ。これを理論上無限に繰り返せる、地球上唯一「生物学的不老不死」の可能性を持つ動物。",fe:"When old or stressed, this jellyfish reverts to its juvenile polyp stage — potentially indefinitely. It may be the only biologically immortal animal on Earth.",s:"Turritopsis研究"},
-  {id:10,e:"🦁",n:"ライオン",ne:"Lion",c:"mammal",w:3,f:"「百獣の王」だが狩りの80%以上はメスが担当。オスの主な役割はなわばり防衛。1日最大20時間眠ることもある、意外とのんびりな王様。",fe:"Despite being the 'King of the Jungle', over 80% of lion hunting is done by females. Males defend territory and can sleep up to 20 hours a day.",s:"アフリカ大型肉食獣研究"},
+  {id:10,e:"🦁",n:"ライオン",ne:"Lion",c:"mammal",w:3,f:"「百獣の王」だが狩りの80%以上はメスが担当。オスの主な役割はなわばり防衛。1日最大20時間眠ることもある。",fe:"Despite being the 'King of the Jungle', over 80% of lion hunting is done by females. Males defend territory and can sleep up to 20 hours a day.",s:"アフリカ大型肉食獣研究"},
   {id:11,e:"🐬",n:"イルカ",ne:"Dolphin",c:"sea",w:4,f:"右脳と左脳を交互に眠らせる「半球睡眠」ができる。片目を開けたまま泳ぎながら眠れるため、溺れずに呼吸を続けながら休息できる。",fe:"Dolphins use 'unihemispheric sleep' — one brain hemisphere sleeps while the other stays awake. They swim, breathe, and keep one eye open while resting.",s:"海洋哺乳類神経科学"},
   {id:12,e:"🦎",n:"カメレオン",ne:"Chameleon",c:"reptile",w:4,f:"体色変化の主目的はカモフラージュではなくコミュニケーションと体温調整。色の変化はナノ結晶の格子構造が光を屈折させる物理現象による。",fe:"Chameleons change color mainly for communication and temperature regulation, not camouflage. The color shift is caused by nanocrystal lattices refracting light in the skin.",s:"爬虫類色素生物学"},
   {id:13,e:"🦅",n:"ハヤブサ",ne:"Peregrine Falcon",c:"bird",w:5,f:"急降下時の最高速度は時速390km超、地球最速の動物。鼻孔内の骨突起が高速飛行時の気流を調整し、肺へのダメージを防ぐ精巧な仕組みを持つ。",fe:"The peregrine falcon dives at 390+ km/h — the fastest animal on Earth. Bony projections inside its nostrils deflect airflow to protect the lungs at extreme speed.",s:"猛禽類生態学"},
-  {id:14,e:"🐜",n:"アリ",ne:"Ant",c:"insect",w:3,f:"地球上のアリの総重量はすべての野生陸上動物の総重量を超えるという試算がある（推定約2000万トン）。女王アリは最長30年生きる。",fe:"The total mass of all ants may exceed that of all wild land animals combined (~20 million tons). Some queen ants live up to 30 years.",s:"社会性昆虫生態学"},
-  {id:15,e:"🦓",n:"シマウマ",ne:"Zebra",c:"mammal",w:3,f:"縞模様は個体ごとに異なり指紋のようなもの。縞の最有力仮説は「吸血昆虫の視覚的着地を乱すため」。白黒の縞がアブの複眼を混乱させるとされる。",fe:"Each zebra's stripe pattern is unique like a fingerprint. The leading theory is that stripes confuse blood-sucking flies, disrupting their ability to land accurately.",s:"ウマ科動物研究"},
-  {id:16,e:"🐧",n:"コウテイペンギン",ne:"Emperor Penguin",c:"bird",w:4,f:"マイナス60℃の南極で繁殖する唯一の動物。オスが卵を足に乗せ約64日温め続け、その間何も食べない。体重が40%以上減ることもある。",fe:"Emperor penguins breed in -60°C Antarctica. Males incubate eggs on their feet for ~64 days without eating, sometimes losing over 40% of their body weight.",s:"南極生態学"},
+  {id:14,e:"🐜",n:"アリ",ne:"Ant",c:"insect",w:3,f:"地球上のアリの総重量はすべての野生陸上動物の総重量を超えるという試算がある（推定約2000万トン）。女王アリは最長30年生きる。",fe:"The total mass of all ants may exceed that of all wild land animals combined. Some queen ants live up to 30 years.",s:"社会性昆虫生態学"},
+  {id:15,e:"🦓",n:"シマウマ",ne:"Zebra",c:"mammal",w:3,f:"縞模様は個体ごとに異なり指紋のようなもの。縞の最有力仮説は「吸血昆虫の視覚的着地を乱すため」。",fe:"Each zebra's stripe pattern is unique like a fingerprint. The leading theory is that stripes confuse blood-sucking flies, disrupting their ability to land accurately.",s:"ウマ科動物研究"},
+  {id:16,e:"🐧",n:"コウテイペンギン",ne:"Emperor Penguin",c:"bird",w:4,f:"マイナス60℃の南極で繁殖する唯一の動物。オスが卵を足に乗せ約64日温め続け、その間何も食べない。体重が40%以上減ることもある。",fe:"Emperor penguins breed in -60 degrees C Antarctica. Males incubate eggs on their feet for 64 days without eating, sometimes losing over 40% of their body weight.",s:"南極生態学"},
   {id:17,e:"🐊",n:"ワニ",ne:"Crocodile",c:"reptile",w:3,f:"約2億年前とほぼ同じ姿の「生きた化石」。4心室の心臓は哺乳類と同型で、代謝の極端な節約が可能。1回の食事で1年以上生きられる。",fe:"Crocodiles are 'living fossils' barely changed in 200 million years. With a four-chambered heart and extreme metabolic efficiency, one meal can last over a year.",s:"爬虫類進化学"},
   {id:18,e:"🦑",n:"コウイカ",ne:"Cuttlefish",c:"sea",w:5,f:"色盲なのに精巧な色彩迷彩ができる。皮膚に光受容体があり、目を介さずに皮膚が直接色情報を感知している可能性が研究されている。",fe:"Cuttlefish are colorblind yet produce precise color camouflage. Their skin may sense color directly through photoreceptors — bypassing the eyes entirely.",s:"頭足類神経生理学"},
   {id:19,e:"🦔",n:"ハリネズミ",ne:"Hedgehog",c:"mammal",w:3,f:"毒や強い匂いの物質を噛んで泡立て自分のトゲに塗りつける「アノインティング」行動をする。なぜそうするのかはまだ完全に解明されていない。",fe:"Hedgehogs 'anoint' themselves — chewing toxic substances and coating their spines with foamy saliva. The exact reason for this unique behavior is still a mystery.",s:"哺乳類行動学"},
   {id:20,e:"🐝",n:"ミツバチ",ne:"Honeybee",c:"insect",w:4,f:"「8の字ダンス（ワグルダンス）」でエサ場の方向・距離・質を仲間に伝える。太陽の位置を基準にした方角をダンスの角度で表現する驚くべき言語能力。",fe:"Honeybees encode food direction, distance, and quality in a 'waggle dance'. The dance angle maps to the sun's position — a true symbolic language in the animal kingdom.",s:"行動生態学"},
 ];
 const CATS={all:{ja:"すべて",en:"All"},mammal:{ja:"哺乳類",en:"Mammal",cls:"c-mammal"},sea:{ja:"海の生き物",en:"Sea Creature",cls:"c-sea"},bird:{ja:"鳥類",en:"Bird",cls:"c-bird"},reptile:{ja:"爬虫類",en:"Reptile",cls:"c-reptile"},insect:{ja:"昆虫・その他",en:"Insect & Others",cls:"c-insect"}};
-let lang="ja",cat="all",favOnly=false,q="";
-let favs=new Set();try{favs=new Set(JSON.parse(localStorage.getItem("wl_f")||"[]"));}catch(e){}
-const savF=()=>{try{localStorage.setItem("wl_f",JSON.stringify([...favs]));}catch(e){}};
+
+// ★ CloudflareワーカーURLをデプロイ後に更新してください
+const AI_ENDPOINT='https://doubutsu-ai.dashiyo777.workers.dev/ai';
+
+// ★ TOMOハッシュ（既存のmonthly codesのSHA-256を追加してください）
+const TOMO_HASHES=new Set([
+  'f0f9659f8ee4d02b9dee8902ff233b7f32a2f61a139535be47f0a13c3f9cc011', // LUMINARE-2026
+]);
+
+let lang='ja',cat='all',favOnly=false,q='';
+let favs=new Set(),tomoUnlocked=false,aiLoading=false,aiHistory=[];
+try{favs=new Set(JSON.parse(localStorage.getItem('wl_f')||'[]'));}catch(e){}
+try{tomoUnlocked=localStorage.getItem('wildlife_tomo')==='1';}catch(e){}
+try{aiHistory=JSON.parse(localStorage.getItem('wildlife_aih')||'[]');}catch(e){}
+const savF=()=>{try{localStorage.setItem('wl_f',JSON.stringify([...favs]));}catch(e){}};
+const saveH=()=>{try{localStorage.setItem('wildlife_aih',JSON.stringify(aiHistory.slice(0,5)));}catch(e){}};
 const today=()=>DATA[Math.floor(Date.now()/86400000)%DATA.length];
-const filtered=()=>DATA.filter(a=>{if(favOnly&&!favs.has(a.id))return false;if(cat!=="all"&&a.c!==cat)return false;if(q){const lq=q.toLowerCase();return a.n.includes(q)||a.ne.toLowerCase().includes(lq)||a.f.includes(q)||a.fe.toLowerCase().includes(lq);}return true;});
-const wdH=(n,cls,sz)=>Array.from({length:5},(_,i)=>`<span class="${cls}${i<n?" on":""}" style="font-size:${sz}px">🐾</span>`).join("");
+const filtered=()=>DATA.filter(a=>{if(favOnly&&!favs.has(a.id))return false;if(cat!=='all'&&a.c!==cat)return false;if(q){const lq=q.toLowerCase();return a.n.includes(q)||a.ne.toLowerCase().includes(lq)||a.f.includes(q)||a.fe.toLowerCase().includes(lq);}return true;});
+const wdH=(n,cls,sz)=>Array.from({length:5},(_,i)=>`<span class="${cls}${i<n?' on':''}" style="font-size:${sz}px">🐾</span>`).join('');
+
 function render(){
   const L=lang,f=today(),list=filtered(),cl=CATS[f.c];
-  document.getElementById("tlbl").textContent=L==="ja"?"🌟 今日の動物":"🌟 TODAY'S ANIMAL";
-  document.getElementById("albl").textContent=L==="ja"?"🦒 どうぶつカード":"🦒 ANIMAL CARDS";
-  document.getElementById("si").placeholder=L==="ja"?"動物名・特徴で検索…":"Search animals...";
-  document.getElementById("feat").innerHTML=`<div class="feat" onclick="openSheet(${f.id})"><button class="fstar${favs.has(f.id)?" on":""}" onclick="event.stopPropagation();toggleFav(${f.id})">${favs.has(f.id)?"❤️":"🤍"}</button><span class="fe">${f.e}</span><div class="fn">${L==="ja"?f.n:f.ne}</div><div class="fc">${L==="ja"?cl.ja:cl.en}</div><div class="wrow"><span class="wlbl">WOW度</span><div class="wdots">${wdH(f.w,"wd",15)}</div></div><div class="fhint">${L==="ja"?"▼ タップして詳しく":"▼ Tap for details"}</div></div>`;
-  document.getElementById("cnt").textContent=L==="ja"?`${list.length}種表示中（全${DATA.length}種）`:`${list.length} of ${DATA.length} animals`;
-  const empty=document.getElementById("empty"),grid=document.getElementById("grid");
-  if(!list.length){grid.innerHTML="";empty.style.display="block";empty.textContent=L==="ja"?"🔍 見つかりませんでした":"🔍 No animals found";}
-  else{empty.style.display="none";grid.innerHTML=list.map(a=>{const cl=CATS[a.c];return`<div class="acard" onclick="openSheet(${a.id})"><button class="fstar${favs.has(a.id)?" on":""}" onclick="event.stopPropagation();toggleFav(${a.id})">${favs.has(a.id)?"❤️":"🤍"}</button><span class="ce">${a.e}</span><div class="cn">${L==="ja"?a.n:a.ne}</div><div class="cen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}">${L==="ja"?cl.ja:cl.en}</span><div class="cwow">${wdH(a.w,"cwd",9)}</div></div>`;}).join("");}
+  document.getElementById('tlbl').textContent=L==='ja'?'🌟 今日の動物':"🌟 TODAY'S ANIMAL";
+  document.getElementById('albl').textContent=L==='ja'?'🦒 どうぶつカード':'🦒 ANIMAL CARDS';
+  document.getElementById('ailbl').textContent=L==='ja'?'🔬 AI飼育員':'🔬 AI KEEPER';
+  document.getElementById('si').placeholder=L==='ja'?'動物名・特徴で検索…':'Search animals...';
+  document.getElementById('feat').innerHTML=`<div class="feat" onclick="openSheet(${f.id})"><button class="fstar${favs.has(f.id)?' on':''}" onclick="event.stopPropagation();toggleFav(${f.id})">${favs.has(f.id)?'❤️':'🤍'}</button><span class="fe">${f.e}</span><div class="fn">${L==='ja'?f.n:f.ne}</div><div class="fc">${L==='ja'?cl.ja:cl.en}</div><div class="wrow"><span class="wlbl">WOW度</span><div class="wdots">${wdH(f.w,'wd',15)}</div></div><div class="fhint">${L==='ja'?'▼ タップして詳しく':'▼ Tap for details'}</div></div>`;
+  document.getElementById('cnt').textContent=L==='ja'?`${list.length}種表示中（全${DATA.length}種）`:`${list.length} of ${DATA.length} animals`;
+  const empty=document.getElementById('empty'),grid=document.getElementById('grid');
+  if(!list.length){grid.innerHTML='';empty.style.display='block';empty.textContent=L==='ja'?'🔍 見つかりませんでした':'🔍 No animals found';}
+  else{empty.style.display='none';grid.innerHTML=list.map(a=>{const cl=CATS[a.c];return`<div class="acard" onclick="openSheet(${a.id})"><button class="fstar${favs.has(a.id)?' on':''}" onclick="event.stopPropagation();toggleFav(${a.id})">${favs.has(a.id)?'❤️':'🤍'}</button><span class="ce">${a.e}</span><div class="cn">${L==='ja'?a.n:a.ne}</div><div class="cen">${L==='ja'?a.ne:a.n}</div><span class="cbadge ${cl.cls}">${L==='ja'?cl.ja:cl.en}</span><div class="cwow">${wdH(a.w,'cwd',9)}</div></div>`;}).join('');}
+  renderAI();
+  const bt=document.getElementById('btnTOMO');
+  bt.textContent=tomoUnlocked?'✅':'🔑';bt.className='hbtn'+(tomoUnlocked?' tomo-on':'');
 }
+
+function renderAI(){
+  const L=lang,sec=document.getElementById('aiSection');
+  if(!tomoUnlocked){
+    sec.className='ai-section';
+    sec.innerHTML=`<div class="ai-hd"><span class="ai-title">🔬 AI飼育員</span><span class="ai-sub">${L==='ja'?'TOMO会員限定':'TOMO Members Only'}</span></div><div class="ai-lock-body"><div class="lock-icon">🔐</div><div class="lock-desc">${L==='ja'?'TOMO会員は任意の動物について\nAI飼育員に詳しく質問できます\n\n例：「ベニクラゲの不老不死は本当？」\n「タコはなぜ色盲なのに迷彩できる？」':'TOMO members can ask the AI Keeper\nabout any animal in depth\n\nEx: "Are jellyfish really immortal?"\n"How can colorblind cuttlefish camouflage?"'}</div><button class="unlock-btn" onclick="openTomoModal()">${L==='ja'?'🔑 パスコードで解錠':'🔑 Unlock with Passcode'}</button><a href="https://note.com/leo77777/membership" target="_blank" rel="noopener" class="member-link">${L==='ja'?'TOMO会員になる（月300円）→':'Become a TOMO member →'}</a></div>`;
+  } else {
+    sec.className='ai-section unlocked';
+    const chips=L==='ja'?['🐪 ラクダのコブの仕組みを詳しく','🐙 タコの9つの脳それぞれの役割','🦅 ハヤブサが速い科学的理由','🪼 ベニクラゲの不老不死の仕組み','🦦 カワウソが手をつなぐ本当の理由','🐝 ミツバチのダンスが言語である証拠']:['🐪 How exactly does a camel hump work?','🐙 The role of each of octopus 9 brains','🦅 The science behind falcons speed','🪼 How immortal jellyfish actually work','🦦 The real reason otters hold hands','🐝 Evidence bees have a real language'];
+    const histHtml=aiHistory.length?`<div class="ai-hist-lbl">${L==='ja'?'▼ 最近の質問':'▼ Recent questions'}</div>${aiHistory.map((h,i)=>`<div class="ai-hist-item" onclick="document.getElementById('aiInput').value=${JSON.stringify(h.q)};document.getElementById('aiInput').focus()">${h.q.length>40?h.q.slice(0,40)+'…':h.q}</div>`).join('')}`:'';
+    sec.innerHTML=`<div class="ai-hd"><span class="ai-title">🔬 AI飼育員</span><span class="tomo-badge">✅ TOMO会員</span></div><div class="ai-panel-body"><div class="ai-chips">${chips.map(c=>`<button class="ai-chip" onclick="setAIQ(this.dataset.q)" data-q="${c.replace(/^[^\s]+\s/,'').replace(/"/g,'&quot;')}">${c}</button>`).join('')}</div><div class="ai-input-row"><input type="text" class="ai-input" id="aiInput" placeholder="${L==='ja'?'動物について何でも質問…':'Ask anything about animals…'}" onkeydown="if(event.key==='Enter')sendAI()"><button class="ai-send" id="aiSend" onclick="sendAI()">${L==='ja'?'質問':'Ask'}</button></div><div class="ai-response" id="aiResp">${L==='ja'?'上に質問を入力してください。AI飼育員が詳しく答えます。':'Enter a question above. The AI Keeper will answer in detail.'}</div>${histHtml}</div>`;
+  }
+}
+
+function setAIQ(q){const inp=document.getElementById('aiInput');if(inp){inp.value=q;inp.focus();}}
+
+async function sendAI(){
+  const inp=document.getElementById('aiInput');if(!inp||aiLoading)return;
+  const question=inp.value.trim();if(!question)return;
+  aiLoading=true;
+  const btn=document.getElementById('aiSend');if(btn)btn.disabled=true;
+  const resp=document.getElementById('aiResp');
+  resp.innerHTML=`<span class="ai-loading-txt">🔬 ${lang==='ja'?'飼育員が調べています…':'Looking it up…'}</span>`;
+  try{
+    const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,lang})});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    const answer=data.answer||'申し訳ありません。もう一度お試しください。';
+    resp.textContent=answer;
+    aiHistory.unshift({q:question,a:answer});
+    if(aiHistory.length>5)aiHistory.pop();
+    saveH();
+    // 履歴エリアだけ更新
+    const histEl=resp.parentElement.querySelector('.ai-hist-lbl');
+    if(!histEl){
+      const L=lang;
+      const histHtml=`<div class="ai-hist-lbl">${L==='ja'?'▼ 最近の質問':'▼ Recent questions'}</div>${aiHistory.map((h,i)=>`<div class="ai-hist-item" onclick="document.getElementById('aiInput').value=${JSON.stringify(h.q)};document.getElementById('aiInput').focus()">${h.q.length>40?h.q.slice(0,40)+'…':h.q}</div>`).join('')}`;
+      resp.insertAdjacentHTML('afterend',histHtml);
+    }
+  }catch(e){resp.textContent=lang==='ja'?`エラー: ${e.message}\n\n※ Cloudflare Workerの設定を確認してください`:`Error: ${e.message}\n\nPlease check the Cloudflare Worker setup.`;}
+  finally{aiLoading=false;const btn2=document.getElementById('aiSend');if(btn2)btn2.disabled=false;}
+}
+
+// TOMO
+async function verifyTOMO(code){
+  try{const enc=new TextEncoder();const buf=await crypto.subtle.digest('SHA-256',enc.encode(code.trim().toUpperCase()));return TOMO_HASHES.has(Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''));}catch(e){return false;}
+}
+function onTomoBtn(){if(tomoUnlocked)showToast(lang==='ja'?'✅ TOMO会員として認証済みです':'✅ Verified as TOMO member');else openTomoModal();}
+function openTomoModal(){document.getElementById('tomoModal').classList.add('show');setTimeout(()=>document.getElementById('tomoInput').focus(),100);}
+function closeTomoModal(){document.getElementById('tomoModal').classList.remove('show');document.getElementById('tomoInput').value='';}
+async function authTOMO(){
+  const code=document.getElementById('tomoInput').value.trim();if(!code)return;
+  const valid=await verifyTOMO(code);
+  if(valid){tomoUnlocked=true;try{localStorage.setItem('wildlife_tomo','1');}catch(e){}closeTomoModal();render();showToast(lang==='ja'?'✅ TOMO会員として認証されました！':'✅ Verified as TOMO member!');}
+  else{showToast(lang==='ja'?'❌ パスコードが違います':'❌ Invalid passcode');document.getElementById('tomoInput').select();}
+}
+document.getElementById('tomoInput').addEventListener('keydown',e=>{if(e.key==='Enter')authTOMO();});
+
+// ボトムシート
 function openSheet(id){
   const a=DATA.find(x=>x.id===id);if(!a)return;
   const L=lang,cl=CATS[a.c],isFav=favs.has(a.id);
-  document.getElementById("shc").innerHTML=`<span class="she">${a.e}</span><div class="shn">${L==="ja"?a.n:a.ne}</div><div class="shen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}" style="font-size:10px;padding:3px 8px">${L==="ja"?cl.ja:cl.en}</span><div class="shwrow"><span class="shwlbl">WOW度</span>${Array.from({length:5},(_,i)=>`<span class="shwd${i<a.w?" on":""}">🐾</span>`).join("")}</div><hr class="shdiv"><div class="shfact">${L==="ja"?a.f:a.fe}</div><div class="shsrc">📚 出典：${a.s}</div><button class="shfav${isFav?" on":""}" id="sfb">${isFav?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites")}</button>`;
-  document.getElementById("sfb").onclick=function(){toggleFav(a.id);const now=favs.has(a.id);this.className="shfav"+(now?" on":"");this.textContent=now?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites");};
-  document.getElementById("ov").classList.add("show");document.getElementById("sh").classList.add("show");document.body.style.overflow="hidden";
+  const aiBtn=tomoUnlocked?`<button class="sh-ai-btn" onclick="closeSheet();setAIQ('${a.n}について詳しく教えてください');document.querySelector('#aiSection').scrollIntoView({behavior:'smooth'})">🔬 AI飼育員に詳しく質問する</button>`:'';
+  document.getElementById('shc').innerHTML=`<span class="she">${a.e}</span><div class="shn">${L==='ja'?a.n:a.ne}</div><div class="shen">${L==='ja'?a.ne:a.n}</div><span class="cbadge ${cl.cls}" style="font-size:10px;padding:3px 8px">${L==='ja'?cl.ja:cl.en}</span><div class="shwrow"><span class="shwlbl">WOW度</span>${Array.from({length:5},(_,i)=>`<span class="shwd${i<a.w?' on':''}">🐾</span>`).join('')}</div><hr class="shdiv"><div class="shfact">${L==='ja'?a.f:a.fe}</div><div class="shsrc">📚 出典：${a.s}</div>${aiBtn}<button class="shfav${isFav?' on':''}" id="sfb">${isFav?(L==='ja'?'❤️ お気に入り済み':'❤️ Favorited'):(L==='ja'?'🤍 お気に入りに追加':'🤍 Add to favorites')}</button>`;
+  document.getElementById('sfb').onclick=function(){toggleFav(a.id);const now=favs.has(a.id);this.className='shfav'+(now?' on':'');this.textContent=now?(L==='ja'?'❤️ お気に入り済み':'❤️ Favorited'):(L==='ja'?'🤍 お気に入りに追加':'🤍 Add to favorites');};
+  document.getElementById('ov').classList.add('show');document.getElementById('sh').classList.add('show');document.body.style.overflow='hidden';
 }
-function closeSheet(){document.getElementById("ov").classList.remove("show");document.getElementById("sh").classList.remove("show");document.body.style.overflow="";}
+function closeSheet(){document.getElementById('ov').classList.remove('show');document.getElementById('sh').classList.remove('show');document.body.style.overflow='';}
+
+// ユーティリティ
 function toggleFav(id){favs.has(id)?favs.delete(id):favs.add(id);savF();render();}
-function toggleLang(){lang=lang==="ja"?"en":"ja";document.getElementById("btnL").textContent=lang==="ja"?"EN":"JP";document.documentElement.lang=lang;render();}
-function toggleFavF(){favOnly=!favOnly;document.getElementById("btnF").classList.toggle("on",favOnly);document.getElementById("btnF").textContent=favOnly?"❤️":"🤍";render();}
-function toggleSearch(){const sb=document.getElementById("sbar"),shown=sb.classList.contains("show");sb.classList.toggle("show",!shown);document.getElementById("btnS").classList.toggle("on",!shown);if(!shown)document.getElementById("si").focus();else{q="";document.getElementById("si").value="";render();}}
+function toggleLang(){lang=lang==='ja'?'en':'ja';document.getElementById('btnL').textContent=lang==='ja'?'EN':'JP';document.documentElement.lang=lang;render();}
+function toggleFavF(){favOnly=!favOnly;document.getElementById('btnF').classList.toggle('on',favOnly);document.getElementById('btnF').textContent=favOnly?'❤️':'🤍';render();}
+function toggleSearch(){const sb=document.getElementById('sbar'),shown=sb.classList.contains('show');sb.classList.toggle('show',!shown);document.getElementById('btnS').classList.toggle('on',!shown);if(!shown)document.getElementById('si').focus();else{q='';document.getElementById('si').value='';render();}}
 function onSearch(v){q=v;render();}
-function setcat(btn,c){document.querySelectorAll(".ctab").forEach(t=>t.classList.remove("on"));btn.classList.add("on");cat=c;render();}
+function setcat(btn,c){document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');cat=c;render();}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 render();
 </script>
 </body>
