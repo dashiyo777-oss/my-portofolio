@@ -23,6 +23,44 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .hbtns{display:flex;gap:6px}
 .hbtn{background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;line-height:1.2;}
 .hbtn.on{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
+.hbtn.tomo-on{background:var(--wow);color:var(--bg);border-color:var(--wow);font-weight:700}
+/* AI料理長 */
+.ai-section{border:1px solid var(--bdr);border-radius:16px;overflow:hidden;margin-bottom:60px;}
+.ai-section.unlocked{border-color:rgba(255,107,53,.5);}
+.ai-hd{background:var(--card);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bdr);}
+.ai-title{font-size:14px;font-weight:700;color:var(--wow);}.ai-sub{font-size:10px;color:var(--mut);}
+.tomo-badge{background:rgba(255,107,53,.15);color:var(--wow);font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;}
+.ai-lock-body{padding:24px 16px;text-align:center;}.lock-icon{font-size:36px;margin-bottom:10px;}
+.lock-desc{font-size:12px;color:var(--mut);line-height:1.7;margin-bottom:16px;white-space:pre-line;}
+.unlock-btn{background:var(--wow);color:var(--bg);border:none;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-bottom:10px;display:block;width:100%;}
+.member-link{color:var(--ac);font-size:11px;text-decoration:none;display:block;}
+.ai-panel-body{padding:14px 16px;}
+.ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.ai-chip{background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:16px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.ai-chip:hover{background:rgba(255,107,53,.12);border-color:rgba(255,107,53,.4);color:var(--wow);}
+.ai-input-row{display:flex;gap:8px;margin-bottom:12px;}
+.ai-input{flex:1;background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:10px 12px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;min-height:44px;}
+.ai-input:focus{border-color:rgba(255,107,53,.5);}.ai-input::placeholder{color:var(--mut);}
+.ai-send{background:var(--wow);color:var(--bg);border:none;border-radius:10px;padding:0 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;flex-shrink:0;transition:opacity .15s;}
+.ai-send:disabled{opacity:.4;cursor:default;}
+.ai-response{min-height:80px;background:var(--sf);border-radius:10px;padding:14px;font-size:13px;line-height:1.85;color:var(--txt);white-space:pre-line;font-weight:300;}
+.ai-loading-txt{color:var(--mut);font-size:12px;}
+.ai-hist-lbl{font-size:10px;color:var(--mut);margin:10px 0 6px;letter-spacing:.1em;}
+.ai-hist-item{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--txt);margin-bottom:4px;cursor:pointer;transition:border-color .15s;}
+.ai-hist-item:hover{border-color:var(--acd);}
+.sh-ai-btn{width:100%;padding:11px;border-radius:10px;border:1px solid rgba(255,107,53,.4);background:rgba(255,107,53,.08);color:var(--wow);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;}
+/* TOMOモーダル */
+.tomo-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}.tomo-modal.show{display:flex}
+.tomo-box{background:var(--sf);border:1px solid rgba(255,107,53,.5);border-radius:18px;padding:24px;width:100%;max-width:320px;position:relative;}
+.tomo-title{font-size:16px;font-weight:900;color:var(--wow);margin-bottom:4px;}.tomo-desc{font-size:12px;color:var(--mut);line-height:1.6;margin-bottom:16px;}
+.tomo-inp{width:100%;background:var(--card);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:11px 14px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;margin-bottom:10px;letter-spacing:.08em;text-transform:uppercase;}
+.tomo-inp:focus{border-color:rgba(255,107,53,.5);}.tomo-inp::placeholder{text-transform:none;color:var(--mut);}
+.tomo-auth{width:100%;background:var(--wow);color:var(--bg);border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-bottom:12px;}
+.tomo-mem{display:block;text-align:center;color:var(--ac);font-size:12px;text-decoration:none;}
+.tomo-cl{position:absolute;top:12px;right:14px;background:var(--card);border:1px solid var(--bdr);color:var(--mut);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;}
+/* トースト */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--bdr);color:var(--txt);border-radius:20px;padding:10px 20px;font-size:13px;z-index:300;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .sbar{margin-bottom:8px;display:none}
 .sbar.show{display:block}
 .sbar input{width:100%;background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:8px 14px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;}
@@ -97,6 +135,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
       <button class="hbtn" id="btnS" onclick="toggleSearch()">🔍</button>
       <button class="hbtn" id="btnL" onclick="toggleLang()">EN</button>
       <button class="hbtn" id="btnF" onclick="toggleFavF()">🤍</button>
+      <button class="hbtn" id="btnTOMO" onclick="onTomoBtn()">🔑</button>
     </div>
   </div>
   <div class="sbar" id="sbar">
@@ -118,7 +157,20 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
   <div class="cnt" id="cnt"></div>
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty" style="display:none"></div>
+  <div class="shd" id="ailbl"></div><div class="ai-section" id="aiSection"></div>
 </main>
+
+<div class="tomo-modal" id="tomoModal">
+  <div class="tomo-box">
+    <button class="tomo-cl" onclick="closeTomoModal()">✕</button>
+    <div class="tomo-title">🔑 TOMO認証</div>
+    <div class="tomo-desc">月替わりパスコードを入力すると<br>AI料理長が利用できます</div>
+    <input type="text" class="tomo-inp" id="tomoInput" placeholder="TOMO-XXXX" autocomplete="off">
+    <button class="tomo-auth" onclick="authTOMO()">認証する</button>
+    <a href="https://note.com/leo77777/membership" target="_blank" rel="noopener" class="tomo-mem">TOMO会員登録はこちら →</a>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 <div class="ov" id="ov" onclick="closeSheet()"></div>
 <div class="sh" id="sh">
   <div class="shhd"></div>
@@ -152,6 +204,36 @@ const CATS={all:{ja:"すべて",en:"All"},pan:{ja:"パン・麺",en:"Bread & Noo
 let lang="ja",cat="all",favOnly=false,q="";
 let favs=new Set();try{favs=new Set(JSON.parse(localStorage.getItem("gm_f")||"[]"));}catch(e){}
 const savF=()=>{try{localStorage.setItem("gm_f",JSON.stringify([...favs]));}catch(e){}};
+
+// ★ AI料理長用Cloudflare Worker（doubutsu-aiと共用。role:'chef'で人格を切替）
+const AI_ENDPOINT="https://doubutsu-ai.dashiyo777.workers.dev/ai";
+
+// ★ マスター合言葉（常に有効・運用者用）のSHA-256
+const TOMO_MASTER_HASHES=new Set([
+  "f0f9659f8ee4d02b9dee8902ff233b7f32a2f61a139535be47f0a13c3f9cc011", // LUMINARE-2026
+]);
+// ★ 叡智の灯火 月替わり合言葉（TOMO-XXXX）のSHA-256。2027-05まで登録済み。
+//    当月のコードのみ有効。新しい月を足すときはClaudeに依頼してください。
+const TOMO_MONTHLY={
+ "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+ "2026-07":"67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+ "2026-08":"fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+ "2026-09":"4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+ "2026-10":"266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+ "2026-11":"eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+ "2026-12":"7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+ "2027-01":"a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+ "2027-02":"00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+ "2027-03":"63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+ "2027-04":"d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+ "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+};
+const curYM=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
+
+let tomoUnlocked=false,aiLoading=false,aiHistory=[];
+try{tomoUnlocked=localStorage.getItem("gourmet_tomo")==="1";}catch(e){}
+try{aiHistory=JSON.parse(localStorage.getItem("gourmet_aih")||"[]");}catch(e){}
+const saveH=()=>{try{localStorage.setItem("gourmet_aih",JSON.stringify(aiHistory.slice(0,5)));}catch(e){}};
 const today=()=>DATA[Math.floor(Date.now()/86400000)%DATA.length];
 const filtered=()=>DATA.filter(a=>{if(favOnly&&!favs.has(a.id))return false;if(cat!=="all"&&a.c!==cat)return false;if(q){const lq=q.toLowerCase();return a.n.includes(q)||a.ne.toLowerCase().includes(lq)||a.f.includes(q)||a.fe.toLowerCase().includes(lq);}return true;});
 const wdH=(n,cls,sz)=>Array.from({length:5},(_,i)=>`<span class="${cls}${i<n?" on":""}" style="font-size:${sz}px">⭐</span>`).join("");
@@ -165,11 +247,71 @@ function render(){
   const empty=document.getElementById("empty"),grid=document.getElementById("grid");
   if(!list.length){grid.innerHTML="";empty.style.display="block";empty.textContent=L==="ja"?"🔍 見つかりませんでした":"🔍 No food facts found";}
   else{empty.style.display="none";grid.innerHTML=list.map(a=>{const cl=CATS[a.c];return`<div class="acard" onclick="openSheet(${a.id})"><button class="fstar${favs.has(a.id)?" on":""}" onclick="event.stopPropagation();toggleFav(${a.id})">${favs.has(a.id)?"❤️":"🤍"}</button><span class="ce">${a.e}</span><div class="cn">${L==="ja"?a.n:a.ne}</div><div class="cen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}">${L==="ja"?cl.ja:cl.en}</span><div class="cwow">${wdH(a.w,"cwd",9)}</div></div>`;}).join("");}
+  document.getElementById("ailbl").textContent=L==="ja"?"👨‍🍳 AI料理長":"👨‍🍳 AI CHEF";
+  renderAI();
+  const bt=document.getElementById("btnTOMO");
+  bt.textContent=tomoUnlocked?"✅":"🔑";bt.className="hbtn"+(tomoUnlocked?" tomo-on":"");
 }
+
+/* ---------- AI料理長 ---------- */
+function renderAI(){
+  const L=lang,sec=document.getElementById("aiSection");
+  if(!tomoUnlocked){
+    sec.className="ai-section";
+    sec.innerHTML=`<div class="ai-hd"><span class="ai-title">👨‍🍳 AI料理長</span><span class="ai-sub">${L==="ja"?"TOMO会員限定":"TOMO Members Only"}</span></div><div class="ai-lock-body"><div class="lock-icon">🔐</div><div class="lock-desc">${L==="ja"?"TOMO会員は気になる食べ物について\nAI料理長に詳しく質問できます\n\n例：「はちみつはなぜ腐らない？」\n「クロワッサンの形の意味は？」":"TOMO members can ask the AI Chef\nabout any food in depth\n\nEx: \"Why does honey never spoil?\"\n\"What do croissant shapes mean?\""}</div><button class="unlock-btn" onclick="openTomoModal()">${L==="ja"?"🔑 パスコードで解錠":"🔑 Unlock with Passcode"}</button><a href="https://note.com/leo77777/membership" target="_blank" rel="noopener" class="member-link">${L==="ja"?"TOMO会員になる（月300円）→":"Become a TOMO member →"}</a></div>`;
+  } else {
+    sec.className="ai-section unlocked";
+    const chips=L==="ja"?["🥐 クロワッサンの形と材料の関係を詳しく","🍯 はちみつが数千年腐らない科学的理由","🌶️ 唐辛子の辛さが鳥に効かない仕組み","🍓 イチゴの本当の果実はどの部分？","🍫 チョコが3000年飲み物だった歴史","🥜 ピーナッツが地中で実る不思議"]:["🥐 How croissant shape reveals the butter","🍯 The science of honey never spoiling","🌶️ Why chili peppers spare the birds","🍓 Where are a strawberry's real fruits?","🍫 Chocolate's 3,000 years as a drink","🥜 Why peanuts ripen underground"];
+    const histHtml=aiHistory.length?`<div class="ai-hist-lbl">${L==="ja"?"▼ 最近の質問":"▼ Recent questions"}</div>${aiHistory.map(h=>`<div class="ai-hist-item" onclick="document.getElementById('aiInput').value=${JSON.stringify(h.q)};document.getElementById('aiInput').focus()">${h.q.length>40?h.q.slice(0,40)+"…":h.q}</div>`).join("")}`:"";
+    sec.innerHTML=`<div class="ai-hd"><span class="ai-title">👨‍🍳 AI料理長</span><span class="tomo-badge">✅ TOMO会員</span></div><div class="ai-panel-body"><div class="ai-chips">${chips.map(c=>`<button class="ai-chip" onclick="setAIQ(this.dataset.q)" data-q="${c.replace(/^[^\s]+\s/,"").replace(/"/g,"&quot;")}">${c}</button>`).join("")}</div><div class="ai-input-row"><input type="text" class="ai-input" id="aiInput" placeholder="${L==="ja"?"食べ物について何でも質問…":"Ask anything about food…"}" onkeydown="if(event.key==='Enter')sendAI()"><button class="ai-send" id="aiSend" onclick="sendAI()">${L==="ja"?"質問":"Ask"}</button></div><div class="ai-response" id="aiResp">${L==="ja"?"上に質問を入力してください。AI料理長が詳しく答えます。":"Enter a question above. The AI Chef will answer in detail."}</div>${histHtml}</div>`;
+  }
+}
+function setAIQ(q){const inp=document.getElementById("aiInput");if(inp){inp.value=q;inp.focus();}}
+async function sendAI(){
+  const inp=document.getElementById("aiInput");if(!inp||aiLoading)return;
+  const question=inp.value.trim();if(!question)return;
+  aiLoading=true;
+  const btn=document.getElementById("aiSend");if(btn)btn.disabled=true;
+  const resp=document.getElementById("aiResp");
+  resp.innerHTML=`<span class="ai-loading-txt">👨‍🍳 ${lang==="ja"?"料理長が調べています…":"The chef is looking it up…"}</span>`;
+  try{
+    const res=await fetch(AI_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question,lang,role:"chef"})});
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const data=await res.json();
+    const answer=data.answer||(lang==="ja"?"申し訳ありません。もう一度お試しください。":"Sorry, please try again.");
+    resp.textContent=answer;
+    aiHistory.unshift({q:question,a:answer});
+    if(aiHistory.length>5)aiHistory.pop();
+    saveH();
+    const histEl=resp.parentElement.querySelector(".ai-hist-lbl");
+    if(!histEl){
+      const L=lang;
+      const histHtml=`<div class="ai-hist-lbl">${L==="ja"?"▼ 最近の質問":"▼ Recent questions"}</div>${aiHistory.map(h=>`<div class="ai-hist-item" onclick="document.getElementById('aiInput').value=${JSON.stringify(h.q)};document.getElementById('aiInput').focus()">${h.q.length>40?h.q.slice(0,40)+"…":h.q}</div>`).join("")}`;
+      resp.insertAdjacentHTML("afterend",histHtml);
+    }
+  }catch(e){resp.textContent=lang==="ja"?`エラー: ${e.message}\n\n※ Cloudflare Workerの設定を確認してください`:`Error: ${e.message}\n\nPlease check the Cloudflare Worker setup.`;}
+  finally{aiLoading=false;const btn2=document.getElementById("aiSend");if(btn2)btn2.disabled=false;}
+}
+
+/* ---------- TOMO認証 ---------- */
+async function verifyTOMO(code){
+  try{const enc=new TextEncoder();const buf=await crypto.subtle.digest("SHA-256",enc.encode(code.trim().toUpperCase()));const h=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");return TOMO_MASTER_HASHES.has(h)||TOMO_MONTHLY[curYM()]===h;}catch(e){return false;}
+}
+function onTomoBtn(){if(tomoUnlocked)showToast(lang==="ja"?"✅ TOMO会員として認証済みです":"✅ Verified as TOMO member");else openTomoModal();}
+function openTomoModal(){document.getElementById("tomoModal").classList.add("show");setTimeout(()=>document.getElementById("tomoInput").focus(),100);}
+function closeTomoModal(){document.getElementById("tomoModal").classList.remove("show");document.getElementById("tomoInput").value="";}
+async function authTOMO(){
+  const code=document.getElementById("tomoInput").value.trim();if(!code)return;
+  const valid=await verifyTOMO(code);
+  if(valid){tomoUnlocked=true;try{localStorage.setItem("gourmet_tomo","1");}catch(e){}closeTomoModal();render();showToast(lang==="ja"?"✅ TOMO会員として認証されました！":"✅ Verified as TOMO member!");}
+  else{showToast(lang==="ja"?"❌ パスコードが違います":"❌ Invalid passcode");document.getElementById("tomoInput").select();}
+}
+function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000);}
 function openSheet(id){
   const a=DATA.find(x=>x.id===id);if(!a)return;
   const L=lang,cl=CATS[a.c],isFav=favs.has(a.id);
-  document.getElementById("shc").innerHTML=`<span class="she">${a.e}</span><div class="shn">${L==="ja"?a.n:a.ne}</div><div class="shen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}" style="font-size:10px;padding:3px 8px">${L==="ja"?cl.ja:cl.en}</span><div class="shwrow"><span class="shwlbl">${L==="ja"?"びっくり度":"Surprise"}</span>${Array.from({length:5},(_,i)=>`<span class="shwd${i<a.w?" on":""}">⭐</span>`).join("")}</div><hr class="shdiv"><div class="shfact">${L==="ja"?a.f:a.fe}</div><div class="shsrc">📚 出典：${a.s}</div><button class="shfav${isFav?" on":""}" id="sfb">${isFav?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites")}</button>`;
+  const aiBtn=tomoUnlocked?`<button class="sh-ai-btn" onclick="closeSheet();setAIQ('${a.n}について詳しく教えてください');document.querySelector('#aiSection').scrollIntoView({behavior:'smooth'})">👨‍🍳 AI料理長に詳しく質問する</button>`:"";
+  document.getElementById("shc").innerHTML=`<span class="she">${a.e}</span><div class="shn">${L==="ja"?a.n:a.ne}</div><div class="shen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}" style="font-size:10px;padding:3px 8px">${L==="ja"?cl.ja:cl.en}</span><div class="shwrow"><span class="shwlbl">${L==="ja"?"びっくり度":"Surprise"}</span>${Array.from({length:5},(_,i)=>`<span class="shwd${i<a.w?" on":""}">⭐</span>`).join("")}</div><hr class="shdiv"><div class="shfact">${L==="ja"?a.f:a.fe}</div><div class="shsrc">📚 出典：${a.s}</div>${aiBtn}<button class="shfav${isFav?" on":""}" id="sfb">${isFav?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites")}</button>`;
   document.getElementById("sfb").onclick=function(){toggleFav(a.id);const now=favs.has(a.id);this.className="shfav"+(now?" on":"");this.textContent=now?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites");};
   document.getElementById("ov").classList.add("show");document.getElementById("sh").classList.add("show");document.body.style.overflow="hidden";
 }
@@ -180,6 +322,7 @@ function toggleFavF(){favOnly=!favOnly;document.getElementById("btnF").classList
 function toggleSearch(){const sb=document.getElementById("sbar"),shown=sb.classList.contains("show");sb.classList.toggle("show",!shown);document.getElementById("btnS").classList.toggle("on",!shown);if(!shown)document.getElementById("si").focus();else{q="";document.getElementById("si").value="";render();}}
 function onSearch(v){q=v;render();}
 function setcat(btn,c){document.querySelectorAll(".ctab").forEach(t=>t.classList.remove("on"));btn.classList.add("on");cat=c;render();}
+document.getElementById("tomoInput").addEventListener("keydown",e=>{if(e.key==="Enter")authTOMO();});
 render();
 </script>
 </body>

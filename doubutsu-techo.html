@@ -166,11 +166,27 @@ const CATS={all:{ja:"すべて",en:"All"},mammal:{ja:"哺乳類",en:"Mammal",cls
 // ★ CloudflareワーカーURLをデプロイ後に更新してください
 const AI_ENDPOINT='https://doubutsu-ai.dashiyo777.workers.dev/ai';
 
-// ★ TOMOハッシュ（既存のmonthly codesのSHA-256を追加してください）
-const TOMO_HASHES=new Set([
+// ★ マスター合言葉（常に有効・運用者用）のSHA-256
+const TOMO_MASTER_HASHES=new Set([
   'f0f9659f8ee4d02b9dee8902ff233b7f32a2f61a139535be47f0a13c3f9cc011', // LUMINARE-2026
-  'fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06', // TOMO-2519
 ]);
+// ★ 叡智の灯火 月替わり合言葉（TOMO-XXXX）のSHA-256。2027-05まで登録済み。
+//    当月のコードのみ有効。新しい月を足すときはClaudeに依頼してください。
+const TOMO_MONTHLY={
+ "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+ "2026-07":"67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+ "2026-08":"fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+ "2026-09":"4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+ "2026-10":"266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+ "2026-11":"eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+ "2026-12":"7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+ "2027-01":"a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+ "2027-02":"00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+ "2027-03":"63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+ "2027-04":"d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+ "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+};
+const curYM=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
 
 let lang='ja',cat='all',favOnly=false,q='';
 let favs=new Set(),tomoUnlocked=false,aiLoading=false,aiHistory=[];
@@ -222,7 +238,7 @@ async function sendAI(){
   const resp=document.getElementById('aiResp');
   resp.innerHTML=`<span class="ai-loading-txt">🔬 ${lang==='ja'?'飼育員が調べています…':'Looking it up…'}</span>`;
   try{
-    const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,lang})});
+    const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,lang,role:'keeper'})});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
     const answer=data.answer||'申し訳ありません。もう一度お試しください。';
@@ -243,7 +259,7 @@ async function sendAI(){
 
 // TOMO
 async function verifyTOMO(code){
-  try{const enc=new TextEncoder();const buf=await crypto.subtle.digest('SHA-256',enc.encode(code.trim().toUpperCase()));return TOMO_HASHES.has(Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''));}catch(e){return false;}
+  try{const enc=new TextEncoder();const buf=await crypto.subtle.digest('SHA-256',enc.encode(code.trim().toUpperCase()));const h=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');return TOMO_MASTER_HASHES.has(h)||TOMO_MONTHLY[curYM()]===h;}catch(e){return false;}
 }
 function onTomoBtn(){if(tomoUnlocked)showToast(lang==='ja'?'✅ TOMO会員として認証済みです':'✅ Verified as TOMO member');else openTomoModal();}
 function openTomoModal(){document.getElementById('tomoModal').classList.add('show');setTimeout(()=>document.getElementById('tomoInput').focus(),100);}
