@@ -143,6 +143,19 @@ footer{max-width:820px;margin:40px auto 0;padding:24px 16px calc(env(safe-area-i
   text-align:center;font-size:11.5px;color:var(--muted);line-height:1.8}
 footer .rule{height:1px;background:var(--line);margin-bottom:16px}
 footer a{color:var(--accent)}
+/* ── さくいん ── */
+.idx-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.idx-chips a{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:12.5px;text-decoration:none;color:inherit;background:var(--card,transparent)}
+.idx-chips a:active{opacity:.7}
+.idx-h{font-weight:700;font-size:12.5px;margin-top:14px;color:var(--muted)}
+.idx-all{margin-top:12px}
+.idx-all summary{cursor:pointer;font-weight:700;font-size:13.5px}
+.idx-cat{font-weight:700;margin:10px 0 4px;font-size:12.5px;color:var(--muted)}
+.idx-list{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px}
+.idx-list a{text-decoration:none;color:inherit;border-bottom:1px dotted var(--line)}
+.card-hit{outline:2px solid var(--accent);outline-offset:3px;transition:outline-color 1.2s}
+.card-hit.fade{outline-color:transparent}
+#idx-fab{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom) + 14px);z-index:50;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg,#fff);font-size:19px;line-height:42px;text-align:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);display:none;text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
@@ -161,6 +174,18 @@ footer a{color:var(--accent)}
     <p class="sum-p">最大の流れは <b>「縮む日本」</b>。人口・出生・婚姻は減り続け、<b>合計特殊出生率は1.15と過去最低</b>、高齢化率は約29%、政府債務は膨張中。一方で、<b>平均寿命は世界最高水準、大学進学率は過去最高、自殺者数は長期的に減少、訪日外国人は過去最高</b>——確実に上向いている面もあります。物価・賃金・GDPなどは伸び悩みや高齢化が絡み <b>良し悪しを一概に言えない中立</b>。総じて「<b>社会の土台（人口）は縮む一方、暮らしの質や国際的な魅力には上向きの芽もある</b>」という姿です。</p>
     <div class="tally" id="tally"></div>
     <p class="sum-p" style="margin-top:12px;color:var(--muted);font-size:12px">※「改善／悪化／中立」は各指標の数字の向きに基づく機械的な目安です。良し悪しの最終判断は指標の性質（例：死亡数の増加は高齢化の反映）にもよります。各カードの注記もご覧ください。</p>
+  </section>
+
+  <section class="summary" style="margin-top:16px" id="idx">
+    <div class="sum-h">🧭 さくいん</div>
+    <div class="idx-h">特集</div>
+    <div class="idx-chips" id="idx-features"></div>
+    <div class="idx-h">カテゴリ（指標カード）</div>
+    <div class="idx-chips" id="idx-cats"></div>
+    <details class="idx-all">
+      <summary>📚 全指標さくいん（タップで開く）</summary>
+      <div id="idx-all-body"></div>
+    </details>
   </section>
 
   <section class="summary" style="margin-top:16px">
@@ -328,6 +353,7 @@ footer a{color:var(--accent)}
     <details>
       <summary style="cursor:pointer;font-weight:700">📜 更新履歴</summary>
       <div style="margin-top:10px;font-size:.92em;line-height:1.8">
+        <b>2026-08-09</b>：「🧭 さくいん」を新設（特集・カテゴリ・全指標へのジャンプ、さくいんへ戻る浮きボタン）。<br>
         <b>2026-08-09</b>：食料自給率に2025年度概算値を反映（カロリーベース37%で過去最低を更新・生産額ベース66%は注記に記載）。判定を中立→悪化に変更。<br>
         <b>2026-07-26</b>：2025年の年間確定値を7指標に反映（訪日外国人4,268万人・金価格・完全失業率・有効求人倍率・現金給与総額・実質賃金指数・非正規雇用比率）。実質GDPカードに基準改定（2025SNA）の注記を追加。<br>
         <b>2026-07-21</b>：特集「移民はどこで進んでいるか ― 地域のばらつきと『中国化』の実態」を新設。家計金融資産・対外純資産・海外永住者数の3指標を追加（→72指標）。<br>
@@ -625,7 +651,7 @@ function card(d){
         <div class="foot-note">連続データは準備中（部分表示）</div></div>`;
   const table = `<details><summary>数値をみる</summary><table class="mini"><thead><tr><th>年</th><th>${d.unit}</th></tr></thead><tbody>${
     d.series.map(s=>`<tr><td>${s[0]}</td><td>${nf.format(s[1])}</td></tr>`).join("")}</tbody></table></details>`;
-  return `<article class="card">
+  return `<article class="card" id="card-${d.key}">
     <div class="ttl">${d.title}</div>
     <div class="srcname">${d.src}</div>
     <div class="row">
@@ -644,13 +670,58 @@ function card(d){
   </article>`;
 }
 
-CATS.forEach(cat=>{
+CATS.forEach((cat,ci)=>{
   const items=DATA.filter(d=>d.category===cat);
   if(!items.length) return;
   const sec=document.createElement("section");
+  sec.id="cat-"+ci;
   sec.innerHTML=`<div class="cat"><h2>${cat}</h2></div><div class="grid">${items.map(card).join("")}</div>`;
   app.appendChild(sec);
 });
+
+/* ── さくいんの自動構築 ── */
+(function buildIndex(){
+  const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  // 特集：見出しからリンクを自動生成（さくいん自身と更新履歴は除外）
+  const feats=[...document.querySelectorAll("section.summary")].filter(s=>{
+    const t=(s.querySelector(".sum-h")||{}).textContent||"";
+    return t.includes("特集");
+  });
+  document.getElementById("idx-features").innerHTML=feats.map((s,i)=>{
+    s.id=s.id||("fs-"+i);
+    const t=(s.querySelector(".sum-h").textContent||"").replace(/^[^：]*：/,"").split("―")[0].split("——")[0].trim();
+    return `<a href="#${s.id}">${esc(t)}</a>`;
+  }).join("");
+  // カテゴリチップ（件数つき）
+  document.getElementById("idx-cats").innerHTML=CATS.map((cat,ci)=>{
+    const n=DATA.filter(d=>d.category===cat).length;
+    return n?`<a href="#cat-${ci}">${esc(cat)} <span style="color:var(--muted)">${n}</span></a>`:"";
+  }).join("");
+  // 全指標さくいん（カテゴリ別）
+  document.getElementById("idx-all-body").innerHTML=CATS.map(cat=>{
+    const items=DATA.filter(d=>d.category===cat);
+    if(!items.length) return "";
+    return `<div class="idx-cat">${esc(cat)}</div><div class="idx-list">${
+      items.map(d=>`<a href="#card-${d.key}" data-card="1">${esc(d.title)}</a>`).join("")
+    }</div>`;
+  }).join("");
+  // カードへのジャンプ時にハイライト
+  document.getElementById("idx-all-body").addEventListener("click",e=>{
+    const a=e.target.closest("a[data-card]"); if(!a) return;
+    const el=document.querySelector(a.getAttribute("href")); if(!el) return;
+    el.classList.remove("card-hit","fade");
+    requestAnimationFrame(()=>{ el.classList.add("card-hit");
+      setTimeout(()=>el.classList.add("fade"),900);
+      setTimeout(()=>el.classList.remove("card-hit","fade"),2400); });
+  });
+  // さくいんへ戻る浮きボタン
+  const fab=document.createElement("a");
+  fab.id="idx-fab"; fab.href="#idx"; fab.title="さくいんへ"; fab.textContent="🧭";
+  document.body.appendChild(fab);
+  const idxSec=document.getElementById("idx");
+  addEventListener("scroll",()=>{ fab.style.display = (scrollY > idxSec.offsetTop + 400) ? "block" : "none"; },{passive:true});
+})();
+if(!document.querySelector('style[data-smooth]')){const st=document.createElement('style');st.dataset.smooth='1';st.textContent='html{scroll-behavior:smooth}';document.head.appendChild(st);}
 
 // hover tooltip for charts
 function fmtHover(sv, year, val, unit){ return `${year}：${nf.format(val)} ${unit}`; }
