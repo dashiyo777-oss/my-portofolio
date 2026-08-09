@@ -800,11 +800,11 @@ var s=document.createElement('script');s.textContent=code;document.body.appendCh
 })();
 </script>
 
-<!-- 訪問カウンター：ページ読込ごとに +1／?admin 付きURLで数値バッジ表示（counterapi.dev） -->
+<!-- 訪問カウンター：ページ読込ごとに +1／?admin 付きURLで数値バッジ表示（自前Worker eichi-count） -->
 <script id="eichi-counter" data-ns="wadai-karuta">
 (function(){
   var NS='wadai-karuta';
-  fetch('https://api.counterapi.dev/v1/dashiyo777oss/'+NS+'/up')
+  fetch('https://eichi-count.dashiyo777.workers.dev/'+NS+'/up')
     .then(function(r){return r.json();})
     .then(function(d){
       if(location.search.indexOf('admin')===-1) return;
