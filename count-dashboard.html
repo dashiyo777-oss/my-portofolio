@@ -82,9 +82,9 @@ footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line)
   <div class="card" id="grp-ext"></div>
 
   <p class="note">
-    ・数字は counterapi.dev の<strong>累計値</strong>です（読み取り専用取得のため、この画面を開いてもカウントは増えません）。<br>
+    ・数字は自前カウンター（Cloudflare Worker + KV）の<strong>累計値</strong>です（読み取り専用取得のため、この画面を開いてもカウントは増えません）。<br>
     ・「＋N」は<strong>この端末で前回この画面を開いた時からの増加数</strong>（端末ごとに記録）。日々の増減の目安にどうぞ。<br>
-    ・外部（政治家ランク／世界の見方／冴え手帖・叡智の灯火／賢人会議）は counterapi 対象外のため、各ダッシュボード・itch.io Analytics・Discord日次レポートを参照して <a href="access-jisseki.html">台帳</a> に手入力してください。
+    ・外部（政治家ランク／世界の見方／冴え手帖・叡智の灯火／賢人会議）は自前カウンター対象外のため、各ダッシュボード・itch.io Analytics・Discord日次レポートを参照して <a href="access-jisseki.html">台帳</a> に手入力してください。
   </p>
 
   <footer>
@@ -94,8 +94,10 @@ footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line)
 </div>
 
 <script>
-// ===== 計測対象（counterapi のネームスペース）=====
-var WORKSPACE = 'dashiyo777oss';
+// ===== 計測対象（自前カウンター Worker のネームスペース）=====
+// 旧 counterapi.dev v1 は 2026-08-07 に廃止されたため、自前の
+// Cloudflare Worker + KV（count-worker.js）へ移行。
+var WORKER = 'https://eichi-count.dashiyo777.workers.dev';
 var JP = [
   {ns:'meisaku',      em:'📖', nm:'名作手帖',            sub:'meisaku-techo.html'},
   {ns:'meien',        em:'🎬', nm:'名演手帖',            sub:'meien-techo.html'},
@@ -128,16 +130,14 @@ var EXT = [
 
 function fmt(n){ return Number(n).toLocaleString(); }
 function readCount(ns){
-  // counterapi v1 の末尾なしGETは cross-origin fetch に非対応のため、
-  // 動作実績のある /up で取得し、直後に /down で自分の +1 を打ち消す（実質・読み取り専用）。
-  var base='https://api.counterapi.dev/v1/'+WORKSPACE+'/'+ns;
-  return fetch(base+'/up')
+  // 自前 Worker は増やさず読むだけの GET /<ns> を備えるため、
+  // counterapi 時代の /up → /down 打ち消しは不要（真の読み取り専用）。
+  return fetch(WORKER+'/'+ns)
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
     .then(function(d){
-      var c=(d&&(d.count!=null?d.count:(d.data&&d.data.count)));
+      var c=(d&&d.count);
       if(c==null) throw new Error('no count');
-      fetch(base+'/down').catch(function(){}); // 自分の加算を戻す
-      return Math.max(0, Number(c)-1);
+      return Math.max(0, Number(c));
     });
 }
 

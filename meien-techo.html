@@ -755,11 +755,11 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkPass()});
 </script>
 
-<!-- 訪問カウンター：ページ読込ごとに +1／?admin 付きURLで数値バッジ表示（counterapi.dev） -->
+<!-- 訪問カウンター：ページ読込ごとに +1／?admin 付きURLで数値バッジ表示（自前Worker eichi-count） -->
 <script id="eichi-counter" data-ns="meien">
 (function(){
   var NS='meien';
-  fetch('https://api.counterapi.dev/v1/dashiyo777oss/'+NS+'/up')
+  fetch('https://eichi-count.dashiyo777.workers.dev/'+NS+'/up')
     .then(function(r){return r.json();})
     .then(function(d){
       if(location.search.indexOf('admin')===-1) return;

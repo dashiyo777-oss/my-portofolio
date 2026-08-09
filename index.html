@@ -928,16 +928,16 @@
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // CTAクリック計測（どの導線が使われたかを counterapi で集計）
+        // CTAクリック計測（どの導線が使われたかを 自前Workerで集計）
         document.querySelectorAll('[data-cta]').forEach(el => {
             el.addEventListener('click', () => {
                 const ns = 'cta-' + el.getAttribute('data-cta');
-                fetch('https://api.counterapi.dev/v1/dashiyo777oss/' + ns + '/up').catch(() => {});
+                fetch('https://eichi-count.dashiyo777.workers.dev/' + ns + '/up').catch(() => {});
             });
         });
 
         // 訪問カウンター（?admin 付きURLでのみ表示）
-        fetch('https://api.counterapi.dev/v1/dashiyo777oss/portfolio/up')
+        fetch('https://eichi-count.dashiyo777.workers.dev/portfolio/up')
             .then(res => res.json())
             .then(data => {
                 document.getElementById('visit-count').textContent = data.count.toLocaleString();
