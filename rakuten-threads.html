@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>楽天アフィリエイト × Threads 投稿アシスタント | 叡智の灯火</title>
+<meta name="description" content="楽天市場の公式APIで商品を検索し、あなたのアフィリエイトIDでリンクを生成。倫理（嘘を売らない・#PR明示）に沿ったThreads投稿の下書きまで作る、自分用ツール。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E7;--card:#FDFBF4;--ink:#3A2E24;--brown:#6E4423;--brown-deep:#4A2E17;
+  --line:#E2D7C3;--stamp:#A6502E;--gold:#B08D4F;--up:#3E7C4F;--muted:#9A8A72;
+  --disp:'Shippori Mincho',serif;--body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.8;font-size:15px;
+  background-image:radial-gradient(rgba(110,68,35,.045) 1px,transparent 1px);background-size:22px 22px}
+a{color:var(--brown);text-decoration:none}
+.wrap{max-width:960px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 44px) 18px 40px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(22px,5.6vw,31px);letter-spacing:.05em;text-align:center;line-height:1.4}
+.sub{font-family:var(--disp);font-size:13px;color:#7A6A56;text-align:center;margin-top:10px;line-height:1.7}
+.back{display:block;text-align:center;margin-top:10px;font-size:12px}
+.back a::before{content:"← "}
+
+/* ---- 但し書き ---- */
+.disclaimer{background:#FBF3E4;border:1px solid #E7D3A9;border-radius:12px;padding:13px 16px;margin-top:20px;font-size:12px;color:#7A5A2A;line-height:1.85}
+.disclaimer b{color:var(--brown-deep)}
+.disclaimer .em{color:var(--stamp);font-weight:700}
+
+/* ---- 設定パネル ---- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 6px;margin-top:18px;box-shadow:0 2px 10px rgba(110,68,35,.07)}
+.panel h2{font-family:var(--disp);font-size:14px;letter-spacing:.1em;color:var(--brown);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.panel h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11.5px;color:#8A7A64;letter-spacing:.04em;margin-bottom:5px}
+.field label .req{color:var(--stamp)}
+.field input,.field select{width:100%;font-family:var(--body);font-size:14px;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:9px;padding:9px 11px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field .hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.7}
+.field .hint code{background:rgba(110,68,35,.08);border-radius:5px;padding:1px 6px;font-size:10.5px}
+.row2{display:flex;gap:12px;flex-wrap:wrap}
+.row2 .field{flex:1;min-width:130px}
+.row3{display:flex;gap:12px;flex-wrap:wrap}
+.row3 .field{flex:1;min-width:110px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-bottom:10px}
+button.go{font-family:var(--body);font-weight:700;font-size:14px;color:#F7F2E7;
+  background:linear-gradient(135deg,var(--brown-deep),var(--brown));border:none;border-radius:99px;padding:10px 26px;cursor:pointer}
+button.ghost{font-family:var(--body);font-size:13px;color:var(--brown);background:rgba(110,68,35,.07);
+  border:1px solid rgba(110,68,35,.2);border-radius:99px;padding:9px 18px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.remember{font-size:11.5px;color:#8A7A64;display:flex;align-items:center;gap:6px}
+
+/* ---- ステータス ---- */
+.status{margin-top:14px;font-size:12.5px;color:#8A7A64;text-align:center;min-height:20px}
+.status.err{color:var(--stamp)}
+
+/* ---- 結果ヘッダ ---- */
+.rhead{display:flex;align-items:center;gap:12px;margin:24px 0 8px;font-family:var(--disp);font-size:13px;letter-spacing:.12em;color:var(--brown)}
+.rhead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+/* ---- 商品一覧 ---- */
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:620px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(110,68,35,.07);display:flex;flex-direction:column}
+.card .body{padding:13px 14px;display:flex;gap:12px}
+.card .thumb{width:88px;height:88px;flex:0 0 88px;border-radius:10px;object-fit:cover;background:#efe7d5;border:1px solid var(--line)}
+.card .info{flex:1;min-width:0}
+.card .name{font-size:13px;font-weight:700;line-height:1.55;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .name a{color:var(--ink)}
+.card .shop{font-size:11px;color:#8A7A64;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .price{font-family:var(--disp);font-weight:800;font-size:19px;color:var(--stamp);margin-top:6px;font-variant-numeric:tabular-nums}
+.card .price .yen{font-size:12px;margin-left:2px}
+.card .meta{display:flex;flex-wrap:wrap;gap:5px 12px;margin-top:6px}
+.card .m{font-size:11px;color:#7A6A56}
+.card .m b{font-family:var(--disp);font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.stars{color:var(--gold);letter-spacing:1px;font-size:12px}
+.card .btns{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 13px}
+.card .btns button{flex:1;min-width:120px;font-family:var(--body);font-size:12px;border-radius:99px;padding:7px 10px;cursor:pointer;border:1px solid rgba(110,68,35,.2)}
+.card .btns .copy{color:var(--brown);background:rgba(110,68,35,.07)}
+.card .btns .draft{color:#F7F2E7;background:linear-gradient(135deg,var(--brown-deep),var(--brown));border:none}
+.rate{display:inline-block;font-size:10px;letter-spacing:.04em;color:#fff;background:var(--up);border-radius:5px;padding:1px 6px;vertical-align:middle}
+
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:40px 16px}
+
+/* ---- 下書きモーダル ---- */
+.modal{position:fixed;inset:0;background:rgba(58,46,36,.55);display:none;align-items:flex-start;justify-content:center;padding:24px 14px;z-index:50;overflow:auto}
+.modal.on{display:flex}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:16px;max-width:640px;width:100%;box-shadow:0 12px 40px rgba(58,46,36,.3);margin:auto}
+.sheet .sh{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--line)}
+.sheet .sh h3{font-family:var(--disp);font-size:15px;letter-spacing:.06em;color:var(--brown);flex:1}
+.sheet .sh .x{font-size:20px;color:var(--muted);cursor:pointer;background:none;border:none;line-height:1}
+.sheet .sb{padding:16px 18px}
+.tab{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab button{font-family:var(--body);font-size:11.5px;border:1px solid var(--line);background:#fff;color:var(--brown);border-radius:99px;padding:5px 13px;cursor:pointer}
+.tab button.on{background:var(--brown);color:#fff;border-color:var(--brown)}
+textarea#draft{width:100%;min-height:270px;font-family:var(--body);font-size:13.5px;line-height:1.9;color:var(--ink);
+  background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:none;resize:vertical}
+textarea#draft:focus{border-color:var(--gold)}
+.count{font-size:11px;color:var(--muted);text-align:right;margin-top:5px}
+.count.over{color:var(--stamp)}
+.sheet .foot{display:flex;gap:10px;flex-wrap:wrap;padding:0 18px 16px}
+.checklist{background:#FBF3E4;border:1px solid #E7D3A9;border-radius:10px;padding:11px 14px;margin-top:12px;font-size:11.5px;color:#7A5A2A;line-height:1.9}
+.checklist b{color:var(--brown-deep)}
+.checklist ul{margin:6px 0 0 16px}
+
+.note{font-size:11.5px;color:#8A7A64;margin-top:24px;line-height:1.95}
+.note code{background:rgba(110,68,35,.08);border-radius:5px;padding:1px 6px;font-size:11px}
+.note h3{font-family:var(--disp);font-size:12.5px;color:var(--brown);letter-spacing:.1em;margin:16px 0 5px}
+.note ol,.note ul{margin:0 0 0 18px}.note li{margin-bottom:3px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--brown-deep);color:#F7F2E7;
+  font-size:12.5px;padding:9px 18px;border-radius:99px;opacity:0;transition:.25s;pointer-events:none;z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{text-align:center;margin-top:34px;font-size:11px;color:var(--muted);letter-spacing:.08em}
+footer .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🛍️ 楽天アフィリエイト × Threads</h1>
+  <p class="sub">楽天市場の公式APIで商品を探し、あなたのアフィリエイトIDでリンクを生成。<br>倫理に沿った投稿の<b>下書き</b>まで作る、自分用アシスタント。</p>
+  <p class="back"><a href="hub.html">ハブへ戻る</a> ｜ <a href="threads-search.html">Threadsキーワード探索</a></p>
+
+  <div class="disclaimer">
+    <b>この道具の姿勢（正直に）：</b><br>
+    ・使うのは<b>楽天ウェブサービス（公式API）</b>のみ。スクレイピングや規約違反はしません。<br>
+    ・このツールは<b>Threadsへ自動投稿しません</b>。下書きを作るだけ。投稿は必ずあなたが内容を確認してから手動で。<br>
+    ・<span class="em">下書きにレビューや体験を勝手に創作しません。</span>「使った実感」はあなた自身の言葉で埋める欄にしています（＝<b>嘘を売らない／こたつ記事にしない</b>）。<br>
+    ・アフィリエイトを含む投稿は<span class="em">景品表示法（ステマ規制）</span>により「広告であること」の明示が必須です。下書きには <code>#PR</code> と一言の告知を最初から入れています。
+  </div>
+
+  <div class="panel">
+    <h2>楽天API 設定</h2>
+    <div class="row2">
+      <div class="field">
+        <label>楽天アプリID（applicationId）<span class="req">*</span></label>
+        <input id="appid" type="text" placeholder="10桁前後の数字" autocomplete="off" inputmode="numeric">
+        <div class="hint"><a href="https://webservice.rakuten.co.jp/app/list" target="_blank" rel="noopener">楽天ウェブサービス</a>で発行したアプリID。</div>
+      </div>
+      <div class="field">
+        <label>楽天アフィリエイトID <span class="req">*</span></label>
+        <input id="affid" type="text" placeholder="xxxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx など" autocomplete="off">
+        <div class="hint"><a href="https://affiliate.rakuten.co.jp/" target="_blank" rel="noopener">楽天アフィリエイト</a>のID。これでリンクに報酬が紐づきます。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>商品を探す</h2>
+    <div class="field">
+      <label>キーワード <span class="req">*</span></label>
+      <input id="q" type="text" placeholder="例：ドリップコーヒー　急須　万年筆　…" autocomplete="off">
+      <div class="hint">実際に使った・自信を持って薦められる物で検索するのがコツ（＝倫理の土台）。</div>
+    </div>
+    <div class="row3">
+      <div class="field">
+        <label>並び順</label>
+        <select id="sort">
+          <option value="standard">標準（楽天おすすめ）</option>
+          <option value="-reviewCount">レビュー件数が多い順</option>
+          <option value="-reviewAverage">レビュー評価が高い順</option>
+          <option value="+itemPrice">価格が安い順</option>
+          <option value="-itemPrice">価格が高い順</option>
+          <option value="-affiliateRate">報酬率が高い順</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>表示件数</label>
+        <select id="hits">
+          <option value="10">10件</option>
+          <option value="20" selected>20件</option>
+          <option value="30">30件</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>最低レビュー件数</label>
+        <select id="minrev">
+          <option value="0">指定なし</option>
+          <option value="5">5件以上</option>
+          <option value="20">20件以上</option>
+          <option value="50">50件以上</option>
+          <option value="100">100件以上</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>APIプロキシURL（任意・JSONPが失敗する環境のみ）</label>
+      <input id="proxy" type="text" placeholder="例：https://your-worker.workers.dev/?url=  （末尾に対象URLを連結する形式）" autocomplete="off">
+      <div class="hint">通常は空でOK（楽天APIはJSONPで直接呼べます）。うまくいかない場合のみ、自分のCloudflare Worker等を指定。</div>
+    </div>
+    <div class="actions">
+      <button class="go" id="run">この条件で探す</button>
+      <button class="ghost" id="demo">デモを見る</button>
+      <button class="ghost" id="csv" disabled>CSVで書き出す</button>
+      <label class="remember"><input type="checkbox" id="remember"> IDをこの端末に記憶</label>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="rhead" id="rhead" style="display:none"><span id="rtitle">結果</span></div>
+  <div class="grid" id="grid" style="display:none"></div>
+
+  <div class="note">
+    <h3>▎表示している指標の意味</h3>
+    ・<b>価格・ポイント・レビュー</b>：すべて楽天市場APIが返す<b>客観データ（出典：楽天市場）</b>。<br>
+    ・<b>報酬率</b>：そのショップの楽天アフィリエイト料率（<code>affiliateId</code>を入れたときのみ表示）。確定・支払いは楽天の条件に従います。<br>
+    ・<b>リンクをコピー</b>：あなたのアフィリエイトIDが付いた <code>affiliateUrl</code> をコピーします。<br>
+    ・<b>投稿下書きを作る</b>：倫理と型（起承転結・1投稿1テーマ・#PR明示）に沿った下書きを生成。<b>体験の欄はあなたが埋めてから</b>投稿してください。
+
+    <h3>▎準備の手順（IDの取り方）</h3>
+    <ol>
+      <li><a href="https://affiliate.rakuten.co.jp/" target="_blank" rel="noopener">楽天アフィリエイト</a>に登録し、<b>アフィリエイトID</b>を確認。</li>
+      <li><a href="https://webservice.rakuten.co.jp/app/create" target="_blank" rel="noopener">楽天ウェブサービス</a>でアプリを新規作成し、<b>applicationId</b>を発行。</li>
+      <li>上の2欄に貼り付け、キーワードで検索。詳しくは同梱の <a href="rakuten-threads-setup.md" target="_blank" rel="noopener">セットアップ＆運用ガイド</a> を参照。</li>
+    </ol>
+
+    <h3>▎安全とプライバシー</h3>
+    ・ID類はこの端末（localStorage）にのみ保存され、通信先は楽天API（またはあなたが指定したプロキシ）だけです。<br>
+    ・「記憶」を外せば保存しません。共用端末では記憶しないでください。<br>
+    ・楽天ウェブサービスの利用は<b>1秒1回程度</b>のリクエストに留めるのが目安です。
+  </div>
+
+  <footer>
+    <div class="rule"></div>
+    楽天アフィリエイト × Threads 投稿アシスタント（自分用・公式API準拠） ｜ © 叡智の灯火
+  </footer>
+</div>
+
+<!-- 下書きモーダル -->
+<div class="modal" id="modal">
+  <div class="sheet">
+    <div class="sh">
+      <h3>🧵 Threads 投稿の下書き</h3>
+      <button class="x" id="mclose" aria-label="閉じる">×</button>
+    </div>
+    <div class="sb">
+      <div class="tab" id="tabs">
+        <button data-tone="honest" class="on">正直レビュー型</button>
+        <button data-tone="tips">お役立ち・使い方型</button>
+        <button data-tone="compare">比較・選び方型</button>
+      </div>
+      <textarea id="draft" spellcheck="false"></textarea>
+      <div class="count" id="count">0 文字</div>
+      <div class="checklist">
+        <b>投稿前チェック（ライティング・ナレッジ準拠）</b>
+        <ul>
+          <li>【　】の欄を<b>あなた自身の実体験</b>で埋めた（憶測・創作を書いていない）</li>
+          <li>価格・スペックなど<b>客観データの出典</b>が明確（楽天市場の表示）</li>
+          <li><code>#PR</code> と広告告知を消していない（ステマ規制の遵守）</li>
+          <li>1投稿1テーマに絞れている／盛り込みすぎていない</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="go" id="mcopy">下書きをコピー</button>
+      <a class="ghost" id="mopen" href="https://www.threads.net/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:10px 22px;border-radius:99px;border:1px solid rgba(110,68,35,.2)">Threadsを開く ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+var API='https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601';
+
+var els={
+  appid:document.getElementById('appid'), affid:document.getElementById('affid'),
+  q:document.getElementById('q'), sort:document.getElementById('sort'), hits:document.getElementById('hits'),
+  minrev:document.getElementById('minrev'), proxy:document.getElementById('proxy'), remember:document.getElementById('remember'),
+  run:document.getElementById('run'), demo:document.getElementById('demo'), csv:document.getElementById('csv'),
+  status:document.getElementById('status'), rhead:document.getElementById('rhead'), rtitle:document.getElementById('rtitle'),
+  grid:document.getElementById('grid'),
+  modal:document.getElementById('modal'), mclose:document.getElementById('mclose'), draft:document.getElementById('draft'),
+  count:document.getElementById('count'), mcopy:document.getElementById('mcopy'), mopen:document.getElementById('mopen'),
+  tabs:document.getElementById('tabs'), toast:document.getElementById('toast')
+};
+
+/* ---- 保存IDの復元 ---- */
+try{
+  var a=localStorage.getItem('rkt-appid'); if(a){ els.appid.value=a; els.remember.checked=true; }
+  var f=localStorage.getItem('rkt-affid'); if(f) els.affid.value=f;
+  var p=localStorage.getItem('rkt-proxy'); if(p) els.proxy.value=p;
+}catch(e){}
+
+var lastItems=[];      // 現在の結果（CSV用）
+var currentTone='honest';
+var currentItem=null;
+
+function setStatus(msg,isErr){ els.status.textContent=msg||''; els.status.className='status'+(isErr?' err':''); }
+function fmt(n){ return Number(n).toLocaleString(); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function toast(msg){ els.toast.textContent=msg; els.toast.classList.add('on'); setTimeout(function(){ els.toast.classList.remove('on'); },1600); }
+
+/* ---- JSONP（楽天APIをCORS回避で直接呼ぶ）---- */
+function jsonp(url){
+  return new Promise(function(resolve,reject){
+    var cb='__rkt_cb_'+(jsonp._n=(jsonp._n||0)+1)+'_'+String(Date.now()).slice(-6);
+    var s=document.createElement('script');
+    var timer=setTimeout(function(){ cleanup(); reject(new Error('タイムアウト（ネットワーク／IDをご確認ください）')); },15000);
+    function cleanup(){ clearTimeout(timer); try{ delete window[cb]; }catch(e){ window[cb]=undefined; } if(s.parentNode) s.parentNode.removeChild(s); }
+    window[cb]=function(data){ cleanup(); resolve(data); };
+    s.onerror=function(){ cleanup(); reject(new Error('リクエストに失敗しました（IDの誤り／通信環境をご確認ください）')); };
+    s.src=url+(url.indexOf('?')>=0?'&':'?')+'callback='+cb;
+    document.head.appendChild(s);
+  });
+}
+
+/* ---- fetch（プロキシ経由。JSONP不可の環境向け）---- */
+function viaProxy(url,proxy){ return proxy+encodeURIComponent(url); }
+function fetchJson(url){
+  return fetch(url,{headers:{'Accept':'application/json'}}).then(function(r){
+    return r.json().catch(function(){ throw new Error('APIの応答をJSONとして解釈できませんでした'); })
+      .then(function(j){ if(!r.ok) throw new Error((j&&j.error_description)||(j&&j.error)||('HTTP '+r.status)); return j; });
+  });
+}
+
+function buildUrl(){
+  var params={
+    applicationId:els.appid.value.trim(),
+    affiliateId:els.affid.value.trim(),
+    keyword:els.q.value.trim(),
+    sort:els.sort.value,
+    hits:els.hits.value,
+    format:'json',
+    formatVersion:'2'
+  };
+  var qs=Object.keys(params).filter(function(k){return params[k]!=='';})
+    .map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(params[k]); }).join('&');
+  return API+'?'+qs;
+}
+
+function stars(avg){
+  var n=Math.round(Number(avg)||0), s='';
+  for(var i=0;i<5;i++) s+= i<n?'★':'☆';
+  return s;
+}
+
+function normalize(items){
+  // formatVersion=2 では Items は Item オブジェクトの配列
+  return (items||[]).map(function(it){
+    var o=it.Item?it.Item:it;
+    var img='';
+    if(o.mediumImageUrls&&o.mediumImageUrls.length){
+      img=typeof o.mediumImageUrls[0]==='string'?o.mediumImageUrls[0]:o.mediumImageUrls[0].imageUrl;
+      img=img.replace(/\?_ex=\d+x\d+/,'?_ex=128x128');
+    }
+    return {
+      name:o.itemName||'', price:Number(o.itemPrice)||0,
+      url:o.affiliateUrl||o.itemUrl||'', rawUrl:o.itemUrl||'',
+      shop:o.shopName||'', reviewCount:Number(o.reviewCount)||0,
+      reviewAverage:Number(o.reviewAverage)||0, pointRate:Number(o.pointRate)||1,
+      pointRateEnd:o.pointRateEndTime||'', affiliateRate:o.affiliateRate!=null?Number(o.affiliateRate):null,
+      caption:o.itemCaption||'', img:img
+    };
+  });
+}
+
+function render(){
+  var min=parseInt(els.minrev.value,10)||0;
+  var items=lastItems.filter(function(x){ return x.reviewCount>=min; });
+  if(!items.length){
+    els.grid.innerHTML='<div class="empty">該当商品がありませんでした。キーワードやレビュー条件を変えてお試しください。</div>';
+    els.rhead.style.display='flex'; els.grid.style.display='block'; els.rtitle.textContent='結果：0件'; return;
+  }
+  els.grid.style.display='grid';
+  els.grid.innerHTML=items.map(function(x,i){
+    var rate=x.affiliateRate!=null?('<span class="rate">報酬 '+x.affiliateRate+'%</span>'):'';
+    var rev=x.reviewCount?('<span class="m"><span class="stars">'+stars(x.reviewAverage)+'</span> '+x.reviewAverage.toFixed(2)+'（'+fmt(x.reviewCount)+'件）</span>'):'<span class="m" style="color:#B9AC94">レビューなし</span>';
+    var pt=x.pointRate>1?('<span class="m"><b>'+x.pointRate+'</b>倍ポイント</span>'):'';
+    var thumb=x.img?'<img class="thumb" src="'+esc(x.img)+'" alt="" loading="lazy">':'<div class="thumb"></div>';
+    return '<div class="card">'
+      +'<div class="body">'
+        +thumb
+        +'<div class="info">'
+          +'<div class="name"><a href="'+esc(x.url)+'" target="_blank" rel="nofollow noopener sponsored">'+esc(x.name)+'</a></div>'
+          +'<div class="shop">'+esc(x.shop)+'</div>'
+          +'<div class="price">'+fmt(x.price)+'<span class="yen">円</span></div>'
+          +'<div class="meta">'+rev+pt+' '+rate+'</div>'
+        +'</div>'
+      +'</div>'
+      +'<div class="btns">'
+        +'<button class="copy" data-i="'+i+'">🔗 リンクをコピー</button>'
+        +'<button class="draft" data-i="'+i+'">🧵 投稿下書きを作る</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+  els.rtitle.textContent='結果：'+items.length+'件';
+  els.rhead.style.display='flex';
+  els.csv.disabled=false;
+  // ボタン結線
+  Array.prototype.forEach.call(els.grid.querySelectorAll('.copy'),function(b){
+    b.addEventListener('click',function(){ copyLink(items[+b.dataset.i]); });
+  });
+  Array.prototype.forEach.call(els.grid.querySelectorAll('.draft'),function(b){
+    b.addEventListener('click',function(){ openDraft(items[+b.dataset.i]); });
+  });
+}
+
+function copyText(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(t);
+  return new Promise(function(res){ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); res(); });
+}
+function copyLink(x){ copyText(x.url).then(function(){ toast('アフィリエイトリンクをコピーしました'); }); }
+
+/* ---- 下書き生成（倫理・型に準拠）---- */
+function priceLine(x){
+  var pt=x.pointRate>1?('＋ポイント'+x.pointRate+'倍'):'';
+  return '価格：'+fmt(x.price)+'円'+(pt?'（'+pt+'）':'')+'　※楽天市場の表示（変動あり）';
+}
+function reviewLine(x){
+  if(!x.reviewCount) return '';
+  return 'みんなの評価：★'+x.reviewAverage.toFixed(2)+'（'+fmt(x.reviewCount)+'件のレビュー）';
+}
+function shortName(x){
+  var n=x.name.replace(/【[^】]*】/g,'').replace(/\[[^\]]*\]/g,'').replace(/\s+/g,' ').trim();
+  return n.length>42?n.slice(0,42)+'…':n;
+}
+function buildDraft(x,tone){
+  var name=shortName(x);
+  var link=x.url;
+  var pr='※本投稿は楽天アフィリエイトのリンクを含む広告です #PR';
+  var facts=[priceLine(x),reviewLine(x)].filter(Boolean).join('\n');
+  var body;
+  if(tone==='tips'){
+    body=
+'【'+name+'】を使ってみて気づいた、ちいさなコツ。\n\n'+
+'▶ こんな時に便利：【　どんな場面で役立ったか、あなたの実例を1〜2行　】\n'+
+'▶ 使い方のポイント：【　実際に試して分かったコツを1つ　】\n'+
+'▶ ここは注意：【　正直に感じた弱点や向き不向きを1つ　】\n\n'+
+facts+'\n\n'+
+'気になる人はこちらから見られます👇\n'+link+'\n\n'+pr;
+  }else if(tone==='compare'){
+    body=
+'「'+name+'」って結局どうなの？ 選ぶ前に見たポイント。\n\n'+
+'▶ 選んだ決め手：【　なぜこれにしたか、あなたの基準を1〜2行　】\n'+
+'▶ 迷った他候補との違い：【　比較して感じた差を1つ（事実ベースで）　】\n'+
+'▶ 向いている人：【　どんな人におすすめか　】\n\n'+
+facts+'\n\n'+
+'詳しいスペックはこちらで確認できます👇\n'+link+'\n\n'+pr;
+  }else{ // honest
+    body=
+'正直レビュー：'+name+'\n\n'+
+'【　まず結論を一言（買ってよかった／人を選ぶ など）　】\n\n'+
+'▶ 良かった点：【　実際に使って良かったところを1〜2つ　】\n'+
+'▶ 気になった点：【　正直に感じたマイナスを1つ　】\n'+
+'▶ こんな人におすすめ：【　　】\n\n'+
+facts+'\n\n'+
+'チェックはこちらから👇\n'+link+'\n\n'+pr;
+  }
+  return body;
+}
+function refreshDraft(){
+  if(!currentItem) return;
+  els.draft.value=buildDraft(currentItem,currentTone);
+  updateCount();
+}
+function updateCount(){
+  var n=els.draft.value.length;
+  els.count.textContent=n+' 文字';
+  els.count.className='count'+(n>500?' over':''); // Threadsは1投稿500文字目安
+}
+function openDraft(x){
+  currentItem=x; currentTone='honest';
+  Array.prototype.forEach.call(els.tabs.querySelectorAll('button'),function(b){ b.classList.toggle('on',b.dataset.tone==='honest'); });
+  refreshDraft();
+  els.modal.classList.add('on');
+}
+function closeDraft(){ els.modal.classList.remove('on'); }
+
+els.tabs.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  currentTone=b.dataset.tone;
+  Array.prototype.forEach.call(els.tabs.querySelectorAll('button'),function(x){ x.classList.toggle('on',x===b); });
+  refreshDraft();
+});
+els.draft.addEventListener('input',updateCount);
+els.mcopy.addEventListener('click',function(){ copyText(els.draft.value).then(function(){ toast('下書きをコピーしました。体験の欄を埋めてから投稿を'); }); });
+els.mclose.addEventListener('click',closeDraft);
+els.modal.addEventListener('click',function(e){ if(e.target===els.modal) closeDraft(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDraft(); });
+
+/* ---- 実行 ---- */
+function run(){
+  var appid=els.appid.value.trim(), affid=els.affid.value.trim(), q=els.q.value.trim(), proxy=els.proxy.value.trim();
+  if(!appid){ setStatus('楽天アプリID（applicationId）を入力してください。',true); els.appid.focus(); return; }
+  if(!affid){ setStatus('楽天アフィリエイトIDを入力してください（リンクに報酬を紐づけるために必須）。',true); els.affid.focus(); return; }
+  if(!q){ setStatus('キーワードを入力してください（デモは「デモを見る」から）。',true); els.q.focus(); return; }
+
+  try{
+    if(els.remember.checked){ localStorage.setItem('rkt-appid',appid); localStorage.setItem('rkt-affid',affid); }
+    else { localStorage.removeItem('rkt-appid'); localStorage.removeItem('rkt-affid'); }
+    if(proxy) localStorage.setItem('rkt-proxy',proxy); else localStorage.removeItem('rkt-proxy');
+  }catch(e){}
+
+  els.run.disabled=true; els.csv.disabled=true;
+  setStatus('楽天市場を検索中…');
+  var url=buildUrl();
+  var task=proxy? fetchJson(viaProxy(url,proxy)) : jsonp(url);
+  task.then(function(j){
+      if(j&&j.error) throw new Error((j.error_description||j.error));
+      var items=normalize(j.Items||[]);
+      lastItems=items;
+      if(!items.length){ setStatus('該当商品がありませんでした。キーワードを変えてお試しください。'); }
+      else { setStatus('完了：'+items.length+'件を取得しました（全'+fmt(j.count||items.length)+'件中）。'); }
+      render();
+    })
+    .catch(function(err){
+      var m=(err&&err.message)||String(err);
+      var hint='';
+      if(/CORS|Failed to fetch|NetworkError/i.test(m)) hint='（下の「APIプロキシURL」に自分のWorkerを設定して再試行してください）';
+      setStatus('エラー：'+m+' '+hint,true);
+    })
+    .then(function(){ els.run.disabled=false; });
+}
+
+/* ---- デモ ---- */
+function demo(){
+  lastItems=normalize([
+    {itemName:'【自家焙煎】ドリップコーヒー 30袋 深煎りブレンド 送料無料',itemPrice:1980,itemUrl:'https://item.rakuten.co.jp/demo/coffee/',affiliateUrl:'https://demo.example/aff/coffee',shopName:'叡智珈琲店',reviewCount:842,reviewAverage:4.53,pointRate:3,affiliateRate:4.0,mediumImageUrls:['']},
+    {itemName:'南部鉄器 急須 0.5L 職人手作り 直火不可 IH非対応',itemPrice:6600,itemUrl:'https://item.rakuten.co.jp/demo/kyusu/',affiliateUrl:'https://demo.example/aff/kyusu',shopName:'和ノ器',reviewCount:128,reviewAverage:4.71,pointRate:1,affiliateRate:3.0,mediumImageUrls:['']},
+    {itemName:'万年筆 中字 ギフトボックス入り インクカートリッジ付き',itemPrice:3300,itemUrl:'https://item.rakuten.co.jp/demo/pen/',affiliateUrl:'https://demo.example/aff/pen',shopName:'文具の灯火',reviewCount:37,reviewAverage:4.20,pointRate:2,affiliateRate:5.0,mediumImageUrls:['']}
+  ]);
+  setStatus('デモ表示中（サンプルデータ・実データではありません）。');
+  render();
+}
+
+els.run.addEventListener('click',run);
+els.demo.addEventListener('click',demo);
+els.q.addEventListener('keydown',function(e){ if(e.key==='Enter') run(); });
+
+/* ---- CSV ---- */
+els.csv.addEventListener('click',function(){
+  var min=parseInt(els.minrev.value,10)||0;
+  var rows=lastItems.filter(function(x){return x.reviewCount>=min;});
+  if(!rows.length) return;
+  var head=['商品名','価格','ショップ','レビュー平均','レビュー件数','ポイント倍率','報酬率(%)','アフィリエイトURL'];
+  var lines=[head.join(',')];
+  rows.forEach(function(x){
+    var cells=[x.name,x.price,x.shop,x.reviewAverage,x.reviewCount,x.pointRate,(x.affiliateRate!=null?x.affiliateRate:''),x.url]
+      .map(function(v){ var s=String(v==null?'':v); return '"'+s.replace(/"/g,'""')+'"'; });
+    lines.push(cells.join(','));
+  });
+  var csv='﻿'+lines.join('\r\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='rakuten-'+(els.q.value.trim()||'demo')+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+});
+</script>
+</body>
+</html>
