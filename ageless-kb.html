@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>若さ維持ノート 知識台帳｜よしだ</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F6F1;
+  --ink:#24291F;
+  --ink-soft:#5A6052;
+  --green:#33523E;
+  --sprout:#8FAE6B;
+  --amber:#B98A2F;
+  --line:#DDD9CC;
+  --card:#FFFFFF;
+  --lock:#EFEDE4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Zen Kaku Gothic New",sans-serif;
+  line-height:1.75;
+  font-size:15px;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{padding:40px 0 20px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.brand .mark{width:34px;height:34px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px}
+.brand .who{font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em}
+h1{
+  font-family:"Shippori Mincho",serif;
+  font-size:clamp(26px,6vw,34px);
+  font-weight:700;
+  letter-spacing:.02em;
+  line-height:1.4;
+}
+h1 .sub{display:block;font-size:13px;font-weight:500;color:var(--green);letter-spacing:.22em;margin-bottom:6px}
+.lede{margin-top:12px;color:var(--ink-soft);font-size:13.5px;max-width:560px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;font-size:12px;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dots{letter-spacing:2px;color:var(--amber);font-size:11px}
+
+/* ---------- controls ---------- */
+.controls{position:sticky;top:0;z-index:5;background:var(--paper);padding:14px 0 10px;border-bottom:1px solid var(--line)}
+.search{
+  width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:8px;
+  font-family:inherit;font-size:15px;background:var(--card);color:var(--ink);
+}
+.search:focus{outline:2px solid var(--sprout);outline-offset:1px;border-color:var(--sprout)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{
+  border:1px solid var(--line);background:var(--card);color:var(--ink-soft);
+  padding:5px 13px;border-radius:999px;font-size:12.5px;font-family:inherit;cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.chip:focus-visible{outline:2px solid var(--sprout);outline-offset:2px}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.count{font-size:12px;color:var(--ink-soft);margin-top:10px}
+
+/* ---------- cards ---------- */
+.list{margin-top:18px;display:flex;flex-direction:column;gap:12px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+}
+.card summary{
+  list-style:none;cursor:pointer;padding:15px 16px;display:flex;gap:12px;align-items:flex-start;
+}
+.card summary::-webkit-details-marker{display:none}
+.card summary:focus-visible{outline:2px solid var(--sprout);outline-offset:-2px}
+.cat-tag{
+  flex:none;font-size:10.5px;letter-spacing:.08em;color:var(--green);
+  border:1px solid var(--sprout);border-radius:4px;padding:2px 7px;margin-top:3px;white-space:nowrap;
+}
+.card h2{font-family:"Shippori Mincho",serif;font-size:16.5px;font-weight:600;line-height:1.5;flex:1}
+.meta{flex:none;text-align:right;font-size:10.5px;color:var(--ink-soft);margin-top:2px}
+.meta .dots{display:block;font-size:12px}
+.body{padding:2px 16px 18px;border-top:1px dashed var(--line)}
+.sec{margin-top:14px}
+.sec h3{
+  font-size:11.5px;letter-spacing:.18em;color:var(--green);font-weight:700;margin-bottom:5px;
+  display:flex;align-items:center;gap:8px;
+}
+.sec h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec p{font-size:14px}
+.src{font-size:12px;color:var(--ink-soft);margin-top:5px;padding-left:12px;border-left:2px solid var(--amber)}
+.threads-box{
+  background:var(--paper);border:1px solid var(--line);border-radius:8px;
+  padding:12px 13px;font-size:13.5px;white-space:pre-wrap;margin-top:6px;
+}
+.copy{
+  margin-top:8px;border:1px solid var(--green);background:var(--card);color:var(--green);
+  font-family:inherit;font-size:12.5px;padding:6px 16px;border-radius:6px;cursor:pointer;
+}
+.copy:focus-visible{outline:2px solid var(--sprout);outline-offset:2px}
+.copy.done{background:var(--green);color:#fff}
+
+/* ---------- locked ---------- */
+.card.locked{background:var(--lock)}
+.card.locked summary{cursor:pointer}
+.locknote{font-size:12px;color:var(--ink-soft);padding:0 16px 15px;display:flex;align-items:center;gap:7px}
+
+/* ---------- member gate ---------- */
+.gate{
+  margin-top:34px;border:1px solid var(--line);border-radius:10px;background:var(--card);
+  padding:22px 18px;text-align:center;
+}
+.gate h2{font-family:"Shippori Mincho",serif;font-size:17px;margin-bottom:6px}
+.gate p{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+.gate input{
+  padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-family:inherit;
+  font-size:15px;width:min(240px,100%);text-align:center;letter-spacing:.06em;background:var(--paper);
+}
+.gate input:focus{outline:2px solid var(--sprout);border-color:var(--sprout)}
+.gate button{
+  margin-left:8px;margin-top:8px;padding:10px 22px;border:none;border-radius:8px;
+  background:var(--green);color:#fff;font-family:inherit;font-size:14px;cursor:pointer;
+}
+.gate button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.gate .msg{margin-top:10px;font-size:12.5px;min-height:1.4em}
+.gate .msg.ok{color:var(--green)}
+.gate .msg.ng{color:#A0522D}
+
+footer{margin-top:50px;font-size:11.5px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:16px}
+footer p{margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="mark">&#127793;</div>
+    <div class="who">よしだ｜70歳の若さ維持ノート（@yoshida.ageless）</div>
+  </div>
+  <h1><span class="sub">AGELESS KNOWLEDGE BASE</span>若さ維持ノート 知識台帳</h1>
+  <p class="lede">40歳からの若さ維持について、研究と統計にもとづく知識だけを集めた台帳です。出典を明記し、大げさに言いません。効果が小さいものは小さいと書きます。</p>
+  <div class="legend">
+    <span><span class="dots">&#9679;&#9679;&#9679;</span>根拠が強い（大規模研究・指針）</span>
+    <span><span class="dots">&#9679;&#9679;&#9675;</span>根拠は中程度</span>
+    <span><span class="dots">&#9679;&#9675;&#9675;</span>参考程度（小規模・観察研究）</span>
+  </div>
+</header>
+
+<div class="controls">
+  <input type="search" class="search" id="q" placeholder="検索（例：肌 タンパク質 睡眠 歩行）" aria-label="知識を検索">
+  <div class="chips" id="chips" role="group" aria-label="カテゴリで絞り込み"></div>
+  <div class="count" id="count"></div>
+</div>
+
+<div class="list" id="list"></div>
+
+<div class="gate" id="gate">
+  <h2>&#128274; 会員限定ノート</h2>
+  <p>実践プログラムやチェックリストなどの限定コンテンツは、合言葉を入力すると開きます。</p>
+  <input type="password" id="pass" placeholder="合言葉" aria-label="合言葉">
+  <button id="unlock">開く</button>
+  <div class="msg" id="gatemsg" role="status"></div>
+</div>
+
+<footer>
+  <p>&#9670; この台帳は一般的な健康情報の整理であり、医療の助言ではありません。持病・服薬中の方は医師にご相談ください。</p>
+  <p>&#9670; 出典は本文中に明記しています。数値は公表時点のものです。</p>
+  <p>&#169; よしだ｜70歳の若さ維持ノート</p>
+</footer>
+
+</div>
+
+<script>
+/* =========================================================
+   知識データ
+   追加するときは、この KB 配列にオブジェクトを1つ足すだけ。
+   ev: 3=強 2=中 1=参考程度
+   access: "public" か "member"
+   threads: Threads下書き（!マーク無し・半角数字・本文リンク無し）
+========================================================= */
+const KB = [
+
+/* ---------- 肌 ---------- */
+{
+id:"skin-01", cat:"肌", ev:3, access:"public",
+title:"日焼け止めは、最も確実な若さ維持の習慣",
+point:"肌老化の最大の外的要因は紫外線。毎日の日焼け止めは、シワ・シミ予防の中で最も証拠がそろっている方法。",
+evidence:"オーストラリアの903人を4.5年追跡した比較試験で、毎日日焼け止めを使った群は、任意使用の群より皮膚老化の進行が24%少なかった。",
+source:"Hughes et al., Annals of Internal Medicine, 2013（ナンバー研究）",
+practice:"朝の洗顔後、SPF30以上を顔・首・手の甲に。曇りの日も。冬も。これだけは365日続ける。",
+threads:"70歳になって断言できる若さ維持のいちばんの近道は、高い化粧品ではなく日焼け止めでした。\n\n903人を4.5年追跡した豪州の研究では、毎日塗った人は皮膚老化の進行が24%少なかった。\n\n曇りの日も、冬も。今日から塗れます。"
+},
+{
+id:"skin-02", cat:"肌", ev:3, access:"public",
+title:"レチノイド（ビタミンA誘導体）はシワに効く数少ない成分",
+point:"外用成分でシワ改善の証拠が積み上がっているのは、実質的にレチノイド系だけ。市販ではレチノール配合品が入口。",
+evidence:"医薬品のトレチノインは複数の比較試験で細かいシワの改善が確認されている。市販のレチノールは作用が穏やかだが、同系統の働きを持つ。",
+source:"Mukherjee et al., Clinical Interventions in Aging, 2006 ほか多数の臨床試験",
+practice:"夜に少量から。最初は週2〜3回、赤みや皮むけが出たら頻度を下げる。使用中は日焼け止め必須。",
+threads:"化粧品売り場には若返りの言葉があふれていますが、シワへの効果で研究が積み上がっている外用成分は、実はレチノイド系くらいです。\n\n市販ならレチノール。夜に少量、週2〜3回から。\n\n合わせて日焼け止めが必須です。"
+},
+{
+id:"skin-03", cat:"肌", ev:2, access:"public",
+title:"タバコは顔を確実に老けさせる",
+point:"喫煙は肌の血流とコラーゲンを損ない、見た目年齢を大きく引き上げる。双子の比較でも差がはっきり出ている。",
+evidence:"一卵性双生児79組の顔写真を比較した研究で、喫煙歴が5年以上長い側の双子は、目袋・口周りのシワなどが有意に強く、より老けて評価された。",
+source:"Okada et al.（Guyuronグループ）, Plastic and Reconstructive Surgery, 2013",
+practice:"禁煙に遅すぎることはない。禁煙後は肌の血流が数週間で改善し始める。",
+threads:"同じ遺伝子を持つ一卵性双生児79組の顔を比べた研究があります。\n\n喫煙歴が5年以上長い側は、目袋や口元のシワが目立ち、より老けて評価されました。\n\n遺伝が同じでも、習慣で顔は変わるということです。"
+},
+{
+id:"skin-04", cat:"肌", ev:2, access:"public",
+title:"保湿はシワを「消す」のではなく「目立たせない」",
+point:"保湿でシワ自体は減らないが、乾燥による小ジワは水分で目立たなくなる。誇大に語らず、正しく期待する。",
+evidence:"角層の水分量が上がると乾燥性の小ジワは改善することが複数の試験で示されている。深いシワへの効果は限定的。",
+source:"日本香粧品学会「化粧品機能評価法ガイドライン」ほか",
+practice:"入浴後5分以内にセラミドやワセリン系でフタをする。高価格帯である必要はない。",
+threads:"保湿クリームはシワを消しません。でも乾燥による小ジワは、水分が戻ると確かに目立たなくなります。\n\nここを区別せずに宣伝する商品が多い。\n\n効果が小さいものは小さいと知って使う。それが70歳の化粧品との付き合い方です。"
+},
+
+/* ---------- 筋力・姿勢 ---------- */
+{
+id:"mus-01", cat:"筋力・姿勢", ev:3, access:"public",
+title:"筋肉は40歳から減るが、90歳でも増やせる",
+point:"筋肉量は40歳前後から年およそ0.5〜1%ずつ減る。ただし筋トレへの反応は高齢でも失われない。",
+evidence:"平均90歳の高齢者10人に8週間の高強度筋トレを行った古典的研究で、脚の筋力は平均174%増加し、歩行速度も改善した。",
+source:"Fiatarone et al., JAMA, 1990",
+practice:"スクワット・かかと上げ・壁腕立ての3種目を週2回から。回数より継続。",
+threads:"筋肉は40歳ごろから年0.5〜1%ずつ減っていきます。\n\nでも平均90歳の方に8週間筋トレをしてもらった研究では、脚の筋力が平均174%増えました。\n\n始めるのに遅い年齢はない。データがそう言っています。"
+},
+{
+id:"mus-02", cat:"筋力・姿勢", ev:3, access:"public",
+title:"歩く速さは、その人の元気さを映す鏡",
+point:"歩行速度は高齢期の生存予測に使えるほど全身状態を反映する。速く歩ける体を保つことが若さの土台。",
+evidence:"約34,000人の高齢者データを統合した解析で、歩行速度が速い人ほどその後の生存率が高く、速度は年齢・性別と並ぶ予測因子だった。",
+source:"Studenski et al., JAMA, 2011",
+practice:"1日1回、10分だけ「少し息が弾む速さ」で歩く区間を作る。信号2つ分でもよい。",
+threads:"歩く速さは、医学の世界で生存予測に使われるほど全身の状態を映します。\n\n約34,000人の解析では、速く歩ける高齢者ほどその後の生存率が高かった。\n\n1日10分、少し息が弾む速さで歩く区間を作る。私はこれを毎日の点検にしています。"
+},
+{
+id:"mus-03", cat:"筋力・姿勢", ev:2, access:"public",
+title:"片脚立ち10秒は、体の状態のセルフチェック",
+point:"中高年で片脚立ち10秒ができるかどうかは、バランス能力と健康状態の簡単な指標になる。",
+evidence:"51〜75歳の約1,700人を平均7年追跡した研究で、片脚立ち10秒ができない人は、できる人より追跡期間中の死亡リスクが高かった（観察研究のため因果は断定できない）。",
+source:"Araujo et al., British Journal of Sports Medicine, 2022",
+practice:"歯みがき中に左右30秒ずつ片脚立ち。ふらつく人は指1本を壁に添えて。転倒に注意。",
+threads:"片脚立ちで10秒立てますか。\n\n51〜75歳の約1,700人を7年追跡した研究では、これができない人は死亡リスクが高い傾向がありました。観察研究なので断定はしません。\n\nただ、バランスは鍛え直せます。私は歯みがき中に左右30秒ずつやっています。"
+},
+{
+id:"mus-04", cat:"筋力・姿勢", ev:2, access:"public",
+title:"猫背は実年齢より老けて見せる最大の要因のひとつ",
+point:"背中が丸まると、それだけで数歳老けて見える。胸を開く習慣は費用ゼロの若見え対策。",
+evidence:"加齢に伴う円背（背中の丸まり）は見た目の印象評価を大きく下げることが印象研究で示されている。胸椎の伸展運動は姿勢改善に有効。",
+source:"高齢者の脊柱後弯と運動介入に関する複数の臨床研究（Katzman et al., 2017 ほか）",
+practice:"1時間に1回、両手を後ろで組んで胸を開き、視線を水平に。スマホは目の高さへ。",
+threads:"若見えに一番効いて、一番お金がかからないのは姿勢だと思っています。\n\n背中が丸まるだけで人は数歳老けて見える。逆に胸を開いて視線を水平にするだけで印象は変わります。\n\n1時間に1回、後ろで手を組んで胸を開く。今日からできます。"
+},
+{
+id:"mus-05", cat:"筋力・姿勢", ev:3, access:"public",
+title:"世界標準の運動量は「週150分＋筋トレ週2回」",
+point:"WHOの指針は65歳以上にも、中強度の有酸素運動を週150分以上と、筋力トレーニングを週2回以上求めている。",
+evidence:"WHO身体活動ガイドライン（2020年）は高齢者に対し、有酸素運動週150〜300分、筋トレ週2回以上、加えてバランス運動を推奨している。",
+source:"WHO Guidelines on Physical Activity and Sedentary Behaviour, 2020",
+practice:"週150分＝1日約20分の早歩き。筋トレはスクワットとかかと上げでよい。",
+threads:"世界保健機関の運動指針は、65歳以上にもはっきり数字を示しています。\n\n早歩きなどの有酸素運動を週150分以上。筋トレを週2回以上。\n\n週150分は1日20分ほど。特別な器具も会費もいりません。"
+},
+
+/* ---------- 表情・見た目 ---------- */
+{
+id:"face-01", cat:"表情・見た目", ev:1, access:"public",
+title:"顔の体操で「見た目マイナス3歳」の小規模研究がある",
+point:"表情筋トレーニングには一定の根拠があるが、研究はまだ小規模。期待は控えめに、費用ゼロなので試す価値はある。",
+evidence:"40〜65歳の女性が20週間の顔面体操を続けた米国の研究で、写真評価による推定年齢が平均50.8歳から48.1歳に下がった。ただし完了者16人の小規模研究。",
+source:"Alam et al., JAMA Dermatology, 2018（ノースウェスタン大学）",
+practice:"頬をふくらませる・「イー」と口角を上げて10秒キープなどを1日20〜30分。やり過ぎはシワの原因になるとの指摘もあり、ほどほどに。",
+threads:"顔の体操で若返るのか。米国の研究では、20週間続けた女性の推定年齢が平均50.8歳から48.1歳に下がりました。\n\nただし16人の小規模研究です。過信は禁物。\n\n費用はゼロなので、私は歯みがき後の3分だけ続けています。"
+},
+{
+id:"face-02", cat:"表情・見た目", ev:2, access:"public",
+title:"「見た目年齢」は健康状態の指標でもある",
+point:"老けて見えることは単なる印象の問題ではなく、体の状態と関係している。だから見た目のケアは健康管理と地続き。",
+evidence:"デンマークの70歳以上の双子1,826人を追跡した研究で、同じ双子でも老けて見えると評価された側の方が死亡率が高く、見た目年齢は生存の予測因子だった。",
+source:"Christensen et al., BMJ, 2009",
+practice:"見た目を整える努力（姿勢・肌・体型）は、健康習慣そのものと重なる。両方を一緒に考える。",
+threads:"デンマークで70歳以上の双子1,826人を追跡した研究があります。\n\n同じ遺伝子でも、老けて見えると評価された側の方が死亡率が高かった。見た目年齢は健康の指標でもあるのです。\n\n見た目の手入れは虚栄ではなく、体の点検だと私は考えています。"
+},
+
+/* ---------- 栄養 ---------- */
+{
+id:"nut-01", cat:"栄養", ev:3, access:"public",
+title:"中高年こそタンパク質。目安は体重1kgあたり1.0〜1.2g",
+point:"年を取るほどタンパク質の利用効率が落ちるため、若い頃より多めに必要。筋肉維持の土台。",
+evidence:"国際的な専門家会議（PROT-AGE）は、健康な高齢者に体重1kgあたり1日1.0〜1.2gのタンパク質を推奨。運動する人はさらに多めを勧めている。",
+source:"Bauer et al., PROT-AGE Study Group, JAMDA, 2013／厚生労働省「日本人の食事摂取基準」",
+practice:"体重60kgなら1日60〜72g。毎食に手のひら1枚分の肉・魚・卵・大豆を置くイメージ。",
+threads:"筋トレより先に見直すべきはタンパク質かもしれません。\n\n国際的な指針では、高齢者は体重1kgあたり1日1.0〜1.2gが目安。体重60kgなら60〜72gです。\n\n毎食、手のひら1枚分の肉・魚・卵・大豆。朝が不足しがちなので、私は朝に卵と納豆を固定しています。"
+},
+{
+id:"nut-02", cat:"栄養", ev:2, access:"public",
+title:"ビタミンDは日本の中高年で不足が目立つ",
+point:"骨と筋機能に関わるビタミンDは、国内調査で不足者が非常に多い。日光と食事、必要なら補助を検討。",
+evidence:"東京の成人5,518人の血液を調べた2023年の国内研究では、98%が国際的な充足基準（30ng/mL）に届いていなかった。",
+source:"Journal of Nutrition, 2023（東京慈恵会医科大学ほかの調査）",
+practice:"1日15分程度の日光（手足でよい）、鮭・サバ・きのこ類。サプリを使う場合は表示量を守る。",
+threads:"東京の成人5,518人の血液を調べた研究で、98%がビタミンD不足という結果が出ています。\n\nビタミンDは骨と筋肉の働きに関わる栄養素。\n\n1日15分の日光と、鮭やサバ、きのこ類。日焼け止めを塗る人ほど、食事側を意識する必要があります。"
+},
+{
+id:"nut-03", cat:"栄養", ev:2, access:"public",
+title:"サプリで寿命は延びない、が今のところの答え",
+point:"マルチビタミン等の総合サプリに寿命延長の証拠は乏しい。サプリは「不足の穴埋め」と割り切る。",
+evidence:"米国成人約39万人を最長27年追跡した2024年の解析で、マルチビタミンの常用者に死亡リスクの低下は見られなかった。",
+source:"Loftfield et al., JAMA Network Open, 2024（米国国立がん研究所）",
+practice:"基本は食事。サプリは血液検査などで不足がわかった栄養素（ビタミンD等）に絞る。",
+threads:"サプリを30年飲んできた私が言うのも変ですが、正直に書きます。\n\n米国の約39万人を最長27年追跡した解析では、マルチビタミン常用者の死亡リスクは下がっていませんでした。\n\nサプリは万能薬ではなく、不足の穴埋め。主役はあくまで食事です。"
+},
+{
+id:"nut-04", cat:"栄養", ev:2, access:"public",
+title:"緑茶とコーヒーは、日本の大規模調査で良い傾向",
+point:"どちらも国内の大規模追跡調査で死亡リスク低下との関連が報告されている。ただし観察研究であり、飲めば安心という話ではない。",
+evidence:"国立がん研究センターの多目的コホート研究（約9万人規模）で、コーヒー1日3〜4杯の人は全死亡リスクが低い関連が示された。緑茶にも同様の報告がある。",
+source:"国立がん研究センター JPHC研究（Saito et al., 2015 ほか）",
+practice:"砂糖を入れずに1日数杯まで。夕方以降は睡眠のためカフェインを控える。",
+threads:"日本人約9万人を追跡した国立がん研究センターの調査では、コーヒーを1日3〜4杯飲む人は死亡リスクが低い傾向がありました。緑茶にも同様の報告があります。\n\n観察研究なので因果は断定できません。\n\nただ、砂糖なしの1日数杯なら、楽しみと実益を兼ねられそうです。"
+},
+
+/* ---------- 睡眠 ---------- */
+{
+id:"slp-01", cat:"睡眠", ev:3, access:"public",
+title:"睡眠はおよそ7時間が最も死亡リスクが低い",
+point:"日本人の大規模追跡で、睡眠時間7時間前後の人が最も死亡リスクが低い。長すぎも短すぎもリスク上昇と関連。",
+evidence:"日本人約10万人を約10年追跡したJACC研究で、睡眠7時間の群の死亡リスクが最も低く、4時間以下・10時間以上では上昇していた。",
+source:"Tamakoshi & Ohno, JACC Study, Sleep, 2004",
+practice:"就寝・起床時刻を毎日そろえるのが第一歩。寝床でのスマホは30分前に手放す。",
+threads:"日本人約10万人を10年追跡した調査では、睡眠時間が7時間前後の人の死亡リスクが最も低いという結果でした。\n\n短すぎても長すぎてもリスクは上がる傾向。\n\nまず整えるのは時間の長さより、寝る時刻と起きる時刻をそろえること。私は22時半就寝を固定しています。"
+},
+{
+id:"slp-02", cat:"睡眠", ev:1, access:"public",
+title:"睡眠不足は翌日の見た目に出る",
+point:"寝不足の顔は他人から見ても分かる。睡眠は最も安い美容法という言い方には、一応の根拠がある。",
+evidence:"スウェーデンの実験で、睡眠を制限された人の顔写真は、十分寝た時より「疲れて見える」「魅力が低い」と第三者に評価された（小規模の実験研究）。",
+source:"Axelsson et al., BMJ, 2010／Sundelin et al., 2017",
+practice:"大事な予定の前日は睡眠を最優先する。それだけで印象が変わる。",
+threads:"寝不足は顔に出る。感覚ではなく、実験で確かめられています。\n\n睡眠を削られた人の顔写真は、第三者から「疲れて見える」「魅力が低い」と評価されました。\n\n高い美容液より、まず今夜の7時間。費用は0円です。"
+},
+
+/* ---------- 脳・心 ---------- */
+{
+id:"brain-01", cat:"脳・心", ev:2, access:"public",
+title:"有酸素運動は記憶を担う脳の部位を保つ",
+point:"歩くことは脳のためでもある。記憶に関わる海馬は、運動で萎縮が抑えられるどころか大きくなり得る。",
+evidence:"高齢者120人を1年間追跡した試験で、有酸素運動群は海馬の体積が約2%増加。対照群は約1.4%縮小した。",
+source:"Erickson et al., PNAS, 2011",
+practice:"週3回、40分程度の早歩き。景色の変わる屋外コースだと続けやすい。",
+threads:"歩くことは脳の手入れでもあります。\n\n高齢者120人の1年間の試験で、有酸素運動をした群は記憶を担う海馬が約2%大きくなり、しなかった群は約1.4%縮んでいました。\n\n週3回40分の早歩き。脳のための散歩だと思うと、雨の日も出かけられます。"
+},
+{
+id:"brain-02", cat:"脳・心", ev:3, access:"public",
+title:"人とのつながりは、運動や食事と並ぶ健康要因",
+point:"孤立は喫煙に匹敵する健康リスクという解析がある。会話や役割を持つことは、立派な若さ維持活動。",
+evidence:"148研究・約31万人を統合した解析で、社会的つながりが豊かな人は生存率が約50%高かった。この影響の大きさは軽度の喫煙や飲酒の害に匹敵すると論じられている。",
+source:"Holt-Lunstad et al., PLoS Medicine, 2010",
+practice:"週1回、家族以外の誰かと話す予定を入れる。趣味・ボランティア・SNSでの交流も含めてよい。",
+threads:"148の研究、約31万人分を統合した解析によると、人とのつながりが豊かな人は生存率が約50%高いそうです。\n\n影響の大きさは喫煙の害に匹敵すると論じられています。\n\n週1回、家族以外の誰かと話す。これも運動と同じ、若さ維持のメニューです。"
+},
+{
+id:"brain-03", cat:"脳・心", ev:2, access:"public",
+title:"新しいことを学ぶ人の脳は老けにくい",
+point:"難しいことに挑む学習は記憶機能の維持と関連する。年齢を理由に学びをやめないことが脳の若さにつながる。",
+evidence:"高齢者に写真編集やキルティングなど新しい技能を3か月学ばせた実験で、単なる交流活動の群より記憶機能の改善が大きかった。",
+source:"Park et al., Psychological Science, 2014（Synapse Project）",
+practice:"「少し難しい」と感じる学びを選ぶのがコツ。楽な脳トレより、新しい道具や言語に挑む。",
+threads:"脳の若さを保つのは、楽な脳トレより「少し難しい挑戦」のようです。\n\n高齢者に写真編集など新しい技能を3か月学ばせた実験では、おしゃべり中心の群より記憶機能の改善が大きくなりました。\n\n私は70歳でAIを使い始めました。難しいですが、これも脳の運動だと思っています。"
+},
+
+/* ---------- データ・統計 ---------- */
+{
+id:"data-01", cat:"データ・統計", ev:3, access:"public",
+title:"平均寿命と健康寿命の差は約9〜12年",
+point:"日本人の平均寿命は男81.09歳・女87.14歳（2023年）。一方、健康上の問題なく生活できる健康寿命は男72.68歳・女75.38歳（2019年）。この差を縮めるのが若さ維持の本当の目的。",
+evidence:"厚生労働省の簡易生命表（2023年）と健康寿命の公表値（2019年）より。差は男性約8.4年、女性約11.8年。",
+source:"厚生労働省 簡易生命表・健康寿命の公表資料",
+practice:"目標を「長生き」ではなく「元気な年数を延ばす」に置き換えると、日々の習慣の意味がはっきりする。",
+threads:"日本人の平均寿命は男性81.09歳、女性87.14歳（2023年、厚生労働省）。\n\n一方、健康上の問題なく暮らせる健康寿命は男性72.68歳、女性75.38歳（2019年）。\n\n差は約8〜12年。若さ維持の目的は長生きではなく、この差を縮めることだと私は考えています。"
+},
+{
+id:"data-02", cat:"データ・統計", ev:3, access:"public",
+title:"高齢者の体力は20年前より確実に向上している",
+point:"「昔の70歳」と「今の70歳」は違う。スポーツ庁の体力テストで、高齢者の成績は長期的に向上傾向にある。",
+evidence:"スポーツ庁「体力・運動能力調査」の長期推移で、65歳以上の合計点は調査開始以降おおむね向上傾向が続いている。",
+source:"スポーツ庁 体力・運動能力調査（年次報告）",
+practice:"「年だから」と決めつける前にデータを見る。同世代の水準は上がっており、伸びしろはある。",
+threads:"スポーツ庁の体力テストの長期データを見ると、65歳以上の成績はこの20年余りでおおむね向上し続けています。\n\n今の70歳は、昔の70歳より体力的に若い。\n\n「年だから」はデータの上では言い訳になりにくい時代です。私も同世代の平均に負けないよう歩いています。"
+},
+
+/* ---------- 会員限定 ---------- */
+{
+id:"mem-01", cat:"会員限定", ev:3, access:"member",
+title:"【限定】4週間スタートプログラム（費用0円）",
+point:"この台帳の知識を、無理なく習慣にするための4週間の導入プログラム。1週ごとに1つだけ増やす。",
+evidence:"習慣化研究では、行動を既存の習慣に結びつけ（習慣スタッキング）、一度に1つずつ増やす方法の定着率が高いとされる。",
+source:"Lally et al., European Journal of Social Psychology, 2010（習慣形成に平均66日）",
+practice:"■1週目：日焼け止めを毎朝（洗顔とセットに）\n■2週目：＋歯みがき中の片脚立ち 左右30秒\n■3週目：＋1日10分の早歩き区間\n■4週目：＋朝食にタンパク質1品（卵か納豆）\n4週間後も全部で1日15分程度。これが土台になる。",
+threads:"若さ維持は一気にやると続きません。私の4週間プログラムは、1週間に1つだけ増やします。\n\n1週目は日焼け止めだけ。2週目に片脚立ちを足す。\n\n研究では習慣の定着に平均66日かかるとされます。焦らないことが最短距離です。"
+},
+{
+id:"mem-02", cat:"会員限定", ev:2, access:"member",
+title:"【限定】サプリの優先順位リスト（30年の結論）",
+point:"サプリ歴30年の経験と研究を突き合わせた、正直な優先順位。上から順に検討し、下は基本不要。",
+evidence:"各栄養素の臨床研究および国内の栄養調査に基づく整理。個人の血液検査値が最優先の判断材料。",
+source:"本台帳の栄養カテゴリ各項目の出典を参照",
+practice:"■第1優先：ビタミンD（国内調査で不足者98%。日光が少ない人）\n■第2優先：タンパク質補助（食事で1.0g/kgに届かない日のプロテイン）\n■検討可：オメガ3（魚を週2回食べない人のみ）\n■基本不要：マルチビタミン、コラーゲン経口、高価な美容サプリ\n※服薬中の方は飲み合わせを薬剤師に確認。",
+threads:"サプリ歴30年の正直な結論です。\n\n優先度が高いのはビタミンDと、食事で足りない日のタンパク質補助。魚を食べない人はオメガ3も検討。\n\n一方、マルチビタミンに寿命延長の証拠はなく、高価な美容サプリの多くも根拠が薄い。\n\nサプリは穴埋め。主役は食事です。"
+},
+{
+id:"mem-03", cat:"会員限定", ev:2, access:"member",
+title:"【限定】よしだの1日ルーティン完全版",
+point:"70歳の実践者として、実際に毎日やっていることの全て。所要時間と根拠付き。",
+evidence:"本台帳の各項目を1日の生活動線に配置したもの。全て費用ゼロまたは低コスト。",
+source:"本台帳各項目の出典を参照",
+practice:"■朝：起床時刻固定／日焼け止め（2分）／卵＋納豆の朝食／15分の日光\n■昼：早歩き10分区間（買い物と兼ねる）／昼食に魚か肉\n■夕：スクワット10回×2＋かかと上げ20回（週2回）／歯みがき中の片脚立ち\n■夜：夕方以降カフェインなし／寝る30分前にスマホを手放す／22時半就寝\n合計の追加時間は1日約20分。",
+threads:"70歳の私の1日は、若さ維持の実験場です。\n\n朝は日焼け止めと卵、昼は早歩き10分、夜は歯みがき片脚立ちと22時半就寝。\n\n特別なことは何もありません。追加でかかる時間は1日約20分。\n\n続けられる形にまで削ったのが、この20分です。"
+},
+{
+id:"mem-04", cat:"会員限定", ev:2, access:"member",
+title:"【限定】見た目年齢セルフチェック 10項目",
+point:"月1回、自分の状態を点検するためのチェックリスト。増減を記録すると変化が見える。",
+evidence:"各項目は本台帳の該当研究（歩行速度・片脚立ち・姿勢・睡眠など）に対応。",
+source:"本台帳各項目の出典を参照",
+practice:"□1. 片脚立ち10秒（左右とも）\n□2. 横断歩道を余裕を持って渡り切れる速さで歩けた\n□3. 壁に背を付けて立ち、後頭部が自然に壁に付く\n□4. 今週、筋トレを2回した\n□5. 毎朝日焼け止めを塗った\n□6. 毎食タンパク質を1品入れた\n□7. 就寝時刻のずれが1時間以内だった\n□8. 家族以外の人と会話した\n□9. 新しいことを1つ学んだ\n□10. タバコを吸っていない\n8個以上で良好。増減をメモする。",
+threads:"月1回、自分に出している10項目のテストがあります。\n\n片脚立ち10秒。横断歩道を余裕で渡れる歩速。後頭部が壁に付く姿勢。週2回の筋トレ。毎朝の日焼け止め。\n\n点数より、先月との増減を見るのがコツです。\n\n体は正直に答えてくれます。"
+},
+{
+id:"mem-05", cat:"会員限定", ev:1, access:"member",
+title:"【限定】お金をかけない優先順位（効果÷費用の表)",
+point:"この台帳の全知識を「効果の確からしさ÷費用」で並べ替えた一覧。予算ゼロでも上位はすべて実行できる。",
+evidence:"各項目のエビデンス強度と概算費用による独自整理。",
+source:"本台帳各項目の出典を参照",
+practice:"■費用0円で効果大：睡眠時刻の固定／早歩き／筋トレ／片脚立ち／姿勢／禁煙／人との会話\n■月数百円で効果大：日焼け止け毎日\n■月1,000円前後で検討：レチノール、ビタミンD\n■効果のわりに高い：高級クリーム、美容サプリ、エステ\n上2段だけで、この台帳の効果の8割は取れると考えている。",
+threads:"若さ維持を「効果の確からしさ÷費用」で並べ替えると、上位はほぼ0円です。\n\n睡眠時刻の固定。早歩き。筋トレ。姿勢。禁煙。人との会話。\n\nお金がかかるのはその次の段からで、日焼け止めは月数百円。\n\n高い商品から始める必要は、データの上ではありません。"
+}
+];
+
+/* =========================================================
+   限定エリアの合言葉
+   変更するには：新しい合言葉のSHA-256ハッシュをここに入れる。
+   （Claude Codeに「合言葉を〇〇に変えて」と頼めばOK）
+========================================================= */
+const PASS_HASH = "7740748afa3a3f738f1bfe51121723b45ffdea4c2f4df77c800c9560a098d662";
+let unlocked = false;
+
+const CATS = ["すべて","肌","筋力・姿勢","表情・見た目","栄養","睡眠","脳・心","データ・統計","会員限定"];
+let curCat = "すべて";
+let curQ = "";
+
+const listEl = document.getElementById("list");
+const chipsEl = document.getElementById("chips");
+const countEl = document.getElementById("count");
+
+function evDots(n){
+  return "&#9679;".repeat(n) + "&#9675;".repeat(3-n);
+}
+function evLabel(n){ return n===3?"根拠 強":n===2?"根拠 中":"参考程度"; }
+
+function esc(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function render(){
+  const q = curQ.trim().toLowerCase();
+  const items = KB.filter(it=>{
+    if(curCat!=="すべて" && it.cat!==curCat) return false;
+    if(!q) return true;
+    const hay = (it.title+it.point+it.evidence+it.practice+it.cat).toLowerCase();
+    return q.split(/\s+/).every(w=>hay.includes(w));
+  });
+
+  countEl.textContent = items.length + "件 ／ 全" + KB.length + "件";
+
+  listEl.innerHTML = items.map(it=>{
+    const locked = it.access==="member" && !unlocked;
+    if(locked){
+      return `<div class="card locked">
+        <summary style="display:flex;gap:12px;align-items:flex-start;padding:15px 16px" role="button" tabindex="0" onclick="document.getElementById('gate').scrollIntoView()" onkeydown="if(event.key==='Enter')document.getElementById('gate').scrollIntoView()">
+          <span class="cat-tag">${esc(it.cat)}</span>
+          <h2>&#128274; ${esc(it.title)}</h2>
+        </summary>
+        <div class="locknote">会員限定ノートです。下の合言葉欄から開けます。</div>
+      </div>`;
+    }
+    return `<details class="card" id="${it.id}">
+      <summary>
+        <span class="cat-tag">${esc(it.cat)}</span>
+        <h2>${esc(it.title)}</h2>
+        <span class="meta"><span class="dots">${evDots(it.ev)}</span>${evLabel(it.ev)}</span>
+      </summary>
+      <div class="body">
+        <div class="sec"><h3>要点</h3><p>${esc(it.point)}</p></div>
+        <div class="sec"><h3>根拠</h3><p>${esc(it.evidence)}</p><p class="src">出典：${esc(it.source)}</p></div>
+        <div class="sec"><h3>やり方</h3><p>${esc(it.practice).replace(/\n/g,"<br>")}</p></div>
+        <div class="sec"><h3>THREADS 下書き</h3>
+          <div class="threads-box" id="tb-${it.id}">${esc(it.threads)}</div>
+          <button class="copy" data-target="tb-${it.id}">下書きをコピー</button>
+        </div>
+      </div>
+    </details>`;
+  }).join("") || `<p style="color:var(--ink-soft);padding:30px 0;text-align:center">該当する知識がありません。別の言葉で検索してください。</p>`;
+
+  listEl.querySelectorAll(".copy").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const text = document.getElementById(btn.dataset.target).textContent;
+      const done = ()=>{ btn.textContent="コピーしました"; btn.classList.add("done");
+        setTimeout(()=>{btn.textContent="下書きをコピー";btn.classList.remove("done");},1800); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+      }else{ fallbackCopy(text,done); }
+    });
+  });
+}
+
+function fallbackCopy(text,done){
+  const ta=document.createElement("textarea");
+  ta.value=text;document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");done();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* chips */
+chipsEl.innerHTML = CATS.map(c=>`<button class="chip${c==="すべて"?" on":""}" data-cat="${c}">${c}</button>`).join("");
+chipsEl.querySelectorAll(".chip").forEach(ch=>{
+  ch.addEventListener("click",()=>{
+    curCat = ch.dataset.cat;
+    chipsEl.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===ch));
+    render();
+  });
+});
+
+document.getElementById("q").addEventListener("input",e=>{curQ=e.target.value;render();});
+
+/* gate */
+async function sha256(str){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+document.getElementById("unlock").addEventListener("click",tryUnlock);
+document.getElementById("pass").addEventListener("keydown",e=>{if(e.key==="Enter")tryUnlock();});
+async function tryUnlock(){
+  const v = document.getElementById("pass").value.trim();
+  const msg = document.getElementById("gatemsg");
+  if(!v){msg.textContent="合言葉を入力してください";msg.className="msg ng";return;}
+  const h = await sha256(v);
+  if(h===PASS_HASH){
+    unlocked = true;
+    msg.textContent="開きました。限定ノートが読めます";
+    msg.className="msg ok";
+    render();
+  }else{
+    msg.textContent="合言葉が違います";
+    msg.className="msg ng";
+  }
+}
+
+render();
+</script>
+</body>
+</html>
