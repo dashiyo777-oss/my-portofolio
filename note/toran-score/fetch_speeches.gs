@@ -205,9 +205,10 @@ function fetchAffiliations() {
  * CSVの氏名は「岸田 文雄」のようにスペース入りなので、詰めた形でも引く。
  */
 function countSpeeches(name) {
-  var candidates = [name];
+  // 詰めた形（岸田文雄）を先に試す。CSVはスペース入りだが、APIはこちらで引ける。
+  // 順序を逆にすると全員ぶん2回問い合わせることになり、時間が倍かかる。
   var squeezed = name.replace(/[\s　]/g, '');
-  if (squeezed !== name) candidates.push(squeezed);
+  var candidates = squeezed !== name ? [squeezed, name] : [name];
 
   var lastError = null;
   for (var i = 0; i < candidates.length; i++) {
