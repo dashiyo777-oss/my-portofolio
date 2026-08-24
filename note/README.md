@@ -25,6 +25,7 @@
 ## 1. 第1弾の設計（実装済み原稿）
 
 **[`seiji-keizai-01-kensho-no-tejun.md`](seiji-keizai-01-kensho-no-tejun.md)**
+→ **公開済み（2026-08-24）**：https://note.com/leo77777/n/n974887e9a909
 ― 政治家の「実績」は、無料の公的資料だけで確かめられる（7つの検証手順）
 
 | 項目 | 設計 |

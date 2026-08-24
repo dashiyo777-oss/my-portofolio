@@ -1,6 +1,8 @@
 # 公開手順書 ― 第1弾「検証の7手順」を note に出すまで
 
 > 対象：[`seiji-keizai-01-kensho-no-tejun.md`](seiji-keizai-01-kensho-no-tejun.md)（780円・エバーグリーン）
+> **✅ 公開済み：2026-08-24 18:31** → https://note.com/leo77777/n/n974887e9a909（名義：政策データ・ラボ）
+> 残タスクは Day 0-C のThreads投稿1本目と、Day 1〜14 の導線投稿。
 > 設計の根拠：[`README.md`](README.md)／Threads運用：`.claude/skills/threads-monetize/SKILL.md`
 > **所要時間の目安：Day 0 に約2時間。以降は1日10〜15分。**
 
