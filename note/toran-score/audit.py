@@ -291,6 +291,8 @@ def merge_pairs(pairs):
     conflicts = []
     for honmyo, tsusho, _ in pairs:   # honmyo=[ ]付きの本名行（消す） / tsusho=残す行
         tsusho["統合元ID"] = honmyo["ID"]
+        # 本名の文字列も残す。一次資料は通称と本名の両方で引く必要があるため。
+        tsusho["統合元氏名"] = honmyo["氏名"].strip("[]").strip()
         took = False
         for c in ACTIVITY_COLS:
             a, b = tsusho[c].strip(), honmyo[c].strip()
@@ -328,7 +330,7 @@ def main():
         merged, conflicts = merge_pairs(pairs)
         drop = {r["ID"] for r, _, _ in pairs}
         kept = [r for r in rows if r["ID"] not in drop]
-        out_fields = fields + ["統合元ID"]
+        out_fields = fields + ["統合元ID", "統合元氏名"]
         with io.open(args.clean, "w", encoding="utf-8-sig", newline="") as fh:
             w = csv.DictWriter(fh, fieldnames=out_fields, extrasaction="ignore")
             w.writeheader()
