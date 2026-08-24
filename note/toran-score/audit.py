@@ -34,6 +34,9 @@ ACTIVITY_COLS = [
 # 国会議員ではないので議席数の検算対象から外す区分
 NON_DIET = ("首長", "候補", "元議員")
 
+# 発言数の集計期間の日数（2021-11-01〜2026-07-31）。1日あたりに直して現実性を見る用。
+PERIOD_DAYS = 1733
+
 
 def kata2hira(s):
     return "".join(chr(ord(c) - 0x60) if "ァ" <= c <= "ヶ" else c for c in s)
@@ -191,6 +194,63 @@ class Audit:
                      + ("（連続＝作業順の産物）" if contiguous
                         else "（とびとび）"))
 
+    # ── 7. 数値そのものが妥当か ─────────────────────────
+    def check_plausibility(self):
+        """一次資料に当たれなくても、数字の形から疑えることを見る。"""
+        diet = [r for r in self.rows if r["院"] in SEATS]
+        if not diet:
+            return
+
+        def val(r, c):
+            v = (r.get(c) or "").strip()
+            return float(v) if v else 0.0
+
+        speech = ACTIVITY_COLS[0]
+
+        # 7-1. あり得ない組み合わせ（発言0なのに主意書や発議がある）
+        impossible = [r for r in diet
+                      if val(r, speech) == 0
+                      and (val(r, ACTIVITY_COLS[1]) > 0
+                           or val(r, ACTIVITY_COLS[2]) > 0)]
+        if impossible:
+            self.add("重大", "あり得ない組み合わせ",
+                     f"発言0なのに質問主意書か議員立法がある {len(impossible)}人",
+                     [r["ID"] for r in impossible])
+        else:
+            self.add("情報", "列どうしの論理矛盾なし", "")
+
+        # 7-2. 発言0が特定の政党に偏っていないか
+        # 取得漏れなら政党と無関係に散らばるはず。偏るなら構造か収集バグ。
+        zero = [r for r in diet if val(r, speech) == 0]
+        if zero:
+            by = Counter(r["政党"] for r in zero)
+            tot = Counter(r["政党"] for r in diet)
+            worst = max(by, key=lambda p: by[p] / tot[p])
+            clean = [p for p in tot if tot[p] >= 20 and by.get(p, 0) == 0]
+            self.add("要確認", "発言数0の人がいる",
+                     f"{len(zero)}人 / 最も多いのは{worst} "
+                     f"{by[worst]}/{tot[worst]}={by[worst] / tot[worst]:.1%}"
+                     + (f" / 20人以上いて0人なのは{'・'.join(clean)}" if clean else "")
+                     + "  ※取得漏れなら政党と無関係に散らばるはず",
+                     [r["ID"] for r in zero])
+
+        # 7-3. 4列すべて0＝在職の痕跡がない
+        trace = [r for r in diet
+                 if all(val(r, c) == 0 for c in ACTIVITY_COLS)]
+        if trace:
+            self.add("要確認", "4列すべて0で在職の痕跡がない",
+                     f"{len(trace)}人  新人か、名簿だけあって収集されていないか判別が要る",
+                     [r["ID"] for r in trace])
+
+        # 7-4. 発言数の最大値を1日あたりに直して現実性を見る
+        top = max(diet, key=lambda r: val(r, speech))
+        v = val(top, speech)
+        if v:
+            self.add("情報", "発言数の最大値",
+                     f"{top['氏名']} {v:.0f}回"
+                     f"（{PERIOD_DAYS}日で割ると {v / PERIOD_DAYS:.2f}回/日）"
+                     "  上位は答弁側の役職者が占めるのが自然")
+
     def run(self):
         self.check_seats()
         pairs = self.check_alias_rows()
@@ -198,6 +258,7 @@ class Audit:
         self.check_missing()
         self.check_dup_names()
         self.check_progress()
+        self.check_plausibility()
         return pairs
 
 
