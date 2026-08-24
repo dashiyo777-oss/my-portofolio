@@ -1,25 +1,20 @@
 /**
  * 国会会議録検索システムから発言件数を取り直す（Google Apps Script）
  *
- * ⚠ このスクリプトは書いた環境から国会会議録検索システムに接続できなかったため、
- *    実際のレスポンスで動作確認できていません。
- *    走らせる前に、必ず下の「STEP 0」をブラウザで実行して、
- *    APIの応答が想定どおりか自分の目で確かめてください。
+ * 2026-08-24、ブラウザで1件確認済みです。
+ *   speaker=岸田文雄 / 2021-11-01〜2026-07-31 → numberOfRecords = 9540
+ *   CSVの発言数9540と完全に一致したので、CSVはこのAPIのこのパラメータで
+ *   作られていると確定しました。nameOfHouse は「両院」で、衆参の本会議・
+ *   委員会・合同審査会をすべて含みます。
+ *   氏名はスペースを詰めた形（岸田文雄）で引けます。
  *
- * ── STEP 0：先にブラウザで1件だけ確かめる ─────────────────────
- * 次のURLをブラウザのアドレスバーに貼って開きます。
+ * 発言件数のほかに、応答には次も入っています。ここも同時に拾います。
+ *   speakerGroup    会派  → 政党「（要確認）」48人を埋められる
+ *   speakerYomi     よみ  → よみの欠損を埋められる
+ *   speakerPosition 役職  → 役職「（要確認）」を埋められる
  *
- *   https://kokkai.ndl.go.jp/api/speech?speaker=岸田文雄&from=2021-11-01&until=2026-07-31&maximumRecords=1&recordPacking=json
- *
- * 確かめること:
- *   1. numberOfRecords という項目があり、数字が入っているか
- *   2. その数字が、CSVの岸田文雄の発言数9540と近いか
- *      → 大きく違うなら、CSVの「発言」の定義が違います。
- *        委員会を含むのか、答弁を含むのか、ここで決着させてください
- *   3. 氏名にスペースを入れる／入れないで結果が変わるか
- *      （CSVは「岸田 文雄」ですが、APIは「岸田文雄」で引ける場合があります）
- *
- * この3点が確認できるまで、STEP 1に進まないでください。
+ * ただし会派と役職は「返ってきた1件の発言時点」の値です。日付も一緒に
+ * 記録するので、古ければ fetchAffiliations() で引き直してください。
  *
  * ── STEP 1：シートを用意する ──────────────────────────────
  * toran-clean.csv を Google スプレッドシートに読み込みます。
@@ -51,6 +46,13 @@ var OUT_MAIN = 'API発言数(通称)';
 var OUT_ALIAS = 'API発言数(本名)';
 var OUT_TOTAL = 'API発言数(判定)';
 var OUT_NOTE = 'API備考';
+var OUT_YOMI = 'APIよみ';
+var OUT_GROUP = 'API会派';
+var OUT_POS = 'API役職';
+var OUT_ASOF = 'API会派の時点';
+
+// 会派を引き直すときの開始日。直近の会派が欲しいので選挙後に置く。
+var AFFIL_FROM = '2026-02-01';
 // ────────────────────────────────────────────────────
 
 function fetchSpeeches() {
@@ -66,7 +68,8 @@ function fetchSpeeches() {
   }
 
   // 出力列を用意する
-  [OUT_MAIN, OUT_ALIAS, OUT_TOTAL, OUT_NOTE].forEach(function (name) {
+  [OUT_MAIN, OUT_ALIAS, OUT_TOTAL, OUT_NOTE,
+   OUT_YOMI, OUT_GROUP, OUT_POS, OUT_ASOF].forEach(function (name) {
     if (col[name] === undefined) {
       header.push(name);
       col[name] = header.length - 1;
@@ -132,7 +135,8 @@ function fetchSpeeches() {
     }
 
     writeRow(sheet, r + 1, col,
-      [a.count, b === null ? '' : b.count, total, note]);
+      [a.count, b === null ? '' : b.count, total, note],
+      a.count !== null ? a : b);
     done++;
 
     // 6分制限に当たる前に自分から抜ける（次回は続きから）
@@ -143,11 +147,57 @@ function fetchSpeeches() {
     '空欄が残っていれば、もう一度実行してください。');
 }
 
-function writeRow(sheet, rowNumber, col, vals) {
+function writeRow(sheet, rowNumber, col, vals, meta) {
   sheet.getRange(rowNumber, col[OUT_MAIN] + 1).setValue(vals[0]);
   sheet.getRange(rowNumber, col[OUT_ALIAS] + 1).setValue(vals[1]);
   sheet.getRange(rowNumber, col[OUT_TOTAL] + 1).setValue(vals[2]);
   sheet.getRange(rowNumber, col[OUT_NOTE] + 1).setValue(vals[3]);
+  if (!meta) return;
+  sheet.getRange(rowNumber, col[OUT_YOMI] + 1).setValue(meta.yomi || '');
+  sheet.getRange(rowNumber, col[OUT_GROUP] + 1).setValue(meta.group || '');
+  sheet.getRange(rowNumber, col[OUT_POS] + 1).setValue(meta.position || '');
+  sheet.getRange(rowNumber, col[OUT_ASOF] + 1).setValue(meta.date || '');
+}
+
+
+/**
+ * 政党が「（要確認）」の行だけ、選挙後の会派を引き直す。
+ * fetchSpeeches のあとに実行してください。48人ぶんなので数分で終わります。
+ */
+function fetchAffiliations() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var values = sheet.getDataRange().getValues();
+  var header = values[0];
+  var col = {};
+  header.forEach(function (h, i) { col[String(h).trim()] = i; });
+
+  if (col['政党'] === undefined) throw new Error('「政党」列がありません。');
+  [OUT_GROUP, OUT_ASOF].forEach(function (name) {
+    if (col[name] === undefined) {
+      header.push(name);
+      col[name] = header.length - 1;
+      sheet.getRange(1, header.length).setValue(name);
+    }
+  });
+
+  var done = 0;
+  for (var r = 1; r < values.length; r++) {
+    var party = String(values[r][col['政党']] || '').trim();
+    if (party !== '（要確認）') continue;
+
+    var name = String(values[r][col[NAME_COL]] || '').trim();
+    if (!name) continue;
+
+    var res = callApi(name.replace(/[\s　]/g, ''), AFFIL_FROM, UNTIL);
+    Utilities.sleep(SLEEP_MS);
+    if (res.error) continue;
+
+    sheet.getRange(r + 1, col[OUT_GROUP] + 1).setValue(res.group || '(該当なし)');
+    sheet.getRange(r + 1, col[OUT_ASOF] + 1).setValue(res.date || '');
+    done++;
+  }
+  SpreadsheetApp.getUi().alert(done + '人ぶんの会派を ' + AFFIL_FROM +
+    ' 以降の発言から引き直しました。');
 }
 
 /**
@@ -170,11 +220,11 @@ function countSpeeches(name) {
   return { count: 0, error: null };     // 本当に0件
 }
 
-function callApi(speaker) {
+function callApi(speaker, from, until) {
   var url = 'https://kokkai.ndl.go.jp/api/speech'
     + '?speaker=' + encodeURIComponent(speaker)
-    + '&from=' + FROM
-    + '&until=' + UNTIL
+    + '&from=' + (from || FROM)
+    + '&until=' + (until || UNTIL)
     + '&maximumRecords=1'
     + '&recordPacking=json';
 
@@ -189,7 +239,17 @@ function callApi(speaker) {
     if (n === undefined || n === null) {
       return { count: null, error: 'numberOfRecords が応答にありません' };
     }
-    return { count: Number(n), error: null };
+    // 会派・よみ・役職も同じ応答に入っているので拾う。
+    // ただし「返ってきた1件の発言時点」の値なので、日付も一緒に持つ。
+    var rec = (json.speechRecord && json.speechRecord[0]) || {};
+    return {
+      count: Number(n),
+      error: null,
+      yomi: rec.speakerYomi || '',
+      group: rec.speakerGroup || '',
+      position: rec.speakerPosition || '',
+      date: rec.date || ''
+    };
   } catch (e) {
     return { count: null, error: String(e) };
   }
