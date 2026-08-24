@@ -39,6 +39,19 @@
  * 全部埋まるまで、何度か繰り返します。
  */
 
+// ── 期間について（2026-08-24に判明）─────────────────────────
+// 福島みずほで引くと、CSVの1,420に対して
+//   until=2026-07-31 → 1,494
+//   until=2026-06-30 → 1,472
+// となり、どちらとも合わなかった。CSVの列名「2021.11〜2026.07」は
+// 実際の集計範囲と一致していない。
+//
+// 岸田文雄と麻生太郎が一致したのは矛盾しない。麻生の最新発言は2024年11月で、
+// 締めが手前でも数字が変わらないため。直近まで活発な人でだけズレが出る。
+//
+// したがって古い数字の締め日を突き止める意味は薄く、UNTIL を固定して
+// 全件取り直すのが確実。取得日時を必ず記録するのはそのため。
+//
 // ── 設定（ここだけ触れば挙動が変わります）──────────────────────
 var FROM = '2021-11-01';        // CSVの発言数の期間に合わせる
 var UNTIL = '2026-07-31';
@@ -56,6 +69,7 @@ var OUT_YOMI = 'APIよみ';
 var OUT_GROUP = 'API会派';
 var OUT_POS = 'API役職';
 var OUT_ASOF = 'API会派の時点';
+var OUT_FETCHED = 'API取得日時';
 
 // 会派を引き直すときの開始日。直近の会派が欲しいので選挙後に置く。
 var AFFIL_FROM = '2026-02-01';
@@ -75,7 +89,7 @@ function fetchSpeeches() {
 
   // 出力列を用意する
   [OUT_MAIN, OUT_ALIAS, OUT_TOTAL, OUT_NOTE,
-   OUT_YOMI, OUT_GROUP, OUT_POS, OUT_ASOF].forEach(function (name) {
+   OUT_YOMI, OUT_GROUP, OUT_POS, OUT_ASOF, OUT_FETCHED].forEach(function (name) {
     if (col[name] === undefined) {
       header.push(name);
       col[name] = header.length - 1;
@@ -158,6 +172,11 @@ function writeRow(sheet, rowNumber, col, vals, meta) {
   sheet.getRange(rowNumber, col[OUT_ALIAS] + 1).setValue(vals[1]);
   sheet.getRange(rowNumber, col[OUT_TOTAL] + 1).setValue(vals[2]);
   sheet.getRange(rowNumber, col[OUT_NOTE] + 1).setValue(vals[3]);
+  // 取得日時は必ず残す。会議録は後から追加されるので、同じクエリでも
+  // 引いた日によって数字が変わる。いつ時点かが書けない数字は再現できない。
+  sheet.getRange(rowNumber, col[OUT_FETCHED] + 1)
+    .setValue(Utilities.formatDate(new Date(),
+      Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm'));
   if (!meta) return;
   sheet.getRange(rowNumber, col[OUT_YOMI] + 1).setValue(meta.yomi || '');
   sheet.getRange(rowNumber, col[OUT_GROUP] + 1).setValue(meta.group || '');
