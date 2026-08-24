@@ -2,7 +2,9 @@
 
 > 対象：[`seiji-keizai-01-kensho-no-tejun.md`](seiji-keizai-01-kensho-no-tejun.md)（780円・エバーグリーン）
 > **✅ 公開済み：2026-08-24 18:31** → https://note.com/leo77777/n/n974887e9a909（名義：政策データ・ラボ）
-> 残タスクは Day 0-C のThreads投稿1本目と、Day 1〜14 の導線投稿。
+> **✅ Day 0-C 完了：2026-08-24 18:35** Threads投稿1本目＋1コメ目リンク投稿済み
+> （threads.com/@yoshidatoran/post/DcawMWAoGzm。カードプレビュー展開を確認）
+> 残タスクは Day 1〜14 の導線投稿（【投稿2】から1日1本）。
 > 設計の根拠：[`README.md`](README.md)／Threads運用：`.claude/skills/threads-monetize/SKILL.md`
 > **所要時間の目安：Day 0 に約2時間。以降は1日10〜15分。**
 
