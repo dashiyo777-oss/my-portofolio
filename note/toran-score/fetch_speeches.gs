@@ -97,6 +97,7 @@ function fetchSpeeches() {
     }
   });
 
+  console.log('開始します。対象は最大 ' + (values.length - 1) + ' 行です。');
   var errors = 0;
   var done = 0;
 
@@ -126,8 +127,7 @@ function fetchSpeeches() {
       errors++;
       writeRow(sheet, r + 1, col, ['', '', '', 'ERROR: ' + a.error]);
       if (errors >= STOP_AFTER_ERRORS) {
-        SpreadsheetApp.getUi().alert(
-          '連続で' + errors + '件失敗したので止めました。\n' + a.error);
+        say('連続で' + errors + '件失敗したので止めました。' + a.error);
         return;
       }
       continue;
@@ -159,29 +159,80 @@ function fetchSpeeches() {
       a.count !== null ? a : b);
     done++;
 
-    // 6分制限に当たる前に自分から抜ける（次回は続きから）
-    if (done % 50 === 0) SpreadsheetApp.flush();
+    // 進捗をログに出す。無反応に見えると、動いているのか判断できないため。
+    if (done % 10 === 0) {
+      console.log(done + '件完了（' + r + '行目 ' + name + '）');
+      SpreadsheetApp.flush();
+    }
   }
 
-  SpreadsheetApp.getUi().alert('今回 ' + done + '件を取得しました。\n' +
-    '空欄が残っていれば、もう一度実行してください。');
+  say('今回 ' + done + '件を取得しました。'
+    + '空欄が残っていれば、もう一度実行してください。');
 }
 
+
+/**
+ * 進捗の知らせ方。
+ * スプレッドシートの画面から実行したときはポップアップを出し、
+ * Apps Scriptのエディタから実行したときは実行ログに書く。
+ * エディタにはポップアップの表示先がなく、getUi() をそのまま呼ぶと
+ * 実行が止まったように見えるため、必ずここを通す。
+ */
+function say(message) {
+  console.log(message);
+  try {
+    SpreadsheetApp.getUi().alert(message);
+  } catch (e) {
+    // エディタから実行した場合。ログに出ているので何もしない。
+  }
+}
+
+/**
+ * 1行ぶんの結果を書く。
+ * 出力列は末尾に連続して並ぶので、1回のsetValuesでまとめて書く。
+ * 1セルずつ書くと9往復になり、1行あたり1秒近く余計にかかって、
+ * 6分の制限に早く当たってしまう。
+ */
 function writeRow(sheet, rowNumber, col, vals, meta) {
-  sheet.getRange(rowNumber, col[OUT_MAIN] + 1).setValue(vals[0]);
-  sheet.getRange(rowNumber, col[OUT_ALIAS] + 1).setValue(vals[1]);
-  sheet.getRange(rowNumber, col[OUT_TOTAL] + 1).setValue(vals[2]);
-  sheet.getRange(rowNumber, col[OUT_NOTE] + 1).setValue(vals[3]);
   // 取得日時は必ず残す。会議録は後から追加されるので、同じクエリでも
   // 引いた日によって数字が変わる。いつ時点かが書けない数字は再現できない。
-  sheet.getRange(rowNumber, col[OUT_FETCHED] + 1)
-    .setValue(Utilities.formatDate(new Date(),
-      Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm'));
-  if (!meta) return;
-  sheet.getRange(rowNumber, col[OUT_YOMI] + 1).setValue(meta.yomi || '');
-  sheet.getRange(rowNumber, col[OUT_GROUP] + 1).setValue(meta.group || '');
-  sheet.getRange(rowNumber, col[OUT_POS] + 1).setValue(meta.position || '');
-  sheet.getRange(rowNumber, col[OUT_ASOF] + 1).setValue(meta.date || '');
+  var stamp = Utilities.formatDate(new Date(),
+    Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm');
+  var m = meta || {};
+
+  var pairs = [
+    [col[OUT_MAIN], vals[0]],
+    [col[OUT_ALIAS], vals[1]],
+    [col[OUT_TOTAL], vals[2]],
+    [col[OUT_NOTE], vals[3]],
+    [col[OUT_YOMI], m.yomi || ''],
+    [col[OUT_GROUP], m.group || ''],
+    [col[OUT_POS], m.position || ''],
+    [col[OUT_ASOF], m.date || ''],
+    [col[OUT_FETCHED], stamp]
+  ];
+
+  var min = pairs[0][0];
+  var max = pairs[0][0];
+  for (var i = 1; i < pairs.length; i++) {
+    if (pairs[i][0] < min) min = pairs[i][0];
+    if (pairs[i][0] > max) max = pairs[i][0];
+  }
+
+  // 連続していればまとめて1回で書く
+  if (max - min + 1 === pairs.length) {
+    var line = new Array(pairs.length);
+    for (var j = 0; j < pairs.length; j++) {
+      line[pairs[j][0] - min] = pairs[j][1];
+    }
+    sheet.getRange(rowNumber, min + 1, 1, pairs.length).setValues([line]);
+    return;
+  }
+
+  // 並びが崩れている場合（列を手で足したときなど）は1セルずつ
+  for (var k = 0; k < pairs.length; k++) {
+    sheet.getRange(rowNumber, pairs[k][0] + 1).setValue(pairs[k][1]);
+  }
 }
 
 
@@ -221,8 +272,7 @@ function fetchAffiliations() {
     sheet.getRange(r + 1, col[OUT_ASOF] + 1).setValue(res.date || '');
     done++;
   }
-  SpreadsheetApp.getUi().alert(done + '人ぶんの会派を ' + AFFIL_FROM +
-    ' 以降の発言から引き直しました。');
+  say(done + '人ぶんの会派を ' + AFFIL_FROM + ' 以降の発言から引き直しました。');
 }
 
 /**
