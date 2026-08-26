@@ -469,7 +469,8 @@ const MEMBER={
   "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
  },
  MASTER:"LUMINARE-2026",
- NOTE:"https://note.com/leo77777/membership"
+ NOTE:"https://note.com/leo77777/membership",
+ ITCH:"https://ryuzaburo7.itch.io/sae-techo"
 };
 const curYM=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
 const isMember=()=>DB.memberMaster===true||DB.memberYM===curYM();
@@ -1580,10 +1581,10 @@ function showGate(){
       <p id="gateErr" style="display:none;color:var(--shu);font-size:13px;margin-top:8px">${P("合言葉が違います。今月の合言葉（TOMO-XXXX）をご確認ください。","Wrong passcode. Please check this month&#39;s TOMO-XXXX.","Contraseña incorrecta. Verifica el TOMO-XXXX de este mes.")}</p>
       <div style="display:grid;gap:10px;margin-top:14px">
         <button class="btn shu" id="gateGo">${P("解錠する","Unlock","Desbloquear")}</button>
-        <button class="btn secondary" onclick="window.open(MEMBER.NOTE,'_blank')">${P("合言葉を入手する（noteメンバー）","Get the passcode (note members)","Obtener la contraseña (miembros de note)")}</button>
+        <button class="btn secondary" onclick="window.open(LANG==='ja'?MEMBER.NOTE:MEMBER.ITCH,'_blank')">${P("合言葉を入手する（noteメンバー）","Get SAE on itch.io","Consigue SAE en itch.io")}</button>
         <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
-      <p class="muted small" style="margin-top:12px">${P("合言葉は月替わり。叡智の灯火のnoteメンバーシップ（月300円）でご案内しています。","The passcode changes monthly, shared with Eichi no Hi note members.","La contraseña cambia cada mes; se comparte con los miembros de note de Eichi no Hi.")}</p>
+      <p class="muted small" style="margin-top:12px">${P("合言葉は月替わり。叡智の灯火のnoteメンバーシップ（月300円）でご案内しています。","Outside Japan? Get the full SAE on itch.io (one-time, worldwide).","¿Fuera de Japón? Consigue SAE completo en itch.io (pago único, mundial).")}</p>
     </div>`;
   $("#gateGo").onclick=async()=>{
     const ok=await tryUnlock($("#gateIn").value);
