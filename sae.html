@@ -469,7 +469,10 @@ const MEMBER={
   "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
  },
  MASTER:"LUMINARE-2026",
- NOTE:"https://note.com/leo77777/membership"
+ NOTE:"https://note.com/leo77777/membership",
+ ITCH:"https://ryuzaburo7.itch.io/sae-techo",
+ // 海外買い切りの永久キー。月替わりコード同様SHA-256ハッシュで格納（平文キーはitchの購入後ページにのみ記載）
+ WORLD_HASH:"54522692cca7a13edd2399853c46d80068c1b92332c7d9709f5a1d21a635a07f"
 };
 const curYM=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
 const isMember=()=>DB.memberMaster===true||DB.memberYM===curYM();
@@ -478,7 +481,9 @@ async function sha256hex(s){const b=await crypto.subtle.digest("SHA-256",new Tex
 async function tryUnlock(raw){
   const v=normPass(raw);if(!v)return false;
   if(v===MEMBER.MASTER.toUpperCase()){DB.memberMaster=true;save();return true;}
-  try{const h=await sha256hex(v);if(MEMBER.CODES[curYM()]===h){DB.memberYM=curYM();save();return true;}}catch(e){}
+  try{const h=await sha256hex(v);
+    if(h===MEMBER.WORLD_HASH){DB.memberMaster=true;save();return true;}
+    if(MEMBER.CODES[curYM()]===h){DB.memberYM=curYM();save();return true;}}catch(e){}
   return false;
 }
 
@@ -1575,15 +1580,15 @@ function showGate(){
       <div style="width:74px;height:74px;margin:0 auto 10px;border:2px solid var(--shu);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--shu);font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px">会員</div>
       <h2 class="mincho" style="font-size:19px;margin-bottom:6px">${P("大花園に入る","Enter the Grand Garden","Entrar al Gran Jardín")}</h2>
       <p class="muted" style="margin-bottom:4px">${P("5×5の大盤で、じっくり大輪を咲かせる——叡智の灯火の会員特典です。","A serene 5×5 board for slow, grand blooms — a member perk from Eichi no Hi.","Un sereno tablero 5×5 para grandes flores — beneficio para miembros de Eichi no Hi.")}</p>
-      <p class="muted small" style="margin-bottom:12px">${P("今月の合言葉（TOMO-XXXX）を入力してください。","Enter this month&#39;s passcode (TOMO-XXXX).","Escribe la contraseña del mes (TOMO-XXXX).")}</p>
+      <p class="muted small" style="margin-bottom:12px">${P("今月の合言葉（TOMO-XXXX）を入力してください。","Enter your unlock key.","Escribe tu clave de acceso.")}</p>
       <input id="gateIn" inputmode="text" autocomplete="off" placeholder="TOMO-XXXX" style="width:100%;padding:14px;border:1.5px solid var(--line);border-radius:12px;font-size:18px;text-align:center;letter-spacing:.2em;font-family:inherit;background:var(--white)">
-      <p id="gateErr" style="display:none;color:var(--shu);font-size:13px;margin-top:8px">${P("合言葉が違います。今月の合言葉（TOMO-XXXX）をご確認ください。","Wrong passcode. Please check this month&#39;s TOMO-XXXX.","Contraseña incorrecta. Verifica el TOMO-XXXX de este mes.")}</p>
+      <p id="gateErr" style="display:none;color:var(--shu);font-size:13px;margin-top:8px">${P("合言葉が違います。今月の合言葉（TOMO-XXXX）をご確認ください。","Wrong key. Please check the key from your itch.io purchase.","Clave incorrecta. Revisa la clave de tu compra en itch.io.")}</p>
       <div style="display:grid;gap:10px;margin-top:14px">
         <button class="btn shu" id="gateGo">${P("解錠する","Unlock","Desbloquear")}</button>
-        <button class="btn secondary" onclick="window.open(MEMBER.NOTE,'_blank')">${P("合言葉を入手する（noteメンバー）","Get the passcode (note members)","Obtener la contraseña (miembros de note)")}</button>
+        <button class="btn secondary" onclick="window.open(LANG==='ja'?MEMBER.NOTE:MEMBER.ITCH,'_blank')">${P("合言葉を入手する（noteメンバー）","Unlock worldwide — buy on itch.io","Desbloquear — comprar en itch.io")}</button>
         <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
       </div>
-      <p class="muted small" style="margin-top:12px">${P("合言葉は月替わり。叡智の灯火のnoteメンバーシップ（月300円）でご案内しています。","The passcode changes monthly, shared with Eichi no Hi note members.","La contraseña cambia cada mes; se comparte con los miembros de note de Eichi no Hi.")}</p>
+      <p class="muted small" style="margin-top:12px">${P("合言葉は月替わり。叡智の灯火のnoteメンバーシップ（月300円）でご案内しています。","One-time purchase on itch.io. You&#39;ll receive a permanent key to unlock the Grand Garden.","Compra única en itch.io. Recibirás una clave permanente para desbloquear el Gran Jardín.")}</p>
     </div>`;
   $("#gateGo").onclick=async()=>{
     const ok=await tryUnlock($("#gateIn").value);
