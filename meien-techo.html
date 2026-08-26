@@ -263,7 +263,7 @@ footer a{color:var(--gold);text-decoration:none}
     <div class="pay-err" id="payErr"></div>
     <div class="btnrow"><button class="btn velvet" onclick="checkPass()" id="payUnlock">解錠する</button></div>
     <div class="btnrow" style="margin-top:10px">
-      <button class="btn primary" onclick="window.open(CONFIG.PURCHASE_URL,'_blank')" id="payBuy">合言葉を入手する（Noteメンバー）</button>
+      <button class="btn primary" onclick="window.open((typeof LANG!=='undefined'&&LANG==='en')?CONFIG.GUMROAD_URL:CONFIG.PURCHASE_URL,'_blank')" id="payBuy">合言葉を入手する（Noteメンバー）</button>
     </div>
     <p class="pay-note" id="payNote"></p>
   </div>
@@ -297,6 +297,7 @@ const CONFIG = {
    "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
   },
   PURCHASE_URL: "https://note.com/leo77777/membership",
+  GUMROAD_URL: "https://atenium.gumroad.com/l/meisaku",    // 英語モード時の入手先（Gumroad メンバーシップ $3/月・MEISAKUと共通コード）
   PROXY_URL: "https://meisaku-ai.dashiyo777.workers.dev",
   RANKING_URL: "https://meisaku-rank.dashiyo777.workers.dev",
   MODEL: "claude-sonnet-4-6",
@@ -342,8 +343,8 @@ en:{tagline:"The classics of stage and screen, in three minutes.",
  savedH:"SCREENING RECORDS", savedEmpty:"No records yet. Use the AI Concierge above to create one.",
  payTitle:"Become a member",
  payCopy:t=>`Unlock all <strong>${t}</strong> classic summaries plus the <strong>AI Concierge</strong>.<br>Enter this month's passcode below.`,
- unlock:"Unlock", buy:"Get a passcode (Note membership)",
- payNote:"The passcode rotates monthly. Your current Eichi no Hi passcode (TOMO-XXXX) works here too.",
+ unlock:"Unlock", buy:"Become a member — $3/month",
+ payNote:"New here? Join the membership ($3/month) — a fresh passcode is posted to members each month. Enter this month's passcode above to unlock.",
  wrong:"That passcode doesn't match this month's code (TOMO-XXXX).", welcome:"Welcome, member.",
  foot:"All summaries are original write-ups. Nothing is quoted from the works.",
  themesLabel:"Highlights", aiTag:"AI Screening", del:"Delete",

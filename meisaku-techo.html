@@ -359,7 +359,7 @@ footer a{color:var(--gold);text-decoration:none}
       <button class="btn shu" onclick="checkPass()" id="payUnlock">解錠する</button>
     </div>
     <div class="btnrow" style="margin-top:10px">
-      <button class="btn primary" onclick="window.open(CONFIG.PURCHASE_URL,'_blank')" id="payBuy">合言葉を購入する（叡智の灯火）</button>
+      <button class="btn primary" onclick="window.open((typeof LANG!=='undefined'&&LANG==='en')?CONFIG.GUMROAD_URL:CONFIG.PURCHASE_URL,'_blank')" id="payBuy">合言葉を購入する（叡智の灯火）</button>
     </div>
     <p class="pay-note" id="payNote">合言葉は月替わりです。叡智の灯火の今月の合言葉（TOMO-XXXX）がそのまま使えます。</p>
   </div>
@@ -395,6 +395,7 @@ const CONFIG = {
    "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
   },
   PURCHASE_URL: "https://note.com/leo77777/membership",   // 合言葉の入手先（noteメンバーシップ 月300円）
+  GUMROAD_URL: "https://atenium.gumroad.com/l/meisaku",    // 英語モード時の入手先（Gumroad メンバーシップ $3/月）
   PROXY_URL: "https://meisaku-ai.dashiyo777.workers.dev",  // AI書斎用Worker（設置済み）
   MODEL: "claude-sonnet-4-6",
   FREE_COUNT: 8,                            // 無料で読める冊数
@@ -442,8 +443,8 @@ en:{tagline:"The world's classics, in three minutes — before you read, or afte
  savedH:"YOUR AI SHELF", savedEmpty:"No books yet. Use the AI Librarian above to create one.",
  payTitle:"Become a member",
  payCopy:t=>`Unlock all <strong>${t}</strong> classic summaries plus the <strong>AI Librarian</strong>.<br>Enter your passcode below.`,
- unlock:"Unlock", buy:"Get a passcode (Eichi no Hi)",
- payNote:"The passcode rotates monthly. Your current Eichi no Hi passcode (TOMO-XXXX) works here too.",
+ unlock:"Unlock", buy:"Become a member — $3/month",
+ payNote:"New here? Join the membership ($3/month) — a fresh passcode is posted to members each month. Enter this month's passcode above to unlock.",
  wrong:"That passcode doesn't match this month's code (TOMO-XXXX).", welcome:"Welcome, member.",
  foot:"All summaries are original write-ups. No text is quoted from the works.",
  themesLabel:"Themes", aiTag:"AI Shelf", del:"Delete",
