@@ -471,7 +471,8 @@ const MEMBER={
  MASTER:"LUMINARE-2026",
  NOTE:"https://note.com/leo77777/membership",
  ITCH:"https://ryuzaburo7.itch.io/sae-techo",
- WORLD:"SAE-WORLD-2026"
+ // 海外買い切りの永久キー。月替わりコード同様SHA-256ハッシュで格納（平文キーはitchの購入後ページにのみ記載）
+ WORLD_HASH:"54522692cca7a13edd2399853c46d80068c1b92332c7d9709f5a1d21a635a07f"
 };
 const curYM=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
 const isMember=()=>DB.memberMaster===true||DB.memberYM===curYM();
@@ -479,8 +480,10 @@ const normPass=v=>String(v||"").normalize("NFKC").replace(/[\u2010-\u2015\u2212\
 async function sha256hex(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");}
 async function tryUnlock(raw){
   const v=normPass(raw);if(!v)return false;
-  if(v===MEMBER.MASTER.toUpperCase()||v===MEMBER.WORLD.toUpperCase()){DB.memberMaster=true;save();return true;}
-  try{const h=await sha256hex(v);if(MEMBER.CODES[curYM()]===h){DB.memberYM=curYM();save();return true;}}catch(e){}
+  if(v===MEMBER.MASTER.toUpperCase()){DB.memberMaster=true;save();return true;}
+  try{const h=await sha256hex(v);
+    if(h===MEMBER.WORLD_HASH){DB.memberMaster=true;save();return true;}
+    if(MEMBER.CODES[curYM()]===h){DB.memberYM=curYM();save();return true;}}catch(e){}
   return false;
 }
 
