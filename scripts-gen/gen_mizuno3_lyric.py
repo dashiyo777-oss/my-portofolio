@@ -48,7 +48,6 @@ engine = g.ENGINE.replace("SCENES", scenes_js)
 BODY = r"""
   <div id="win"><div id="redtower"></div><div id="wref"></div></div>
   <div id="winframe"></div>
-  <div id="poster"><span>四十年。<br>こんな顔だったか。</span></div>
   <div id="sill"></div>
   <div id="seat"></div>
   <div id="bag"></div>
