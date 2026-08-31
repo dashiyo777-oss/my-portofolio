@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#2A4D8F">
+<title>冴え手帖 -SAE- 脳活道場｜よしだ（70歳の脳活）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F2EB;
+  --paper2:#ECE8DC;
+  --ink:#1E2A38;
+  --ai:#2A4D8F;
+  --ai-deep:#1D3765;
+  --shu:#C8452C;
+  --gold:#C99B2D;
+  --green:#3E7C4F;
+  --line:#D9D4C5;
+  --white:#FFFFFF;
+  --radius:14px;
+  --shadow:0 2px 10px rgba(30,42,56,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.6;
+  overscroll-behavior:none;
+}
+.mincho{font-family:'Shippori Mincho B1',serif}
+
+/* ===== App shell ===== */
+#app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;position:relative}
+header.appbar{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px 10px;
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:var(--paper);z-index:20;
+}
+.hanko{
+  width:34px;height:34px;flex:0 0 34px;
+  background:var(--shu);color:#fff;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:20px;
+  box-shadow:0 1px 3px rgba(200,69,44,.4);
+  transform:rotate(-4deg);
+}
+.appbar h1{font-family:'Shippori Mincho B1',serif;font-size:19px;font-weight:800;letter-spacing:.06em}
+.appbar h1 small{font-size:11px;font-weight:600;color:var(--ai);letter-spacing:.14em;display:block;line-height:1.2}
+.streak-chip{
+  margin-left:0;background:var(--white);border:1px solid var(--line);
+  border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--shu);
+  white-space:nowrap;
+}
+main{flex:1;padding:18px 18px 90px;overflow-x:hidden}
+
+/* ===== Bottom nav ===== */
+nav.tabbar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:520px;
+  display:flex;background:var(--white);border-top:1px solid var(--line);
+  z-index:30;padding-bottom:env(safe-area-inset-bottom);
+}
+.tabbar button{
+  flex:1;background:none;border:none;padding:9px 0 7px;
+  font-family:inherit;font-size:10.5px;font-weight:700;color:#8B8878;
+  display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;
+}
+.tabbar button .ticon{font-size:20px;line-height:1}
+.tabbar button.active{color:var(--ai)}
+.tabbar button.active .ticon{transform:translateY(-1px)}
+
+/* ===== Cards & common ===== */
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+.card h2{font-family:'Shippori Mincho B1',serif;font-size:16px;font-weight:800;margin-bottom:8px;letter-spacing:.04em}
+.eyebrow{font-size:11px;font-weight:700;color:var(--ai);letter-spacing:.18em;margin-bottom:4px}
+.btn{
+  display:block;width:100%;border:none;border-radius:12px;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:16px;padding:15px;
+  background:var(--ai);color:#fff;letter-spacing:.05em;
+  transition:transform .08s ease, filter .15s;
+}
+.btn:active{transform:scale(.97)}
+.btn.secondary{background:var(--white);color:var(--ai);border:1.5px solid var(--ai)}
+.btn.shu{background:var(--shu)}
+.btn.ghost{background:none;color:#8B8878;border:1px solid var(--line);font-size:14px;padding:11px}
+.btn:disabled{opacity:.4;pointer-events:none}
+.muted{color:#7C7A6E;font-size:13px}
+.small{font-size:12px}
+.center{text-align:center}
+
+/* ===== Home ===== */
+.hero{
+  background:linear-gradient(160deg,var(--ai) 0%,var(--ai-deep) 100%);
+  color:#fff;border-radius:var(--radius);padding:20px 18px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"冴";font-family:'Shippori Mincho B1',serif;font-weight:800;
+  position:absolute;right:-14px;bottom:-38px;font-size:130px;color:rgba(255,255,255,.07);
+  pointer-events:none;
+}
+.hero .date{font-size:12px;opacity:.85;letter-spacing:.1em;margin-bottom:6px}
+.hero h2{font-family:'Shippori Mincho B1',serif;font-size:21px;font-weight:800;margin-bottom:4px}
+.hero p{font-size:13px;opacity:.9;margin-bottom:14px}
+.hero .btn{background:#fff;color:var(--ai-deep)}
+.brainage-mini{
+  display:flex;align-items:baseline;gap:6px;margin-bottom:10px;
+}
+.brainage-mini .num{font-family:'Shippori Mincho B1',serif;font-size:44px;font-weight:800;line-height:1}
+.brainage-mini .unit{font-size:14px;opacity:.9}
+
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.game-tile{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 12px;cursor:pointer;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:4px;transition:transform .08s;
+}
+.game-tile:active{transform:scale(.97)}
+.game-tile .gicon{font-size:26px}
+.game-tile .gname{font-weight:700;font-size:14px}
+.game-tile .gdom{font-size:11px;color:var(--ai);font-weight:700}
+.game-tile .gbest{font-size:11px;color:#8B8878}
+
+/* ===== Game overlay ===== */
+#gameOverlay{
+  position:fixed;inset:0;background:var(--paper);z-index:100;display:none;
+  flex-direction:column;max-width:520px;margin:0 auto;
+}
+#gameOverlay.open{display:flex}
+.g-head{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+.g-head .g-title{font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:17px}
+.g-head .g-quit{margin-left:auto;background:none;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-family:inherit;font-size:13px;color:#8B8878;cursor:pointer}
+.g-prog{height:4px;background:var(--paper2)}
+.g-prog>div{height:100%;background:var(--gold);width:0%;transition:width .25s}
+#gameArea{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;position:relative}
+
+.big-display{font-family:'Shippori Mincho B1',serif;font-size:52px;font-weight:800;letter-spacing:.12em;min-height:80px;display:flex;align-items:center;justify-content:center}
+.instruction{font-size:15px;color:#5C5A4E;margin-bottom:14px}
+.countN{font-family:'Shippori Mincho B1',serif;font-size:70px;font-weight:800;color:var(--ai)}
+
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:min(300px,80vw);margin-top:14px}
+.numpad button{
+  font-family:'Shippori Mincho B1',serif;font-size:26px;font-weight:700;
+  padding:14px 0;border-radius:12px;border:1px solid var(--line);background:var(--white);
+  cursor:pointer;color:var(--ink);
+}
+.numpad button:active{background:var(--paper2)}
+.numpad button.util{font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;color:var(--shu)}
+.digit-input{font-family:'Shippori Mincho B1',serif;font-size:36px;letter-spacing:.2em;min-height:52px;border-bottom:3px solid var(--ai);width:min(300px,80vw);display:flex;align-items:center;justify-content:center}
+
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(340px,86vw);margin-top:18px}
+.choice-grid.cols3{grid-template-columns:repeat(3,1fr)}
+.choice-btn{
+  font-family:inherit;font-weight:700;font-size:20px;padding:18px 0;border-radius:12px;
+  border:1.5px solid var(--line);background:var(--white);cursor:pointer;color:var(--ink);
+}
+.choice-btn:active{background:var(--paper2)}
+.choice-btn.big{font-size:34px;padding:20px 0}
+
+#trailField{position:relative;width:min(340px,88vw);height:min(430px,62dvh);background:var(--white);border:1px solid var(--line);border-radius:var(--radius)}
+.trail-node{
+  position:absolute;width:52px;height:52px;border-radius:50%;
+  background:var(--white);border:2px solid var(--ai);color:var(--ai);
+  font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:21px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  user-select:none;transition:transform .1s, opacity .3s;
+}
+.trail-node.done{background:var(--ai);color:#fff;opacity:.35;pointer-events:none}
+.trail-node.miss{animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.stroop-word{font-family:'Shippori Mincho B1',serif;font-size:56px;font-weight:800;min-height:90px;display:flex;align-items:center;justify-content:center}
+.janken-hand{font-size:86px;line-height:1;min-height:100px}
+.janken-order{font-size:22px;font-weight:800;border-radius:999px;padding:5px 24px;display:inline-block;margin-bottom:10px;color:#fff}
+.feedback{position:absolute;top:14%;left:0;right:0;font-size:40px;font-weight:800;pointer-events:none;opacity:0;transition:opacity .15s}
+.feedback.show{opacity:1}
+
+/* ===== Result / diagnosis ===== */
+.enso-wrap{position:relative;width:230px;height:230px;margin:6px auto 10px}
+.enso-wrap svg{position:absolute;inset:0}
+.enso-num{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.enso-num .n{font-family:'Shippori Mincho B1',serif;font-size:74px;font-weight:800;line-height:1;color:var(--ink)}
+.enso-num .u{font-size:14px;font-weight:700;color:#7C7A6E}
+.enso-num .l{font-size:12px;font-weight:700;color:var(--ai);letter-spacing:.2em;margin-bottom:2px}
+.score-big{font-family:'Shippori Mincho B1',serif;font-size:64px;font-weight:800;color:var(--ai);line-height:1.1}
+.domain-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+.domain-row .dn{width:88px;font-size:12.5px;font-weight:700;flex:0 0 88px}
+.domain-row .bar{flex:1;height:10px;background:var(--paper2);border-radius:99px;overflow:hidden}
+.domain-row .bar>div{height:100%;border-radius:99px;background:var(--ai);width:0;transition:width .8s ease}
+.domain-row .dv{width:34px;text-align:right;font-weight:700;font-size:13px;flex:0 0 34px}
+.stamp{
+  display:inline-block;border:3px solid var(--shu);color:var(--shu);border-radius:8px;
+  font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px;
+  padding:6px 16px;transform:rotate(-5deg);letter-spacing:.1em;margin-top:8px;
+}
+
+/* ===== Advice ===== */
+.tip-card{border-left:4px solid var(--gold);background:var(--white);border-radius:0 var(--radius) var(--radius) 0;padding:14px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.tip-card .tcat{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--gold);margin-bottom:3px}
+.tip-card .ttitle{font-weight:700;font-size:15px;margin-bottom:4px}
+.tip-card p{font-size:13.5px;color:#4A493F}
+.tip-card .tev{font-size:11px;color:#8B8878;margin-top:6px}
+.cat-tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px}
+.cat-tabs button{
+  flex:0 0 auto;border:1px solid var(--line);background:var(--white);border-radius:999px;
+  padding:6px 14px;font-family:inherit;font-size:12.5px;font-weight:700;color:#7C7A6E;cursor:pointer;
+}
+.cat-tabs button.active{background:var(--ai);border-color:var(--ai);color:#fff}
+
+/* ===== Records ===== */
+.chart-box{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow)}
+.rec-row{display:flex;justify-content:space-between;padding:9px 2px;border-bottom:1px dashed var(--line);font-size:13.5px}
+.rec-row:last-child{border-bottom:none}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:12px 8px;text-align:center;box-shadow:var(--shadow)}
+.kpi .kv{font-family:'Shippori Mincho B1',serif;font-size:24px;font-weight:800;color:var(--ai)}
+.kpi .kl{font-size:10.5px;color:#8B8878;font-weight:700}
+
+.fade-in{animation:fadein .4s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== SAE RUSH ===== */
+.rush-hud{position:absolute;top:10px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:17px}
+.rush-hud .hearts{letter-spacing:2px;font-size:15px}
+.rush-hud .rscore{font-family:'Shippori Mincho B1',serif;font-size:22px}
+.rush-hud .rcombo{color:var(--shu);min-width:56px;text-align:right;font-size:15px}
+.rush-timebar{position:absolute;top:46px;left:16px;right:16px;height:8px;background:var(--paper2);border-radius:99px;overflow:hidden}
+#rtb{height:100%;width:100%;background:linear-gradient(90deg,var(--gold),var(--shu))}
+.rush-q{font-family:'Shippori Mincho B1',serif;font-size:42px;font-weight:800;min-height:70px;display:flex;align-items:center;justify-content:center;letter-spacing:.04em}
+.pill{display:inline-block;color:#fff;border-radius:999px;padding:5px 20px;font-weight:800;font-size:17px;margin-bottom:10px}
+.rush-lvl{position:absolute;bottom:12px;right:18px;font-size:12px;font-weight:800;color:#8B8878}
+.odd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(320px,84vw);margin-top:12px}
+.odd-grid button{font-size:26px;padding:12px 0;border-radius:10px;border:1px solid var(--line);background:var(--white);font-family:'Shippori Mincho B1',serif;cursor:pointer;color:var(--ink)}
+@keyframes shakeArea{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.shake{animation:shakeArea .35s}
+.redflash{position:absolute;inset:0;background:rgba(200,69,44,.18);opacity:0;pointer-events:none;transition:opacity .1s;z-index:5}
+.redflash.on{opacity:1}
+.ptfloat{position:absolute;top:24%;left:0;right:0;text-align:center;font-weight:800;font-size:24px;color:var(--green);animation:floatUp .55s ease forwards;pointer-events:none;z-index:6}
+@keyframes floatUp{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-28px)}}
+.lvup{position:absolute;top:36%;left:0;right:0;text-align:center;font-family:'Shippori Mincho B1',serif;font-size:36px;font-weight:800;color:var(--ai);animation:fadein .3s;z-index:6}
+.rush-stats{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-bottom:12px;opacity:.95}
+.rush-stats b{font-size:16px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.kpi .kv{font-size:20px}
+
+/* ===== 花あわせ (HANA) ===== */
+.hana-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.hana-head{display:flex;justify-content:space-between;align-items:baseline;width:min(360px,88vw);font-weight:800;font-size:15px}
+.hana-head b{font-family:'Shippori Mincho B1',serif;font-size:24px}
+#hanaBoard{position:relative;width:min(360px,88vw);background:#E4DECB;border-radius:14px;touch-action:none;user-select:none;box-shadow:inset 0 2px 6px rgba(30,42,56,.12)}
+.hcell{position:absolute;background:rgba(255,255,255,.45);border-radius:10px}
+.htile{position:absolute;border-radius:10px;transition:transform .13s ease;will-change:transform;box-shadow:0 1px 3px rgba(30,42,56,.18)}
+.htile .hin{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px}
+.htile .he{font-size:30px;line-height:1.1}
+.htile .hn{font-size:9.5px;color:#6B6857;font-weight:800;letter-spacing:.05em}
+@keyframes hpop{0%{transform:scale(.5)}60%{transform:scale(1.14)}100%{transform:scale(1)}}
+.hin.pop{animation:hpop .18s ease}
+.hana-toast{position:absolute;top:8px;left:0;right:0;text-align:center;font-weight:800;font-size:17px;color:var(--shu);animation:floatUp 1.1s ease forwards;pointer-events:none;z-index:9;text-shadow:0 1px 0 #fff}
+
+/* ===== Premium polish ===== */
+body{background:
+  radial-gradient(1200px 500px at 50% -200px, #FBF9F1 0%, transparent 60%),
+  repeating-linear-gradient(0deg, rgba(120,110,90,.022) 0 1px, transparent 1px 3px),
+  repeating-linear-gradient(90deg, rgba(120,110,90,.018) 0 1px, transparent 1px 3px),
+  var(--paper);}
+header.appbar{box-shadow:0 1px 0 var(--line),0 2px 0 rgba(233,196,106,.55),0 6px 14px -8px rgba(30,42,56,.15)}
+.hanko{box-shadow:0 2px 6px rgba(200,69,44,.35),inset 0 0 0 2px rgba(255,255,255,.35);border-radius:8px}
+.card{box-shadow:0 1px 2px rgba(30,42,56,.05),0 6px 18px -6px rgba(30,42,56,.10)}
+.card h2{letter-spacing:.03em}
+.btn{box-shadow:0 3px 0 rgba(23,42,84,.55),0 6px 14px -6px rgba(42,77,143,.55);
+  background:linear-gradient(180deg,#3560AD 0%,var(--ai) 55%,#24437D 100%)}
+.btn:active{transform:translateY(2px) scale(.985);box-shadow:0 1px 0 rgba(23,42,84,.55)}
+.btn.shu{background:linear-gradient(180deg,#D75A3F 0%,var(--shu) 55%,#A93A24 100%);
+  box-shadow:0 3px 0 rgba(120,35,20,.55),0 6px 14px -6px rgba(200,69,44,.5)}
+.btn.secondary{background:var(--white);box-shadow:0 2px 0 rgba(30,42,56,.10),0 4px 10px -6px rgba(30,42,56,.18)}
+.btn.ghost{box-shadow:none}
+.hero{box-shadow:0 10px 26px -10px rgba(23,42,84,.55),inset 0 1px 0 rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.14)}
+.hero::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(420px 160px at 85% -30%,rgba(233,196,106,.28),transparent 70%)}
+.hero .btn{box-shadow:0 3px 0 rgba(180,170,140,.7),0 6px 16px -8px rgba(0,0,0,.4)}
+nav.tabbar{box-shadow:0 -1px 0 var(--line),0 -8px 18px -12px rgba(30,42,56,.18);
+  backdrop-filter:blur(6px);background:rgba(244,242,235,.92)}
+.tabbar button{position:relative;transition:color .15s}
+.tabbar button.active::after{content:"";position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:26px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--shu))}
+.tabbar button:active .ticon{transform:scale(.85)}
+.game-tile{transition:transform .1s ease,box-shadow .15s}
+.game-tile:active{transform:scale(.96)}
+/* 花あわせ */
+#hanaBoard{box-shadow:inset 0 2px 8px rgba(30,42,56,.14),0 2px 0 rgba(255,255,255,.6),0 10px 24px -12px rgba(30,42,56,.3);
+  border:1px solid #D5CEBB}
+.htile{box-shadow:0 2px 4px rgba(30,42,56,.20),inset 0 1px 0 rgba(255,255,255,.55)}
+.htile[data-lv="8"] .hin,.htile[data-lv="9"] .hin{box-shadow:0 0 12px rgba(120,170,220,.55)}
+.htile[data-lv="10"] .hin,.htile[data-lv="11"] .hin{box-shadow:0 0 14px rgba(233,196,106,.75)}
+.htile[data-lv="12"] .hin{box-shadow:0 0 18px rgba(200,69,44,.65),0 0 34px rgba(233,196,106,.5);animation:hglow 1.6s ease-in-out infinite}
+@keyframes hglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
+.hfloat{position:absolute;left:50%;transform:translateX(-50%);top:-6px;font-weight:800;color:var(--shu);
+  font-size:20px;text-shadow:0 1px 0 #fff;pointer-events:none;animation:hfloat .8s ease-out forwards;z-index:5;font-family:'Shippori Mincho B1',serif}
+@keyframes hfloat{0%{opacity:0;transform:translate(-50%,6px) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-34px) scale(1.15)}}
+.petal{position:fixed;top:-30px;pointer-events:none;z-index:1;font-size:18px;opacity:.5;animation:pfall linear infinite}
+@keyframes pfall{0%{transform:translateY(-4vh) translateX(0) rotate(0deg)}
+  100%{transform:translateY(106vh) translateX(60px) rotate(320deg)}}
+body.ingame .petal{display:none}
+/* ラッシュ */
+#rtb{transition:background .2s}
+#rtb.warn{background:linear-gradient(90deg,#E9C46A,#D9822B)}
+#rtb.danger{background:linear-gradient(90deg,#D9534F,var(--shu));animation:rpulse .5s ease-in-out infinite}
+@keyframes rpulse{50%{filter:brightness(1.35)}}
+.rcombo.fire{font-size:17px;background:linear-gradient(90deg,var(--shu),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:rpulse .6s ease-in-out infinite}
+/* 番付 */
+.rank-1{background:linear-gradient(90deg,#FFF3C4,#FFE9A0)!important;box-shadow:inset 0 0 0 1px rgba(233,196,106,.9)}
+.rank-2{background:linear-gradient(90deg,#F3F3F3,#E7E7E7)}
+.rank-3{background:linear-gradient(90deg,#F6E7DC,#EED9C8)}
+.rec-row{border-radius:8px}
+@media (prefers-reduced-motion:reduce){.petal{display:none}.hin.pop,#rtb.danger,.rcombo.fire,.htile[data-lv="12"] .hin{animation:none}}
+
+#hanaBoard[data-n="5"] .he{font-size:24px}
+#hanaBoard[data-n="5"] .hn{font-size:8.5px}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="appbar">
+    <div class="hanko">冴</div>
+    <h1 style="flex:1">冴え手帖<small>SAE — 脳活道場</small></h1>
+    <button class="streak-chip" id="langBtn" style="border:1px solid var(--line);background:var(--white);cursor:pointer;font-family:inherit;color:var(--ai)"></button>
+    <div class="streak-chip" id="streakChip" style="margin-left:6px">🔥 0</div>
+  </header>
+  <main id="main"></main>
+  <nav class="tabbar">
+    <button data-tab="home" class="active"><span class="ticon">⛩️</span>道場</button>
+    <button data-tab="diag"><span class="ticon">🧠</span>診断</button>
+    <button data-tab="rec"><span class="ticon">📈</span>記録</button>
+    <button data-tab="tips"><span class="ticon">💡</span>知恵</button>
+  </nav>
+</div>
+
+<div id="gameOverlay">
+  <div class="g-head">
+    <div class="g-title" id="gTitle">ゲーム</div>
+    <button class="g-quit" id="muteBtn" style="margin-left:auto">🔊</button>
+    <button class="g-quit" id="quitBtn" style="margin-left:8px" onclick="quitGame()">やめる</button>
+  </div>
+  <div class="g-prog"><div id="gProg"></div></div>
+  <div id="gameArea"></div>
+</div>
+
+<script>
+/* ======================================================
+   冴え手帖 -SAE- 脳活道場
+   よしだ｜70歳の脳活道場（よしだ読者用の配布版）
+   単一ファイル / GitHub Pages 用 / localStorage保存
+====================================================== */
+/* ---------- utilities ---------- */
+const $=s=>document.querySelector(s);
+const todayStr=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+const jpDate=()=>new Date().toLocaleDateString({ja:"ja-JP",es:"es-ES",fr:"fr-FR",pt:"pt-BR"}[LANG]||"en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const dateSeed=()=>{const s=todayStr();let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h;};
+const dayKey=()=>todayStr().replace(/-/g,"");
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+let HDaily=false,HRNG=null;
+
+/* ---------- persistent state ---------- */
+const KEY="sae_v1";
+let DB;
+try{DB=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){DB={};}
+DB.history=DB.history||[];   // {d,g,s}
+DB.daily=DB.daily||{};       // {"2026-07-11":true}
+DB.diag=DB.diag||[];         // {d,age,comp,scores:{}}
+DB.best=DB.best||{};
+DB.rush=DB.rush||{best:0,plays:0};
+DB.hana=DB.hana||{best:0,bestLv:1,plays:0};
+DB.habits=DB.habits||{};
+DB.daily1=DB.daily1||null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
+
+function streakCount(){
+  let n=0;const d=new Date();
+  if(!DB.daily[todayStr()])d.setDate(d.getDate()-1); // 今日未実施なら昨日から数える
+  for(;;){
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    if(DB.daily[k]){n++;d.setDate(d.getDate()-1);}else break;
+  }
+  return n;
+}
+function markPractice(gid,score){
+  DB.history.push({d:todayStr(),g:gid,s:score});
+  if(DB.history.length>400)DB.history=DB.history.slice(-400);
+  DB.daily[todayStr()]=true;
+  if(!(gid in DB.best)||score>DB.best[gid])DB.best[gid]=score;
+  save();updateStreakChip();
+}
+function updateStreakChip(){$("#streakChip").textContent="🔥 "+streakCount()+P("日","d","d");}
+
+/* ---------- i18n ---------- */
+const LANGS=["ja","en","es","fr","pt"];
+let LANG=DB.lang||((navigator.language||"en").slice(0,2));
+if(!LANGS.includes(LANG))LANG="en";
+const XT={"Math Dash":{"fr":"Calcul Éclair","pt":"Cálculo Rápido"},"Speed":{"fr":"Vitesse","pt":"Rapidez"},"Quick mental math":{"fr":"Calcul mental rapide","pt":"Cálculo mental veloz"},"Number Recall":{"fr":"Mémoire des Chiffres","pt":"Memória Numérica"},"Memory":{"fr":"Mémoire","pt":"Memória"},"Memorize and type digits":{"fr":"Mémorisez et saisissez les chiffres","pt":"Memorize e digite os números"},"Trail Touch":{"fr":"Touche en Ordre","pt":"Toque em Ordem"},"Attention":{"fr":"Attention","pt":"Atenção"},"Tap numbers in order":{"fr":"Touchez les nombres dans l'ordre","pt":"Toque os números em ordem"},"Color Match":{"fr":"Couleur et Mot","pt":"Cor e Palavra"},"Focus":{"fr":"Concentration","pt":"Concentração"},"Name the ink color":{"fr":"Dites la couleur de l'encre","pt":"Diga a cor da tinta"},"RPS Reflex":{"fr":"Réflexe Chifoumi","pt":"Reflexo Jokenpô"},"Reflex":{"fr":"Réflexes","pt":"Reflexos"},"Win or lose on command":{"fr":"Gagnez ou perdez sur ordre","pt":"Ganhe ou perca sob comando"},"All":{"fr":"Tout","pt":"Todos"},"Exercise":{"fr":"Exercice","pt":"Exercício"},"Diet":{"fr":"Alimentation","pt":"Alimentação"},"Sleep":{"fr":"Sommeil","pt":"Sono"},"Social":{"fr":"Social","pt":"Social"},"Brain habits":{"fr":"Habitudes mentales","pt":"Hábitos mentais"},"A brisk 20–30 minute walk daily":{"fr":"20 à 30 minutes de marche rapide par jour","pt":"Caminhe rápido 20–30 min por dia"},"Aerobic exercise that gets you slightly out of breath is reported to support the hippocampus — the brain's memory center. Just walk a little faster on errands or strolls.":{"fr":"L'exercice aérobie qui essouffle légèrement soutient l'hippocampe, le centre de la mémoire du cerveau. Il suffit de marcher un peu plus vite lors de vos trajets.","pt":"O exercício aeróbico que deixa você levemente ofegante apoia o hipocampo, o centro da memória do cérebro. Basta caminhar um pouco mais rápido no dia a dia."},"Ref: Erickson et al. (2011) / WHO physical activity guidelines":{"fr":"Réf. : Erickson et al. (2011) / recommandations OMS","pt":"Ref.: Erickson et al. (2011) / diretrizes da OMS"},"Dual-task walking: count backwards as you go":{"fr":"Marchez en comptant à rebours (double tâche)","pt":"Caminhe contando de trás para frente (dupla tarefa)"},"Doing a mental task while moving trains attention switching and is widely used in dementia-prevention programs. Try naming animals or counting down by 3s on your walk.":{"fr":"Faire une tâche mentale en bougeant entraîne la flexibilité attentionnelle ; c'est utilisé en prévention de la démence. Essayez de nommer des animaux ou de compter de 3 en 3 en marchant.","pt":"Fazer uma tarefa mental enquanto se move treina a atenção e é usado na prevenção de demência. Tente nomear animais ou contar de 3 em 3 enquanto caminha."},"Ref: NCGG (Japan) Cognicise program":{"fr":"Réf. : programme Cognicise du NCGG (Japon)","pt":"Ref.: programa Cognicise do NCGG (Japão)"},"Break up sitting every 30 minutes":{"fr":"Levez-vous toutes les 30 minutes","pt":"Levante-se a cada 30 minutos"},"Long sitting slows blood flow to body and brain. Standing up and stretching once every 30–60 minutes helps. Use TV commercials as your cue.":{"fr":"Rester assis longtemps ralentit la circulation vers le corps et le cerveau. Levez-vous et étirez-vous toutes les 30 à 60 minutes. Les pubs télé sont un bon signal.","pt":"Ficar sentado por muito tempo reduz o fluxo sanguíneo. Levante-se e alongue-se a cada 30–60 minutos. Use os comerciais de TV como lembrete."},"Ref: WHO guidelines on physical activity and sedentary behaviour (2020)":{"fr":"Réf. : recommandations OMS sur la sédentarité (2020)","pt":"Ref.: diretrizes da OMS sobre sedentarismo (2020)"},"Fish, vegetables, beans and olive oil":{"fr":"Poisson, légumes, légumineuses et huile d'olive","pt":"Peixe, verduras, leguminosas e azeite"},"Mediterranean-style eating patterns are associated with better cognitive health in multiple studies. Adding oily fish and vegetables to your usual meals is enough.":{"fr":"L'alimentation de type méditerranéen est associée à une meilleure santé cognitive dans de nombreuses études. Ajoutez simplement poisson gras et légumes à vos repas.","pt":"A dieta de estilo mediterrâneo está associada a melhor saúde cognitiva em vários estudos. Basta adicionar peixe e verduras às refeições habituais."},"Ref: studies on Mediterranean and MIND diets":{"fr":"Réf. : études sur les régimes méditerranéen et MIND","pt":"Ref.: estudos sobre as dietas mediterrânea e MIND"},"Sip water regularly":{"fr":"Buvez de l'eau régulièrement","pt":"Beba água com frequência"},"Even mild dehydration lowers attention and mood. Have a glass of water first thing in the morning and in hot weather. Tea and soup count too.":{"fr":"Même une légère déshydratation réduit l'attention et l'humeur. Un verre d'eau au réveil et par temps chaud. Thé et soupe comptent aussi.","pt":"Mesmo uma desidratação leve reduz a atenção e o humor. Um copo de água ao acordar e nos dias quentes. Chá e sopa também contam."},"Ref: studies on mild dehydration and cognitive performance":{"fr":"Réf. : études sur la déshydratation légère et la cognition","pt":"Ref.: estudos sobre desidratação leve e cognição"},"Chew well":{"fr":"Mastiquez bien","pt":"Mastigue bem"},"Chewing also boosts blood flow to the brain. A few more chews per bite — and healthy teeth — are a foundation for enjoying food for life.":{"fr":"Mastiquer augmente aussi le flux sanguin vers le cerveau. Quelques mastications de plus par bouchée — et des dents saines — pour savourer toute la vie.","pt":"Mastigar também aumenta o fluxo sanguíneo para o cérebro. Mastigar um pouco mais — e cuidar dos dentes — é a base para aproveitar a comida por toda a vida."},"Ref: epidemiological studies on chewing and cognition":{"fr":"Réf. : études épidémiologiques mastication et cognition","pt":"Ref.: estudos epidemiológicos sobre mastigação e cognição"},"Protect about 7 hours of sleep":{"fr":"Protégez environ 7 heures de sommeil","pt":"Proteja cerca de 7 horas de sono"},"During sleep the brain consolidates memories and clears waste. Both too little and too much sleep are linked to cognitive decline. Start by fixing your bed and wake times.":{"fr":"Pendant le sommeil, le cerveau consolide les souvenirs et élimine les déchets. Trop peu comme trop de sommeil est lié au déclin cognitif. Commencez par des horaires réguliers.","pt":"Durante o sono, o cérebro consolida memórias e elimina resíduos. Dormir pouco ou demais está ligado ao declínio cognitivo. Comece fixando seus horários."},"Ref: large studies on sleep duration and cognition":{"fr":"Réf. : grandes études sommeil et cognition","pt":"Ref.: grandes estudos sobre sono e cognição"},"Dim the screens 1 hour before bed":{"fr":"Baissez les écrans 1 h avant le coucher","pt":"Diminua as telas 1 hora antes de dormir"},"Bright light suppresses melatonin, the hormone that invites sleep. Dim your screen or switch to a paper book to tell your brain it's night.":{"fr":"La lumière vive supprime la mélatonine, l'hormone du sommeil. Baissez l'écran ou passez au livre papier pour signaler la nuit à votre cerveau.","pt":"A luz forte suprime a melatonina, o hormônio do sono. Diminua a tela ou troque por um livro de papel para avisar o cérebro que é noite."},"Ref: research on light exposure and sleep quality":{"fr":"Réf. : recherche lumière et qualité du sommeil","pt":"Ref.: pesquisas sobre luz e qualidade do sono"},"Keep naps under 20 minutes":{"fr":"Siestes de moins de 20 minutes","pt":"Sonecas de até 20 minutos"},"A short nap restores afternoon focus, but naps over 30 minutes or in the evening make night sleep shallow. '20 minutes, sitting up' is the rule.":{"fr":"Une courte sieste restaure la concentration, mais au-delà de 30 minutes ou en soirée, elle allège le sommeil nocturne. « 20 minutes, assis » est la règle.","pt":"Uma soneca curta restaura o foco, mas mais de 30 minutos ou à noite deixa o sono noturno leve. «20 minutos, sentado» é a regra."},"Ref: research on brief naps and alertness":{"fr":"Réf. : recherche siestes courtes et vigilance","pt":"Ref.: pesquisas sobre sonecas curtas e alerta"},"Exchange words with someone once a day":{"fr":"Échangez avec quelqu'un chaque jour","pt":"Converse com alguém todos os dias"},"Conversation is advanced brain training — listening, thinking and speaking at once. More social connection is linked to lower risk of decline. A call or a greeting counts.":{"fr":"Converser est un entraînement cérébral avancé : écouter, penser et parler à la fois. Plus de lien social est associé à moins de déclin. Un appel ou un bonjour compte.","pt":"Conversar é um treino cerebral avançado: ouvir, pensar e falar ao mesmo tempo. Mais conexão social está ligada a menor risco. Uma ligação ou um cumprimento contam."},"Ref: epidemiology of social isolation and dementia risk":{"fr":"Réf. : épidémiologie de l'isolement social et démence","pt":"Ref.: epidemiologia do isolamento social e demência"},"Teach it to someone":{"fr":"Enseignez-le à quelqu'un","pt":"Ensine a alguém"},"Explaining what you've learned makes memories stick. Tell your family one thing from today's news or a book you're reading.":{"fr":"Expliquer ce qu'on a appris ancre la mémoire. Racontez à vos proches une nouvelle du jour ou un passage de votre lecture.","pt":"Explicar o que aprendeu fixa a memória. Conte à família uma notícia de hoje ou algo do livro que está lendo."},"Ref: learning science on retrieval practice":{"fr":"Réf. : sciences de l'apprentissage, rappel actif","pt":"Ref.: ciência da aprendizagem sobre evocação"},"Choose 'slightly hard'":{"fr":"Choisissez le « un peu difficile »","pt":"Escolha o «um pouco difícil»"},"Brain training works best when it's neither too easy nor too hard — around a 70–80% success rate is the growth zone. SAE's games are designed the same way.":{"fr":"L'entraînement cérébral marche mieux ni trop facile ni trop dur : 70–80 % de réussite, c'est la zone de progression. Les jeux SAE sont conçus ainsi.","pt":"O treino funciona melhor quando não é nem fácil nem difícil demais: acertar 70–80% é a zona de crescimento. Os jogos do SAE são assim."},"Ref: research on adaptive difficulty in cognitive training":{"fr":"Réf. : recherche sur la difficulté adaptative","pt":"Ref.: pesquisas sobre dificuldade adaptativa"},"Try your non-dominant hand":{"fr":"Essayez votre main non dominante","pt":"Use a mão não dominante"},"Brushing your teeth or using the mouse with your other hand activates rarely used motor areas. Learning new movements is a healthy stimulus.":{"fr":"Se brosser les dents ou utiliser la souris de l'autre main active des zones motrices peu utilisées. Apprendre de nouveaux gestes stimule le cerveau.","pt":"Escovar os dentes ou usar o celular com a outra mão ativa áreas motoras pouco usadas. Aprender novos movimentos estimula o cérebro."},"Ref: research on motor learning and plasticity":{"fr":"Réf. : apprentissage moteur et plasticité","pt":"Ref.: aprendizagem motora e plasticidade"},"A new route, a new recipe, a new song":{"fr":"Un nouveau chemin, une nouvelle recette, une nouvelle chanson","pt":"Um caminho novo, uma receita nova, uma música nova"},"'Firsts' give the brain its strongest stimulation. Shift your walking route by one street, cook something you've never made. One small novelty every week.":{"fr":"Les « premières fois » stimulent le plus le cerveau. Changez une rue de votre promenade, cuisinez un plat inédit. Une petite nouveauté par semaine.","pt":"As «primeiras vezes» dão ao cérebro seu estímulo mais forte. Mude uma rua do passeio, cozinhe algo novo. Uma pequena novidade por semana."},"Ref: research on novelty and cognitive reserve":{"fr":"Réf. : nouveauté et réserve cognitive","pt":"Ref.: novidade e reserva cognitiva"},"Three minutes a day beats one big push":{"fr":"Trois minutes par jour valent mieux qu'un grand effort","pt":"Três minutos por dia vencem um grande esforço"},"In Finland's FINGER study, the group that combined exercise, diet, brain training and health management showed improved cognition. Small daily habits win.":{"fr":"Dans l'étude finlandaise FINGER, le groupe combinant exercice, alimentation, entraînement cérébral et suivi de santé a amélioré sa cognition. Les petites habitudes gagnent.","pt":"No estudo finlandês FINGER, o grupo que combinou exercício, dieta, treino cerebral e cuidados de saúde melhorou a cognição. Os pequenos hábitos diários vencem."},"Ref: Ngandu et al. (2015), the FINGER study (Lancet)":{"fr":"Réf. : Ngandu et al. (2015), étude FINGER (Lancet)","pt":"Ref.: Ngandu et al. (2015), estudo FINGER (Lancet)"},"Just swipe. Merge matching flowers into the next bloom. Chase the legendary Grand Bloom.":{"fr":"Glissez, tout simplement. Fusionnez les fleurs identiques pour éclore la suivante. Visez la légendaire Grande Fleur.","pt":"É só deslizar. Una flores iguais para desabrochar a próxima. Busque a lendária Grande Flor."},"Best":{"fr":"Record","pt":"Recorde"},"Best ":{"fr":"Record ","pt":"Recorde "},"Best bloom":{"fr":"Meilleure fleur","pt":"Melhor flor"},"Game saved":{"fr":"Partie sauvegardée","pt":"Jogo salvo"},"Continue":{"fr":"Continuer","pt":"Continuar"},"Play":{"fr":"Jouer","pt":"Jogar"}," · Rank ":{"fr":" · Grade ","pt":" · Rank "},"Test your reflexes. 3 misses and it ends":{"fr":"Testez vos réflexes. 3 erreurs et c'est fini","pt":"Teste seus reflexos. 3 erros e acabou"},"Go":{"fr":"Défi","pt":"Ir"},"Daily Training":{"fr":"Entraînement du Jour","pt":"Treino Diário"},"Done today. 🔥Streak ":{"fr":"Fait aujourd'hui. 🔥Série ","pt":"Feito hoje. 🔥Sequência "},"3 daily games · about 3 min":{"fr":"3 jeux du jour · environ 3 min","pt":"3 jogos do dia · cerca de 3 min"},"Start":{"fr":"Commencer","pt":"Começar"},"Practice by game":{"fr":"Pratique par jeu","pt":"Prática por jogo"},"Brain Age Check":{"fr":"Bilan d'Âge Cérébral","pt":"Teste de Idade Cerebral"},"Play all five games in a row to measure your brain age and five abilities (about 5 min).":{"fr":"Jouez les cinq jeux d'affilée pour mesurer votre âge cérébral et cinq capacités (environ 5 min).","pt":"Jogue os cinco jogos em sequência para medir sua idade cerebral e cinco capacidades (cerca de 5 min)."},"Go to Brain Age Check":{"fr":"Aller au bilan","pt":"Ir para o teste"},"Daily Wisdom":{"fr":"Sagesse du Jour","pt":"Sabedoria do Dia"},"Featured":{"fr":"À la une","pt":"Destaque"},"Note: this app offers general health information, not medical care or diagnosis. Please consult a doctor about any symptoms.":{"fr":"Note : cette appli offre des informations générales de santé, pas de soins ni de diagnostic. Consultez un médecin en cas de symptômes.","pt":"Nota: este app oferece informações gerais de saúde, não atendimento médico nem diagnóstico. Consulte um médico em caso de sintomas."},"Streak":{"fr":"Série","pt":"Sequência"},"Brain age":{"fr":"Âge cérébral","pt":"Idade cerebral"},"World Rankings":{"fr":"Classement Mondial","pt":"Ranking Mundial"},"Compete with players worldwide under your nickname.":{"fr":"Affrontez le monde entier sous votre pseudo.","pt":"Compita com jogadores do mundo todo com seu apelido."},"Hana-Awase Rankings":{"fr":"Classement Hana-Awase","pt":"Ranking Hana-Awase"},"SAE Rush Rankings":{"fr":"Classement SAE Rush","pt":"Ranking SAE Rush"},"Average score, last 14 days":{"fr":"Score moyen, 14 derniers jours","pt":"Média, últimos 14 dias"},"Brain age over time":{"fr":"Âge cérébral dans le temps","pt":"Idade cerebral ao longo do tempo"},"Personal bests":{"fr":"Records personnels","pt":"Recordes pessoais"},"No records yet.<br>Head to the Dojo and start training.":{"fr":"Pas encore de données.<br>Passez au Dojo et entraînez-vous.","pt":"Ainda sem registros.<br>Vá ao Dojo e comece a treinar."},"Play five games in a row and we estimate your brain age from five abilities: <b>speed, memory, attention, focus and reflex</b>. About 5 minutes.":{"fr":"Jouez cinq jeux d'affilée : nous estimons votre âge cérébral selon cinq capacités : <b>vitesse, mémoire, attention, concentration et réflexes</b>. Environ 5 minutes.","pt":"Jogue cinco jogos em sequência e estimamos sua idade cerebral por cinco capacidades: <b>rapidez, memória, atenção, concentração e reflexos</b>. Cerca de 5 minutos."},"A fun, game-based indicator. Not a medical test or diagnosis.":{"fr":"Un indicateur ludique — ni examen ni diagnostic médical.","pt":"Um indicador lúdico — não é exame nem diagnóstico médico."},"Start the check":{"fr":"Lancer le bilan","pt":"Começar o teste"},"No check results yet.":{"fr":"Pas encore de résultat.","pt":"Ainda sem resultados."},"Last check":{"fr":"Dernier bilan","pt":"Último teste"},"BRAIN AGE":{"fr":"ÂGE CÉRÉBRAL","pt":"IDADE CEREBRAL"},"yrs · overall ":{"fr":"ans · total ","pt":"anos · total "},"Focus area":{"fr":"Point à travailler","pt":"Ponto a melhorar"},"Math Dash + brisk walking":{"fr":"Calcul Éclair + marche rapide","pt":"Cálculo Rápido + caminhada rápida"},"Processing speed responds fastest to daily repetition. One Math Dash a day, plus walking a little quicker, raises your mental tempo too.":{"fr":"La vitesse de traitement progresse le plus vite par la répétition. Un Calcul Éclair par jour, et marchez un peu plus vite : le tempo mental suit.","pt":"A rapidez melhora mais com a repetição diária. Um Cálculo Rápido por dia, e caminhar um pouco mais rápido, também acelera o tempo mental."},"Number Recall + say it out loud":{"fr":"Mémoire des Chiffres + à voix haute","pt":"Memória Numérica + fale em voz alta"},"Using several senses — saying digits aloud or tracing them — makes memories stronger. Play daily and memorize your shopping list too.":{"fr":"Utiliser plusieurs sens — dire les chiffres à voix haute ou les tracer — renforce la mémoire. Jouez chaque jour et mémorisez votre liste de courses.","pt":"Usar vários sentidos — dizer os números em voz alta ou traçá-los — fortalece a memória. Jogue todo dia e memorize sua lista de compras."},"Trail Touch + multitask cooking":{"fr":"Touche en Ordre + cuisine multitâche","pt":"Toque em Ordem + cozinhar várias coisas"},"Attention switching is trained by visual-search games like Trail Touch, and by real-world juggling like cooking several dishes at once.":{"fr":"La flexibilité attentionnelle s'entraîne avec des jeux de recherche visuelle et en cuisinant plusieurs plats à la fois.","pt":"A atenção é treinada com jogos de busca visual e com tarefas reais, como cozinhar vários pratos ao mesmo tempo."},"Color Match trains your brakes":{"fr":"Couleur et Mot entraîne vos freins","pt":"Cor e Palavra treina seus freios"},"Suppressing the urge to read the word and answering the color — that inhibition is your frontal lobe's brake pedal. Keep playing, and breathe before acting.":{"fr":"Réprimer l'envie de lire le mot pour répondre à la couleur : cette inhibition est la pédale de frein du lobe frontal. Continuez, et respirez avant d'agir.","pt":"Reprimir o impulso de ler a palavra e responder a cor: essa inibição é o freio do lobo frontal. Continue jogando e respire antes de agir."},"RPS Reflex + lively conversation":{"fr":"Réflexe Chifoumi + conversation animée","pt":"Reflexo Jokenpô + conversa animada"},"Fast judgment is sharpened by reaction games — and by quick back-and-forth conversation. Chatting with family is real training.":{"fr":"Le jugement rapide s'aiguise avec les jeux de réaction et les conversations vives. Bavarder en famille, c'est déjà de l'entraînement.","pt":"O julgamento rápido se afia com jogos de reação e conversas dinâmicas. Bater papo com a família já é treino."},"Novice":{"fr":"Novice","pt":"Novato"},"White Belt":{"fr":"Ceinture Blanche","pt":"Faixa Branca"},"Brown Belt":{"fr":"Ceinture Marron","pt":"Faixa Marrom"},"Black Belt":{"fr":"Ceinture Noire","pt":"Faixa Preta"},"Instructor":{"fr":"Instructeur","pt":"Instrutor"},"Master":{"fr":"Maître","pt":"Mestre"},"Expert":{"fr":"Expert","pt":"Perito"},"Grandmaster":{"fr":"Grand Maître","pt":"Grão-Mestre"},"Peak SAE":{"fr":"Sommet SAE","pt":"Auge SAE"},"RED":{"fr":"ROUGE","pt":"VERMELHO"},"BLUE":{"fr":"BLEU","pt":"AZUL"},"GREEN":{"fr":"VERT","pt":"VERDE"},"YELLOW":{"fr":"JAUNE","pt":"AMARELO"},"Correct?":{"fr":"Correct ?","pt":"Correto?"},"Smaller!":{"fr":"Le plus petit !","pt":"Menor!"},"Bigger!":{"fr":"Le plus grand !","pt":"Maior!"},"Word = color?":{"fr":"Mot = couleur ?","pt":"Palavra = cor?"},"Ink color?":{"fr":"Couleur de l'encre ?","pt":"Cor da tinta?"},"WIN!":{"fr":"GAGNEZ !","pt":"VENÇA!"},"LOSE!":{"fr":"PERDEZ !","pt":"PERCA!"},"OPPOSITE way!":{"fr":"Sens INVERSE !","pt":"Direção OPOSTA!"},"SAME way!":{"fr":"MÊME sens !","pt":"MESMA direção!"},"Find the odd one!":{"fr":"Trouvez l'intrus !","pt":"Ache o diferente!"},"What was the number?":{"fr":"Quel était le nombre ?","pt":"Qual era o número?"},"Memorize!":{"fr":"Mémorisez !","pt":"Memorize!"},"Time to stop!":{"fr":"C'est fini !","pt":"Acabou!"},"🎉 New personal best!":{"fr":"🎉 Nouveau record !","pt":"🎉 Novo recorde!"},"Max combo":{"fr":"Combo max","pt":"Combo máx."},"Questions":{"fr":"Questions","pt":"Perguntas"},"Level reached":{"fr":"Niveau atteint","pt":"Nível alcançado"},"Next rank":{"fr":"Grade suivant","pt":"Próximo rank"},"Try again":{"fr":"Réessayer","pt":"Tentar de novo"},"Close":{"fr":"Fermer","pt":"Fechar"},"Sprout":{"fr":"Pousse","pt":"Broto"},"Seedling":{"fr":"Plantule","pt":"Muda"},"Clover":{"fr":"Trèfle","pt":"Trevo"},"Tulip":{"fr":"Tulipe","pt":"Tulipa"},"Peony":{"fr":"Pivoine","pt":"Peônia"},"Sunflower":{"fr":"Tournesol","pt":"Girassol"},"Maple":{"fr":"Érable","pt":"Bordo"},"Snowflake":{"fr":"Flocon","pt":"Floco de Neve"},"Full Moon":{"fr":"Pleine Lune","pt":"Lua Cheia"},"Dawn Light":{"fr":"Aurore","pt":"Aurora"},"Grand Bloom":{"fr":"Grande Fleur","pt":"Grande Flor"},"How to play":{"fr":"Comment jouer","pt":"Como jogar"},"1. Swipe and <u>all</u> flowers slide that way":{"fr":"1. Glissez : <u>toutes</u> les fleurs coulissent","pt":"1. Deslize e <u>todas</u> as flores se movem"},"Swipe left and…":{"fr":"Glissez à gauche et…","pt":"Deslize para a esquerda e…"},"Matching flowers merge!":{"fr":"Les fleurs identiques fusionnent !","pt":"Flores iguais se unem!"},"2. A different flower in between blocks the merge":{"fr":"2. Une fleur différente entre elles bloque la fusion","pt":"2. Uma flor diferente no meio bloqueia a união"},"Like 🌱🌸🌱 — the sakura is a wall. Line up matching flowers in the <b>same row or column</b>, then swipe.":{"fr":"Comme 🌱🌸🌱 : le sakura fait mur. Alignez les fleurs identiques sur la <b>même ligne ou colonne</b>, puis glissez.","pt":"Como 🌱🌸🌱: a sakura é um muro. Alinhe flores iguais na <b>mesma linha ou coluna</b> e deslize."},"3. The 12 stages of bloom":{"fr":"3. Les 12 étapes de floraison","pt":"3. Os 12 estágios da flor"},"Tip: keep your biggest flower in a corner. <b>Never swipe up</b> (only down, left, right) and you will last much longer.":{"fr":"Astuce : gardez votre plus grande fleur dans un coin. <b>Ne glissez jamais vers le haut</b> (bas, gauche, droite seulement) et vous durerez bien plus longtemps.","pt":"Dica: mantenha sua maior flor em um canto. <b>Nunca deslize para cima</b> (só para baixo, esquerda e direita) e você durará muito mais."},"Got it, play!":{"fr":"Compris, on joue !","pt":"Entendi, vamos jogar!"},"Score":{"fr":"Score","pt":"Pontos"},"Undo":{"fr":"Annuler","pt":"Desfazer"},"New game":{"fr":"Nouvelle partie","pt":"Reiniciar"},"Swipe to move. Matching flowers merge into the next bloom.":{"fr":"Glissez pour déplacer. Les fleurs identiques fusionnent en la suivante.","pt":"Deslize para mover. Flores iguais se unem na próxima."}," blooms!":{"fr":" éclot !","pt":" floresce!"},"No more moves!":{"fr":"Plus de coups possibles !","pt":"Sem mais movimentos!"},"Bloom again":{"fr":"Refaire fleurir","pt":"Florescer de novo"},"Enter your nickname for the rankings (max 8 chars)":{"fr":"Entrez votre pseudo pour le classement (8 caractères max)","pt":"Digite seu apelido para o ranking (máx. 8)"},"Rankings":{"fr":"Classement","pt":"Ranking"},"Loading rankings…":{"fr":"Chargement du classement…","pt":"Carregando o ranking…"},"Could not load the rankings.<br>Please check your connection and try again.":{"fr":"Impossible de charger le classement.<br>Vérifiez votre connexion et réessayez.","pt":"Não foi possível carregar o ranking.<br>Verifique sua conexão e tente novamente."}," (you)":{"fr":" (vous)","pt":" (você)"},"No records yet. Be the first!":{"fr":"Pas encore de scores. Soyez le premier !","pt":"Ainda sem registros. Seja o primeiro!"},"Players: ":{"fr":"Joueurs : ","pt":"Jogadores: "}," · nickname ":{"fr":" · pseudo ","pt":" · apelido "},"The #1 at the end of December becomes that year&#39;s <b>Yokozuna</b> — enshrined forever.":{"fr":"Le n°1 à la fin décembre devient le <b>Yokozuna</b> de l'année — au panthéon pour toujours.","pt":"O nº1 no fim de dezembro se torna o <b>Yokozuna</b> do ano — imortalizado para sempre."},"Hall of Yokozuna":{"fr":"Panthéon des Yokozuna","pt":"Salão dos Yokozuna"},"Change nickname":{"fr":"Changer de pseudo","pt":"Mudar apelido"},"Join the rankings":{"fr":"Rejoindre le classement","pt":"Entrar no ranking"},"Opening the hall…":{"fr":"Ouverture du panthéon…","pt":"Abrindo o salão…"},"Could not load the hall.":{"fr":"Impossible de charger le panthéon.","pt":"Não foi possível carregar o salão."},"Back to rankings":{"fr":"Retour au classement","pt":"Voltar ao ranking"},"The first Yokozuna throne is still vacant.":{"fr":"Le trône du premier Yokozuna est encore vacant.","pt":"O trono do primeiro Yokozuna ainda está vago."},"This year, ":{"fr":"Cette année, ","pt":"Este ano, "}," — its champion will be the first name in history.":{"fr":" — son champion sera le premier nom de l'histoire.","pt":" — seu campeão será o primeiro nome da história."},"Current interim champion":{"fr":"Champion provisoire actuel","pt":"Campeão interino atual"},"SAE Techo — Brain Dojo | Eichi no Hi":{"fr":"SAE Techo — Dojo Cérébral | Eichi no Hi","pt":"SAE Techo — Dojo Cerebral | Eichi no Hi"},"BRAIN DOJO":{"fr":"DOJO CÉRÉBRAL","pt":"DOJO CEREBRAL"},"Dojo":{"fr":"Dojo","pt":"Dojo"},"Check":{"fr":"Bilan","pt":"Teste"},"Stats":{"fr":"Stats","pt":"Dados"},"Tips":{"fr":"Conseils","pt":"Dicas"},"Quit":{"fr":"Quitter","pt":"Sair"},"Game":{"fr":"Jeu","pt":"Jogo"},"Pick the answer":{"fr":"Choisissez la réponse","pt":"Escolha a resposta"},"As fast and accurate as you can.":{"fr":"Le plus vite et le plus juste possible.","pt":"O mais rápido e preciso possível."}," digits — memorize them!":{"fr":" chiffres — mémorisez-les !","pt":" dígitos — memorize!"},"Enter the digits you memorized":{"fr":"Saisissez les chiffres mémorisés","pt":"Digite os números memorizados"},"So close! Try again:":{"fr":"Presque ! Réessayez :","pt":"Quase! Tente de novo:"}," digits":{"fr":" chiffres","pt":" dígitos"},"Memorize the digits, then type them in.":{"fr":"Mémorisez les chiffres puis saisissez-les.","pt":"Memorize os números e digite-os."},"Alternate numbers and letters: 1→A→2→B…":{"fr":"Alternez chiffres et lettres : 1→A→2→B…","pt":"Alterne números e letras: 1→A→2→B…"},"Tap 1 to 12 in order!":{"fr":"Touchez de 1 à 12 dans l'ordre !","pt":"Toque de 1 a 12 em ordem!"},"Next":{"fr":"Suivant","pt":"Próx."},"Choose the ink COLOR!":{"fr":"Choisissez la COULEUR de l'encre !","pt":"Escolha a COR da tinta!"},"Do not read the word. Answer the COLOR of the ink.":{"fr":"Ne lisez pas le mot. Répondez à la COULEUR de l'encre.","pt":"Não leia a palavra. Responda a COR da tinta."},"If it says WIN, throw the winning hand. If LOSE, the losing one!":{"fr":"Si c'est GAGNEZ, jouez la main gagnante. Si c'est PERDEZ, la perdante !","pt":"Se disser VENÇA, jogue a mão vencedora. Se PERCA, a perdedora!"},"Razor sharp":{"fr":"Affûté","pt":"Afiado"},"In good form":{"fr":"En forme","pt":"Em forma"},"Not bad":{"fr":"Pas mal","pt":"Nada mal"},"Room to grow":{"fr":"Belle marge","pt":"Muito a crescer"},"Play again":{"fr":"Rejouer","pt":"Jogar de novo"},"Training ":{"fr":"Entraînement ","pt":"Treino "},"Trains":{"fr":"Entraîne","pt":"Treina"},"Results":{"fr":"Résultats","pt":"Resultados"},"Nice work today!":{"fr":"Beau travail aujourd'hui !","pt":"Bom trabalho hoje!"},"Tip of the day":{"fr":"Conseil du jour","pt":"Dica do dia"},"Streak: ":{"fr":"Série : ","pt":"Sequência: "},"Back to Dojo":{"fr":"Retour au Dojo","pt":"Voltar ao Dojo"},"Brain Age Check ":{"fr":"Bilan d'Âge Cérébral ","pt":"Teste de Idade "},"Test":{"fr":"Mesure","pt":"Prova"},"Measures":{"fr":"Mesure","pt":"Mede"}," (check ver.: numbers⇄letters)":{"fr":" (version bilan : chiffres⇄lettres)","pt":" (versão teste: números⇄letras)"},"Start test":{"fr":"Lancer la mesure","pt":"Começar a prova"}};
+Object.assign(XT,{
+"Grand Garden":{"fr":"Grand Jardin","pt":"Grande Jardim"},
+"Enter the Grand Garden":{"fr":"Entrer dans le Grand Jardin","pt":"Entrar no Grande Jardim"},
+"A serene 5×5 board for slow, grand blooms — a member perk from Eichi no Hi.":{"fr":"Un plateau 5×5 serein pour de grandes floraisons — un avantage membre d'Eichi no Hi.","pt":"Um sereno tabuleiro 5×5 para grandes flores — benefício para membros do Eichi no Hi."},
+"Enter this month&#39;s passcode (TOMO-XXXX).":{"fr":"Entrez le mot de passe du mois (TOMO-XXXX).","pt":"Digite a senha do mês (TOMO-XXXX)."},
+"Wrong passcode. Please check this month&#39;s TOMO-XXXX.":{"fr":"Mot de passe incorrect. Vérifiez le TOMO-XXXX du mois.","pt":"Senha incorreta. Verifique o TOMO-XXXX deste mês."},
+"Unlock":{"fr":"Déverrouiller","pt":"Desbloquear"},
+"Get the passcode (note members)":{"fr":"Obtenir le mot de passe (membres note)","pt":"Obter a senha (membros do note)"},
+"The passcode changes monthly, shared with Eichi no Hi note members.":{"fr":"Le mot de passe change chaque mois, partagé avec les membres note d'Eichi no Hi.","pt":"A senha muda todo mês, compartilhada com os membros do note do Eichi no Hi."},
+"World rankings cover the standard 4×4 board only.":{"fr":"Le classement mondial ne concerne que le plateau standard 4×4.","pt":"O ranking mundial cobre apenas o tabuleiro padrão 4×4."},
+"A grand 5×5 board. Unlock with the monthly passcode":{"fr":"Un grand plateau 5×5. Déverrouillez avec le mot de passe mensuel","pt":"Um grande tabuleiro 5×5. Desbloqueie com a senha mensal"},
+"Unlocked — a serene 5×5 retreat":{"fr":"Déverrouillé — une retraite sereine en 5×5","pt":"Desbloqueado — um sereno refúgio 5×5"}
+});
+Object.assign(XT,{
+"Daily Duel":{"fr":"Duel du Jour","pt":"Duelo do Dia"},
+"One shared board. One serious attempt a day.":{"fr":"Un plateau mondial. Une tentative sérieuse par jour.","pt":"Um tabuleiro mundial. Uma tentativa séria por dia."},
+"You have played today":{"fr":"Vous avez déjà joué aujourd&#39;hui","pt":"Você já jogou hoje"},
+"See you tomorrow — a brand-new board.":{"fr":"À demain — un plateau tout neuf.","pt":"Até amanhã — um tabuleiro novinho."},
+"Today&#39;s rankings":{"fr":"Classement du jour","pt":"Ranking de hoje"},
+"Daily Duel Rankings":{"fr":"Classement du Duel du Jour","pt":"Ranking do Duelo do Dia"},
+"A new board every midnight. Same board, same luck, for everyone.":{"fr":"Un nouveau plateau chaque minuit. Même plateau, même chance, pour tous.","pt":"Um tabuleiro novo à meia-noite. Mesmo tabuleiro, mesma sorte, para todos."},
+"Result":{"fr":"Résultat","pt":"Ver"},
+" pts — done for today":{"fr":" pts — terminé pour aujourd&#39;hui","pt":" pts — feito por hoje"},
+"Daily Habit Check":{"fr":"Check des Habitudes","pt":"Check de Hábitos"},
+"What works is the combo: exercise × diet × sleep × social. Tap what you did today.":{"fr":"Ce qui marche, c&#39;est le combo : exercice × alimentation × sommeil × social. Cochez ce que vous avez fait.","pt":"O que funciona é a combinação: exercício × dieta × sono × social. Toque no que você fez hoje."},
+"Brisk walk 20 min":{"fr":"Marche rapide 20 min","pt":"Caminhada rápida 20 min"},
+"Fish or veggies":{"fr":"Poisson ou légumes","pt":"Peixe ou verduras"},
+"Sip water often":{"fr":"Boire de l&#39;eau souvent","pt":"Beber água"},
+"Slept ~7 hours":{"fr":"Dormi ~7 heures","pt":"Dormi ~7 horas"},
+"Talked with someone":{"fr":"Parlé à quelqu&#39;un","pt":"Conversei com alguém"},
+"One new thing":{"fr":"Une nouveauté","pt":"Algo novo"},
+"Last 7 days":{"fr":"7 derniers jours","pt":"Últimos 7 dias"},
+"Save bloom certificate":{"fr":"Enregistrer le certificat","pt":"Salvar certificado"},
+"CERTIFICATE OF BLOOM":{"fr":"CERTIFICAT DE FLORAISON","pt":"CERTIFICADO DE FLORAÇÃO"},
+"This certifies the bloom above was achieved":{"fr":"Certifie que la floraison ci-dessus a été accomplie","pt":"Certifica que a flor acima foi alcançada"},
+"A Nameless Gardener":{"fr":"Jardinier Anonyme","pt":"Jardineiro Anônimo"}
+});
+const P=(ja,en,es)=>{if(LANG==="ja")return ja;if(LANG==="es")return es;if(LANG==="en")return en;const x=XT[en];return (x&&x[LANG])||en;};
+function setLang(l){DB.lang=l;save();location.reload();}
+function cycleLang(){setLang(LANGS[(LANGS.indexOf(LANG)+1)%LANGS.length]);}
+
+/* ====== 会員（大花園）ゲート ====== */
+const MEMBER={
+ CODES:{
+  "2026-06":"9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+  "2026-07":"67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+  "2026-08":"fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+  "2026-09":"4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+  "2026-10":"266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+  "2026-11":"eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+  "2026-12":"7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+  "2027-01":"a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+  "2027-02":"00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+  "2027-03":"63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+  "2027-04":"d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+  "2027-05":"492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+ },
+ MASTER:"LUMINARE-2026",
+ NOTE:"#",
+ ITCH:"#",
+ // 海外買い切りの永久キー。月替わりコード同様SHA-256ハッシュで格納（平文キーはitchの購入後ページにのみ記載）
+ WORLD_HASH:"54522692cca7a13edd2399853c46d80068c1b92332c7d9709f5a1d21a635a07f"
+};
+const curYM=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
+const isMember=()=>DB.memberMaster===true||DB.memberYM===curYM();
+const normPass=v=>String(v||"").normalize("NFKC").replace(/[\u2010-\u2015\u2212\u30FC\uFF0D\uFF70]/g,"-").replace(/\s+/g,"").toUpperCase();
+async function sha256hex(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");}
+async function tryUnlock(raw){
+  const v=normPass(raw);if(!v)return false;
+  if(v===MEMBER.MASTER.toUpperCase()){DB.memberMaster=true;save();return true;}
+  try{const h=await sha256hex(v);
+    if(h===MEMBER.WORLD_HASH){DB.memberMaster=true;save();return true;}
+    if(MEMBER.CODES[curYM()]===h){DB.memberYM=curYM();save();return true;}}catch(e){}
+  return false;
+}
+
+/* ====== BGM：オリジナル曲「百億年前のパズル」＋琴フォールバック ====== */
+let BGMAudio=null,BGMFade=null;
+function bgmStart(){
+  if(muted)return;
+  if(BGMAudio){try{BGMAudio.play().catch(()=>{});bgmFadeTo(0.30);}catch(e){}return;}
+  try{
+    const a=new Audio(LANG==="ja"?"sae-bgm.mp3":"sae-bgm-en.mp3");
+    a.loop=true;a.preload="auto";a.volume=0;
+    a.addEventListener("error",()=>{BGMAudio=null;bgmKotoStart();},{once:true});
+    const p=a.play();
+    if(p&&p.catch)p.catch(()=>{bgmArmRetry();});
+    BGMAudio=a;
+    bgmFadeTo(0.30);
+  }catch(e){bgmKotoStart();}
+}
+function bgmArmRetry(){
+  const kick=()=>{
+    document.removeEventListener("pointerdown",kick);
+    document.removeEventListener("touchstart",kick);
+    if(BGMAudio&&BGMAudio.paused&&!muted){BGMAudio.play().catch(()=>{});bgmFadeTo(0.30);}
+  };
+  document.addEventListener("pointerdown",kick,{once:true});
+  document.addEventListener("touchstart",kick,{once:true});
+}
+function bgmFadeTo(target){
+  if(!BGMAudio)return;
+  if(BGMFade)clearInterval(BGMFade);
+  BGMFade=setInterval(()=>{
+    if(!BGMAudio){clearInterval(BGMFade);return;}
+    const v=BGMAudio.volume,step=0.03;
+    if(Math.abs(v-target)<=step){BGMAudio.volume=target;clearInterval(BGMFade);if(target===0){BGMAudio.pause();}}
+    else BGMAudio.volume=v+(target>v?step:-step);
+  },70);
+}
+let BGT=null,BGGain=null;
+function bgmKotoStart(){
+  if(muted||BGT)return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==="suspended")AC.resume();
+    BGGain=AC.createGain();BGGain.gain.value=0.09;BGGain.connect(AC.destination);
+    const HIRA=[293.66,311.13,392.00,440.00,466.16,587.33,622.25];
+    const pluck=()=>{
+      if(muted||!BGGain){bgmStop();return;}
+      const t=AC.currentTime,f=HIRA[Math.floor(Math.random()*HIRA.length)];
+      const mk=(freq,at,vol,dur)=>{
+        const o=AC.createOscillator(),g=AC.createGain(),fl=AC.createBiquadFilter();
+        o.type="triangle";o.frequency.value=freq;
+        fl.type="lowpass";fl.frequency.value=1600;
+        g.gain.setValueAtTime(0.0001,t+at);
+        g.gain.exponentialRampToValueAtTime(vol,t+at+0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001,t+at+dur);
+        o.connect(fl);fl.connect(g);g.connect(BGGain);
+        o.start(t+at);o.stop(t+at+dur+0.1);
+      };
+      mk(f,0,0.5,2.4);
+      if(Math.random()<0.35)mk(f*4/3,0.5,0.3,2.2);
+      if(Math.random()<0.15)mk(f/2,0.1,0.25,3.2);
+      BGT=setTimeout(pluck,1700+Math.random()*2300);
+    };
+    pluck();
+  }catch(e){}
+}
+function bgmStop(){
+  if(BGMAudio)bgmFadeTo(0);
+  if(BGT){clearTimeout(BGT);BGT=null;}
+  if(BGGain){try{const g=BGGain;g.gain.linearRampToValueAtTime(0.0001,AC.currentTime+0.4);setTimeout(()=>{try{g.disconnect();}catch(e){}},500);}catch(e){}BGGain=null;}
+}
+
+
+/* ---------- game meta ---------- */
+const GAMES={
+  calc:{name:P("けいさん道場","Math Dash","Cálculo Rápido"),icon:"🧮",dom:P("処理速度","Speed","Rapidez"),domKey:"speed",desc:P("かんたんな計算を素早く","Quick mental math","Cálculo mental veloz")},
+  digit:{name:P("数字おぼえ","Number Recall","Memoria Numérica"),icon:"🔢",dom:P("記憶力","Memory","Memoria"),domKey:"memory",desc:P("数字を見て覚えて入力","Memorize and type digits","Memoriza y escribe")},
+  trail:{name:P("順番タッチ","Trail Touch","Toque en Orden"),icon:"👆",dom:P("注意・切替","Attention","Atención"),domKey:"attention",desc:P("数字を順にタッチ","Tap numbers in order","Toca en orden")},
+  stroop:{name:P("いろよみ","Color Match","Color y Palabra"),icon:"🎨",dom:P("集中・抑制","Focus","Concentración"),domKey:"inhibition",desc:P("文字の「色」を答える","Name the ink color","Di el color de la tinta")},
+  janken:{name:P("後出しじゃんけん","RPS Reflex","Reflejo Manos"),icon:"✊",dom:P("判断・反射","Reflex","Reflejos"),domKey:"judge",desc:P("指示どおりに後出し","Win or lose on command","Gana o pierde a la orden")}
+};
+const DOMS={speed:P("処理速度","Speed","Rapidez"),memory:P("記憶力","Memory","Memoria"),attention:P("注意・切替","Attention","Atención"),inhibition:P("集中・抑制","Focus","Concentración"),judge:P("判断・反射","Reflex","Reflejos")};
+
+/* ---------- tips ---------- */
+const TIPCATS=[P("すべて","All","Todos"),P("運動","Exercise","Ejercicio"),P("食事","Diet","Alimentación"),P("睡眠","Sleep","Sueño"),P("交流","Social","Social"),P("脳の使い方","Brain habits","Hábitos mentales")];
+const C_EX=TIPCATS[1],C_DI=TIPCATS[2],C_SL=TIPCATS[3],C_SO=TIPCATS[4],C_BR=TIPCATS[5];
+const TIPS=[
+ {cat:C_EX,title:P("1日20〜30分の早歩き","A brisk 20–30 minute walk daily","Camina rápido 20–30 min al día"),body:P("軽く息がはずむ程度の有酸素運動は、記憶を担う脳の「海馬」の働きを支えると報告されています。買い物や散歩を少しだけ速く歩くのがコツ。","Aerobic exercise that gets you slightly out of breath is reported to support the hippocampus — the brain's memory center. Just walk a little faster on errands or strolls.","El ejercicio aeróbico que te deja levemente sin aliento apoya al hipocampo, el centro de la memoria. Basta caminar un poco más rápido al hacer recados."),ev:P("参考：Erickson ら(2011)／WHO身体活動ガイドライン","Ref: Erickson et al. (2011) / WHO physical activity guidelines","Ref.: Erickson et al. (2011) / Guías de actividad física de la OMS")},
+ {cat:C_EX,title:P("「歩きながらしりとり」デュアルタスク","Dual-task walking: count backwards as you go","Camina contando hacia atrás (doble tarea)"),body:P("体を動かしながら頭も使う二重課題は、注意を切り替える力のトレーニングとして介護予防の現場でも使われています。家族との散歩で試してみましょう。","Doing a mental task while moving trains attention switching and is widely used in dementia-prevention programs. Try naming animals or counting down by 3s on your walk.","Hacer una tarea mental mientras te mueves entrena la atención y se usa en programas de prevención. Prueba nombrar animales o restar de 3 en 3 mientras caminas."),ev:P("参考：国立長寿医療研究センター「コグニサイズ」","Ref: NCGG (Japan) Cognicise program","Ref.: programa Cognicise del NCGG (Japón)")},
+ {cat:C_EX,title:P("座りっぱなしを30分ごとに中断","Break up sitting every 30 minutes","Levántate cada 30 minutos"),body:P("長時間の座位は脳と体の血流を滞らせます。30分〜1時間に一度立ち上がって伸びをするだけでも違います。テレビCMを合図にするのがおすすめ。","Long sitting slows blood flow to body and brain. Standing up and stretching once every 30–60 minutes helps. Use TV commercials as your cue.","Estar sentado mucho tiempo reduce el flujo sanguíneo al cuerpo y al cerebro. Levántate y estírate cada 30–60 minutos. Usa los anuncios de TV como señal."),ev:P("参考：WHO身体活動・座位行動ガイドライン(2020)","Ref: WHO guidelines on physical activity and sedentary behaviour (2020)","Ref.: guías de la OMS sobre sedentarismo (2020)")},
+ {cat:C_DI,title:P("魚・野菜・豆・オリーブ油を中心に","Fish, vegetables, beans and olive oil","Pescado, verduras, legumbres y aceite de oliva"),body:P("地中海式に近い食事パターンは、認知機能の維持と関連することが複数の研究で示されています。和食に青魚と野菜を足すイメージで十分です。","Mediterranean-style eating patterns are associated with better cognitive health in multiple studies. Adding oily fish and vegetables to your usual meals is enough.","La dieta de estilo mediterráneo se asocia con mejor salud cognitiva en varios estudios. Basta añadir pescado azul y verduras a tus comidas habituales."),ev:P("参考：地中海食・MIND食に関する観察研究群","Ref: studies on Mediterranean and MIND diets","Ref.: estudios sobre dietas mediterránea y MIND")},
+ {cat:C_DI,title:P("水分をこまめに","Sip water regularly","Bebe agua con frecuencia"),body:P("軽い脱水でも注意力や気分は低下します。特に夏場と起床後は意識してコップ一杯の水を。お茶や汁物も水分です。","Even mild dehydration lowers attention and mood. Have a glass of water first thing in the morning and in hot weather. Tea and soup count too.","Incluso una deshidratación leve reduce la atención y el ánimo. Un vaso de agua al despertar y en días calurosos. El té y la sopa también cuentan."),ev:P("参考：軽度脱水と認知パフォーマンスに関する研究","Ref: studies on mild dehydration and cognitive performance","Ref.: estudios sobre deshidratación leve y cognición")},
+ {cat:C_DI,title:P("よく噛んで食べる","Chew well","Mastica bien"),body:P("咀嚼は脳への血流を高める行為でもあります。一口の回数を少し増やす、歯の健康を保つことは、食を楽しみ続ける土台にもなります。","Chewing also boosts blood flow to the brain. A few more chews per bite — and healthy teeth — are a foundation for enjoying food for life.","Masticar también aumenta el flujo sanguíneo al cerebro. Masticar un poco más cada bocado —y cuidar tus dientes— es la base para disfrutar la comida toda la vida."),ev:P("参考：咀嚼機能と認知機能の関連に関する疫学研究","Ref: epidemiological studies on chewing and cognition","Ref.: estudios epidemiológicos sobre masticación y cognición")},
+ {cat:C_SL,title:P("7時間前後の睡眠を守る","Protect about 7 hours of sleep","Protege unas 7 horas de sueño"),body:P("睡眠中に脳は日中の記憶を整理し、老廃物を洗い流すと考えられています。極端な寝不足も寝すぎも認知機能低下と関連します。まずは就寝・起床時刻をそろえることから。","During sleep the brain consolidates memories and clears waste. Both too little and too much sleep are linked to cognitive decline. Start by fixing your bed and wake times.","Al dormir, el cerebro consolida recuerdos y elimina desechos. Dormir muy poco o demasiado se asocia con deterioro. Empieza fijando tus horarios."),ev:P("参考：睡眠時間と認知機能に関する大規模疫学研究","Ref: large studies on sleep duration and cognition","Ref.: grandes estudios sobre sueño y cognición")},
+ {cat:C_SL,title:P("寝る前1時間はスマホの光を控えめに","Dim the screens 1 hour before bed","Baja las pantallas 1 hora antes de dormir"),body:P("強い光は眠りを促すメラトニンの分泌を妨げます。画面を暗くする、紙の本に切り替えるなど、脳に「夜」を知らせる工夫を。","Bright light suppresses melatonin, the hormone that invites sleep. Dim your screen or switch to a paper book to tell your brain it's night.","La luz intensa suprime la melatonina, la hormona del sueño. Atenúa la pantalla o cambia a un libro de papel para avisarle al cerebro que es de noche."),ev:P("参考：光曝露と睡眠の質に関する研究","Ref: research on light exposure and sleep quality","Ref.: investigación sobre luz y calidad del sueño")},
+ {cat:C_SL,title:P("昼寝は20分まで","Keep naps under 20 minutes","Siestas de menos de 20 minutos"),body:P("短い昼寝は午後の集中力を回復させますが、30分を超える昼寝や夕方の昼寝は夜の睡眠を浅くします。「座ったまま20分」が目安です。","A short nap restores afternoon focus, but naps over 30 minutes or in the evening make night sleep shallow. '20 minutes, sitting up' is the rule.","Una siesta corta recupera la concentración, pero más de 30 minutos o al anochecer vuelve ligero el sueño nocturno. «20 minutos, sentado» es la regla."),ev:P("参考：短時間仮眠と覚醒度に関する研究","Ref: research on brief naps and alertness","Ref.: investigación sobre siestas breves y alerta")},
+ {cat:C_SO,title:P("1日1回、誰かと言葉を交わす","Exchange words with someone once a day","Cruza palabras con alguien cada día"),body:P("会話は「聞く・考える・話す」を同時に行う高度な脳トレです。社会的なつながりが多い人ほど認知機能低下のリスクが低いという報告が多数あります。電話やあいさつでもOK。","Conversation is advanced brain training — listening, thinking and speaking at once. More social connection is linked to lower risk of decline. A call or a greeting counts.","Conversar es entrenamiento cerebral avanzado: escuchar, pensar y hablar a la vez. Más conexión social se asocia con menor riesgo. Una llamada o un saludo cuentan."),ev:P("参考：社会的孤立と認知症リスクに関する疫学研究","Ref: epidemiology of social isolation and dementia risk","Ref.: epidemiología del aislamiento social y demencia")},
+ {cat:C_SO,title:P("人に教える・話して聞かせる","Teach it to someone","Enséñaselo a alguien"),body:P("覚えたことを人に説明すると、記憶はぐっと定着します。今日のニュースや本の内容を家族にひとこと紹介してみましょう。","Explaining what you've learned makes memories stick. Tell your family one thing from today's news or a book you're reading.","Explicar lo aprendido fija la memoria. Cuéntale a tu familia una noticia de hoy o algo del libro que lees."),ev:P("参考：想起練習（テスト効果）に関する学習科学研究","Ref: learning science on retrieval practice","Ref.: ciencia del aprendizaje sobre práctica de recuperación")},
+ {cat:C_BR,title:P("「少し難しい」を選ぶ","Choose 'slightly hard'","Elige lo «un poco difícil»"),body:P("脳のトレーニングは、簡単すぎても難しすぎても効果が薄れます。正解率7〜8割くらいの「ちょい難」が成長ゾーン。冴え手帖のゲームも同じ設計です。","Brain training works best when it's neither too easy nor too hard — around a 70–80% success rate is the growth zone. SAE's games are designed the same way.","El entrenamiento funciona mejor cuando no es ni muy fácil ni muy difícil: acertar el 70–80% es la zona de crecimiento. Los juegos de SAE están diseñados así."),ev:P("参考：認知トレーニングの難易度適応に関する研究","Ref: research on adaptive difficulty in cognitive training","Ref.: investigación sobre dificultad adaptativa")},
+ {cat:C_BR,title:P("利き手と反対の手を使ってみる","Try your non-dominant hand","Usa la mano no dominante"),body:P("歯みがきやマウス操作を反対の手で行うと、普段使わない運動野が活動します。新しい動きの学習は脳への良い刺激です。","Brushing your teeth or using the mouse with your other hand activates rarely used motor areas. Learning new movements is a healthy stimulus.","Cepillarte los dientes o usar el móvil con la otra mano activa zonas motoras poco usadas. Aprender movimientos nuevos estimula el cerebro."),ev:P("参考：運動学習と脳の可塑性に関する研究","Ref: research on motor learning and plasticity","Ref.: investigación sobre aprendizaje motor y plasticidad")},
+ {cat:C_BR,title:P("新しい道・新しいレシピ・新しい曲","A new route, a new recipe, a new song","Una ruta nueva, una receta nueva, una canción nueva"),body:P("「初めて」の体験は脳に最も強い刺激を与えます。いつもの散歩コースを一本ずらす、作ったことのない料理に挑戦する。小さな新しさを毎週ひとつ。","'Firsts' give the brain its strongest stimulation. Shift your walking route by one street, cook something you've never made. One small novelty every week.","Lo «primero» da al cerebro su estímulo más fuerte. Cambia una calle de tu paseo, cocina algo nuevo. Una pequeña novedad por semana."),ev:P("参考：知的活動・novelty と認知予備力に関する研究","Ref: research on novelty and cognitive reserve","Ref.: investigación sobre novedad y reserva cognitiva")},
+ {cat:C_BR,title:P("毎日3分、続けることが最強","Three minutes a day beats one big push","Tres minutos al día ganan a un gran esfuerzo"),body:P("フィンランドのFINGER研究では、運動・食事・脳トレ・健康管理を「組み合わせて続けた」グループで認知機能の改善が確認されました。一発の頑張りより、小さな毎日を。","In Finland's FINGER study, the group that combined exercise, diet, brain training and health management showed improved cognition. Small daily habits win.","En el estudio FINGER de Finlandia, el grupo que combinó ejercicio, dieta, entrenamiento y control de salud mejoró su cognición. Los pequeños hábitos diarios ganan."),ev:P("参考：Ngandu ら(2015) FINGER研究（Lancet）","Ref: Ngandu et al. (2015), the FINGER study (Lancet)","Ref.: Ngandu et al. (2015), estudio FINGER (Lancet)")}
+];
+let tipCat=TIPCATS[0];
+
+/* ---------- navigation ---------- */
+const mainEl=$("#main");
+document.querySelectorAll(".tabbar button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".tabbar button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    render(b.dataset.tab);
+  });
+});
+function render(tab){
+  if(tab==="home")renderHome();
+  else if(tab==="diag")renderDiag();
+  else if(tab==="rec")renderRec();
+  else renderTips();
+  mainEl.scrollTop=0;window.scrollTo(0,0);
+}
+
+/* ---------- home ---------- */
+function renderHome(){
+  const doneToday=!!DB.daily[todayStr()];
+  const hb=DB.hana.best||0, hf=HLV[DB.hana.bestLv||1];
+  const rb=DB.rush.best||0, rk=rankFor(rb);
+  const tiles=Object.entries(GAMES).map(([id,g])=>`
+    <div class="game-tile" onclick="startGame('${id}')">
+      <div class="gicon">${g.icon}</div>
+      <div class="gname">${g.name}</div>
+      <div class="gdom">${g.dom}</div>
+      <div class="gbest">${id in DB.best?P("自己ベスト ","Best ","Récord ")+DB.best[id]+P("点"," pts"," pts"):g.desc}</div>
+    </div>`).join("");
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="hero">
+      <div class="date">${jpDate()}</div>
+      <h2>🌸 ${P("花あわせ","Hana-Awase","Hana-Awase")}</h2>
+      <p>${P("指でなぞるだけ。同じ花をかさねて、ひとつ上の花に。めざせ幻の「大輪・冴」。","Just swipe. Merge matching flowers into the next bloom. Chase the legendary Grand Bloom.","Solo desliza. Une flores iguales para crear la siguiente. Persigue la legendaria Gran Flor.")}</p>
+      ${hb?`<div class="rush-stats"><span>${P("最高","Best","Récord")} <b>${hb.toLocaleString()}</b></span><span>${P("ここまで咲いた","Best bloom","Mejor flor")} <b>${hf.e}${hf.n}</b></span>${DB.hanaState?`<span><b>${P("つづきあり","Game saved","Partida guardada")}</b></span>`:``}</div>`:``}
+      <button class="btn" onclick="startHana()">${DB.hanaState?P("つづきから遊ぶ","Continue","Continuar"):P("遊ぶ","Play","Jugar")}</button>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px;border:1px solid rgba(42,77,143,.35)">
+      <div style="font-size:28px">🎴</div>
+      <div style="flex:1"><b>${P("今日の一局","Daily Duel","Duelo del Día")}</b><div class="muted small">${(DB.daily1&&DB.daily1.d===todayStr()&&DB.daily1.done)?P("本日 ","Today ","Hoy ")+(DB.daily1.score||0).toLocaleString()+P("点・指し終えました"," pts — done for today"," pts — hecho por hoy"):P("世界共通の盤で、一日一回の真剣勝負","One shared board. One serious attempt a day.","Un tablero mundial. Un intento serio al día.")}</div></div>
+      <button class="btn" style="width:auto;padding:10px 16px;font-size:14px" onclick="startDaily1()">${(DB.daily1&&DB.daily1.d===todayStr()&&DB.daily1.done)?P("結果","Result","Ver"):P("挑戦","Play","Jugar")}</button>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:28px">⚡</div>
+      <div style="flex:1"><b>${P("冴えラッシュ","SAE Rush","SAE Rush")}</b><div class="muted small">${rb?P("最高 ","Best ","Récord ")+rb.toLocaleString()+P("・段位 "," · Rank "," · Rango ")+rk:P("反射神経の腕試し。3ミスで終了","Test your reflexes. 3 misses and it ends","Pon a prueba tus reflejos. 3 fallos y termina")}</div></div>
+      <button class="btn shu" style="width:auto;padding:10px 16px;font-size:14px" onclick="startRush()">${P("挑戦","Go","Ir")}</button>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px;border:1px solid rgba(233,196,106,.85);background:linear-gradient(135deg,#FFFDF4,#FFF6DC)">
+      <div style="font-size:28px">🌸🌸</div>
+      <div style="flex:1"><b>${P("大花園","Grand Garden","Gran Jardín")} <span style="font-size:10px;background:var(--shu);color:#fff;border-radius:4px;padding:2px 6px;vertical-align:2px;font-family:'Shippori Mincho B1',serif">会員</span></b>
+        <div class="muted small">${isMember()?((DB.hana.best5||0)?P("最高 ","Best ","Récord ")+(DB.hana.best5||0).toLocaleString():P("解錠済み・5×5の静かな別邸","Unlocked — a serene 5×5 retreat","Desbloqueado — un sereno refugio 5×5")):P("5×5の大盤。月替わり合言葉で解錠","A grand 5×5 board. Unlock with the monthly passcode","Tablero 5×5. Desbloquea con la contraseña mensual")}</div></div>
+      <button class="btn" style="width:auto;padding:10px 16px;font-size:14px;background:linear-gradient(180deg,#E9C46A,#C99B2D);color:#4A3A16;box-shadow:0 3px 0 rgba(140,100,30,.5)" onclick="startHana5()">${isMember()?P("遊ぶ","Play","Jugar"):P("解錠","Unlock","Abrir")}</button>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:28px">⛩️</div>
+      <div style="flex:1"><b>${P("今日の稽古","Daily Training","Entreno Diario")}</b><div class="muted small">${doneToday?P("本日は済み。🔥連続","Done today. 🔥Streak ","Hecho hoy. 🔥Racha ")+streakCount()+P("日","d","d"):P("日替わり3種目・約3分","3 daily games · about 3 min","3 juegos del día · unos 3 min")}</div></div>
+      <button class="btn" style="width:auto;padding:10px 18px;font-size:14px" onclick="startDaily()">${P("やる","Start","Ir")}</button>
+    </div>
+    <div class="eyebrow">TRAINING</div>
+    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">${P("種目べつ稽古","Practice by game","Práctica por juego")}</h2>
+    <div class="game-grid">${tiles}</div>
+    <div class="card" style="margin-top:16px">
+      <h2>🧠 ${P("脳年齢診断","Brain Age Check","Chequeo de Edad Cerebral")}</h2>
+      <p class="muted" style="margin-bottom:12px">${P("5種目を通しでプレイして、脳年齢と5つの力を測定します（約5分）。","Play all five games in a row to measure your brain age and five abilities (about 5 min).","Juega los cinco juegos seguidos para medir tu edad cerebral y cinco capacidades (unos 5 min).")}</p>
+      <button class="btn secondary" onclick="switchTab('diag')">${P("診断ページへ","Go to Brain Age Check","Ir al chequeo")}</button>
+    </div>
+  </div>`;
+}
+function switchTab(t){
+  document.querySelectorAll(".tabbar button").forEach(x=>x.classList.toggle("active",x.dataset.tab===t));
+  render(t);
+}
+
+/* ---------- tips ---------- */
+function renderTips(){
+  const feat=TIPS[dateSeed()%TIPS.length];
+  const list=TIPS.filter(t=>tipCat===TIPCATS[0]||t.cat===tipCat);
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="card" style="margin-bottom:14px;border:1px solid rgba(42,77,143,.3)">
+      <h2>✅ ${P("きょうの習慣チェック","Daily Habit Check","Chequeo de Hábitos")}</h2>
+      <p class="muted small" style="margin-bottom:10px">${P("脳にいいのは「運動×食事×睡眠×交流」の合わせ技。今日できたものをタップ。","What works is the combo: exercise × diet × sleep × social. Tap what you did today.","Lo que funciona es la combinación: ejercicio × dieta × sueño × social. Toca lo que hiciste hoy.")}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${HABITS.map(h=>{const on=(DB.habits[todayStr()]||[]).includes(h.id);
+          return `<button onclick="toggleHabit('${h.id}')" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;text-align:left;border:1.5px solid ${on?"var(--ai)":"var(--line)"};background:${on?"#E9F0FB":"var(--white)"};color:${on?"var(--ai)":"#6B6857"}">${on?"✅":h.e} ${h.n()}</button>`;}).join("")}
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+        <span class="muted small">${P("直近7日","Last 7 days","Últimos 7 días")}: ${habitDots()}</span>
+        <b style="color:var(--ai)">${(DB.habits[todayStr()]||[]).length}/6</b>
+      </div>
+    </div>
+    <div class="eyebrow">TODAY'S WISDOM</div>
+    <h2 class="mincho" style="font-size:17px;margin-bottom:10px">${P("今日の知恵","Daily Wisdom","Sabiduría del Día")}</h2>
+    <div class="tip-card" style="border-left-color:var(--shu)">
+      <div class="tcat" style="color:var(--shu)">${P("本日のおすすめ","Featured","Destacado")} · ${feat.cat}</div>
+      <div class="ttitle">${feat.title}</div>
+      <p>${feat.body}</p>
+      <div class="tev">${feat.ev}</div>
+    </div>
+    <div class="cat-tabs">${TIPCATS.map(c=>`<button class="${c===tipCat?"active":""}" onclick="setTipCat('${c}')">${c}</button>`).join("")}</div>
+    ${list.map(t=>`
+      <div class="tip-card">
+        <div class="tcat">${t.cat}</div>
+        <div class="ttitle">${t.title}</div>
+        <p>${t.body}</p>
+        <div class="tev">${t.ev}</div>
+      </div>`).join("")}
+    <p class="muted small" style="margin-top:6px">${P("※本アプリの助言は一般的な健康情報であり、医療行為・診断に代わるものではありません。気になる症状があるときは医師にご相談ください。","Note: this app offers general health information, not medical care or diagnosis. Please consult a doctor about any symptoms.","Nota: esta app ofrece información general de salud, no atención médica ni diagnóstico. Consulta a un médico ante cualquier síntoma.")}</p>
+  </div>`;
+}
+function setTipCat(c){tipCat=c;renderTips();}
+
+/* ---------- records ---------- */
+function renderRec(){
+  const plays=DB.history.length;
+  const streak=streakCount();
+  const lastDiag=DB.diag[DB.diag.length-1];
+  // 直近14日の日別平均スコア
+  const byDay={};
+  DB.history.forEach(h=>{(byDay[h.d]=byDay[h.d]||[]).push(h.s);});
+  const days=[];
+  for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    days.push({k,label:(d.getMonth()+1)+"/"+d.getDate(),avg:byDay[k]?Math.round(byDay[k].reduce((a,b)=>a+b,0)/byDay[k].length):null});
+  }
+  const chart=svgBarChart(days);
+  const diagChart=DB.diag.length>=1?svgAgeChart(DB.diag.slice(-10)):"";
+  const bests=Object.entries(GAMES).map(([id,g])=>`
+    <div class="rec-row"><span>${g.icon} ${g.name}</span><b>${id in DB.best?DB.best[id]+P("点"," pts"," pts"):"—"}</b></div>`).join("");
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="kpis">
+      <div class="kpi"><div class="kv">${DB.hana.best?DB.hana.best.toLocaleString():"—"}</div><div class="kl">Hana</div></div>
+      <div class="kpi"><div class="kv">${DB.rush.best?DB.rush.best.toLocaleString():"—"}</div><div class="kl">Rush</div></div>
+      <div class="kpi"><div class="kv">${streak}</div><div class="kl">${P("連続日数","Streak","Racha")}</div></div>
+      <div class="kpi"><div class="kv">${lastDiag?lastDiag.age:"—"}</div><div class="kl">${P("脳年齢","Brain age","Edad cerebral")}</div></div>
+    </div>
+    <div class="card">
+      <h2>🏆 ${P("世界番付","World Rankings","Clasificación Mundial")}</h2>
+      <p class="muted small" style="margin-bottom:10px">${P("よびな（ニックネーム）で、世界中のプレイヤーと自己ベストを競えます。","Compete with players worldwide under your nickname.","Compite con jugadores de todo el mundo con tu apodo.")}</p>
+      <div style="display:grid;gap:8px">
+        <button class="btn secondary" onclick="showRanking('hana')">🌸 ${P("花あわせの番付","Hana-Awase Rankings","Clasificación Hana-Awase")}</button>
+        <button class="btn secondary" onclick="showRanking('rush')">⚡ ${P("冴えラッシュの番付","SAE Rush Rankings","Clasificación SAE Rush")}</button>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">${P("直近14日の平均スコア","Average score, last 14 days","Promedio, últimos 14 días")}</h2>
+      ${chart}
+    </div>
+    ${DB.diag.length?`<div class="chart-box">
+      <h2 class="mincho" style="font-size:15px;margin-bottom:8px">${P("脳年齢のうつりかわり","Brain age over time","Edad cerebral en el tiempo")}</h2>
+      ${diagChart}
+    </div>`:""}
+    <div class="card">
+      <h2>${P("自己ベスト","Personal bests","Récords personales")}</h2>
+      ${bests}
+    </div>
+    ${plays===0?`<p class="muted center">${P("まだ記録がありません。<br>「道場」から今日の稽古を始めましょう。","No records yet.<br>Head to the Dojo and start training.","Aún no hay registros.<br>Ve al Dojo y empieza a entrenar.")}</p>`:""}
+  </div>`;
+}
+function svgBarChart(days){
+  const W=340,H=140,pad=6,bw=W/days.length;
+  let bars="";
+  days.forEach((d,i)=>{
+    if(d.avg!==null){
+      const h=(d.avg/100)*(H-30);
+      bars+=`<rect x="${i*bw+4}" y="${H-20-h}" width="${bw-8}" height="${h}" rx="3" fill="${d.avg>=70?"#2A4D8F":d.avg>=45?"#C99B2D":"#C8452C"}"/>`;
+      bars+=`<text x="${i*bw+bw/2}" y="${H-24-h}" font-size="9" text-anchor="middle" fill="#555">${d.avg}</text>`;
+    }
+    if(i%3===0)bars+=`<text x="${i*bw+bw/2}" y="${H-6}" font-size="8.5" text-anchor="middle" fill="#999">${d.label}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%"><line x1="0" y1="${H-20}" x2="${W}" y2="${H-20}" stroke="#D9D4C5"/>${bars}</svg>`;
+}
+function svgAgeChart(diags){
+  const W=340,H=140;
+  const min=Math.min(...diags.map(d=>d.age))-4, max=Math.max(...diags.map(d=>d.age))+4;
+  const x=i=>diags.length===1?W/2:20+(W-40)*i/(diags.length-1);
+  const y=v=>15+(H-45)*(v-min)/(max-min||1);
+  const pts=diags.map((d,i)=>`${x(i)},${y(d.age)}`).join(" ");
+  const dots=diags.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.age)}" r="4" fill="#C8452C"/><text x="${x(i)}" y="${y(d.age)-9}" font-size="10" text-anchor="middle" fill="#333" font-weight="700">${d.age}</text><text x="${x(i)}" y="${H-6}" font-size="8.5" text-anchor="middle" fill="#999">${d.d.slice(5).replace("-","/")}</text>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%"><polyline points="${pts}" fill="none" stroke="#2A4D8F" stroke-width="2.5"/>${dots}</svg>`;
+}
+
+/* ---------- diagnosis page ---------- */
+function renderDiag(){
+  const last=DB.diag[DB.diag.length-1];
+  mainEl.innerHTML=`
+  <div class="fade-in">
+    <div class="eyebrow">BRAIN AGE CHECK</div>
+    <h2 class="mincho" style="font-size:18px;margin-bottom:8px">${P("脳年齢診断","Brain Age Check","Chequeo de Edad Cerebral")}</h2>
+    <div class="card">
+      <p style="font-size:14px;margin-bottom:10px">${P("5つのゲームを通しでプレイし、<b>処理速度・記憶力・注意・集中・判断</b>の5つの力から脳年齢を推定します。所要時間は約5分です。","Play five games in a row and we estimate your brain age from five abilities: <b>speed, memory, attention, focus and reflex</b>. About 5 minutes.","Juega cinco juegos seguidos y estimamos tu edad cerebral según cinco capacidades: <b>rapidez, memoria, atención, concentración y reflejos</b>. Unos 5 minutos.")}</p>
+      <p class="muted small" style="margin-bottom:14px">${P("※楽しみながら傾向を知るためのゲーム上の指標です。医学的な検査・診断ではありません。","A fun, game-based indicator. Not a medical test or diagnosis.","Un indicador lúdico. No es una prueba ni un diagnóstico médico.")}</p>
+      <button class="btn shu" onclick="startDiagnosis()">${P("診断をはじめる","Start the check","Empezar el chequeo")}</button>
+    </div>
+    ${last?renderDiagResultCard(last,false):`<p class="muted center">${P("まだ診断記録がありません。","No check results yet.","Aún no hay resultados.")}</p>`}
+  </div>`;
+  if(last)requestAnimationFrame(()=>animateBars());
+}
+function renderDiagResultCard(diag,fresh){
+  const rank=stampFor(diag.comp);
+  const weakest=Object.entries(diag.scores).sort((a,b)=>a[1]-b[1])[0];
+  const advice=domainAdvice(weakest[0]);
+  const circ=2*Math.PI*105;
+  const frac=clamp(diag.comp/100,0.08,1);
+  return `
+  <div class="card ${fresh?"fade-in":""}">
+    <div class="center"><span class="eyebrow">${P("前回の診断","Last check","Último chequeo")} (${diag.d})</span></div>
+    <div class="enso-wrap">
+      <svg viewBox="0 0 230 230">
+        <circle cx="115" cy="115" r="105" fill="none" stroke="#ECE8DC" stroke-width="9"/>
+        <circle cx="115" cy="115" r="105" fill="none" stroke="#2A4D8F" stroke-width="9" stroke-linecap="round"
+          stroke-dasharray="${circ}" stroke-dashoffset="${circ*(1-frac)}" transform="rotate(-90 115 115)"
+          style="transition:stroke-dashoffset 1.2s ease"/>
+      </svg>
+      <div class="enso-num"><div class="l">${P("脳年齢","BRAIN AGE","EDAD CEREBRAL")}</div><div class="n">${diag.age}</div><div class="u">${P("歳（総合 ","yrs · overall ","años · total ")}${diag.comp}${P("点）"," pts"," pts")}</div></div>
+    </div>
+    <div class="center"><span class="stamp">${rank}</span></div>
+    <div style="margin-top:14px">
+      ${Object.entries(diag.scores).map(([k,v])=>`
+        <div class="domain-row"><span class="dn">${DOMS[k]}</span><div class="bar"><div data-w="${v}"></div></div><span class="dv">${v}</span></div>`).join("")}
+    </div>
+    <div class="tip-card" style="margin-top:14px;margin-bottom:0">
+      <div class="tcat">${P("きたえどころ","Focus area","Punto a mejorar")}: ${DOMS[weakest[0]]}</div>
+      <div class="ttitle">${advice.title}</div>
+      <p>${advice.body}</p>
+    </div>
+  </div>`;
+}
+function animateBars(){
+  document.querySelectorAll(".domain-row .bar>div").forEach(b=>{b.style.width=b.dataset.w+"%";});
+}
+function domainAdvice(k){
+  const map={
+    speed:{title:P("「けいさん道場」と早歩きで加速","Math Dash + brisk walking","Cálculo Rápido + caminar deprisa"),body:P("処理速度は日々の反復でいちばん伸びやすい力です。毎日1回のけいさん道場に加え、散歩のスピードを少し上げると、脳の情報処理のテンポも上がるといわれます。","Processing speed responds fastest to daily repetition. One Math Dash a day, plus walking a little quicker, raises your mental tempo too.","La rapidez mejora con la repetición diaria. Un Cálculo Rápido al día, y caminar un poco más deprisa, también acelera el tempo mental.")},
+    memory:{title:P("「数字おぼえ」＋声に出す","Number Recall + say it out loud","Memoria Numérica + dilo en voz alta"),body:P("覚えるときに声に出す・指で書くなど、複数の感覚を使うと記憶は強くなります。数字おぼえを毎日1回、買い物リストの暗記にも挑戦を。","Using several senses — saying digits aloud or tracing them — makes memories stronger. Play daily and memorize your shopping list too.","Usar varios sentidos —decir los números en voz alta o trazarlos— fortalece la memoria. Practica a diario y memoriza tu lista de la compra.")},
+    attention:{title:P("「順番タッチ」＋ながら家事","Trail Touch + multitask cooking","Toque en Orden + cocinar varias cosas"),body:P("注意の切り替えは、順番タッチのような視覚探索と、料理など複数の段取りを同時に進める活動で鍛えられます。","Attention switching is trained by visual-search games like Trail Touch, and by real-world juggling like cooking several dishes at once.","La atención se entrena con juegos de búsqueda visual y con tareas reales como cocinar varios platos a la vez.")},
+    inhibition:{title:P("「いろよみ」で我慢する脳を","Color Match trains your brakes","Color y Palabra entrena tus frenos"),body:P("つい読んでしまう文字を抑えて色に答える——この「抑制」はブレーキ役の前頭葉の働きです。いろよみを続けつつ、深呼吸してから行動する習慣も効果的。","Suppressing the urge to read the word and answering the color — that inhibition is your frontal lobe's brake pedal. Keep playing, and breathe before acting.","Reprimir el impulso de leer y responder el color: esa inhibición es el freno del lóbulo frontal. Sigue jugando y respira hondo antes de actuar.")},
+    judge:{title:P("「後出しじゃんけん」＋会話","RPS Reflex + lively conversation","Reflejo Manos + conversación ágil"),body:P("素早い判断は、後出しじゃんけんのような反応課題と、テンポのよい会話で磨かれます。家族との雑談も立派なトレーニングです。","Fast judgment is sharpened by reaction games — and by quick back-and-forth conversation. Chatting with family is real training.","El juicio rápido se afila con juegos de reacción y con conversación dinámica. Charlar con la familia es entrenamiento real.")}
+  };
+  return map[k];
+}
+
+
+/* ======================================================
+   ⚡ 冴えラッシュ (SAE RUSH) — endless arcade mode
+====================================================== */
+const RANKS=[[0,P("見習い","Novice","Novato")],[2000,P("白帯","White Belt","Cinta Blanca")],[5000,P("茶帯","Brown Belt","Cinta Marrón")],[9000,P("黒帯","Black Belt","Cinta Negra")],[14000,P("師範代","Instructor","Instructor")],[20000,P("師範","Master","Maestro")],[28000,P("達人","Expert","Experto")],[38000,P("名人","Grandmaster","Gran Maestro")],[50000,P("冴えの極み","Peak SAE","Cima SAE")]];
+function rankFor(s){let r=RANKS[0][1];for(const[t,n]of RANKS)if(s>=t)r=n;return r;}
+function nextRank(s){for(const[t,n]of RANKS)if(s<t)return[t,n];return null;}
+const rnd=n=>Math.floor(Math.random()*n);
+
+/* --- sound (WebAudio, mutable) --- */
+let AC=null,muted=!!DB.muted;
+function beep(f,d,type,vol){
+  if(muted)return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type=type||"sine";o.frequency.value=f;
+    g.gain.setValueAtTime(vol||.14,AC.currentTime);
+    o.connect(g);g.connect(AC.destination);o.start();
+    g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);
+    o.stop(AC.currentTime+d);
+  }catch(e){}
+}
+const sfxOK=c=>beep(500+Math.min(c,12)*55,.09,"triangle");
+const sfxNG=()=>beep(130,.28,"sawtooth",.12);
+const sfxLv=()=>{beep(660,.1,"triangle");setTimeout(()=>beep(880,.16,"triangle"),100);};
+const mb=$("#muteBtn");
+mb.textContent=muted?"🔇":"🔊";
+mb.onclick=()=>{muted=!muted;DB.muted=muted;save();mb.textContent=muted?"🔇":"🔊";if(muted)bgmStop();else if($("#hanaBoard"))bgmStart();};
+
+/* --- question generators: return {pill,pillColor,html,buttons:[{label,ok}],cols,extra,flash} --- */
+const CN=[{n:P("あか","RED","ROJO"),c:"#C8452C"},{n:P("あお","BLUE","AZUL"),c:"#2A4D8F"},{n:P("みどり","GREEN","VERDE"),c:"#3E7C4F"},{n:P("きいろ","YELLOW","AMARILLO"),c:"#C99B2D"}];
+const KPAIRS=[["旅","族"],["未","末"],["土","士"],["矢","失"],["体","休"],["網","綱"],["徴","微"],["崇","祟"],["瓜","爪"],["天","夭"],["若","苦"],["右","石"],["田","由"],["王","玉"]];
+
+function qCalcTF(L){
+  const hard=L>=4;const t=rnd(3);let a,b,res,q;
+  if(t===0){a=3+rnd(hard?26:12);b=3+rnd(hard?26:12);res=a+b;q=`${a} ＋ ${b}`;}
+  else if(t===1){a=10+rnd(hard?60:30);b=1+rnd(Math.min(a-1,hard?25:12));res=a-b;q=`${a} − ${b}`;}
+  else{a=2+rnd(hard?8:6);b=2+rnd(hard?8:6);res=a*b;q=`${a} × ${b}`;}
+  const truth=Math.random()<.5;let shown=res;
+  if(!truth){do{shown=res+(rnd(7)-3);}while(shown===res||shown<0);}
+  return{pill:P("正しい？","Correct?","¿Correcto?"),pillColor:"var(--ai)",html:`<div class="rush-q">${q} ＝ ${shown}</div>`,
+    buttons:[{label:"○",ok:truth},{label:"✕",ok:!truth}],cols:2};
+}
+function qCompare(L){
+  const rev=L>=6&&Math.random()<.4;
+  const mk=()=>{
+    if(L>=3&&Math.random()<.5){const a=2+rnd(8),b=2+rnd(8);return{t:`${a}×${b}`,v:a*b};}
+    if(Math.random()<.5){const a=5+rnd(30),b=3+rnd(20);return{t:`${a}+${b}`,v:a+b};}
+    return{t:String(10+rnd(70)),v:0};
+  };
+  let A=mk(),B=mk();
+  if(A.t.indexOf("+")<0&&A.t.indexOf("×")<0)A.v=Number(A.t);
+  if(B.t.indexOf("+")<0&&B.t.indexOf("×")<0)B.v=Number(B.t);
+  if(A.v===B.v)B.v+=1,B.t=String(B.v);
+  const bigA=A.v>B.v;
+  return{pill:rev?P("小さい方！","Smaller!","¡Menor!"):P("大きい方！","Bigger!","¡Mayor!"),pillColor:rev?"var(--shu)":"var(--ai)",
+    html:``,buttons:[{label:A.t,ok:bigA!==rev},{label:B.t,ok:bigA===rev}],cols:2,extra:300};
+}
+function qColorTF(){
+  const w=CN[rnd(4)],ink=Math.random()<.5?w:CN[rnd(4)];
+  return{pill:P("文字と色、一致？","Word = color?","¿Palabra = color?"),pillColor:"var(--ai)",
+    html:`<div class="rush-q" style="color:${ink.c}">${w.n}</div>`,
+    buttons:[{label:"○",ok:w.n===ink.n},{label:"✕",ok:w.n!==ink.n}],cols:2};
+}
+function qColorTap(){
+  const w=CN[rnd(4)],ink=CN[rnd(4)];
+  return{pill:P("インクの色は？","Ink color?","¿Color de tinta?"),pillColor:"var(--ai)",
+    html:`<div class="rush-q" style="color:${ink.c}">${w.n}</div>`,
+    buttons:shuffle(CN.slice()).map(c=>({label:c.n,ok:c.n===ink.n})),cols:2,extra:400};
+}
+function qJanken(){
+  const H=["✊","✌️","✋"],winTo={0:2,1:0,2:1},loseTo={0:1,1:2,2:0};
+  const opp=rnd(3),win=Math.random()<.5,target=win?winTo[opp]:loseTo[opp];
+  return{pill:win?P("かって！","WIN!","¡GANA!"):P("まけて！","LOSE!","¡PIERDE!"),pillColor:win?"var(--ai)":"var(--shu)",
+    html:`<div class="rush-q" style="font-size:64px">${H[opp]}</div>`,
+    buttons:H.map((h,i)=>({label:h,ok:i===target})),cols:3,extra:300};
+}
+function qArrow(L){
+  const AR=["⬅️","➡️","⬆️","⬇️"],OPP={0:1,1:0,2:3,3:2};
+  const rev=L>=6&&Math.random()<.4;
+  const a=rnd(4),target=rev?OPP[a]:a;
+  return{pill:rev?P("逆の向き！","OPPOSITE way!","¡Dirección OPUESTA!"):P("同じ向き！","SAME way!","¡MISMA dirección!"),pillColor:rev?"var(--shu)":"var(--ai)",
+    html:`<div class="rush-q" style="font-size:60px">${AR[a]}</div>`,
+    buttons:AR.map((x,i)=>({label:x,ok:i===target})),cols:2,extra:200};
+}
+function qOdd(){
+  const p=KPAIRS[rnd(KPAIRS.length)];
+  const flip=Math.random()<.5,base=flip?p[1]:p[0],odd=flip?p[0]:p[1];
+  const pos=rnd(12);
+  const cells=Array.from({length:12},(_,i)=>({label:i===pos?odd:base,ok:i===pos}));
+  return{pill:P("ひとつだけ違う字は？","Find the odd one!","¡Encuentra el distinto!"),pillColor:"var(--gold)",html:``,buttons:cells,cols:"odd",extra:1600};
+}
+function qFlash(L){
+  const len=L>=6?4:3;
+  let n="";for(let i=0;i<len;i++)n+=rnd(10);
+  const v=n;
+  const set=new Set([v]);
+  while(set.size<3){
+    let d=v.split("");
+    const i=rnd(len);d[i]=String((Number(d[i])+1+rnd(8))%10);
+    set.add(d.join(""));
+  }
+  return{flash:{text:v.split("").join(" "),ms:850},
+    pill:P("さっきの数字は？","What was the number?","¿Cuál era el número?"),pillColor:"var(--gold)",html:``,
+    buttons:shuffle([...set]).map(x=>({label:x,ok:x===v})),cols:3,extra:600};
+}
+function pickGen(L,last){
+  const pool=[qCalcTF,qCompare];
+  if(L>=2)pool.push(qColorTF);
+  if(L>=3)pool.push(qJanken,qOdd);
+  if(L>=4)pool.push(qArrow,qColorTap);
+  if(L>=5)pool.push(qFlash);
+  let g;do{g=pool[rnd(pool.length)];}while(pool.length>1&&g===last);
+  return g;
+}
+
+/* --- rush state machine --- */
+let RS=null;
+function startRush(){
+  RS={score:0,combo:0,maxCombo:0,lives:3,q:0,level:1,lastGen:null};
+  gResolve=()=>{};       // makes やめる work
+  clearGTimers();
+  openOverlay("⚡ "+P("冴えラッシュ","SAE Rush","SAE Rush"));
+  rushNext();
+}
+function rushHud(){
+  return `<div class="rush-hud">
+    <span class="hearts">${"❤️".repeat(RS.lives)}${"🖤".repeat(3-RS.lives)}</span>
+    <span class="rscore">${RS.score.toLocaleString()}</span>
+    <span class="rcombo${RS.combo>=8?" fire":""}">${RS.combo>=2?"🔥"+RS.combo:""}</span>
+  </div>
+  <div class="rush-timebar"><div id="rtb"></div></div>
+  <div class="redflash" id="rflash"></div>
+  <div class="rush-lvl">LV.${RS.level}</div>`;
+}
+function rushNext(){
+  if(!RS)return;
+  RS.q++;
+  if(RS.q>1&&(RS.q-1)%8===0){
+    RS.level++;sfxLv();
+    gArea().innerHTML=rushHud()+`<div class="lvup">LEVEL ${RS.level}</div>`;
+    gT(()=>rushShow(),750);
+    return;
+  }
+  rushShow();
+}
+function rushShow(){
+  const gen=pickGen(RS.level,RS.lastGen);RS.lastGen=gen;
+  const g=gen(RS.level);
+  if(g.flash){
+    gArea().innerHTML=rushHud()+`<p class="instruction">${P("おぼえて！","Memorize!","¡Memoriza!")}</p><div class="rush-q" style="letter-spacing:.15em">${g.flash.text}</div>`;
+    gT(()=>rushQ(g),g.flash.ms);
+  }else rushQ(g);
+}
+function rushQ(g){
+  const tmax=(g.extra||0)+Math.max(1500,3500-(RS.level-1)*250);
+  let grid;
+  if(g.cols==="odd"){
+    grid=`<div class="odd-grid">${g.buttons.map((b,i)=>`<button data-i="${i}" data-ok="${b.ok}">${b.label}</button>`).join("")}</div>`;
+  }else{
+    grid=`<div class="choice-grid ${g.cols===3?"cols3":""}">${g.buttons.map((b,i)=>`<button class="choice-btn ${g.cols===3?"":"big"}" style="font-size:${String(g.buttons[0].label).length>3?22:28}px" data-i="${i}" data-ok="${b.ok}">${b.label}</button>`).join("")}</div>`;
+  }
+  gArea().innerHTML=rushHud()+`
+    <div class="pill" style="background:${g.pillColor}">${g.pill}</div>
+    ${g.html}
+    ${grid}`;
+  const bar=$("#rtb");
+  if(bar)bar.classList.remove("warn","danger");
+  const w1=gT(()=>{if(bar)bar.classList.add("warn");},tmax*0.6);
+  const w2=gT(()=>{if(bar)bar.classList.add("danger");},tmax*0.85);
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{
+    if(!bar.isConnected)return;
+    bar.style.transition=`width ${tmax}ms linear`;
+    bar.style.width="0%";
+  });});
+  const t0=Date.now();
+  let done=false;
+  const expiry=gT(()=>{if(!done){done=true;rushMiss();}},tmax);
+  gArea().querySelectorAll("[data-ok]").forEach(b=>{
+    b.onclick=()=>{
+      if(done)return;done=true;clearTimeout(expiry);clearTimeout(w1);clearTimeout(w2);
+      if(b.dataset.ok==="true"){
+        const frac=clamp(1-(Date.now()-t0)/tmax,0,1);
+        rushHit(frac);
+      }else rushMiss();
+    };
+  });
+}
+function rushHit(frac){
+  RS.combo++;RS.maxCombo=Math.max(RS.maxCombo,RS.combo);
+  const mult=1+Math.min(Math.floor(RS.combo/5),6)*0.5;
+  const pts=Math.round((100+100*frac)*mult);
+  RS.score+=pts;
+  sfxOK(RS.combo);
+  if(RS.combo>0&&RS.combo%5===0)sfxLv();
+  const f=document.createElement("div");f.className="ptfloat";f.textContent="+"+pts+(mult>1?"（×"+mult+"）":"");
+  gArea().appendChild(f);
+  gT(rushNext,200);
+}
+function rushMiss(){
+  RS.lives--;RS.combo=0;sfxNG();
+  const fl=$("#rflash");if(fl)fl.classList.add("on");
+  gArea().classList.add("shake");
+  gT(()=>{gArea().classList.remove("shake");},360);
+  if(RS.lives<=0)gT(rushEnd,550);
+  else gT(rushNext,480);
+}
+function rushEnd(){
+  const s=RS.score,mc=RS.maxCombo,qn=RS.q,lv=RS.level;
+  const newBest=s>(DB.rush.best||0);
+  if(newBest)DB.rush.best=s;
+  DB.rush.plays++;
+  DB.daily[todayStr()]=true;
+  save();updateStreakChip();
+  submitScore('rush',s);
+  RS=null;setProg(1);
+  const rk=rankFor(s),nx=nextRank(s);
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      <p class="instruction center">${P("ここまで！","Time to stop!","¡Hasta aquí!")}</p>
+      <div class="center"><div class="score-big" id="cntup">0</div>
+      <span class="stamp">${rk}</span>
+      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:8px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:""}
+      </div>
+      <div style="margin-top:14px">
+        <div class="rec-row"><span>${P("最大コンボ","Max combo","Combo máx.")}</span><b>🔥${mc}</b></div>
+        <div class="rec-row"><span>${P("こなした問題","Questions","Preguntas")}</span><b>${qn}</b></div>
+        <div class="rec-row"><span>${P("到達レベル","Level reached","Nivel alcanzado")}</span><b>LV.${lv}</b></div>
+        ${nx?`<div class="rec-row"><span>${P("次の段位","Next rank","Próximo rango")}「${nx[1]}」</span><b>${(nx[0]-s).toLocaleString()}</b></div>`:""}
+      </div>
+      <div style="display:grid;gap:10px;margin-top:18px">
+        <button class="btn shu" onclick="startRush()">${P("もう一度挑戦","Try again","Otra vez")}</button>
+        <button class="btn secondary" onclick="joinRank('rush',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+  const el=$("#cntup");let cur=0;const step=Math.max(1,Math.round(s/40));
+  const iv=setInterval(()=>{cur=Math.min(s,cur+step);el.textContent=cur.toLocaleString();if(cur>=s)clearInterval(iv);},22);
+  gTimers.push(iv);
+}
+
+
+/* ======================================================
+   🌸 花あわせ (HANA-AWASE) — merge puzzle
+====================================================== */
+const HLV=[null,
+ {e:"🌱",n:P("芽","Sprout","Brote")},{e:"🌿",n:P("双葉","Seedling","Plantita")},{e:"🍀",n:P("若葉","Clover","Trébol")},{e:"🌷",n:P("つぼみ","Tulip","Tulipán")},
+ {e:"🌸",n:P("桜","Sakura","Sakura")},{e:"🌺",n:P("牡丹","Peony","Peonía")},{e:"🌻",n:P("向日葵","Sunflower","Girasol")},{e:"🍁",n:P("紅葉","Maple","Arce")},
+ {e:"❄️",n:P("雪華","Snowflake","Nieve")},{e:"🌕",n:P("満月","Full Moon","Luna Llena")},{e:"✨",n:P("暁光","Dawn Light","Aurora")},{e:"💮",n:P("大輪・冴","Grand Bloom","Gran Flor")}];
+const HCOL=["","#FFFFFF","#FBF6E7","#F1ECD5","#EFE0AC","#F7D9DE","#F0BFCB","#F6D2A0","#EFB48A","#D7E6F5","#F7ECC0","#FFF3C4","#F6C8C0"];
+let HG=null;
+
+function hSnapshot(){return{score:HG.score,tiles:HG.tiles.filter(t=>!t.dead).map(t=>({x:t.x,y:t.y,lv:t.lv}))};}
+function hSave(){if(HDaily)return;hStSet(hSnapshot());save();}
+
+function hTutorial(cb){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🌸 "+P("あそびかた","How to play","Cómo jugar"));
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      <div class="card" style="margin-bottom:10px">
+        <p style="font-size:14.5px;margin-bottom:6px"><b>${P("1. 指でなぞる（スワイプ）と、花が<u>ぜんぶ一斉に</u>その方向へすべる","1. Swipe and <u>all</u> flowers slide that way","1. Desliza y <u>todas</u> las flores se mueven")}</b></p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌱</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌱</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span></span>
+        </div>
+        <div style="text-align:center;font-weight:800;color:var(--ai);margin:4px 0">⬅ ${P("左へスワイプすると…","Swipe left and…","Desliza a la izquierda y…")}</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;width:38px;height:38px;border:1px solid #D9D4C5;border-radius:8px;background:#fff;align-items:center;justify-content:center;font-size:20px">🌿</span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span><span style="display:inline-flex;width:38px;height:38px;border:1px solid #E4DECB;border-radius:8px;background:#EFEBDD"></span></span>
+        </div>
+        <p style="font-size:14.5px;margin-top:6px;text-align:center"><b>${P("おなじ花どうしが ぶつかると合体！","Matching flowers merge!","¡Las flores iguales se unen!")}</b><br>🌱＋🌱＝🌿、🌿＋🌿＝🍀、🍀＋🍀＝🌷…</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <p style="font-size:14.5px"><b>${P("2. 間にちがう花があると合体しない","2. A different flower in between blocks the merge","2. Una flor distinta en medio bloquea la unión")}</b><br>${P("🌱🌸🌱 のように挟まっていると、桜が壁になって芽どうしは出会えません。同じ花を<b>同じ列にそろえてから</b>その方向へスワイプ。","Like 🌱🌸🌱 — the sakura is a wall. Line up matching flowers in the <b>same row or column</b>, then swipe.","Como 🌱🌸🌱: la sakura es un muro. Alinea flores iguales en la <b>misma fila o columna</b> y desliza.")}</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <p style="font-size:14.5px;margin-bottom:8px"><b>${P("3. 花のそだつ順番（全12段階）","3. The 12 stages of bloom","3. Las 12 etapas de la flor")}</b></p>
+        <div id="tutChain" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px 4px;text-align:center"></div>
+      </div>
+      <p class="muted small" style="margin-bottom:12px">💡 ${P("コツ：いちばん育った花をカドに置く。<b>上へはスワイプしない</b>（下・左・右だけ）と長生きします。","Tip: keep your biggest flower in a corner. <b>Never swipe up</b> (only down, left, right) and you will last much longer.","Consejo: mantén tu flor más grande en una esquina. <b>Nunca deslices hacia arriba</b> (solo abajo, izquierda, derecha).")}</p>
+      <button class="btn" id="tutGo">${P("わかった、はじめる","Got it, play!","¡Entendido, a jugar!")}</button>
+    </div>`;
+  const tc=$("#tutChain");
+  if(tc)tc.innerHTML=HLV.slice(1).map((f,i)=>`<div><div style="font-size:24px">${f.e}</div><div style="font-size:11px;font-weight:700;color:#6B6857">${i+1}. ${f.n}</div></div>`).join("");
+  $("#tutGo").onclick=cb;
+}
+let HN=4;
+const hStGet=()=>HN===5?DB.hanaState5:DB.hanaState;
+const hStSet=v=>{if(HN===5)DB.hanaState5=v;else DB.hanaState=v;};
+const hBestVal=()=>HN===5?(DB.hana.best5||0):(DB.hana.best||0);
+function startHana(){HN=4;
+  if(!DB.hanaTut){hTutorial(()=>{DB.hanaTut=1;save();startHana();});return;}
+  startHanaCore();
+}
+function startDaily1(){
+  const k=todayStr();
+  if(DB.daily1&&DB.daily1.d===k&&DB.daily1.done){
+    gResolve=()=>{};clearGTimers();
+    openOverlay("🎴 "+P("今日の一局","Daily Duel","Duelo del Día"));
+    const f=HLV[DB.daily1.lv||1];
+    gArea().innerHTML=`
+      <div class="fade-in center" style="width:min(340px,88vw)">
+        <p class="instruction">${P("本日はもう指し終えました","You have played today","Ya jugaste hoy")}</p>
+        <div style="font-size:56px">${f.e}</div>
+        <div class="score-big">${(DB.daily1.score||0).toLocaleString()}</div>
+        <p class="muted small" style="margin-top:6px">${P("また明日、あたらしい盤で。","See you tomorrow — a brand-new board.","Hasta mañana, con un tablero nuevo.")}</p>
+        <div style="display:grid;gap:10px;margin-top:16px">
+          <button class="btn secondary" onclick="joinRank('daily',${DB.daily1.score||0})">🏆 ${P("今日の番付を見る","Today&#39;s rankings","Ranking de hoy")}</button>
+          <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+        </div>
+      </div>`;
+    return;
+  }
+  HN=4;HDaily=true;HRNG=mulberry32(dateSeed());
+  startHanaCore();
+}
+function startHana5(){
+  if(!isMember()){showGate();return;}
+  HN=5;startHanaCore();
+}
+function startHanaCore(){
+  gResolve=()=>{};clearGTimers();
+  openOverlay(HDaily?"🎴 "+P("今日の一局","Daily Duel","Duelo del Día")+" "+todayStr().slice(5).replace("-","/"):HN===5?"🌸🌸 "+P("大花園","Grand Garden","Gran Jardín"):"🌸 "+P("花あわせ","Hana-Awase","Hana-Awase"));
+  bgmStart();
+  gArea().innerHTML=`
+    <div class="hana-wrap">
+      <div class="hana-head"><span>${P("スコア","Score","Puntos")} <b id="hScore">0</b></span><span class="muted small"><span id="hBest">${P("ベスト ","Best ","Récord ")}${hBestVal().toLocaleString()}</span>${HDaily?"":` <span id="hBestReset" role="button" title="${P("この端末の自己ベストをリセット（番付には無影響）","Reset this device's best (rankings unaffected)","Reiniciar mejor local (no afecta la clasificación)")}" style="cursor:pointer;opacity:.5;padding:0 4px">↺</span>`}</span></div>
+      <div id="hanaBoard"></div>
+      <div style="display:flex;gap:10px;width:min(360px,88vw)">
+        <button class="btn ghost" style="flex:1" id="hUndo">↩ ${P("1手もどす","Undo","Deshacer")}</button>
+        <button class="btn ghost" style="flex:1" id="hNew">🌱 ${P("はじめから","New game","Reiniciar")}</button>
+        <button class="btn ghost" style="flex:0 0 52px" id="hHelp">？</button>
+      </div>
+      <div id="hChain" style="text-align:center;font-size:15px;line-height:1.9;width:min(360px,88vw)"></div>
+      <p class="muted small" style="margin-top:-4px">${P("スワイプで動かす。同じ花がかさなると、ひとつ上の花に。","Swipe to move. Matching flowers merge into the next bloom.","Desliza para mover. Las flores iguales se unen en la siguiente.")}</p>
+    </div>`;
+  const board=$("#hanaBoard");
+  const W=board.clientWidth||320;
+  board.style.height=W+"px";
+  const PAD=10,G=8,cs=(W-2*PAD-(HN-1)*G)/HN;
+  board.dataset.n=HN;
+  for(let y=0;y<HN;y++)for(let x=0;x<HN;x++){
+    const c=document.createElement("div");c.className="hcell";
+    c.style.width=cs+"px";c.style.height=cs+"px";
+    c.style.left=(PAD+x*(cs+G))+"px";c.style.top=(PAD+y*(cs+G))+"px";
+    board.appendChild(c);
+  }
+  // state: resume or new
+  HG={tiles:[],score:0,nid:1,nodes:{},undo:null,maxLv:1,bloom:null,over:false,cs,PAD,G};
+  const st=HDaily?null:hStGet();
+  if(st&&st.tiles&&st.tiles.length){
+    HG.score=st.score;
+    st.tiles.forEach(t=>{HG.tiles.push({id:HG.nid++,x:t.x,y:t.y,lv:t.lv});HG.maxLv=Math.max(HG.maxLv,t.lv);});
+  }else{hSpawn();hSpawn();}
+  hRender();
+  hSave();
+  // input
+  let ts=null;
+  board.addEventListener("touchstart",e=>{ts=[e.touches[0].clientX,e.touches[0].clientY];},{passive:true});
+  board.addEventListener("touchend",e=>{
+    if(!ts)return;
+    const dx=e.changedTouches[0].clientX-ts[0],dy=e.changedTouches[0].clientY-ts[1];ts=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;
+    hMove(Math.abs(dx)>Math.abs(dy)?(dx>0?1:0):(dy>0?3:2));
+  });
+  let ms=null;
+  board.addEventListener("mousedown",e=>{ms=[e.clientX,e.clientY];});
+  board.addEventListener("mouseup",e=>{
+    if(!ms)return;const dx=e.clientX-ms[0],dy=e.clientY-ms[1];ms=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;
+    hMove(Math.abs(dx)>Math.abs(dy)?(dx>0?1:0):(dy>0?3:2));
+  });
+  $("#hUndo").onclick=()=>{
+    if(!HG||!HG.undo)return;
+    const u=HG.undo;HG.undo=null;
+    Object.values(HG.nodes).forEach(el=>el.remove());
+    HG.nodes={};HG.tiles=[];HG.score=u.score;HG.over=false;
+    u.tiles.forEach(t=>HG.tiles.push({id:HG.nid++,x:t.x,y:t.y,lv:t.lv,neu:true}));
+    hRender();hSave();
+  };
+  $("#hHelp").onclick=()=>{hTutorial(()=>startHana());};
+  $("#hNew").onclick=()=>{
+    Object.values(HG.nodes).forEach(el=>el.remove());
+    HG.nodes={};HG.tiles=[];HG.score=0;HG.undo=null;HG.maxLv=1;HG.over=false;
+    hSpawn();hSpawn();hRender();hSave();
+  };
+  const hbr=$("#hBestReset");if(hbr)hbr.onclick=hResetBest;
+}
+// この端末の自己ベスト表示だけをリセット（サーバー番付には一切影響しない）
+function hResetBest(){
+  const isG=HN===5;
+  const label=isG?P("大花園","Grand Garden","Gran Jardín"):P("花あわせ","Hana-Awase","Hana-Awase");
+  if(!confirm(P("この端末の「"+label+"」の自己ベスト表示をリセットします。オンライン番付には影響しません。よろしいですか？","Reset this device's "+label+" best score? This does NOT affect the online rankings.","¿Restablecer tu mejor puntuación local de "+label+"? No afecta la clasificación en línea.")))return;
+  if(isG){DB.hana.best5=0;DB.hana.bestLv5=1;}else{DB.hana.best=0;DB.hana.bestLv=1;}
+  save();
+  const hb=$("#hBest");if(hb)hb.textContent=P("ベスト ","Best ","Récord ")+(HG?Math.max(hBestVal(),HG.score):hBestVal()).toLocaleString();
+}
+
+function hSpawn(){
+  const occ={};HG.tiles.forEach(t=>{if(!t.dead)occ[t.x+","+t.y]=1;});
+  const empty=[];
+  for(let y=0;y<HN;y++)for(let x=0;x<HN;x++)if(!occ[x+","+y])empty.push([x,y]);
+  if(!empty.length)return;
+  const R=HRNG||Math.random;
+  const [x,y]=empty[Math.floor(R()*empty.length)];
+  HG.tiles.push({id:HG.nid++,x,y,lv:R()<0.9?1:2,neu:true});
+}
+
+function hRender(){
+  const board=$("#hanaBoard");if(!board||!HG)return;
+  $("#hScore").textContent=HG.score.toLocaleString();
+  const hb=$("#hBest");if(hb)hb.textContent=P("ベスト ","Best ","Récord ")+Math.max(hBestVal(),HG.score).toLocaleString();
+  const hc=$("#hChain");
+  if(hc){const seen=Math.max((HN===5?DB.hana.bestLv5:DB.hana.bestLv)||1,HG.maxLv||1);
+    hc.innerHTML=HLV.slice(1).map((f,i)=>`<span style="opacity:${i+1<=seen?1:.28}" title="${f.n}">${f.e}</span>`).join(`<span style="opacity:.35;font-size:11px">→</span>`);}
+  const {cs,PAD,G}=HG;
+  HG.tiles.forEach(t=>{
+    let el=HG.nodes[t.id];
+    const tx=PAD+t.x*(cs+G),ty=PAD+t.y*(cs+G);
+    if(!el){
+      el=document.createElement("div");el.className="htile";
+      el.style.width=cs+"px";el.style.height=cs+"px";
+      el.innerHTML=`<div class="hin"><div class="he"></div><div class="hn"></div></div>`;
+      el.style.transform=`translate(${tx}px,${ty}px)`;
+      el.dataset.lv=t.lv;
+      if(t.neu)el.querySelector(".hin").classList.add("pop");
+      board.appendChild(el);HG.nodes[t.id]=el;
+    }
+    el.style.transform=`translate(${tx}px,${ty}px)`;
+    el.style.zIndex=t.dead?1:2;
+    const f=HLV[Math.min(t.lv,HLV.length-1)];
+    el.querySelector(".he").textContent=f.e;
+    el.querySelector(".hn").textContent=f.n;
+    el.querySelector(".hin").style.background=HCOL[Math.min(t.lv,HCOL.length-1)];
+    el.dataset.lv=t.lv;
+    if(t.popNext){t.popNext=false;const h=el.querySelector(".hin");h.classList.remove("pop");void h.offsetWidth;h.classList.add("pop");}
+    t.neu=false;
+  });
+  if(HG.bloom){
+    const f=HLV[HG.bloom];HG.bloom=null;
+    const d=document.createElement("div");d.className="hana-toast";
+    d.textContent=`${f.e} ${f.n}${P("、開花！"," blooms!"," ¡florece!")}`;
+    board.appendChild(d);gT(()=>d.remove(),1100);
+    beep(700,.12,"triangle",.12);gT(()=>beep(1050,.16,"triangle",.12),110);
+  }
+  gT(()=>{
+    if(!HG)return;
+    HG.tiles.filter(t=>t.dead).forEach(t=>{const el=HG.nodes[t.id];if(el)el.remove();delete HG.nodes[t.id];});
+    HG.tiles=HG.tiles.filter(t=>!t.dead);
+  },150);
+}
+
+function hMove(dir){
+  if(BGMAudio&&BGMAudio.paused&&!muted){BGMAudio.play().catch(()=>{});bgmFadeTo(0.30);}
+  if(!HG||HG.over||!$("#hanaBoard"))return;
+  const v=[[-1,0],[1,0],[0,-1],[0,1]][dir];
+  const ord=[...Array(HN).keys()];
+  const rev=[...ord].reverse();
+  const xo=v[0]===1?rev:ord, yo=v[1]===1?rev:ord;
+  const at={};HG.tiles.forEach(t=>{if(!t.dead)at[t.x+","+t.y]=t;});
+  let moved=false,gained=0;const merged=new Set();
+  const snap=hSnapshot();
+  for(const y of yo)for(const x of xo){
+    const t=at[x+","+y];if(!t)continue;
+    let cx=x,cy=y,didMerge=false;
+    for(;;){
+      const nx=cx+v[0],ny=cy+v[1];
+      if(nx<0||nx>=HN||ny<0||ny>=HN)break;
+      const o=at[nx+","+ny];
+      if(!o){cx=nx;cy=ny;continue;}
+      if(o.lv===t.lv&&!merged.has(o.id)&&o.lv<12){
+        delete at[x+","+y];
+        t.x=nx;t.y=ny;t.dead=true;
+        o.lv++;o.popNext=true;merged.add(o.id);
+        gained+=Math.pow(2,o.lv);
+        if(o.lv>HG.maxLv){HG.maxLv=o.lv;HG.bloom=o.lv;}
+        moved=true;didMerge=true;
+      }
+      break;
+    }
+    if(didMerge)continue;
+    if(cx!==x||cy!==y){delete at[x+","+y];t.x=cx;t.y=cy;at[cx+","+cy]=t;moved=true;}
+  }
+  if(!moved)return;
+  HG.undo=snap;
+  HG.score+=gained;
+  if(gained>0){beep(360+Math.min(HG.maxLv,12)*28,.08,"triangle",.09);
+    const b=$("#hanaBoard");
+    if(b){const f=document.createElement("div");f.className="hfloat";f.textContent="+"+gained;
+      b.appendChild(f);setTimeout(()=>f.remove(),850);}}
+  hSpawn();
+  hRender();
+  hSave();
+  if(hIsOver()){HG.over=true;gT(hGameOver,400);}
+}
+
+function hIsOver(){
+  const g={};let cnt=0;
+  HG.tiles.forEach(t=>{if(!t.dead){g[t.x+","+t.y]=t.lv;cnt++;}});
+  if(cnt<HN*HN)return false;
+
+  for(let y=0;y<HN;y++)for(let x=0;x<HN;x++){
+    const l=g[x+","+y];
+    if(x<HN-1&&g[(x+1)+","+y]===l)return false;
+    if(y<HN-1&&g[x+","+(y+1)]===l)return false;
+  }
+  return true;
+}
+
+function hGameOver(){
+  if(!HG)return;
+  const s=HG.score,top=HG.maxLv;
+  bgmStop();
+  const newBest=s>hBestVal();
+  if(HN===5){if(newBest)DB.hana.best5=s;DB.hana.bestLv5=Math.max(DB.hana.bestLv5||1,top);}
+  else{if(newBest)DB.hana.best=s;DB.hana.bestLv=Math.max(DB.hana.bestLv||1,top);}
+  DB.hana.plays++;
+  hStSet(null);
+  DB.daily[todayStr()]=true;
+  save();updateStreakChip();
+  if(HDaily){DB.daily1={d:todayStr(),score:s,lv:top,done:true};save();submitScore('daily',s);}
+  else if(HN===4)submitScore('hana',s);
+  else if(HN===5)submitScore('ogarden',s);
+  const f=HLV[top];
+  window.__cert={lv:top,score:s,mode:HDaily?P("今日の一局","Daily Duel","Duelo del Día"):HN===5?P("大花園","Grand Garden","Gran Jardín"):P("花あわせ","Hana-Awase","Hana-Awase")};
+  const wasDaily=HDaily;HDaily=false;HRNG=null;
+  HG=null;
+  gArea().innerHTML=`
+    <div class="fade-in center" style="width:min(340px,88vw)">
+      <p class="instruction">${P("これ以上うごかせません","No more moves!","¡No hay más movimientos!")}</p>
+      <div style="font-size:64px">${f.e}</div>
+      <p style="font-weight:800;margin-bottom:6px">${P("いちばん咲いた花","Best bloom","Mejor flor")}: ${f.n}</p>
+      <div class="score-big">${s.toLocaleString()}</div>
+      ${newBest?`<p style="color:var(--shu);font-weight:800;margin-top:6px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:``}
+      <div style="display:grid;gap:10px;margin-top:20px">
+        ${top>=5?`<button class="btn secondary" onclick="saveCert()">📜 ${P("開花のしるしを保存","Save bloom certificate","Guardar certificado")}</button>`:``}
+        ${wasDaily?`<p class="muted small">${P("また明日、あたらしい盤で。","See you tomorrow — a brand-new board.","Hasta mañana, con un tablero nuevo.")}</p>`
+                  :`<button class="btn" onclick="${HN===5?"startHana5()":"startHana()"}">${P("もう一度さかせる","Bloom again","Florecer otra vez")}</button>`}
+        ${wasDaily?`<button class="btn secondary" onclick="joinRank('daily',${s})">🏆 ${P("今日の番付を見る","Today&#39;s rankings","Ranking de hoy")}</button>`
+         :HN===4?`<button class="btn secondary" onclick="joinRank('hana',${s})">🏆 ${P("世界番付を見る","World Rankings","Clasificación Mundial")}</button>`
+         :HN===5?`<button class="btn secondary" onclick="joinRank('ogarden',${s})">🏆 ${P("大花園番付を見る","Grand Garden Rankings","Clasificación del Gran Jardín")}</button>`
+                :`<p class="muted small">${P("番付は定式盤（4×4）のみ対象です。","World rankings cover the standard 4×4 board only.","La clasificación cubre solo el tablero estándar 4×4.")}</p>`}
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+}
+
+document.addEventListener("keydown",e=>{
+  if(!HG||!$("#hanaBoard"))return;
+  const k={ArrowLeft:0,ArrowRight:1,ArrowUp:2,ArrowDown:3}[e.key];
+  if(k!==undefined){e.preventDefault();hMove(k);}
+});
+
+
+/* ====== 開花証明書 ====== */
+function saveCert(){
+  const c=window.__cert;if(!c)return;
+  try{
+    const cv=document.createElement("canvas");cv.width=1080;cv.height=1350;
+    const x=cv.getContext("2d");if(!x)return;
+    // 和紙背景＋市松
+    x.fillStyle="#F4F2EB";x.fillRect(0,0,1080,1350);
+    x.fillStyle="#EFEDE4";
+    for(let yy=0;yy<1350;yy+=54)for(let xx=0;xx<1080;xx+=54)if(((xx/54)+(yy/54))%2===0)x.fillRect(xx,yy,54,54);
+    // 金枠
+    x.strokeStyle="#C99B2D";x.lineWidth=10;x.strokeRect(40,40,1000,1270);
+    x.strokeStyle="#E9C46A";x.lineWidth=3;x.strokeRect(60,60,960,1230);
+    // 見出し
+    x.fillStyle="#2A4D8F";x.textAlign="center";
+    x.font="800 64px 'Shippori Mincho B1',serif";
+    x.fillText(P("開 花 証 明","CERTIFICATE OF BLOOM","CERTIFICADO DE FLOR"),540,170);
+    x.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+    x.fillStyle="#8A8674";x.fillText(c.mode+" · "+P("冴え手帖","SAE Techo","SAE Techo"),540,225);
+    // 花
+    const f=HLV[c.lv]||HLV[1];
+    x.font="300px serif";x.fillText(f.e,540,610);
+    x.fillStyle="#2A4D8F";x.font="800 58px 'Shippori Mincho B1',serif";
+    x.fillText(f.n,540,720);
+    // スコア
+    x.fillStyle="#C8452C";x.font="800 110px 'Shippori Mincho B1',serif";
+    x.fillText(c.score.toLocaleString(),540,880);
+    x.fillStyle="#8A8674";x.font="700 28px 'Zen Kaku Gothic New',sans-serif";
+    x.fillText(P("この者、みごと上記の花を咲かせたことを証する","This certifies the bloom above was achieved","Certifica que la flor de arriba fue lograda"),540,950);
+    // 名前・日付
+    x.fillStyle="#3D3A30";x.font="800 46px 'Shippori Mincho B1',serif";
+    x.fillText(DB.rankName||P("名無しの庭師","A Nameless Gardener","Jardinero Anónimo"),540,1050);
+    x.fillStyle="#8A8674";x.font="700 30px 'Zen Kaku Gothic New',sans-serif";
+    x.fillText(todayStr(),540,1105);
+    // 朱印
+    x.fillStyle="#C8452C";
+    const rx=860,ry=1130;x.beginPath();if(x.roundRect)x.roundRect(rx,ry,130,130,14);else x.rect(rx,ry,130,130);x.fill();
+    x.fillStyle="#F4F2EB";x.font="800 84px 'Shippori Mincho B1',serif";x.fillText("冴",rx+65,ry+98);
+    // フッター
+    x.fillStyle="#2A4D8F";x.font="700 26px 'Zen Kaku Gothic New',sans-serif";
+    x.fillText("冴え手帖 -SAE- 脳活道場 ｜ よしだ",540,1270);
+    const a=document.createElement("a");
+    a.download="sae-bloom-"+todayStr()+".png";
+    a.href=cv.toDataURL("image/png");
+    document.body.appendChild(a);a.click();a.remove();
+    beep(880,.12,"triangle",.1);
+  }catch(e){}
+}
+
+/* ====== 生活習慣チェック（FINGER型・複合介入の実践） ====== */
+const HABITS=[
+ {id:"walk",e:"🚶",n:()=>P("早歩き20分","Brisk walk 20 min","Caminar rápido 20 min")},
+ {id:"veg",e:"🐟",n:()=>P("魚か野菜をしっかり","Fish or veggies","Pescado o verduras")},
+ {id:"water",e:"💧",n:()=>P("水をこまめに","Sip water often","Beber agua")},
+ {id:"sleep",e:"😴",n:()=>P("7時間ねむった","Slept ~7 hours","Dormí ~7 horas")},
+ {id:"talk",e:"💬",n:()=>P("誰かと会話した","Talked with someone","Hablé con alguien")},
+ {id:"new",e:"✨",n:()=>P("新しいことひとつ","One new thing","Algo nuevo")}
+];
+function toggleHabit(id){
+  const k=todayStr();
+  const arr=DB.habits[k]||[];
+  const i=arr.indexOf(id);
+  if(i>=0)arr.splice(i,1);else{arr.push(id);beep(600+arr.length*80,.07,"triangle",.08);}
+  DB.habits[k]=arr;save();renderTips();
+}
+function habitDots(){
+  const out=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    const c=(DB.habits[k]||[]).length;
+    out.push(`<span title="${k}" style="display:inline-block;width:16px;height:16px;border-radius:50%;margin:0 3px;background:${c>=4?"var(--shu)":c>=2?"var(--gold)":c>=1?"#CFC9B6":"#EAE6D8"};border:1px solid #D9D4C5"></span>`);
+  }
+  return out.join("");
+}
+
+/* ======================================================
+   🏆 世界番付 (global ranking via Cloudflare Worker)
+====================================================== */
+const RANK_URL="https://sae-rank.dashiyo777.workers.dev";
+// ogarden=大花園（別集計）。hana/rush の既存データとは別キーで管理される。
+function gameLabel(g){return g==="hana"?"Hana-Awase":g==="ogarden"?P("大花園","Grand Garden","Gran Jardín"):"SAE Rush";}
+function myBestFor(g){return g==="daily"?((DB.daily1&&DB.daily1.score)||0):g==="hana"?(DB.hana.best||0):g==="ogarden"?(DB.hana.best5||0):(DB.rush.best||0);}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function rankId(){
+  if(!DB.rankId){
+    let id="";
+    try{id=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>b.toString(16).padStart(2,"0")).join("");}
+    catch(e){id=String(Date.now())+String(Math.floor(Math.random()*1e6));}
+    DB.rankId=id;save();
+  }
+  return DB.rankId;
+}
+function askName(){
+  const v=window.prompt(P("番付に載せる「よびな」を入力してください（8文字まで）","Enter your nickname for the rankings (max 8 chars)","Escribe tu apodo para la clasificación (máx. 8)"),DB.rankName||"");
+  if(v===null)return null;
+  const name=v.replace(/[<>&"'`]/g,"").trim().slice(0,8);
+  if(!name)return null;
+  DB.rankName=name;save();return name;
+}
+async function submitScore(g,s){
+  if(!DB.rankName||!(s>0))return;
+  try{
+    await fetch(RANK_URL+"/submit",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({g,id:rankId(),n:DB.rankName,s})});
+  }catch(e){}
+}
+function joinRank(g,s){
+  const n=DB.rankName||askName();
+  if(!n){showRanking(g);return;}
+  submitScore(g,s).then(()=>showRanking(g));
+}
+function renameRank(g){
+  const n=askName();
+  if(n){const s=myBestFor(g);submitScore(g,s).then(()=>showRanking(g));}
+}
+const curYear=()=>new Date().getFullYear();
+async function showRanking(g){
+  gResolve=()=>{};clearGTimers();
+  const isD=g==="daily";
+  openOverlay(isD?"🎴 "+P("今日の一局 番付","Daily Duel Rankings","Ranking del Día")+" "+todayStr().slice(5).replace("-","/")
+    :"🏆 "+curYear()+P("年 ",""," ")+gameLabel(g)+" "+P("番付","Rankings","Clasificación"));
+  gArea().innerHTML=`<p class="muted">${P("番付を読み込み中…","Loading rankings…","Cargando clasificación…")}</p>`;
+  let data=null;
+  try{const r=await fetch(RANK_URL+"/top?g="+g+"&y="+(g==="daily"?dayKey():curYear())+"&n=20");data=await r.json();}catch(e){}
+  if(!data||!data.top){
+    gArea().innerHTML=`<div class="center fade-in"><p class="muted">${P("番付を取得できませんでした。<br>通信環境をご確認のうえ、もう一度お試しください。","Could not load the rankings.<br>Please check your connection and try again.","No se pudo cargar la clasificación.<br>Revisa tu conexión e inténtalo de nuevo.")}</p>
+      <button class="btn ghost" style="margin-top:16px;width:min(280px,78vw)" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button></div>`;
+    return;
+  }
+  const me=rankId();
+  const myBest=myBestFor(g);
+  const medals=["🥇","🥈","🥉"];
+  const rows=data.top.map((r,i)=>`
+    <div class="rec-row ${i<3?"rank-"+(i+1):""}" style="padding-left:8px;padding-right:8px;${r.id===me?"box-shadow:inset 0 0 0 2px var(--gold);border-radius:8px;":""}">
+      <span>${i===0&&g!=="daily"?"🥇<b style='color:var(--shu)'>"+P("横綱(暫定)","Yokozuna","Yokozuna")+"</b>":medals[i]||"<b>"+(i+1)+"</b>"}　${esc(r.n)}${r.id===me?P("（あなた）"," (you)"," (tú)"):""}</span><b>${Number(r.s).toLocaleString()}</b>
+    </div>`).join("");
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      ${rows||'<p class="muted center">'+P("まだ記録がありません。一番乗りのチャンス！","No records yet. Be the first!","Aún no hay registros. ¡Sé el primero!")+'</p>'}
+      <p class="muted small center" style="margin-top:10px">${P("参加 ","Players: ","Jugadores: ")}${data.total}${DB.rankName?P("人・よびな「"," · nickname "," · apodo ")+esc(DB.rankName)+P("」","",""):""}</p>
+      <p class="muted small center">${g==="daily"?P("盤は毎日0時にあたらしくなります。全員おなじ盤・おなじ運。","A new board every midnight. Same board, same luck, for everyone.","Un tablero nuevo cada medianoche. El mismo tablero para todos."):P("12月末時点の1位が、その年の<b>横綱</b>として殿堂入りします。","The #1 at the end of December becomes that year&#39;s <b>Yokozuna</b> — enshrined forever.","El nº1 a fin de diciembre se convierte en el <b>Yokozuna</b> del año, para siempre.")}</p>
+      <div style="display:grid;gap:10px;margin-top:12px">
+        ${g==="daily"?``:`<button class="btn secondary" onclick="showHall('${g}')">🏛 ${P("歴代横綱の殿堂","Hall of Yokozuna","Salón de los Yokozuna")}</button>`}
+        ${DB.rankName?`<button class="btn ghost" onclick="renameRank('${g}')">${P("よびなを変える","Change nickname","Cambiar apodo")}</button>`
+                     :`<button class="btn shu" onclick="joinRank('${g}',${myBest})">${P("番付に参加する（よびな登録）","Join the rankings","Unirse a la clasificación")}</button>`}
+        <button class="btn" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+}
+async function showHall(g){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🏛 "+gameLabel(g)+" "+P("歴代横綱","Hall of Yokozuna","Salón de Yokozuna"));
+  gArea().innerHTML=`<p class="muted">${P("殿堂を開いています…","Opening the hall…","Abriendo el salón…")}</p>`;
+  let data=null;
+  try{const r=await fetch(RANK_URL+"/champions?g="+g);data=await r.json();}catch(e){}
+  if(!data||!data.champions){
+    gArea().innerHTML=`<div class="center fade-in"><p class="muted">${P("殿堂を取得できませんでした。","Could not load the hall.","No se pudo cargar el salón.")}</p>
+      <button class="btn ghost" style="margin-top:16px;width:min(280px,78vw)" onclick="showRanking('${g}')">${P("番付にもどる","Back to rankings","Volver a la clasificación")}</button></div>`;
+    return;
+  }
+  const past=data.champions.filter(c=>c.y<data.currentYear);
+  const cur=data.champions.find(c=>c.y===data.currentYear);
+  gArea().innerHTML=`
+    <div class="fade-in center" style="width:min(340px,88vw)">
+      ${past.length?past.map(c=>`
+        <div class="card" style="margin-bottom:10px">
+          <div class="eyebrow">${c.y}${P("年 横綱"," Yokozuna"," Yokozuna")}</div>
+          <div class="mincho" style="font-size:26px;font-weight:800">👑 ${esc(c.n)}</div>
+          <div class="muted">${Number(c.s).toLocaleString()} ${P("点","pts","pts")}</div>
+        </div>`).join("")
+      :`<div class="card" style="margin-bottom:10px">
+          <div style="font-size:40px">👑</div>
+          <p style="font-weight:700;margin-top:6px">${P("初代横綱の座は、まだ空位。","The first Yokozuna throne is still vacant.","El trono del primer Yokozuna sigue vacante.")}</p>
+          <p class="muted small">${P("今年","This year, ","Este año, ")}${data.currentYear}${P("年の王者が、歴史に名を刻む最初の一人になります。"," — its champion will be the first name in history."," — su campeón será el primer nombre en la historia.")}</p>
+        </div>`}
+      ${cur?`<p class="muted small">${P("現在の暫定王者","Current interim champion","Campeón interino actual")}: ${esc(cur.n)}（${Number(cur.s).toLocaleString()}${P("点","pts","pts")}）</p>`:""}
+      <div style="display:grid;gap:10px;margin-top:12px">
+        <button class="btn" onclick="showRanking('${g}')">${P("番付にもどる","Back to rankings","Volver a la clasificación")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+}
+
+
+function showGate(){
+  gResolve=()=>{};clearGTimers();
+  openOverlay("🌸🌸 "+P("大花園","Grand Garden","Gran Jardín"));
+  gArea().innerHTML=`
+    <div class="fade-in center" style="width:min(340px,88vw)">
+      <div style="width:74px;height:74px;margin:0 auto 10px;border:2px solid var(--shu);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--shu);font-family:'Shippori Mincho B1',serif;font-weight:800;font-size:22px">会員</div>
+      <h2 class="mincho" style="font-size:19px;margin-bottom:6px">${P("大花園に入る","Enter the Grand Garden","Entrar al Gran Jardín")}</h2>
+      <p class="muted" style="margin-bottom:4px">${P("5×5の大盤で、じっくり大輪を咲かせる、おまけの盤です。","A serene 5×5 board for slow, grand blooms — a bonus board.","Un sereno tablero 5×5 para grandes flores — un tablero extra.")}</p>
+      <p class="muted small" style="margin-bottom:12px">${P("今月の合言葉（TOMO-XXXX）を入力してください。","Enter your unlock key.","Escribe tu clave de acceso.")}</p>
+      <input id="gateIn" inputmode="text" autocomplete="off" placeholder="TOMO-XXXX" style="width:100%;padding:14px;border:1.5px solid var(--line);border-radius:12px;font-size:18px;text-align:center;letter-spacing:.2em;font-family:inherit;background:var(--white)">
+      <p id="gateErr" style="display:none;color:var(--shu);font-size:13px;margin-top:8px">${P("この大花園は準備中です。","This Grand Garden is coming soon.","El Gran Jardín llegará pronto.")}</p>
+      <div style="display:grid;gap:10px;margin-top:14px">
+        <button class="btn shu" id="gateGo">${P("解錠する","Unlock","Desbloquear")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+      <p class="muted small" style="margin-top:12px">${P("この「大花園」は準備中です。通常の道場だけでも、たっぷりお楽しみいただけます。","This Grand Garden is coming soon. The main dojo is fully playable.","El Gran Jardín llegará pronto. El dojo principal ya está disponible.")}</p>
+    </div>`;
+  $("#gateGo").onclick=async()=>{
+    const ok=await tryUnlock($("#gateIn").value);
+    if(ok){beep(880,.15,"triangle",.12);startHana5();}
+    else{$("#gateErr").style.display="block";$("#gateIn").focus();}
+  };
+  $("#gateIn").onkeydown=e=>{if(e.key==="Enter")$("#gateGo").click();};
+}
+
+/* ---------- init ---------- */
+document.title=P("冴え手帖 -SAE- 脳活道場｜よしだ（70歳の脳活）","SAE Techo — Brain Dojo","SAE Techo — Dojo Cerebral");
+document.querySelector(".appbar h1").innerHTML=P("冴え手帖","SAE Techo","SAE Techo")+`<small>${P("SAE — 脳活道場","BRAIN DOJO","DOJO CEREBRAL")}</small>`;
+(function(){const TB={home:P("道場","Dojo","Dojo"),diag:P("診断","Check","Chequeo"),rec:P("記録","Stats","Datos"),tips:P("知恵","Tips","Consejos")};
+document.querySelectorAll(".tabbar button").forEach(b=>{const ic=b.querySelector(".ticon").textContent;b.innerHTML=`<span class="ticon">${ic}</span>${TB[b.dataset.tab]}`;});})();
+$("#quitBtn").textContent=P("やめる","Quit","Salir");
+$("#gTitle").textContent=P("ゲーム","Game","Juego");
+(function(){const lb=$("#langBtn");lb.textContent="🌐 "+LANG.toUpperCase();lb.onclick=cycleLang;})();
+(function(){const pe=["🌸","🌸","🌺","🌸","💮","🌸"];
+for(let i=0;i<6;i++){const s=document.createElement("span");s.className="petal";s.textContent=pe[i];
+s.style.left=(8+i*16+Math.random()*8)+"%";s.style.animationDuration=(11+Math.random()*9)+"s";
+s.style.animationDelay=(-Math.random()*18)+"s";s.style.fontSize=(13+Math.random()*9)+"px";
+document.body.appendChild(s);}})();
+updateStreakChip();
+renderHome();
+
+/* ======================================================
+   game engine
+====================================================== */
+let gResolve=null,gTimers=[];
+const gArea=()=>$("#gameArea");
+function gT(fn,ms){const t=setTimeout(fn,ms);gTimers.push(t);return t;}
+function clearGTimers(){gTimers.forEach(clearTimeout);gTimers=[];}
+function openOverlay(title){$("#gTitle").textContent=title;setProg(0);$("#gameOverlay").classList.add("open");document.body.classList.add("ingame");}
+function closeOverlay(){$("#gameOverlay").classList.remove("open");document.body.classList.remove("ingame");HDaily=false;HRNG=null;bgmStop();clearGTimers();gArea().innerHTML="";}
+function quitGame(){const r=gResolve;gResolve=null;closeOverlay();if(r)r(null);const ab=document.querySelector(".tabbar button.active");if(ab)render(ab.dataset.tab);}
+function setProg(f){$("#gProg").style.width=(f*100)+"%";}
+function finishWith(score){const r=gResolve;gResolve=null;if(r)r(score);}
+function runGame(id,opts={}){
+  return new Promise(res=>{
+    gResolve=res;clearGTimers();openOverlay(GAMES[id].icon+" "+GAMES[id].name);
+    GAME_IMPL[id](finishWith,opts);
+  });
+}
+function countdown(intro,cb){
+  gArea().innerHTML=`<div class="fade-in"><p class="instruction">${intro}</p><div class="countN" id="cnt">3</div></div>`;
+  let n=3;
+  const tick=()=>{n--;if(n>0){const c=$("#cnt");if(c)c.textContent=n;gT(tick,750);}else cb();};
+  gT(tick,750);
+}
+function flashFeedback(ok){
+  const el=document.createElement("div");
+  el.className="feedback show";
+  el.style.color=ok?"var(--green)":"var(--shu)";
+  el.textContent=ok?"○":"✕";
+  gArea().appendChild(el);
+  gT(()=>{el.remove();},260);
+}
+
+/* ======================================================
+   game implementations  (finish(score 0-100))
+====================================================== */
+const GAME_IMPL={};
+
+/* ----- けいさん道場 (処理速度) ----- */
+GAME_IMPL.calc=function(finish){
+  const N=15;let i=0,correct=0,t0=0;
+  const gen=()=>{
+    const type=Math.floor(Math.random()*3);
+    let a,b,q,ans;
+    if(type===0){a=3+Math.floor(Math.random()*27);b=3+Math.floor(Math.random()*27);q=`${a} ＋ ${b}`;ans=a+b;}
+    else if(type===1){a=10+Math.floor(Math.random()*40);b=1+Math.floor(Math.random()*Math.min(a,20));q=`${a} − ${b}`;ans=a-b;}
+    else{a=2+Math.floor(Math.random()*8);b=2+Math.floor(Math.random()*8);q=`${a} × ${b}`;ans=a*b;}
+    const set=new Set([ans]);
+    while(set.size<3){const d=ans+(Math.floor(Math.random()*7)-3);if(d>=0&&d!==ans)set.add(d);}
+    return{q,ans,opts:shuffle([...set])};
+  };
+  const next=()=>{
+    if(i>=N){
+      const total=(Date.now()-t0)/1000;
+      const speed=clamp((70-total)/(70-18),0,1);
+      finish(Math.round((correct/N)*60+speed*40));
+      return;
+    }
+    setProg(i/N);
+    const p=gen();
+    gArea().innerHTML=`
+      <p class="instruction">${P("こたえを えらんでください","Pick the answer","Elige la respuesta")}（${i+1}/${N}）</p>
+      <div class="big-display">${p.q}</div>
+      <div class="choice-grid cols3">
+        ${p.opts.map(o=>`<button class="choice-btn" data-v="${o}">${o}</button>`).join("")}
+      </div>`;
+    gArea().querySelectorAll(".choice-btn").forEach(b=>{
+      b.onclick=()=>{
+        const ok=Number(b.dataset.v)===p.ans;
+        if(ok)correct++;flashFeedback(ok);
+        i++;gT(next,240);
+      };
+    });
+  };
+  countdown(P("できるだけ速く、正確に。","As fast and accurate as you can.","Lo más rápido y preciso posible."),()=>{t0=Date.now();next();});
+};
+
+/* ----- 数字おぼえ (記憶力) ----- */
+GAME_IMPL.digit=function(finish){
+  let level=4,lives=2,maxSpan=0;
+  const round=()=>{
+    setProg(clamp((level-3)/6,0,1));
+    let digits="";
+    for(let k=0;k<level;k++)digits+=Math.floor(Math.random()*10);
+    gArea().innerHTML=`
+      <p class="instruction">${level}${P("けたの数字を おぼえてください"," digits — memorize them!"," dígitos — ¡memorízalos!")}</p>
+      <div class="big-display" id="dg" style="letter-spacing:.18em">${digits.split("").join(" ")}</div>`;
+    gT(()=>askInput(digits),level*650+500);
+  };
+  const askInput=(digits)=>{
+    let entered="";
+    gArea().innerHTML=`
+      <p class="instruction">${P("おぼえた数字を 入力してください","Enter the digits you memorized","Escribe los dígitos memorizados")}</p>
+      <div class="digit-input" id="din">&nbsp;</div>
+      <div class="numpad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-n="${n}">${n}</button>`).join("")}
+        <button class="util" data-n="del">${P("けす","DEL","BORR")}</button>
+        <button data-n="0">0</button>
+        <button class="util" data-n="ok" style="color:var(--ai)">OK</button>
+      </div>`;
+    const din=$("#din");
+    gArea().querySelectorAll(".numpad button").forEach(b=>{
+      b.onclick=()=>{
+        const v=b.dataset.n;
+        if(v==="del")entered=entered.slice(0,-1);
+        else if(v==="ok"){judge(entered,digits);return;}
+        else if(entered.length<level)entered+=v;
+        din.textContent=entered?entered.split("").join(" "):"\u00A0";
+      };
+    });
+  };
+  const judge=(entered,digits)=>{
+    const ok=entered===digits;
+    flashFeedback(ok);
+    gT(()=>{
+      if(ok){
+        maxSpan=Math.max(maxSpan,level);
+        if(level>=9){end();return;}
+        level++;round();
+      }else{
+        lives--;
+        if(lives>0){
+          gArea().innerHTML=`<p class="instruction">${P("おしい！ もう一度","So close! Try again:","¡Casi! Otra vez:")} ${level}${P("けたに挑戦"," digits"," dígitos")}</p><div class="countN">✍️</div>`;
+          gT(round,900);
+        }else end();
+      }
+    },350);
+  };
+  const end=()=>{
+    const score=maxSpan===0?10:clamp((maxSpan-3)*16+20,10,100);
+    finish(score);
+  };
+  countdown(P("表示された数字を おぼえて入力。","Memorize the digits, then type them in.","Memoriza los dígitos y escríbelos."),round);
+};
+
+/* ----- 順番タッチ (注意・切替) ----- */
+GAME_IMPL.trail=function(finish,opts={}){
+  const modeB=!!opts.modeB;
+  const labels=modeB?(LANG==="ja"?["1","あ","2","い","3","う","4","え","5","お","6","か"]:["1","A","2","B","3","C","4","D","5","E","6","F"]):["1","2","3","4","5","6","7","8","9","10","11","12"];
+  countdown(modeB?P("数字と ひらがなを こうごに：1→あ→2→い…","Alternate numbers and letters: 1→A→2→B…","Alterna números y letras: 1→A→2→B…"):P("1 から 12 まで じゅんばんにタッチ！","Tap 1 to 12 in order!","¡Toca del 1 al 12 en orden!"),()=>{
+    gArea().innerHTML=`
+      <p class="instruction" id="trailHint">${P("つぎ","Next","Sig.")}: <b style="color:var(--ai);font-size:19px">${labels[0]}</b></p>
+      <div id="trailField"></div>`;
+    const field=$("#trailField");
+    const W=field.clientWidth,H=field.clientHeight;
+    const cols=3,rows=4,cw=W/cols,ch=H/rows;
+    const cells=shuffle(Array.from({length:12},(_,i)=>i));
+    let next=0,errors=0;
+    const t0=Date.now();
+    labels.forEach((lb,idx)=>{
+      const cell=cells[idx],cx=cell%cols,cy=Math.floor(cell/cols);
+      const x=cx*cw+4+Math.random()*Math.max(cw-60,1);
+      const y=cy*ch+4+Math.random()*Math.max(ch-60,1);
+      const node=document.createElement("div");
+      node.className="trail-node";node.textContent=lb;
+      node.style.left=x+"px";node.style.top=y+"px";
+      node.onclick=()=>{
+        if(labels.indexOf(lb)===-1)return;
+        if(lb===labels[next]){
+          node.classList.add("done");next++;
+          setProg(next/labels.length);
+          const hint=$("#trailHint");
+          if(next<labels.length){if(hint)hint.innerHTML=`${P("つぎ","Next","Sig.")}: <b style="color:var(--ai);font-size:19px">${labels[next]}</b>`;}
+          else{
+            const t=(Date.now()-t0)/1000;
+            const best=modeB?16:12,worst=modeB?55:45;
+            const score=clamp(Math.round(clamp((worst-t)/(worst-best),0,1)*100-errors*4),5,100);
+            gT(()=>finish(score),380);
+          }
+        }else{errors++;node.classList.add("miss");gT(()=>node.classList.remove("miss"),320);}
+      };
+      field.appendChild(node);
+    });
+  });
+};
+
+/* ----- いろよみ (集中・抑制) ----- */
+GAME_IMPL.stroop=function(finish){
+  const COLORS=[{n:P("あか","RED","ROJO"),c:"#C8452C"},{n:P("あお","BLUE","AZUL"),c:"#2A4D8F"},{n:P("みどり","GREEN","VERDE"),c:"#3E7C4F"},{n:P("きいろ","YELLOW","AMARILLO"),c:"#C99B2D"}];
+  const N=16;let i=0,correct=0,rts=[];
+  const next=()=>{
+    if(i>=N){
+      const avg=rts.length?rts.reduce((a,b)=>a+b,0)/rts.length:2200;
+      const speed=clamp((2200-avg)/(2200-800),0,1);
+      finish(Math.round((correct/N)*65+speed*35));
+      return;
+    }
+    setProg(i/N);
+    const word=COLORS[Math.floor(Math.random()*4)];
+    const ink=Math.random()<0.5?word:COLORS[Math.floor(Math.random()*4)];
+    const t0=Date.now();
+    gArea().innerHTML=`
+      <p class="instruction">${P("文字の《 いろ 》を えらんで！","Choose the ink COLOR!","¡Elige el COLOR de la tinta!")}（${i+1}/${N}）</p>
+      <div class="stroop-word" style="color:${ink.c};font-size:${LANG==="ja"?56:40}px">${word.n}</div>
+      <div class="choice-grid">
+        ${shuffle(COLORS.slice()).map(c=>`<button class="choice-btn" data-n="${c.n}">${c.n}</button>`).join("")}
+      </div>`;
+    gArea().querySelectorAll(".choice-btn").forEach(b=>{
+      b.onclick=()=>{
+        const ok=b.dataset.n===ink.n;
+        if(ok){correct++;rts.push(Date.now()-t0);}
+        flashFeedback(ok);
+        i++;gT(next,240);
+      };
+    });
+  };
+  countdown(P("文字を「読む」のではなく、インクの「色」を答えます。","Do not read the word. Answer the COLOR of the ink.","No leas la palabra. Responde el COLOR de la tinta."),next);
+};
+
+/* ----- 後出しじゃんけん (判断・反射) ----- */
+GAME_IMPL.janken=function(finish){
+  const HANDS=[{e:"✊",n:"グー"},{e:"✌️",n:"チョキ"},{e:"✋",n:"パー"}];
+  const winTo={0:2,1:0,2:1};  // 相手idx → 勝てる手idx (✊に✋, ✌に✊, ✋に✌)
+  const loseTo={0:1,1:2,2:0}; // 相手idx → 負ける手idx
+  const N=15;let i=0,correct=0,rts=[],timer=null;
+  const next=()=>{
+    if(i>=N){
+      const avg=rts.length?rts.reduce((a,b)=>a+b,0)/rts.length:2200;
+      const speed=clamp((2000-avg)/(2000-700),0,1);
+      finish(Math.round((correct/N)*70+speed*30));
+      return;
+    }
+    setProg(i/N);
+    const opp=Math.floor(Math.random()*3);
+    const win=Math.random()<0.5;
+    const target=win?winTo[opp]:loseTo[opp];
+    const t0=Date.now();
+    gArea().innerHTML=`
+      <div class="janken-order" style="background:${win?"var(--ai)":"var(--shu)"}">${win?P("かって！","WIN!","¡GANA!"):P("まけて！","LOSE!","¡PIERDE!")}</div>
+      <div class="janken-hand">${HANDS[opp].e}</div>
+      <p class="instruction small" style="margin-top:6px">${i+1}/${N}</p>
+      <div class="choice-grid cols3">
+        ${HANDS.map((h,idx)=>`<button class="choice-btn big" data-i="${idx}">${h.e}</button>`).join("")}
+      </div>`;
+    const done=(idx)=>{
+      clearTimeout(timer);
+      const ok=idx===target;
+      if(ok){correct++;rts.push(Date.now()-t0);}
+      flashFeedback(ok);
+      i++;gT(next,260);
+    };
+    timer=gT(()=>done(-1),3200);
+    gArea().querySelectorAll(".choice-btn").forEach(b=>{b.onclick=()=>done(Number(b.dataset.i));});
+  };
+  countdown(P("指示が「かって」なら勝つ手、「まけて」なら負ける手を後出し！","If it says WIN, throw the winning hand. If LOSE, the losing one!","Si dice GANA, saca la mano ganadora. Si dice PIERDE, ¡la perdedora!"),next);
+};
+
+/* ======================================================
+   single game / daily course / diagnosis
+====================================================== */
+function stampFor(s){return s>=85?P("冴えわたる","Razor sharp","Brillante"):s>=70?P("好調","In good form","En forma"):s>=55?P("まずまず","Not bad","Nada mal"):P("伸びしろ大","Room to grow","A crecer");}
+
+async function startGame(id){
+  const score=await runGame(id);
+  if(score===null)return;
+  const isBest=!(id in DB.best)||score>DB.best[id];
+  markPractice(id,score);
+  setProg(1);
+  gArea().innerHTML=`
+    <div class="fade-in">
+      <p class="instruction">${GAMES[id].icon} ${GAMES[id].name} — ${GAMES[id].dom}</p>
+      <div class="score-big">${score}<span style="font-size:22px">${P("点"," pts"," pts")}</span></div>
+      <div><span class="stamp">${stampFor(score)}</span></div>
+      ${isBest?`<p style="color:var(--shu);font-weight:800;margin-top:10px">${P("🎉 自己ベスト更新！","🎉 New personal best!","🎉 ¡Nuevo récord!")}</p>`:""}
+      <div style="width:min(300px,80vw);margin-top:22px;display:grid;gap:10px">
+        <button class="btn" onclick="retryGame('${id}')">${P("もう一度","Play again","Otra vez")}</button>
+        <button class="btn ghost" onclick="quitAndRefresh()">${P("とじる","Close","Cerrar")}</button>
+      </div>
+    </div>`;
+}
+function retryGame(id){startGame(id);}
+function quitAndRefresh(){closeOverlay();render(document.querySelector(".tabbar button.active").dataset.tab);}
+
+async function startDaily(){
+  const keys=Object.keys(GAMES);
+  const s=dateSeed();
+  const picks=[keys[s%5],keys[(s+2)%5],keys[(s+4)%5]];
+  const scores=[];
+  for(let i=0;i<picks.length;i++){
+    const id=picks[i];
+    openOverlay(P("今日の稽古 ","Training ","Entreno ")+(i+1)+"/3");
+    await new Promise(res=>{
+      gArea().innerHTML=`
+        <div class="fade-in">
+          <p class="instruction">${P("種目","Game","Juego")} ${i+1}/3</p>
+          <div style="font-size:52px">${GAMES[id].icon}</div>
+          <h2 class="mincho" style="font-size:24px;margin:6px 0 2px">${GAMES[id].name}</h2>
+          <p class="muted">${P("きたえる力","Trains","Entrena")}: ${GAMES[id].dom}</p>
+          <div style="width:min(280px,78vw);margin-top:22px">
+            <button class="btn" id="goBtn">${P("はじめる","Start","Empezar")}</button>
+          </div>
+        </div>`;
+      gResolve=res;
+      $("#goBtn").onclick=()=>{const r=gResolve;gResolve=null;r(true);};
+    }).then(v=>{if(v===null)throw"quit";});
+    const sc=await runGame(id);
+    if(sc===null)return;
+    markPractice(id,sc);
+    scores.push({id,sc});
+  }
+  const avg=Math.round(scores.reduce((a,b)=>a+b.sc,0)/scores.length);
+  openOverlay(P("本日の結果","Results","Resultados"));setProg(1);
+  const tip=TIPS[dateSeed()%TIPS.length];
+  gArea().innerHTML=`
+    <div class="fade-in" style="width:min(340px,88vw)">
+      <p class="instruction center">${P("本日の稽古、おつかれさまでした","Nice work today!","¡Buen trabajo hoy!")}</p>
+      <div class="center"><div class="score-big">${avg}<span style="font-size:22px">${P("点"," pts"," pts")}</span></div>
+      <span class="stamp">${stampFor(avg)}</span></div>
+      <div style="margin-top:16px;text-align:left">
+        ${scores.map(x=>`<div class="rec-row"><span>${GAMES[x.id].icon} ${GAMES[x.id].name}</span><b>${x.sc}${P("点"," pts"," pts")}</b></div>`).join("")}
+      </div>
+      <div class="tip-card" style="margin-top:16px;text-align:left">
+        <div class="tcat">${P("今日の知恵","Tip of the day","Consejo del día")} · ${tip.cat}</div>
+        <div class="ttitle">${tip.title}</div>
+        <p>${tip.body}</p>
+      </div>
+      <p class="center" style="font-weight:700;color:var(--shu)">🔥 ${P("連続 ","Streak: ","Racha: ")}${streakCount()}${P("日目！","d!","d!")}</p>
+      <button class="btn" style="margin-top:8px" onclick="quitAndRefresh()">${P("道場にもどる","Back to Dojo","Volver al Dojo")}</button>
+    </div>`;
+}
+// startDailyのquit例外の握りつぶし
+window.addEventListener("unhandledrejection",e=>{if(e.reason==="quit")e.preventDefault();});
+
+async function startDiagnosis(){
+  const seq=[
+    {id:"calc",opts:{}},
+    {id:"digit",opts:{}},
+    {id:"trail",opts:{modeB:true}},
+    {id:"stroop",opts:{}},
+    {id:"janken",opts:{}}
+  ];
+  const scores={};
+  for(let i=0;i<seq.length;i++){
+    const {id,opts}=seq[i];
+    openOverlay(P("脳年齢診断 ","Brain Age Check ","Chequeo ")+(i+1)+"/5");
+    const go=await new Promise(res=>{
+      gArea().innerHTML=`
+        <div class="fade-in">
+          <p class="instruction">${P("測定","Test","Prueba")} ${i+1}/5</p>
+          <div style="font-size:52px">${GAMES[id].icon}</div>
+          <h2 class="mincho" style="font-size:24px;margin:6px 0 2px">${GAMES[id].name}</h2>
+          <p class="muted">${P("測定する力","Measures","Mide")}: ${GAMES[id].dom}${id==="trail"?P("（診断版：数字⇔かな）"," (check ver.: numbers⇄letters)"," (versión: números⇄letras)"):""}</p>
+          <div style="width:min(280px,78vw);margin-top:22px">
+            <button class="btn shu" id="goBtn">${P("測定スタート","Start test","Empezar prueba")}</button>
+          </div>
+        </div>`;
+      gResolve=res;
+      $("#goBtn").onclick=()=>{const r=gResolve;gResolve=null;r(true);};
+    });
+    if(go===null)return;
+    const sc=await runGame(id,opts);
+    if(sc===null)return;
+    markPractice(id,sc);
+    scores[GAMES[id].domKey]=sc;
+  }
+  const comp=Math.round(Object.values(scores).reduce((a,b)=>a+b,0)/5);
+  const age=Math.round(clamp(20+(100-comp)*0.72,20,88));
+  const diag={d:todayStr(),age,comp,scores};
+  DB.diag.push(diag);
+  if(DB.diag.length>60)DB.diag=DB.diag.slice(-60);
+  save();
+  closeOverlay();
+  switchTab("diag");
+  gT(()=>{window.scrollTo({top:0});},50);
+}
+
+</script>
+</body>
+</html>
