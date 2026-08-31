@@ -637,12 +637,6 @@ function renderHome(){
       <div style="flex:1"><b>${P("冴えラッシュ","SAE Rush","SAE Rush")}</b><div class="muted small">${rb?P("最高 ","Best ","Récord ")+rb.toLocaleString()+P("・段位 "," · Rank "," · Rango ")+rk:P("反射神経の腕試し。3ミスで終了","Test your reflexes. 3 misses and it ends","Pon a prueba tus reflejos. 3 fallos y termina")}</div></div>
       <button class="btn shu" style="width:auto;padding:10px 16px;font-size:14px" onclick="startRush()">${P("挑戦","Go","Ir")}</button>
     </div>
-    <div class="card" style="display:flex;align-items:center;gap:12px;border:1px solid rgba(233,196,106,.85);background:linear-gradient(135deg,#FFFDF4,#FFF6DC)">
-      <div style="font-size:28px">🌸🌸</div>
-      <div style="flex:1"><b>${P("大花園","Grand Garden","Gran Jardín")} <span style="font-size:10px;background:var(--shu);color:#fff;border-radius:4px;padding:2px 6px;vertical-align:2px;font-family:'Shippori Mincho B1',serif">会員</span></b>
-        <div class="muted small">${isMember()?((DB.hana.best5||0)?P("最高 ","Best ","Récord ")+(DB.hana.best5||0).toLocaleString():P("解錠済み・5×5の静かな別邸","Unlocked — a serene 5×5 retreat","Desbloqueado — un sereno refugio 5×5")):P("5×5の大盤。月替わり合言葉で解錠","A grand 5×5 board. Unlock with the monthly passcode","Tablero 5×5. Desbloquea con la contraseña mensual")}</div></div>
-      <button class="btn" style="width:auto;padding:10px 16px;font-size:14px;background:linear-gradient(180deg,#E9C46A,#C99B2D);color:#4A3A16;box-shadow:0 3px 0 rgba(140,100,30,.5)" onclick="startHana5()">${isMember()?P("遊ぶ","Play","Jugar"):P("解錠","Unlock","Abrir")}</button>
-    </div>
     <div class="card" style="display:flex;align-items:center;gap:12px">
       <div style="font-size:28px">⛩️</div>
       <div style="flex:1"><b>${P("今日の稽古","Daily Training","Entreno Diario")}</b><div class="muted small">${doneToday?P("本日は済み。🔥連続","Done today. 🔥Streak ","Hecho hoy. 🔥Racha ")+streakCount()+P("日","d","d"):P("日替わり3種目・約3分","3 daily games · about 3 min","3 juegos del día · unos 3 min")}</div></div>
