@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>愛が始まる場所 / 花明り (Promo Short)</title>
+<meta name="description" content="雨あがりの駅で、そっと手をつなぐ。花明りの新曲「愛が始まる場所」。">
+<meta property="og:title" content="愛が始まる場所 / 花明り (Promo Short)">
+<meta property="og:description" content="雨あがりの駅で、そっと手をつなぐ。花明りの新曲「愛が始まる場所」。">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#070d1c;overflow:hidden}
+  body{font-family:'Noto Serif JP','Hiragino Mincho ProN',serif;color:#ecdcae;
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;transform:scale(var(--s,0.4));transform-origin:center center;
+    overflow:hidden;background:#0a1428}
+  #sky{position:absolute;left:0;top:0;width:100%;height:60%;
+    background:linear-gradient(#0a1024 0%,#0e1a38 46%,#152a4e 74%,#26375c 100%)}
+  .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#cfe0ff;opacity:0}
+  .bok{position:absolute;border-radius:50%;opacity:0;filter:blur(3px)}
+  #platform{position:absolute;left:0;top:56%;width:100%;height:44%;
+    background:linear-gradient(#0c1730 0%,#0a1428 30%,#0b1526 70%,#0a1220 100%)}
+  #wet{position:absolute;left:0;top:56%;width:100%;height:44%;pointer-events:none;overflow:hidden}
+  .refl{position:absolute;bottom:0;width:60px;filter:blur(6px);opacity:.5}
+  /* gas lamp (left) */
+  #lampglow{position:absolute;left:60px;top:430px;width:340px;height:360px;
+    background:radial-gradient(circle,rgba(255,196,110,.6),rgba(255,170,80,.16) 40%,transparent 66%)}
+  #lamp{position:absolute;left:150px;top:470px;width:70px;height:96px;border-radius:10px 10px 6px 6px;
+    background:linear-gradient(#ffe6b0,#ffbf5e 60%,#e08a2a);box-shadow:0 0 40px 14px rgba(255,180,90,.6)}
+  #lamptop{position:absolute;left:158px;top:452px;width:54px;height:22px;background:#101820;border-radius:6px 6px 0 0}
+  #lamppole{position:absolute;left:180px;top:566px;width:10px;height:760px;background:linear-gradient(#101a26,#0a1220)}
+  #lampbase{position:absolute;left:158px;top:1300px;width:54px;height:40px;background:#0a1220;border-radius:6px}
+  /* train (right) */
+  #train{position:absolute;right:0;top:700px;width:420px;height:560px;background:linear-gradient(100deg,#1a1206,#3a2a12 40%,#241708);
+    border-radius:20px 0 0 20px;box-shadow:-6px 0 40px rgba(0,0,0,.5)}
+  #trainroof{position:absolute;right:0;top:672px;width:440px;height:44px;background:#0c0f16;border-radius:12px 0 0 0}
+  .twin{position:absolute;width:66px;height:96px;border-radius:6px;background:linear-gradient(#fff0c2,#f2b25a);
+    box-shadow:0 0 22px rgba(242,178,90,.55)}
+  #headlight{position:absolute;right:404px;top:1030px;width:60px;height:60px;border-radius:50%;
+    background:radial-gradient(circle,#fff7e0,#ffcf7a 50%,rgba(255,180,80,0) 72%);box-shadow:0 0 60px 24px rgba(255,200,110,.6)}
+  /* couple */
+  #couple{position:absolute;left:398px;top:900px;width:300px;height:560px;z-index:4}
+  .fig{position:absolute;bottom:0;background:#04060c}
+  #man{left:0;width:150px;height:540px;
+    clip-path:polygon(38% 0,62% 0,66% 8%,60% 14%,71% 24%,73% 60%,64% 63%,60% 40%,60% 100%,52% 100%,50% 66%,48% 100%,40% 100%,40% 40%,36% 63%,27% 60%,29% 24%,40% 14%,34% 8%)}
+  #woman{right:0;width:158px;height:494px;
+    clip-path:polygon(41% 0,59% 0,63% 9%,57% 15%,67% 25%,69% 48%,61% 51%,60% 40%,62% 60%,80% 100%,20% 100%,38% 60%,40% 40%,39% 51%,31% 48%,33% 25%,43% 15%,37% 9%)}
+  #hands{position:absolute;left:132px;bottom:250px;width:44px;height:16px;background:#05070e;border-radius:8px;z-index:5}
+  #rim{position:absolute;left:398px;top:900px;width:300px;height:560px;z-index:3;pointer-events:none;
+    filter:blur(1px)}
+  #couplerefl{position:absolute;left:398px;top:1460px;width:300px;height:260px;z-index:2;opacity:.22;
+    transform:scaleY(-1);pointer-events:none}
+  #rain{position:absolute;inset:0;pointer-events:none;z-index:5}
+  .drop{position:absolute;width:2px;background:linear-gradient(rgba(200,220,255,0),rgba(200,220,255,.5));opacity:.5}
+  .petal{position:absolute;width:16px;height:11px;border-radius:60% 0 60% 0;background:#f3cfe0;opacity:0}
+  #grain{position:absolute;inset:0;opacity:.08;pointer-events:none;mix-blend-mode:overlay;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 88% at 46% 50%, transparent 48%, rgba(3,6,14,.78) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:120px 80px 0;opacity:0;z-index:8}
+  .scene.mid{justify-content:center;padding-top:0}
+  .kick{font-size:28px;letter-spacing:.5em;color:#d8c48c;font-weight:500;text-transform:uppercase;margin-bottom:20px}
+  .title{font-size:116px;line-height:1.16;font-weight:600;color:#ecdcae;letter-spacing:.1em;
+    text-shadow:0 2px 30px rgba(0,0,0,.7),0 0 40px rgba(230,200,140,.2)}
+  .orn{display:flex;align-items:center;justify-content:center;gap:22px;margin:30px 0 20px;color:#cbb883}
+  .orn i{display:block;width:140px;height:1px;background:linear-gradient(90deg,transparent,#cbb883,transparent)}
+  .orn b{font-size:40px;color:#e6c98a}
+  .artist{font-size:56px;letter-spacing:.36em;color:#e6d6a4;font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.6)}
+  .tag{margin-top:34px;font-size:28px;letter-spacing:.44em;color:#d8c48c;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:6px;width:0;background:linear-gradient(90deg,#e08a2a,#f2c078);opacity:.85;z-index:9}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(7,13,28,.86);backdrop-filter:blur(4px);z-index:20;gap:30px;padding:0 80px;text-align:center}
+  #ui .k{font-size:28px;letter-spacing:.44em;color:#e6c98a;text-transform:uppercase}
+  #ui h1{font-size:104px;font-weight:600;color:#ecdcae;line-height:1.12;letter-spacing:.08em}
+  #ui p{font-size:44px;letter-spacing:.34em;color:#e6d6a4}
+  #play{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:600;color:#0a1428;background:#e6c98a;border:none;
+    border-radius:100px;padding:26px 76px;cursor:pointer;letter-spacing:.14em;box-shadow:0 10px 40px rgba(230,201,138,.35)}
+  #play:hover{background:#f2dca8}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="sky"></div>
+  <div id="platform"></div>
+  <div id="lampglow"></div>
+  <div id="train"></div>
+  <div id="trainroof"></div>
+  <div id="headlight"></div>
+  <div id="couplerefl"></div>
+  <div id="rim"></div>
+  <div id="couple"><div id="man" class="fig"></div><div id="woman" class="fig"></div><div id="hands"></div></div>
+  <div id="lamptop"></div>
+  <div id="lamp"></div>
+  <div id="lamppole"></div>
+  <div id="lampbase"></div>
+  <div id="wet"></div>
+  <div id="rain"></div>
+  <div id="grain"></div>
+  <div id="scenes"></div>
+  <div id="vig"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">花明り</div>
+    <h1>愛が始まる場所</h1>
+    <p>New Single</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+</div></div>
+<audio id="bgm" src="ai-hajimaru-bgm.mp3" preload="auto"></audio>
+<script>
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  const sky=document.getElementById('sky');
+  const STAR=[]; for(let i=0;i<44;i++){const e=document.createElement('div');e.className='star';
+    e.style.left=((i*47)%100)+'%';e.style.top=((i*29)%54)+'%';e.dataset.ph=((i*13)%100)/100;sky.appendChild(e);STAR.push(e);}
+  // city bokeh band
+  const BOK=[]; for(let i=0;i<40;i++){const e=document.createElement('div');e.className='bok';
+    const warm=i%3!==0; const sz=8+(i%5)*6;
+    e.style.left=((i*37)%100)+'%';e.style.top=(30+(i*23)%18)+'%';e.style.width=sz+'px';e.style.height=sz+'px';
+    e.style.background=warm?'#ffcf82':'#7fb0e0';e.dataset.ph=((i*17)%100)/100;sky.appendChild(e);BOK.push(e);}
+  // wet reflections (lamp + train + headlight)
+  const wet=document.getElementById('wet');
+  [['185px','rgba(255,180,90,.6)',80,780],['auto','rgba(242,178,90,.5)',300,700],['470px','rgba(255,200,110,.7)',70,420]].forEach((r,i)=>{
+    const e=document.createElement('div');e.className='refl';
+    if(r[0]==='auto'){e.style.right='40px';}else{e.style.left=r[0];}
+    e.style.background=`linear-gradient(${r[1]},transparent 72%)`;e.style.width=r[2]+'px';e.style.height=r[3]+'px';
+    wet.appendChild(e);e.dataset.ph=i;});
+  const REFL=[...document.querySelectorAll('.refl')];
+  // rain
+  const rain=document.getElementById('rain'), DR=[];
+  for(let i=0;i<80;i++){const e=document.createElement('div');e.className='drop';
+    e.style.left=((i*37)%100)+'%';e.style.height=(30+(i%5)*20)+'px';e.style.transform='rotate(12deg)';
+    e.dataset.ph=((i*29)%100)/100;e.dataset.sp=0.5+((i*13)%50)/60;rain.appendChild(e);DR.push(e);}
+  // petals
+  const PET=[]; for(let i=0;i<12;i++){const e=document.createElement('div');e.className='petal';
+    e.style.left=((i*53)%100)+'%';e.dataset.dur=8+((i*43)%40)/10;e.dataset.ph=((i*31)%100)/100;
+    e.dataset.sway=30+((i*17)%40);stage.appendChild(e);PET.push(e);}
+  // train windows
+  const train=document.getElementById('train');
+  for(let i=0;i<4;i++){const w=document.createElement('div');w.className='twin';w.style.right=(30+i*96)+'px';w.style.top='120px';train.appendChild(w);}
+  // couple rim-light + reflection (clone silhouettes)
+  const rim=document.getElementById('rim'), cr=document.getElementById('couplerefl');
+  ['man','woman'].forEach(id=>{const src=document.getElementById(id);
+    const a=src.cloneNode(); a.id=''; a.style.background='rgba(255,205,130,.45)'; a.style.transform='translateX(-4px)'; rim.appendChild(a);
+    const b=src.cloneNode(); b.id=''; b.style.background='#04060c'; cr.appendChild(b);});
+  const lamp=document.getElementById('lamp'),lampglow=document.getElementById('lampglow'),head=document.getElementById('headlight'),bar=document.getElementById('bar');
+  const scenes=[
+    {d:5200, html:`<div class="scene"><div class="kick">New Single</div></div>`},
+    {d:8600, html:`<div class="scene"><div class="title">愛が始まる<br>場所</div><div class="orn"><i></i><b>&#10047;</b><i></i></div><div class="artist">花明り</div></div>`},
+    {d:5400, html:`<div class="scene mid"><div class="orn" style="margin:0"><i></i><b>&#10047;</b><i></i></div></div>`},
+    {d:8800, html:`<div class="scene"><div class="title">愛が始まる<br>場所</div><div class="orn"><i></i><b>&#10047;</b><i></i></div><div class="artist">花明り</div><div class="tag">New Single &nbsp;&#9654;</div></div>`}
+  ];
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/860,(en-t)/580),0,1);}
+  function flick(ts){return 0.9+0.1*(0.6*Math.sin(ts*6.4)+0.4*Math.sin(ts*11+1));}
+  window.renderAt=function(t){
+    const ts=t/1000, fl=flick(ts);
+    lamp.style.opacity=fl; lampglow.style.opacity=(0.85*fl).toFixed(3);
+    head.style.opacity=(0.7+0.3*Math.abs(Math.sin(ts*1.2))).toFixed(3);
+    for(const e of STAR){const ph=+e.dataset.ph;e.style.opacity=(0.3+0.6*(0.5+0.5*Math.sin(ts*1.4+ph*6.28))).toFixed(2);}
+    for(const e of BOK){const ph=+e.dataset.ph;e.style.opacity=(0.3+0.45*(0.5+0.5*Math.sin(ts*1.0+ph*6.28))).toFixed(2);}
+    for(const r of REFL){const ph=+r.dataset.ph;r.style.transform=`scaleX(${1+0.2*Math.sin(ts*1.6+ph)}) `;
+      r.style.opacity=(0.4+0.2*Math.sin(ts*2+ph)).toFixed(2)*fl;}
+    for(const d of DR){const p=frac(ts*(+d.dataset.sp)+ +d.dataset.ph);d.style.top=(p*1920-120)+'px';
+      d.style.opacity=(0.25+0.4*Math.sin(p*Math.PI)).toFixed(2);}
+    for(const e of PET){const p=frac(ts/(+e.dataset.dur)+ +e.dataset.ph);e.style.top=(1780-p*1900)+'px';
+      e.style.transform=`translateX(${Math.sin(p*6.28+ +e.dataset.ph*6)*(+e.dataset.sway)}px) rotate(${p*360}deg)`;
+      e.style.opacity=(Math.sin(p*Math.PI)*0.55).toFixed(2);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.85;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.85*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+</script>
+</body>
+</html>
