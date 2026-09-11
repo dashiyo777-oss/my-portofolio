@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>花束の重さ / 水野灯 (Lyric Video)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#080706;overflow:hidden}
+  body{font-family:'Noto Serif JP','Hiragino Mincho ProN',serif;color:#ecdcae;
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;transform:scale(var(--s,0.4));transform-origin:center center;
+    overflow:hidden;background:#0b0908}
+  /* window (the view outside) */
+  #win{position:absolute;left:140px;top:120px;width:940px;height:1060px;overflow:hidden;
+    background:linear-gradient(#0a1020 0%,#0c1626 40%,#101c30 60%,#0a1420 100%)}
+  .bok{position:absolute;border-radius:50%;opacity:0;filter:blur(3px)}
+  #redtower{position:absolute;left:44%;top:14%;width:10px;height:10px;border-radius:50%;background:#ff4a3a;
+    box-shadow:0 0 14px 4px rgba(255,60,40,.7);opacity:0}
+  #wref{position:absolute;left:0;top:62%;width:100%;height:38%;overflow:hidden}
+  .refl{position:absolute;top:0;width:40px;height:100%;filter:blur(6px);opacity:.5}
+  #winframe{position:absolute;left:140px;top:120px;width:940px;height:1060px;border:18px solid #0b0806;pointer-events:none;
+    box-shadow:inset 0 0 50px rgba(0,0,0,.7)}
+  #sill{position:absolute;left:120px;top:1150px;width:980px;height:26px;background:linear-gradient(#241a12,#0e0a06)}
+  /* poster: 四十年。こんな顔だったか。 */
+  #poster{position:absolute;left:922px;top:168px;width:132px;height:300px;background:#e9e1cc;transform:rotate(1deg);
+    box-shadow:0 6px 16px rgba(0,0,0,.5);padding:18px 10px;display:flex;justify-content:center}
+  #poster span{writing-mode:vertical-rl;font-size:30px;letter-spacing:.1em;color:#2a241a;line-height:1.5;font-weight:600}
+  /* seat + man (from behind) */
+  #seat{position:absolute;left:0;top:1230px;width:380px;height:400px;background:linear-gradient(#20304e,#141d30);
+    border-radius:0 18px 0 0;box-shadow:inset 0 6px 0 rgba(120,150,200,.14)}
+  #bag{position:absolute;left:120px;top:1500px;width:150px;height:120px;background:#0e0b09;border-radius:14px 14px 8px 8px}
+  #bag::before{content:"";position:absolute;left:34px;top:-30px;width:82px;height:40px;border:9px solid #0e0b09;border-bottom:none;border-radius:40px 40px 0 0}
+  #manrim{position:absolute;left:600px;top:560px;width:440px;height:760px;z-index:3;filter:blur(1px)}
+  #manrim>*{background:rgba(232,178,96,.4)!important}
+  #man{position:absolute;left:596px;top:558px;width:440px;height:760px;z-index:4}
+  .mp{position:absolute;background:#070609}
+  #m-hair{left:150px;top:0;width:180px;height:150px;border-radius:52% 54% 46% 48%/60% 62% 40% 40%}
+  #m-head{left:168px;top:40px;width:150px;height:170px;border-radius:50% 52% 48% 48%/56% 58% 44% 44%}
+  #m-body{left:0;top:150px;width:440px;height:610px;clip-path:polygon(28% 4%,50% 0,72% 4%,90% 44%,96% 100%,4% 100%,10% 44%)}
+  /* bouquet on the lap (the glow) */
+  #bqglow{position:absolute;left:600px;top:1180px;transform:translateX(-50%);width:560px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,224,170,.55),rgba(255,190,120,.16) 44%,transparent 68%)}
+  #wrap-paper{position:absolute;left:452px;top:1332px;width:296px;height:300px;background:linear-gradient(160deg,#f4ecd6,#cabd9c);
+    clip-path:polygon(50% 100%,86% 26%,66% 2%,34% 2%,14% 26%);box-shadow:0 0 34px rgba(255,220,160,.34)}
+  #ribbon{position:absolute;left:558px;top:1600px;width:88px;height:60px;background:#26304e;border-radius:6px;transform:rotate(-4deg)}
+  #ribbon::before,#ribbon::after{content:"";position:absolute;top:6px;width:44px;height:48px;background:#26304e;border-radius:50% 50% 40% 60%}
+  #ribbon::before{left:-30px;transform:rotate(-30deg)} #ribbon::after{right:-30px;transform:rotate(30deg)}
+  .flw{position:absolute;border-radius:50%}
+  #grain{position:absolute;inset:0;opacity:.10;pointer-events:none;mix-blend-mode:overlay;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px;z-index:7}
+  #rain{position:absolute;left:140px;top:120px;width:940px;height:1060px;overflow:hidden;pointer-events:none;z-index:6}
+  .drop{position:absolute;border-radius:50% 50% 60% 60%/40% 40% 70% 70%;
+    background:radial-gradient(ellipse at 40% 30%,rgba(220,235,255,.6),rgba(180,205,240,.16) 60%,transparent 78%);opacity:0}
+  .run{position:absolute;width:3px;background:linear-gradient(rgba(210,228,255,0),rgba(200,222,255,.5));border-radius:3px;opacity:0}
+  #vig{position:absolute;inset:0;pointer-events:none;z-index:8;
+    background:radial-gradient(120% 92% at 54% 50%, transparent 44%, rgba(3,2,1,.84) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:100px 66px 0;opacity:0;z-index:10}
+  .scene.mid{justify-content:center;padding-top:0}
+  .scene.tl{align-items:flex-start;justify-content:flex-start;text-align:left;padding:110px 0 0 62px}
+  .kick{font-size:28px;letter-spacing:.5em;color:#dcc188;font-weight:500;text-transform:uppercase;margin-bottom:20px}
+  .title{font-size:112px;line-height:1.1;font-weight:600;color:#f0dfae;letter-spacing:.08em;
+    text-shadow:0 2px 30px rgba(0,0,0,.9),0 0 46px rgba(240,200,120,.3)}
+  .orn{display:flex;align-items:center;gap:20px;margin:26px 0 16px;color:#c9ac72}
+  .orn.c{justify-content:center}
+  .orn i{display:block;width:120px;height:1px;background:linear-gradient(90deg,#c9ac72,transparent)}
+  .orn.c i:first-child{background:linear-gradient(90deg,transparent,#c9ac72)}
+  .orn b{font-size:26px;color:#e8c98a}
+  .artist{font-size:50px;letter-spacing:.3em;color:#ecd8a4;font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.9)}
+  .rome{font-size:26px;letter-spacing:.42em;color:#c9ac72;margin-top:10px}
+  .lyric{font-size:62px;line-height:1.82;font-weight:500;color:#f4e8c6;letter-spacing:.06em;
+    text-shadow:0 2px 24px rgba(0,0,0,.95),0 0 40px rgba(0,0,0,.7)}
+  .lyric .em{color:#f0c765}
+  .tag{margin-top:30px;font-size:26px;letter-spacing:.42em;color:#dcc188;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:6px;width:0;background:linear-gradient(90deg,#c9822a,#f0c078);opacity:.85;z-index:11}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(11,9,8,.86);backdrop-filter:blur(4px);z-index:20;gap:26px;padding:0 66px;text-align:center}
+  #ui .k{font-size:26px;letter-spacing:.4em;color:#e8c98a;text-transform:uppercase}
+  #ui h1{font-size:96px;font-weight:600;color:#f0dfae;line-height:1.1;letter-spacing:.06em}
+  #ui p{font-size:38px;letter-spacing:.3em;color:#ecd8a4}
+  #play{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:600;color:#1a120a;background:#e8c98a;border:none;
+    border-radius:100px;padding:26px 74px;cursor:pointer;letter-spacing:.14em;box-shadow:0 10px 40px rgba(232,201,138,.35)}
+  #play:hover{background:#f2dca8}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+
+  #scrim{position:absolute;inset:0;background:rgba(6,4,2,.52);pointer-events:none;z-index:9}
+  .lyric{font-size:66px!important;line-height:1.78!important}
+  .lyric.sm{font-size:56px!important}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+
+  <div id="win"><div id="redtower"></div><div id="wref"></div></div>
+  <div id="winframe"></div>
+  <div id="sill"></div>
+  <div id="seat"></div>
+  <div id="bag"></div>
+  <div id="bqglow"></div>
+  <div id="manrim"></div>
+  <div id="man"><div id="m-hair" class="mp"></div><div id="m-head" class="mp"></div><div id="m-body" class="mp"></div></div>
+  <div id="wrap-paper"></div>
+  <div id="ribbon"></div>
+  <div id="rain"></div>
+  <div id="scrim"></div>
+  <div id="grain"></div>
+  <div id="scenes"></div>
+  <div id="vig"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">水野灯 &middot; AKARI MIZUNO</div>
+    <h1>花束の重さ</h1>
+    <p>Lyric Video</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+
+</div></div>
+<audio id="bgm" src="hanataba-lyric-bgm.mp3" preload="auto"></audio>
+<script>
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  const win=document.getElementById('win'), BOK=[];
+  for(let i=0;i<40;i++){const e=document.createElement('div');e.className='bok';const cool=i%3===0;const sz=8+(i%6)*7;
+    e.style.left=((i*37)%100)+'%';e.style.top=(30+(i*23)%30)+'%';e.style.width=sz+'px';e.style.height=sz+'px';
+    e.style.background=cool?'#6f9ac0':(i%9===0?'#e0482c':'#ffcf82');e.dataset.ph=((i*17)%100)/100;win.appendChild(e);BOK.push(e);}
+  const wref=document.getElementById('wref'),REFL=[];
+  for(let i=0;i<20;i++){const e=document.createElement('div');e.className='refl';const cool=i%3===0;
+    e.style.left=((i*47)%100)+'%';e.style.background=`linear-gradient(${cool?'rgba(111,154,192,.5)':(i%9===0?'rgba(224,72,44,.5)':'rgba(255,207,130,.55)')},transparent 80%)`;
+    e.dataset.ph=((i*13)%100)/100;wref.appendChild(e);REFL.push(e);}
+  // man rim clone
+  const man=document.getElementById('man'),manrim=document.getElementById('manrim');
+  [...man.children].forEach(c=>{const a=c.cloneNode();a.style.transform=(c.style.transform||'')+' translateX(-4px)';manrim.appendChild(a);});
+  // bouquet flowers cluster
+  const stg=stage;
+  const FLW=[]; const cx=600, cy=1318, SC=1.28;
+  const defs=[
+    [0,-70,52,'#f6f0e0','#f0d060'],[ -70,-30,48,'#f6f0e0','#f0d060'],[70,-24,46,'#f4ecd8','#eccf58'],
+    [-30,20,40,'#f6f0e0','#f0d060'],[36,26,42,'#f4ecd8','#eccf58'],
+    [-96,26,34,'#e8a8b2',''],[96,20,32,'#e8a8b2',''],[10,-30,30,'#eab4bc',''],[-40,-70,28,'#eab4bc',''],
+    [56,-64,20,'#f4eee2',''],[-108,-24,18,'#f4eee2',''],[110,-50,18,'#f4eee2',''],[-8,54,18,'#f4eee2',''],[80,58,16,'#f4eee2',''],[-70,60,16,'#f4eee2',''],
+    [-120,30,22,'#7e9060',''],[124,-6,22,'#7e9060',''],[0,80,20,'#7e9060','']
+  ];
+  defs.forEach((d,i)=>{const e=document.createElement('div');e.className='flw';const sz=d[2];
+    e.style.left=(cx+d[0]*SC-sz/2)+'px';e.style.top=(cy+d[1]*SC-sz/2)+'px';e.style.width=sz+'px';e.style.height=sz+'px';e.style.zIndex=5;
+    const c=d[3], cen=d[4]||d[3];
+    e.style.background=`radial-gradient(circle at 42% 38%, ${cen}, ${c} 46%, ${c} 100%)`;
+    e.style.boxShadow=`0 0 ${sz*0.4}px rgba(255,235,190,.35)`;e.dataset.ph=i*0.4;stg.appendChild(e);FLW.push(e);});
+  // rain on glass
+  const rain=document.getElementById('rain'),DROP=[],RUN=[];
+  for(let i=0;i<60;i++){const e=document.createElement('div');e.className='drop';const sz=6+((i*7)%14);
+    e.style.left=((i*137.5)%100)+'%';e.style.top=((i*53)%100)+'%';e.style.width=sz+'px';e.style.height=(sz*1.3)+'px';
+    e.dataset.ph=((i*29)%100)/100;rain.appendChild(e);DROP.push(e);}
+  for(let i=0;i<14;i++){const e=document.createElement('div');e.className='run';e.style.left=((i*61)%100)+'%';
+    e.style.height=(50+(i%4)*40)+'px';e.dataset.ph=((i*37)%100)/100;e.dataset.sp=0.18+((i*13)%40)/300;e.dataset.x0=((i*61)%100);rain.appendChild(e);RUN.push(e);}
+  const redt=document.getElementById('redtower'),bqglow=document.getElementById('bqglow'),bar=document.getElementById('bar');
+  const scenes=[
+    {d:4800, html:`<div class="scene mid"><div class="title" style="text-align:center">花束の重さ</div><div class="orn c" style="justify-content:center;margin-top:20px"><i></i><b>&#10070;</b><i></i></div><div class="artist" style="text-align:center;margin-top:10px">水野灯</div></div>`},
+    {d:5000, html:`<div class="scene mid"><div class="lyric ">送別会の、<br>帰りの電車。</div></div>`},
+    {d:5200, html:`<div class="scene mid"><div class="lyric ">膝の上の 花束が、<br>重い。</div></div>`},
+    {d:6000, html:`<div class="scene mid"><div class="lyric sm">窓に映る、<br>少し老けた顔。<br><span class="sm" style="color:#d8c9a2">四十年 こんな顔だったか。</span></div></div>`},
+    {d:6000, html:`<div class="scene mid"><div class="lyric sm">謝る機会は、<br>もう来ない。<br><span class="em">それでも 忘れずに 持っていく。</span></div></div>`},
+    {d:5600, html:`<div class="scene mid"><div class="lyric sm">ここまで来られたのは、<br>私の力じゃない。</div></div>`},
+    {d:5400, html:`<div class="scene mid"><div class="lyric sm">黙って 尻ぬぐいを<br>してくれた人。</div></div>`},
+    {d:5400, html:`<div class="scene mid"><div class="lyric sm">理不尽な私を、<br>見捨てなかった人。</div></div>`},
+    {d:5400, html:`<div class="scene mid"><div class="lyric sm">その顔が ひとつずつ、<br>浮かんでくる。</div></div>`},
+    {d:6000, html:`<div class="scene mid"><div class="lyric ">花束の重さは、<br><span class="em">そういう重さだ。</span></div></div>`},
+    {d:6200, html:`<div class="scene mid"><div class="lyric sm"><span class="em">ありがとう、</span>と声に出して。<br>明日から また、<br>何かを始めよう。</div></div>`},
+    {d:4000, html:`<div class="scene mid"><div class="artist" style="text-align:center;font-size:44px">花束の重さ</div><div class="rome" style="text-align:center;margin-top:14px">水野灯 &middot; AKARI MIZUNO</div><div class="tag" style="margin-top:22px">New Single &nbsp;&#9654;</div></div>`}
+  ];
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/900,(en-t)/620),0,1);}
+  function flick(ts){return 0.9+0.1*(0.6*Math.sin(ts*5.6)+0.4*Math.sin(ts*9.3+1));}
+  window.renderAt=function(t){
+    const ts=t/1000,fl=flick(ts);
+    bqglow.style.opacity=(0.8+0.2*Math.sin(ts/1.8)).toFixed(3);
+    for(const e of BOK){const ph=+e.dataset.ph;e.style.opacity=(0.3+0.5*(0.5+0.5*Math.sin(ts*0.9+ph*6.28))).toFixed(2);}
+    redt.style.opacity=(Math.sin(ts*2.6)>0.6?0.9:0.06).toFixed(2);
+    for(const r of REFL){const ph=+r.dataset.ph;r.style.transform=`scaleX(${1+0.4*Math.sin(ts*1.7+ph)}) translateX(${Math.sin(ts*1.2+ph)*8}px)`;
+      r.style.opacity=(0.4+0.2*Math.sin(ts*2+ph)).toFixed(2);}
+    for(const f of FLW){const ph=+f.dataset.ph;f.style.filter=`brightness(${(0.94+0.1*Math.sin(ts*1.6+ph)).toFixed(2)})`;}
+    for(const d of DROP){const ph=+d.dataset.ph;d.style.opacity=(0.2+0.35*(0.5+0.5*Math.sin(ts*1.4+ph*6.28))).toFixed(2);}
+    for(const r of RUN){const p=frac(ts*(+r.dataset.sp)+ +r.dataset.ph);r.style.top=(p*1200-140)+'px';
+      r.style.left=(+r.dataset.x0)+'%';r.style.opacity=(Math.sin(p*Math.PI)*0.55).toFixed(2);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.85;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.85*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+</script>
+</body>
+</html>

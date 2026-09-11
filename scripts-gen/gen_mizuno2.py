@@ -1,0 +1,229 @@
+# -*- coding: utf-8 -*-
+"""「雨になる約束 / 水野灯」 — YouTube promo short (warm golden rain-window ballad).
+Original take for Mizuno Akari (distinct from the dark-blue river piece): a golden
+dusk seen through a rain-streaked window — a city, a river, the setting sun, a woman
+by the glass, white flowers and coffee. Carries a verified lyric line from the chorus.
+Unified engine (renderAt). On-screen words: title/artist (cover) + a lyric line the
+rights holder supplied.
+BGM: ame-yakusoku-bgm.mp3 (33s segment).
+"""
+import os
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CSS = r"""
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#0f0a05;overflow:hidden}
+  body{font-family:'Noto Serif JP','Hiragino Mincho ProN',serif;color:#ecdcae;
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;transform:scale(var(--s,0.4));transform-origin:center center;
+    overflow:hidden;background:linear-gradient(#1c150c 0%,#33240f 26%,#5a3d1c 48%,#7a5626 62%,#3a2814 82%,#1c1409 100%)}
+  #rays{position:absolute;left:760px;top:400px;width:1500px;height:1500px;transform:translate(-50%,-50%);
+    background:repeating-conic-gradient(from 0deg, rgba(255,214,120,.14) 0deg 8deg, transparent 8deg 22deg);
+    -webkit-mask-image:radial-gradient(circle,#000 6%,rgba(0,0,0,.4) 30%,transparent 58%);
+            mask-image:radial-gradient(circle,#000 6%,rgba(0,0,0,.4) 30%,transparent 58%)}
+  #sun{position:absolute;left:760px;top:400px;transform:translate(-50%,-50%);width:230px;height:230px;border-radius:50%;
+    background:radial-gradient(circle,#fff2cc 0%,#ffd873 42%,#e8a83a 66%,rgba(232,168,58,0) 74%)}
+  .cloud{position:absolute;height:70px;border-radius:70px;background:#2e2012;opacity:.55;filter:blur(10px)}
+  #city{position:absolute;left:0;top:40%;width:100%;height:9%;background:#140d06;
+    clip-path:polygon(0 60%,6% 60%,6% 32%,10% 32%,10% 56%,16% 56%,16% 20%,19% 20%,19% 54%,25% 54%,25% 40%,30% 40%,30% 62%,36% 62%,36% 26%,40% 26%,40% 56%,46% 56%,46% 42%,52% 42%,52% 60%,58% 60%,58% 22%,62% 22%,62% 54%,68% 54%,68% 38%,74% 38%,74% 60%,80% 60%,80% 28%,85% 28%,85% 56%,92% 56%,92% 40%,97% 40%,97% 58%,100% 58%,100% 100%,0 100%)}
+  .clight{position:absolute;width:4px;height:5px;background:#ffcf82;opacity:0;border-radius:1px}
+  #bridge{position:absolute;left:0;top:49%;width:100%;height:12px;background:#0f0a05;opacity:.85}
+  #water{position:absolute;left:0;top:50%;width:100%;height:16%;background:linear-gradient(#3a2a14,#1c1409);overflow:hidden}
+  #watersun{position:absolute;left:760px;top:0;transform:translateX(-50%);width:120px;height:100%;
+    background:linear-gradient(rgba(255,216,120,.7),rgba(240,180,80,.2) 60%,transparent);filter:blur(6px)}
+  /* woman by the window (right), contemplative silhouette */
+  #wrim{position:absolute;left:632px;top:560px;width:340px;height:1040px;z-index:3;filter:blur(2px)}
+  #wrim>*{background:rgba(232,176,96,.4)!important}
+  #woman{position:absolute;left:628px;top:558px;width:340px;height:1040px;z-index:4}
+  .wp{position:absolute;background:#0a0806}
+  #w-bun{left:60px;top:6px;width:104px;height:96px;border-radius:50%}
+  #w-head{left:96px;top:14px;width:120px;height:132px;border-radius:52% 60% 54% 46%}
+  #w-neck{left:150px;top:130px;width:40px;height:48px}
+  #w-body{left:0;top:150px;width:340px;height:890px;
+    clip-path:polygon(46% 0,64% 4%,66% 20%,60% 40%,68% 62%,86% 100%,4% 100%,26% 60%,34% 36%,30% 16%)}
+  /* foreground: table with flowers + cup */
+  #tableedge{position:absolute;left:0;bottom:0;width:520px;height:150px;background:linear-gradient(#1a1206,#0d0904);border-radius:0 30px 0 0}
+  #vase{position:absolute;left:150px;bottom:150px;width:120px;height:180px;border-radius:16px 16px 30px 30px;
+    background:linear-gradient(100deg,rgba(240,220,160,.16),rgba(200,170,110,.08));border:2px solid rgba(240,215,150,.24);
+    box-shadow:0 0 30px rgba(240,200,120,.2)}
+  #vwater{position:absolute;left:150px;bottom:150px;width:120px;height:70px;border-radius:16px;background:rgba(210,180,110,.18)}
+  .flower{position:absolute;border-radius:50%;background:radial-gradient(circle,#fbf6e6,#d8ccae);box-shadow:0 0 10px rgba(255,240,200,.4)}
+  .stem{position:absolute;width:3px;background:#3a3a24;transform-origin:bottom center}
+  #cup{position:absolute;left:330px;bottom:150px;width:86px;height:64px;background:#241810;border-radius:6px 6px 12px 12px}
+  #cup::after{content:"";position:absolute;right:-20px;top:14px;width:24px;height:30px;border:6px solid #241810;border-left:none;border-radius:0 18px 18px 0}
+  .steam{position:absolute;width:5px;height:60px;background:linear-gradient(to top,transparent,rgba(255,235,200,.4),transparent);border-radius:3px;filter:blur(2px);opacity:0}
+  /* rain on the glass */
+  #glass{position:absolute;inset:0;pointer-events:none;z-index:6}
+  .drop{position:absolute;border-radius:50% 50% 60% 60%/40% 40% 70% 70%;
+    background:radial-gradient(ellipse at 40% 30%, rgba(255,244,214,.7), rgba(255,220,150,.2) 60%, transparent 78%);opacity:0}
+  .run{position:absolute;width:3px;background:linear-gradient(rgba(255,240,200,0),rgba(255,236,190,.6));border-radius:3px;opacity:0}
+  #glasshaze{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:.10;
+    background:radial-gradient(120% 80% at 50% 30%, rgba(200,180,150,.5), transparent 60%)}
+  #grain{position:absolute;inset:0;opacity:.10;pointer-events:none;mix-blend-mode:overlay;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px;z-index:6}
+  #vig{position:absolute;inset:0;pointer-events:none;z-index:7;
+    background:radial-gradient(120% 90% at 60% 40%, transparent 44%, rgba(4,3,1,.82) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:110px 70px 0;opacity:0;z-index:9}
+  .scene.mid{justify-content:center;padding-top:0}
+  .scene.tl{align-items:flex-start;justify-content:flex-start;text-align:left;padding:118px 0 0 64px}
+  .kick{font-size:28px;letter-spacing:.5em;color:#dcc188;font-weight:500;text-transform:uppercase;margin-bottom:20px}
+  .title{font-size:104px;line-height:1.14;font-weight:600;color:#f0dfae;letter-spacing:.08em;
+    text-shadow:0 2px 30px rgba(0,0,0,.85),0 0 44px rgba(240,200,120,.3)}
+  .orn{display:flex;align-items:center;gap:20px;margin:26px 0 16px;color:#c9ac72}
+  .orn.c{justify-content:center}
+  .orn i{display:block;width:120px;height:1px;background:linear-gradient(90deg,#c9ac72,transparent)}
+  .orn.c i:first-child{background:linear-gradient(90deg,transparent,#c9ac72)}
+  .orn b{font-size:26px;color:#e8c98a}
+  .artist{font-size:50px;letter-spacing:.3em;color:#ecd8a4;font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.8)}
+  .rome{font-size:26px;letter-spacing:.42em;color:#c9ac72;margin-top:10px}
+  .lyric{font-size:60px;line-height:1.85;font-weight:500;color:#f4e8c6;letter-spacing:.08em;
+    text-shadow:0 2px 24px rgba(0,0,0,.9),0 0 40px rgba(0,0,0,.6)}
+  .lyric .em{color:#f0c765}
+  .tag{margin-top:30px;font-size:26px;letter-spacing:.42em;color:#dcc188;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:6px;width:0;background:linear-gradient(90deg,#c9822a,#f0c078);opacity:.85;z-index:10}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(15,10,5,.86);backdrop-filter:blur(4px);z-index:20;gap:26px;padding:0 70px;text-align:center}
+  #ui .k{font-size:26px;letter-spacing:.4em;color:#e8c98a;text-transform:uppercase}
+  #ui h1{font-size:92px;font-weight:600;color:#f0dfae;line-height:1.12;letter-spacing:.06em}
+  #ui p{font-size:38px;letter-spacing:.3em;color:#ecd8a4}
+  #play{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:600;color:#1a120a;background:#e8c98a;border:none;
+    border-radius:100px;padding:26px 74px;cursor:pointer;letter-spacing:.14em;box-shadow:0 10px 40px rgba(232,201,138,.35)}
+  #play:hover{background:#f2dca8}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+"""
+
+ENGINE = r"""
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  // clouds
+  const CL=[]; [['12%','10%',300],['54%','6%',360],['30%','20%',240],['70%','16%',280]].forEach((c,i)=>{const e=document.createElement('div');
+    e.className='cloud';e.style.left=c[0];e.style.top=c[1];e.style.width=c[2]+'px';stage.appendChild(e);CL.push({e,i});});
+  // city lights
+  const city=document.getElementById('city'),CLI=[];
+  for(let i=0;i<24;i++){const e=document.createElement('div');e.className='clight';e.style.left=(i*4)+'%';e.style.top=(20+(i*37)%60)+'%';
+    e.dataset.ph=((i*23)%100)/100;city.appendChild(e);CLI.push(e);}
+  // woman rim clone
+  const woman=document.getElementById('woman'),wrim=document.getElementById('wrim');
+  [...woman.children].forEach(c=>{const a=c.cloneNode();a.style.transform='translateX(4px)';wrim.appendChild(a);});
+  // flowers on the vase
+  const stg=stage; const fl=[[196,320,26],[230,300,22],[168,300,20],[250,336,18],[210,350,16],[150,344,15]];
+  fl.forEach((f,i)=>{const s=document.createElement('div');s.className='stem';s.style.left=(210)+'px';s.style.bottom='300px';
+    s.style.height=(30+f[1]-300)+'px';s.dataset.ph=i*0.5;stg.appendChild(s);
+    const b=document.createElement('div');b.className='flower';b.style.left=f[0]+'px';b.style.bottom=f[1]+'px';
+    const sz=(i<3?34:16);b.style.width=sz+'px';b.style.height=sz+'px';stg.appendChild(b);});
+  const STM=[]; [0,1].forEach(i=>{const e=document.createElement('div');e.className='steam';e.style.left=(356+i*12)+'px';e.style.bottom='214px';e.dataset.ph=i*0.8;stg.appendChild(e);STM.push(e);});
+  // rain on glass: clinging droplets + runners
+  const glass=document.getElementById('glass'),DROP=[],RUN=[];
+  for(let i=0;i<70;i++){const e=document.createElement('div');e.className='drop';const sz=6+((i*7)%16);
+    e.style.left=((i*137.5)%100)+'%';e.style.top=((i*53)%100)+'%';e.style.width=sz+'px';e.style.height=(sz*1.3)+'px';
+    e.dataset.ph=((i*29)%100)/100;glass.appendChild(e);DROP.push(e);}
+  for(let i=0;i<16;i++){const e=document.createElement('div');e.className='run';e.style.left=((i*61)%100)+'%';
+    e.style.height=(60+(i%4)*40)+'px';e.dataset.ph=((i*37)%100)/100;e.dataset.sp=0.16+((i*13)%40)/300;e.dataset.x0=((i*61)%100);glass.appendChild(e);RUN.push(e);}
+  const rays=document.getElementById('rays'),sun=document.getElementById('sun'),watersun=document.getElementById('watersun'),bar=document.getElementById('bar');
+  const scenes=SCENES;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/900,(en-t)/620),0,1);}
+  window.renderAt=function(t){
+    const ts=t/1000;
+    rays.style.transform=`translate(-50%,-50%) rotate(${ts*3}deg)`;
+    sun.style.transform=`translate(-50%,-50%) scale(${1+0.03*Math.sin(ts/2.4)})`;
+    watersun.style.transform=`translateX(-50%) scaleX(${1+0.4*Math.sin(ts*1.8)})`;
+    watersun.style.opacity=(0.7+0.3*Math.abs(Math.sin(ts*1.4))).toFixed(2);
+    for(const c of CL){c.e.style.transform=`translateX(${Math.sin(ts/12+c.i)*24+ts*3}px)`;}
+    for(const e of CLI){const ph=+e.dataset.ph;e.style.opacity=(0.35+0.5*(0.5+0.5*Math.sin(ts*1.1+ph*6.28))).toFixed(2);}
+    for(const s of STM){const p=frac(ts/3.2+ +s.dataset.ph);s.style.bottom=(214+p*80)+'px';s.style.opacity=(Math.sin(p*Math.PI)*0.4).toFixed(2);}
+    for(const d of DROP){const ph=+d.dataset.ph;d.style.opacity=(0.25+0.4*(0.5+0.5*Math.sin(ts*1.4+ph*6.28))).toFixed(2);}
+    for(const r of RUN){const p=frac(ts*(+r.dataset.sp)+ +r.dataset.ph);r.style.top=(p*2000-140)+'px';
+      r.style.left=(+r.dataset.x0 + Math.sin(p*10)*0.6)+'%';r.style.opacity=(Math.sin(p*Math.PI)*0.6).toFixed(2);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.85;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.85*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+"""
+
+scenes = [
+    (5000, '<div class="scene"><div class="kick">New Single</div></div>'),
+    (7600, '<div class="scene tl"><div class="title">雨になる約束</div>'
+           '<div class="orn"><i></i><b>&#10070;</b><i></i></div>'
+           '<div class="artist">水野灯</div><div class="rome">AKARI MIZUNO</div></div>'),
+    (7400, '<div class="scene mid"><div class="lyric">さよならは、<br>終わりじゃなくて<br>'
+           '<span class="em">あなたのもとへ降る</span><br>雨になる約束</div></div>'),
+    (8000, '<div class="scene tl"><div class="title">雨になる約束</div>'
+           '<div class="orn"><i></i><b>&#10070;</b><i></i></div>'
+           '<div class="artist">水野灯</div><div class="rome">AKARI MIZUNO</div>'
+           '<div class="tag">New Single &nbsp;&#9654;</div></div>'),
+]
+
+meta = dict(title="雨になる約束 / 水野灯 (Promo Short)",
+  desc="さよならは終わりじゃなくて、あなたのもとへ降る雨になる約束。水野灯の新曲「雨になる約束」。",
+  k="水野灯 / AKARI MIZUNO", ep="雨になる約束", tagline="AKARI MIZUNO")
+
+scenes_js = "[\n" + ",\n".join("    {d:%d, html:`%s`}" % (d, h) for (d, h) in scenes) + "\n  ]"
+engine = ENGINE.replace("SCENES", scenes_js)
+html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{meta['title']}</title>
+<meta name="description" content="{meta['desc']}">
+<meta property="og:title" content="{meta['title']}">
+<meta property="og:description" content="{meta['desc']}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="rays"></div>
+  <div id="sun"></div>
+  <div id="city"></div>
+  <div id="bridge"></div>
+  <div id="water"><div id="watersun"></div></div>
+  <div id="wrim"></div>
+  <div id="woman"><div id="w-bun" class="wp"></div><div id="w-head" class="wp"></div><div id="w-neck" class="wp"></div><div id="w-body" class="wp"></div></div>
+  <div id="tableedge"></div>
+  <div id="vase"></div>
+  <div id="vwater"></div>
+  <div id="cup"></div>
+  <div id="glasshaze"></div>
+  <div id="glass"></div>
+  <div id="grain"></div>
+  <div id="scenes"></div>
+  <div id="vig"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">水野灯 &middot; AKARI MIZUNO</div>
+    <h1>雨になる約束</h1>
+    <p>New Single</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+</div></div>
+<audio id="bgm" src="ame-yakusoku-bgm.mp3" preload="auto"></audio>
+<script>{engine}</script>
+</body>
+</html>
+"""
+open(os.path.join(OUT, "ame-yakusoku-short.html"), "w", encoding="utf-8").write(html)
+print(f"wrote ame-yakusoku-short.html  ({sum(d for d,_ in scenes)/1000:.1f}s, {len(scenes)} scenes)")

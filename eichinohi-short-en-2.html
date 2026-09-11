@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Eichi no Tomoshibi — Don't Quit (Wisdom Short EN #2)</title>
+<meta name="description" content="A life-sim where 27 great minds speak to your crossroads. Lincoln, Muhammad Ali, Eleanor Roosevelt.">
+<meta property="og:title" content="Eichi no Tomoshibi — Don't Quit (Wisdom Short EN #2)">
+<meta property="og:description" content="A life-sim where 27 great minds speak to your crossroads. Lincoln, Muhammad Ali, Eleanor Roosevelt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --white:#fdf6ec; --gold:#c8860a; --amber:#d4863a; --brown:#c47a3a;
+    --gray:#a08060; --bg-dark:#2e1c0a; --bg-mid:#3a2210;
+  }
+  html,body{height:100%;background:#120a03;overflow:hidden}
+  body{font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    color:var(--white);display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;
+    transform:scale(var(--s,0.4));transform-origin:center center;
+    background:radial-gradient(120% 80% at 50% 18%, #4a2c10 0%, var(--bg-dark) 42%, #1c1005 78%, #120a03 100%);
+    overflow:hidden;box-shadow:0 0 120px rgba(0,0,0,.6)}
+  .ember{position:absolute;width:6px;height:6px;border-radius:50%;
+    background:radial-gradient(circle,#ffd98a,#c8860a 60%,transparent 70%);opacity:0;filter:blur(.5px)}
+  #flame{position:absolute;left:50%;top:300px;transform:translateX(-50%);width:120px;height:170px;opacity:0}
+  #flame .core{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:70px;height:120px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    background:linear-gradient(to top,#fff6d8,#ffcf6b 40%,#e08a2a 75%,#b5591a);
+    box-shadow:0 0 60px 20px rgba(224,138,42,.55),0 0 140px 60px rgba(200,134,10,.28);transform-origin:bottom center}
+  #flame .halo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle, rgba(224,138,42,.22), transparent 60%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:0 100px;opacity:0}
+  .kicker{font-family:'Montserrat',system-ui,sans-serif;font-size:30px;letter-spacing:.5em;
+    color:var(--gold);font-weight:500;margin-bottom:44px;text-transform:uppercase}
+  .lead{font-size:80px;font-weight:400;line-height:1.5;letter-spacing:.01em;font-style:italic}
+  .lead .glow{color:var(--amber);font-style:italic}
+  .ep-title{font-size:104px;font-weight:600;line-height:1.15;color:var(--white);
+    text-shadow:0 0 50px rgba(200,134,10,.35)}
+  .q-tag{font-family:'Montserrat',system-ui,sans-serif;font-size:26px;letter-spacing:.5em;
+    color:var(--gray);margin-bottom:44px;text-transform:uppercase}
+  .worry{font-size:70px;font-weight:400;line-height:1.5;color:#f4e2c4;font-style:italic}
+  .worry::before{content:"\201C";color:var(--gold);opacity:.5}
+  .worry::after{content:"\201D";color:var(--gold);opacity:.5}
+  .sage-name{font-family:'Montserrat',system-ui,sans-serif;font-size:40px;letter-spacing:.22em;
+    color:var(--gold);font-weight:600;text-transform:uppercase;margin-bottom:14px}
+  .sage-era{font-family:'Montserrat',system-ui,sans-serif;font-size:26px;letter-spacing:.18em;
+    color:var(--gray);font-weight:400;margin-bottom:52px}
+  .quote{font-size:60px;font-weight:400;line-height:1.55;color:var(--white)}
+  .quote.sm{font-size:52px;line-height:1.5}
+  .src{font-family:'Montserrat',system-ui,sans-serif;margin-top:56px;font-size:26px;
+    color:var(--gray);letter-spacing:.06em}
+  .names{font-size:56px;line-height:1.7;color:var(--white);font-weight:400}
+  .names b{color:var(--amber);font-weight:600;font-style:italic}
+  .names .big{display:block;margin-top:40px;font-size:64px;font-style:italic}
+  .cta-title{font-size:118px;font-weight:600;letter-spacing:.02em;color:var(--white);
+    text-shadow:0 0 50px rgba(200,134,10,.4)}
+  .cta-jp{font-family:'Noto Serif JP',serif;font-size:40px;color:var(--gold);margin-top:18px;letter-spacing:.2em}
+  .cta-sub{font-size:44px;color:var(--gray);margin-top:36px;font-style:italic}
+  .cta-url{margin-top:64px;font-size:60px;color:var(--white);border:2px solid var(--gold);
+    border-radius:100px;padding:24px 66px;letter-spacing:.06em;background:rgba(200,134,10,.08)}
+  .cta-free{font-family:'Montserrat',system-ui,sans-serif;margin-top:36px;font-size:34px;
+    color:var(--gray);letter-spacing:.1em}
+  #bar{position:absolute;left:0;bottom:0;height:8px;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--amber));opacity:.85}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(18,10,3,.82);backdrop-filter:blur(4px);z-index:20;gap:40px;padding:0 100px;text-align:center}
+  #ui .kick{font-family:'Montserrat',system-ui,sans-serif;font-size:30px;letter-spacing:.5em;
+    color:var(--gold);text-transform:uppercase}
+  #ui h1{font-size:96px;font-weight:600;color:var(--white);line-height:1.1}
+  #ui p{font-size:38px;color:var(--gray);line-height:1.6;font-style:italic}
+  #play{font-family:'Montserrat',system-ui,sans-serif;font-size:44px;font-weight:600;color:#1c1005;
+    background:var(--gold);border:none;border-radius:100px;padding:30px 84px;cursor:pointer;
+    letter-spacing:.08em;box-shadow:0 10px 40px rgba(200,134,10,.4)}
+  #play:hover{background:var(--amber)}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="stage">
+    <div id="flame"><div class="halo"></div><div class="core"></div></div>
+    <div id="scenes"></div>
+    <div id="bar"></div>
+    <div id="ui">
+      <div class="kick">The Lamp of Wisdom</div>
+      <h1>Don't quit</h1>
+      <p>When you want to give up, what would the wise say?</p>
+      <button id="play">&#9654; Play</button>
+    </div>
+  </div>
+</div>
+<audio id="bgm" src="eichinohi-site/bgm.mp3" preload="auto"></audio>
+<script>
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage');
+  const EM=[];
+  for(let i=0;i<18;i++){
+    const x=((i*137.5)%100)/100*1080, dur=6+((i*53)%60)/10, phase=((i*29)%100)/100;
+    const e=document.createElement('div');e.className='ember';e.style.left=x+'px';e.style.top='0px';
+    stage.appendChild(e);EM.push({e,dur,phase});
+  }
+  const scenes=[
+    {d:3500, html:`<div class="scene"><div class="lead">There is a moment<br>you want to <span class="glow">give up</span>.</div></div>`},
+    {d:3000, html:`<div class="scene"><div class="kicker">The Lamp of Wisdom</div><div class="ep-title">Don't quit</div></div>`},
+    {d:2600, html:`<div class="scene"><div class="q-tag">Overwhelmed</div><div class="worry">There is too much. I am breaking.</div></div>`},
+    {d:6400, html:`<div class="scene"><div class="sage-name">Abraham Lincoln</div><div class="sage-era">1809 – 1865</div><div class="quote sm">Always bear in mind<br>that your own resolution<br>to succeed is more<br>important than any other.</div><div class="src">&mdash; Letter, 1855</div></div>`},
+    {d:2600, html:`<div class="scene"><div class="q-tag">Exhausted</div><div class="worry">I want to quit.</div></div>`},
+    {d:7000, html:`<div class="scene"><div class="sage-name">Muhammad Ali</div><div class="sage-era">1942 – 2016</div><div class="quote sm">I hated every minute<br>of training, but I said:<br>&lsquo;Don&rsquo;t quit. Suffer now<br>and live the rest of your<br>life as a champion.&rsquo;</div><div class="src">&mdash; In His Own Words</div></div>`},
+    {d:2600, html:`<div class="scene"><div class="q-tag">Afraid</div><div class="worry">I want to try &mdash; but I&rsquo;m afraid.</div></div>`},
+    {d:6000, html:`<div class="scene"><div class="sage-name">Eleanor Roosevelt</div><div class="sage-era">1884 – 1962</div><div class="quote">You must do the things<br>you think you cannot do.</div><div class="src">&mdash; You Learn by Living, 1960</div></div>`},
+    {d:3000, html:`<div class="scene"><div class="names">Lincoln &middot; Ali &middot; Curie &middot;<br>Roosevelt &middot; Gandhi…<span class="big">27 great minds<br>to keep you going.</span></div></div>`},
+    {d:4000, html:`<div class="scene"><div class="cta-title">Eichi no Tomoshibi</div><div class="cta-jp">叡智の灯火</div><div class="cta-sub">Words from 27 great minds to light your path</div><div class="cta-url">eichinohi.com</div><div class="cta-free">&#9654; PLAY FREE</div></div>`}
+  ];
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes');
+  const flame=document.getElementById('flame');
+  const core=flame.querySelector('.core'), halo=flame.querySelector('.halo');
+  const bar=document.getElementById('bar');
+  let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;
+    const el=w.firstElementChild; el.style.opacity=0; scenesEl.appendChild(el);
+    S.push({el,start:t0,end:t0+sc.d}); t0+=sc.d;});
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  function op(t,st,en){if(t<st||t>en)return 0;
+    return clamp(Math.min((t-st)/700,(en-t)/500),0,1);}
+  window.renderAt=function(t){
+    flame.style.opacity=clamp(t/800,0,1);
+    core.style.transform=`translateX(-50%) scaleY(${1+0.06*Math.sin(t/210)}) scaleX(${1-0.04*Math.sin(t/250)})`;
+    halo.style.transform=`translate(-50%,-50%) scale(${1+0.10*Math.sin(t/520)})`;
+    halo.style.opacity=(0.5+0.35*(0.5+0.5*Math.sin(t/520))).toFixed(3);
+    for(const m of EM){const prog=frac((t/1000)/m.dur+m.phase);
+      m.e.style.top=(1520-prog*2700)+'px';
+      m.e.style.transform=`scale(${0.6+prog*0.6})`;
+      m.e.style.opacity=(Math.sin(prog*Math.PI)*0.85).toFixed(3);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search);
+  const ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.7;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(now){const t=performance.now()-start;
+        window.renderAt(Math.min(t,total));
+        if(t<total){requestAnimationFrame(loop);}
+        else{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1200;
+          bgm.volume=Math.max(0,.7*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();
+          ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}
+      })(start);
+      // fade bgm near end
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.7*(1-k));if(k<1)requestAnimationFrame(fo);})();}, total-1500);
+    });
+  }
+</script>
+</body>
+</html>

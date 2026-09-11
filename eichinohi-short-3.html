@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>叡智の灯火 — 宣伝ショート #3｜迷ったとき、賢人ならどう答える？</title>
+<meta name="description" content="人生シミュレーション『叡智の灯火』プロモ第3弾。宮本武蔵・セネカ・孫子——本物の言葉が、あなたの岐路を照らす。">
+<meta property="og:title" content="叡智の灯火 — 宣伝ショート #3">
+<meta property="og:description" content="迷ったとき、賢人ならどう答える？ 世界の偉人27人があなたの岐路を照らす。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Noto+Serif+JP:wght@300;400;600;700&display=swap">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --white:#fdf6ec; --gold:#c8860a; --amber:#d4863a; --brown:#c47a3a;
+    --gray:#a08060; --bg-dark:#2e1c0a; --bg-mid:#3a2210;
+  }
+  html,body{height:100%;background:#120a03;overflow:hidden}
+  body{
+    font-family:'Noto Serif JP',serif;color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* 9:16 stage, scaled to fit the viewport */
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{
+    position:relative;width:1080px;height:1920px;flex:none;
+    transform:scale(var(--s,0.4));transform-origin:center center;
+    background:
+      radial-gradient(120% 80% at 50% 18%, #4a2c10 0%, var(--bg-dark) 42%, #1c1005 78%, #120a03 100%);
+    overflow:hidden;box-shadow:0 0 120px rgba(0,0,0,.6);
+  }
+
+  /* subtle floating embers */
+  .ember{position:absolute;width:6px;height:6px;border-radius:50%;
+    background:radial-gradient(circle,#ffd98a,#c8860a 60%,transparent 70%);
+    opacity:0;filter:blur(.5px)}
+
+  /* central flame */
+  #flame{
+    position:absolute;left:50%;top:300px;transform:translateX(-50%);
+    width:120px;height:170px;opacity:0;transition:opacity 1.2s ease;
+  }
+  #flame .core{
+    position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:70px;height:120px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    background:linear-gradient(to top,#fff6d8,#ffcf6b 40%,#e08a2a 75%,#b5591a);
+    box-shadow:0 0 60px 20px rgba(224,138,42,.55),0 0 140px 60px rgba(200,134,10,.28);
+    animation:flick 1.6s ease-in-out infinite;transform-origin:bottom center;
+  }
+  #flame .halo{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle, rgba(224,138,42,.22), transparent 60%);
+    animation:breathe 3.4s ease-in-out infinite;
+  }
+  @keyframes flick{0%,100%{transform:translateX(-50%) scaleY(1) scaleX(1)}
+    25%{transform:translateX(-51%) scaleY(1.07) scaleX(.96)}
+    50%{transform:translateX(-49%) scaleY(.95) scaleX(1.04)}
+    75%{transform:translateX(-50.5%) scaleY(1.04) scaleX(.98)}}
+  @keyframes breathe{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}
+    50%{opacity:.85;transform:translate(-50%,-50%) scale(1.12)}}
+
+  /* scene layer */
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    padding:0 120px;opacity:0;transition:opacity .9s ease, transform .9s ease}
+  .scene.in{opacity:1}
+  .scene.out{opacity:0}
+
+  .kicker{font-size:34px;letter-spacing:.4em;color:var(--gold);
+    font-weight:600;margin-bottom:40px;opacity:.9}
+  .lead{font-size:74px;font-weight:400;line-height:1.5;letter-spacing:.04em}
+  .lead .glow{color:var(--amber)}
+
+  .serieno{font-family:'Cormorant Garamond',serif;font-size:230px;line-height:1;
+    color:var(--gold);font-weight:400;text-shadow:0 0 60px rgba(200,134,10,.5)}
+  .serie-sub{font-size:56px;margin-top:24px;color:var(--white);font-weight:400}
+
+  /* worry (question) */
+  .q-tag{font-size:32px;letter-spacing:.5em;color:var(--gray);margin-bottom:46px}
+  .worry{font-size:66px;font-weight:600;line-height:1.55;color:#f4e2c4}
+  .worry::before{content:"“";color:var(--gold);opacity:.5;font-size:1.1em}
+  .worry::after{content:"”";color:var(--gold);opacity:.5;font-size:1.1em}
+
+  /* sage answer */
+  .sage-name{font-size:44px;letter-spacing:.18em;color:var(--gold);
+    font-weight:700;margin-bottom:54px}
+  .sage-name .en{display:block;font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-size:34px;letter-spacing:.12em;color:var(--gray);
+    font-weight:400;margin-top:10px}
+  .quote{font-size:60px;font-weight:400;line-height:1.7;color:var(--white)}
+  .src{margin-top:60px;font-size:30px;color:var(--gray);letter-spacing:.06em}
+
+  .names{font-size:52px;line-height:1.9;color:var(--white);font-weight:300}
+  .names b{color:var(--amber);font-weight:600}
+
+  /* CTA */
+  .cta-title{font-size:112px;font-weight:700;letter-spacing:.06em;
+    color:var(--white);text-shadow:0 0 50px rgba(200,134,10,.4)}
+  .cta-sub{font-size:48px;color:var(--gold);margin-top:40px;letter-spacing:.1em}
+  .cta-url{margin-top:70px;font-family:'Cormorant Garamond',serif;font-size:64px;
+    color:var(--white);border:2px solid var(--gold);border-radius:100px;
+    padding:26px 70px;letter-spacing:.08em;background:rgba(200,134,10,.08)}
+  .cta-free{margin-top:40px;font-size:40px;color:var(--gray)}
+
+  /* progress bar */
+  #bar{position:absolute;left:0;bottom:0;height:8px;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--amber));opacity:.85}
+
+  /* start / replay overlay */
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;background:rgba(18,10,3,.82);
+    backdrop-filter:blur(4px);z-index:20;gap:44px;padding:0 120px;text-align:center}
+  #ui h1{font-size:70px;font-weight:700;color:var(--white)}
+  #ui .num{font-family:'Cormorant Garamond',serif;font-size:120px;color:var(--gold);line-height:1}
+  #ui p{font-size:40px;color:var(--gray);line-height:1.6;font-weight:300}
+  #play{font-size:52px;font-weight:600;color:#1c1005;background:var(--gold);
+    border:none;border-radius:100px;padding:34px 90px;cursor:pointer;
+    letter-spacing:.1em;box-shadow:0 10px 40px rgba(200,134,10,.4)}
+  #play:hover{background:var(--amber)}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+  .hint{font-size:30px;color:#7a6244}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="stage">
+    <div id="flame"><div class="halo"></div><div class="core"></div></div>
+
+    <!-- scenes injected by JS -->
+    <div id="scenes"></div>
+
+    <div id="bar"></div>
+
+    <div id="ui">
+      <div class="num">#3</div>
+      <h1>叡智の灯火 — 宣伝ショート</h1>
+      <p>迷ったとき、賢人ならどう答える？<br>本物の言葉が、あなたの岐路を照らす。</p>
+      <button id="play">▶ 再生</button>
+      <div class="hint">縦長ウィンドウで再生 → 画面録画で 9:16 ショートに</div>
+    </div>
+  </div>
+</div>
+
+<audio id="bgm" src="eichinohi-site/bgm.mp3" preload="auto"></audio>
+
+<script>
+  // ---- fit 1080x1920 stage into viewport ----
+  function fit(){
+    const s=Math.min(window.innerWidth/1080, window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s', s);
+  }
+  window.addEventListener('resize',fit); fit();
+
+  // ---- floating embers ----
+  const stage=document.getElementById('stage');
+  for(let i=0;i<18;i++){
+    const e=document.createElement('div');e.className='ember';
+    const x=Math.random()*1080, dur=6+Math.random()*6, delay=Math.random()*8;
+    e.style.left=x+'px';e.style.top=(1400+Math.random()*400)+'px';
+    e.style.animation=`rise ${dur}s linear ${delay}s infinite`;
+    stage.appendChild(e);
+  }
+  const st=document.createElement('style');
+  st.textContent='@keyframes rise{0%{opacity:0;transform:translateY(0) scale(.6)}'
+    +'12%{opacity:.9}100%{opacity:0;transform:translateY(-1200px) scale(1.2)}}';
+  document.head.appendChild(st);
+
+  // ---- scene definitions (verified quotes w/ sources) ----
+  const scenes=[
+    {d:3500, html:`<div class="scene"><div class="lead">人生には、<br><span class="glow">迷う夜</span>がある。</div></div>`},
+    {d:3000, html:`<div class="scene"><div class="serieno">#3</div>
+      <div class="serie-sub">迷ったとき、賢人ならどう答える？</div></div>`},
+    {d:2500, html:`<div class="scene"><div class="q-tag">Q . 1</div>
+      <div class="worry">決めきれない。<br>後悔するのが、怖い。</div></div>`},
+    {d:6000, html:`<div class="scene"><div class="sage-name">宮本武蔵<span class="en">Miyamoto Musashi</span></div>
+      <div class="quote">我、事において<br>後悔をせず。</div>
+      <div class="src">— 『独行道』自筆・1645</div></div>`},
+    {d:2500, html:`<div class="scene"><div class="q-tag">Q . 2</div>
+      <div class="worry">自分が、何をしたいのか、<br>わからない。</div></div>`},
+    {d:6000, html:`<div class="scene"><div class="sage-name">セネカ<span class="en">Seneca</span></div>
+      <div class="quote">どの港を目指すか<br>分からなければ、<br>どんな風も、<br>追い風にはならない。</div>
+      <div class="src">— 『倫理書簡集』71</div></div>`},
+    {d:2500, html:`<div class="scene"><div class="q-tag">Q . 3</div>
+      <div class="worry">大事な勝負に、挑む。<br>勝てるか不安だ。</div></div>`},
+    {d:6000, html:`<div class="scene"><div class="sage-name">孫子<span class="en">Sun Tzu</span></div>
+      <div class="quote">彼を知り己を知れば、<br>百戦して<br>殆（あや）うからず。</div>
+      <div class="src">— 『孫子』謀攻篇</div></div>`},
+    {d:3000, html:`<div class="scene"><div class="names">孔子・武蔵・キュリー・<br>ヘレン・ケラー…<br><br><b>世界の偉人27人</b>が、<br>あなたの岐路を照らす。</div></div>`},
+    {d:3500, html:`<div class="scene"><div class="cta-title">叡智の灯火</div>
+      <div class="cta-sub">人生の岐路を照らす、偉人たちの言葉</div>
+      <div class="cta-url">eichinohi.com</div>
+      <div class="cta-free">▶ 無料でプレイ</div></div>`},
+  ];
+
+  const total=scenes.reduce((a,s)=>a+s.d,0);
+  const scenesEl=document.getElementById('scenes');
+  const bar=document.getElementById('bar');
+  const flame=document.getElementById('flame');
+  const bgm=document.getElementById('bgm');
+  const ui=document.getElementById('ui');
+  let timers=[];
+
+  function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+
+  function run(){
+    clearTimers();
+    scenesEl.innerHTML='';
+    flame.style.opacity='1';
+    // build & schedule
+    let t=0;
+    scenes.forEach((sc,i)=>{
+      const wrap=document.createElement('div');
+      wrap.innerHTML=sc.html;
+      const el=wrap.firstElementChild;
+      scenesEl.appendChild(el);
+      const start=t, end=t+sc.d;
+      timers.push(setTimeout(()=>el.classList.add('in'), start+60));
+      timers.push(setTimeout(()=>{el.classList.remove('in');el.classList.add('out');}, end-500));
+      t=end;
+    });
+    // progress bar
+    const t0=performance.now();
+    (function tick(now){
+      const p=Math.min((performance.now()-t0)/total,1);
+      bar.style.width=(p*100)+'%';
+      if(p<1) requestAnimationFrame(tick);
+    })();
+    // end -> show replay
+    timers.push(setTimeout(()=>{
+      ui.classList.remove('hide');
+      ui.querySelector('#play').textContent='↻ もう一度';
+      flame.style.opacity='.6';
+    }, total+300));
+  }
+
+  document.getElementById('play').addEventListener('click',()=>{
+    ui.classList.add('hide');
+    try{bgm.currentTime=0;bgm.volume=.7;bgm.play().catch(()=>{});}catch(e){}
+    run();
+    // fade bgm near the end
+    timers.push(setTimeout(()=>{ // gentle fade out last 1.5s
+      const fadeStart=performance.now();
+      (function fo(){
+        const k=(performance.now()-fadeStart)/1500;
+        bgm.volume=Math.max(0,.7*(1-k));
+        if(k<1) requestAnimationFrame(fo); else bgm.pause();
+      })();
+    }, total-1500));
+  });
+</script>
+</body>
+</html>

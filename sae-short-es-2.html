@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SAE Techo — ¿Cuál es tu edad cerebral? (Short Cerebral ES #2)</title>
+<meta name="description" content="Convierte tu agilidad en un número con cinco juegos y compite en la clasificación mundial. SAE Techo.">
+<meta property="og:title" content="SAE Techo — ¿Cuál es tu edad cerebral? (Short Cerebral ES #2)">
+<meta property="og:description" content="Convierte tu agilidad en un número con cinco juegos y compite en la clasificación mundial. SAE Techo.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Montserrat:wght@500;600&display=swap">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --white:#fdf6ec; --gold:#d69a2a; --amber:#e0a53a; --jade:#7fae86; --gray:#a89273;
+    --bg-dark:#241a0d; --bg-mid:#33260f;
+  }
+  html,body{height:100%;background:#100b04;overflow:hidden}
+  body{font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;color:var(--white);
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;
+    transform:scale(var(--s,0.4));transform-origin:center center;
+    background:radial-gradient(120% 80% at 50% 20%, #4a3416 0%, var(--bg-dark) 44%, #1a1207 80%, #100b04 100%);
+    overflow:hidden;box-shadow:0 0 120px rgba(0,0,0,.6)}
+  .ember{position:absolute;width:7px;height:7px;border-radius:50%;
+    background:radial-gradient(circle,#ffe6a6,#d69a2a 60%,transparent 70%);opacity:0;filter:blur(.5px)}
+  #flame{position:absolute;left:50%;top:300px;transform:translateX(-50%);width:130px;height:180px;opacity:0}
+  #flame .core{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:78px;height:128px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    background:linear-gradient(to top,#fff6d8,#ffd67a 40%,#e59a2a 75%,#b5661a);
+    box-shadow:0 0 60px 22px rgba(224,150,42,.5),0 0 150px 66px rgba(214,154,42,.26);transform-origin:bottom center}
+  #flame .halo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:440px;height:440px;
+    border-radius:50%;background:radial-gradient(circle, rgba(224,150,42,.2), transparent 60%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:0 100px;opacity:0}
+  .kicker{font-family:'Montserrat',system-ui,sans-serif;font-size:28px;letter-spacing:.34em;color:var(--gold);
+    font-weight:600;margin-bottom:40px;text-transform:uppercase}
+  .lead{font-size:76px;font-weight:500;line-height:1.45;font-style:italic}
+  .lead .glow{color:var(--amber);font-style:italic}
+  .ep-title{font-size:96px;font-weight:600;line-height:1.15;color:var(--white);text-shadow:0 0 50px rgba(214,154,42,.35)}
+  .num{font-family:'Montserrat',system-ui,sans-serif;font-size:26px;letter-spacing:.34em;color:var(--gray);
+    margin-bottom:36px;font-weight:500;text-transform:uppercase}
+  .worry{font-size:66px;font-weight:500;line-height:1.5;color:#f3e4c6;font-style:italic}
+  .worry::before{content:"\201C";color:var(--gold);opacity:.5}
+  .worry::after{content:"\201D";color:var(--gold);opacity:.5}
+  .card-name{font-size:66px;letter-spacing:.02em;color:var(--white);font-weight:600;margin-bottom:20px}
+  .badge{display:inline-block;font-family:'Montserrat',system-ui,sans-serif;font-size:27px;letter-spacing:.16em;
+    color:var(--bg-dark);background:var(--gold);border-radius:100px;padding:10px 32px;font-weight:600;
+    margin-bottom:46px;text-transform:uppercase}
+  .badge.jade{background:var(--jade)}
+  .line{font-size:56px;font-weight:500;line-height:1.5;color:var(--white)}
+  .how{font-family:'Montserrat',system-ui,sans-serif;margin-top:44px;font-size:28px;color:var(--gray);letter-spacing:.03em}
+  .names{font-size:50px;line-height:1.7;color:var(--white);font-weight:500}
+  .names b{color:var(--amber);font-weight:600;font-style:italic}
+  .names .big{display:block;margin-top:34px;font-size:62px;font-style:italic}
+  .cta-title{font-size:88px;font-weight:600;letter-spacing:.02em;color:var(--white);text-shadow:0 0 50px rgba(214,154,42,.4)}
+  .cta-jp{font-family:'Montserrat',system-ui,sans-serif;font-size:30px;color:var(--gold);margin-top:20px;letter-spacing:.12em;text-transform:uppercase}
+  .cta-sub{font-size:44px;color:var(--gray);margin-top:32px;font-style:italic}
+  .cta-url{margin-top:56px;font-family:'Montserrat',system-ui,sans-serif;font-size:42px;color:var(--white);
+    border:2px solid var(--gold);border-radius:100px;padding:22px 50px;letter-spacing:.02em;background:rgba(214,154,42,.08)}
+  .cta-free{font-family:'Montserrat',system-ui,sans-serif;margin-top:32px;font-size:34px;color:var(--gray);letter-spacing:.1em;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:8px;width:0;background:linear-gradient(90deg,var(--gold),var(--amber));opacity:.85}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(16,11,4,.82);backdrop-filter:blur(4px);z-index:20;gap:38px;padding:0 100px;text-align:center}
+  #ui .kick{font-family:'Montserrat',system-ui,sans-serif;font-size:28px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
+  #ui h1{font-size:84px;font-weight:600;color:var(--white);line-height:1.15}
+  #ui p{font-size:38px;color:var(--gray);line-height:1.6;font-style:italic}
+  #play{font-family:'Montserrat',system-ui,sans-serif;font-size:42px;font-weight:600;color:#1a1207;background:var(--gold);
+    border:none;border-radius:100px;padding:28px 78px;cursor:pointer;letter-spacing:.08em;box-shadow:0 10px 40px rgba(214,154,42,.4)}
+  #play:hover{background:var(--amber)}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="flame"><div class="halo"></div><div class="core"></div></div>
+  <div id="scenes"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="kick">SAE Techo — Dojo Cerebral</div>
+    <h1>¿Cuál es tu<br>edad cerebral?</h1>
+    <p>¿Ese pequeño olvido? Compruébalo en minutos.</p>
+    <button id="play">&#9654; Jugar</button>
+  </div>
+</div></div>
+<audio id="bgm" src="sae-bgm-en.mp3" preload="auto"></audio>
+<script>
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage');
+  const EM=[];
+  for(let i=0;i<20;i++){const x=((i*137.5)%100)/100*1080, dur=6+((i*53)%60)/10, phase=((i*29)%100)/100;
+    const e=document.createElement('div');e.className='ember';e.style.left=x+'px';e.style.top='0px';stage.appendChild(e);
+    EM.push({e,dur,phase});}
+  const scenes=[
+    {d:3500, html:`<div class="scene"><div class="lead">¿Ese pequeño <span class="glow">olvido</span>?<br>Tu cerebro podría<br>estar avisando.</div></div>`},
+    {d:3000, html:`<div class="scene"><div class="kicker">SAE Techo — Dojo Cerebral</div><div class="ep-title">Chequeo de<br>Edad Cerebral</div></div>`},
+    {d:2800, html:`<div class="scene"><div class="num">Prueba 1</div><div class="worry">Un nombre que<br>no llega.</div></div>`},
+    {d:2800, html:`<div class="scene"><div class="num">Prueba 2</div><div class="worry">Cambiar de tarea<br>cuesta más.</div></div>`},
+    {d:2800, html:`<div class="scene"><div class="num">Prueba 3</div><div class="worry">Calcular se siente<br>más lento que antes.</div></div>`},
+    {d:5600, html:`<div class="scene"><div class="card-name">Edad Cerebral</div><div class="badge">En minutos</div><div class="line">Convierte tu agilidad<br>en un número.</div><div class="how">Calculado con los 5 juegos</div></div>`},
+    {d:5200, html:`<div class="scene"><div class="card-name">Clasificación Mundial</div><div class="badge jade">Ranking</div><div class="line">Supera tu récord.<br>Compite con el mundo.</div><div class="how">Sube en SAE Rush</div></div>`},
+    {d:4000, html:`<div class="scene"><div class="cta-title">SAE Techo</div><div class="cta-jp">Dojo Cerebral &nbsp;|&nbsp; Eichi no Hi</div><div class="cta-sub">Conoce dónde estás y entrena</div><div class="cta-url">ryuzaburo7.itch.io/sae-techo</div><div class="cta-free">&#9654; Jugar gratis</div></div>`}
+  ];
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'), flame=document.getElementById('flame');
+  const core=flame.querySelector('.core'), halo=flame.querySelector('.halo'), bar=document.getElementById('bar');
+  let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/700,(en-t)/500),0,1);}
+  window.renderAt=function(t){
+    flame.style.opacity=clamp(t/800,0,1);
+    core.style.transform=`translateX(-50%) scaleY(${1+0.06*Math.sin(t/210)}) scaleX(${1-0.04*Math.sin(t/250)})`;
+    halo.style.transform=`translate(-50%,-50%) scale(${1+0.10*Math.sin(t/520)})`;
+    halo.style.opacity=(0.5+0.35*(0.5+0.5*Math.sin(t/520))).toFixed(3);
+    for(const m of EM){const prog=frac((t/1000)/m.dur+m.phase);
+      m.e.style.top=(1520-prog*2700)+'px';m.e.style.transform=`scale(${0.6+prog*0.6})`;
+      m.e.style.opacity=(Math.sin(prog*Math.PI)*0.8).toFixed(3);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.7;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Repetir';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.7*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+</script>
+</body>
+</html>

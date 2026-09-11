@@ -1,0 +1,208 @@
+# -*- coding: utf-8 -*-
+"""「さよならの続き / 琥珀譲二と白詰玲」 — YouTube promo short (adult duet ballad).
+Original take: warm amber night on a bridge — city bokeh rippling on the water, a wet
+ornate railing, two hands almost touching, gas lamps, quiet rain.
+Unified engine (renderAt): real-time playback + ?capture=1 frame export.
+On-screen words are verified from the cover (さよならの続き / 琥珀譲二と白詰玲 / ornament).
+BGM: sayonara-tsuzuki-bgm.mp3 (33s segment).
+"""
+import os
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CSS = r"""
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#120b04;overflow:hidden}
+  body{font-family:'Noto Serif JP','Hiragino Mincho ProN',serif;color:#ecdcae;
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;transform:scale(var(--s,0.4));transform-origin:center center;
+    overflow:hidden;background:#1a1207}
+  #sky{position:absolute;left:0;top:0;width:100%;height:42%;background:linear-gradient(#160e05 0%,#20150a 52%,#33230f 84%,#4a3315 100%)}
+  .bok{position:absolute;border-radius:50%;opacity:0;filter:blur(3px)}
+  #water{position:absolute;left:0;top:40%;width:100%;height:20%;background:linear-gradient(#3a2712,#1c1308 70%,#140d05);overflow:hidden}
+  .wref{position:absolute;top:0;width:34px;height:100%;filter:blur(5px);opacity:.5}
+  /* railing */
+  #railtop{position:absolute;left:0;top:1078px;width:100%;height:36px;background:linear-gradient(#5a3d1c,#2a1c0e 60%,#160e06);
+    box-shadow:inset 0 4px 0 rgba(240,190,100,.5), 0 4px 20px rgba(0,0,0,.5)}
+  #balus{position:absolute;left:0;top:1114px;width:100%;height:300px;background:#100a04;
+    -webkit-mask-image:none;background-image:radial-gradient(circle at 50% 40%, transparent 34px, #140d06 36px);
+    background-size:120px 300px;background-repeat:repeat-x}
+  #balusbar{position:absolute;left:0;top:1300px;width:100%;height:20px;background:#160e06}
+  /* hands (silhouette, reaching to an almost-touch) */
+  #h-sleeve{position:absolute;left:0;top:1000px;width:310px;height:150px;background:linear-gradient(#0c0a06,#1a1109);border-radius:0 26px 28px 0;
+    box-shadow:0 6px 24px rgba(0,0,0,.5)}
+  #h-forearm{position:absolute;right:0;top:1012px;width:340px;height:120px;
+    background:linear-gradient(-90deg,#241708,#4a3016 62%,#5f4022);border-radius:28px 0 0 28px;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+  #h-brace{position:absolute;right:298px;top:1018px;width:13px;height:108px;background:linear-gradient(#f4dc8e,#c9a24a);border-radius:7px;
+    box-shadow:0 0 12px rgba(240,200,100,.7)}
+  .hand{position:absolute;top:1004px;height:150px;background:linear-gradient(#0b0906 60%,#241a10)}
+  #h-man{left:270px;width:250px;
+    clip-path:polygon(0% 22%,0% 78%,54% 82%,60% 56%,68% 84%,74% 54%,82% 82%,88% 52%,95% 74%,100% 62%,100% 48%,90% 42%,76% 36%,58% 30%,36% 25%,16% 20%)}
+  #h-woman{right:270px;width:250px;
+    clip-path:polygon(100% 22%,100% 78%,46% 82%,40% 56%,32% 84%,26% 54%,18% 82%,12% 52%,5% 74%,0% 62%,0% 48%,10% 42%,24% 36%,42% 30%,64% 25%,84% 20%)}
+  .handrim{position:absolute;top:1000px;height:150px;pointer-events:none;filter:blur(1px)}
+  #h-manrim{left:267px;width:250px;background:rgba(232,172,92,.45);
+    clip-path:polygon(0% 22%,0% 78%,54% 82%,60% 56%,68% 84%,74% 54%,82% 82%,88% 52%,95% 74%,100% 62%,100% 48%,90% 42%,76% 36%,58% 30%,36% 25%,16% 20%)}
+  #h-womanrim{right:267px;width:250px;background:rgba(242,206,146,.5);
+    clip-path:polygon(100% 22%,100% 78%,46% 82%,40% 56%,32% 84%,26% 54%,18% 82%,12% 52%,5% 74%,0% 62%,0% 48%,10% 42%,24% 36%,42% 30%,64% 25%,84% 20%)}
+  /* lamps */
+  .lampglow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,200,110,.6),rgba(255,170,80,.14) 42%,transparent 66%)}
+  .lampbulb{position:absolute;border-radius:8px;background:radial-gradient(circle,#fff0c8,#ffbf5e 60%,#e0902a);}
+  #rain{position:absolute;inset:0;pointer-events:none;z-index:5}
+  .drop{position:absolute;width:2px;background:linear-gradient(rgba(240,210,160,0),rgba(240,210,160,.4));opacity:.4}
+  .mote{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#ffe6b8,#e0a24a 60%,transparent 70%);opacity:0}
+  #grain{position:absolute;inset:0;opacity:.09;pointer-events:none;mix-blend-mode:overlay;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 52%, transparent 46%, rgba(6,4,1,.8) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:130px 70px 0;opacity:0;z-index:8}
+  .scene.mid{justify-content:center;padding-top:0}
+  .kick{font-size:28px;letter-spacing:.5em;color:#d8bd84;font-weight:500;text-transform:uppercase;margin-bottom:20px}
+  .title{font-size:118px;line-height:1.12;font-weight:600;color:#eedcac;letter-spacing:.08em;
+    text-shadow:0 2px 30px rgba(0,0,0,.8),0 0 44px rgba(230,190,120,.25)}
+  .orn{display:flex;align-items:center;justify-content:center;gap:22px;margin:32px 0 20px;color:#c9ac72}
+  .orn i{display:block;width:130px;height:1px;background:linear-gradient(90deg,transparent,#c9ac72,transparent)}
+  .orn b{font-size:26px;color:#e6c98a}
+  .artist{font-size:46px;letter-spacing:.24em;color:#e6d2a0;font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+  .tag{margin-top:34px;font-size:28px;letter-spacing:.44em;color:#d8bd84;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:6px;width:0;background:linear-gradient(90deg,#c9822a,#f0c078);opacity:.85;z-index:9}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(18,11,4,.86);backdrop-filter:blur(4px);z-index:20;gap:28px;padding:0 70px;text-align:center}
+  #ui .k{font-size:26px;letter-spacing:.4em;color:#e6c98a;text-transform:uppercase}
+  #ui h1{font-size:100px;font-weight:600;color:#eedcac;line-height:1.1;letter-spacing:.06em}
+  #ui p{font-size:38px;letter-spacing:.2em;color:#e6d2a0}
+  #play{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:600;color:#1a1207;background:#e6c98a;border:none;
+    border-radius:100px;padding:26px 74px;cursor:pointer;letter-spacing:.14em;box-shadow:0 10px 40px rgba(230,201,138,.35)}
+  #play:hover{background:#f2dca8}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+"""
+
+ENGINE = r"""
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  // city bokeh
+  const BOK=[]; for(let i=0;i<46;i++){const e=document.createElement('div');e.className='bok';
+    const red=i%7===0; const sz=10+(i%6)*7;
+    e.style.left=((i*37)%100)+'%';e.style.top=(58+(i*23)%22)+'%';e.style.width=sz+'px';e.style.height=sz+'px';
+    e.style.background=red?'#e0542c':'#f2b45a';e.dataset.ph=((i*17)%100)/100;stage.appendChild(e);BOK.push(e);}
+  // water reflections
+  const water=document.getElementById('water'),WR=[];
+  for(let i=0;i<22;i++){const e=document.createElement('div');e.className='wref';const red=i%6===0;
+    e.style.left=((i*47)%100)+'%';e.style.background=`linear-gradient(${red?'rgba(224,84,44,.55)':'rgba(240,180,90,.55)'},transparent 80%)`;
+    e.dataset.ph=((i*13)%100)/100;water.appendChild(e);WR.push(e);}
+  // lamps (right, receding)
+  const LMP=[]; [[960,150,150,120,64],[1010,560,110,90,40],[1030,760,90,74,30]].forEach((l,i)=>{
+    const g=document.createElement('div');g.className='lampglow';g.style.left=(l[0]-l[2]/2+l[3]/2)+'px';g.style.top=(l[1]-l[2]/2+l[4]/2)+'px';
+    g.style.width=l[2]*2+'px';g.style.height=l[2]*2+'px';stage.appendChild(g);
+    const b=document.createElement('div');b.className='lampbulb';b.style.left=l[0]+'px';b.style.top=l[1]+'px';b.style.width=(l[4]*0.7)+'px';b.style.height=l[4]+'px';
+    b.style.boxShadow=`0 0 ${l[4]/2}px ${l[4]/4}px rgba(255,180,90,.6)`;stage.appendChild(b);LMP.push({g,b,ph:i});});
+  const rain=document.getElementById('rain'),DR=[];
+  for(let i=0;i<70;i++){const e=document.createElement('div');e.className='drop';
+    e.style.left=((i*37)%100)+'%';e.style.height=(28+(i%5)*18)+'px';e.style.transform='rotate(10deg)';
+    e.dataset.ph=((i*29)%100)/100;e.dataset.sp=0.5+((i*13)%50)/60;rain.appendChild(e);DR.push(e);}
+  const MO=[]; for(let i=0;i<16;i++){const e=document.createElement('div');e.className='mote';
+    e.style.left=((i*61)%100)+'%';e.dataset.dur=8+((i*47)%40)/10;e.dataset.ph=((i*31)%100)/100;stage.appendChild(e);MO.push(e);}
+  const bar=document.getElementById('bar');
+  const scenes=SCENES;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/860,(en-t)/580),0,1);}
+  function flick(ts){return 0.9+0.1*(0.6*Math.sin(ts*6.1)+0.4*Math.sin(ts*10+1));}
+  window.renderAt=function(t){
+    const ts=t/1000, fl=flick(ts);
+    for(const e of BOK){const ph=+e.dataset.ph;e.style.opacity=(0.3+0.5*(0.5+0.5*Math.sin(ts*0.9+ph*6.28))).toFixed(2);}
+    for(const r of WR){const ph=+r.dataset.ph;r.style.transform=`scaleX(${1+0.5*Math.sin(ts*2.2+ph*6.28)}) translateX(${Math.sin(ts*1.3+ph)*8}px)`;
+      r.style.opacity=(0.35+0.25*Math.sin(ts*1.8+ph)).toFixed(2);}
+    for(const l of LMP){l.b.style.opacity=fl;l.g.style.opacity=(0.85*fl).toFixed(3);}
+    for(const d of DR){const p=frac(ts*(+d.dataset.sp)+ +d.dataset.ph);d.style.top=(p*1920-120)+'px';
+      d.style.opacity=(0.18+0.32*Math.sin(p*Math.PI)).toFixed(2);}
+    for(const e of MO){const p=frac(ts/(+e.dataset.dur)+ +e.dataset.ph);e.style.top=(1780-p*1500)+'px';
+      e.style.opacity=(Math.sin(p*Math.PI)*0.55*fl).toFixed(2);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.85;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.85*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+"""
+
+scenes = [
+    (5200, '<div class="scene"><div class="kick">New Single</div></div>'),
+    (8600, '<div class="scene"><div class="title">さよならの<br>続き</div>'
+           '<div class="orn"><i></i><b>&#9670;</b><i></i></div>'
+           '<div class="artist">琥珀譲二と白詰玲</div></div>'),
+    (5400, '<div class="scene mid"><div class="orn" style="margin:0"><i></i><b>&#9670;</b><i></i></div></div>'),
+    (8800, '<div class="scene"><div class="title">さよならの<br>続き</div>'
+           '<div class="orn"><i></i><b>&#9670;</b><i></i></div>'
+           '<div class="artist">琥珀譲二と白詰玲</div>'
+           '<div class="tag">New Single &nbsp;&#9654;</div></div>'),
+]
+
+meta = dict(title="さよならの続き / 琥珀譲二と白詰玲 (Promo Short)",
+  desc="濡れた橋の欄干で、あと少しで触れる指先。琥珀譲二と白詰玲のデュエット「さよならの続き」。",
+  k="琥珀譲二と白詰玲", ep="さよならの続き", tagline="Duet")
+
+scenes_js = "[\n" + ",\n".join("    {d:%d, html:`%s`}" % (d, h) for (d, h) in scenes) + "\n  ]"
+engine = ENGINE.replace("SCENES", scenes_js)
+html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{meta['title']}</title>
+<meta name="description" content="{meta['desc']}">
+<meta property="og:title" content="{meta['title']}">
+<meta property="og:description" content="{meta['desc']}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="sky"></div>
+  <div id="water"></div>
+  <div id="balus"></div>
+  <div id="balusbar"></div>
+  <div id="railtop"></div>
+  <div id="h-sleeve"></div>
+  <div id="h-forearm"></div>
+  <div id="h-brace"></div>
+  <div id="h-manrim" class="handrim"></div>
+  <div id="h-womanrim" class="handrim"></div>
+  <div id="h-man" class="hand"></div>
+  <div id="h-woman" class="hand"></div>
+  <div id="rain"></div>
+  <div id="grain"></div>
+  <div id="scenes"></div>
+  <div id="vig"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">琥珀譲二と白詰玲</div>
+    <h1>さよならの続き</h1>
+    <p>Duet</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+</div></div>
+<audio id="bgm" src="sayonara-tsuzuki-bgm.mp3" preload="auto"></audio>
+<script>{engine}</script>
+</body>
+</html>
+"""
+open(os.path.join(OUT, "sayonara-tsuzuki-short.html"), "w", encoding="utf-8").write(html)
+print(f"wrote sayonara-tsuzuki-short.html  ({sum(d for d,_ in scenes)/1000:.1f}s, {len(scenes)} scenes)")
