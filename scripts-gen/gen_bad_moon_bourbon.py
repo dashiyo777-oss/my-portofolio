@@ -1,0 +1,207 @@
+# -*- coding: utf-8 -*-
+"""Rolling All Stars "Bad Moon Bourbon" — YouTube promo short (southern / outlaw rock).
+Code-only cinematic: amber-glowing bourbon bottle + whiskey glass, faded moon,
+wet wood table, distressed vintage-western typography.
+Unified engine (renderAt): real-time playback + ?capture=1 frame export.
+On-screen words are verified from the cover (Bad Moon Bourbon / Rolling All Stars / star).
+BGM: bad-moon-bourbon-bgm.mp3 (33s chorus segment).
+"""
+import os
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CSS = r"""
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#0a1615;overflow:hidden}
+  body{font-family:'Roboto Slab','Rockwell',Georgia,'Times New Roman',serif;color:#efe4c8;
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;transform:scale(var(--s,0.4));transform-origin:center center;
+    overflow:hidden;background:#0c1e1c;box-shadow:0 0 120px rgba(0,0,0,.6)}
+  #bg{position:absolute;inset:0;
+    background:radial-gradient(80% 60% at 66% 62%, rgba(224,145,47,.30), transparent 58%),
+               radial-gradient(90% 70% at 24% 30%, #1f4341 0%, #163331 40%, #0e2321 72%, #081615 100%)}
+  #moon{position:absolute;left:110px;top:430px;width:470px;height:470px;border-radius:50%;opacity:.42;
+    background:radial-gradient(circle at 42% 40%, #d8cf9f 0%, #b7ac78 40%, #6f6a48 72%, rgba(60,58,40,0) 84%)}
+  #moon::after{content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle at 60% 34%, rgba(40,44,34,.5) 0 6%, transparent 8%),
+              radial-gradient(circle at 38% 60%, rgba(40,44,34,.45) 0 5%, transparent 7%),
+              radial-gradient(circle at 66% 66%, rgba(40,44,34,.4) 0 4%, transparent 6%)}
+  #glow{position:absolute;left:52%;top:58%;transform:translate(-50%,-50%);width:820px;height:820px;border-radius:50%;
+    background:radial-gradient(circle, rgba(240,170,70,.5), rgba(224,140,45,.16) 42%, transparent 66%)}
+  /* bourbon bottle */
+  .bb{position:absolute}
+  #b-cap{left:560px;top:604px;width:140px;height:76px;background:linear-gradient(#241a0e,#14100a);border-radius:10px 10px 6px 6px;
+    box-shadow:inset 0 6px 8px rgba(255,220,160,.15)}
+  #b-neck{left:585px;top:664px;width:90px;height:170px;border-radius:10px;
+    background:linear-gradient(100deg,#5c2f10,#b06a24 42%,#e0912f 56%,#8a4a17 78%,#4d2a0e)}
+  #b-body{left:470px;top:812px;width:320px;height:600px;border-radius:44px 44px 30px 30px;
+    background:linear-gradient(104deg,#4d2a0d 0%,#9a5a1e 24%,#e39a3a 50%,#c06f22 66%,#5f350f 100%);
+    box-shadow:inset 0 0 60px rgba(255,214,150,.25), 0 20px 60px rgba(0,0,0,.5)}
+  #b-hl{left:508px;top:838px;width:40px;height:540px;border-radius:20px;background:rgba(255,242,205,.4);filter:blur(9px)}
+  #b-label{left:512px;top:1010px;width:236px;height:216px;border-radius:8px;border:2px solid rgba(30,18,8,.4);
+    background:rgba(24,14,6,.16);display:flex;align-items:center;justify-content:center;color:rgba(255,232,190,.5);font-size:70px}
+  /* whiskey glass */
+  #glass{position:absolute;left:250px;top:1150px;width:270px;height:280px;z-index:2}
+  #g-body{position:absolute;inset:0;clip-path:polygon(6% 0,94% 0,84% 100%,16% 100%);
+    background:linear-gradient(100deg, rgba(230,240,240,.14), rgba(180,205,205,.06));border-top:3px solid rgba(235,245,245,.4)}
+  #g-liq{position:absolute;left:16%;right:16%;bottom:0;height:42%;clip-path:polygon(3% 0,97% 0,90% 100%,10% 100%);
+    background:linear-gradient(#e0912f,#a85e1c);box-shadow:0 0 24px rgba(224,145,47,.5)}
+  #g-hl{position:absolute;left:22%;top:6%;width:22px;height:82%;background:rgba(255,255,255,.16);filter:blur(3px);border-radius:12px}
+  #cork{position:absolute;left:330px;top:1440px;width:96px;height:52px;border-radius:8px;background:#2a1c0d;
+    box-shadow:inset 0 4px 6px rgba(255,220,160,.15);transform:rotate(-12deg);display:flex;align-items:center;justify-content:center;
+    color:#c79a4a;font-size:30px}
+  #table{position:absolute;left:0;bottom:0;width:100%;height:26%;
+    background:linear-gradient(#221408 0%, #160d05 60%, #0c0803 100%)}
+  #tref{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:420px;height:26%;
+    background:linear-gradient(rgba(224,145,47,.28), transparent 70%);filter:blur(7px)}
+  #dust{position:absolute;inset:0;pointer-events:none}
+  .mote{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#ffe6b0,#e0902a 60%,transparent 70%);opacity:0}
+  #grain{position:absolute;inset:0;opacity:.11;pointer-events:none;mix-blend-mode:overlay;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 92% at 50% 44%, transparent 50%, rgba(4,10,9,.72) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:132px 96px 0;opacity:0;z-index:6}
+  .scene.mid{justify-content:center;padding-top:0}
+  .kick{font-family:'Oswald',system-ui,sans-serif;font-size:30px;letter-spacing:.5em;color:#d9a63f;font-weight:600;
+    text-transform:uppercase;margin-bottom:28px}
+  .orn{display:flex;align-items:center;justify-content:center;gap:18px;color:#b23a2c;margin:0 0 22px}
+  .orn i{display:block;width:150px;height:3px;background:currentColor;opacity:.85}
+  .orn b{font-size:32px;color:#d9a63f}
+  .t1{font-size:132px;line-height:.9;font-weight:700;color:#efe4c8;letter-spacing:.01em;
+    text-shadow:0 3px 0 rgba(0,0,0,.4),0 0 40px rgba(0,0,0,.5)}
+  .t2{font-size:132px;line-height:.94;font-weight:700;color:#b23a2c;letter-spacing:.01em;
+    text-shadow:0 3px 0 rgba(0,0,0,.4),0 0 40px rgba(0,0,0,.5)}
+  .sub{font-size:56px;font-weight:600;letter-spacing:.16em;color:#d9a63f;margin-top:8px;
+    text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  .band{font-size:104px;font-weight:700;color:#d9a63f;letter-spacing:.03em;line-height:.98;
+    text-shadow:0 3px 0 rgba(0,0,0,.45),0 0 40px rgba(0,0,0,.5)}
+  .tag{margin-top:32px;font-family:'Oswald',system-ui,sans-serif;font-size:30px;letter-spacing:.44em;color:#efe4c8;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:7px;width:0;background:linear-gradient(90deg,#b23a2c,#e0912f);opacity:.9;z-index:9}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(8,16,15,.85);backdrop-filter:blur(4px);z-index:20;gap:32px;padding:0 96px;text-align:center}
+  #ui .k{font-family:'Oswald',system-ui,sans-serif;font-size:30px;letter-spacing:.44em;color:#d9a63f;text-transform:uppercase}
+  #ui h1{font-size:104px;font-weight:700;color:#efe4c8;line-height:.92}
+  #ui h1 em{color:#b23a2c;font-style:normal}
+  #ui p{font-size:40px;letter-spacing:.16em;color:#d9a63f}
+  #play{font-family:'Oswald',system-ui,sans-serif;font-size:40px;font-weight:700;color:#160d05;background:#d9a63f;border:none;
+    border-radius:100px;padding:28px 78px;cursor:pointer;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 10px 40px rgba(217,166,63,.4)}
+  #play:hover{background:#e8bd5c}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+"""
+
+ENGINE = r"""
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  const dC=document.getElementById('dust'), MO=[];
+  for(let i=0;i<24;i++){const x=((i*137.5)%100)/100*1080,dur=7+((i*53)%50)/10,phase=((i*29)%100)/100;
+    const e=document.createElement('div');e.className='mote';e.style.left=x+'px';dC.appendChild(e);MO.push({e,dur,phase});}
+  const glow=document.getElementById('glow'),hl=document.getElementById('b-hl'),moon=document.getElementById('moon'),
+        liq=document.getElementById('g-liq'),bar=document.getElementById('bar');
+  const scenes=SCENES;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/800,(en-t)/560),0,1);}
+  function flicker(ts){return 0.86+0.14*(0.6*Math.sin(ts*7.3)+0.4*Math.sin(ts*13.1+1.3));}
+  window.renderAt=function(t){
+    const ts=t/1000, fl=flicker(ts);
+    glow.style.opacity=fl.toFixed(3);
+    glow.style.transform=`translate(-50%,-50%) scale(${1+0.03*Math.sin(ts/1.6)})`;
+    hl.style.opacity=(0.3+0.25*Math.abs(Math.sin(ts/1.4))).toFixed(3);
+    moon.style.opacity=(0.40+0.06*Math.sin(ts/3.3)).toFixed(3);
+    if(liq) liq.style.transform=`translateY(${Math.sin(ts/2)*2}px)`;
+    for(const m of MO){const prog=frac((ts)/m.dur+m.phase);
+      m.e.style.top=(1620-prog*1400)+'px';m.e.style.transform=`scale(${0.6+prog*0.7})`;
+      m.e.style.opacity=(Math.sin(prog*Math.PI)*0.65*fl).toFixed(2);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.85;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.85*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+"""
+
+scenes = [
+    (5000, '<div class="scene"><div class="kick">New Single</div>'
+           '<div class="orn"><i></i><b>&#9733;</b><i></i></div></div>'),
+    (8200, '<div class="scene"><div class="orn"><i></i><b>&#9733;</b><i></i></div>'
+           '<div class="t1">Bad Moon</div><div class="t2">Bourbon</div>'
+           '<div class="orn" style="margin-top:20px"><i></i><b>&#9733;</b><i></i></div>'
+           '<div class="sub">Rolling All Stars</div></div>'),
+    (6600, '<div class="scene mid"><div class="band">Rolling<br>All Stars</div>'
+           '<div class="orn" style="margin-top:26px"><i></i><b>&#9733;</b><i></i></div></div>'),
+    (8000, '<div class="scene"><div class="t1">Bad Moon</div><div class="t2">Bourbon</div>'
+           '<div class="orn" style="margin-top:20px"><i></i><b>&#9733;</b><i></i></div>'
+           '<div class="sub">Rolling All Stars</div>'
+           '<div class="tag">New Single &nbsp;&#9654;</div></div>'),
+]
+
+meta = dict(
+  title="Bad Moon Bourbon — Rolling All Stars (Promo Short)",
+  desc="Bad Moon Bourbon by Rolling All Stars. Whiskey-soaked southern rock, poured neat.",
+  k="Rolling All Stars", ep1="Bad Moon", ep2="Bourbon", tagline="Rolling All Stars")
+
+scenes_js = "[\n" + ",\n".join("    {d:%d, html:`%s`}" % (d, h) for (d, h) in scenes) + "\n  ]"
+engine = ENGINE.replace("SCENES", scenes_js)
+html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{meta['title']}</title>
+<meta name="description" content="{meta['desc']}">
+<meta property="og:title" content="{meta['title']}">
+<meta property="og:description" content="{meta['desc']}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Oswald:wght@600;700&display=swap">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="bg"></div>
+  <div id="moon"></div>
+  <div id="glow"></div>
+  <div id="table"></div>
+  <div id="tref"></div>
+  <div id="b-cap" class="bb"></div>
+  <div id="b-neck" class="bb"></div>
+  <div id="b-body" class="bb"></div>
+  <div id="b-hl" class="bb"></div>
+  <div id="b-label" class="bb">&#9733;</div>
+  <div id="glass"><div id="g-body"></div><div id="g-liq"></div><div id="g-hl"></div></div>
+  <div id="cork">&#9733;</div>
+  <div id="dust"></div>
+  <div id="grain"></div>
+  <div id="scenes"></div>
+  <div id="vig"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">{meta['k']}</div>
+    <h1>{meta['ep1']} <em>{meta['ep2']}</em></h1>
+    <p>{meta['tagline']}</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+</div></div>
+<audio id="bgm" src="bad-moon-bourbon-bgm.mp3" preload="auto"></audio>
+<script>{engine}</script>
+</body>
+</html>
+"""
+open(os.path.join(OUT, "bad-moon-bourbon-short.html"), "w", encoding="utf-8").write(html)
+print(f"wrote bad-moon-bourbon-short.html  ({sum(d for d,_ in scenes)/1000:.1f}s, {len(scenes)} scenes)")
