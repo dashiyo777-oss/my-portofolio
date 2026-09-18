@@ -308,11 +308,25 @@
     return pool[day % pool.length];
   }
 
+  // 連続来訪ストリーク。今日開けば継続、1日空くと1に戻る（端末ローカル基準）。
+  function visitStreak() {
+    var today = Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem("lwg-streak")); } catch (e) {}
+    if (!s || typeof s.d !== "number" || typeof s.n !== "number") s = { d: 0, n: 0 };
+    if (s.d !== today) {
+      s.n = (s.d === today - 1) ? s.n + 1 : 1; s.d = today;
+      try { localStorage.setItem("lwg-streak", JSON.stringify(s)); } catch (e) {}
+    }
+    return s.n;
+  }
+
   // ---------- タイトル ----------
   function showTitle() {
     curView = showTitle;
     var has = state.journal.length > 0;
     var pg = playerProgress(); var pos = positionFor(pg.points);
+    var stk = visitStreak();
     var recall = dailyRecall();
     var recallInner = recall ? ('<span class="recall-k">' + L("🕯 今日、心に留めたい言葉", "🕯 A word to keep in your heart today") + '</span>' +
       '<p class="recall-q">' + esc(recall.quote) + '</p><span class="recall-f">— ' + esc(recall.sageName) + '</span>') : "";
@@ -347,6 +361,9 @@
       '</div>' +
       (isPaid() ? '<p class="member-on">' + L("✓ 会員（今月有効）", "✓ Member (valid this month)") + '</p>' : "") +
       '<p class="codex-tease">' + L("✦ 伝説の言葉 " + codex.length + " / " + LEGENDS.length + " 蒐集 ✦", "✦ Legendary Words " + codex.length + " / " + LEGENDS.length + " collected ✦") + '</p>' +
+      '<p class="streak-line">' + (stk > 1
+        ? "🔥 " + L(stk + "日連続で、灯火をともしています", stk + "-day streak — the beacon stays lit")
+        : L("🕯 今日も、灯火をともしました", "🕯 You lit the beacon today")) + '</p>' +
       recallHtml +
       '<p class="tagline">' + L("迷ったとき、世界の偉人があなたの相談相手になる。<br>言葉を選び、暮らしに活かし、少しずつ賢くなっていく。",
         "When you are lost, the great minds of the world become your counsel.<br>Choose a word, live it, and grow a little wiser.") + '</p>' +
@@ -617,10 +634,10 @@
     x.fillText("— " + rec.sageName + (rec.isScripture ? "（聖典）" : ""), W / 2, y); y += 58;
     if (rec.source) { x.font = "400 28px 'Noto Serif JP', serif"; x.fillStyle = goldd; wrapCanvas(x, rec.source, W - 240).forEach(function (s) { x.fillText(s, W / 2, y); y += 38; }); }
     x.font = "500 36px 'Noto Serif JP', serif"; x.fillStyle = goldd; x.fillText("🪔 " + L("叡智の灯火", "Beacon of Wisdom"), W / 2, H - 116);
-    x.font = "400 24px sans-serif"; x.fillStyle = soft; x.fillText("dashiyo777-oss.github.io/my-portofolio/life-wisdom-game/", W / 2, H - 74);
+    x.font = "400 24px sans-serif"; x.fillStyle = soft; x.fillText("eichinohi.com", W / 2, H - 74);
     var name = (lang === "en" ? "beacon-of-wisdom.png" : "叡智の灯火.png");
     function deliver(blob) {
-      try { var f = new File([blob], name, { type: "image/png" }); if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], text: rec.quote + " — " + rec.sageName + "  #" + L("叡智の灯火", "BeaconOfWisdom") }).catch(function () {}); return; } } catch (e) {}
+      try { var f = new File([blob], name, { type: "image/png" }); if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], text: rec.quote + " — " + rec.sageName + "  #" + L("叡智の灯火", "BeaconOfWisdom") + "  https://eichinohi.com/" }).catch(function () {}); return; } } catch (e) {}
       var a = document.createElement("a"); a.download = name; a.href = URL.createObjectURL(blob); document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
     }
     if (c.toBlob) c.toBlob(deliver, "image/png"); else { var a = document.createElement("a"); a.download = name; a.href = c.toDataURL("image/png"); a.click(); }
