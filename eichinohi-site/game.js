@@ -368,7 +368,8 @@
       '<p class="tagline">' + L("迷ったとき、世界の偉人があなたの相談相手になる。<br>言葉を選び、暮らしに活かし、少しずつ賢くなっていく。",
         "When you are lost, the great minds of the world become your counsel.<br>Choose a word, live it, and grow a little wiser.") + '</p>' +
       '<p class="notice">' + L("※ これは制作中のプロトタイプ（MVP）です。名言はすべて出典付きで裏取りしています。<br>つらさが長く続くときは、どうか一人で抱えず、信頼できる人や専門の窓口に頼ってください。",
-        "※ This is a prototype (MVP). Every quote is sourced and fact-checked.<br>If hardship persists, please don't carry it alone — reach out to someone you trust or a professional resource.") + '</p>';
+        "※ This is a prototype (MVP). Every quote is sourced and fact-checked.<br>If hardship persists, please don't carry it alone — reach out to someone you trust or a professional resource.") + '</p>' +
+      '<p class="notice" style="margin-top:6px"><a href="updates.html" style="color:inherit">' + L("🛠 更新履歴", "🛠 Update history") + '</a></p>';
     render(html);
     if (API) loadDaily();
   }

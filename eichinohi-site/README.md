@@ -3,12 +3,16 @@
 このフォルダの中身は、**すべてルート直下**で動くように作ってあります。
 フォルダ（data/ や audio/）は不要。GitHubに**ファイルを全部まとめてドラッグ**するだけでOK。
 
-## アップロードするファイル（この5つだけ）
+## アップロードするファイル（この6つ）
 - `index.html`
 - `style.css`
 - `game.js`
 - `gamedata.js`
 - `bgm.mp3`
+- `updates.html`（ユーザー向け更新履歴。改善をリリースしたら追記する）
+
+> このほかライブの eichinohi リポジトリには `kenjin.html` / `sekai.html` / `bosho/` など
+> ここに含まれないページもあります（それらはライブ側で直接管理）。
 
 > sages.json / events.json / legends.json などは**ゲーム実行には不要**（gamedata.js に同梱済み）。アップロード不要です。
 
