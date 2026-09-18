@@ -215,6 +215,7 @@ h1.title{font-size:2.0rem; letter-spacing:.14em; margin:.4em 0 .1em; font-weight
 .rar-sacred{background:linear-gradient(180deg,#f6e3b0,#e6c878); color:#5a3f12; border-color:#d8b86a}
 .rar-legendary{background:linear-gradient(110deg,#f6d97a,#caa45d 40%,#e7b3d0 70%,#caa45d); color:#3a2a08; border-color:#caa45d; box-shadow:0 0 10px rgba(202,164,93,.5)}
 .codex-tease{text-align:center; color:var(--gold-deep); letter-spacing:.08em; font-size:.84rem; margin:18px 0 0}
+.streak-line{text-align:center; color:var(--ink-soft); letter-spacing:.06em; font-size:.8rem; margin:8px 0 0}
 
 /* ---- 叡智の位 ---- */
 .title-pos{margin:14px 0 0; color:var(--ink-soft); font-size:.92rem}
