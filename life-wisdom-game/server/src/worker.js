@@ -456,6 +456,10 @@ async function dashboard(request, env) {
 async function siteDashboard(env, site) {
   const meta = SITES[site] || { label: site, emoji: "📊" };
   const h = await computeHits(env, site), s = await computeHitSeries(env, site, 30);
+  // 国別内訳（訪問者IPから判定した実際の国）。開くたびに最新＝cronを待たずに分析できる。
+  const c1 = splitJpOverseas(await computeCountry(env, [site]));
+  const c7 = splitJpOverseas(await computeCountry(env, [site], 7 * 86400000));
+  const cAll = splitJpOverseas(await computeCountry(env, [site], 3650 * 86400000));
   const html = '<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1"><title>' + meta.label + ' — 計測ダッシュボード</title>' +
     '<style>body{font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif;background:#f6efe2;color:#33291f;margin:0;padding:18px}' +
@@ -470,6 +474,11 @@ async function siteDashboard(env, site) {
     '<div class="card"><b>' + h.last7d + '</b><span>7日のアクセス</span></div>' +
     '<div class="card"><b>' + h.total + '</b><span>累計のアクセス</span></div>' +
     '</div><canvas id="c" height="170"></canvas>' +
+    '<div class="card" style="text-align:left;margin-top:10px"><b style="font-size:1rem">🌍 国別内訳（訪問者のIPで判定）</b>' +
+    '<div style="font-size:.85rem;line-height:1.9;margin-top:6px">' +
+    '昨日: ' + fmtJpOverseas(c1) + '<br>' +
+    '7日: ' + fmtJpOverseas(c7) + '<br>' +
+    '全期間: ' + fmtJpOverseas(cAll, 10) + '</div></div>' +
     '<p class="meta">直近30日の日次推移（JST）／ ユニークは同一IPを30分に1回として概算<br>更新：開くたびに最新（このページをブックマークしてください）</p>' +
     '<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script><script>' +
     'var L=' + JSON.stringify(s.labels) + ',H=' + JSON.stringify(s.hits) + ';' +
