@@ -177,15 +177,16 @@ async function computeHitSeries(env, site, days) {
   }
   return { labels: labels, hits: hits };
 }
-// 直近24hの国別内訳。対象サイト（配列）をまとめて集計 → { JP:10, US:5, ... } を返す。
-async function computeCountry24h(env, sites) {
+// 国別内訳。対象サイト（配列）を集計窓（ミリ秒、省略時24h）で集計 → { JP:10, US:5, ... } を返す。
+// 国コードは Cloudflare が接続元IPから判定した「訪問者の国」（データセンターの場所ではない）。
+async function computeCountry(env, sites, windowMs) {
   await ensureHits(env);
-  const d1 = Date.now() - 86400000;
+  const since = Date.now() - (windowMs || 86400000);
   const ph = sites.map(function () { return "?"; }).join(",");
   const m = {};
   try {
     const st = env.DB.prepare("SELECT country AS cc, COUNT(*) AS c FROM hits WHERE site IN (" + ph + ") AND ts > ? GROUP BY country");
-    const rs = await st.bind.apply(st, sites.concat([d1])).all();
+    const rs = await st.bind.apply(st, sites.concat([since])).all();
     (rs.results || []).forEach(function (r) { m[(r.cc || "??")] = r.c; });
   } catch (e) {}
   return m;
@@ -196,6 +197,13 @@ function splitJpOverseas(m) {
   for (const k in m) { if (k === "JP") { jp += m[k]; } else { overseas += m[k]; ov.push([k, m[k]]); } }
   ov.sort(function (a, b) { return b[1] - a[1]; });
   return { jp: jp, overseas: overseas, top: ov };
+}
+// splitJpOverseas の結果を「日本 3 ／ 海外 2（US 1 / DE 1）」の1行に整形。topN は海外内訳の表示上限。
+function fmtJpOverseas(sp, topN) {
+  const n = topN || 5;
+  const ov = sp.top.slice(0, n).map(function (x) { return x[0] + " " + x[1]; }).join(" / ");
+  return "日本 " + sp.jp + " ／ 海外 " + sp.overseas +
+    (sp.overseas ? "（" + ov + (sp.top.length > n ? " 他" : "") + "）" : "");
 }
 
 async function redeem(request, env, h) {
@@ -492,20 +500,19 @@ async function sendDailyReport(env) {
       const hh = await computeHits(env, site), m = SITES[site];
       lines.push("");
       lines.push("■ " + m.emoji + " " + m.label + "：昨日 " + hh.last24h + "（ユニーク " + hh.uniq24h + "） ／ 7日 " + hh.last7d + " ／ 累計 " + hh.total);
+      // 国別内訳（訪問者のIPから判定した実際の国。Cloudflareの地図＝データセンター所在地とは別物）
+      const c1 = splitJpOverseas(await computeCountry(env, [site]));
+      const c7 = splitJpOverseas(await computeCountry(env, [site], 7 * 86400000));
+      lines.push("　🌍 昨日: " + fmtJpOverseas(c1) + " ／ 7日: " + fmtJpOverseas(c7));
       if (env.USAGE_KEY) lines.push("　📈 https://api.eichinohi.com/dashboard?key=" + env.USAGE_KEY + "&site=" + site);
     } catch (e) {}
   }
-  // 🌍 賢人会議の海外モニタリング（昨日・国別）
+  // 🎉 新規会員（昨日・国別）。賢人会議の国別利用は上の各サイト行（🌍）に統合済み。
   try {
-    const use = splitJpOverseas(await computeCountry24h(env, ["sage_free", "sage_member"]));
-    const ovStr = use.top.slice(0, 6).map(function (x) { return x[0] + " " + x[1]; }).join(" / ") || "—";
-    const join = splitJpOverseas(await computeCountry24h(env, ["member_join"]));
+    const join = splitJpOverseas(await computeCountry(env, ["member_join"]));
     const joinTotal = join.jp + join.overseas;
     const joinStr = [].concat(join.jp ? [["JP", join.jp]] : [], join.top).map(function (x) { return x[0] + " " + x[1]; }).join(" / ") || "—";
     lines.push("");
-    lines.push("🌍 賢人会議の利用（昨日・国別）");
-    lines.push("　・日本: " + use.jp + " ／ 海外: " + use.overseas);
-    lines.push("　・海外の内訳: " + ovStr);
     lines.push("🎉 新しく会員になった人（昨日）: " + joinTotal + (joinTotal ? "（" + joinStr + "）" : ""));
     lines.push("　※売上金額はGumroadアプリで確認（ここは人数の目安）");
   } catch (e) {}
