@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Carry Me Over / Amber & Rain (Promo Short)</title>
+<meta name="description" content="Four in the morning. Nobody gets across alone. Hold on — I'll carry you over. Amber & Rain, new single "Carry Me Over".">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Caveat:wght@600&family=Montserrat:wght@500;600&display=swap">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:#080a18;overflow:hidden}
+  #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#080a18}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform:scale(var(--s,1));transform-origin:center center;
+    font-family:'Playfair Display',serif;background:#080a18}
+  #world{position:absolute;inset:0;transform-origin:52% 52%}
+  #sky{position:absolute;left:0;top:0;width:1080px;height:1060px;
+    background:linear-gradient(180deg,#0e1330 0%,#182046 22%,#2b3159 42%,#5b4a66 60%,#9c6156 75%,#d5814c 88%,#ffd190 100%)}
+  #dawnglow{position:absolute;left:540px;top:1040px;width:1120px;height:720px;transform:translate(-50%,-50%);pointer-events:none;
+    background:radial-gradient(ellipse at 50% 50%, rgba(255,226,150,.85), rgba(255,190,110,.34) 40%, transparent 68%)}
+  .star{position:absolute;border-radius:50%;background:#fff}
+  #shore{position:absolute;left:0;top:988px;width:1080px;height:80px;background:#12162c;
+    clip-path:polygon(0 60%,10% 46%,22% 56%,34% 42%,46% 54%,58% 40%,70% 54%,82% 44%,92% 56%,100% 46%,100% 100%,0 100%)}
+  #water{position:absolute;left:0;top:1050px;width:1080px;height:610px;
+    background:linear-gradient(180deg,#e79b56 0%,#b07752 8%,#4b466a 30%,#232a4c 60%,#141a33 100%)}
+  #waterglow{position:absolute;left:540px;top:1054px;width:200px;height:520px;transform:translateX(-50%);pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,216,140,.85), rgba(255,186,110,.32) 40%, transparent 100%);filter:blur(5px);mix-blend-mode:screen}
+  .mist{position:absolute;height:60px;border-radius:50%;pointer-events:none;filter:blur(20px);
+    background:radial-gradient(ellipse at 50% 50%, rgba(220,225,240,.6), transparent 72%)}
+  /* boat */
+  #boat{position:absolute;left:404px;top:1196px;width:272px;height:150px;z-index:6}
+  #hull{position:absolute;left:0;top:70px;width:272px;height:56px;background:#0c1022;
+    clip-path:polygon(0 30%,10% 12%,90% 12%,100% 30%,86% 100%,14% 100%)}
+  .fig{position:absolute;background:#0c1022}
+  #fig1{left:74px;top:16px;width:52px;height:74px;border-radius:44% 44% 30% 30%}
+  #fig1b{left:66px;top:0;width:32px;height:34px;border-radius:50%;background:#0c1022;position:absolute}
+  #fig2{left:150px;top:26px;width:48px;height:64px;border-radius:44% 44% 30% 30%}
+  #fig2b{left:158px;top:12px;width:30px;height:32px;border-radius:50%;background:#0c1022;position:absolute}
+  #oar{position:absolute;left:180px;top:48px;width:130px;height:6px;background:#0c1022;border-radius:4px;transform:rotate(24deg);transform-origin:0 50%}
+  #lantpole{position:absolute;left:34px;top:10px;width:5px;height:70px;background:#0c1022;border-radius:3px}
+  #lantern{position:absolute;left:20px;top:2px;width:34px;height:34px;border-radius:50%;
+    background:radial-gradient(circle at 45% 40%,#fff7df,#ffca6a 55%,#f39a2a);box-shadow:0 0 26px 10px rgba(255,196,96,.75)}
+  #lantglow{position:absolute;left:37px;top:19px;width:220px;height:220px;transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,206,120,.5), transparent 66%)}
+  #boatref{position:absolute;left:404px;top:1330px;width:272px;height:120px;z-index:5;opacity:.28;pointer-events:none;
+    transform:scaleY(-0.6);filter:blur(3px)}
+  /* reeds */
+  .reed{position:absolute;bottom:0;width:14px;background:#0a0e1e;transform-origin:50% 100%;z-index:7;
+    border-radius:8px 8px 0 0}
+  .mote{position:absolute;border-radius:50%;background:radial-gradient(circle,#ffe9be,#ffbf72 52%,transparent 74%);opacity:0;z-index:8}
+  #bloom{position:absolute;inset:0;pointer-events:none;z-index:12;opacity:0;
+    background:radial-gradient(120% 78% at 50% 52%, rgba(255,244,214,.95), rgba(255,210,140,.68) 38%, rgba(255,176,96,.32) 68%, transparent 100%)}
+  #grain{position:absolute;inset:0;opacity:.05;pointer-events:none;mix-blend-mode:overlay;z-index:9;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;z-index:9;
+    background:radial-gradient(120% 100% at 50% 48%, transparent 46%, rgba(4,6,16,.82) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;z-index:14}
+  .scene.mid{justify-content:flex-start;padding:230px 80px 0}
+  .scene.low{justify-content:flex-start;padding:186px 80px 0}
+  .kick{font-family:'Montserrat',sans-serif;font-size:30px;letter-spacing:.52em;color:#fff1d6;text-transform:uppercase;font-weight:600;
+    text-shadow:0 2px 20px rgba(4,8,22,.95)}
+  .en{font-size:66px;line-height:1.5;font-weight:600;color:#fff8ec;letter-spacing:.01em;
+    text-shadow:0 2px 24px rgba(4,8,22,.98),0 0 44px rgba(10,16,36,.7)}
+  .en .em{color:#ffd884}
+  .big{font-size:96px;line-height:1.2;font-weight:700;color:#fff;letter-spacing:.01em;display:inline-block;
+    text-shadow:0 3px 26px rgba(4,8,22,1),0 0 56px rgba(255,206,120,.5)}
+  .title{font-family:'Playfair Display',serif;font-size:150px;line-height:.98;font-weight:800;color:#fff8ec;letter-spacing:.01em;
+    text-shadow:0 4px 3px rgba(4,8,22,.5),0 6px 40px rgba(4,8,22,.9),0 0 60px rgba(255,206,120,.4)}
+  .artist{font-family:'Montserrat',sans-serif;font-size:40px;letter-spacing:.34em;color:#ffe7bc;text-transform:uppercase;font-weight:600;
+    text-shadow:0 2px 16px rgba(4,8,22,.9)}
+  .hand{font-family:'Caveat',cursive;font-size:58px;color:#ffdb96;letter-spacing:.01em;text-shadow:0 2px 18px rgba(4,8,22,.9)}
+  .tag{margin-top:24px;font-family:'Montserrat',sans-serif;font-size:26px;letter-spacing:.46em;color:#ffe2ac;text-transform:uppercase;font-weight:600;
+    text-shadow:0 2px 14px rgba(4,8,22,.9)}
+  .orn{display:flex;align-items:center;justify-content:center;gap:22px;margin:22px 0 12px}
+  .orn i{display:block;width:110px;height:1px;background:linear-gradient(90deg,transparent,#ffe2ac,transparent)}
+  .orn b{font-size:26px;color:#ffdb96}
+  #bar{position:absolute;left:0;bottom:0;height:5px;width:0;background:linear-gradient(90deg,#d5814c,#ffdb96);opacity:.85;z-index:15}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(6,10,24,.86);backdrop-filter:blur(4px);z-index:20;gap:26px;padding:0 90px;text-align:center}
+  #ui .k{font-family:'Montserrat',sans-serif;font-size:28px;letter-spacing:.4em;color:#ffdb96;text-transform:uppercase;font-weight:600}
+  #ui h1{font-family:'Playfair Display',serif;font-size:132px;font-weight:800;color:#fff8ec;line-height:.98}
+  #ui p{font-family:'Caveat',cursive;font-size:52px;color:#ffe2ac}
+  #play{font-family:'Montserrat',sans-serif;font-weight:700;font-size:30px;color:#241405;background:#ffdb96;border:none;
+    border-radius:100px;padding:24px 72px;cursor:pointer;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 10px 40px rgba(255,200,110,.4)}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+
+  <div id="world">
+    <div id="sky"></div>
+    <div id="dawnglow"></div>
+    <div id="shore"></div>
+    <div id="water"></div>
+    <div id="waterglow"></div>
+    <div id="boatref"></div>
+    <div id="boat">
+      <div id="lantglow"></div>
+      <div id="hull"></div>
+      <div id="fig1" class="fig"></div><div id="fig1b"></div>
+      <div id="fig2" class="fig"></div><div id="fig2b"></div>
+      <div id="oar"></div>
+      <div id="lantpole"></div><div id="lantern"></div>
+    </div>
+  </div>
+  <div id="bloom"></div>
+  <div id="grain"></div>
+  <div id="vig"></div>
+  <div id="scenes"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">Amber &amp; Rain</div>
+    <h1>Carry Me Over</h1>
+    <p>Hold on, hold on</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+
+</div></div>
+<audio id="bgm" src="carrymeover-bgm.mp3" preload="auto"></audio>
+<script>
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), world=document.getElementById('world'),
+        clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v), sm=v=>v*v*(3-2*v);
+  // fading stars
+  const ST=[]; for(let i=0;i<70;i++){const e=document.createElement('div');e.className='star';
+    const sz=1+((i*7)%3);e.style.width=sz+'px';e.style.height=sz+'px';
+    e.style.left=((i*53)%100)+'%';e.style.top=((i*61)%46)+'%';
+    e.dataset.ph=((i*29)%100)/100;world.insertBefore(e,document.getElementById('shore'));ST.push(e);}
+  // mist bands over the water
+  const MI=[]; const md=[[120,1080,520],[520,1130,640],[-60,1210,560],[560,1280,600],[180,1360,480]];
+  md.forEach((d,i)=>{const e=document.createElement('div');e.className='mist';e.style.left=d[0]+'px';e.style.top=d[1]+'px';
+    e.style.width=d[2]+'px';e.dataset.ph=((i*23)%100)/100;e.dataset.sp=0.5+(i%3)*0.3;
+    world.insertBefore(e,document.getElementById('boat'));MI.push(e);});
+  // reeds in the foreground
+  const RD=[[40,150,300,-4],[92,120,240,3],[150,90,180,-3],[980,150,320,5],[1010,120,250,-4],[930,90,190,3]];
+  RD.forEach(d=>{const e=document.createElement('div');e.className='reed';e.style.left=d[0]+'px';
+    e.style.width=d[1]/8+'px';e.style.height=d[2]+'px';e.dataset.base=d[3];world.appendChild(e);e.dataset.el=1;
+    e.style.setProperty('--x','0');});
+  const REEDS=[...document.querySelectorAll('.reed')];
+  // build a mirrored boat reflection
+  const boat=document.getElementById('boat'), boatref=document.getElementById('boatref');
+  boatref.innerHTML=boat.innerHTML;
+  // warm motes / fireflies drifting over the water
+  const MO=[]; for(let i=0;i<22;i++){const e=document.createElement('div');e.className='mote';const sz=3+(i%3)*3;
+    e.style.width=sz+'px';e.style.height=sz+'px';e.style.left=((i*41)%100)+'%';
+    e.dataset.dur=8+((i*29)%50)/10;e.dataset.ph=((i*53)%100)/100;e.dataset.sway=30+((i*17)%70);e.dataset.y0=1120+((i*37)%420);
+    stage.appendChild(e);MO.push(e);}
+  const dawnglow=document.getElementById('dawnglow'),waterglow=document.getElementById('waterglow'),
+        bloom=document.getElementById('bloom'),bar=document.getElementById('bar');
+  const scenes=[
+    {d:3200, html:`<div class="scene low"><div class="kick">New Single</div></div>`},
+    {d:5200, html:`<div class="scene mid"><div class="en">Four in the morning.<br>Nobody&rsquo;s coming.</div></div>`},
+    {d:5400, html:`<div class="scene mid"><div class="en">It&rsquo;s you, it&rsquo;s me,<br><span class="em">and whoever&rsquo;s still standing.</span></div></div>`},
+    {d:6200, html:`<div class="scene mid"><div class="en">Hold on —<br><span class="big">I&rsquo;ll carry you over.</span></div></div>`},
+    {d:6400, html:`<div class="scene mid" style="padding-top:250px"><div class="title">Carry Me<br>Over</div><div class="orn"><i></i><b>&#10022;</b><i></i></div><div class="artist">Amber &amp; Rain</div><div class="hand" style="margin-top:16px">Hold on, hold on</div><div class="tag">New Single &nbsp;&#9654;</div></div>`}
+  ], BLOOM_FROM=16300, BLOOM_PEAK=19800;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/900,(en-t)/700),0,1);}
+  window.renderAt=function(t){
+    const ts=t/1000, prog=t/total;
+    world.style.transform=`scale(${1+0.06*prog}) translateY(${-prog*10}px)`;
+    // dawn strengthens as we cross
+    const warm=clamp((t-(BLOOM_FROM-3200))/5200,0,1);
+    dawnglow.style.opacity=(0.7+0.5*warm+0.06*Math.sin(ts/1.8)).toFixed(3);
+    dawnglow.style.transform=`translate(-50%,-50%) scale(${1+0.12*warm})`;
+    waterglow.style.opacity=(0.6+0.4*warm+0.12*Math.sin(ts*1.4)).toFixed(3);
+    waterglow.style.transform=`translateX(-50%) scaleX(${1+0.14*Math.sin(ts*1.6)})`;
+    for(const s of ST){const ph=+s.dataset.ph;
+      s.style.opacity=((0.3+0.5*(0.5+0.5*Math.sin(ts*1.6+ph*6.28)))*(1-warm*0.9)).toFixed(3);}
+    // boat rocks gently and drifts toward the light
+    const bx=Math.sin(ts*0.5)*8, by=Math.sin(ts*0.9)*5;
+    boat.style.transform=`translate(${bx}px, ${by-prog*14}px) rotate(${Math.sin(ts*0.9)*1.2}deg)`;
+    boatref.style.transform=`translate(${bx}px, ${-by}px) scaleY(-0.6)`;
+    boatref.style.opacity=(0.24+0.12*Math.sin(ts*1.4)).toFixed(3);
+    for(const m of MI){const ph=+m.dataset.ph, sp=+m.dataset.sp;
+      m.style.transform=`translateX(${Math.sin(ts*0.12*sp+ph*6.28)*40 + ts*6*sp}px)`;
+      m.style.opacity=(0.4+0.3*Math.sin(ts*0.4+ph*6)).toFixed(3);}
+    for(const r of REEDS){const b=+r.dataset.base;
+      r.style.transform=`rotate(${b+Math.sin(ts*0.9+b)*2}deg)`;}
+    for(const m of MO){const pr=frac(ts/(+m.dataset.dur)+ +m.dataset.ph);
+      m.style.top=((+m.dataset.y0)-pr*260)+'px';
+      m.style.transform=`translateX(${Math.sin(pr*6.28+ +m.dataset.ph*8)*(+m.dataset.sway)}px)`;
+      m.style.opacity=((0.3+0.5*warm)*Math.sin(pr*Math.PI)*0.7).toFixed(3);}
+    let bl=0;
+    if(t>BLOOM_FROM){ const up=clamp((t-BLOOM_FROM)/(BLOOM_PEAK-BLOOM_FROM),0,1);
+      bl=sm(up)*0.58; if(t>BLOOM_PEAK) bl=0.58-clamp((t-BLOOM_PEAK)/1500,0,1)*0.28; }
+    bloom.style.opacity=bl.toFixed(3);
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(prog,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.9;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.9*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+</script>
+</body>
+</html>

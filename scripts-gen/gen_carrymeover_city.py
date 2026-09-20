@@ -1,0 +1,269 @@
+# -*- coding: utf-8 -*-
+"""「Carry Me Over / Amber & Rain」 — cover-matching "city & pier" version (9:16, ~26s).
+
+Hews to the jacket: golden-hour city skyline across the water (with a suspension bridge
+to the right), the sun setting behind downtown, and — on the pier in the foreground — a
+couple seen from behind sitting close together with a guitar case beside them, watching
+the light. Warm reflection on the water, drifting clouds and embers, a sun-flare bloom on
+the chorus.
+
+On-screen text uses the rights-holder-supplied lyrics (selected lines), the title, the
+artist, the cover tagline, and generic labels — no invented lines.
+
+Deterministic render: exposes window.renderAt(ms) + window.TOTAL. BGM: carrymeover-bgm.mp3.
+"""
+import os
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.dirname(HERE)
+
+CSS = r"""
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:#0a0f1c;overflow:hidden}
+  #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0f1c}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform:scale(var(--s,1));transform-origin:center center;
+    font-family:'Playfair Display',serif;background:#0a0f1c}
+  #world{position:absolute;inset:0;transform-origin:52% 50%}
+  #sky{position:absolute;left:0;top:0;width:1080px;height:1000px;
+    background:linear-gradient(180deg,#1f5390 0%,#3d72a9 20%,#6d97c3 37%,#a7a19e 52%,#dca55f 66%,#f4bd5c 80%,#ffd888 100%)}
+  #sunhaze{position:absolute;left:540px;top:940px;width:1080px;height:760px;transform:translate(-50%,-50%);pointer-events:none;
+    background:radial-gradient(ellipse at 50% 50%, rgba(255,226,150,.7), rgba(255,196,110,.24) 42%, transparent 68%)}
+  .cloud{position:absolute;border-radius:50%;filter:blur(16px)}
+  #sun{position:absolute;left:540px;top:946px;width:150px;height:150px;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,#fffefb 0%,#fff2cf 42%,#ffdd8a 74%,#ffc266 100%);box-shadow:0 0 90px 40px rgba(255,214,130,.65)}
+  #rays{position:absolute;left:540px;top:946px;width:1150px;height:1150px;transform:translate(-50%,-50%);border-radius:50%;
+    opacity:.4;mix-blend-mode:screen;pointer-events:none;filter:blur(2px);
+    background:repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,238,196,.5) 0deg 2.2deg, transparent 2.2deg 13deg);
+    -webkit-mask:radial-gradient(circle at 50% 50%, transparent 4%, #000 12%, #000 28%, transparent 50%);
+    mask:radial-gradient(circle at 50% 50%, transparent 4%, #000 12%, #000 28%, transparent 50%)}
+  #city{position:absolute;left:0;top:0;width:1080px;height:1010px;z-index:3}
+  #bridge{position:absolute;left:0;top:0;width:1080px;height:1010px;z-index:3;overflow:visible}
+  #water{position:absolute;left:0;top:1000px;width:1080px;height:560px;z-index:2;
+    background:linear-gradient(180deg, rgba(255,214,150,.92) 0%, rgba(214,150,86,.85) 12%, rgba(96,110,140,.5) 40%, rgba(30,44,74,.95) 100%)}
+  #wref{position:absolute;left:540px;top:1004px;width:190px;height:470px;transform:translateX(-50%);z-index:3;pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,230,160,.9), rgba(255,198,116,.32) 46%, transparent 100%);filter:blur(5px);mix-blend-mode:screen}
+  /* pier + left stone pillar */
+  #pier{position:absolute;left:0;bottom:0;width:1080px;height:420px;background:#0c1120;z-index:6;
+    clip-path:polygon(0 22%,30% 16%,62% 20%,100% 14%,100% 100%,0 100%)}
+  #pillar{position:absolute;left:0;bottom:0;width:150px;height:1180px;background:#0b0f1c;z-index:8}
+  /* guitar case standing against the bright water, rim-lit by the sunset */
+  #gcase{position:absolute;left:180px;bottom:300px;width:132px;height:452px;z-index:8;transform:rotate(9deg);transform-origin:50% 100%;
+    background:linear-gradient(96deg, #0b0f1c 58%, rgba(255,206,130,.55) 88%, rgba(255,224,150,.22));
+    clip-path:polygon(38% 0,62% 0,72% 8%,72% 26%,64% 34%,64% 46%,74% 54%,78% 74%,70% 96%,50% 100%,30% 96%,22% 74%,26% 54%,36% 46%,36% 34%,28% 26%,28% 8%)}
+  /* couple (from behind, on the pier) */
+  #couple{position:absolute;left:388px;top:1214px;width:420px;height:346px;z-index:9}
+  .s{position:absolute;background:#0b0f1c}
+  #m-body{left:8px;top:104px;width:214px;height:242px;clip-path:polygon(30% 0,52% 4%,72% 0,90% 26%,100% 100%,0 100%,10% 26%)}
+  #m-head{left:78px;top:44px;width:78px;height:86px;border-radius:50% 50% 46% 46%}
+  #m-hair{left:74px;top:36px;width:86px;height:64px;border-radius:52% 52% 44% 44%;background:#0b0f1c}
+  #w-body{left:210px;top:132px;width:186px;height:214px;clip-path:polygon(30% 0,50% 6%,70% 0,88% 28%,100% 100%,0 100%,12% 28%)}
+  #w-hair{left:250px;top:60px;width:112px;height:190px;border-radius:48% 48% 40% 40%/40% 40% 60% 60%;background:#0b0f1c}
+  #w-head{left:270px;top:70px;width:72px;height:80px;border-radius:50% 50% 46% 46%}
+  #cprim{position:absolute;left:388px;top:1214px;width:420px;height:346px;z-index:8;filter:blur(1px)}
+  #cprim>*{background:linear-gradient(200deg, rgba(255,224,150,.55), rgba(255,190,110,.06) 60%)!important}
+  .mote{position:absolute;border-radius:50%;background:radial-gradient(circle,#ffe9be,#ffbf72 52%,transparent 74%);opacity:0;z-index:9}
+  #bloom{position:absolute;inset:0;pointer-events:none;z-index:12;opacity:0;
+    background:radial-gradient(120% 78% at 50% 50%, rgba(255,244,214,.95), rgba(255,210,140,.68) 38%, rgba(255,176,96,.32) 68%, transparent 100%)}
+  #grain{position:absolute;inset:0;opacity:.05;pointer-events:none;mix-blend-mode:overlay;z-index:10;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;z-index:10;
+    background:radial-gradient(120% 100% at 50% 46%, transparent 46%, rgba(6,9,18,.8) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;z-index:14}
+  .scene.mid{justify-content:flex-start;padding:250px 80px 0}
+  .scene.low{justify-content:flex-start;padding:190px 80px 0}
+  .kick{font-family:'Montserrat',sans-serif;font-size:30px;letter-spacing:.52em;color:#fff1d6;text-transform:uppercase;font-weight:600;
+    text-shadow:0 2px 20px rgba(6,10,24,.95)}
+  .en{font-size:66px;line-height:1.5;font-weight:600;color:#fff8ec;letter-spacing:.01em;
+    text-shadow:0 2px 24px rgba(6,10,24,.98),0 0 44px rgba(12,20,44,.7)}
+  .en .em{color:#ffd884}
+  .big{font-size:96px;line-height:1.2;font-weight:700;color:#fff;letter-spacing:.01em;display:inline-block;
+    text-shadow:0 3px 26px rgba(6,10,24,1),0 0 56px rgba(255,206,120,.5)}
+  .title{font-family:'Playfair Display',serif;font-weight:700;font-size:126px;line-height:1.0;color:#fff8ec;letter-spacing:.005em;
+    text-shadow:0 4px 18px rgba(6,10,24,.9),0 0 60px rgba(255,206,120,.4)}
+  .artist{font-family:'Montserrat',sans-serif;font-size:40px;letter-spacing:.32em;color:#ffe7bc;text-transform:uppercase;font-weight:600;
+    text-shadow:0 2px 16px rgba(6,10,24,.9)}
+  .hand{font-family:'Playfair Display',serif;font-style:italic;font-size:50px;color:#ffdb96;letter-spacing:.01em;text-shadow:0 2px 18px rgba(6,10,24,.9)}
+  .tag{margin-top:22px;font-family:'Montserrat',sans-serif;font-size:26px;letter-spacing:.46em;color:#ffe2ac;text-transform:uppercase;font-weight:600;
+    text-shadow:0 2px 14px rgba(6,10,24,.9)}
+  .orn{display:flex;align-items:center;justify-content:center;gap:22px;margin:16px 0 12px}
+  .orn i{display:block;width:110px;height:1px;background:linear-gradient(90deg,transparent,#ffe2ac,transparent)}
+  .orn b{font-size:26px;color:#ffdb96}
+  #bar{position:absolute;left:0;bottom:0;height:5px;width:0;background:linear-gradient(90deg,#dca55f,#ffdb96);opacity:.85;z-index:15}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(8,12,24,.86);backdrop-filter:blur(4px);z-index:20;gap:24px;padding:0 90px;text-align:center}
+  #ui .k{font-family:'Montserrat',sans-serif;font-size:28px;letter-spacing:.4em;color:#ffdb96;text-transform:uppercase;font-weight:600}
+  #ui h1{font-family:'Playfair Display',serif;font-weight:700;font-size:116px;color:#fff8ec;line-height:1.0}
+  #ui p{font-family:'Playfair Display',serif;font-style:italic;font-size:46px;color:#ffe2ac}
+  #play{font-family:'Montserrat',sans-serif;font-weight:700;font-size:30px;color:#241405;background:#ffdb96;border:none;
+    border-radius:100px;padding:24px 72px;cursor:pointer;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 10px 40px rgba(255,200,110,.4)}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+"""
+
+ENGINE = r"""
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), world=document.getElementById('world'),
+        clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v), sm=v=>v*v*(3-2*v);
+  // make sure the custom fonts are fetched before capture (document.fonts.ready waits on these)
+  try{['132px "Pacifico"','120px "Pacifico"','66px "Playfair Display"','52px "Caveat"','30px "Montserrat"']
+      .forEach(f=>document.fonts.load(f));}catch(e){}
+  // clouds (warm, drifting)
+  const CL=[]; const cd=[[80,210,440,150],[520,150,520,180],[300,360,360,140],[740,300,440,170],[150,470,300,120],[840,470,360,140]];
+  cd.forEach((d,i)=>{const e=document.createElement('div');e.className='cloud';e.style.left=d[0]+'px';e.style.top=d[1]+'px';
+    e.style.width=d[2]+'px';e.style.height=d[3]+'px';e.style.opacity=(0.5-(i%3)*0.1).toFixed(2);
+    e.style.background='radial-gradient(ellipse at 42% 40%, rgba(255,'+(220-(i%3)*20)+','+(190-(i%3)*40)+',.8), rgba(255,190,140,.24) 54%, transparent 76%)';
+    e.dataset.ph=((i*27)%100)/100;e.dataset.sp=0.5+(i%3)*0.3;world.insertBefore(e,document.getElementById('sun'));CL.push(e);});
+  // city skyline
+  const city=document.getElementById('city'); const base=1002; let x=0,bi=0;
+  while(x<760){const w=24+((bi*37)%50); const h=60+((bi*53)%210)+(Math.abs(x-430)<200?70:0);
+    const b=document.createElement('div');b.style.position='absolute';b.style.left=x+'px';b.style.top=(base-h)+'px';
+    b.style.width=(w-3)+'px';b.style.height=h+'px';const near=Math.abs(x-430)<220;
+    b.style.background=near?'#243a5e':'#1c2f4e';b.style.opacity=near?'0.92':'0.86';
+    city.appendChild(b);x+=w+2+((bi*13)%6);bi++;}
+  // suspension bridge on the right
+  const svgNS='http://www.w3.org/2000/svg';const br=document.getElementById('bridge');
+  br.innerHTML=`<svg width="1080" height="1010" viewBox="0 0 1080 1010">
+    <g fill="none" stroke="#1c2f4e" stroke-width="5" opacity="0.9">
+      <path d="M760 1002 L760 812 M980 1002 L980 812"/>
+      <path d="M700 890 Q870 770 1080 872" stroke-width="4"/>
+      <path d="M700 1002 Q870 990 1080 1002" stroke-width="7"/>
+    </g>
+    <g stroke="#1c2f4e" stroke-width="2" opacity="0.8">
+      <path d="M726 902 L726 998 M760 884 L760 998 M800 866 L800 998 M840 852 L840 998
+               M880 846 L880 998 M920 850 L920 998 M960 862 L960 998 M1000 882 L1000 998 M1040 906 L1040 998"/>
+    </g></svg>`;
+  // couple rim-light clone
+  const couple=document.getElementById('couple'),cprim=document.getElementById('cprim');
+  [...couple.children].forEach(c=>{const a=c.cloneNode();cprim.appendChild(a);});
+  // warm embers
+  const MO=[]; for(let i=0;i<24;i++){const e=document.createElement('div');e.className='mote';const sz=3+(i%3)*3;
+    e.style.width=sz+'px';e.style.height=sz+'px';e.style.left=((i*41)%100)+'%';
+    e.dataset.dur=8+((i*29)%50)/10;e.dataset.ph=((i*53)%100)/100;e.dataset.sway=30+((i*17)%70);e.dataset.y0=1120+((i*37)%420);
+    stage.appendChild(e);MO.push(e);}
+  const sun=document.getElementById('sun'),sunhaze=document.getElementById('sunhaze'),rays=document.getElementById('rays'),
+        wref=document.getElementById('wref'),bloom=document.getElementById('bloom'),bar=document.getElementById('bar');
+  const scenes=SCENES, BLOOM_FROM=BLOOMFROM, BLOOM_PEAK=BLOOMPEAK;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/900,(en-t)/700),0,1);}
+  window.renderAt=function(t){
+    const ts=t/1000, prog=t/total;
+    world.style.transform=`scale(${1+0.07*prog}) translateY(${-prog*10}px)`;
+    sunhaze.style.opacity=(0.85+0.12*Math.sin(ts/1.8)).toFixed(3);
+    sun.style.opacity=(0.95+0.05*Math.sin(ts/1.5)).toFixed(3);
+    rays.style.transform=`translate(-50%,-50%) rotate(${ts*1.0}deg)`;
+    rays.style.opacity=(0.34+0.1*Math.sin(ts/2.2)).toFixed(3);
+    wref.style.opacity=(0.66+0.3*Math.sin(ts*1.4)).toFixed(3);
+    wref.style.transform=`translateX(-50%) scaleX(${1+0.12*Math.sin(ts*1.6)})`;
+    for(const c of CL){const ph=+c.dataset.ph, sp=+c.dataset.sp;
+      c.style.transform=`translateX(${Math.sin(ts*0.05*sp+ph*6.28)*22 + ts*3*sp}px)`;}
+    for(const m of MO){const pr=frac(ts/(+m.dataset.dur)+ +m.dataset.ph);
+      m.style.top=((+m.dataset.y0)-pr*280)+'px';
+      m.style.transform=`translateX(${Math.sin(pr*6.28+ +m.dataset.ph*8)*(+m.dataset.sway)}px)`;
+      m.style.opacity=(Math.sin(pr*Math.PI)*0.62).toFixed(3);}
+    let bl=0;
+    if(t>BLOOM_FROM){ const up=clamp((t-BLOOM_FROM)/(BLOOM_PEAK-BLOOM_FROM),0,1);
+      bl=sm(up)*0.58; if(t>BLOOM_PEAK) bl=0.58-clamp((t-BLOOM_PEAK)/1500,0,1)*0.28; }
+    bloom.style.opacity=bl.toFixed(3);
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(prog,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.9;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.9*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+"""
+
+# scene timeline
+D = [3200, 5200, 5400, 6200, 6400]
+S4 = D[0]+D[1]+D[2]
+BLOOM_FROM = S4 + 2500
+BLOOM_PEAK = S4 + D[3] - 200
+
+scenes = [
+    (D[0], '<div class="scene low"><div class="kick">New Single</div></div>'),
+    (D[1], '<div class="scene mid"><div class="en">Same skies,<br>same songs.</div></div>'),
+    (D[2], '<div class="scene mid"><div class="en">Nobody gets<br><span class="em">across alone.</span></div></div>'),
+    (D[3], '<div class="scene mid"><div class="en">Hold on —<br><span class="big">I&rsquo;ll carry you over.</span></div></div>'),
+    (D[4], '<div class="scene mid" style="padding-top:236px">'
+           '<div class="title">Carry&nbsp;Me&nbsp;Over</div>'
+           '<div class="orn"><i></i><b>&#10022;</b><i></i></div>'
+           '<div class="artist">Amber &amp; Rain</div>'
+           '<div class="hand" style="margin-top:14px">We will carry each other this time</div>'
+           '<div class="tag">New Single &nbsp;&#9654;</div></div>'),
+]
+
+meta = dict(title="Carry Me Over / Amber & Rain (Promo Short — City)",
+  desc="Same skies, same songs. Nobody gets across alone. Hold on — I'll carry you over. Amber & Rain, new single \"Carry Me Over\".")
+
+scenes_js = "[\n" + ",\n".join("    {d:%d, html:`%s`}" % (d, h) for (d, h) in scenes) + "\n  ]"
+engine = (ENGINE.replace("SCENES", scenes_js)
+          .replace("BLOOMFROM", str(BLOOM_FROM)).replace("BLOOMPEAK", str(BLOOM_PEAK)))
+
+BODY = r"""
+  <div id="world">
+    <div id="sky"></div>
+    <div id="sunhaze"></div>
+    <div id="rays"></div>
+    <div id="sun"></div>
+    <div id="city"></div>
+    <div id="bridge"></div>
+    <div id="water"></div>
+    <div id="wref"></div>
+    <div id="pier"></div>
+    <div id="pillar"></div>
+    <div id="gcase"></div>
+    <div id="cprim"></div>
+    <div id="couple">
+      <div id="m-body" class="s"></div><div id="m-hair" class="s"></div><div id="m-head" class="s"></div>
+      <div id="w-body" class="s"></div><div id="w-hair" class="s"></div><div id="w-head" class="s"></div>
+    </div>
+  </div>
+  <div id="bloom"></div>
+  <div id="grain"></div>
+  <div id="vig"></div>
+  <div id="scenes"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">Amber &amp; Rain</div>
+    <h1>Carry Me Over</h1>
+    <p>We will carry each other this time</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+"""
+
+html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{meta['title']}</title>
+<meta name="description" content="{meta['desc']}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@600;700&family=Caveat:wght@600&family=Montserrat:wght@500;600&display=swap">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+{BODY}
+</div></div>
+<audio id="bgm" src="carrymeover-bgm.mp3" preload="auto"></audio>
+<script>{engine}</script>
+</body>
+</html>
+"""
+open(os.path.join(OUT, "carrymeover-city-short.html"), "w", encoding="utf-8").write(html)
+print(f"wrote carrymeover-city-short.html  ({sum(d for d,_ in scenes)/1000:.1f}s, {len(scenes)} scenes; bloom {BLOOM_FROM}->{BLOOM_PEAK})")
