@@ -101,7 +101,8 @@ async function fingerprint(token) {
 const SITES = {
   politicians: { label: "議員ランキング", emoji: "🏛" },
   sage_free: { label: "賢人会議（無料）", emoji: "🧙" },
-  sage_member: { label: "賢人会議（会員）", emoji: "🧙" }
+  sage_member: { label: "賢人会議（会員）", emoji: "🧙" },
+  bosho: { label: "墓所手帖", emoji: "🪷" }
 };
 
 // 賢人会議（AI対話プロキシ）の設定。会員は無制限、非会員はIP×窓で無料枠のみ。
