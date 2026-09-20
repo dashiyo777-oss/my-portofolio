@@ -48,6 +48,7 @@ td.title-cell .artist{display:block;font-weight:400;font-size:.72rem;color:var(-
 .badge.check{background:#fff3cd;color:#a07d1a;margin-left:4px;cursor:help}
 .badge.short-yes{background:var(--ok-soft);color:var(--ok)}
 .badge.short-no{background:#f1ede6;color:#b0a794}
+.badge.na{background:#f1ede6;color:#a79c88}
 /* sns cell */
 .sns-cell{display:flex;flex-direction:column;gap:3px;min-width:96px}
 .sns-toggle{font-size:.68rem;padding:3px 8px;border-radius:14px;border:1px solid var(--line);background:#f7f3ec;color:#a79c88;cursor:pointer;text-align:center;user-select:none}
@@ -131,57 +132,69 @@ footer a{color:var(--accent)}
 </div>
 
 <script>
-// ===== 楽曲マスターデータ（ROUTER.FM 配信登録履歴より）=====
+// ===== 楽曲マスターデータ =====
+// reg: ROUTER.FM配信登録日 / yt: YouTubeショートの公開日・視聴回数（YouTube Studioより転記）
 // check:true = スクリーンショット読取が不鮮明。ページ上で編集して修正してください。
 const SONGS = [
-  {id:"s01", reg:"2026-09-20", title:"the Sound With No Name", artist:"ナナシグナル", status:"審査中",   note:false, check:true},
-  {id:"s02", reg:"2026-09-17", title:"Carry Me Over",           artist:"Amber & Rain", status:"審査中",   note:false},
-  {id:"s03", reg:"2026-09-11", title:"Give Us Back the Sky",    artist:"Rolling All Stars", status:"承認完了", note:false},
-  {id:"s04", reg:"2026-09-11", title:"Put It Back",             artist:"Rolling All Stars", status:"承認完了", note:false},
-  {id:"s05", reg:"2026-09-11", title:"十月の金木犀",             artist:"花明り", status:"承認完了", note:false, check:true},
-  {id:"s06", reg:"2026-09-11", title:"まだ、ここに立っている",   artist:"w-Band", status:"承認完了", note:false},
-  {id:"s07", reg:"2026-08-31", title:"約束の重さ",               artist:"花明り", status:"承認完了", note:false, check:true},
-  {id:"s08", reg:"2026-08-29", title:"雨になる前に",             artist:"花明り", status:"承認完了", note:true,  check:true},
-  {id:"s09", reg:"2026-08-28", title:"泣きたい夜のワルツ",       artist:"智弘 達二", status:"承認完了", note:false, check:true},
-  {id:"s10", reg:"2026-08-28", title:"川の橋を越えて",           artist:"花明り", status:"承認完了", note:true,  check:true},
-  {id:"s11", reg:"2026-08-28", title:"トキメキ止まらない",       artist:"Marin", status:"承認完了", note:true},
-  {id:"s12", reg:"2026-08-26", title:"愛が始まる場所",           artist:"花明り", status:"承認完了", note:true,  check:true},
-  {id:"s13", reg:"2026-08-26", title:"みえはらの橋",             artist:"智弘達二と仲間たち", status:"承認完了", note:true, check:true},
-  {id:"s14", reg:"2026-08-22", title:"ふたつのグラス",           artist:"智弘 達二", status:"承認完了", note:true, check:true},
-  {id:"s15", reg:"2026-08-21", title:"街は夜の色",               artist:"智弘 達二", status:"承認完了", note:true, check:true},
-  {id:"s16", reg:"2026-08-21", title:"Bad Moon Bourbon",         artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s17", reg:"2026-08-21", title:"Moonlight on the Interstate", artist:"Signal", status:"承認完了", note:true},
-  {id:"s18", reg:"2026-08-21", title:"三時三十四分",             artist:"Signal", status:"承認完了", note:true, check:true},
-  {id:"s19", reg:"2026-08-21", title:"Ray Dolan's Street",       artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s20", reg:"2026-08-21", title:"Give Us Back the Morning", artist:"The Common Table", status:"承認完了", note:true},
-  {id:"s21", reg:"2026-08-21", title:"We Are Still Here",        artist:"Noah Vale", status:"承認完了", note:true},
+  {id:"s01", reg:"2026-09-20", title:"the Sound With No Name", artist:"NANASIGNAL（ナナシグナル）", status:"審査中", note:false, yt:{pub:"2026-10-03", views:0}, memo0:"YouTube公開予約"},
+  {id:"s02", reg:"2026-09-17", title:"Carry Me Over",           artist:"Amber & Rain", status:"審査中", note:false, yt:{pub:"2026-10-03", views:0}, memo0:"YouTube公開予約"},
+  {id:"s03", reg:"2026-09-11", title:"Give Us Back the Sky",    artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-10-03", views:4}, memo0:"YouTube公開予約・ショート2本(3+1)"},
+  {id:"s04", reg:"2026-09-11", title:"Put It Back",             artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:2}, memo0:"YouTube公開予約・ショート2本(1+1)"},
+  {id:"s05", reg:"2026-09-11", title:"金木犀の夕焼け",           artist:"花明り", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:1}, memo0:"YouTube公開予約"},
+  {id:"s06", reg:"2026-09-11", title:"まだ ここに立っている",   artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:0}, memo0:"YouTube公開予約"},
+  {id:"s07", reg:"2026-08-31", title:"花束の重さ",               artist:"水野灯", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:1}, memo0:"YouTube公開予約"},
+  {id:"s08", reg:"2026-08-29", title:"雨になる約束",             artist:"水野灯", status:"承認完了", note:true,  yt:{pub:"2026-09-19", views:296}},
+  {id:"s09", reg:"2026-08-28", title:"ほどける夜のワルツ",       artist:"琥珀譲二", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:3}, memo0:"YouTube公開予約"},
+  {id:"s10", reg:"2026-08-28", title:"川は名前を変えて",         artist:"水野灯", status:"承認完了", note:true,  yt:{pub:"2026-09-12", views:840}},
+  {id:"s11", reg:"2026-08-28", title:"トキメキ上書き中",         artist:"Maron", status:"承認完了", note:true, yt:{pub:"2026-09-12", views:811}},
+  {id:"s12", reg:"2026-08-26", title:"愛がはじまる場所",         artist:"花明り", status:"承認完了", note:true,  yt:{pub:"2026-09-12", views:1680}},
+  {id:"s13", reg:"2026-08-26", title:"さよならの続き",           artist:"琥珀譲二 & 白詰玲", status:"承認完了", note:true, yt:{pub:"2026-09-19", views:1081}},
+  {id:"s14", reg:"2026-08-22", title:"ふたつのグラス",           artist:"琥珀譲二", status:"承認完了", note:true, yt:{pub:"2026-09-12", views:1486}, memo0:"ショート2本(琥珀ch 810＋英語版 Still Set for Two 676)"},
+  {id:"s15", reg:"2026-08-21", title:"雨は琥珀色",               artist:"琥珀譲二", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:2437}},
+  {id:"s16", reg:"2026-08-21", title:"Bad Moon Bourbon",         artist:"Rolling All Stars", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:476}},
+  {id:"s17", reg:"2026-08-21", title:"Moonlight on the Interstate", artist:"Signal", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:419}},
+  {id:"s18", reg:"2026-08-21", title:"三時三十四分",             artist:"Signal", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:1857}},
+  {id:"s19", reg:"2026-08-21", title:"Ray Dolan's Street",       artist:"Rolling All Stars", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:396}},
+  {id:"s20", reg:"2026-08-21", title:"Give Us Back the Morning", artist:"The Common Table", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:200}},
+  {id:"s21", reg:"2026-08-21", title:"We Are Still Here",        artist:"Noah Vale", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:327}},
   {id:"s22", reg:"2026-08-18", title:"Long Way Down to Morning", artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s23", reg:"2026-08-18", title:"Riverside and Vine",       artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s24", reg:"2026-08-18", title:"シグナル",                 artist:"Signal", status:"承認完了", note:true},
-  {id:"s25", reg:"2026-08-18", title:"Six Feet of Bad Road",     artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s26", reg:"2026-08-07", title:"四月のフリージア",         artist:"花明り", status:"承認完了", note:true, check:true},
-  {id:"s27", reg:"2026-08-06", title:"Where the River Bends",    artist:"Amber & Rain", status:"承認完了", note:true},
-  {id:"s28", reg:"2026-08-06", title:"Don't Have to Tell Me",    artist:"Amber & Rain", status:"承認完了", note:true},
-  {id:"s29", reg:"2026-08-06", title:"聞かないでいい",           artist:"智弘 達二", status:"承認完了", note:true, check:true},
-  {id:"s30", reg:"2026-08-04", title:"Not a Promise, Already True", artist:"City", status:"承認完了", note:true, check:true},
-  {id:"s31", reg:"2026-08-02", title:"The Grand Bloom",          artist:"Martin", status:"承認完了", note:true},
-  {id:"s32", reg:"2026-07-30", title:"The Harbor Light",         artist:"Noah Vale", status:"承認完了", note:true},
-  {id:"s33", reg:"2026-07-30", title:"月の舟",                   artist:"Martin", status:"承認完了", note:true},
-  {id:"s34", reg:"2026-07-30", title:"帆を上げて",               artist:"w-Band", status:"承認完了", note:true},
-  {id:"s35", reg:"2026-07-30", title:"Marlena",                  artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s36", reg:"2026-07-28", title:"One Light, One World",     artist:"City", status:"承認完了", note:true},
-  {id:"s37", reg:"2026-07-26", title:"夜明け前",                 artist:"花明り", status:"承認完了", note:true, check:true},
-  {id:"s38", reg:"2026-07-26", title:"最後の一秒",               artist:"w-Band", status:"承認完了", note:true},
-  {id:"s39", reg:"2026-07-26", title:"Whiskey Moon Woman",       artist:"Rolling All Stars", status:"承認完了", note:true},
-  {id:"s40", reg:"2026-07-26", title:"Say It Plain",             artist:"Noah Vale", status:"承認完了", note:true},
-  {id:"s41", reg:"2026-07-26", title:"Already Here",             artist:"City", status:"承認完了", note:true},
-  {id:"s42", reg:"2026-07-22", title:"I'll Meet You in a Dream", artist:"Thinking cats", status:"承認完了", note:true},
-  {id:"s43", reg:"2026-07-19", title:"Gravity of the Heart",     artist:"Thinking cats", status:"承認完了", note:true},
-  {id:"s44", reg:"2026-07-18", title:"After the Rain, Before the Dawn", artist:"Thinking cats", status:"承認完了", note:true, check:true},
-  {id:"s45", reg:"2026-07-18", title:"百億年前のパズル",         artist:"Martin", status:"承認完了", note:true},
-  {id:"s46", reg:"2026-07-18", title:"Horizon - Rise Again (English Ver.)", artist:"w-Band", status:"承認完了", note:true},
-  {id:"s47", reg:"2026-07-18", title:"水平線 - Rise Again (New Vocal Ver.)", artist:"w-Band", status:"承認完了", note:true},
-  {id:"s48", reg:"2026-07-18", title:"水平線 - Rise Again",      artist:"w-Band", status:"承認完了", note:true},
+  {id:"s23", reg:"2026-08-18", title:"Riverside and Vine",       artist:"Rolling All Stars", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:1158}},
+  {id:"s24", reg:"2026-08-18", title:"シグナル",                 artist:"Signal", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:1933}},
+  {id:"s25", reg:"2026-08-18", title:"Six Feet of Bad Road",     artist:"Rolling All Stars", status:"承認完了", note:true, yt:{pub:"2026-09-05", views:2607}},
+  {id:"s26", reg:"2026-08-07", title:"四月のフリージア",         artist:"花明り", status:"承認完了", note:true, yt:{pub:"2026-08-22", views:5402}},
+  {id:"s27", reg:"2026-08-06", title:"Where the River Bends",    artist:"Amber & Rain", status:"承認完了", note:true, yt:{pub:"2026-08-22", views:1751}},
+  {id:"s28", reg:"2026-08-06", title:"Don't Have to Tell Me",    artist:"Amber & Rain", status:"承認完了", note:true, yt:{pub:"2026-08-22", views:2343}},
+  {id:"s29", reg:"2026-08-06", title:"聞かないでいい",           artist:"琥珀譲二", status:"承認完了", note:true, yt:{pub:"2026-08-22", views:3402}},
+  {id:"s30", reg:"2026-08-04", title:"Not a promise. Already true. | Already Here", artist:"ELLY", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:733}, memo0:"ショート2本(Thinking cats 630＋w-Band 103)"},
+  {id:"s31", reg:"2026-08-02", title:"The Grand Bloom",          artist:"Maron", status:"承認完了", note:true, yt:{pub:"2026-08-15", views:547}},
+  {id:"s32", reg:"2026-07-30", title:"The Harbor Light",         artist:"Noah Vale", status:"承認完了", note:true, yt:{pub:"2026-08-15", views:1734}},
+  {id:"s33", reg:"2026-07-30", title:"月の舟",                   artist:"Maron", status:"承認完了", note:true, yt:{pub:"2026-08-15", views:2958}},
+  {id:"s34", reg:"2026-07-30", title:"帆を上げて",               artist:"w-Band", status:"承認完了", note:true, yt:{pub:"2026-08-15", views:2599}},
+  {id:"s35", reg:"2026-07-30", title:"Marlena",                  artist:"Rolling All Stars", status:"承認完了", note:true, yt:{pub:"2026-08-15", views:576}},
+  {id:"s36", reg:"2026-07-28", title:"One Light, One World",     artist:"ELLY", status:"承認完了", note:true, yt:{pub:"2026-08-15", views:683}},
+  {id:"s37", reg:"2026-07-26", title:"夜明けを手渡して",         artist:"花明り", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:4959}},
+  {id:"s38", reg:"2026-07-26", title:"最後の一秒",               artist:"w-Band", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:2964}},
+  {id:"s39", reg:"2026-07-26", title:"Whiskey Moon Woman",       artist:"Rolling All Stars", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:5341}},
+  {id:"s40", reg:"2026-07-26", title:"Say It Plain",             artist:"Noah Vale", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:2410}},
+  {id:"s41", reg:"2026-07-26", title:"Already Here",             artist:"ELLY", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:348}},
+  {id:"s42", reg:"2026-07-22", title:"I'll Meet You in a Dream", artist:"Thinking cats", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:116}},
+  {id:"s43", reg:"2026-07-19", title:"Gravity of the Heart",     artist:"Thinking cats", status:"承認完了", note:true, memo0:"ショートあり(視聴回数は画面外・要転記)"},
+  {id:"s44", reg:"2026-07-18", title:"Rain Is All That Holds Me", artist:"Thinking cats", status:"承認完了", note:true, yt:{pub:"2026-08-02", views:1103}},
+  {id:"s45", reg:"2026-07-18", title:"百億年前のパズル",         artist:"Maron", status:"承認完了", note:true, yt:{pub:"2026-08-08", views:4}},
+  {id:"s46", reg:"2026-07-18", title:"Horizon - Rise Again (English Ver.)", artist:"w-Band", status:"承認完了", note:true, yt:{pub:"2026-08-04", views:961}},
+  {id:"s47", reg:"2026-07-18", title:"水平線 - Rise Again (New Vocal Ver.)", artist:"w-Band", status:"承認完了", note:true, yt:{pub:"2026-08-03", views:327}},
+  {id:"s48", reg:"2026-07-18", title:"水平線 - Rise Again",      artist:"w-Band", status:"承認完了", note:true, yt:{pub:"2026-08-02", views:6180}},
+  // ---- ROUTER.FM未登録（YouTubeショートのみ確認できた楽曲）----
+  {id:"s49", reg:"", title:"沈丁花の坂",  artist:"花明り", status:"未登録", note:false, yt:{pub:"2026-08-08", views:6303}},
+  {id:"s50", reg:"", title:"満ち潮",      artist:"w-Band", status:"未登録", note:false, yt:{pub:"2026-08-08", views:5829}},
+  {id:"s51", reg:"", title:"またね",      artist:"w-Band", status:"未登録", note:false, check:true, yt:{pub:"2026-08-08", views:4456}, memo0:"ショート名:「またね」の続きを、まだ言えないでいる"},
+  {id:"s52", reg:"", title:"Somewhere, Someone's Dreaming", artist:"Thinking cats", status:"未登録", note:false, check:true, yt:{pub:"2026-08-03", views:210}},
+  {id:"s53", reg:"", title:"Goodbye to the Neon Mile", artist:"Noah Vale", status:"未登録", note:false, yt:{pub:"2026-08-08", views:2738}},
+  {id:"s54", reg:"", title:"Thunderbird Slim", artist:"Rolling All Stars", status:"未登録", note:false, yt:{pub:"2026-08-15", views:308}},
+  {id:"s55", reg:"", title:"Song for Hiro (Reignite Edition)", artist:"w-Band", status:"未登録", note:false, yt:{pub:"2026-02-21", views:443}},
+  {id:"s56", reg:"", title:"Beach at night", artist:"w-Band", status:"未登録", note:false, yt:{pub:"2025-08-11", views:76}},
+  {id:"s57", reg:"", title:"Beside you",  artist:"w-Band", status:"未登録", note:false, yt:{pub:"2025-07-29", views:1806}},
+  {id:"s58", reg:"", title:"Wipe your tears", artist:"w-Band", status:"未登録", note:false, yt:{pub:"2025-07-07", views:3570}},
 ];
 
 const PLATFORMS = [
@@ -221,18 +234,21 @@ function merged(song){
   const sns = {};
   PLATFORMS.forEach(p=>{
     const s = (r.sns && r.sns[p.key]) || {};
+    let defOn = false, defViews = "";
+    if(p.key === "note") defOn = song.note;
+    if(p.key === "youtube" && song.yt){ defOn = true; defViews = String(song.yt.views); }
     sns[p.key] = {
-      on: (s.on !== undefined) ? s.on : (p.key === "note" ? song.note : false),
-      views: s.views || ""
+      on: (s.on !== undefined) ? s.on : defOn,
+      views: s.views || defViews
     };
   });
   return {
     ...song,
     title: r.title || song.title,
     artist: r.artist || song.artist,
-    pub: r.pub || "",
+    pub: r.pub || (song.yt && song.yt.pub) || "",
     streams: r.streams || "",
-    memo: r.memo || "",
+    memo: r.memo || song.memo0 || "",
     sns
   };
 }
@@ -275,8 +291,14 @@ function render(){
   if(af) list = list.filter(m => m.artist === af);
   if(sf === "yes") list = list.filter(hasShort);
   if(sf === "no") list = list.filter(m => !hasShort(m));
-  list.sort((a,b)=> sort==="new" ? b.reg.localeCompare(a.reg) || b.id.localeCompare(a.id)
-                                 : a.reg.localeCompare(b.reg) || a.id.localeCompare(b.id));
+  list.sort((a,b)=>{
+    // 配信登録日が空（ROUTER未登録）の行は常に末尾へ
+    if(!a.reg && !b.reg) return a.id.localeCompare(b.id);
+    if(!a.reg) return 1;
+    if(!b.reg) return -1;
+    return sort==="new" ? b.reg.localeCompare(a.reg) || b.id.localeCompare(a.id)
+                        : a.reg.localeCompare(b.reg) || a.id.localeCompare(b.id);
+  });
 
   tbody.innerHTML = "";
   list.forEach((m,i)=>{
@@ -288,13 +310,13 @@ function render(){
 
     tr.innerHTML = `
       <td class="num-col">${i+1}</td>
-      <td>${m.reg.replace(/-/g,".")}</td>
+      <td>${m.reg ? m.reg.replace(/-/g,".") : "—"}</td>
       <td><input type="date" class="pub-input" data-field="pub" value="${m.pub}"></td>
       <td class="title-cell">
         <span contenteditable="true" data-field="title" spellcheck="false">${escapeHtml(m.title)}</span>${m.check ? '<span class="badge check" title="スクリーンショットの文字が不鮮明だったため要確認。クリックして修正してください">要確認</span>' : ""}
         <span class="artist" contenteditable="true" data-field="artist" spellcheck="false">${escapeHtml(m.artist)}</span>
       </td>
-      <td><span class="badge ${m.status==="承認完了"?"ok":"wait"}">${m.status}</span></td>
+      <td><span class="badge ${m.status==="承認完了"?"ok":m.status==="審査中"?"wait":"na"}">${m.status}</span></td>
       <td class="num-col"><span class="badge ${short?"short-yes":"short-no"}">${short?"○ 掲載済":"− 未掲載"}</span></td>
       ${PLATFORMS.map(p=>{
         const s = m.sns[p.key];
