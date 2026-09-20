@@ -101,7 +101,8 @@ async function fingerprint(token) {
 const SITES = {
   politicians: { label: "議員ランキング", emoji: "🏛" },
   sage_free: { label: "賢人会議（無料）", emoji: "🧙" },
-  sage_member: { label: "賢人会議（会員）", emoji: "🧙" }
+  sage_member: { label: "賢人会議（会員）", emoji: "🧙" },
+  bosho: { label: "墓所手帖", emoji: "🪷" }
 };
 
 // 賢人会議（AI対話プロキシ）の設定。会員は無制限、非会員はIP×窓で無料枠のみ。
@@ -191,19 +192,25 @@ async function computeCountry(env, sites, windowMs) {
   } catch (e) {}
   return m;
 }
-// 国別内訳を「日本 / 海外（内訳）」の文字列に整形。
+// 国別内訳を「日本 / 海外（内訳）/ 不明」に分類。
+// "??" は国コードが記録されていないヒット（国の記録を始める前の旧Workerが保存した分）で、海外とは別扱い。
 function splitJpOverseas(m) {
-  let jp = 0, overseas = 0; const ov = [];
-  for (const k in m) { if (k === "JP") { jp += m[k]; } else { overseas += m[k]; ov.push([k, m[k]]); } }
+  let jp = 0, overseas = 0, unknown = 0; const ov = [];
+  for (const k in m) {
+    if (k === "JP") { jp += m[k]; }
+    else if (k === "??") { unknown += m[k]; }
+    else { overseas += m[k]; ov.push([k, m[k]]); }
+  }
   ov.sort(function (a, b) { return b[1] - a[1]; });
-  return { jp: jp, overseas: overseas, top: ov };
+  return { jp: jp, overseas: overseas, unknown: unknown, top: ov };
 }
 // splitJpOverseas の結果を「日本 3 ／ 海外 2（US 1 / DE 1）」の1行に整形。topN は海外内訳の表示上限。
 function fmtJpOverseas(sp, topN) {
   const n = topN || 5;
   const ov = sp.top.slice(0, n).map(function (x) { return x[0] + " " + x[1]; }).join(" / ");
   return "日本 " + sp.jp + " ／ 海外 " + sp.overseas +
-    (sp.overseas ? "（" + ov + (sp.top.length > n ? " 他" : "") + "）" : "");
+    (sp.overseas ? "（" + ov + (sp.top.length > n ? " 他" : "") + "）" : "") +
+    (sp.unknown ? " ／ 記録前 " + sp.unknown : "");
 }
 
 async function redeem(request, env, h) {
@@ -519,7 +526,7 @@ async function sendDailyReport(env) {
   // 🎉 新規会員（昨日・国別）。賢人会議の国別利用は上の各サイト行（🌍）に統合済み。
   try {
     const join = splitJpOverseas(await computeCountry(env, ["member_join"]));
-    const joinTotal = join.jp + join.overseas;
+    const joinTotal = join.jp + join.overseas + join.unknown;
     const joinStr = [].concat(join.jp ? [["JP", join.jp]] : [], join.top).map(function (x) { return x[0] + " " + x[1]; }).join(" / ") || "—";
     lines.push("");
     lines.push("🎉 新しく会員になった人（昨日）: " + joinTotal + (joinTotal ? "（" + joinStr + "）" : ""));
