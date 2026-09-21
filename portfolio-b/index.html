@@ -1248,6 +1248,8 @@
 <script id="eichi-counter" data-ns="portfolio-b">
 (function(){
   var NS='portfolio-b';
+  // 国別つき計測（api.eichinohi.com の hits に同じネームスペースで記録）
+  try{new Image().src='https://api.eichinohi.com/api/hit?site='+NS+'&r='+Date.now();}catch(e){}
   fetch('https://eichi-count.dashiyo777.workers.dev/'+NS+'/up')
     .then(function(r){return r.json();})
     .then(function(d){

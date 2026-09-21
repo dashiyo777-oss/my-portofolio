@@ -936,6 +936,8 @@
             });
         });
 
+        // 国別つき計測（api.eichinohi.com の hits に site=portfolio で記録）
+        try{new Image().src='https://api.eichinohi.com/api/hit?site=portfolio&r='+Date.now();}catch(e){}
         // 訪問カウンター（?admin 付きURLでのみ表示）
         fetch('https://eichi-count.dashiyo777.workers.dev/portfolio/up')
             .then(res => res.json())
