@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作曲リスト一覧 | 吉田獅玄</title>
+<meta name="description" content="配信登録した楽曲の一覧と、TikTok・X・Threads・YouTube・note などへの掲載実績・アクセス数・ストリーミング数を記録する管理ページ。">
+<style>
+:root{
+  --bg:#faf7f2; --card:#ffffff; --ink:#3a3226; --sub:#8a7f6e;
+  --accent:#e8834e; --accent-soft:#fdf0e7; --line:#eee5d8;
+  --ok:#4caf7d; --ok-soft:#e8f5ee; --warn:#c94f4f; --warn-soft:#fbeaea;
+  --note:#6c8ebf; --note-soft:#eaf0f8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:linear-gradient(135deg,#f7e8d8,#fdf0e7);padding:36px 20px 28px;text-align:center;border-bottom:1px solid var(--line)}
+header h1{font-size:1.6rem;letter-spacing:.08em}
+header p{color:var(--sub);font-size:.85rem;margin-top:6px}
+.wrap{max-width:1400px;margin:0 auto;padding:20px 16px 80px}
+/* stats */
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:120px;text-align:center;flex:1}
+.stat .num{font-size:1.3rem;font-weight:700;color:var(--accent)}
+.stat .lbl{font-size:.72rem;color:var(--sub)}
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.controls input[type=text],.controls select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:.85rem;background:var(--card)}
+.controls input[type=text]{min-width:200px}
+.btn{padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);cursor:pointer;font-size:.8rem;color:var(--ink)}
+.btn:hover{background:var(--accent-soft);border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.hint{font-size:.75rem;color:var(--sub);margin:6px 0 14px}
+/* table */
+.table-scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:1500px;font-size:.8rem}
+thead th{position:sticky;top:0;background:#f5ede1;color:#6b5f4c;font-size:.72rem;padding:10px 8px;white-space:nowrap;border-bottom:2px solid var(--line);z-index:2}
+tbody td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+tbody tr:hover{background:#fdfaf5}
+td.title-cell{white-space:normal;min-width:190px;font-weight:600}
+td.title-cell .artist{display:block;font-weight:400;font-size:.72rem;color:var(--sub)}
+[contenteditable]{outline:none;border-bottom:1px dashed transparent;border-radius:3px;padding:1px 3px}
+[contenteditable]:hover{border-bottom-color:#c9b89d;background:#fdf6ec}
+[contenteditable]:focus{background:#fff6e8;border-bottom-color:var(--accent)}
+.badge{display:inline-block;font-size:.65rem;padding:2px 7px;border-radius:20px;font-weight:600}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+.badge.wait{background:var(--warn-soft);color:var(--warn)}
+.badge.check{background:#fff3cd;color:#a07d1a;margin-left:4px;cursor:help}
+.badge.short-yes{background:var(--ok-soft);color:var(--ok)}
+.badge.short-no{background:#f1ede6;color:#b0a794}
+.badge.na{background:#f1ede6;color:#a79c88}
+/* sns cell */
+.sns-cell{display:flex;flex-direction:column;gap:3px;min-width:96px}
+.sns-toggle{font-size:.68rem;padding:3px 8px;border-radius:14px;border:1px solid var(--line);background:#f7f3ec;color:#a79c88;cursor:pointer;text-align:center;user-select:none}
+.sns-toggle.on{background:var(--ok-soft);color:var(--ok);border-color:#bfe3d0;font-weight:700}
+.views-input{width:96px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;font-size:.72rem;background:#fffdf9}
+.views-input::placeholder{color:#cfc6b5}
+input[type=date].pub-input{padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:.74rem;background:#fffdf9;color:var(--ink)}
+input[type=text].memo-input,input[type=text].stream-input{padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:.74rem;background:#fffdf9;width:150px}
+input[type=text].stream-input{width:110px}
+.total-cell{font-weight:700;color:var(--accent)}
+.num-col{text-align:center;color:var(--sub)}
+footer{text-align:center;color:var(--sub);font-size:.75rem;padding:30px 10px}
+footer a{color:var(--accent)}
+@media(max-width:640px){
+  header h1{font-size:1.2rem}
+  .controls input[type=text]{min-width:130px;flex:1}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎵 作曲リスト一覧</h1>
+  <p>ROUTER.FM 配信登録楽曲 × SNS掲載実績トラッカー（TikTok / X / Threads / YouTube / Instagram / note）</p>
+</header>
+
+<div class="wrap">
+
+  <div class="stats" id="stats"></div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="曲名・アーティストで検索">
+    <select id="artistFilter"><option value="">全アーティスト</option></select>
+    <select id="shortFilter">
+      <option value="">ショート動画：すべて</option>
+      <option value="yes">掲載あり</option>
+      <option value="no">未掲載</option>
+    </select>
+    <select id="sortSel">
+      <option value="new">配信登録日（新しい順）</option>
+      <option value="old">配信登録日（古い順）</option>
+    </select>
+    <button class="btn primary" id="exportCsv">CSV書き出し</button>
+    <button class="btn" id="exportJson">バックアップ(JSON)</button>
+    <button class="btn" id="importJson">復元(JSON読込)</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+  </div>
+  <p class="hint">
+    ✏️ 曲名・アーティスト名・公開日・各SNSの「未→✓掲載」切替・アクセス数・ストリーミング数・メモは<strong>クリックしてそのまま入力・編集</strong>できます（このブラウザに自動保存）。
+    別のPC・スマホでも使う場合は「バックアップ(JSON)」で保存したファイルを「復元」で読み込んでください。
+    <span class="badge check">要確認</span> はスクリーンショットから読み取った際に不鮮明だった項目です。正しい表記に直してください（クリックで編集）。
+  </p>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>配信登録日</th>
+          <th>公開日</th>
+          <th>曲名 / アーティスト</th>
+          <th>審査状態</th>
+          <th>ショート動画</th>
+          <th>TikTok</th>
+          <th>X (Twitter)</th>
+          <th>Threads</th>
+          <th>YouTube</th>
+          <th>Instagram</th>
+          <th>note</th>
+          <th>アクセス数合計</th>
+          <th>ストリーミング数</th>
+          <th>メモ</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    作曲リスト一覧 — <a href="index.html">吉田獅玄 ポートフォリオ</a> ｜ 配信登録元: ROUTER.FM
+  </footer>
+</div>
+
+<script>
+// ===== 楽曲マスターデータ =====
+// reg: ROUTER.FM配信登録日 / yt: YouTubeショートの公開日・視聴回数（YouTube Studioより転記）
+// check:true = スクリーンショット読取が不鮮明。ページ上で編集して修正してください。
+const SONGS = [
+  {id:"s01", reg:"2026-09-20", title:"the Sound With No Name", artist:"NANASIGNAL（ナナシグナル）", status:"審査中", note:false, yt:{pub:"2026-10-03", views:0}, memo0:"YouTube公開予約"},
+  {id:"s02", reg:"2026-09-17", title:"Carry Me Over",           artist:"Amber & Rain", status:"審査中", note:false, yt:{pub:"2026-10-03", views:0}, memo0:"YouTube公開予約"},
+  {id:"s03", reg:"2026-09-11", title:"Give Us Back the Sky",    artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-10-03", views:4}, memo0:"YouTube公開予約・ショート2本(3+1)"},
+  {id:"s04", reg:"2026-09-11", title:"Put It Back",             artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:2}, memo0:"YouTube公開予約・ショート2本(1+1)"},
+  {id:"s05", reg:"2026-09-11", title:"金木犀の夕焼け",           artist:"花明り", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:1}, memo0:"YouTube公開予約"},
+  {id:"s06", reg:"2026-09-11", title:"まだ ここに立っている",   artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:0}, memo0:"YouTube公開予約"},
+  {id:"s07", reg:"2026-08-31", title:"花束の重さ",               artist:"水野灯", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:1}, memo0:"YouTube公開予約"},
+  {id:"s08", reg:"2026-08-29", title:"雨になる約束",             artist:"水野灯", status:"承認完了", note:false,  yt:{pub:"2026-09-19", views:296}},
+  {id:"s09", reg:"2026-08-28", title:"ほどける夜のワルツ",       artist:"琥珀譲二", status:"承認完了", note:false, yt:{pub:"2026-09-26", views:3}, memo0:"YouTube公開予約"},
+  {id:"s10", tk:true, reg:"2026-08-28", title:"川は名前を変えて",         artist:"水野灯", status:"承認完了", note:false,  yt:{pub:"2026-09-12", views:840}},
+  {id:"s11", tk:true, reg:"2026-08-28", title:"トキメキ上書き中",         artist:"Maron", status:"承認完了", note:false, yt:{pub:"2026-09-12", views:811}},
+  {id:"s12", x:{views:19}, tk:true, reg:"2026-08-26", title:"愛がはじまる場所",         artist:"花明り", status:"承認完了", note:false,  yt:{pub:"2026-09-12", views:1680}},
+  {id:"s13", tk:true, reg:"2026-08-26", title:"さよならの続き",           artist:"琥珀譲二 & 白詰玲", status:"承認完了", note:false, yt:{pub:"2026-09-19", views:1081}},
+  {id:"s14", tk:true, reg:"2026-08-22", title:"ふたつのグラス",           artist:"琥珀譲二", status:"承認完了", note:false, yt:{pub:"2026-09-12", views:1486}, memo0:"ショート2本(琥珀ch 810＋英語版 Still Set for Two 676)"},
+  {id:"s15", x:{views:11}, tk:true, reg:"2026-08-21", title:"雨は琥珀色",               artist:"琥珀譲二", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:2437}},
+  {id:"s16", reg:"2026-08-21", title:"Bad Moon Bourbon",         artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:476}},
+  {id:"s17", x:{views:17}, tk:true, reg:"2026-08-21", title:"Moonlight on the Interstate", artist:"Signal", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:419}},
+  {id:"s18", x:{views:9}, tk:true, reg:"2026-08-21", title:"三時三十四分",             artist:"Signal", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:1857}},
+  {id:"s19", tk:true, reg:"2026-08-21", title:"Ray Dolan's Street",       artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:396}},
+  {id:"s20", x:{views:5}, tk:true, reg:"2026-08-21", title:"Give Us Back the Morning", artist:"The Common Table", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:200}},
+  {id:"s21", tk:true, reg:"2026-08-21", title:"We Are Still Here",        artist:"Noah Vale", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:327}},
+  {id:"s22", reg:"2026-08-18", title:"Long Way Down to Morning", artist:"Rolling All Stars", status:"承認完了", note:false},
+  {id:"s23", reg:"2026-08-18", title:"Riverside and Vine",       artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:1158}},
+  {id:"s24", tk:true, reg:"2026-08-18", title:"シグナル",                 artist:"Signal", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:1933}},
+  {id:"s25", x:{views:9}, tk:true, reg:"2026-08-18", title:"Six Feet of Bad Road",     artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-09-05", views:2607}},
+  {id:"s26", tk:true, reg:"2026-08-07", title:"四月のフリージア",         artist:"花明り", status:"承認完了", note:false, yt:{pub:"2026-08-22", views:5402}},
+  {id:"s27", tk:true, reg:"2026-08-06", title:"Where the River Bends",    artist:"Amber & Rain", status:"承認完了", note:false, yt:{pub:"2026-08-22", views:1751}},
+  {id:"s28", tk:true, reg:"2026-08-06", title:"Don't Have to Tell Me",    artist:"Amber & Rain", status:"承認完了", note:false, yt:{pub:"2026-08-22", views:2343}},
+  {id:"s29", tk:true, reg:"2026-08-06", title:"聞かないでいい",           artist:"琥珀譲二", status:"承認完了", note:false, yt:{pub:"2026-08-22", views:3402}},
+  {id:"s30", tk:true, reg:"2026-08-04", title:"Not a promise. Already true. | Already Here", artist:"ELLY", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:733}, memo0:"ショート2本(Thinking cats 630＋w-Band 103)"},
+  {id:"s31", tk:true, reg:"2026-08-02", title:"The Grand Bloom",          artist:"Maron", status:"承認完了", note:false, yt:{pub:"2026-08-15", views:547}},
+  {id:"s32", tk:true, reg:"2026-07-30", title:"The Harbor Light",         artist:"Noah Vale", status:"承認完了", note:false, yt:{pub:"2026-08-15", views:1734}},
+  {id:"s33", x:{views:10}, tk:true, reg:"2026-07-30", title:"月の舟",                   artist:"Maron", status:"承認完了", note:false, yt:{pub:"2026-08-15", views:2958}},
+  {id:"s34", reg:"2026-07-30", title:"帆を上げて",               artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-08-15", views:2599}},
+  {id:"s35", tk:true, reg:"2026-07-30", title:"Marlena",                  artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-08-15", views:576}},
+  {id:"s36", reg:"2026-07-28", title:"One Light, One World",     artist:"ELLY", status:"承認完了", note:false, yt:{pub:"2026-08-15", views:683}},
+  {id:"s37", tk:true, reg:"2026-07-26", title:"夜明けを手渡して",         artist:"花明り", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:4959}},
+  {id:"s38", reg:"2026-07-26", title:"最後の一秒",               artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:2964}},
+  {id:"s39", tk:true, reg:"2026-07-26", title:"Whiskey Moon Woman",       artist:"Rolling All Stars", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:5341}},
+  {id:"s40", tk:true, reg:"2026-07-26", title:"Say It Plain",             artist:"Noah Vale", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:2410}},
+  {id:"s41", reg:"2026-07-26", title:"Already Here",             artist:"ELLY", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:348}},
+  {id:"s42", tk:true, reg:"2026-07-22", title:"I'll Meet You in a Dream", artist:"Thinking cats", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:116}},
+  {id:"s43", tk:true, reg:"2026-07-19", title:"Gravity of the Heart",     artist:"Thinking cats", status:"承認完了", note:false, yt:{pub:"2026-08-02", views:1311}},
+  {id:"s44", tk:true, reg:"2026-07-18", title:"Rain Is All That Holds Me", artist:"Thinking cats", status:"承認完了", note:false, yt:{pub:"2026-08-02", views:1103}},
+  {id:"s45", tk:true, reg:"2026-07-18", title:"百億年前のパズル",         artist:"Maron", status:"承認完了", note:false, yt:{pub:"2026-08-08", views:4}},
+  {id:"s46", tk:true, reg:"2026-07-18", title:"Horizon - Rise Again (English Ver.)", artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-08-04", views:961}},
+  {id:"s47", tk:true, reg:"2026-07-18", title:"水平線 - Rise Again (New Vocal Ver.)", artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-08-03", views:327}},
+  {id:"s48", tk:true, reg:"2026-07-18", title:"水平線 - Rise Again",      artist:"w-Band", status:"承認完了", note:false, yt:{pub:"2026-08-02", views:6180}},
+  // ---- ROUTER.FM未登録（YouTubeショートのみ確認できた楽曲）----
+  {id:"s49", x:{views:17}, tk:true, reg:"", title:"沈丁花の坂",  artist:"花明り", status:"未登録", note:false, yt:{pub:"2026-08-08", views:6303}},
+  {id:"s50", tk:true, reg:"", title:"満ち潮",      artist:"w-Band", status:"未登録", note:false, yt:{pub:"2026-08-08", views:5829}},
+  {id:"s51", tk:true, reg:"", title:"またね",      artist:"w-Band", status:"未登録", note:false, check:true, yt:{pub:"2026-08-08", views:4456}, memo0:"ショート名:「またね」の続きを、まだ言えないでいる"},
+  {id:"s52", tk:true, reg:"", title:"Somewhere, Someone's Dreaming", artist:"Thinking cats", status:"未登録", note:false, check:true, yt:{pub:"2026-08-03", views:210}},
+  {id:"s53", tk:true, reg:"", title:"Goodbye to the Neon Mile", artist:"Noah Vale", status:"未登録", note:false, yt:{pub:"2026-08-08", views:2738}},
+  {id:"s54", tk:true, reg:"", title:"Thunderbird Slim", artist:"Rolling All Stars", status:"未登録", note:false, yt:{pub:"2026-08-15", views:308}},
+  {id:"s55", reg:"", title:"Song for Hiro (Reignite Edition)", artist:"w-Band", status:"未登録", note:false, yt:{pub:"2026-02-21", views:443}},
+  {id:"s56", reg:"", title:"Beach at night", artist:"w-Band", status:"未登録", note:false, yt:{pub:"2025-08-11", views:76}},
+  {id:"s57", reg:"", title:"Beside you",  artist:"w-Band", status:"未登録", note:false, yt:{pub:"2025-07-29", views:1806}},
+  {id:"s58", reg:"", title:"Wipe your tears", artist:"w-Band", status:"未登録", note:false, yt:{pub:"2025-07-07", views:3570}},
+  {id:"s59", reg:"", title:"Before my bedroom", artist:"Thinking cats", status:"未登録", note:false, yt:{pub:"2025-08-11", views:270}},
+  {id:"s60", reg:"", title:"Summer session 1", artist:"Thinking cats", status:"未登録", note:false, yt:{pub:"2025-04-04", views:6272}},
+  {id:"s61", reg:"", title:"Turn me on", artist:"Thinking cats", status:"未登録", note:false, yt:{pub:"2025-03-29", views:225}},
+];
+
+const PLATFORMS = [
+  {key:"tiktok", label:"TikTok"},
+  {key:"x", label:"X (Twitter)"},
+  {key:"threads", label:"Threads"},
+  {key:"youtube", label:"YouTube"},
+  {key:"instagram", label:"Instagram"},
+  {key:"note", label:"note"},
+];
+
+const LS_KEY = "sakkyoku-list-v1";
+
+// ===== 保存データ =====
+function loadData(){
+  try{ return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }catch(e){ return {}; }
+}
+function saveData(d){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(d)); }catch(e){ /* private mode 等 */ }
+}
+let userData = loadData();
+
+function rec(id){
+  if(!userData[id]) userData[id] = {sns:{}};
+  if(!userData[id].sns) userData[id].sns = {};
+  return userData[id];
+}
+function snsRec(id, key){
+  const r = rec(id);
+  if(!r.sns[key]) r.sns[key] = {on:false, views:""};
+  return r.sns[key];
+}
+
+// マスター + ユーザー編集をマージした表示用データ
+function merged(song){
+  const r = userData[song.id] || {};
+  const sns = {};
+  PLATFORMS.forEach(p=>{
+    const s = (r.sns && r.sns[p.key]) || {};
+    let defOn = false, defViews = "";
+    if(p.key === "note") defOn = song.note;
+    if(p.key === "youtube" && song.yt){ defOn = true; defViews = String(song.yt.views); }
+    if(p.key === "tiktok" && song.tk) defOn = true;
+    if(p.key === "x" && song.x){ defOn = true; defViews = String(song.x.views); }
+    sns[p.key] = {
+      on: (s.on !== undefined) ? s.on : defOn,
+      views: s.views || defViews
+    };
+  });
+  return {
+    ...song,
+    title: r.title || song.title,
+    artist: r.artist || song.artist,
+    pub: r.pub || (song.yt && song.yt.pub) || "",
+    streams: r.streams || "",
+    memo: r.memo || song.memo0 || "",
+    sns
+  };
+}
+
+// "1.2万" "3,400" などを数値に変換（合計用）
+function parseViews(str){
+  if(!str) return 0;
+  let s = String(str).replace(/[,，\s回再生viewsVIEWS]/g,"");
+  let mult = 1;
+  if(s.includes("億")){ mult = 100000000; s = s.replace("億",""); }
+  else if(s.includes("万")){ mult = 10000; s = s.replace("万",""); }
+  else if(/[kK]$/.test(s)){ mult = 1000; s = s.replace(/[kK]$/,""); }
+  else if(/[mM]$/.test(s)){ mult = 1000000; s = s.replace(/[mM]$/,""); }
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : Math.round(n * mult);
+}
+function fmt(n){
+  if(n >= 10000) return (n/10000).toFixed(n%10000?1:0) + "万";
+  return n.toLocaleString();
+}
+function hasShort(m){
+  // note は記事プラットフォームなのでショート動画判定から除外
+  return PLATFORMS.some(p => p.key !== "note" && m.sns[p.key].on);
+}
+function rowTotal(m){
+  return PLATFORMS.reduce((sum,p)=> sum + parseViews(m.sns[p.key].views), 0);
+}
+
+// ===== 描画 =====
+const tbody = document.getElementById("tbody");
+
+function render(){
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const af = document.getElementById("artistFilter").value;
+  const sf = document.getElementById("shortFilter").value;
+  const sort = document.getElementById("sortSel").value;
+
+  let list = SONGS.map(merged);
+  if(q) list = list.filter(m => (m.title + m.artist).toLowerCase().includes(q));
+  if(af) list = list.filter(m => m.artist === af);
+  if(sf === "yes") list = list.filter(hasShort);
+  if(sf === "no") list = list.filter(m => !hasShort(m));
+  list.sort((a,b)=>{
+    // 配信登録日が空（ROUTER未登録）の行は常に末尾へ
+    if(!a.reg && !b.reg) return a.id.localeCompare(b.id);
+    if(!a.reg) return 1;
+    if(!b.reg) return -1;
+    return sort==="new" ? b.reg.localeCompare(a.reg) || b.id.localeCompare(a.id)
+                        : a.reg.localeCompare(b.reg) || a.id.localeCompare(b.id);
+  });
+
+  tbody.innerHTML = "";
+  list.forEach((m,i)=>{
+    const tr = document.createElement("tr");
+    tr.dataset.id = m.id;
+
+    const short = hasShort(m);
+    const total = rowTotal(m);
+
+    tr.innerHTML = `
+      <td class="num-col">${i+1}</td>
+      <td>${m.reg ? m.reg.replace(/-/g,".") : "—"}</td>
+      <td><input type="date" class="pub-input" data-field="pub" value="${m.pub}"></td>
+      <td class="title-cell">
+        <span contenteditable="true" data-field="title" spellcheck="false">${escapeHtml(m.title)}</span>${m.check ? '<span class="badge check" title="スクリーンショットの文字が不鮮明だったため要確認。クリックして修正してください">要確認</span>' : ""}
+        <span class="artist" contenteditable="true" data-field="artist" spellcheck="false">${escapeHtml(m.artist)}</span>
+      </td>
+      <td><span class="badge ${m.status==="承認完了"?"ok":m.status==="審査中"?"wait":"na"}">${m.status}</span></td>
+      <td class="num-col"><span class="badge ${short?"short-yes":"short-no"}">${short?"○ 掲載済":"− 未掲載"}</span></td>
+      ${PLATFORMS.map(p=>{
+        const s = m.sns[p.key];
+        return `<td><div class="sns-cell">
+          <span class="sns-toggle ${s.on?"on":""}" data-sns="${p.key}">${s.on?"✓ 掲載":"未"}</span>
+          <input type="text" class="views-input" data-views="${p.key}" placeholder="アクセス数" value="${escapeHtml(s.views)}">
+        </div></td>`;
+      }).join("")}
+      <td class="total-cell">${total ? fmt(total) : "—"}</td>
+      <td><input type="text" class="stream-input" data-field="streams" placeholder="例: 1,200" value="${escapeHtml(m.streams)}"></td>
+      <td><input type="text" class="memo-input" data-field="memo" placeholder="メモ" value="${escapeHtml(m.memo)}"></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  renderStats();
+}
+
+function renderStats(){
+  const all = SONGS.map(merged);
+  const totalViews = all.reduce((s,m)=> s + rowTotal(m), 0);
+  const totalStreams = all.reduce((s,m)=> s + parseViews(m.streams), 0);
+  const st = [
+    {num: all.length, lbl:"総曲数"},
+    {num: all.filter(m=>m.status==="承認完了").length, lbl:"承認完了"},
+    {num: all.filter(hasShort).length, lbl:"ショート動画掲載"},
+    {num: all.filter(m=>m.sns.note.on).length, lbl:"note掲載"},
+    {num: totalViews ? fmt(totalViews) : "—", lbl:"アクセス数合計"},
+    {num: totalStreams ? fmt(totalStreams) : "—", lbl:"ストリーミング数合計"},
+  ];
+  document.getElementById("stats").innerHTML =
+    st.map(s=>`<div class="stat"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>`).join("");
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// ===== イベント（編集の保存）=====
+tbody.addEventListener("click", e=>{
+  const t = e.target.closest(".sns-toggle");
+  if(!t) return;
+  const id = t.closest("tr").dataset.id;
+  const s = snsRec(id, t.dataset.sns);
+  s.on = !s.on;
+  saveData(userData);
+  render();
+});
+tbody.addEventListener("input", e=>{
+  const tr = e.target.closest("tr"); if(!tr) return;
+  const id = tr.dataset.id;
+  if(e.target.dataset.views !== undefined && e.target.dataset.views !== ""){
+    const s = snsRec(id, e.target.dataset.views);
+    s.views = e.target.value;
+    if(e.target.value && !s.on){ s.on = true; } // アクセス数を入れたら自動で「掲載」に
+    saveData(userData);
+    // 合計セルだけ更新（フォーカスを失わないよう再描画しない）
+    const m = merged(SONGS.find(x=>x.id===id));
+    tr.querySelector(".total-cell").textContent = rowTotal(m) ? fmt(rowTotal(m)) : "—";
+    const tg = tr.querySelector(`.sns-toggle[data-sns="${e.target.dataset.views}"]`);
+    if(s.on && tg && !tg.classList.contains("on")){ tg.classList.add("on"); tg.textContent = "✓ 掲載"; }
+    renderStats();
+    return;
+  }
+  const f = e.target.dataset.field;
+  if(f){
+    rec(id)[f] = (e.target.isContentEditable) ? e.target.textContent.trim() : e.target.value;
+    saveData(userData);
+    if(f === "streams") renderStats();
+  }
+});
+tbody.addEventListener("change", e=>{
+  if(e.target.dataset.field === "pub"){
+    rec(e.target.closest("tr").dataset.id).pub = e.target.value;
+    saveData(userData);
+  }
+});
+// contenteditable からフォーカスが外れたら反映
+tbody.addEventListener("blur", e=>{
+  if(e.target.isContentEditable) render();
+}, true);
+
+["search","artistFilter","shortFilter","sortSel"].forEach(id=>{
+  document.getElementById(id).addEventListener("input", render);
+});
+
+// アーティスト絞り込みの選択肢
+(function(){
+  const sel = document.getElementById("artistFilter");
+  [...new Set(SONGS.map(s=>s.artist))].sort().forEach(a=>{
+    const o = document.createElement("option"); o.value = a; o.textContent = a; sel.appendChild(o);
+  });
+})();
+
+// ===== 書き出し / 読み込み =====
+document.getElementById("exportCsv").addEventListener("click", ()=>{
+  const head = ["No","配信登録日","公開日","曲名","アーティスト","審査状態","ショート動画",
+    ...PLATFORMS.flatMap(p=>[p.label+"掲載", p.label+"アクセス数"]),
+    "アクセス数合計","ストリーミング数","メモ"];
+  const rows = SONGS.map(merged).map((m,i)=>[
+    i+1, m.reg, m.pub, m.title, m.artist, m.status, hasShort(m)?"掲載済":"未掲載",
+    ...PLATFORMS.flatMap(p=>[m.sns[p.key].on?"○":"", m.sns[p.key].views]),
+    rowTotal(m)||"", m.streams, m.memo
+  ]);
+  const csv = "﻿" + [head, ...rows].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  download(new Blob([csv],{type:"text/csv"}), "作曲リスト一覧.csv");
+});
+document.getElementById("exportJson").addEventListener("click", ()=>{
+  download(new Blob([JSON.stringify(userData,null,2)],{type:"application/json"}), "sakkyoku-list-backup.json");
+});
+document.getElementById("importJson").addEventListener("click", ()=> document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const fr = new FileReader();
+  fr.onload = ()=>{
+    try{
+      userData = JSON.parse(fr.result);
+      saveData(userData);
+      render();
+      alert("復元しました。");
+    }catch(err){ alert("読み込みに失敗しました。JSONファイルを確認してください。"); }
+  };
+  fr.readAsText(f);
+  e.target.value = "";
+});
+function download(blob, name){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+render();
+</script>
+</body>
+</html>
