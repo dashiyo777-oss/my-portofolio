@@ -1,0 +1,273 @@
+# -*- coding: utf-8 -*-
+"""「海になるまで / 水野灯 (AKARI MIZUNO)」 — promo short (9:16, ~29s).
+
+Matches the jacket: a golden-hour view from a coastal train window — the sea, a headland,
+the sun low on the water, and the coastal railway curving past while telephone poles slip
+by (train motion). In the foreground, the singer's silhouette leans on her hand watching
+the light, an old envelope resting on the sill. On the payoff the sea widens into gold.
+Gentle, wistful acoustic folk. Bilingual (JP + EN) for a Japan/US audience, ages 10+.
+
+On-screen text uses the rights-holder-supplied lyrics (selected lines), the title, the
+artist, and generic labels.
+
+Deterministic render: exposes window.renderAt(ms) + window.TOTAL. BGM: umi-bgm.mp3.
+"""
+import os
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.dirname(HERE)
+
+CSS = r"""
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:#0a0f16;overflow:hidden}
+  #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0f16}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform:scale(var(--s,1));transform-origin:center center;
+    font-family:'Noto Serif JP',serif;background:#0b1018}
+  #world{position:absolute;inset:0;transform-origin:52% 46%}
+  #view{position:absolute;left:0;top:0;width:1080px;height:1560px;overflow:hidden}
+  #sky{position:absolute;left:0;top:0;width:1080px;height:840px;
+    background:linear-gradient(180deg,#2b5f9c 0%,#4b80b6 20%,#8aa9c4 40%,#d9b48a 60%,#f2c06e 76%,#ffd98a 90%,#ffe9bc 100%)}
+  .cloud{position:absolute;border-radius:50%;filter:blur(14px)}
+  #sun{position:absolute;left:842px;top:792px;width:150px;height:150px;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,#fffefb 0%,#fff3d2 42%,#ffdd8c 74%,#ffc266 100%);box-shadow:0 0 90px 40px rgba(255,214,130,.6)}
+  #sea{position:absolute;left:0;top:820px;width:1080px;height:600px;
+    background:linear-gradient(180deg,#ffd98a 0%,#e0a45c 6%,#7fa2b8 24%,#3f6f9a 55%,#274f78 100%)}
+  #searef{position:absolute;left:842px;top:824px;width:180px;height:440px;transform:translateX(-50%);pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,232,160,.9), rgba(255,200,120,.3) 44%, transparent 100%);filter:blur(5px);mix-blend-mode:screen}
+  #headland{position:absolute;right:0;top:700px;width:520px;height:150px;background:#20364e;opacity:.9;
+    clip-path:polygon(0 100%,10% 60%,26% 74%,44% 40%,62% 66%,80% 36%,100% 58%,100% 100%)}
+  #farcoast{position:absolute;left:0;top:772px;width:1080px;height:70px;background:#3a536e;opacity:.7;
+    clip-path:polygon(0 100%,20% 60%,40% 80%,60% 54%,80% 76%,100% 60%,100% 100%)}
+  #embank{position:absolute;left:0;top:1270px;width:1080px;height:300px;
+    background:linear-gradient(180deg,#6e5a3a 0%,#4a3c26 40%,#2c2416 100%)}
+  #railwrap{position:absolute;left:0;top:1250px;width:1080px;height:200px;overflow:hidden}
+  #rail{position:absolute;left:-10%;top:0;width:120%;height:200px;
+    background:repeating-linear-gradient(90deg, transparent 0 62px, rgba(180,150,90,.5) 62px 70px)}
+  #rail2{position:absolute;left:120px;top:60px;width:900px;height:10px;background:linear-gradient(90deg,transparent,rgba(200,170,110,.7),transparent);
+    transform:perspective(300px) rotateX(60deg)}
+  /* window frame */
+  #wtop{position:absolute;left:0;top:0;width:1080px;height:96px;background:linear-gradient(180deg,#12161e,#1c222c);z-index:5}
+  #wleft{position:absolute;left:0;top:0;width:70px;height:1560px;background:linear-gradient(90deg,#12161e,#1a2029);z-index:5}
+  #wright{position:absolute;right:0;top:0;width:56px;height:1560px;background:linear-gradient(270deg,#12161e,#1a2029);z-index:5}
+  #glasssheen{position:absolute;left:70px;top:96px;width:960px;height:1440px;pointer-events:none;z-index:5;opacity:.14;
+    background:linear-gradient(112deg, transparent 40%, rgba(220,235,255,.7) 50%, transparent 60%)}
+  #sill{position:absolute;left:0;top:1500px;width:1080px;height:420px;z-index:6;
+    background:linear-gradient(180deg,#1a212b 0%,#12171f 40%,#0b0f16 100%);box-shadow:0 -4px 20px rgba(0,0,0,.5)}
+  #silledge{position:absolute;left:0;top:1494px;width:1080px;height:20px;z-index:6;background:linear-gradient(180deg,#33404f,#161c25)}
+  /* old envelope on the sill */
+  #env{position:absolute;left:430px;top:1560px;width:280px;height:180px;z-index:7;transform:rotate(-7deg);
+    background:linear-gradient(160deg,#e9dcc0 0%,#d8c7a2 60%,#c3ad83 100%);box-shadow:0 8px 24px rgba(0,0,0,.5);border:1px solid rgba(120,100,70,.4)}
+  #envflap{position:absolute;left:430px;top:1560px;width:280px;height:96px;z-index:7;transform:rotate(-7deg);transform-origin:50% 0;
+    background:linear-gradient(160deg,#ded0b2,#c9b892);clip-path:polygon(0 0,100% 0,50% 100%);opacity:.9}
+  #stamp{position:absolute;left:632px;top:1576px;width:46px;height:56px;z-index:7;transform:rotate(-7deg);
+    background:linear-gradient(160deg,#8fb0c8,#5c86a8);border:3px solid #efe7d4}
+  /* the singer, leaning, watching */
+  #figrim{position:absolute;left:-16px;top:1010px;width:520px;height:910px;z-index:7;filter:blur(1px)}
+  #figrim>*{background:linear-gradient(90deg, rgba(255,214,150,.55), rgba(255,180,110,.05) 55%)!important}
+  #fig{position:absolute;left:-20px;top:1008px;width:520px;height:912px;z-index:8}
+  .fg{position:absolute;background:#0a0e15}
+  #f-body{left:0;top:250px;width:420px;height:662px;clip-path:polygon(0 100%,0 30%,26% 8%,54% 0,82% 10%,100% 34%,100% 100%)}
+  #f-hair{left:120px;top:70px;width:280px;height:360px;background:#0a0e15;
+    clip-path:polygon(58% 0,86% 10%,96% 40%,86% 74%,60% 96%,30% 100%,0 88%,14% 52%,10% 22%,30% 6%)}
+  #f-head{left:214px;top:120px;width:150px;height:168px;border-radius:56% 60% 52% 48%/60% 58% 44% 46%}
+  #f-arm{left:250px;top:300px;width:150px;height:300px;border-radius:70px;transform:rotate(28deg)}
+  .mote{position:absolute;border-radius:50%;background:radial-gradient(circle,#fff1cf,#ffcf82 55%,transparent 74%);opacity:0;z-index:9}
+  #bloom{position:absolute;inset:0;pointer-events:none;z-index:12;opacity:0;
+    background:radial-gradient(120% 76% at 62% 44%, rgba(255,244,214,.9), rgba(255,214,140,.6) 40%, rgba(255,180,100,.28) 70%, transparent 100%)}
+  #grain{position:absolute;inset:0;opacity:.05;pointer-events:none;mix-blend-mode:overlay;z-index:10;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;z-index:10;
+    background:radial-gradient(120% 100% at 54% 44%, transparent 46%, rgba(6,9,16,.82) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;z-index:14}
+  .scene.mid{justify-content:flex-start;padding:250px 84px 0}
+  .scene.low{justify-content:flex-start;padding:196px 84px 0}
+  .kick{font-family:'Montserrat',sans-serif;font-size:32px;letter-spacing:.5em;color:#fff2d6;text-transform:uppercase;font-weight:700;
+    text-shadow:0 2px 20px rgba(6,12,26,.95)}
+  .jp{font-size:64px;line-height:1.5;font-weight:600;color:#fff8ee;letter-spacing:.05em;
+    text-shadow:0 2px 22px rgba(6,12,26,.98),0 0 44px rgba(20,40,70,.7)}
+  .jp .em{color:#ffd98a}
+  .big{font-size:92px;line-height:1.32;font-weight:700;color:#fff;letter-spacing:.05em;display:inline-block;
+    text-shadow:0 3px 24px rgba(6,12,26,1),0 0 56px rgba(255,206,120,.5)}
+  .ensub{font-family:'Montserrat',sans-serif;font-size:28px;letter-spacing:.14em;color:#d8c39a;font-weight:500;margin-top:18px;text-transform:uppercase}
+  .title{font-family:'Noto Serif JP',serif;font-size:118px;line-height:1.1;font-weight:700;color:#fff8ee;letter-spacing:.04em;
+    text-shadow:0 3px 22px rgba(6,12,26,1),0 0 56px rgba(120,180,240,.5)}
+  .tswoosh{width:360px;height:16px;margin:6px auto 0;border-radius:50%;
+    background:radial-gradient(ellipse at 50% 40%, rgba(90,160,220,.9), rgba(70,140,210,.3) 60%, transparent 78%);filter:blur(2px)}
+  .artist{font-family:'Noto Serif JP',serif;font-size:52px;letter-spacing:.34em;color:#fff2d2;font-weight:600;margin-top:22px;
+    text-shadow:0 2px 16px rgba(6,12,26,.9)}
+  .rome{font-family:'Montserrat',sans-serif;font-size:28px;letter-spacing:.4em;color:#cdd8e2;margin-top:10px;text-transform:uppercase}
+  .tag{margin-top:24px;font-family:'Montserrat',sans-serif;font-size:26px;letter-spacing:.44em;color:#e8c99a;text-transform:uppercase;font-weight:700;
+    text-shadow:0 2px 14px rgba(6,12,26,.9)}
+  #bar{position:absolute;left:0;bottom:0;height:5px;width:0;background:linear-gradient(90deg,#3f6f9a,#ffd98a);opacity:.85;z-index:15}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(8,12,22,.9);backdrop-filter:blur(4px);z-index:20;gap:24px;padding:0 90px;text-align:center}
+  #ui .k{font-family:'Montserrat',sans-serif;font-size:28px;letter-spacing:.4em;color:#cdd8e2;text-transform:uppercase;font-weight:600}
+  #ui h1{font-family:'Noto Serif JP',serif;font-size:104px;font-weight:700;color:#fff8ee;line-height:1.1}
+  #ui p{font-family:'Montserrat',sans-serif;font-size:32px;letter-spacing:.3em;color:#e8c99a;text-transform:uppercase}
+  #play{font-family:'Montserrat',sans-serif;font-weight:800;font-size:30px;color:#0d1a2a;background:#ffd98a;border:none;
+    border-radius:100px;padding:22px 66px;cursor:pointer;letter-spacing:.16em;text-transform:uppercase}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+"""
+
+ENGINE = r"""
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), world=document.getElementById('world'),
+        clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  try{['118px "Noto Serif JP"','64px "Noto Serif JP"','40px "Montserrat"'].forEach(f=>document.fonts.load(f));}catch(e){}
+  const view=document.getElementById('view');
+  // warm clouds
+  const CL=[]; const cd=[[120,140,420,120],[560,90,520,150],[300,280,340,110],[760,220,420,140]];
+  cd.forEach((d,i)=>{const e=document.createElement('div');e.className='cloud';e.style.left=d[0]+'px';e.style.top=d[1]+'px';
+    e.style.width=d[2]+'px';e.style.height=d[3]+'px';e.style.opacity=(0.5-(i%3)*0.1).toFixed(2);
+    e.style.background='radial-gradient(ellipse at 42% 40%, rgba(255,'+(228-(i%3)*16)+','+(200-(i%3)*40)+',.8), rgba(255,200,150,.2) 54%, transparent 76%)';
+    e.dataset.ph=((i*27)%100)/100;e.dataset.sp=0.4+(i%3)*0.25;view.insertBefore(e,document.getElementById('sun'));CL.push(e);});
+  // telephone poles that slip past (train motion) — placed on the embankment
+  const POL=[]; for(let i=0;i<7;i++){const p=document.createElement('div');p.style.position='absolute';
+    p.style.width='9px';p.style.height='150px';p.style.background='#20303f';p.style.top='1150px';p.style.zIndex=4;
+    const arm=document.createElement('div');arm.style.position='absolute';arm.style.left='-16px';arm.style.top='8px';
+    arm.style.width='40px';arm.style.height='6px';arm.style.background='#20303f';p.appendChild(arm);
+    const arm2=document.createElement('div');arm2.style.position='absolute';arm2.style.left='-12px';arm2.style.top='26px';
+    arm2.style.width='32px';arm2.style.height='5px';arm2.style.background='#20303f';p.appendChild(arm2);
+    p.dataset.i=i;view.insertBefore(p,document.getElementById('embank'));POL.push(p);}
+  // sea sparkle
+  const SP=[]; for(let i=0;i<26;i++){const e=document.createElement('div');e.style.position='absolute';const w=6+((i*5)%14);
+    e.style.width=w+'px';e.style.height='3px';e.style.borderRadius='2px';e.style.background='rgba(255,240,200,.85)';
+    e.style.left=(120+((i*67)%860))+'px';e.style.top=(880+((i*83)%360))+'px';e.style.zIndex=3;
+    e.dataset.ph=((i*37)%100)/100;e.dataset.sp=0.8+(i%5)*0.3;view.insertBefore(e,document.getElementById('embank'));SP.push(e);}
+  // figure rim clone
+  const fig=document.getElementById('fig'),figrim=document.getElementById('figrim');
+  [...fig.children].forEach(c=>{const a=c.cloneNode();figrim.appendChild(a);});
+  // warm motes
+  const MO=[]; for(let i=0;i<20;i++){const e=document.createElement('div');e.className='mote';const sz=3+(i%3)*3;
+    e.style.width=sz+'px';e.style.height=sz+'px';e.style.left=((i*41)%100)+'%';
+    e.dataset.dur=8+((i*29)%50)/10;e.dataset.ph=((i*53)%100)/100;e.dataset.sway=24+((i*17)%60);e.dataset.y0=760+((i*37)%560);stage.appendChild(e);MO.push(e);}
+  const sun=document.getElementById('sun'),searef=document.getElementById('searef'),
+        bloom=document.getElementById('bloom'),bar=document.getElementById('bar');
+  const scenes=SCENES, BLOOM_FROM=BLOOMFROM, BLOOM_PEAK=BLOOMPEAK;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/900,(en-t)/700),0,1);}
+  window.renderAt=function(t){
+    const ts=t/1000, prog=t/total;
+    world.style.transform=`scale(${1+0.05*prog}) translateY(${-prog*8}px)`;
+    sun.style.opacity=(0.95+0.05*Math.sin(ts/1.6)).toFixed(3);
+    searef.style.opacity=(0.66+0.3*Math.sin(ts*1.4)).toFixed(3);
+    searef.style.transform=`translateX(-50%) scaleX(${1+0.1*Math.sin(ts*1.6)})`;
+    for(const c of CL){const sp=+c.dataset.sp;c.style.transform=`translateX(${-((ts*10*sp)%1400)}px)`;}
+    // poles slip past to convey the train moving
+    for(const p of POL){const i=+p.dataset.i; let x=1080-((ts*150 + i*180)%1320); p.style.left=x+'px';
+      p.style.opacity=(x<80||x>1040)?0.2:0.9;}
+    for(const s of SP){const ph=+s.dataset.ph, sp=+s.dataset.sp;
+      s.style.opacity=(0.2+0.7*(0.5+0.5*Math.sin(ts*sp*2.2+ph*6.28))).toFixed(3);}
+    for(const m of MO){const pr=frac(ts/(+m.dataset.dur)+ +m.dataset.ph);
+      m.style.top=((+m.dataset.y0)-pr*300)+'px';m.style.transform=`translateX(${Math.sin(pr*6.28+ +m.dataset.ph*8)*(+m.dataset.sway)}px)`;
+      m.style.opacity=(Math.sin(pr*Math.PI)*0.55).toFixed(3);}
+    let bl=0;
+    if(t>BLOOM_FROM){ const up=clamp((t-BLOOM_FROM)/(BLOOM_PEAK-BLOOM_FROM),0,1);
+      bl=up*up*(3-2*up)*0.54; if(t>BLOOM_PEAK) bl=0.54-clamp((t-BLOOM_PEAK)/1500,0,1)*0.26; }
+    bloom.style.opacity=bl.toFixed(3);
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(prog,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.92;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='REPLAY';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.92*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+"""
+
+# scene timeline
+D = [2800, 4800, 5000, 5000, 5600, 6200]
+S4 = D[0]+D[1]+D[2]+D[3]
+BLOOM_FROM = S4 + 2200
+BLOOM_PEAK = S4 + D[4] - 200
+
+scenes = [
+    (D[0], '<div class="scene low"><div class="kick">New Single</div></div>'),
+    (D[1], '<div class="scene mid"><div class="jp">終点までは、<br>あと三つ。</div>'
+           '<div class="ensub">three more stops to the last one</div></div>'),
+    (D[2], '<div class="scene mid"><div class="jp">川は 名を変えて、<br>最後は 名前を置いていく。</div>'
+           '<div class="ensub">the river leaves its name at the sea</div></div>'),
+    (D[3], '<div class="scene mid"><div class="jp"><span class="big">海になるまで、<br>あとすこし。</span></div>'
+           '<div class="ensub">almost, until it becomes the sea</div></div>'),
+    (D[4], '<div class="scene mid"><div class="jp">名を呼ばれなくても、<br><span class="em">私はここにいる。</span></div>'
+           '<div class="ensub">even unnamed, I am still here</div></div>'),
+    (D[5], '<div class="scene mid" style="padding-top:300px">'
+           '<div class="title">海になるまで</div><div class="tswoosh"></div>'
+           '<div class="artist">水野 灯</div><div class="rome">Akari Mizuno</div>'
+           '<div class="tag">New Single &nbsp;&#9654;</div></div>'),
+]
+
+meta = dict(title="海になるまで / 水野灯 (Promo Short)",
+  desc="終点まであと三つ。川は名を変えて、最後は名前を置いていく。海になるまで、あとすこし。水野灯 の新曲「海になるまで」。")
+
+scenes_js = "[\n" + ",\n".join("    {d:%d, html:`%s`}" % (d, h) for (d, h) in scenes) + "\n  ]"
+engine = (ENGINE.replace("SCENES", scenes_js).replace("BLOOMFROM", str(BLOOM_FROM)).replace("BLOOMPEAK", str(BLOOM_PEAK)))
+
+BODY = r"""
+  <div id="world">
+    <div id="view">
+      <div id="sky"></div>
+      <div id="sun"></div>
+      <div id="farcoast"></div>
+      <div id="headland"></div>
+      <div id="sea"></div>
+      <div id="searef"></div>
+      <div id="embank"></div>
+      <div id="railwrap"><div id="rail"></div><div id="rail2"></div></div>
+    </div>
+    <div id="wtop"></div><div id="wleft"></div><div id="wright"></div>
+    <div id="glasssheen"></div>
+    <div id="silledge"></div><div id="sill"></div>
+    <div id="envflap"></div><div id="env"></div><div id="stamp"></div>
+    <div id="figrim"></div>
+    <div id="fig"><div id="f-body" class="fg"></div><div id="f-hair" class="fg"></div><div id="f-head" class="fg"></div><div id="f-arm" class="fg"></div></div>
+  </div>
+  <div id="bloom"></div>
+  <div id="grain"></div>
+  <div id="vig"></div>
+  <div id="scenes"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">Akari Mizuno</div>
+    <h1>海になるまで</h1>
+    <p>New Single</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+"""
+
+html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{meta['title']}</title>
+<meta name="description" content="{meta['desc']}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+{BODY}
+</div></div>
+<audio id="bgm" src="umi-bgm.mp3" preload="auto"></audio>
+<script>{engine}</script>
+</body>
+</html>
+"""
+open(os.path.join(OUT, "uminaru-short.html"), "w", encoding="utf-8").write(html)
+print(f"wrote uminaru-short.html  ({sum(d for d,_ in scenes)/1000:.1f}s, {len(scenes)} scenes; bloom {BLOOM_FROM}->{BLOOM_PEAK})")
