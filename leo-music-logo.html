@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#0a0f1a}
+  #logo{position:relative;width:1024px;height:1024px;overflow:hidden;font-family:sans-serif;
+    background:radial-gradient(circle at 50% 44%, #1f5170 0%, #143b54 42%, #0e2536 76%, #0a1826 100%)}
+  .note{position:absolute;color:#ffcf7a;opacity:.75;text-shadow:0 0 20px rgba(255,190,90,.55)}
+  /* ---- cat head (positioning context) ---- */
+  #head{position:absolute;left:252px;top:280px;width:520px;height:470px;
+    background:radial-gradient(circle at 42% 32%, #f8b158, #ea9236 52%, #d07a24 100%);
+    border-radius:48% 48% 47% 47%/45% 45% 55% 55%}
+  #earL,#earR{position:absolute;top:-58px;width:158px;height:172px;background:linear-gradient(160deg,#f0a03f,#d97f28)}
+  #earL{left:44px;transform:rotate(-8deg);clip-path:polygon(50% 0,96% 96%,4% 88%)}
+  #earR{right:44px;transform:rotate(8deg);clip-path:polygon(50% 0,96% 88%,4% 96%)}
+  #earinL,#earinR{position:absolute;top:8px;width:78px;height:104px;background:#c9605a;border-radius:50% 50% 50% 50%/60% 60% 40% 40%}
+  #earinL{left:88px;transform:rotate(-8deg)} #earinR{right:88px;transform:rotate(8deg)}
+  .stripe{position:absolute;background:#c26f1e;border-radius:8px;opacity:.8}
+  #s1{left:260px;top:36px;width:16px;height:74px;transform:translateX(-50%)}
+  #s2{left:206px;top:52px;width:13px;height:58px;transform:rotate(-16deg)}
+  #s3{left:314px;top:52px;width:13px;height:58px;transform:rotate(16deg)}
+  #muzzle{position:absolute;left:260px;top:300px;width:280px;height:180px;transform:translateX(-50%);
+    background:radial-gradient(circle at 50% 36%, #fff4e1, #f5e0c1 72%);border-radius:50% 50% 50% 50%/42% 42% 58% 58%}
+  .cheek{position:absolute;top:262px;width:78px;height:46px;background:rgba(240,120,90,.38);border-radius:50%;filter:blur(5px)}
+  #chL{left:44px} #chR{right:44px}
+  .eye{position:absolute;top:186px;width:104px;height:52px;border:15px solid #2a1a10;border-bottom:none;border-radius:110px 110px 0 0}
+  #eyeL{left:96px} #eyeR{right:96px}
+  #nose{position:absolute;left:260px;top:262px;width:46px;height:34px;transform:translateX(-50%);
+    background:#d0685e;border-radius:50% 50% 50% 50%/58% 58% 42% 42%}
+  #smile{position:absolute;left:260px;top:300px;width:118px;height:52px;transform:translateX(-50%);
+    border:10px solid #2a1a10;border-top:none;border-radius:0 0 110px 110px;border-left-color:transparent;border-right-color:transparent}
+  .wk{position:absolute;height:5px;background:#fff;border-radius:3px;opacity:.85}
+  #wkL1{left:-42px;top:286px;width:150px;transform:rotate(7deg)}
+  #wkL2{left:-42px;top:320px;width:150px;transform:rotate(-7deg)}
+  #wkR1{right:-42px;top:286px;width:150px;transform:rotate(-7deg)}
+  #wkR2{right:-42px;top:320px;width:150px;transform:rotate(7deg)}
+  /* ---- headphones ---- */
+  #band{position:absolute;left:512px;top:212px;width:566px;height:340px;transform:translateX(-50%);
+    border:46px solid #1e232c;border-bottom:none;border-radius:300px 300px 0 0;box-shadow:0 6px 16px rgba(0,0,0,.4)}
+  #bandhi{position:absolute;left:512px;top:212px;width:566px;height:340px;transform:translateX(-50%);
+    border:12px solid rgba(90,210,255,.45);border-bottom:none;border-radius:300px 300px 0 0}
+  .cup{position:absolute;top:452px;width:196px;height:214px;background:linear-gradient(140deg,#2a303a,#14181f);
+    border-radius:50%;box-shadow:0 10px 22px rgba(0,0,0,.5)}
+  #cupL{left:150px} #cupR{right:150px}
+  .cupring{position:absolute;top:478px;width:146px;height:164px;border-radius:50%;border:9px solid #39c0e6;box-shadow:0 0 22px rgba(57,192,230,.65)}
+  #cupringL{left:175px} #cupringR{right:175px}
+  .cupdot{position:absolute;top:534px;width:52px;height:52px;border-radius:50%;background:radial-gradient(circle,#5ad2ff,#1f7fae);opacity:.9}
+  #cupdotL{left:222px} #cupdotR{right:222px}
+  /* waveform footer */
+  #wf{position:absolute;bottom:96px;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:11px;height:64px;opacity:.55}
+  #wf i{width:10px;background:linear-gradient(180deg,#5ad2ff,#1f7fae);border-radius:5px}
+</style></head>
+<body>
+<div id="logo">
+  <div class="note" style="left:150px;top:150px;font-size:62px">&#9834;</div>
+  <div class="note" style="right:150px;top:120px;font-size:78px">&#9835;</div>
+  <div id="head">
+    <div id="earL"></div><div id="earR"></div>
+    <div id="earinL"></div><div id="earinR"></div>
+    <div id="s1" class="stripe"></div><div id="s2" class="stripe"></div><div id="s3" class="stripe"></div>
+    <div id="muzzle"></div>
+    <div id="chL" class="cheek"></div><div id="chR" class="cheek"></div>
+    <div id="eyeL" class="eye"></div><div id="eyeR" class="eye"></div>
+    <div id="nose"></div><div id="smile"></div>
+    <div id="wkL1" class="wk"></div><div id="wkL2" class="wk"></div>
+    <div id="wkR1" class="wk"></div><div id="wkR2" class="wk"></div>
+  </div>
+  <div id="cupL" class="cup"></div><div id="cupR" class="cup"></div>
+  <div id="cupringL" class="cupring"></div><div id="cupringR" class="cupring"></div>
+  <div id="cupdotL" class="cupdot"></div><div id="cupdotR" class="cupdot"></div>
+  <div id="band"></div><div id="bandhi"></div>
+  <div id="wf"></div>
+</div>
+<script>
+  const wf=document.getElementById('wf');[24,40,58,38,66,30,52,44,60,34,48,26].forEach(h=>{const i=document.createElement('i');i.style.height=h+'px';wf.appendChild(i);});
+</script>
+</body></html>
