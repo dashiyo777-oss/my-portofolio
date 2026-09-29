@@ -4,7 +4,7 @@ Emotion-first remake: golden-hour light and depth — soft bokeh, a sun bloom, o
 petals swirling in the light, and a couple from behind (she rests her head on his
 shoulder) rim-lit by the sunset. A slow push-in, and at "世界中が金色に染まる" the whole
 frame blooms gold. Verified title/artist + rights-holder-supplied lyric lines.
-Unified engine (renderAt). BGM: kinmokusei-bgm.mp3 (33s chorus segment).
+Unified engine (renderAt). BGM: kinmokusei-bgm.mp3 (chorus from source 3:02/182s; earlier 1:04 chorus avoided due to mis-sung line).
 """
 import os
 OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
