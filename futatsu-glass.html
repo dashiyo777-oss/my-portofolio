@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ふたつのグラス (Duet with 白詰玲) / 琥珀譲二</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0b0705;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0b0705}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:top left;
+  font-family:"Noto Sans JP",system-ui,sans-serif;background:#0b0705}
+#world{position:absolute;inset:0;transform-origin:50% 46%}
+/* room */
+#room{position:absolute;inset:0;background:
+  radial-gradient(80% 55% at 42% 78%, rgba(232,150,60,.28), transparent 62%),
+  radial-gradient(60% 40% at 86% 40%, rgba(70,110,170,.20), transparent 66%),
+  linear-gradient(180deg,#160d08 0%,#1c110a 40%,#241509 66%,#160d07 100%)}
+/* piano (left bg) */
+#piano{position:absolute;left:-80px;top:250px;width:520px;height:640px;background:#0d0906;
+  transform:skewY(-8deg);clip-path:polygon(0 22%,72% 0,100% 30%,100% 100%,0 100%);
+  box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
+#pianoedge{position:absolute;left:-80px;top:250px;width:520px;height:640px;transform:skewY(-8deg);
+  clip-path:polygon(0 22%,72% 0,74% 4%,2% 26%);background:linear-gradient(90deg,rgba(240,190,110,.55),rgba(230,150,70,.15))}
+#pianokeys{position:absolute;left:20px;top:560px;width:300px;height:26px;transform:skewY(-8deg);
+  background:repeating-linear-gradient(90deg,#e9e2d2 0 12px,#0d0906 12px 15px);opacity:.5;border-radius:2px}
+/* hanging lights */
+.hl{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#ffe6b0,#e59a3a);
+  box-shadow:0 0 22px 6px rgba(240,170,70,.6)}
+.hlcord{position:absolute;width:1px;background:linear-gradient(180deg,rgba(255,220,150,.0),rgba(255,220,150,.3));}
+/* window bokeh */
+#win{position:absolute;right:0;top:120px;width:360px;height:1040px;overflow:hidden;
+  -webkit-mask:linear-gradient(180deg,transparent,#000 8%,#000 78%,transparent);
+  mask:linear-gradient(180deg,transparent,#000 8%,#000 78%,transparent)}
+.bok{position:absolute;border-radius:50%;filter:blur(6px)}
+.wref{position:absolute;bottom:0;width:6px;height:200px;border-radius:4px;filter:blur(3px);opacity:.4}
+/* ambient bokeh (warm) */
+.amb{position:absolute;border-radius:50%;filter:blur(5px);background:radial-gradient(circle,rgba(255,200,120,.5),transparent 70%)}
+/* sakura */
+#branch{position:absolute;left:-30px;top:-10px;width:420px;height:360px}
+#branch .stem{position:absolute;background:#2a1a10;border-radius:8px;transform-origin:left center}
+.blossom{position:absolute;width:34px;height:34px;border-radius:50% 0 50% 50%;
+  background:radial-gradient(circle at 60% 40%,#ffd9e4,#f4a9c0);box-shadow:0 0 10px rgba(247,169,192,.5);transform:rotate(20deg)}
+.petal{position:absolute;width:22px;height:18px;background:radial-gradient(circle at 60% 35%,#ffe1ea,#f3aac0);
+  border-radius:75% 25% 75% 25%/70% 30% 70% 30%;opacity:.9;box-shadow:0 0 6px rgba(247,169,192,.35)}
+/* marble table */
+#table{position:absolute;left:0;right:0;bottom:0;height:720px;
+  background:linear-gradient(180deg,#100a09 0%,#0a0706 40%,#070505 100%)}
+#tabletop{position:absolute;left:0;right:0;bottom:640px;height:6px;
+  background:linear-gradient(90deg,transparent,rgba(255,210,150,.55),rgba(255,180,120,.25),transparent)}
+#marblesheen{position:absolute;left:0;right:0;bottom:0;height:640px;pointer-events:none;
+  background:radial-gradient(60% 70% at 46% 0%, rgba(240,170,80,.18), transparent 60%)}
+/* glasses */
+.glass{position:absolute;width:170px;height:210px;border-radius:10px 10px 24px 24px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,240,220,.09),rgba(255,225,190,.04));
+  border:2px solid rgba(255,231,201,.42);
+  box-shadow:inset 0 0 26px rgba(255,200,140,.14),0 0 50px rgba(220,140,55,.26)}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:5;
+  background:repeating-linear-gradient(90deg,rgba(255,248,235,.10) 0 2px,transparent 2px 24px),
+            linear-gradient(180deg,rgba(255,255,255,.18),transparent 26%)}
+.whisky{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#dc9a45 0%,#b06f2c 62%,#8a5220 100%);
+  box-shadow:0 -6px 18px rgba(255,190,110,.35) inset}
+.ice{position:absolute;border-radius:9px;background:linear-gradient(135deg,rgba(255,252,246,.75),rgba(255,224,186,.35));
+  border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.spec{position:absolute;left:14px;top:16px;width:16px;height:150px;border-radius:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0));filter:blur(1px)}
+.gref{position:absolute;width:170px;height:150px;border-radius:26px 26px 16px 16px;filter:blur(4px);opacity:.16;
+  background:linear-gradient(180deg,rgba(240,170,80,.8),transparent 78%);transform:scaleY(-1)}
+.gglow{position:absolute;width:230px;height:230px;border-radius:50%;filter:blur(30px);
+  background:radial-gradient(circle,rgba(240,160,70,.45),transparent 70%)}
+/* candle */
+#votive{position:absolute;width:88px;height:110px;border-radius:10px;
+  background:linear-gradient(180deg,rgba(255,210,150,.22),rgba(180,110,50,.28));
+  border:1px solid rgba(255,210,150,.35);box-shadow:0 0 40px rgba(240,160,70,.5),inset 0 0 24px rgba(255,190,110,.4)}
+#flame{position:absolute;width:26px;height:44px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;
+  background:radial-gradient(circle at 50% 70%,#fff3c4,#ffb43a 55%,#ff7a1e 100%);
+  box-shadow:0 0 26px 8px rgba(255,160,60,.7);transform-origin:50% 100%}
+#flameglow{position:absolute;width:180px;height:180px;border-radius:50%;filter:blur(26px);
+  background:radial-gradient(circle,rgba(255,170,70,.5),transparent 70%)}
+/* book */
+#book{position:absolute;right:70px;bottom:120px;width:180px;height:60px;border-radius:6px;transform:skewX(-16deg);
+  background:linear-gradient(180deg,#2a1c12,#160d08);box-shadow:0 6px 16px rgba(0,0,0,.5),inset 0 2px 0 rgba(240,190,120,.25)}
+#book::after{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:4px;background:rgba(240,190,120,.4)}
+/* text scenes */
+#scenes{position:absolute;left:70px;right:70px;top:300px;height:660px;z-index:7}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;opacity:0;will-change:opacity,transform}
+.lead{font-family:"Noto Serif JP",serif;font-size:66px;font-weight:600;color:#fbeede;line-height:1.45;letter-spacing:2px;
+  text-shadow:0 3px 26px rgba(0,0,0,.8),0 0 26px rgba(240,180,110,.3)}
+.en{display:block;font-family:"Noto Serif JP",serif;font-style:italic;font-size:34px;color:#e7b877;letter-spacing:1px;
+  margin-top:16px;text-shadow:0 0 16px rgba(230,160,90,.4)}
+.title-jp{font-family:"Noto Serif JP",serif;font-size:118px;font-weight:600;line-height:1.05;letter-spacing:4px;
+  background:linear-gradient(92deg,#f4d79a 0%,#f0c27a 46%,#f3b0c2 72%,#f7c6d0 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 18px rgba(0,0,0,.6)) drop-shadow(0 0 26px rgba(240,190,130,.35))}
+.tflour{width:520px;max-width:82%;height:2px;margin:20px auto 18px;
+  background:linear-gradient(90deg,transparent,rgba(240,200,140,.7),transparent)}
+.duet{font-family:"Noto Serif JP",serif;font-style:italic;font-size:44px;color:#f0d6a8;letter-spacing:2px}
+.artist{font-family:"Noto Serif JP",serif;font-size:46px;color:#efe4cf;letter-spacing:6px;margin-top:16px}
+.artist small{display:block;font-size:26px;letter-spacing:6px;color:#c9a877;margin-top:6px;font-style:italic}
+.lyr{font-family:"Noto Serif JP",serif;font-size:58px;font-weight:600;color:#fbeede;line-height:1.55;letter-spacing:1px;
+  text-shadow:0 3px 24px rgba(0,0,0,.85),0 0 22px rgba(230,160,90,.28)}
+.lyr .am{color:#f2b96a}
+.badge{display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:28px;font-weight:800;letter-spacing:6px;
+  color:#1a0f08;background:linear-gradient(90deg,#f4d79a,#f3b0c2);padding:9px 26px;border-radius:40px;margin-bottom:24px}
+.cta-t{font-family:"Noto Serif JP",serif;font-size:96px;font-weight:600;line-height:1.05;letter-spacing:3px;
+  background:linear-gradient(92deg,#f4d79a,#f0c27a 55%,#f7c6d0);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 16px rgba(0,0,0,.6))}
+.cta-a{font-family:"Noto Serif JP",serif;font-size:42px;color:#efe4cf;letter-spacing:4px;margin-top:14px}
+.cta-a small{font-style:italic;font-size:26px;color:#c9a877;display:block;margin-top:6px;letter-spacing:5px}
+.cta-s{font-size:32px;color:#d8c3a0;letter-spacing:2px;margin-top:22px}
+/* fx */
+#vig{position:absolute;inset:0;pointer-events:none;z-index:9;
+  background:radial-gradient(120% 82% at 48% 52%,transparent 52%,rgba(0,0,0,.62) 100%)}
+#grain{position:absolute;inset:0;pointer-events:none;opacity:.05;z-index:9;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.5) 0 1px,transparent 1px 3px)}
+#ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:20}
+#play{width:150px;height:150px;border-radius:50%;border:none;cursor:pointer;color:#1a0f08;font-size:60px;
+  background:linear-gradient(135deg,#f4d79a,#f3b0c2);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#bar{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.10);z-index:20}
+#barf{height:100%;width:0;background:linear-gradient(90deg,#f4d79a,#f3b0c2)}
+body.capture #ui,body.capture #bar{display:none}
+</style></head>
+<body>
+
+<div id="wrap"><div id="stage">
+ <div id="world">
+  <div id="room"></div>
+  <div id="piano"></div><div id="pianoedge"></div><div id="pianokeys"></div>
+  <div id="lights"></div>
+  <div id="win"></div>
+  <div id="amb"></div>
+  <div id="branch"></div>
+  <div id="petals"></div>
+  <div id="table"></div>
+  <div id="tabletop"></div>
+  <div id="marblesheen"></div>
+  <!-- glasses -->
+  <div class="gglow" id="glowL" style="left:250px;bottom:460px"></div>
+  <div class="gglow" id="glowR" style="left:520px;bottom:460px"></div>
+  <div class="gref" id="grefL" style="left:335px;bottom:470px"></div>
+  <div class="gref" id="grefR" style="left:600px;bottom:470px"></div>
+  <div class="glass" id="glassL" style="left:335px;bottom:490px">
+     <div class="whisky" id="whiskyL" style="height:150px"></div>
+     <div class="ice" id="iceL1" style="left:34px;bottom:70px;width:64px;height:64px;transform:rotate(-8deg)"></div>
+     <div class="ice" id="iceL2" style="left:82px;bottom:104px;width:58px;height:58px;transform:rotate(12deg)"></div>
+     <div class="spec"></div>
+  </div>
+  <div class="glass" id="glassR" style="left:600px;bottom:490px">
+     <div class="whisky" id="whiskyR" style="height:96px"></div>
+     <div class="ice" id="iceR1" style="left:52px;bottom:56px;width:60px;height:60px;transform:rotate(6deg)"></div>
+     <div class="spec"></div>
+  </div>
+  <!-- candle -->
+  <div id="flameglow" style="left:806px;bottom:648px"></div>
+  <div id="votive" style="left:842px;bottom:498px"></div>
+  <div id="flame" style="left:873px;bottom:604px"></div>
+  <div id="book"></div>
+ </div>
+ <div id="scenes"></div>
+ <div id="grain"></div>
+ <div id="vig"></div>
+ <div id="ui"><button id="play">&#9654;</button></div>
+ <div id="bar"><div id="barf"></div></div>
+</div></div>
+<audio id="bgm" src="futatsu-bgm.mp3" preload="auto"></audio>
+
+<script>
+
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);stage.style.transform='scale('+s+')';
+  document.getElementById('wrap').style.width=innerWidth+'px';}
+addEventListener('resize',fit);fit();
+const capture=new URLSearchParams(location.search).has('capture');
+if(capture)document.body.classList.add('capture');
+let _s=44556677;function rnd(){_s=(_s*1103515245+12345)&0x7fffffff;return _s/0x7fffffff;}
+
+// hanging lights (top-left)
+const lights=document.getElementById('lights');const hlEls=[];
+for(let i=0;i<6;i++){const x=60+i*70, y=60+ (i%2)*22;
+  const cord=document.createElement('div');cord.className='hlcord';cord.style.left=(x+8)+'px';cord.style.top='0';cord.style.height=y+'px';lights.appendChild(cord);
+  const b=document.createElement('div');b.className='hl';b.style.left=x+'px';b.style.top=y+'px';lights.appendChild(b);
+  hlEls.push({el:b,ph:rnd()*6.28});}
+
+// window bokeh + reflections
+const win=document.getElementById('win');const bokEls=[];
+const cols=['rgba(255,190,110,','rgba(120,160,220,','rgba(240,140,180,','rgba(255,220,150,'];
+for(let i=0;i<20;i++){const b=document.createElement('div');b.className='bok';
+  const sz=14+rnd()*46;b.style.width=sz+'px';b.style.height=sz+'px';
+  b.style.left=(rnd()*330)+'px';b.style.top=(120+rnd()*520)+'px';
+  const c=cols[(rnd()*cols.length)|0];b.style.background='radial-gradient(circle,'+c+'0.7),transparent 70%)';
+  win.appendChild(b);bokEls.push({el:b,ph:rnd()*6.28,sp:0.5+rnd()*1.6});}
+for(let i=0;i<10;i++){const r=document.createElement('div');r.className='wref';
+  r.style.left=(rnd()*340)+'px';const c=cols[(rnd()*cols.length)|0];
+  r.style.background='linear-gradient(180deg,'+c+'0.6),transparent)';win.appendChild(r);bokEls.push({el:r,ph:rnd()*6.28,sp:0.4+rnd()*1.2,ref:true});}
+
+// ambient warm bokeh
+const amb=document.getElementById('amb');const ambEls=[];
+for(let i=0;i<14;i++){const d=document.createElement('div');d.className='amb';
+  const sz=8+rnd()*26;d.style.width=sz+'px';d.style.height=sz+'px';
+  d.style.left=(rnd()*1000)+'px';d.style.top=(200+rnd()*1200)+'px';
+  amb.appendChild(d);ambEls.push({el:d,x:parseFloat(d.style.left),y:parseFloat(d.style.top),ph:rnd()*6.28,sp:0.3+rnd()*0.7});}
+
+// sakura branch (stems + blossoms)
+const branch=document.getElementById('branch');
+function stem(x,y,w,len,rot){const s=document.createElement('div');s.className='stem';
+  s.style.left=x+'px';s.style.top=y+'px';s.style.width=len+'px';s.style.height=w+'px';
+  s.style.transform='rotate('+rot+'deg)';branch.appendChild(s);}
+stem(0,40,10,300,18);stem(120,95,7,150,-22);stem(210,150,6,120,10);stem(60,70,6,120,48);
+for(let i=0;i<10;i++){const bl=document.createElement('div');bl.className='blossom';
+  bl.style.left=(30+rnd()*300)+'px';bl.style.top=(30+rnd()*200)+'px';
+  bl.style.transform='rotate('+(rnd()*360)+'deg) scale('+(0.7+rnd()*0.7)+')';branch.appendChild(bl);}
+
+// falling petals
+const petalsEl=document.getElementById('petals');const petals=[];
+for(let i=0;i<14;i++){const p=document.createElement('div');p.className='petal';petalsEl.appendChild(p);
+  petals.push({el:p,x:rnd()*1080,y:rnd()*1400,sp:26+rnd()*40,drift:20+rnd()*40,ph:rnd()*6.28,rot:rnd()*360,rs:(rnd()-0.5)*80,sc:0.7+rnd()*0.8});}
+
+const flame=document.getElementById('flame'),flameglow=document.getElementById('flameglow');
+const glowL=document.getElementById('glowL'),glowR=document.getElementById('glowR');
+
+// ---------- scenes ----------
+const scenes=[
+ {d:2800, html:'<div class="sc"><div class="lead">今夜もふたつ、<br>グラスを頼む。<span class="en">Two glasses again tonight.</span></div></div>'},
+ {d:3600, html:'<div class="sc"><div class="title-jp">ふたつのグラス</div><div class="tflour"></div><div class="duet">(Duet with 白詰玲)</div><div class="artist">琥珀 譲二 &times; 白詰 玲<small>KOHAKU JOJI &times; SHIROTSUME REI</small></div></div>'},
+ {d:2800, html:'<div class="sc"><div class="lyr">あなたの席には<br>誰も座らせない</div></div>'},
+ {d:3600, html:'<div class="sc"><div class="lyr">こんなに愛して<br>愛されていたのに<br><span class="am">神様は何を 間違えたのだろう</span></div></div>'},
+ {d:3200, html:'<div class="sc"><div class="lyr">桜が咲いたら 行こうと言った<br>指切りをした 小指のぬくもり</div></div>'},
+ {d:3200, html:'<div class="sc"><div class="lyr">あんなに晴れた 四月の朝に<br><span class="am">あなたは急いで 逝ってしまった</span></div></div>'},
+ {d:3400, html:'<div class="sc"><div class="lyr"><span class="am">逢いたい 逢いたい</span><br>ふたつのグラスの<br>ひとつは減らない<span class="en">One of the two glasses never empties.</span></div></div>'},
+ {d:2800, html:'<div class="sc"><div class="lyr">それでもわたしは ふたつを頼む<br><span class="am">あなたと生きてる つもりでいさせて</span></div></div>'},
+ {d:3000, html:'<div class="sc"><div class="lyr">氷が溶けても 減らないグラス<br>今夜もあなたと 飲んでいます<span class="en">Tonight, again, I drink with you.</span></div></div>'},
+ {d:3400, html:'<div class="sc"><span class="badge">NEW SINGLE</span><div class="cta-t">ふたつのグラス</div><div class="cta-a">琥珀譲二 &times; 白詰玲<small>DUET</small></div><div class="cta-s">配信中 &nbsp;/&nbsp; Streaming Now</div></div>'},
+];
+const scEls=[];let acc=0;const marks=[];const scenesEl=document.getElementById('scenes');
+scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+  scenesEl.appendChild(el);scEls.push(el);marks.push({start:acc,end:acc+sc.d});acc+=sc.d;});
+const TOTAL=acc;window.TOTAL=TOTAL;
+function smooth(t,a,b){if(t<=a)return 0;if(t>=b)return 1;const x=(t-a)/(b-a);return x*x*(3-2*x);}
+
+window.renderAt=function(t){
+  const ts=t/1000,prog=t/TOTAL;
+  document.getElementById('world').style.transform='scale('+(1+0.035*prog).toFixed(4)+') translateY('+(-6*prog).toFixed(1)+'px)';
+  // hanging lights flicker
+  for(const h of hlEls){h.el.style.opacity=(0.8+0.2*Math.sin(ts*2.2+h.ph)).toFixed(3);}
+  // window bokeh twinkle + shimmer
+  for(const b of bokEls){const tw=0.55+0.45*Math.sin(ts*b.sp+b.ph);
+    if(b.ref){b.el.style.transform='scaleY('+(1+0.12*Math.sin(ts*1.3+b.ph)).toFixed(3)+') translateX('+(Math.sin(ts+b.ph)*3).toFixed(1)+'px)';b.el.style.opacity=(0.3+0.2*tw).toFixed(3);}
+    else b.el.style.opacity=(0.4+0.5*tw).toFixed(3);}
+  // ambient bokeh drift up
+  for(const a of ambEls){const y=a.y-((ts*a.sp*10)%1400);const yy=y<-40?y+1400:y;
+    a.el.style.transform='translate('+(Math.sin(ts*0.5+a.ph)*16).toFixed(1)+'px,'+(yy-a.y).toFixed(1)+'px)';
+    a.el.style.opacity=(0.25+0.35*Math.abs(Math.sin(ts*0.7+a.ph))).toFixed(3);}
+  // petals fall
+  for(const p of petals){let y=(p.y+ts*p.sp)%1520;
+    const x=p.x+Math.sin(ts*0.7+p.ph)*p.drift + prog*40;
+    const rot=p.rot+ts*p.rs*0.4;
+    p.el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+rot.toFixed(0)+'deg) scale('+p.sc+')';
+    p.el.style.opacity=(0.5+0.4*Math.sin(ts*1.1+p.ph)).toFixed(3);}
+  // candle flame flicker
+  const fk=Math.sin(ts*13)*0.5+Math.sin(ts*27+1)*0.3+Math.sin(ts*7)*0.2;
+  flame.style.transform='translateX('+(fk*3).toFixed(2)+'px) scaleY('+(1+fk*0.14).toFixed(3)+') scaleX('+(1-fk*0.06).toFixed(3)+')';
+  flame.style.opacity=(0.9+0.1*fk).toFixed(3);
+  const fg=(0.85+0.15*fk);flameglow.style.opacity=fg.toFixed(3);flameglow.style.transform='scale('+(1+fk*0.08).toFixed(3)+')';
+  // glass glow gentle breathe + warm flicker from candle
+  const gb=0.8+0.2*Math.sin(ts*1.1);glowL.style.opacity=(gb).toFixed(3);glowR.style.opacity=(gb*0.9).toFixed(3);
+  // scenes
+  const FADE=300;
+  for(let i=0;i<scEls.length;i++){const m=marks[i];let o=0,dy=14;
+    if(t>=m.start-FADE&&t<=m.end+FADE){
+      if(t<m.start)o=(t-(m.start-FADE))/FADE;else if(t>m.end)o=1-(t-m.end)/FADE;else o=1;
+      o=Math.max(0,Math.min(1,o));dy=14*(1-o);}
+    scEls[i].style.opacity=o.toFixed(3);scEls[i].style.transform='translateY('+dy.toFixed(1)+'px)';}
+};
+
+const bgm=document.getElementById('bgm');const barf=document.getElementById('barf');let raf=null,t0=0;
+function play(){document.getElementById('ui').style.display='none';
+  try{bgm.currentTime=0;bgm.play();}catch(e){}
+  t0=performance.now();
+  (function loop(){const t=performance.now()-t0;const tt=Math.min(t,TOTAL);window.renderAt(tt);
+    barf.style.width=(100*tt/TOTAL)+'%';if(t<TOTAL)raf=requestAnimationFrame(loop);})();
+  setTimeout(()=>{const st=performance.now();(function fo(){const k=(performance.now()-st)/1600;
+    bgm.volume=Math.max(0,0.9*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();},TOTAL-1600);
+}
+document.getElementById('play').addEventListener('click',play);
+window.renderAt(0);
+
+</script>
+</body></html>
