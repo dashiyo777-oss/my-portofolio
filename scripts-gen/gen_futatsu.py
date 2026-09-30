@@ -88,8 +88,14 @@ html,body{background:#0b0705;overflow:hidden}
 #book{position:absolute;right:70px;bottom:120px;width:180px;height:60px;border-radius:6px;transform:skewX(-16deg);
   background:linear-gradient(180deg,#2a1c12,#160d08);box-shadow:0 6px 16px rgba(0,0,0,.5),inset 0 2px 0 rgba(240,190,120,.25)}
 #book::after{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:4px;background:rgba(240,190,120,.4)}
+/* persistent brand */
+#brand{position:absolute;left:0;right:0;top:150px;text-align:center;z-index:7;opacity:0}
+#brand .bt{display:block;font-family:"Noto Serif JP",serif;font-size:56px;letter-spacing:3px;
+  background:linear-gradient(92deg,#f4d79a,#f0c27a 55%,#f3b0c2);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 10px rgba(0,0,0,.6))}
+#brand .ba{display:block;font-family:"Noto Serif JP",serif;font-size:30px;letter-spacing:5px;color:#d8bf94;margin-top:6px}
 /* text scenes */
-#scenes{position:absolute;left:70px;right:70px;top:300px;height:660px;z-index:7}
+#scenes{position:absolute;left:70px;right:70px;top:330px;height:620px;z-index:7}
 .sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;opacity:0;will-change:opacity,transform}
 .lead{font-family:"Noto Serif JP",serif;font-size:66px;font-weight:600;color:#fbeede;line-height:1.45;letter-spacing:2px;
@@ -164,6 +170,7 @@ BODY = r"""
   <div id="flame" style="left:873px;bottom:604px"></div>
   <div id="book"></div>
  </div>
+ <div id="brand"><span class="bt">ふたつのグラス</span><span class="ba">琥珀譲二 &times; 白詰玲</span></div>
  <div id="scenes"></div>
  <div id="grain"></div>
  <div id="vig"></div>
@@ -226,23 +233,23 @@ for(let i=0;i<14;i++){const p=document.createElement('div');p.className='petal';
 const flame=document.getElementById('flame'),flameglow=document.getElementById('flameglow');
 const glowL=document.getElementById('glowL'),glowR=document.getElementById('glowR');
 
-// ---------- scenes ----------
+// ---------- scenes (BGMは大サビ「逢いたい 逢いたい…」の頭から。歌い出しに同期) ----------
+// 各行 {s,e} は BGM 先頭からのms。ボーカルのフレーズ開始を解析して決定。
 const scenes=[
- {d:2800, html:'<div class="sc"><div class="lead">今夜もふたつ、<br>グラスを頼む。<span class="en">Two glasses again tonight.</span></div></div>'},
- {d:3600, html:'<div class="sc"><div class="title-jp">ふたつのグラス</div><div class="tflour"></div><div class="duet">(Duet with 白詰玲)</div><div class="artist">琥珀 譲二 &times; 白詰 玲<small>KOHAKU JOJI &times; SHIROTSUME REI</small></div></div>'},
- {d:2800, html:'<div class="sc"><div class="lyr">あなたの席には<br>誰も座らせない</div></div>'},
- {d:3600, html:'<div class="sc"><div class="lyr">こんなに愛して<br>愛されていたのに<br><span class="am">神様は何を 間違えたのだろう</span></div></div>'},
- {d:3200, html:'<div class="sc"><div class="lyr">桜が咲いたら 行こうと言った<br>指切りをした 小指のぬくもり</div></div>'},
- {d:3200, html:'<div class="sc"><div class="lyr">あんなに晴れた 四月の朝に<br><span class="am">あなたは急いで 逝ってしまった</span></div></div>'},
- {d:3400, html:'<div class="sc"><div class="lyr"><span class="am">逢いたい 逢いたい</span><br>ふたつのグラスの<br>ひとつは減らない<span class="en">One of the two glasses never empties.</span></div></div>'},
- {d:2800, html:'<div class="sc"><div class="lyr">それでもわたしは ふたつを頼む<br><span class="am">あなたと生きてる つもりでいさせて</span></div></div>'},
- {d:3000, html:'<div class="sc"><div class="lyr">氷が溶けても 減らないグラス<br>今夜もあなたと 飲んでいます<span class="en">Tonight, again, I drink with you.</span></div></div>'},
- {d:3400, html:'<div class="sc"><span class="badge">NEW SINGLE</span><div class="cta-t">ふたつのグラス</div><div class="cta-a">琥珀譲二 &times; 白詰玲<small>DUET</small></div><div class="cta-s">配信中 &nbsp;/&nbsp; Streaming Now</div></div>'},
+ {s:800,  e:5000,  html:'<div class="sc"><div class="lyr"><span class="am">逢いたい 逢いたい</span><br>声にしたなら</div></div>'},
+ {s:5000, e:8700,  html:'<div class="sc"><div class="lyr">崩れてしまうから<br>琥珀を見つめる</div></div>'},
+ {s:8700, e:11400, html:'<div class="sc"><div class="lyr">ふたつのグラスの<br><span class="am">ひとつは減らない</span></div></div>'},
+ {s:11400,e:14000, html:'<div class="sc"><div class="lyr">それでもわたしは<br>ふたつを頼む</div></div>'},
+ {s:14000,e:18600, html:'<div class="sc"><div class="lyr"><span class="am">あなたと生きてる</span><br>つもりでいさせて</div></div>'},
+ {s:18600,e:22800, html:'<div class="sc"><div class="lyr"><span class="am">逢いたい 逢いたい</span><br>声にしたなら</div></div>'},
+ {s:22800,e:26600, html:'<div class="sc"><div class="lyr">ふたつのグラスの<br><span class="am">ひとつは減らない</span><span class="en">One of the two glasses never empties.</span></div></div>'},
+ {s:26600,e:30800, html:'<div class="sc"><span class="badge">NEW SINGLE</span><div class="cta-t">ふたつのグラス</div><div class="cta-a">琥珀譲二 &times; 白詰玲<small>DUET with SHIROTSUME REI</small></div><div class="cta-s">配信中 &nbsp;/&nbsp; Streaming Now</div></div>'},
 ];
-const scEls=[];let acc=0;const marks=[];const scenesEl=document.getElementById('scenes');
+const scEls=[];const marks=[];const scenesEl=document.getElementById('scenes');
 scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
-  scenesEl.appendChild(el);scEls.push(el);marks.push({start:acc,end:acc+sc.d});acc+=sc.d;});
-const TOTAL=acc;window.TOTAL=TOTAL;
+  scenesEl.appendChild(el);scEls.push(el);marks.push({start:sc.s,end:sc.e});});
+const TOTAL=30800;window.TOTAL=TOTAL;
+const brandEl=document.getElementById('brand');
 function smooth(t,a,b){if(t<=a)return 0;if(t>=b)return 1;const x=(t-a)/(b-a);return x*x*(3-2*x);}
 
 window.renderAt=function(t){
@@ -271,6 +278,9 @@ window.renderAt=function(t){
   const fg=(0.85+0.15*fk);flameglow.style.opacity=fg.toFixed(3);flameglow.style.transform='scale('+(1+fk*0.08).toFixed(3)+')';
   // glass glow gentle breathe + warm flicker from candle
   const gb=0.8+0.2*Math.sin(ts*1.1);glowL.style.opacity=(gb).toFixed(3);glowR.style.opacity=(gb*0.9).toFixed(3);
+  // persistent brand: fade in at head, fade out before CTA
+  const bo=Math.min(smooth(t,300,1300), 1-smooth(t,25800,26600));
+  brandEl.style.opacity=Math.max(0,bo).toFixed(3);
   // scenes
   const FADE=300;
   for(let i=0;i<scEls.length;i++){const m=marks[i];let o=0,dy=14;
