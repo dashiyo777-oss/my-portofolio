@@ -1,0 +1,60 @@
+name: kanpo-archive
+
+# 官報（kanpo.go.jp）の直近90日分を毎日取得し、日付ごとの Release に一括PDFを保管する。
+# 目次(toc/*.json)はリポジトリにコミットする。既に保管済みの日付はダウンロードしない。
+on:
+  schedule:
+    - cron: "17 21 * * *"   # 毎日 06:17 JST（官報は8:30公開なので前日分まで確実に取る）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kanpo-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 保管済みの日付を調べる
+        run: |
+          gh release list --limit 1000 --json tagName,isDraft -q '.[] | select(.isDraft | not) | .tagName' \
+            | sed -n 's/^kanpo-\([0-9]\{8\}\)$/\1/p' > all-done.txt || true
+          # 当日・前日分は後から号外が追加されることがあるので毎回取り直す
+          cutoff=$(TZ=Asia/Tokyo date -d '1 day ago' +%Y%m%d)
+          awk -v c="$cutoff" '$1 < c' all-done.txt > done-dates.txt
+          wc -l done-dates.txt
+
+      - name: 官報を取得（未保管の日付のみ）
+        run: python3 fetch_kanpo.py --out data --skip-dates done-dates.txt
+
+      - name: 日付ごとに Release へアップロード
+        run: |
+          for dir in data/pdf/*/; do
+            [ -d "$dir" ] || continue
+            d=$(basename "$dir"); tag="kanpo-$d"
+            # 下書きで作って全PDFを上げ終えてから公開状態にする（途中失敗なら翌日やり直し）
+            if ! gh release view "$tag" >/dev/null 2>&1; then
+              gh release create "$tag" --draft --title "官報 $d" \
+                --notes "官報 ${d:0:4}-${d:4:2}-${d:6:2} 発行分の一括PDF（出典: 内閣府 官報発行サイト）。個人情報を含むため再配布禁止。" \
+                "$dir"*.pdf
+            else
+              gh release upload "$tag" "$dir"*.pdf --clobber
+            fi
+            gh release edit "$tag" --draft=false
+          done
+
+      - name: 目次をコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add toc
+          git diff --cached --quiet || git commit -m "toc: $(date -u +%F) 官報目次を更新"
+          git push
