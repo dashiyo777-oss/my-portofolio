@@ -213,6 +213,31 @@ function fmtJpOverseas(sp, topN) {
     (sp.unknown ? " ／ 記録前 " + sp.unknown : "");
 }
 
+// 手帖シリーズ共通コード（SHA-256 ハッシュ。sae.html 等と同じ一覧）
+const SUITE_CODE_HASHES = {
+  "2026-06": "9bd357bbca3db5b13470cd0bb03968dac54c54068122ea5846fec611560df70e",
+  "2026-07": "67c31d7ef7edd79a94003b6703940cd87fb1fba16aa44b106c9cf637e0e258ae",
+  "2026-08": "fbd6d7bb0cc1871c97c7cac326afaedec6475d4d20483872e355f6052f07bf06",
+  "2026-09": "4a4e495befe9b09ab22ce01ea1867dd0612a5e328ddb2ffd7c809c8d1c3ac542",
+  "2026-10": "266fb31d3fed1b0cd121b54fd8d8f68418bc7e89a66794258b4119692e222476",
+  "2026-11": "eb8d0d47f5327875b364950a149642ee550beee1c98e82fd21a2138635c4ad0e",
+  "2026-12": "7bbd3b5a2cb2f1a7e1d9e5459090e3b5eb75dcc57131ba66807d9ca0f6a79e82",
+  "2027-01": "a4c5bb4fed876718fb8ea813912f0209bbc384a3107b71c77fba73c80e38e2ce",
+  "2027-02": "00c73670334abebf0e555a8ec3d9fadb844d261e5f16965d5ad177c469f96ca6",
+  "2027-03": "63d6691ec930de7453ae0ee1a5c0a89e2655519834782ad3e6831e4257b36b2e",
+  "2027-04": "d063f3bc33ac232afacd3cac71ab86b94f048f35a46b8868bfd97cd57b69ae5b",
+  "2027-05": "492b0ed0c1075d45d78e459ded26bdc0c4be65d6d3a5cc590e46b4296590a3d4"
+};
+async function suiteCodeOk(code) {
+  const j = new Date(Date.now() + 9 * 3600000);
+  const ym = j.getUTCFullYear() + "-" + String(j.getUTCMonth() + 1).padStart(2, "0");
+  const want = SUITE_CODE_HASHES[ym];
+  if (!want) return false;
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(code));
+  const hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  return hex === want;
+}
+
 async function redeem(request, env, h) {
   const ip = request.headers.get("CF-Connecting-IP") || "";
   if (await limited(env, ip, "redeem", 10, 60)) return json({ error: "rate_limited" }, 429, h);
@@ -220,7 +245,9 @@ async function redeem(request, env, h) {
   const code = (body && body.code ? String(body.code) : "").trim().toUpperCase();
   const mk = monthKey(new Date());
   const want = (await expectedCode(mk, env.CODE_SECRET)).toUpperCase();
-  if (!code || code !== want) return json({ error: "invalid_code" }, 401, h);
+  // 手帖シリーズ共通の月替わりコード（noteに掲示しているもの）も受け付ける。月は日本時間で判定。
+  const ok = code && (code === want || (await suiteCodeOk(code)));
+  if (!ok) return json({ error: "invalid_code" }, 401, h);
   const exp = monthEndExp(new Date());
   const token = await signJWT({ m: mk, exp: exp }, env.JWT_SECRET);
   // 新規会員（noteコード経由）を国つきで記録 → 日次レポート「新しく会員になった人」用
