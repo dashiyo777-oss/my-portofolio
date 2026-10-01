@@ -397,7 +397,7 @@ Performed by: Rolling all stars
 - JP：`バトンルージュの場末の酒場で出会った女。給料も名前も持っていかれて、それでも毎晩あの道を這って戻る。Rolling all stars の新曲。スライドギターが泣く、酔いどれのブルースです。`
 - EN：`Met her in a roadhouse past Baton Rouge. She took my paycheck and my name, and still I crawl back every night. The new single from Rolling all stars. A boozy blues where the slide guitar cries.`
 
-## ⑫ Marlena / Rolling all stars　【Rock】　※要確認：記入シートでは「Thunderbird Slim」欄にこの歌詞（サビ＝Marlena）
+## ⑫ Marlena / Rolling all stars　【Rock】　（確認済み：Marlena専用歌詞）
 **YouTube（英）** `Rolling all stars - "Marlena" (Official Music Video)`
 **YouTube（和表示）** `Marlena / Rolling all stars【Music Video】`
 **説明（JP）**
@@ -712,7 +712,125 @@ Performed by: Noah Vale
 - JP：`借り物の靴、他人のイニシャル。廊下の鏡は本当の僕を一度も映さなかった。きらめくネオンの一マイルにさよなら。玄関の灯がともる場所へ、自分を連れて帰る。Noah Vale の新曲。虚飾を脱いで故郷へ還る、アメリカーナです。`
 - EN：`Borrowed shoes, someone else initials. The mirrors in your hallway never once showed me anything true. Goodbye to the neon mile. I am going where the porch light burns, taking myself home. The new single from Noah Vale. Americana about shedding the glitter and heading home.`
 
-> **保留（空欄のまま）**：最後の一秒(w-Band)／夜明けを手渡して(花明り)／Horizon -Rise Again- English Ver.(NANASIGNAL)／Don't Have to Tell Me・Where the River Bends(Amber & Rain)／百億年前のパズル・The Grand Bloom(Maron)／聞かないでいい(琥珀讓二)／Not a promise・Still Set for Two(ELLY)／The Harbor Light・Say It Plain(Noah Vale)／Thinking cats 全4曲 → 歌詞が届き次第、清書します（＝「別シート」待ち）。
+## ㉓ Thunderbird Slim / Rolling all stars　【Rock（ロカビリー / アウトロー）】
+**YouTube（英）** `Rolling all stars - "Thunderbird Slim" (Official Music Video)`
+**YouTube（和表示）** `Thunderbird Slim / Rolling all stars【Music Video】`
+**説明（JP）**
+```
+貨物列車で生まれ、錆びたカミソリでへその緒を切られた。
+天国を追い出され、地獄にも手に負えない。
+悪魔にはニセ札で魂を売ってやった——今じゃ俺のバンドでリズムを刻んでる。
+俺はサンダーバード・スリム、鎖なんか無い。
+Rolling all stars ニューシングル「Thunderbird Slim」。六回死んでまだ転がり続ける、無法のロカビリー・ロック。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Rolling all stars
+#ThunderbirdSlim #RollingAllStars #新曲 #洋楽 #ロカビリー #ロックンロール #Shorts
+```
+**説明（EN）**
+```
+Born on a freight train, cord cut with a rusty blade.
+Kicked out of heaven, too wild to let back in.
+Sold the devil a counterfeit soul — now he plays rhythm in my band.
+I'm Thunderbird Slim, and I ain't got no chains.
+"Thunderbird Slim" is the new single from Rolling all stars. Outlaw rockabilly that's died six times and keeps on rolling.
+▼ Stream / Download
+[配信リンク]
+Performed by: Rolling all stars
+#ThunderbirdSlim #RollingAllStars #NewSingle #Rockabilly #RockAndRoll #Shorts
+```
+**Router.FM** ジャンル：**Rock**（代替：Rockabilly / Blues）／カナ：サンダーバード・スリム
+- JP：`貨物列車で生まれ、錆びたカミソリでへその緒を切られた。天国を追い出され、地獄にも手に負えない。悪魔にはニセ札で魂を売ってやった。俺はサンダーバード・スリム、鎖なんか無い。Rolling all stars の新曲。六回死んでまだ転がり続ける、無法のロカビリーロックです。`
+- EN：`Born on a freight train, cord cut with a rusty blade. Kicked out of heaven, too wild to let back in. Sold the devil a counterfeit soul, now he plays rhythm in my band. I am Thunderbird Slim, and I have no chains. The new single from Rolling all stars. Outlaw rockabilly that has died six times and keeps on rolling.`
+
+## ㉔ Where the River Bends / Amber & Rain　【Folk / Americana】
+**YouTube（英）** `Amber & Rain - "Where the River Bends" (Official Music Video)`
+**YouTube（和表示）** `Where the River Bends / Amber & Rain【Music Video】`
+**説明（JP）**
+```
+川が流れる向きを覚えるように、出会いは、ずっと前から決まっていた。
+月が海に落ちて、星が場所を忘れても——
+僕は川の曲がり角に立って、水が尽きるまで君を愛してる。
+Amber & Rain ニューシングル「Where the River Bends」。時が髪を銀に変えても色褪せない、運命のフォーク・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Amber & Rain
+#WhereTheRiverBends #AmberAndRain #新曲 #洋楽 #フォーク #アメリカーナ #ラブソング #Shorts
+```
+**説明（EN）**
+```
+Some things are written long before we know — the way a river learns which way to flow.
+If the moon fell in the sea and every star forgot its place,
+I'd still be standing where the river bends, loving you until the water ends.
+"Where the River Bends" is the new single from Amber & Rain. A fated folk ballad that won't fade, even as time turns our hair to silver.
+▼ Stream / Download
+[配信リンク]
+Performed by: Amber & Rain
+#WhereTheRiverBends #AmberAndRain #NewSingle #Folk #Americana #LoveSong #Shorts
+```
+**Router.FM** ジャンル：**Folk**（代替：Americana / Country）／カナ：ウェア・ザ・リバー・ベンズ
+- JP：`川が流れる向きを覚えるように、出会いはずっと前から決まっていた。月が海に落ちて、星が場所を忘れても、僕は川の曲がり角に立って、水が尽きるまで君を愛してる。Amber & Rain の新曲。時が髪を銀に変えても色褪せない、運命のフォークバラードです。`
+- EN：`Some things are written long before we know, the way a river learns which way to flow. If the moon fell in the sea and every star forgot its place, I would still stand where the river bends, loving you until the water ends. The new single from Amber & Rain. A fated folk ballad that will not fade, even as time turns our hair to silver.`
+
+## ㉕ 百億年前のパズル / Maron　【Pop（ゲームテーマ）】　※英語版＝㉖ The Grand Bloom
+**YouTube（和）** `百億年前のパズル / Maron【Music Video】`
+**YouTube（英）** `Maron - "A Ten-Billion-Year Puzzle" (Official Music Video)`
+**説明（JP）**
+```
+夜ふけの部屋に、ちいさな灯り。指先ひとつで、花がめざめる。
+うまく咲かない日は、一手もどせばいい——人生にもあればいいのにね。
+百億年前から、パズルが好き。シワが増えても、夢中が好き。それが若さの、ほんとの名前。
+Maron ニューシングル「百億年前のパズル」。“花あわせ”の夜に寄り添う、温かなポップ。Merge the flowers, merge the hours.
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Maron
+#百億年前のパズル #Maron #新曲 #邦楽 #ポップ #パズルゲーム #花あわせ #Shorts
+```
+**説明（EN）**
+```
+A small light in the midnight room. One touch of a finger, and a flower wakes.
+On the days nothing blooms, just undo one move — wish life would let us do the same.
+Ten billion years ago, I fell for puzzles. My hair turns silver, still I'm lost in wonder — and that's the truest name of being young.
+The new single from Maron, a warm pop song for late nights of "flower-merge." Merge the flowers, merge the hours.
+▼ Stream / Download
+[配信リンク]
+Performed by: Maron
+#Maron #NewSingle #Pop #PuzzleGame #Shorts
+```
+**Router.FM** ジャンル：**Pop**（代替：J-Pop / Game Music）／カナ：ヒャクオクネンマエノパズル
+- JP：`夜ふけの部屋にちいさな灯り。指先ひとつで花がめざめる。うまく咲かない日は一手もどせばいい。人生にもあればいいのにね。百億年前からパズルが好き。シワが増えても夢中が好き。それが若さのほんとの名前。Maron の新曲。花あわせの夜に寄り添う、温かなポップです。`
+- EN：`A small light in the midnight room. One touch of a finger and a flower wakes. On the days nothing blooms, just undo one move. Ten billion years ago I fell for puzzles. My hair turns silver, still I am lost in wonder, and that is the truest name of being young. The new single from Maron. A warm pop song for late nights of flower merge.`
+
+## ㉖ The Grand Bloom / Maron　【Pop】　※㉕「百億年前のパズル」英語版
+**YouTube（英）** `Maron - "The Grand Bloom" (Official Music Video)`
+**YouTube（和表示）** `The Grand Bloom / Maron【Music Video】`
+**説明（JP）**
+```
+真夜中の小さな灯り、指先ひとつで花がほどける。
+咲かない日は、一手もどせばいい。急がない旅ほど、遠くへ行ける。
+百億年前からパズルに恋してる——髪が銀色になっても、夢中でいることが“若さ”の本名。
+Maron ニューシングル「The Grand Bloom」（「百億年前のパズル」英語版）。海外リスナーへ届ける、温かなポップ。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Maron
+#TheGrandBloom #Maron #新曲 #ポップ #パズルゲーム #Shorts
+```
+**説明（EN）**
+```
+A small light at midnight; one touch of a finger and a flower unfolds.
+On the days nothing blooms, just undo one move — the slowest journey goes the farthest.
+Ten billion years ago, I fell for puzzles. My hair turns silver, still I'm lost in wonder — and that's the truest name of being young.
+"The Grand Bloom" is the new single from Maron (the English version of "A Ten-Billion-Year Puzzle"). Warm pop, blooming bloom by bloom. We're coming home.
+▼ Stream / Download
+[配信リンク]
+Performed by: Maron
+#TheGrandBloom #Maron #NewSingle #Pop #PuzzleGame #Shorts
+```
+**Router.FM** ジャンル：**Pop**（代替：Game Music）／カナ：ザ・グランド・ブルーム
+- JP：`真夜中の小さな灯り、指先ひとつで花がほどける。咲かない日は一手もどせばいい。急がない旅ほど遠くへ行ける。百億年前からパズルに恋してる。髪が銀色になっても、夢中でいることが若さの本名。Maron の新曲（百億年前のパズル英語版）。海外リスナーへ届ける、温かなポップです。`
+- EN：`A small light at midnight, one touch of a finger and a flower unfolds. On the days nothing blooms, just undo one move. The slowest journey goes the farthest. Ten billion years ago I fell for puzzles. My hair turns silver, still I am lost in wonder, and that is the truest name of being young. The new single from Maron, the English version of A Ten Billion Year Puzzle. Warm pop, blooming bloom by bloom.`
+
+> **保留（空欄のまま）**：最後の一秒(w-Band)／夜明けを手渡して(花明り)／Horizon -Rise Again- English Ver.(NANASIGNAL)／Don't Have to Tell Me(Amber & Rain)／聞かないでいい(琥珀讓二)／Not a promise・Still Set for Two(ELLY)／The Harbor Light・Say It Plain(Noah Vale)／Thinking cats 全4曲 → 歌詞が届き次第、清書します。
 > **既出**：三時三十四分（Signal名義のVIP Mixとして動画・コピー作成済み）／ふたつのグラス（作成済み）。
 
 ---
