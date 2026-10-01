@@ -830,7 +830,211 @@ Performed by: Maron
 - JP：`真夜中の小さな灯り、指先ひとつで花がほどける。咲かない日は一手もどせばいい。急がない旅ほど遠くへ行ける。百億年前からパズルに恋してる。髪が銀色になっても、夢中でいることが若さの本名。Maron の新曲（百億年前のパズル英語版）。海外リスナーへ届ける、温かなポップです。`
 - EN：`A small light at midnight, one touch of a finger and a flower unfolds. On the days nothing blooms, just undo one move. The slowest journey goes the farthest. Ten billion years ago I fell for puzzles. My hair turns silver, still I am lost in wonder, and that is the truest name of being young. The new single from Maron, the English version of A Ten Billion Year Puzzle. Warm pop, blooming bloom by bloom.`
 
-> **保留（空欄のまま）**：最後の一秒(w-Band)／夜明けを手渡して(花明り)／Horizon -Rise Again- English Ver.(NANASIGNAL)／Don't Have to Tell Me(Amber & Rain)／聞かないでいい(琥珀讓二)／Not a promise・Still Set for Two(ELLY)／The Harbor Light・Say It Plain(Noah Vale)／Thinking cats 全4曲 → 歌詞が届き次第、清書します。
+## ㉗ 最後の一秒 / w-Band　【Rock（アンセム）】
+**YouTube（和）** `最後の一秒 / w-Band【Music Video】`
+**YouTube（英）** `w-Band - "The Last Second" (Official Music Video)`
+**説明（JP）**
+```
+砕けた膝を土につけて——まだ聞こえるか、この心臓の音。
+夜明け前がいちばん暗い。だから叫ぶんだ、胸の奥へ。
+探していた名前は、鏡の中にある。燃えろ、最後の一秒まで。
+w-Band ニューシングル「最後の一秒」。立ち上がるすべての人へ、泥まみれのロック・アンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：w-Band
+#最後の一秒 #wBand #新曲 #邦楽 #ロック #応援ソング #Shorts
+```
+**説明（EN）**
+```
+On broken knees in the dirt — can you still hear this heartbeat?
+The darkest hour is just before dawn, so I scream it deep into my chest.
+The name I was searching for is right there in the mirror. Burn, down to the last second.
+"The Last Second" is the new single from w-Band. A mud-covered rock anthem for everyone rising to their feet.
+▼ Stream / Download
+[配信リンク]
+Performed by: w-Band
+#TheLastSecond #wBand #NewSingle #Rock #Shorts
+```
+**Router.FM** ジャンル：**Rock**／カナ：サイゴノイチビョウ
+- JP：`砕けた膝を土につけて、まだ聞こえるか、この心臓の音。夜明け前がいちばん暗い。だから叫ぶんだ、胸の奥へ。探していた名前は鏡の中にある。燃えろ、最後の一秒まで。w-Band の新曲。立ち上がるすべての人へ、泥まみれのロックアンセムです。`
+- EN：`On broken knees in the dirt, can you still hear this heartbeat? The darkest hour is just before dawn, so I scream it deep into my chest. The name I was searching for is right there in the mirror. Burn, down to the last second. The new single from w-Band. A mud covered rock anthem for everyone rising to their feet.`
+
+## ㉘ 夜明けを手渡して / 花明り　【J-Pop（バラード）】
+**YouTube（和）** `夜明けを手渡して / 花明り【Music Video】`
+**YouTube（英）** `Hanaakari - "Hand Me the Dawn" (Official Music Video)`
+**説明（JP）**
+```
+地球の裏で、誰かの昼が幕を下ろすころ。朝は東へ、海をわたってやって来る。
+夜明けを手渡して——知らない人からわたしへ、わたしからあなたの手のひらへ。
+青い水の星に生まれたということは、誰かの光を継ぐということ。
+花明り ニューシングル「夜明けを手渡して」。国境を越えて命をつなぐ、祈りのバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：花明り
+#夜明けを手渡して #花明り #新曲 #邦楽 #バラード #平和 #Shorts
+```
+**説明（EN）**
+```
+As someone's daylight falls on the far side of the earth, morning comes east across the sea.
+Hand me the dawn — from a stranger to me, from me to the palm of your hand.
+To be born on this blue water planet is to carry someone else's light onward.
+"Hand Me the Dawn" is the new single from Hanaakari. A prayer-like ballad passing life across every border.
+▼ Stream / Download
+[配信リンク]
+Performed by: Hanaakari
+#HandMeTheDawn #Hanaakari #NewSingle #JPop #Ballad #Shorts
+```
+**Router.FM** ジャンル：**Pop**（J-Pop）／カナ：ヨアケヲテワタシテ
+- JP：`地球の裏で誰かの昼が幕を下ろすころ、朝は東へ海をわたってやって来る。夜明けを手渡して。知らない人からわたしへ、わたしからあなたの手のひらへ。青い水の星に生まれたということは、誰かの光を継ぐということ。花明り の新曲。国境を越えて命をつなぐ、祈りのバラードです。`
+- EN：`As someone daylight falls on the far side of the earth, morning comes east across the sea. Hand me the dawn, from a stranger to me, from me to the palm of your hand. To be born on this blue water planet is to carry someone else light onward. The new single from Hanaakari. A prayer like ballad passing life across every border.`
+
+## ㉙ Horizon -Rise Again- (English Ver.) / NANASIGNAL　【Rock（アンセム）】　※「水平線 -Rise Again-」(w-Band ⑮) の英語版
+**YouTube（英）** `NANASIGNAL - "Horizon (Rise Again)" (Official Music Video)`
+**YouTube（和表示）** `Horizon -Rise Again- (English Ver.) / NANASIGNAL【Music Video】`
+**説明（JP）**
+```
+灯りの消えた港の隅。「もう遅すぎる」と誰かが笑う——でも岬の灯は、消えていなかった。
+今、この手で舵を取れ。水平線の向こうで、朝は生まれてる。
+昨日の涙は、追い風に変わる。
+NANASIGNAL「Horizon -Rise Again-」（「水平線 -Rise Again-」英語版）。再生の航海を世界へ届けるアンセム。Sail away, we rise again.
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：NANASIGNAL
+#Horizon #RiseAgain #NANASIGNAL #新曲 #洋楽 #ロック #Shorts
+```
+**説明（EN）**
+```
+Down in the harbor where the lights went out. "It's far too late," somebody laughs — but the light on the cape wasn't dead.
+Take the helm now, with these hands. Beyond the far horizon, morning's being born.
+Yesterday's tears are turning into tailwind.
+"Horizon (Rise Again)" from NANASIGNAL (English version of w-Band's "Suiheisen -Rise Again-"). A voyage-of-rebirth anthem for the world. Sail away, we rise again.
+▼ Stream / Download
+[配信リンク]
+Performed by: NANASIGNAL
+#Horizon #RiseAgain #NANASIGNAL #NewSingle #Rock #Shorts
+```
+**Router.FM** ジャンル：**Rock**／カナ：ホライズン ライズ・アゲイン
+- JP：`灯りの消えた港の隅。もう遅すぎると誰かが笑う。でも岬の灯は消えていなかった。今この手で舵を取れ。水平線の向こうで朝は生まれてる。昨日の涙は追い風に変わる。NANASIGNAL の楽曲、水平線 Rise Again の英語版。再生の航海を世界へ届けるアンセムです。`
+- EN：`Down in the harbor where the lights went out. It is far too late, somebody laughs, but the light on the cape was not dead. Take the helm now, with these hands. Beyond the far horizon, morning is being born. Yesterday tears are turning into tailwind. From NANASIGNAL, the English version of Suiheisen Rise Again. A voyage of rebirth anthem for the world.`
+
+## ㉚ Don't Have to Tell Me / Amber & Rain　【Folk / Americana】　※「聞かないでいい」(琥珀讓二 ㉜) と同テーマの対
+**YouTube（英）** `Amber & Rain - "Don't Have to Tell Me" (Official Music Video)`
+**YouTube（和表示）** `Don't Have to Tell Me / Amber & Rain【Music Video】`
+**説明（JP）**
+```
+君がどこにいたかなんて、話さなくていい。グラスの氷が、静かに溶けてゆく夜。
+ここに君がいる、ただそれだけでいい。
+何も言わないで——言葉は、この夜の魔法を壊してしまうから。
+Amber & Rain ニューシングル「Don't Have to Tell Me」。過去を問わず今だけを抱く、静かなフォーク・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Amber & Rain
+#DontHaveToTellMe #AmberAndRain #新曲 #洋楽 #フォーク #ラブソング #Shorts
+```
+**説明（EN）**
+```
+You don't have to tell me where you've been before. The ice is slowly melting in your glass tonight.
+Just to have you here — that's all I need.
+Don't say a word at all, for words could break the spell that holds us here tonight.
+"Don't Have to Tell Me" is the new single from Amber & Rain. A quiet folk ballad that asks nothing of the past and holds only the now.
+▼ Stream / Download
+[配信リンク]
+Performed by: Amber & Rain
+#DontHaveToTellMe #AmberAndRain #NewSingle #Folk #Americana #LoveSong #Shorts
+```
+**Router.FM** ジャンル：**Folk**（代替：Americana）／カナ：ドント・ハフ・トゥ・テル・ミー
+- JP：`君がどこにいたかなんて話さなくていい。グラスの氷が静かに溶けてゆく夜。ここに君がいる、ただそれだけでいい。何も言わないで。言葉はこの夜の魔法を壊してしまうから。Amber & Rain の新曲。過去を問わず今だけを抱く、静かなフォークバラードです。`
+- EN：`You do not have to tell me where you have been before. The ice is slowly melting in your glass tonight. Just to have you here, that is all I need. Do not say a word at all, for words could break the spell that holds us here tonight. The new single from Amber & Rain. A quiet folk ballad that asks nothing of the past and holds only the now.`
+
+## ㉛ The Harbor Light / Noah Vale　【Americana / Folk】
+**YouTube（英）** `Noah Vale - "The Harbor Light" (Official Music Video)`
+**YouTube（和表示）** `The Harbor Light / Noah Vale【Music Video】`
+**説明（JP）**
+```
+水辺の道を、君が去った日から、毎晩ひとりで歩いてきた。
+風に肩をすり減らされ、歳月に背を曲げられても——港の灯はまだ燃えていて、君の名を呼んでいる。
+消さないで。僕は、そう遠くにはいないから。
+Noah Vale ニューシングル「The Harbor Light」。帰る場所を信じて歩き続ける、郷愁のアメリカーナ。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Noah Vale
+#TheHarborLight #NoahVale #新曲 #洋楽 #アメリカーナ #フォーク #Shorts
+```
+**説明（EN）**
+```
+A road along the water I've walked every evening since the day you had to go.
+Though the wind has worn my shoulders and the years have bent my frame — there's a harbor light still burning, calling out your name.
+Don't let it fade. I am not so far away.
+"The Harbor Light" is the new single from Noah Vale. A nostalgic Americana about walking on, believing in a place to return to.
+▼ Stream / Download
+[配信リンク]
+Performed by: Noah Vale
+#TheHarborLight #NoahVale #NewSingle #Americana #Folk #Shorts
+```
+**Router.FM** ジャンル：**Americana**（代替：Folk / Country）／カナ：ザ・ハーバー・ライト
+- JP：`水辺の道を、君が去った日から毎晩ひとりで歩いてきた。風に肩をすり減らされ、歳月に背を曲げられても、港の灯はまだ燃えていて、君の名を呼んでいる。消さないで。僕はそう遠くにはいないから。Noah Vale の新曲。帰る場所を信じて歩き続ける、郷愁のアメリカーナです。`
+- EN：`A road along the water I have walked every evening since the day you had to go. Though the wind has worn my shoulders and the years have bent my frame, there is a harbor light still burning, calling out your name. Do not let it fade. I am not so far away. The new single from Noah Vale. A nostalgic Americana about walking on, believing in a place to return to.`
+
+## ㉜ 聞かないでいい / 琥珀讓二　【Pop / Mood（バラード）】　※「Don't Have to Tell Me」(Amber & Rain ㉚) と同テーマの対
+**YouTube（和）** `聞かないでいい / 琥珀讓二【Music Video】`
+**YouTube（英）** `Kohaku Joji - "You Don't Have to Say" (Official Music Video)`
+**説明（JP）**
+```
+あなたの昨日は、聞かないでいい。グラスの氷が溶けるだけの夜。
+誰を愛したか、誰に泣いたのか——それはあなたの、遠い岸辺のこと。
+今夜ここにいる、それだけでいい。言葉にすれば、壊れてしまうから。
+琥珀讓二 ニューシングル「聞かないでいい」。過去を問わず今を抱きしめる、大人のムード・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：琥珀讓二
+#聞かないでいい #琥珀讓二 #新曲 #邦楽 #バラード #ムード歌謡 #Shorts
+```
+**説明（EN）**
+```
+You don't have to tell me your yesterdays. A night where only the ice melts in the glass.
+Who you loved, who made you cry — that's a far shoreline that belongs to you.
+Just being here tonight is enough. Say it in words, and it would break.
+"You Don't Have to Say" is the new single from Kohaku Joji. An adult mood ballad that asks nothing and embraces the now.
+▼ Stream / Download
+[配信リンク]
+Performed by: Kohaku Joji
+#KohakuJoji #NewSingle #Ballad #MoodMusic #Shorts
+```
+**Router.FM** ジャンル：**Pop**（代替：Jazz / Mood）／カナ：キカナイデイイ
+- JP：`あなたの昨日は聞かないでいい。グラスの氷が溶けるだけの夜。誰を愛したか、誰に泣いたのか、それはあなたの遠い岸辺のこと。今夜ここにいる、それだけでいい。言葉にすれば壊れてしまうから。琥珀讓二 の新曲。過去を問わず今を抱きしめる、大人のムードバラードです。`
+- EN：`You do not have to tell me your yesterdays. A night where only the ice melts in the glass. Who you loved, who made you cry, that is a far shoreline that belongs to you. Just being here tonight is enough. Say it in words and it would break. The new single from Kohaku Joji. An adult mood ballad that asks nothing and embraces the now.`
+
+## ㉝ Still Set for Two / ELLY　【Pop（バラード）】
+**YouTube（英）** `ELLY - "Still Set for Two" (Official Music Video)`
+**YouTube（和表示）** `Still Set for Two / ELLY【Music Video】`
+**説明（JP）**
+```
+テーブルにカップは二つ、床に影はひとつ。
+曲が終わっても回り続けるレコード。この部屋はまだ、君がいないことを知らない。
+グラスを満たして、空の椅子に乾杯を。テーブルは今も、二人分のまま。
+ELLY ニューシングル「Still Set for Two」。喪失のあとも席を空けて待つ、静かなピアノ・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：ELLY
+#StillSetForTwo #ELLY #新曲 #洋楽 #バラード #Shorts
+```
+**説明（EN）**
+```
+Two cups on the table, one shadow on the floor. A record still turning long after the song.
+I leave every light where it used to be — the room hasn't learned you are gone.
+So bring out the glasses and pour something true; I'll drink to an empty chair. The table is still set for two.
+"Still Set for Two" is the new single from ELLY. A quiet piano ballad that keeps a place set, even after loss.
+▼ Stream / Download
+[配信リンク]
+Performed by: ELLY
+#StillSetForTwo #ELLY #NewSingle #Ballad #PianoBallad #Shorts
+```
+**Router.FM** ジャンル：**Pop**（代替：Singer-Songwriter）／カナ：スティル・セット・フォー・トゥー
+- JP：`テーブルにカップは二つ、床に影はひとつ。曲が終わっても回り続けるレコード。この部屋はまだ、君がいないことを知らない。グラスを満たして空の椅子に乾杯を。テーブルは今も二人分のまま。ELLY の新曲。喪失のあとも席を空けて待つ、静かなピアノバラードです。`
+- EN：`Two cups on the table, one shadow on the floor. A record still turning long after the song. I leave every light where it used to be. The room has not learned you are gone. So bring out the glasses and pour something true. I will drink to an empty chair. The table is still set for two. The new single from ELLY. A quiet piano ballad that keeps a place set, even after loss.`
+
+> **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
+> **保留（歌詞待ち）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale)／Thinking cats 全4曲（I'll Meet You in a Dream／Somewhere Someone's Dreaming／Rain Is All That Holds Me／Gravity of the Heart）。
 > **既出**：三時三十四分（Signal名義のVIP Mixとして動画・コピー作成済み）／ふたつのグラス（作成済み）。
 
 ---
