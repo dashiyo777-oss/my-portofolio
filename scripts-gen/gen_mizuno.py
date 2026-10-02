@@ -1,0 +1,197 @@
+# -*- coding: utf-8 -*-
+"""「川は名前を変えて / 水野灯」 — YouTube promo short (quiet minimal night-river ballad).
+Original take: a still dark river at night — one street lamp laying a long, rippling
+ribbon of gold on the water; a distant bridge, a few window lights, a willow.
+Unified engine (renderAt): real-time playback + ?capture=1 frame export.
+On-screen words are verified from the cover (川は名前を変えて / 水野灯 / MIZUNO AKARI).
+BGM: kawa-namae-bgm.mp3 (33s segment).
+"""
+import os
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CSS = r"""
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#05090f;overflow:hidden}
+  body{font-family:'Noto Serif JP','Hiragino Mincho ProN',serif;color:#e6d4a0;
+    display:flex;align-items:center;justify-content:center}
+  #wrap{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  #stage{position:relative;width:1080px;height:1920px;flex:none;transform:scale(var(--s,0.4));transform-origin:center center;
+    overflow:hidden;background:linear-gradient(#0a1220 0%,#0b1524 30%,#081019 50%,#060d16 74%,#04090f 100%)}
+  .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#cfe0ff;opacity:0}
+  #town{position:absolute;left:0;top:400px;width:100%;height:130px;background:#05090f;
+    clip-path:polygon(0 60%,7% 60%,7% 34%,12% 34%,12% 56%,18% 56%,18% 42%,22% 42%,22% 30%,26% 30%,26% 52%,33% 52%,33% 46%,100% 46%,100% 100%,0 100%)}
+  #willow{position:absolute;right:0;top:220px;width:220px;height:420px;
+    background:radial-gradient(ellipse at 70% 10%, rgba(10,20,16,.9), transparent 70%)}
+  .wlv{position:absolute;top:0;width:3px;background:linear-gradient(#0e1c14,transparent);border-radius:2px;transform-origin:top center}
+  #bridge{position:absolute;left:0;top:500px;width:100%;height:60px;background:linear-gradient(#0a1018,#05090f);
+    box-shadow:0 -2px 0 rgba(180,150,90,.18)}
+  #bridgerail{position:absolute;left:0;top:494px;width:100%;height:8px;background:repeating-linear-gradient(90deg,#141c26 0 8px,#0a1018 8px 16px);opacity:.7}
+  #lampglow{position:absolute;left:640px;top:470px;transform:translate(-50%,-50%);width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,190,90,.7),rgba(255,170,70,.16) 40%,transparent 66%)}
+  #lampbulb{position:absolute;left:640px;top:462px;transform:translate(-50%,-50%);width:18px;height:22px;border-radius:6px;
+    background:radial-gradient(circle,#fff0c8,#ffbf5e 60%,#e0902a);box-shadow:0 0 30px 10px rgba(255,180,90,.7)}
+  #lamppost{position:absolute;left:637px;top:400px;width:5px;height:70px;background:#0a1018}
+  .win{position:absolute;border-radius:1px;background:#e8a24a;opacity:0}
+  #water{position:absolute;left:0;top:530px;width:100%;height:100%;overflow:hidden}
+  .seg{position:absolute;border-radius:50%;filter:blur(3px)}
+  #source{position:absolute;left:640px;top:560px;transform:translateX(-50%);width:60px;height:120px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(255,230,160,.85),rgba(240,176,72,.3) 50%,transparent 74%);filter:blur(4px)}
+  #mist{position:absolute;left:0;top:520px;width:100%;height:220px;pointer-events:none;
+    background:linear-gradient(rgba(120,140,170,.10),transparent 70%);filter:blur(8px)}
+  #grain{position:absolute;inset:0;opacity:.10;pointer-events:none;mix-blend-mode:overlay;
+    background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:3px 3px}
+  #vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(130% 100% at 30% 78%, rgba(4,8,14,.5), transparent 40%),
+               radial-gradient(120% 90% at 50% 44%, transparent 52%, rgba(3,6,12,.8) 100%)}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:110px 70px 0;opacity:0;z-index:8}
+  .scene.mid{justify-content:center;padding-top:0}
+  .scene.tl{align-items:flex-start;justify-content:flex-end;text-align:left;padding:0 0 360px 66px}
+  .kick{font-size:28px;letter-spacing:.5em;color:#cbb277;font-weight:500;text-transform:uppercase;margin-bottom:20px}
+  .title{font-size:96px;line-height:1.1;font-weight:600;color:#e8d6a2;letter-spacing:.08em;
+    text-shadow:0 2px 26px rgba(0,0,0,.9),0 0 40px rgba(0,0,0,.7)}
+  .orn{display:flex;align-items:center;gap:20px;margin:26px 0 16px;color:#b89f68}
+  .orn.c{justify-content:center}
+  .orn i{display:block;width:120px;height:1px;background:linear-gradient(90deg,#b89f68,transparent)}
+  .orn.c i:first-child{background:linear-gradient(90deg,transparent,#b89f68)}
+  .orn b{font-size:24px;color:#d8bd84}
+  .artist{font-size:46px;letter-spacing:.3em;color:#e0cd98;font-weight:500;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+  .rome{font-size:24px;letter-spacing:.46em;color:#b89f68;margin-top:12px}
+  .tag{margin-top:30px;font-size:26px;letter-spacing:.42em;color:#cbb277;text-transform:uppercase}
+  #bar{position:absolute;left:0;bottom:0;height:6px;width:0;background:linear-gradient(90deg,#c9822a,#f0c078);opacity:.8;z-index:9}
+  #ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(6,10,18,.86);backdrop-filter:blur(4px);z-index:20;gap:26px;padding:0 70px;text-align:center}
+  #ui .k{font-size:26px;letter-spacing:.4em;color:#d8bd84;text-transform:uppercase}
+  #ui h1{font-size:92px;font-weight:600;color:#e8d6a2;line-height:1.1;letter-spacing:.06em}
+  #ui p{font-size:38px;letter-spacing:.3em;color:#e0cd98}
+  #play{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:600;color:#06101a;background:#d8bd84;border:none;
+    border-radius:100px;padding:26px 74px;cursor:pointer;letter-spacing:.14em;box-shadow:0 10px 40px rgba(216,189,132,.3)}
+  #play:hover{background:#e8cf9a}
+  #ui.hide{opacity:0;pointer-events:none;transition:opacity .6s}
+"""
+
+ENGINE = r"""
+  function fit(){const s=Math.min(window.innerWidth/1080,window.innerHeight/1920);
+    document.getElementById('stage').style.setProperty('--s',s);}
+  window.addEventListener('resize',fit);fit();
+  const stage=document.getElementById('stage'), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), frac=v=>v-Math.floor(v);
+  const STAR=[]; for(let i=0;i<30;i++){const e=document.createElement('div');e.className='star';
+    e.style.left=((i*47)%100)+'%';e.style.top=((i*23)%22)+'%';e.dataset.ph=((i*13)%100)/100;stage.appendChild(e);STAR.push(e);}
+  // willow strands
+  const willow=document.getElementById('willow');
+  for(let i=0;i<20;i++){const s=document.createElement('div');s.className='wlv';s.style.left=(60+i*8)+'px';
+    s.style.height=(160+ (i%5)*60)+'px';s.dataset.ph=i*0.4;willow.appendChild(s);}
+  // window lights (left houses + a few far)
+  const WIN=[]; const wd=[[70,300,7,10],[120,286,6,12],[92,320,8,9],[150,330,6,10],[300,470,4,6],[360,472,4,6],[980,300,7,10],[1010,330,6,9]];
+  wd.forEach((w,i)=>{const e=document.createElement('div');e.className='win';e.style.left=w[0]+'px';e.style.top=w[1]+'px';
+    e.style.width=w[2]+'px';e.style.height=w[3]+'px';e.dataset.ph=((i*29)%100)/100;stage.appendChild(e);WIN.push(e);});
+  // golden reflection ribbon on the water
+  const water=document.getElementById('water'), SEG=[]; const N=34, cx=640;
+  for(let i=0;i<N;i++){const s=document.createElement('div');s.className='seg';water.appendChild(s);
+    SEG.push({s,i,ph:i*0.55,ph2:i*0.9});}
+  const lampglow=document.getElementById('lampglow'),lampbulb=document.getElementById('lampbulb'),
+        source=document.getElementById('source'),bar=document.getElementById('bar');
+  const scenes=SCENES;
+  const total=scenes.reduce((a,s)=>a+s.d,0); window.TOTAL=total;
+  const scenesEl=document.getElementById('scenes'); let t0=0; const S=[];
+  scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+    el.style.opacity=0;scenesEl.appendChild(el);S.push({el,start:t0,end:t0+sc.d});t0+=sc.d;});
+  function op(t,st,en){if(t<st||t>en)return 0;return clamp(Math.min((t-st)/900,(en-t)/600),0,1);}
+  function flick(ts){return 0.9+0.1*(0.6*Math.sin(ts*5.4)+0.4*Math.sin(ts*9+1));}
+  window.renderAt=function(t){
+    const ts=t/1000, fl=flick(ts);
+    lampglow.style.opacity=(0.85*fl).toFixed(3); lampbulb.style.opacity=fl.toFixed(3);
+    source.style.opacity=(0.75+0.25*Math.sin(ts*2)).toFixed(3);
+    for(const e of STAR){const ph=+e.dataset.ph;e.style.opacity=(0.2+0.5*(0.5+0.5*Math.sin(ts*1.2+ph*6.28))).toFixed(2);}
+    for(const e of WIN){const ph=+e.dataset.ph;e.style.opacity=(0.4+0.5*(0.5+0.5*Math.sin(ts*0.9+ph*6.28))).toFixed(2);}
+    for(const st of willow.children){const ph=+st.dataset.ph;st.style.transform=`rotate(${Math.sin(ts*0.7+ph)*2}deg)`;}
+    // reflection ribbon: each segment wavers, widens toward bottom, shimmers
+    for(const o of SEG){const i=o.i, p=i/N; const y=560+Math.pow(p,1.06)*1320;
+      const w=26+p*230*(0.8+0.2*Math.sin(ts*2+o.ph2));
+      const h=8+p*16;
+      const x=cx + Math.sin(ts*1.5+o.ph)* (5+p*46) + Math.sin(ts*0.7+o.ph2)*(p*20);
+      const br=(0.9-p*0.3)*(0.55+0.45*Math.sin(ts*3.2+o.ph*1.7)); // shimmer, brighter near top
+      o.s.style.left=(x-w/2)+'px'; o.s.style.top=y+'px'; o.s.style.width=w+'px'; o.s.style.height=h+'px';
+      const c1 = p<0.3? '255,236,176' : '246,190,90';
+      o.s.style.background=`radial-gradient(ellipse, rgba(${c1},${clamp(br,0,1).toFixed(2)}), rgba(240,170,70,${(br*0.3).toFixed(2)}) 55%, transparent 78%)`;
+      o.s.style.opacity=clamp(0.4+br,0,1).toFixed(2);}
+    for(const s of S){s.el.style.opacity=op(t,s.start,s.end);}
+    if(bar) bar.style.width=(clamp(t/total,0,1)*100)+'%';
+  };
+  window.renderAt(0);
+  const params=new URLSearchParams(location.search), ui=document.getElementById('ui');
+  if(params.has('capture')){ ui.style.display='none'; bar.style.display='none'; }
+  else {
+    const bgm=document.getElementById('bgm');
+    document.getElementById('play').addEventListener('click',()=>{
+      ui.classList.add('hide');
+      try{bgm.currentTime=0;bgm.volume=.85;bgm.play().catch(()=>{});}catch(e){}
+      const start=performance.now();
+      (function loop(){const t=performance.now()-start;window.renderAt(Math.min(t,total));
+        if(t<total)requestAnimationFrame(loop);
+        else{ui.classList.remove('hide');document.getElementById('play').textContent='↻ Replay';}})();
+      setTimeout(()=>{const fs=performance.now();(function fo(){const k=(performance.now()-fs)/1500;
+        bgm.volume=Math.max(0,.85*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();}, total-1500);
+    });
+  }
+"""
+
+scenes = [
+    (5200, '<div class="scene"><div class="kick">New Single</div></div>'),
+    (8600, '<div class="scene tl"><div class="title">川は名前を<br>変えて</div>'
+           '<div class="orn"><i></i><b>&#10070;</b><i></i></div>'
+           '<div class="artist">水野灯</div><div class="rome">MIZUNO AKARI</div></div>'),
+    (5400, '<div class="scene mid"><div class="orn c" style="margin:0"><i></i><b>&#10070;</b><i></i></div></div>'),
+    (8800, '<div class="scene tl"><div class="title">川は名前を<br>変えて</div>'
+           '<div class="orn"><i></i><b>&#10070;</b><i></i></div>'
+           '<div class="artist">水野灯</div><div class="rome">MIZUNO AKARI</div>'
+           '<div class="tag">New Single &nbsp;&#9654;</div></div>'),
+]
+
+meta = dict(title="川は名前を変えて / 水野灯 (Promo Short)",
+  desc="暗い川に、街灯の金色がひとすじ揺れる。水野灯の新曲「川は名前を変えて」。",
+  k="水野灯 / MIZUNO AKARI", ep="川は名前を変えて", tagline="MIZUNO AKARI")
+
+scenes_js = "[\n" + ",\n".join("    {d:%d, html:`%s`}" % (d, h) for (d, h) in scenes) + "\n  ]"
+engine = ENGINE.replace("SCENES", scenes_js)
+html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{meta['title']}</title>
+<meta name="description" content="{meta['desc']}">
+<meta property="og:title" content="{meta['title']}">
+<meta property="og:description" content="{meta['desc']}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="willow"></div>
+  <div id="town"></div>
+  <div id="lamppost"></div>
+  <div id="bridgerail"></div>
+  <div id="bridge"></div>
+  <div id="lampglow"></div>
+  <div id="lampbulb"></div>
+  <div id="mist"></div>
+  <div id="water"><div id="source"></div></div>
+  <div id="grain"></div>
+  <div id="scenes"></div>
+  <div id="vig"></div>
+  <div id="bar"></div>
+  <div id="ui">
+    <div class="k">水野灯 &middot; MIZUNO AKARI</div>
+    <h1>川は名前を変えて</h1>
+    <p>New Single</p>
+    <button id="play">&#9654; Play</button>
+  </div>
+</div></div>
+<audio id="bgm" src="kawa-namae-bgm.mp3" preload="auto"></audio>
+<script>{engine}</script>
+</body>
+</html>
+"""
+open(os.path.join(OUT, "kawa-namae-short.html"), "w", encoding="utf-8").write(html)
+print(f"wrote kawa-namae-short.html  ({sum(d for d,_ in scenes)/1000:.1f}s, {len(scenes)} scenes)")

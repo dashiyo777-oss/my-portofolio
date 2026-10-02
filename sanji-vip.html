@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三時三十四分 (VIP Mix) / Signal</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#05060f;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#05060f}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:top left;
+  font-family:"Noto Sans JP",system-ui,sans-serif;background:#05060f}
+#world{position:absolute;inset:0;transform-origin:50% 42%}
+/* ---- sky ---- */
+#sky{position:absolute;inset:0;background:
+  radial-gradient(120% 70% at 50% 92%, rgba(232,63,143,.20), transparent 60%),
+  linear-gradient(180deg,#070a1e 0%,#0c1030 34%,#1b1746 58%,#3a2360 74%,#5a2a63 86%,#7a2f5a 96%)}
+#dawn{position:absolute;inset:0;opacity:0;background:
+  radial-gradient(120% 46% at 50% 100%, rgba(255,214,170,.85), rgba(255,180,150,.35) 40%, transparent 70%),
+  linear-gradient(180deg, rgba(120,150,210,.0) 40%, rgba(190,180,210,.35) 72%, rgba(255,225,190,.55) 100%)}
+#moon{position:absolute;right:150px;top:300px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle at 40% 38%, #fdfbf3, #e8e6dc 60%, #cfd0cf 100%);
+  box-shadow:0 0 60px 18px rgba(240,240,230,.35), 0 0 140px 50px rgba(180,190,230,.18)}
+#moon::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 62% 58%, rgba(160,160,170,.25), transparent 42%),
+             radial-gradient(circle at 35% 66%, rgba(150,150,165,.20), transparent 30%)}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#eaf0ff}
+.ntf{position:absolute;width:5px;height:5px;border-radius:50%;background:#5fe0ff;
+  box-shadow:0 0 8px 2px rgba(95,224,255,.8)}
+/* ---- skyline ---- */
+#skyline{position:absolute;left:0;right:0;bottom:520px;height:640px}
+.bld{position:absolute;bottom:0;background:linear-gradient(180deg,#0b1130,#070a1c);
+  border-top:1px solid rgba(120,140,220,.10)}
+.bld.near{background:linear-gradient(180deg,#0a0e24,#04060f)}
+.win{position:absolute;border-radius:1px}
+/* ---- water ---- */
+#water{position:absolute;left:0;right:0;bottom:280px;height:250px;overflow:hidden;
+  background:linear-gradient(180deg,#0a0e26 0%,#0a0c1e 100%)}
+.ref{position:absolute;top:0;width:8px;height:100%;border-radius:4px;filter:blur(2px);opacity:.5}
+#waterline{position:absolute;left:0;right:0;bottom:530px;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(120,150,230,.5),transparent)}
+/* ---- window frame / curtain ---- */
+#curtain{position:absolute;left:0;top:0;bottom:0;width:230px;
+  background:linear-gradient(90deg, rgba(60,30,90,.92), rgba(80,40,120,.5) 60%, transparent);
+  box-shadow:inset -30px 0 60px rgba(140,70,180,.25)}
+#curtain::before{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;
+  background:repeating-linear-gradient(92deg, rgba(20,10,40,.0) 0 26px, rgba(20,8,44,.35) 30px 40px)}
+#frameR{position:absolute;right:0;top:0;bottom:0;width:70px;background:linear-gradient(90deg,transparent,#05070f 60%);}
+#sill{position:absolute;left:0;right:0;bottom:470px;height:26px;background:linear-gradient(180deg,#12162e,#080a16);
+  box-shadow:0 -1px 0 rgba(120,150,230,.25)}
+/* ---- desk foreground ---- */
+#desk{position:absolute;left:0;right:0;bottom:0;height:470px;
+  background:linear-gradient(180deg, rgba(6,7,15,.2) 0%, #06070f 34%, #04050b 100%)}
+#deskglow{position:absolute;left:0;right:0;bottom:360px;height:120px;
+  background:radial-gradient(60% 100% at 50% 100%, rgba(120,90,200,.22), transparent 70%)}
+/* headphones */
+#hp{position:absolute;left:150px;bottom:120px;width:250px;height:180px}
+#hpband{position:absolute;left:35px;top:0;width:180px;height:120px;border:26px solid #10131f;border-bottom:none;
+  border-radius:120px 120px 0 0}
+.hpcup{position:absolute;bottom:0;width:96px;height:120px;border-radius:24px;
+  background:linear-gradient(140deg,#171b28,#0a0c14)}
+#hpL{left:0} #hpR{right:0}
+.hpring{position:absolute;bottom:22px;width:60px;height:76px;border-radius:16px;border:5px solid #39c0e6;
+  box-shadow:0 0 16px rgba(57,192,230,.6)}
+#hpringL{left:18px} #hpringR{right:18px}
+/* mug + steam */
+#mug{position:absolute;right:210px;bottom:120px;width:120px;height:120px;border-radius:14px 14px 40px 40px;
+  background:linear-gradient(150deg,#1a1622,#0c0910);box-shadow:inset 0 8px 0 rgba(120,90,150,.25)}
+#mug::after{content:"";position:absolute;right:-34px;top:26px;width:44px;height:56px;border:12px solid #1a1622;border-radius:0 40px 40px 0}
+.stm{position:absolute;right:250px;bottom:230px;width:10px;height:34px;border-radius:6px;
+  background:linear-gradient(180deg, rgba(210,220,255,.5), transparent);filter:blur(3px)}
+/* mixer knobs */
+#mixer{position:absolute;right:70px;bottom:60px;display:flex;gap:20px}
+.knob{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2a2f42,#0a0c14);
+  border:2px solid rgba(120,150,230,.3);position:relative}
+.knob::after{content:"";position:absolute;left:50%;top:4px;width:3px;height:12px;background:#5fe0ff;transform:translateX(-50%);border-radius:2px;box-shadow:0 0 6px rgba(95,224,255,.8)}
+/* phone glow */
+#phone{position:absolute;left:470px;bottom:90px;width:74px;height:150px;border-radius:12px;
+  background:linear-gradient(160deg,#0d1120,#070912);border:2px solid rgba(120,150,230,.25)}
+#phscr{position:absolute;inset:8px;border-radius:6px;background:linear-gradient(180deg,#6fb4ff,#3f6fe0);opacity:.85;
+  box-shadow:0 0 26px rgba(90,150,255,.7)}
+/* seated figure */
+#figure{position:absolute;left:70px;bottom:150px;width:420px;height:640px;z-index:3}
+#body{position:absolute;left:40px;bottom:0;width:360px;height:430px;background:#04050a;
+  border-radius:150px 190px 0 0/200px 260px 0 0}
+#head{position:absolute;left:150px;bottom:360px;width:150px;height:165px;background:#04050a;border-radius:50% 50% 46% 46%}
+#hair{position:absolute;left:132px;bottom:392px;width:190px;height:150px;background:#04050a;
+  border-radius:60% 60% 40% 40%;clip-path:polygon(0 40%,18% 8%,44% 0,74% 6%,100% 34%,100% 100%,0 100%)}
+#rim{position:absolute;left:150px;bottom:360px;width:150px;height:165px;border-radius:50% 50% 46% 46%;
+  box-shadow:inset -10px 6px 0 -6px rgba(255,80,150,.55), inset 12px 10px 0 -8px rgba(90,180,255,.4)}
+#rimb{position:absolute;left:40px;bottom:0;width:360px;height:430px;border-radius:150px 190px 0 0/200px 260px 0 0;
+  box-shadow:inset -14px 0 0 -8px rgba(255,80,150,.35)}
+/* clock */
+#clock{position:absolute;left:76px;top:120px;font-family:"Courier New",monospace;font-weight:700;
+  font-size:56px;letter-spacing:4px;color:#7ff0ff;text-shadow:0 0 18px rgba(95,224,255,.85);z-index:6}
+#clock small{font-size:24px;letter-spacing:2px;opacity:.8;margin-left:8px}
+/* ---- text scenes ---- */
+#scenes{position:absolute;left:70px;right:70px;top:470px;height:640px;z-index:7}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;opacity:0;will-change:opacity,transform}
+.lead{font-size:60px;font-weight:800;color:#eef2ff;line-height:1.4;letter-spacing:1px;
+  text-shadow:0 3px 30px rgba(0,0,0,.8),0 0 24px rgba(120,120,200,.3)}
+.lead .m{color:#ff7ab6} .lead .c{color:#7ff0ff}
+.title-jp{font-family:"Noto Serif JP",serif;font-size:120px;font-weight:600;color:#f4f7ff;line-height:1.05;
+  letter-spacing:6px;text-shadow:0 0 34px rgba(120,180,255,.5),0 4px 26px rgba(0,0,0,.7)}
+.under{width:520px;max-width:80%;height:5px;margin:26px auto 14px;border-radius:3px;
+  background:linear-gradient(90deg, rgba(95,224,255,0), #5fe0ff 22%, #ff5aa0 78%, rgba(255,90,160,0));
+  box-shadow:0 0 20px rgba(120,200,255,.6)}
+.vip{font-family:"Noto Serif JP",serif;font-style:italic;font-size:52px;color:#dfe6ff;letter-spacing:3px;
+  text-shadow:0 0 20px rgba(120,180,255,.5)}
+.artist{font-family:"Noto Serif JP",serif;font-style:italic;font-size:44px;color:#b9c4ea;letter-spacing:8px;margin-top:14px}
+.lyr{font-size:56px;font-weight:700;color:#eef2ff;line-height:1.5;letter-spacing:1px;
+  text-shadow:0 3px 26px rgba(0,0,0,.85),0 0 22px rgba(90,120,200,.35)}
+.lyr .en{display:block;font-size:46px;font-weight:600;font-style:italic;color:#7ff0ff;letter-spacing:1px;
+  text-shadow:0 0 22px rgba(95,224,255,.55);margin-bottom:8px}
+.lyr .sub{display:block;font-size:44px;color:#dfe6ff;margin-top:6px}
+.bridge{font-family:"Noto Serif JP",serif;font-style:italic;font-size:66px;font-weight:700;color:#fff;letter-spacing:2px}
+.badge{display:inline-block;font-size:30px;font-weight:800;letter-spacing:6px;color:#05060f;
+  background:linear-gradient(90deg,#7ff0ff,#ff7ab6);padding:10px 26px;border-radius:40px;margin-bottom:26px}
+.cta-t{font-family:"Noto Serif JP",serif;font-size:92px;font-weight:700;color:#f4f7ff;line-height:1.1;letter-spacing:4px;
+  text-shadow:0 0 30px rgba(120,180,255,.5)}
+.cta-a{font-family:"Noto Serif JP",serif;font-style:italic;font-size:46px;color:#c7d0f0;letter-spacing:6px;margin-top:16px}
+.cta-s{font-size:34px;color:#aeb8dd;letter-spacing:2px;margin-top:26px}
+/* fx */
+#vig{position:absolute;inset:0;pointer-events:none;z-index:9;
+  background:radial-gradient(120% 80% at 50% 44%, transparent 55%, rgba(0,0,0,.55) 100%)}
+#grain{position:absolute;inset:0;pointer-events:none;opacity:.06;z-index:9;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 1px, transparent 1px 3px)}
+#scan{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:10;mix-blend-mode:screen;
+  background:linear-gradient(180deg, rgba(120,200,255,.0), rgba(120,200,255,.14), rgba(255,90,160,.0))}
+/* playback UI (hidden in capture) */
+#ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:20}
+#play{width:150px;height:150px;border-radius:50%;border:none;cursor:pointer;color:#05060f;font-size:60px;
+  background:linear-gradient(135deg,#7ff0ff,#ff7ab6);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#bar{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.12);z-index:20}
+#barf{height:100%;width:0;background:linear-gradient(90deg,#7ff0ff,#ff7ab6)}
+body.capture #ui,body.capture #bar{display:none}
+</style></head>
+<body>
+
+<div id="wrap"><div id="stage">
+ <div id="world">
+  <div id="sky"></div>
+  <div id="moon"></div>
+  <div id="starf"></div>
+  <div id="skyline"></div>
+  <div id="waterline"></div>
+  <div id="water"></div>
+  <div id="sill"></div>
+  <div id="dawn"></div>
+  <div id="curtain"></div>
+  <div id="frameR"></div>
+  <div id="deskglow"></div>
+  <div id="desk"></div>
+  <div id="figure">
+    <div id="body"></div><div id="rimb"></div>
+    <div id="hair"></div><div id="head"></div><div id="rim"></div>
+  </div>
+  <div id="phone"><div id="phscr"></div></div>
+  <div id="hp"><div id="hpband"></div><div class="hpcup" id="hpL"></div><div class="hpcup" id="hpR"></div>
+     <div class="hpring" id="hpringL"></div><div class="hpring" id="hpringR"></div></div>
+  <div id="mug"></div>
+  <div id="steamf"></div>
+  <div id="mixer"></div>
+ </div>
+ <div id="clock">3:34</div>
+ <div id="scenes"></div>
+ <div id="scan"></div>
+ <div id="grain"></div>
+ <div id="vig"></div>
+ <div id="ui"><button id="play">&#9654;</button></div>
+ <div id="bar"><div id="barf"></div></div>
+</div></div>
+<audio id="bgm" src="sanji-vip-bgm.mp3" preload="auto"></audio>
+
+<script>
+
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);stage.style.transform='scale('+s+')';
+  document.getElementById('wrap').style.width=innerWidth+'px';}
+addEventListener('resize',fit);fit();
+const capture=new URLSearchParams(location.search).has('capture');
+if(capture)document.body.classList.add('capture');
+
+// seeded rng
+let _s=20260930;function rnd(){_s=(_s*1103515245+12345)&0x7fffffff;return _s/0x7fffffff;}
+
+// stars + notifications
+const starf=document.getElementById('starf');const stars=[];
+for(let i=0;i<80;i++){const d=document.createElement('div');d.className='star';
+  const x=rnd()*1080,y=rnd()*900;d.style.left=x+'px';d.style.top=y+'px';
+  const sz=1+rnd()*2.4;d.style.width=sz+'px';d.style.height=sz+'px';
+  starf.appendChild(d);stars.push({el:d,ph:rnd()*6.28,sp:0.6+rnd()*1.6});}
+const ntfs=[];
+for(let i=0;i<5;i++){const d=document.createElement('div');d.className='ntf';
+  d.style.left=(120+rnd()*840)+'px';d.style.top=(80+rnd()*520)+'px';
+  starf.appendChild(d);ntfs.push({el:d,ph:rnd()*6.28,sp:2+rnd()*2.5});}
+
+// skyline buildings with neon windows
+const sky=document.getElementById('skyline');const winEls=[];
+function makeRow(count,base,cls,minH,maxH,minW,maxW){
+  let x=-20;
+  for(let i=0;i<count;i++){
+    const w=minW+rnd()*(maxW-minW);const h=minH+rnd()*(maxH-minH);
+    const b=document.createElement('div');b.className='bld '+cls;
+    b.style.left=x+'px';b.style.width=w+'px';b.style.height=h+'px';sky.appendChild(b);
+    // windows grid
+    const cols=Math.max(2,Math.floor(w/26)),rows=Math.floor(h/34);
+    for(let c=0;c<cols;c++)for(let r=0;r<rows;r++){
+      if(rnd()<0.45)continue;
+      const wd=document.createElement('div');wd.className='win';
+      const ww=8+rnd()*6, wh=6+rnd()*6;
+      wd.style.width=ww+'px';wd.style.height=wh+'px';
+      wd.style.left=(6+c*(w-12)/cols)+'px';wd.style.bottom=(8+r*30)+'px';
+      const cyan=rnd()<0.5;
+      const col=cyan?'rgba(95,224,255,':'rgba(255,90,160,';
+      wd.style.background=col+'0.9)';
+      wd.style.boxShadow='0 0 8px 1px '+col+'0.7)';
+      b.appendChild(wd);
+      winEls.push({el:wd,ph:rnd()*6.28,sp:0.5+rnd()*2.2});
+    }
+    x+=w-6;
+    if(x>1120)break;
+  }
+}
+makeRow(16,0,'far',180,360,60,120);
+makeRow(12,0,'near',240,470,90,160);
+
+// water reflections aligned under bright columns
+const water=document.getElementById('water');const refEls=[];
+for(let i=0;i<16;i++){const r=document.createElement('div');r.className='ref';
+  r.style.left=(60+rnd()*980)+'px';
+  const cyan=rnd()<0.5;
+  r.style.background='linear-gradient(180deg,'+(cyan?'rgba(95,224,255,.8)':'rgba(255,90,160,.8)')+',transparent)';
+  water.appendChild(r);refEls.push({el:r,ph:rnd()*6.28});}
+
+// steam
+const steamf=document.getElementById('steamf');const stm=[];
+for(let i=0;i<4;i++){const p=document.createElement('div');p.className='stm';
+  p.style.right=(230+i*10)+'px';steamf.appendChild(p);stm.push(p);}
+
+// mixer knobs
+const mixer=document.getElementById('mixer');
+for(let i=0;i<6;i++){const k=document.createElement('div');k.className='knob';mixer.appendChild(k);}
+
+const moon=document.getElementById('moon');
+const clockEl=document.getElementById('clock');
+const dawnEl=document.getElementById('dawn');
+const scanEl=document.getElementById('scan');
+const phscr=document.getElementById('phscr');
+
+// ---------- scenes ----------
+const scenes=[
+ {d:3200, html:'<div class="sc"><div class="lead">眠れない街の、<br><span class="c">午前3時34分</span>。</div></div>'},
+ {d:4200, html:'<div class="sc"><div class="title-jp">三時三十四分</div><div class="under"></div><div class="vip">(VIP Mix)</div><div class="artist">Signal</div></div>'},
+ {d:3400, html:'<div class="sc"><div class="lyr">画面の青が<br>壁を染めてく</div></div>'},
+ {d:3400, html:'<div class="sc"><div class="lyr">通知の光が、<span class="c">星の代わりに</span>。<br><span class="sub">三時三十四分 まだ終わらない</span></div></div>'},
+ {d:4200, html:'<div class="sc"><div class="lyr"><span class="en">Waiting for the morning,<br>waiting for a line</span>夜は長すぎて<br>朝は遠すぎて</div></div>'},
+ {d:3000, html:'<div class="sc"><div class="lyr">まだ書けない<br>まだ眠れない</div></div>'},
+ {d:2800, html:'<div class="sc"><div class="bridge" id="brk">It\'s not the night,<br>it\'s me</div></div>'},
+ {d:3200, html:'<div class="sc"><div class="lyr"><span class="c">四時零分</span> 窓が白む<br><span class="sub">空が、鳴る。</span></div></div>'},
+ {d:3400, html:'<div class="sc"><span class="badge">NEW SINGLE</span><div class="cta-t">三時三十四分</div><div class="cta-a">(VIP Mix) &mdash; Signal</div><div class="cta-s">配信中 &nbsp;/&nbsp; Streaming Now</div></div>'},
+];
+const scEls=[];let acc=0;const marks=[];
+const scenesEl=document.getElementById('scenes');
+scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+  scenesEl.appendChild(el);scEls.push(el);marks.push({start:acc,end:acc+sc.d});acc+=sc.d;});
+const TOTAL=acc;window.TOTAL=TOTAL;
+
+function smooth(t,a,b){if(t<=a)return 0;if(t>=b)return 1;const x=(t-a)/(b-a);return x*x*(3-2*x);}
+
+window.renderAt=function(t){
+  const ts=t/1000, prog=t/TOTAL;
+  const dawn=smooth(t, TOTAL-6800, TOTAL-2600);   // last ~4s block -> dawn
+  dawnEl.style.opacity=dawn.toFixed(3);
+  // world slow push-in
+  document.getElementById('world').style.transform='scale('+(1+0.04*prog).toFixed(4)+') translateY('+(-8*prog).toFixed(1)+'px)';
+  // stars twinkle (fade at dawn)
+  for(const s of stars){const v=(0.25+0.75*Math.abs(Math.sin(ts*s.sp+s.ph)))*(1-0.85*dawn);s.el.style.opacity=v.toFixed(3);}
+  for(const n of ntfs){const blink=Math.sin(ts*n.sp+n.ph);n.el.style.opacity=((blink>0.4?1:0.15)*(1-0.7*dawn)).toFixed(3);}
+  // moon
+  moon.style.opacity=(1-0.55*dawn).toFixed(3);
+  // neon windows flicker + fade at dawn
+  for(const w of winEls){const f=0.55+0.45*Math.sin(ts*w.sp+w.ph);w.el.style.opacity=((0.45+0.55*f)*(1-0.6*dawn)).toFixed(3);}
+  // water shimmer
+  for(const r of refEls){r.el.style.transform='translateX('+(Math.sin(ts*0.9+r.ph)*4).toFixed(1)+'px) scaleY('+(1+0.12*Math.sin(ts*1.4+r.ph)).toFixed(3)+')';
+     r.el.style.opacity=((0.4+0.2*Math.sin(ts*1.1+r.ph))*(1-0.5*dawn)).toFixed(3);}
+  // steam
+  stm.forEach((p,i)=>{const y=((ts*26+i*30)%120);p.style.transform='translate('+(Math.sin((ts+i)*1.4)*10).toFixed(1)+'px,'+(-y).toFixed(1)+'px)';p.style.opacity=((1-y/120)*0.5*(1-0.6*dawn)).toFixed(3);});
+  // phone glow
+  phscr.style.opacity=(0.55+0.35*Math.abs(Math.sin(ts*1.6))).toFixed(3);
+  // clock: 3:34 -> 4:00 at dawn, colon blink
+  const colon=(Math.floor(ts*2)%2)?'<small>:</small>':'<span style="opacity:.25"><small>:</small></span>';
+  clockEl.innerHTML=(dawn>0.55?'4':'3')+colon+(dawn>0.55?'00':'34');
+  clockEl.style.color=dawn>0.55?'#ffd9a6':'#7ff0ff';
+  clockEl.style.textShadow=dawn>0.55?'0 0 18px rgba(255,200,150,.85)':'0 0 18px rgba(95,224,255,.85)';
+  // scenes opacity + slight rise; glitch on bridge scene
+  const FADE=300;
+  for(let i=0;i<scEls.length;i++){
+    const m=marks[i];let o=0,dy=14;
+    if(t>=m.start-FADE&&t<=m.end+FADE){
+      if(t<m.start)o=(t-(m.start-FADE))/FADE;
+      else if(t>m.end)o=1-(t-m.end)/FADE;
+      else o=1;
+      o=Math.max(0,Math.min(1,o));dy=14*(1-o);
+    }
+    scEls[i].style.opacity=o.toFixed(3);
+    scEls[i].style.transform='translateY('+dy.toFixed(1)+'px)';
+  }
+  // bridge glitch (scene index 6)
+  const bm=marks[6];const gl=(t>=bm.start&&t<=bm.end)?(0.5+0.5*Math.sin(ts*22)):0;
+  const brk=document.getElementById('brk');
+  if(brk){const j=(Math.sin(ts*40)*6*gl).toFixed(1);
+    brk.style.textShadow=gl>0.05?(j+'px 0 rgba(255,60,120,.9), '+(-j)+'px 0 rgba(80,200,255,.9)'):'0 0 20px rgba(120,180,255,.4)';
+    brk.style.transform='translateX('+(Math.sin(ts*33)*4*gl).toFixed(1)+'px)';}
+  scanEl.style.opacity=(gl*0.5).toFixed(3);
+  scanEl.style.transform='translateY('+((ts*300)%1920).toFixed(0)+'px)';
+};
+
+// playback
+const bgm=document.getElementById('bgm');const barf=document.getElementById('barf');
+let raf=null,t0=0;
+function play(){document.getElementById('ui').style.display='none';
+  try{bgm.currentTime=0;bgm.play();}catch(e){}
+  t0=performance.now();
+  (function loop(){const t=performance.now()-t0;const tt=Math.min(t,TOTAL);window.renderAt(tt);
+    barf.style.width=(100*tt/TOTAL)+'%';
+    if(t<TOTAL)raf=requestAnimationFrame(loop);})();
+  setTimeout(()=>{const st=performance.now();(function fo(){const k=(performance.now()-st)/1500;
+    bgm.volume=Math.max(0,0.9*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();},TOTAL-1500);
+}
+document.getElementById('play').addEventListener('click',play);
+window.renderAt(0);
+
+</script>
+</body></html>
