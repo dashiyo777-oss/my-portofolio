@@ -1033,12 +1033,43 @@ Performed by: ELLY
 - JP：`テーブルにカップは二つ、床に影はひとつ。曲が終わっても回り続けるレコード。この部屋はまだ、君がいないことを知らない。グラスを満たして空の椅子に乾杯を。テーブルは今も二人分のまま。ELLY の新曲。喪失のあとも席を空けて待つ、静かなピアノバラードです。`
 - EN：`Two cups on the table, one shadow on the floor. A record still turning long after the song. I leave every light where it used to be. The room has not learned you are gone. So bring out the glasses and pour something true. I will drink to an empty chair. The table is still set for two. The new single from ELLY. A quiet piano ballad that keeps a place set, even after loss.`
 
+## ㉞ A Flower in the Stone / Elly　【Cinematic Pop / Ballad】　（動画制作済み `flower-stone.mp4`）
+**YouTube（英）** `Elly - "A Flower in the Stone" (Official Music Video)`
+**YouTube（和表示）** `A Flower in the Stone / Elly【Music Video】`
+**説明（JP）**
+```
+壁の上には風が居座り、通りには作りものの笑顔が並ぶ。
+それでも石畳の割れ目には、名もない花がひとつ、隠れずに咲いている。
+その真実は、誰にも消せない。石の中の花は、その場所を守ってきた。
+Elly ニューシングル「A Flower in the Stone」。遠い雨からはじまり、夕陽のサビへ昇るシネマティックなバラード。どんな風が吹いても、この小さな炎は消えはしない。
+▼ 配信・ダウンロード
+[配信リンク]
+作詞作曲：〇〇
+Performed by：Elly
+#AFlowerInTheStone #Elly #新曲 #洋楽 #シネマティックポップ #バラード #Shorts
+```
+**説明（EN）**
+```
+The wind sits high upon the wall, and painted smiles parade the street.
+But where the cobblestones divide, a nameless flower would not hide.
+The truth is not a thing they can erase — the flower in the stone has kept its place.
+"A Flower in the Stone" is the new single from Elly. A cinematic ballad rising from distant rain to a soaring, golden-hour chorus. Whatever wind may come to blow, this little flame will not let go.
+▼ Stream / Download
+[配信リンク]
+Words & Music: 〇〇
+Performed by: Elly
+#AFlowerInTheStone #Elly #NewSingle #CinematicPop #Ballad #IndiePop #Shorts
+```
+**Router.FM** ジャンル：**Pop**（代替：Singer-Songwriter / Cinematic）／カナ：ア・フラワー・イン・ザ・ストーン（アーティスト：エリー）
+- JP：`壁の上には風が居座り、通りには作りものの笑顔が並ぶ。それでも石畳の割れ目には、名もない花がひとつ、隠れずに咲いている。その真実は誰にも消せない。石の中の花は、その場所を守ってきた。Elly の新曲。遠い雨からはじまり、夕陽のサビへと昇ってゆくシネマティックなバラード。どんな風が吹いても、この小さな炎は消えはしない。`
+- EN：`The wind sits high upon the wall, and painted smiles parade the street. But where the cobblestones divide, a nameless flower would not hide. The truth is not a thing they can erase. The flower in the stone has kept its place. A Flower in the Stone is the new single from Elly. A cinematic ballad that rises from distant rain to a golden hour chorus. Whatever wind may come to blow, this little flame will not let go.`
+
 > **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
 > **後回し（歌詞待ち・2曲）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale) → 歌詞が見つかり次第いつでも追記。
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
-> **既出**：三時三十四分（Signal名義のVIP Mixとして動画・コピー作成済み）／ふたつのグラス（作成済み）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix 動画・コピー済み）／ふたつのグラス（動画・コピー済み）／A Flower in the Stone（㉞・動画 flower-stone.mp4 済み）。
 >
-> ※上記2曲を除き、**歌詞提供分は全曲 清書完了**（計30曲）。
+> ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
 
 ---
 
