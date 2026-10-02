@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Flower in the Stone / Elly</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0a1020;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0a1020}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:top left;
+  font-family:"Noto Sans JP",system-ui,sans-serif;background:#0a1020}
+#world{position:absolute;inset:0;transform-origin:52% 46%}
+/* sky */
+#sky{position:absolute;inset:0;background:
+  linear-gradient(180deg,#14213f 0%,#20335c 32%,#395277 54%,#6b6a72 72%,#9b7e63 86%,#c89a62 100%)}
+#warm{position:absolute;inset:0;opacity:0;background:
+  radial-gradient(70% 55% at 80% 60%, rgba(255,186,92,.6), rgba(255,150,70,.18) 44%, transparent 70%),
+  linear-gradient(180deg, transparent 30%, rgba(255,170,90,.16) 72%, rgba(255,150,80,.3) 100%)}
+#sun{position:absolute;right:120px;top:560px;width:150px;height:150px;border-radius:50%;opacity:0;
+  background:radial-gradient(circle,#fff7e6,#ffd98a 55%,#ffb24d 100%);
+  box-shadow:0 0 90px 30px rgba(255,200,110,.6),0 0 200px 80px rgba(255,170,80,.35)}
+#rays{position:absolute;right:-180px;top:260px;width:760px;height:760px;opacity:0;mix-blend-mode:screen;
+  background:repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,214,150,.0) 0deg 5deg, rgba(255,214,150,.22) 6deg 9deg, rgba(255,214,150,0) 10deg 16deg);
+  -webkit-mask:radial-gradient(circle at 50% 50%, #000 0%, rgba(0,0,0,.5) 42%, transparent 72%);
+  mask:radial-gradient(circle at 50% 50%, #000 0%, rgba(0,0,0,.5) 42%, transparent 72%)}
+.cloud{position:absolute;border-radius:50%;filter:blur(18px);background:
+  radial-gradient(circle,rgba(40,52,82,.8),rgba(40,52,82,0) 70%)}
+.cloudw{position:absolute;border-radius:50%;filter:blur(20px);opacity:0;
+  background:radial-gradient(circle,rgba(255,200,130,.5),transparent 70%)}
+/* rain */
+#rain{position:absolute;inset:0;overflow:hidden}
+.rd{position:absolute;width:2px;height:70px;background:linear-gradient(180deg,rgba(200,215,255,.0),rgba(200,215,255,.35));border-radius:2px}
+/* city */
+#city{position:absolute;left:0;right:0;bottom:430px;height:420px}
+.bld{position:absolute;bottom:0;background:linear-gradient(180deg,#2a3350,#1a2138)}
+.dome{position:absolute;bottom:0;width:96px;height:120px;background:#232c47;border-radius:50% 50% 0 0}
+.dome::after{content:"";position:absolute;left:50%;top:-34px;width:8px;height:40px;background:#232c47;transform:translateX(-50%)}
+.spire{position:absolute;bottom:0;width:40px;background:#222a44;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.clit{position:absolute;width:6px;height:6px;border-radius:1px;background:rgba(255,196,120,.9);box-shadow:0 0 7px 1px rgba(255,180,90,.7)}
+/* river */
+#river{position:absolute;left:0;right:0;bottom:300px;height:140px;overflow:hidden;
+  background:linear-gradient(180deg,#2c3a55 0%,#223049 100%)}
+.rref{position:absolute;top:0;width:7px;height:100%;border-radius:4px;filter:blur(3px);opacity:.5;
+  background:linear-gradient(180deg,rgba(255,190,110,.8),transparent)}
+.bridge{position:absolute;bottom:92px;height:30px;background:#1c2338;border-radius:0}
+.bridge::before,.bridge::after{content:"";position:absolute;bottom:0;width:40%;height:26px;border:6px solid #1c2338;border-bottom:none;border-radius:40px 40px 0 0}
+.bridge::before{left:4%} .bridge::after{right:4%}
+/* stone wall + ledge */
+#wall{position:absolute;left:0;top:0;bottom:0;width:300px;
+  background:linear-gradient(90deg,#3a3026 0%,#4a3c2c 60%,rgba(60,48,34,.2) 100%);
+  box-shadow:inset -40px 0 70px rgba(0,0,0,.4)}
+#wall::after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(28deg,rgba(0,0,0,.18) 0 3px,transparent 3px 46px),
+            repeating-linear-gradient(-14deg,rgba(255,240,210,.08) 0 2px,transparent 2px 60px)}
+#ledge{position:absolute;left:0;right:0;bottom:0;height:320px;
+  background:linear-gradient(180deg,#4a3b2b 0%,#3a2e22 30%,#2a2018 100%)}
+#ledge::after{content:"";position:absolute;inset:0;opacity:.45;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.2) 0 2px,transparent 2px 70px),
+            repeating-linear-gradient(0deg,rgba(255,235,200,.08) 0 2px,transparent 2px 48px)}
+#ledgelight{position:absolute;left:0;right:0;bottom:200px;height:160px;opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,190,110,.35),transparent 70%)}
+/* flower */
+#flower{position:absolute;left:250px;bottom:300px;width:260px;height:360px;z-index:4;transform-origin:50% 100%}
+#stem{position:absolute;left:120px;bottom:0;width:10px;height:220px;background:linear-gradient(90deg,#4a5e2a,#6f8a3a);border-radius:6px;transform:rotate(6deg)}
+.leaf{position:absolute;width:90px;height:46px;background:linear-gradient(120deg,#5c7a2e,#7fa544);border-radius:0 80% 0 80%}
+#leaf1{left:70px;bottom:120px;transform:rotate(18deg)}
+#leaf2{left:130px;bottom:80px;transform:rotate(-150deg)}
+#bloom{position:absolute;left:70px;bottom:188px;width:150px;height:150px}
+#glowb{position:absolute;left:40px;bottom:160px;width:220px;height:220px;border-radius:50%;opacity:.6;filter:blur(26px);
+  background:radial-gradient(circle,rgba(255,235,190,.7),transparent 70%)}
+.petal{position:absolute;left:50%;top:50%;width:58px;height:84px;margin:-74px 0 0 -29px;transform-origin:50% 88%;
+  background:radial-gradient(circle at 50% 30%,#ffffff,#ffe9f2 55%,#f3cdb0 100%);
+  border-radius:50% 50% 50% 50%/62% 62% 38% 38%;box-shadow:0 0 10px rgba(255,235,210,.5)}
+#core{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;
+  background:radial-gradient(circle at 42% 38%,#ffe27a,#f0a73a 70%,#c87f22 100%);box-shadow:0 0 16px rgba(255,200,90,.7)}
+.dew{position:absolute;width:9px;height:11px;border-radius:50% 50% 50% 50%/40% 40% 60% 60%;
+  background:radial-gradient(circle at 40% 30%,rgba(255,255,255,.95),rgba(200,220,255,.4));box-shadow:0 1px 2px rgba(0,0,0,.2)}
+/* motes */
+.mote{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,224,160,.9),transparent 70%);filter:blur(1px)}
+/* text */
+#brand{position:absolute;left:0;right:0;top:150px;text-align:center;z-index:7;opacity:0}
+#brand .bt{display:block;font-family:"Noto Serif JP",serif;font-size:58px;letter-spacing:2px;color:#fbf2e2;
+  text-shadow:0 2px 20px rgba(0,0,0,.6),0 0 24px rgba(255,210,150,.3)}
+#brand .ba{display:block;font-family:"Noto Serif JP",serif;font-style:italic;font-size:30px;letter-spacing:8px;color:#e9cfa6;margin-top:8px}
+#scenes{position:absolute;left:70px;right:70px;top:360px;height:560px;z-index:8}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;will-change:opacity,transform}
+.title-en{font-family:"Noto Serif JP",serif;font-size:104px;font-weight:600;line-height:1.05;letter-spacing:1px;color:#fcf5e8;
+  text-shadow:0 4px 26px rgba(0,0,0,.6),0 0 34px rgba(255,210,150,.4)}
+.tfl{width:460px;max-width:78%;height:2px;margin:22px auto 16px;background:linear-gradient(90deg,transparent,rgba(255,220,160,.8),transparent)}
+.artist{font-family:"Noto Serif JP",serif;font-style:italic;font-size:46px;letter-spacing:10px;color:#eccf9f}
+.lyr{font-family:"Noto Serif JP",serif;font-size:62px;font-weight:600;line-height:1.3;letter-spacing:1px;color:#fcf5e8;
+  text-shadow:0 3px 22px rgba(0,0,0,.72),0 0 22px rgba(255,200,130,.3)}
+.lyr .jp{display:block;font-family:"Noto Sans JP",sans-serif;font-size:36px;font-weight:600;color:#f0d6a8;letter-spacing:1px;margin-top:16px;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.lyr .hl{color:#ffdf9b}
+.badge{display:inline-block;font-family:"Noto Sans JP";font-size:28px;font-weight:800;letter-spacing:6px;color:#2a1c0e;
+  background:linear-gradient(90deg,#ffe6ad,#ffc06a);padding:9px 26px;border-radius:40px;margin-bottom:24px}
+.cta-t{font-family:"Noto Serif JP",serif;font-size:88px;font-weight:600;line-height:1.06;color:#fcf5e8;text-shadow:0 0 28px rgba(255,210,150,.4)}
+.cta-a{font-family:"Noto Serif JP",serif;font-style:italic;font-size:46px;letter-spacing:8px;color:#eccf9f;margin-top:14px}
+.cta-s{font-size:32px;color:#e3cdaa;letter-spacing:2px;margin-top:22px}
+#vig{position:absolute;inset:0;pointer-events:none;z-index:9;background:radial-gradient(120% 82% at 48% 46%,transparent 54%,rgba(0,0,0,.55) 100%)}
+#grain{position:absolute;inset:0;pointer-events:none;opacity:.05;z-index:9;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.5) 0 1px,transparent 1px 3px)}
+#ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:20}
+#play{width:150px;height:150px;border-radius:50%;border:none;cursor:pointer;color:#2a1c0e;font-size:60px;background:linear-gradient(135deg,#ffe6ad,#ffc06a);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#bar{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.12);z-index:20}
+#barf{height:100%;width:0;background:linear-gradient(90deg,#ffe6ad,#ffc06a)}
+body.capture #ui,body.capture #bar{display:none}
+</style></head>
+<body>
+
+<div id="wrap"><div id="stage">
+ <div id="world">
+  <div id="sky"></div>
+  <div id="clouds"></div>
+  <div id="sun"></div><div id="rays"></div>
+  <div id="warm"></div>
+  <div id="rain"></div>
+  <div id="city"></div>
+  <div id="river"></div>
+  <div id="wall"></div>
+  <div id="ledge"></div><div id="ledgelight"></div>
+  <div id="motes"></div>
+  <div id="flower">
+    <div id="glowb"></div>
+    <div id="stem"></div>
+    <div class="leaf" id="leaf1"></div><div class="leaf" id="leaf2"></div>
+    <div id="bloom"></div>
+  </div>
+ </div>
+ <div id="brand"><span class="bt">A Flower in the Stone</span><span class="ba">Elly</span></div>
+ <div id="scenes"></div>
+ <div id="grain"></div>
+ <div id="vig"></div>
+ <div id="ui"><button id="play">&#9654;</button></div>
+ <div id="bar"><div id="barf"></div></div>
+</div></div>
+<audio id="bgm" src="flower-stone-bgm.mp3" preload="auto"></audio>
+
+<script>
+
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);stage.style.transform='scale('+s+')';
+  document.getElementById('wrap').style.width=innerWidth+'px';}
+addEventListener('resize',fit);fit();
+const capture=new URLSearchParams(location.search).has('capture');
+if(capture)document.body.classList.add('capture');
+let _s=10022026;function rnd(){_s=(_s*1103515245+12345)&0x7fffffff;return _s/0x7fffffff;}
+
+// clouds
+const cl=document.getElementById('clouds');const cloudsW=[];
+for(let i=0;i<7;i++){const c=document.createElement('div');c.className='cloud';
+  const w=260+rnd()*380,h=90+rnd()*90;c.style.width=w+'px';c.style.height=h+'px';
+  c.style.left=(rnd()*900-100)+'px';c.style.top=(60+rnd()*560)+'px';cl.appendChild(c);
+  const cw=document.createElement('div');cw.className='cloudw';cw.style.width=w*0.8+'px';cw.style.height=h+'px';
+  cw.style.left=(parseFloat(c.style.left)+40)+'px';cw.style.top=(parseFloat(c.style.top)+10)+'px';cl.appendChild(cw);
+  cloudsW.push(cw);}
+
+// rain
+const rain=document.getElementById('rain');const rds=[];
+for(let i=0;i<60;i++){const d=document.createElement('div');d.className='rd';
+  d.style.left=(rnd()*1080)+'px';d.style.top=(rnd()*1400)+'px';
+  d.style.transform='rotate(12deg)';rain.appendChild(d);rds.push({el:d,y:parseFloat(d.style.top),sp:600+rnd()*500,x:parseFloat(d.style.left)});}
+
+// city skyline
+const city=document.getElementById('city');const clits=[];
+function bld(x,w,h){const b=document.createElement('div');b.className='bld';b.style.left=x+'px';b.style.width=w+'px';b.style.height=h+'px';city.appendChild(b);
+  const cols=Math.max(1,Math.floor(w/22)),rows=Math.floor(h/30);
+  for(let c=0;c<cols;c++)for(let r=0;r<rows;r++){if(rnd()<0.6)continue;const d=document.createElement('div');d.className='clit';
+    d.style.left=(x+6+c*20)+'px';d.style.bottom=(10+r*28)+'px';city.appendChild(d);clits.push({el:d,ph:rnd()*6.28,sp:0.4+rnd()*1.6});}}
+let x=-20;while(x<1120){const w=50+rnd()*90,h=90+rnd()*220;bld(x,w,h);x+=w+rnd()*10;}
+function dome(x){const d=document.createElement('div');d.className='dome';d.style.left=x+'px';d.style.height=(150+rnd()*60)+'px';city.appendChild(d);}
+function spire(x,h){const s=document.createElement('div');s.className='spire';s.style.left=x+'px';s.style.height=h+'px';city.appendChild(s);}
+dome(300);dome(620);spire(500,300);spire(760,260);spire(170,230);
+
+// river reflections + bridges
+const river=document.getElementById('river');const rrefs=[];
+for(let i=0;i<18;i++){const r=document.createElement('div');r.className='rref';r.style.left=(rnd()*1040)+'px';river.appendChild(r);rrefs.push({el:r,ph:rnd()*6.28});}
+[[120,320],[560,360],[840,260]].forEach(([bx,bw])=>{const b=document.createElement('div');b.className='bridge';b.style.left=bx+'px';b.style.width=bw+'px';river.appendChild(b);});
+
+// flower bloom (petals + core + dew)
+const bloom=document.getElementById('bloom');
+for(let i=0;i<7;i++){const p=document.createElement('div');p.className='petal';p.style.transform='rotate('+(i*(360/7))+'deg)';bloom.appendChild(p);}
+const core=document.createElement('div');core.id='core';bloom.appendChild(core);
+[[60,40],[96,70],[52,96]].forEach(([l,b])=>{const d=document.createElement('div');d.className='dew';d.style.left=l+'px';d.style.bottom=b+'px';document.getElementById('flower').appendChild(d);});
+
+// motes
+const motesEl=document.getElementById('motes');const motes=[];
+for(let i=0;i<22;i++){const m=document.createElement('div');m.className='mote';const sz=4+rnd()*10;m.style.width=sz+'px';m.style.height=sz+'px';
+  m.style.left=(rnd()*1080)+'px';m.style.top=(400+rnd()*1200)+'px';motesEl.appendChild(m);motes.push({el:m,x:parseFloat(m.style.left),y:parseFloat(m.style.top),ph:rnd()*6.28,sp:0.3+rnd()*0.8});}
+
+const sun=document.getElementById('sun'),rays=document.getElementById('rays'),warm=document.getElementById('warm'),
+  ledgelight=document.getElementById('ledgelight'),glowb=document.getElementById('glowb'),flower=document.getElementById('flower');
+
+// scenes (synced to final soaring chorus; BGM starts 3:10, big chorus ~3:12 = +2.6s)
+const scenes=[
+ {s:300,  e:2600,  html:'<div class="sc"><div class="title-en">A Flower<br>in the Stone</div><div class="tfl"></div><div class="artist">Elly</div></div>'},
+ {s:2600, e:6200,  html:'<div class="sc"><div class="lyr">The truth is not a thing<br>they can erase<span class="jp">その真実は、誰にも消せない</span></div></div>'},
+ {s:6200, e:10000, html:'<div class="sc"><div class="lyr"><span class="hl">The flower in the stone</span><br>has kept its place<span class="jp">石の中の花は、その場所を守ってきた</span></div></div>'},
+ {s:10000,e:13600, html:'<div class="sc"><div class="lyr">So let the painted rain<br>fall and fall<span class="jp">まがいものの雨は、降らせておけばいい</span></div></div>'},
+ {s:13600,e:17200, html:'<div class="sc"><div class="lyr"><span class="hl">Something true<br>outlives it all</span><span class="jp">本物は、すべてを越えて生き残る</span></div></div>'},
+ {s:17200,e:20800, html:'<div class="sc"><div class="lyr">Stand straight beneath<br>the heavy cloud<span class="jp">重い雲の下でも、背すじを伸ばして</span></div></div>'},
+ {s:20800,e:24000, html:'<div class="sc"><div class="lyr">Whatever wind<br>may come to blow<span class="jp">どんな風が吹いてこようと</span></div></div>'},
+ {s:24000,e:27200, html:'<div class="sc"><div class="lyr"><span class="hl">This little flame<br>will not let go</span><span class="jp">この小さな炎は、消えはしない</span></div></div>'},
+ {s:27200,e:31000, html:'<div class="sc"><span class="badge">NEW SINGLE</span><div class="cta-t">A Flower in the Stone</div><div class="cta-a">Elly</div><div class="cta-s">配信中 &nbsp;/&nbsp; Streaming Now</div></div>'},
+];
+const scEls=[];const marks=[];const scenesEl=document.getElementById('scenes');
+scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+  scenesEl.appendChild(el);scEls.push(el);marks.push({start:sc.s,end:sc.e});});
+const TOTAL=31000;window.TOTAL=TOTAL;
+const brandEl=document.getElementById('brand');
+function smooth(t,a,b){if(t<=a)return 0;if(t>=b)return 1;const x=(t-a)/(b-a);return x*x*(3-2*x);}
+
+window.renderAt=function(t){
+  const ts=t/1000,prog=t/TOTAL;
+  // sun breakthrough rises from ~t=2s, strong by ~t=16s (payoff), full by end
+  const sunf=smooth(t,1500,16000);
+  const sunf2=smooth(t,12000,27000); // extra golden push late
+  const S=Math.max(sunf,sunf2*0.9);
+  sun.style.opacity=S.toFixed(3);
+  rays.style.opacity=(0.65*S).toFixed(3);
+  rays.style.transform='rotate('+(ts*2).toFixed(2)+'deg)';
+  warm.style.opacity=(0.9*S).toFixed(3);
+  ledgelight.style.opacity=(0.8*S).toFixed(3);
+  for(const c of cloudsW)c.style.opacity=(0.8*S).toFixed(3);
+  // rain fades out as sun breaks
+  const rainf=1-smooth(t,1000,9000);
+  for(const r of rds){let y=(r.y+ts*r.sp)%1500;r.el.style.transform='translate('+(Math.sin(ts*0.3+r.x)*0).toFixed(0)+'px,'+(y-r.y).toFixed(0)+'px) rotate(12deg)';r.el.style.opacity=(0.35*rainf).toFixed(3);}
+  // city lights twinkle, warmer with sun
+  for(const c of clits){c.el.style.opacity=((0.5+0.5*Math.sin(ts*c.sp+c.ph))*(0.7+0.3*S)).toFixed(3);}
+  // river shimmer
+  for(const r of rrefs){r.el.style.transform='translateX('+(Math.sin(ts*0.8+r.ph)*4).toFixed(1)+'px) scaleY('+(1+0.12*Math.sin(ts*1.3+r.ph)).toFixed(3)+')';r.el.style.opacity=((0.35+0.2*Math.sin(ts*1.1+r.ph))*(0.6+0.4*S)).toFixed(3);}
+  // motes rise, brighter with sun
+  for(const m of motes){let y=m.y-((ts*m.sp*10)%1500);const yy=y<-20?y+1500:y;
+    m.el.style.transform='translate('+(Math.sin(ts*0.5+m.ph)*16).toFixed(1)+'px,'+(yy-m.y).toFixed(1)+'px)';
+    m.el.style.opacity=((0.2+0.4*Math.abs(Math.sin(ts*0.7+m.ph)))*(0.3+0.7*S)).toFixed(3);}
+  // flower gentle sway + grows brighter (glow) with sun
+  flower.style.transform='rotate('+(Math.sin(ts*0.7)*1.6).toFixed(2)+'deg)';
+  glowb.style.opacity=(0.35+0.5*S).toFixed(3);
+  // world slow push-in
+  document.getElementById('world').style.transform='scale('+(1+0.04*prog).toFixed(4)+') translateY('+(-6*prog).toFixed(1)+'px)';
+  // brand fade in head, out before CTA
+  brandEl.style.opacity=Math.max(0,Math.min(smooth(t,2600,3400),1-smooth(t,26400,27200))).toFixed(3);
+  // scenes
+  const FADE=300;
+  for(let i=0;i<scEls.length;i++){const m=marks[i];let o=0,dy=14;
+    if(t>=m.start-FADE&&t<=m.end+FADE){
+      if(t<m.start)o=(t-(m.start-FADE))/FADE;else if(t>m.end)o=1-(t-m.end)/FADE;else o=1;
+      o=Math.max(0,Math.min(1,o));dy=14*(1-o);}
+    scEls[i].style.opacity=o.toFixed(3);scEls[i].style.transform='translateY('+dy.toFixed(1)+'px)';}
+};
+
+const bgm=document.getElementById('bgm');const barf=document.getElementById('barf');let t0=0;
+function play(){document.getElementById('ui').style.display='none';
+  try{bgm.currentTime=0;bgm.play();}catch(e){}
+  t0=performance.now();
+  (function loop(){const t=performance.now()-t0;const tt=Math.min(t,TOTAL);window.renderAt(tt);
+    barf.style.width=(100*tt/TOTAL)+'%';if(t<TOTAL)requestAnimationFrame(loop);})();
+  setTimeout(()=>{const st=performance.now();(function fo(){const k=(performance.now()-st)/1600;
+    bgm.volume=Math.max(0,0.92*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();},TOTAL-1600);
+}
+document.getElementById('play').addEventListener('click',play);
+window.renderAt(0);
+
+</script>
+</body></html>
