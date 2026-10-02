@@ -1034,8 +1034,11 @@ Performed by: ELLY
 - EN：`Two cups on the table, one shadow on the floor. A record still turning long after the song. I leave every light where it used to be. The room has not learned you are gone. So bring out the glasses and pour something true. I will drink to an empty chair. The table is still set for two. The new single from ELLY. A quiet piano ballad that keeps a place set, even after loss.`
 
 > **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
-> **保留（歌詞待ち）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale)／Thinking cats 全4曲（I'll Meet You in a Dream／Somewhere Someone's Dreaming／Rain Is All That Holds Me／Gravity of the Heart）。
+> **後回し（歌詞待ち・2曲）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale) → 歌詞が見つかり次第いつでも追記。
+> **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > **既出**：三時三十四分（Signal名義のVIP Mixとして動画・コピー作成済み）／ふたつのグラス（作成済み）。
+>
+> ※上記2曲を除き、**歌詞提供分は全曲 清書完了**（計30曲）。
 
 ---
 
