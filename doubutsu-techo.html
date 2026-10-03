@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>面白動物手帖 WILDLIFE</title>
+<meta name="description" content="タコの心臓は3つ、ハヤブサは時速390km超。知ると世界が変わる動物の驚き事実を集めた手帖。毎日変わる「今日の5問クイズ」つき。JP/EN対応。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="叡智の灯火">
+<meta property="og:title" content="面白動物手帖 WILDLIFE — 今日の5問クイズ">
+<meta property="og:description" content="タコの心臓は3つ、ハヤブサは時速390km超。驚きの事実から動物を当てる日替わりクイズに挑戦。">
+<meta property="og:url" content="https://dashiyo777-oss.github.io/my-portofolio/doubutsu-techo.html">
+<meta name="twitter:card" content="summary">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#081520">
 <style>
@@ -84,6 +91,21 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 .sh-ai-btn{width:100%;padding:11px;border-radius:10px;border:1px solid rgba(255,208,84,.4);background:rgba(255,208,84,.08);color:var(--wow);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;}
 .shfav{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;}
 .shfav.on{background:rgba(0,229,204,.12);border-color:var(--ac);color:var(--ac)}
+/* 今日の5問クイズ */
+.qz-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:16px;margin-bottom:18px;}
+.qz-lead{font-size:13px;color:var(--txt);line-height:1.7;margin-bottom:10px;}
+.qz-meta{font-size:12px;color:var(--wow);margin-bottom:10px;}
+.qz-start{width:100%;padding:12px;border-radius:10px;border:none;background:var(--ac);color:var(--bg);font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.qz-row{display:flex;gap:8px;margin-top:8px;}
+.qz-sub{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bdr);background:var(--sf);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:12.5px;cursor:pointer;}
+.qz-q{font-size:13.5px;line-height:1.8;color:var(--txt);margin:10px 0 14px;font-weight:300;}
+.qz-cnt{font-size:11px;color:var(--mut);letter-spacing:.1em;}
+.qz-ch{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:14px;cursor:pointer;margin-bottom:8px;}
+.qz-ch.ok{border-color:var(--ac);background:rgba(0,229,204,.15);}
+.qz-ch.ng{border-color:#e05555;background:rgba(224,85,85,.12);}
+.qz-fb{font-size:13px;margin:4px 0 10px;color:var(--wow);min-height:18px;}
+.qz-next{width:100%;padding:11px;border-radius:10px;border:none;background:var(--wow);color:var(--bg);font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.qz-score{font-size:26px;font-weight:900;color:var(--ac);text-align:center;margin:8px 0;}
 /* TOMOモーダル */
 .tomo-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}.tomo-modal.show{display:flex}
 .tomo-box{background:var(--sf);border:1px solid rgba(255,208,84,.5);border-radius:18px;padding:24px;width:100%;max-width:320px;position:relative;}
@@ -121,6 +143,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
 </header>
 <main id="main">
   <div class="shd" id="tlbl"></div><div id="feat"></div>
+  <div class="shd" id="qzlbl"></div><div id="qzcard"></div>
   <div class="shd" id="albl"></div><div class="cnt" id="cnt"></div>
   <div class="grid" id="grid"></div><div class="empty" id="empty" style="display:none"></div>
   <div class="shd" id="ailbl"></div><div class="ai-section" id="aiSection"></div>
@@ -133,6 +156,13 @@ body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif
     <input type="text" class="tomo-inp" id="tomoInput" placeholder="TOMO-XXXX" autocomplete="off">
     <button class="tomo-auth" onclick="authTOMO()">認証する</button>
     <a href="https://note.com/leo77777/membership" target="_blank" rel="noopener" class="tomo-mem">TOMO会員登録はこちら →</a>
+  </div>
+</div>
+<div class="tomo-modal" id="qzModal">
+  <div class="tomo-box">
+    <button class="tomo-cl" onclick="closeQuiz()">✕</button>
+    <div class="tomo-title">🎯 <span id="qzmTitle">今日の5問</span></div>
+    <div id="qzBody"></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -223,8 +253,82 @@ function render(){
   if(!list.length){grid.innerHTML='';empty.style.display='block';empty.textContent=L==='ja'?'🔍 見つかりませんでした':'🔍 No animals found';}
   else{empty.style.display='none';grid.innerHTML=list.map(a=>{const cl=CATS[a.c];return`<div class="acard" onclick="openSheet(${a.id})"><button class="fstar${favs.has(a.id)?' on':''}" onclick="event.stopPropagation();toggleFav(${a.id})">${favs.has(a.id)?'❤️':'🤍'}</button><span class="ce">${a.e}</span><div class="cn">${L==='ja'?a.n:a.ne}</div><div class="cen">${L==='ja'?a.ne:a.n}</div><span class="cbadge ${cl.cls}">${L==='ja'?cl.ja:cl.en}</span><div class="cwow">${wdH(a.w,'cwd',9)}</div></div>`;}).join('');}
   renderAI();
+  renderQuizCard();
   const bt=document.getElementById('btnTOMO');
   bt.textContent=tomoUnlocked?'✅':'🔑';bt.className='hbtn'+(tomoUnlocked?' tomo-on':'');
+}
+
+// ===== 🎯 今日の5問クイズ（日替わり・全員同じ出題） =====
+const QZ_URL='https://dashiyo777-oss.github.io/my-portofolio/doubutsu-techo.html';
+const qzDay=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/86400000);
+function qzRng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function qzLoad(){try{return JSON.parse(localStorage.getItem('wl_quiz'))||{};}catch(e){return{};}}
+function qzSave(s){try{localStorage.setItem('wl_quiz',JSON.stringify(s));}catch(e){}}
+function qzBuild(seed){
+  const rnd=qzRng(seed);
+  const shuf=arr=>{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  return shuf(DATA).slice(0,5).map(ans=>{
+    const others=DATA.filter(x=>x.id!==ans.id);
+    const d=shuf(others.filter(x=>x.c===ans.c)).concat(shuf(others.filter(x=>x.c!==ans.c))).slice(0,2);
+    return {ans:ans,chs:shuf([ans].concat(d))};
+  });
+}
+let qz=null;
+function renderQuizCard(){
+  const L=lang,st=qzLoad(),d=qzDay(),done=st.d===d;
+  document.getElementById('qzlbl').textContent=L==='ja'?'🎯 今日の5問クイズ':"🎯 TODAY'S QUIZ";
+  const meta=done?(L==='ja'?`今日の成績 ${st.best}/5`+(st.streak>1?` ・🔥 ${st.streak}日連続`:''):`Today ${st.best}/5`+(st.streak>1?` ・🔥 ${st.streak}-day streak`:'')):'';
+  document.getElementById('qzcard').innerHTML=`<div class="qz-card">`+
+    (done
+      ?`<div class="qz-meta">${meta}</div><div class="qz-lead">${L==='ja'?'明日も新しい5問が出ます。':'New 5 questions tomorrow.'}</div><div class="qz-row"><button class="qz-sub" onclick="shareQuiz()">${L==='ja'?'📤 成績をシェア':'📤 Share score'}</button><button class="qz-sub" onclick="startQuiz(true)">${L==='ja'?'🔁 練習モード':'🔁 Practice'}</button></div>`
+      :`<div class="qz-lead">${L==='ja'?`驚きの事実から動物を当てる3択。毎日0時に全員同じ5問が出ます。全問正解できますか。`:'Guess the animal from the fact. Same 5 questions for everyone, daily.'}</div><button class="qz-start" onclick="startQuiz(false)">${L==='ja'?'挑戦する':'Start'}</button>`)
+    +`</div>`;
+}
+function startQuiz(practice){
+  qz={qs:qzBuild(practice?Math.floor(Math.random()*1e9):qzDay()),i:0,score:0,practice:practice};
+  document.getElementById('qzmTitle').textContent=practice?(lang==='ja'?'練習モード':'Practice'):(lang==='ja'?'今日の5問':"Today's 5");
+  document.getElementById('qzModal').classList.add('show');
+  qzQuestion();
+}
+function closeQuiz(){document.getElementById('qzModal').classList.remove('show');qz=null;}
+function qzQuestion(){
+  const L=lang,q=qz.qs[qz.i];
+  const f=L==='ja'?q.ans.f:q.ans.fe;
+  const txt=f.length>150?f.slice(0,150)+'…':f;
+  document.getElementById('qzBody').innerHTML=`<div class="qz-cnt">Q${qz.i+1} / 5</div><div class="qz-q">${txt}</div>`+
+    q.chs.map((c,i)=>`<button class="qz-ch" id="qzc${i}" onclick="qzAnswer(${i})">${c.e} ${L==='ja'?c.n:c.ne}</button>`).join('')+
+    `<div class="qz-fb" id="qzfb"></div>`;
+}
+function qzAnswer(i){
+  const L=lang,q=qz.qs[qz.i],ok=q.chs[i].id===q.ans.id;
+  q.chs.forEach((c,j)=>{const el=document.getElementById('qzc'+j);el.disabled=true;if(c.id===q.ans.id)el.classList.add('ok');else if(j===i)el.classList.add('ng');});
+  if(ok)qz.score++;
+  document.getElementById('qzfb').textContent=ok?(L==='ja'?'⭕ 正解':'⭕ Correct'):(L==='ja'?`答えは ${q.ans.e} ${q.ans.n}`:`Answer: ${q.ans.e} ${q.ans.ne}`);
+  const last=qz.i>=4;
+  document.getElementById('qzfb').insertAdjacentHTML('afterend',`<button class="qz-next" onclick="${last?'qzFinish()':'qzNext()'}">${last?(L==='ja'?'結果を見る':'See result'):(L==='ja'?'次の問題へ':'Next')}</button>`);
+}
+function qzNext(){qz.i++;qzQuestion();}
+function qzFinish(){
+  const L=lang,sc=qz.score,d=qzDay();
+  if(!qz.practice){
+    const st=qzLoad();
+    if(st.d!==d){st.streak=(st.lastd===d-1&&st.streak)?st.streak+1:1;st.lastd=d;st.d=d;st.best=sc;}
+    else if(sc>(st.best||0)){st.best=sc;}
+    qzSave(st);
+    try{new Image().src='https://api.eichinohi.com/api/hit?site=doubutsu-quiz&r='+Date.now();}catch(e){}
+  }
+  const msg=sc===5?(L==='ja'?'全問正解。動物博士です':'Perfect. Animal expert'):sc>=3?(L==='ja'?'なかなかの動物通です':'Nice work'):(L==='ja'?'明日リベンジできます':'Try again tomorrow');
+  document.getElementById('qzBody').innerHTML=`<div class="qz-score">${sc} / 5</div><div class="qz-lead" style="text-align:center">${msg}</div>`+
+    (qz.practice?'':`<button class="qz-start" onclick="shareQuiz()">${L==='ja'?'📤 成績をシェアする':'📤 Share score'}</button>`)+
+    `<div class="qz-row"><button class="qz-sub" onclick="closeQuiz();render()">${L==='ja'?'閉じる':'Close'}</button></div>`;
+}
+function shareQuiz(){
+  const L=lang,st=qzLoad();
+  const txt=(L==='ja'
+    ?`🦁 どうぶつクイズ 今日の5問、${st.best||0}/5問正解でした`+(st.streak>1?`（🔥${st.streak}日連続挑戦中）`:'')+`\n#面白動物手帖\n`
+    :`🦁 Animal quiz: I scored ${st.best||0}/5 today\n#WildlifeNotebook\n`)+QZ_URL;
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
+  else{try{navigator.clipboard.writeText(txt);showToast(L==='ja'?'📋 シェア文をコピーしました':'📋 Copied share text');}catch(e){}}
 }
 
 function renderAI(){
@@ -303,6 +407,8 @@ function toggleSearch(){const sb=document.getElementById('sbar'),shown=sb.classL
 function onSearch(v){q=v;render();}
 function setcat(btn,c){document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');cat=c;render();}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+// 訪問計測（api.eichinohi.com の hits に site=doubutsu で記録。国別も付く）
+try{new Image().src='https://api.eichinohi.com/api/hit?site=doubutsu&r='+Date.now();}catch(e){}
 render();
 </script>
 </body>
