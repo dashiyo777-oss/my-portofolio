@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>航跡 / w-Band feat. Akari Mizuno</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060b1a;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#060b1a}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:top left;
+  font-family:"Noto Sans JP",system-ui,sans-serif;background:#060b1a}
+#world{position:absolute;inset:0;transform-origin:50% 46%}
+/* sky: starry blue -> golden horizon */
+#sky{position:absolute;left:0;right:0;top:0;height:800px;background:
+  linear-gradient(180deg,#0a1230 0%,#16254f 32%,#2f4a7a 52%,#6d6a7e 66%,#c08a56 82%,#ffc473 100%)}
+#dawn{position:absolute;left:0;right:0;top:0;height:800px;opacity:0;background:
+  radial-gradient(60% 50% at 66% 100%, rgba(255,210,140,.6), transparent 66%),
+  linear-gradient(180deg,rgba(120,150,210,.0) 40%, rgba(255,200,150,.2) 76%, rgba(255,225,180,.4) 100%)}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#eef2ff}
+#sun{position:absolute;left:640px;top:700px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,#fff6df,#ffd98a 52%,#ff9e4e 100%);
+  box-shadow:0 0 90px 30px rgba(255,180,100,.6),0 0 200px 80px rgba(255,150,90,.35)}
+.cloud{position:absolute;border-radius:50%;filter:blur(20px)}
+#gullf{position:absolute;inset:0}
+.gull{position:absolute;width:52px;height:24px}
+.gull::before,.gull::after{content:"";position:absolute;top:0;width:28px;height:16px;border-top:4px solid #f4f0e4;border-radius:50%}
+.gull::before{left:0;transform:rotate(18deg)} .gull::after{right:0;transform:rotate(-18deg)}
+/* sea */
+#sea{position:absolute;left:0;right:0;top:760px;bottom:0;background:linear-gradient(180deg,#1a2f52 0%,#0e1c38 50%,#081222 100%)}
+#sunroad{position:absolute;left:715px;top:766px;width:150px;height:360px;transform:translateX(-50%);transform-origin:top center;
+  background:linear-gradient(180deg,rgba(255,200,120,.6),rgba(255,180,100,.0) 80%);filter:blur(8px);opacity:.75;z-index:1}
+/* wake (航跡): foaming trail from the sun widening toward the lower-right */
+#wake{position:absolute;left:0;right:0;top:760px;bottom:0;z-index:2;
+  clip-path:polygon(65.5% 0, 68.5% 0, 92% 100%, 60% 100%);
+  background:linear-gradient(180deg, rgba(255,220,150,.45) 0%, rgba(225,238,255,.32) 30%, rgba(235,245,255,.2) 100%)}
+#wakeglow{position:absolute;left:0;right:0;top:760px;bottom:0;z-index:2;filter:blur(9px);opacity:.6;
+  clip-path:polygon(66.2% 0, 67.8% 0, 82% 100%, 70% 100%);
+  background:linear-gradient(180deg, rgba(255,230,170,.6), rgba(235,245,255,.28))}
+.foam{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(230,240,255,.2) 70%);filter:blur(1px);z-index:2}
+/* railing */
+#railing{position:absolute;left:0;right:0;bottom:0;height:470px;z-index:4}
+#railtop{position:absolute;left:-40px;right:380px;bottom:360px;height:22px;background:linear-gradient(180deg,#f4efe4,#c9b48c);border-radius:12px;transform:rotate(-7deg);box-shadow:0 6px 16px rgba(0,0,0,.4)}
+#railtop2{position:absolute;left:-40px;right:380px;bottom:250px;height:14px;background:linear-gradient(180deg,#e6dcc6,#b09a72);border-radius:10px;transform:rotate(-7deg);opacity:.9}
+.baluster{position:absolute;bottom:0;width:12px;height:380px;background:linear-gradient(180deg,#e9dfc8,#9f8a64);border-radius:6px}
+#deck{position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(180deg,#3a2a1a,#1c130b);
+  box-shadow:0 -2px 0 rgba(255,210,150,.2)}
+/* figure: woman at the rail, back view, backlit silhouette with golden rim */
+#figure{position:absolute;left:150px;bottom:150px;width:360px;height:760px;z-index:5}
+#body{position:absolute;left:0;bottom:0;width:250px;height:560px;z-index:2;background:#0c0908;
+  clip-path:polygon(40% 12%,60% 12%,64% 28%,58% 44%,70% 64%,96% 100%,6% 100%,32% 64%,42% 44%,36% 28%)}
+#head{position:absolute;left:92px;bottom:452px;width:76px;height:92px;background:#0c0908;border-radius:50% 50% 46% 46%;z-index:2}
+/* long hair down the back + a wind wisp to the right */
+#hair{position:absolute;left:96px;bottom:356px;width:104px;height:210px;background:#0c0908;z-index:1;border-radius:46% 48% 36% 44%/40% 40% 60% 60%}
+#hairwisp{position:absolute;left:150px;bottom:476px;width:120px;height:58px;background:#0c0908;z-index:1;opacity:.85;
+  clip-path:polygon(0 36%,46% 8%,82% 34%,100% 58%,64% 60%,34% 92%);filter:blur(1.4px)}
+#hair2{position:absolute;left:96px;bottom:430px;width:96px;height:120px;background:#0c0908;border-radius:46% 46% 40% 40%;z-index:2}
+#rim{position:absolute;left:0;bottom:0;width:250px;height:560px;z-index:3;mix-blend-mode:screen;opacity:.9;
+  clip-path:polygon(60% 12%,64% 28%,58% 44%,70% 64%,96% 100%,86% 100%,62% 64%,50% 44%,54% 28%,52% 12%);
+  background:linear-gradient(120deg,rgba(255,190,110,0),rgba(255,205,125,.9))}
+/* lantern */
+#lantern{position:absolute;left:40px;top:90px;width:90px;height:200px;z-index:6}
+#lanpost{position:absolute;left:40px;top:-90px;width:8px;height:180px;background:#2a2016}
+#lanbody{position:absolute;left:6px;top:80px;width:74px;height:100px;border-radius:10px 10px 14px 14px;
+  background:linear-gradient(180deg,rgba(255,210,140,.5),rgba(150,100,50,.6));border:3px solid #4a3620;box-shadow:0 0 50px 16px rgba(255,180,90,.6),inset 0 0 20px rgba(255,200,120,.6)}
+#lanflame{position:absolute;left:34px;top:112px;width:18px;height:34px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:radial-gradient(circle at 50% 70%,#fff3c4,#ffb43a 60%,#ff7a1e);box-shadow:0 0 22px 8px rgba(255,160,60,.8)}
+/* particles */
+.mote{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,224,160,.9),transparent 70%);filter:blur(1px)}
+/* text */
+#brand{position:absolute;left:0;right:0;top:120px;text-align:center;z-index:7;opacity:0}
+#brand .bt{display:block;font-family:"Noto Serif JP",serif;font-size:72px;font-weight:600;letter-spacing:18px;
+  background:linear-gradient(92deg,#fff4df,#ffe3b0 55%,#ffd27a);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 14px rgba(0,0,0,.6))}
+#brand .ba{display:block;font-family:"Noto Serif JP",serif;font-size:28px;letter-spacing:4px;color:#eadcc0;margin-top:8px}
+#brand .ba small{display:block;font-style:italic;font-size:22px;letter-spacing:3px;color:#cdb790;margin-top:4px}
+#scenes{position:absolute;left:66px;right:66px;top:330px;height:470px;z-index:8}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;will-change:opacity,transform}
+.title-jp{font-family:"Noto Serif JP",serif;font-size:150px;font-weight:600;letter-spacing:26px;
+  background:linear-gradient(92deg,#fff6e6,#ffe6b4 52%,#ffd27a);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(0,0,0,.55)) drop-shadow(0 0 34px rgba(255,210,140,.4))}
+.tfl{width:380px;height:2px;margin:16px auto 14px;background:linear-gradient(90deg,transparent,rgba(255,220,150,.9),transparent)}
+.artist{font-family:"Noto Serif JP",serif;font-size:42px;letter-spacing:4px;color:#f0e4cc}
+.artist small{display:block;font-style:italic;font-size:26px;letter-spacing:3px;color:#d2bc94;margin-top:6px}
+.lyr{font-family:"Noto Serif JP",serif;font-size:58px;font-weight:600;line-height:1.42;letter-spacing:1px;color:#fcf5e6;
+  text-shadow:0 3px 24px rgba(0,0,0,.85),0 0 22px rgba(255,190,110,.3)}
+.lyr .hl{color:#ffdc9b}
+.lyr .en{display:block;font-family:"Noto Sans JP";font-size:33px;font-weight:600;color:#ecd6ae;letter-spacing:1px;margin-top:14px;text-shadow:0 2px 12px rgba(0,0,0,.85)}
+.badge{display:inline-block;font-family:"Noto Sans JP";font-size:27px;font-weight:800;letter-spacing:6px;color:#2a1c0c;
+  background:linear-gradient(90deg,#fff4df,#ffcf86);padding:9px 24px;border-radius:40px;margin-bottom:22px}
+.cta-t{font-family:"Noto Serif JP",serif;font-size:132px;font-weight:600;letter-spacing:20px;
+  background:linear-gradient(92deg,#fff6e6,#ffd27a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 16px rgba(0,0,0,.6))}
+.cta-a{font-family:"Noto Serif JP",serif;font-size:40px;letter-spacing:3px;color:#f0e4cc;margin-top:12px}
+.cta-a small{display:block;font-style:italic;font-size:24px;color:#d2bc94;margin-top:4px}
+.cta-s{font-size:32px;color:#e6d4b2;letter-spacing:2px;margin-top:20px}
+#vig{position:absolute;inset:0;pointer-events:none;z-index:9;background:radial-gradient(120% 80% at 50% 44%,transparent 54%,rgba(0,0,0,.55) 100%)}
+#grain{position:absolute;inset:0;pointer-events:none;opacity:.05;z-index:9;mix-blend-mode:overlay;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.5) 0 1px,transparent 1px 3px)}
+#ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:20}
+#play{width:150px;height:150px;border-radius:50%;border:none;cursor:pointer;color:#2a1c0c;font-size:60px;background:linear-gradient(135deg,#fff4df,#ffcf86);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#bar{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.12);z-index:20}
+#barf{height:100%;width:0;background:linear-gradient(90deg,#fff4df,#ffd27a)}
+body.capture #ui,body.capture #bar{display:none}
+</style></head>
+<body>
+
+<div id="wrap"><div id="stage">
+ <div id="world">
+  <div id="sky"></div>
+  <div id="starf"></div>
+  <div id="clouds"></div>
+  <div id="sun"></div>
+  <div id="dawn"></div>
+  <div id="gullf"></div>
+  <div id="sea"></div>
+  <div id="wakeglow"></div><div id="wake"></div>
+  <div id="foamf"></div>
+  <div id="railing">
+    <div id="railtop2"></div><div id="railtop"></div>
+    <div id="deck"></div>
+  </div>
+  <div id="figure">
+    <div id="hair"></div><div id="hairwisp"></div><div id="body"></div>
+    <div id="head"></div><div id="hair2"></div><div id="rim"></div>
+  </div>
+  <div id="lantern"><div id="lanpost"></div><div id="lanbody"></div><div id="lanflame"></div></div>
+  <div id="motes"></div>
+ </div>
+ <div id="brand"><span class="bt">航 跡</span><span class="ba">w-Band<small>featuring Akari Mizuno</small></span></div>
+ <div id="scenes"></div>
+ <div id="grain"></div>
+ <div id="vig"></div>
+ <div id="ui"><button id="play">&#9654;</button></div>
+ <div id="bar"><div id="barf"></div></div>
+</div></div>
+<audio id="bgm" src="kouseki-bgm.mp3" preload="auto"></audio>
+
+<script>
+
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);stage.style.transform='scale('+s+')';
+  document.getElementById('wrap').style.width=innerWidth+'px';}
+addEventListener('resize',fit);fit();
+const capture=new URLSearchParams(location.search).has('capture');
+if(capture)document.body.classList.add('capture');
+let _s=10042026;function rnd(){_s=(_s*1103515245+12345)&0x7fffffff;return _s/0x7fffffff;}
+
+// stars
+const starf=document.getElementById('starf');const stars=[];
+for(let i=0;i<70;i++){const d=document.createElement('div');d.className='star';
+  const x=rnd()*1080,y=rnd()*560;d.style.left=x+'px';d.style.top=y+'px';
+  const sz=1+rnd()*2.2;d.style.width=sz+'px';d.style.height=sz+'px';starf.appendChild(d);stars.push({el:d,ph:rnd()*6.28,sp:0.6+rnd()*1.6});}
+// clouds (golden)
+const cl=document.getElementById('clouds');const clouds=[];
+const ccol=['rgba(255,180,100,.5)','rgba(60,80,130,.6)','rgba(255,150,90,.4)'];
+for(let i=0;i<6;i++){const c=document.createElement('div');c.className='cloud';
+  const w=280+rnd()*360,h=70+rnd()*70;c.style.width=w+'px';c.style.height=h+'px';
+  c.style.left=(rnd()*900-80)+'px';c.style.top=(360+rnd()*340)+'px';
+  c.style.background='radial-gradient(circle,'+ccol[(rnd()*3)|0]+',transparent 70%)';cl.appendChild(c);clouds.push({el:c,ph:rnd()*6.28});}
+// gulls
+const gf=document.getElementById('gullf');const gulls=[];
+for(let i=0;i<3;i++){const g=document.createElement('div');g.className='gull';g.style.transform='scale('+(0.6+rnd()*0.8)+')';gf.appendChild(g);
+  gulls.push({el:g,x:rnd()*1080,y:180+rnd()*300,sp:12+rnd()*16,ph:rnd()*6.28,amp:10+rnd()*20});}
+// foam along wake edges
+const foamf=document.getElementById('foamf');const foams=[];
+for(let i=0;i<30;i++){const f=document.createElement('div');f.className='foam';const sz=8+rnd()*22;f.style.width=sz+'px';f.style.height=sz+'px';foamf.appendChild(f);
+  foams.push({el:f,side:(i%2)?1:-1,t0:rnd(),sp:0.12+rnd()*0.18,ph:rnd()*6.28});}
+// balusters
+const railing=document.getElementById('railing');
+for(let i=0;i<9;i++){const b=document.createElement('div');b.className='baluster';const x=-30+i*95;
+  b.style.left=x+'px';b.style.bottom=(130 - i*2)+'px';b.style.height=(300 - i*4)+'px';
+  b.style.transform='rotate(-7deg)';railing.insertBefore(b,document.getElementById('deck'));}
+// motes
+const motesEl=document.getElementById('motes');const motes=[];
+for(let i=0;i<22;i++){const m=document.createElement('div');m.className='mote';const sz=4+rnd()*9;m.style.width=sz+'px';m.style.height=sz+'px';
+  m.style.left=(rnd()*1080)+'px';m.style.top=(300+rnd()*1300)+'px';motesEl.appendChild(m);motes.push({el:m,x:parseFloat(m.style.left),y:parseFloat(m.style.top),ph:rnd()*6.28,sp:0.3+rnd()*0.8});}
+
+const sun=document.getElementById('sun'),dawn=document.getElementById('dawn'),lanflame=document.getElementById('lanflame'),
+  wakeEl=document.getElementById('wake'),wakeglow=document.getElementById('wakeglow'),brandEl=document.getElementById('brand');
+
+// scenes (BGM 3:30 start; final-chorus belt ~ +4s)
+const scenes=[
+ {s:300,  e:2800,  html:'<div class="sc"><div class="title-jp">航跡</div><div class="tfl"></div><div class="artist">w-Band<small>featuring Akari Mizuno</small></div></div>'},
+ {s:2800, e:7000,  html:'<div class="sc"><div class="lyr"><span class="hl">振り返れば 一筋の光</span><span class="en">Look back — a single thread of light</span></div></div>'},
+ {s:7000, e:11200, html:'<div class="sc"><div class="lyr">この星の夜に<br><span class="hl">描いた航跡</span><span class="en">the wake we drew across this starlit night</span></div></div>'},
+ {s:11200,e:15400, html:'<div class="sc"><div class="lyr">別れさえも<br>愛のかたちで</div></div>'},
+ {s:15400,e:20200, html:'<div class="sc"><div class="lyr"><span class="hl">出会えたこと</span><br>それだけで 奇跡だった<span class="en">Just to have met you was a miracle</span></div></div>'},
+ {s:20200,e:24400, html:'<div class="sc"><div class="lyr">夜明けの海へ——<br>歌よ 届け 遠く</div></div>'},
+ {s:24400,e:28000, html:'<div class="sc"><div class="lyr"><span class="hl">歌よ 届け 永遠に</span><span class="en">Song, reach on — forever</span></div></div>'},
+ {s:28000,e:31000, html:'<div class="sc"><span class="badge">NEW SINGLE</span><div class="cta-t">航跡</div><div class="cta-a">w-Band<small>feat. Akari Mizuno</small></div><div class="cta-s">配信中 &nbsp;/&nbsp; Streaming Now</div></div>'},
+];
+const scEls=[];const marks=[];const scenesEl=document.getElementById('scenes');
+scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+  scenesEl.appendChild(el);scEls.push(el);marks.push({start:sc.s,end:sc.e});});
+const TOTAL=31000;window.TOTAL=TOTAL;
+function smooth(t,a,b){if(t<=a)return 0;if(t>=b)return 1;const x=(t-a)/(b-a);return x*x*(3-2*x);}
+
+window.renderAt=function(t){
+  const ts=t/1000,prog=t/TOTAL;
+  // dawn brightens toward the outro (夜明けの海へ)
+  const dawnf=smooth(t,17000,29000);
+  dawn.style.opacity=(0.9*dawnf).toFixed(3);
+  sun.style.top=(700-30*dawnf)+'px';
+  sun.style.boxShadow='0 0 '+(90+40*dawnf)+'px '+(30+16*dawnf)+'px rgba(255,180,100,'+(0.6+0.2*dawnf)+'),0 0 '+(200+80*dawnf)+'px 80px rgba(255,150,90,'+(0.35+0.15*dawnf)+')';
+  // stars fade with dawn
+  for(const s of stars)s.el.style.opacity=((0.3+0.7*Math.abs(Math.sin(ts*s.sp+s.ph)))*(1-0.7*dawnf)).toFixed(3);
+  // clouds drift
+  for(const c of clouds)c.el.style.transform='translateX('+(Math.sin(ts*0.12+c.ph)*16).toFixed(1)+'px)';
+  // gulls glide
+  for(const g of gulls){let x=(g.x+ts*g.sp)%1200-60;g.el.style.left=x+'px';g.el.style.top=(g.y+Math.sin(ts*0.8+g.ph)*g.amp)+'px';}
+  // wake foam travels upward (toward horizon) + glow pulse
+  foams.forEach(f=>{const p=((ts*f.sp+f.t0)%1);const y=760+(1-p)*1160;
+    const whalf=12+(1-p)*150;const cx=722+(1-p)*100+f.side*whalf;
+    f.el.style.left=(cx-10)+'px';f.el.style.top=(y-10)+'px';
+    f.el.style.opacity=((0.5+0.5*Math.sin(ts*3+f.ph))*(0.4+0.6*(1-p))).toFixed(3);
+    f.el.style.transform='scale('+(0.4+0.7*(1-p)).toFixed(2)+')';});
+  wakeEl.style.opacity=(0.8+0.2*Math.sin(ts*1.3)).toFixed(3);
+  wakeglow.style.opacity=((0.6+0.2*Math.sin(ts*1.1))*(0.8+0.3*dawnf)).toFixed(3);
+  // lantern flame flicker
+  const fk=Math.sin(ts*12)*0.5+Math.sin(ts*27+1)*0.3;
+  lanflame.style.transform='translateX('+(fk*2).toFixed(2)+'px) scaleY('+(1+fk*0.14).toFixed(3)+')';lanflame.style.opacity=(0.9+0.1*fk).toFixed(3);
+  // motes rise
+  for(const m of motes){let y=m.y-((ts*m.sp*10)%1500);const yy=y<-20?y+1500:y;
+    m.el.style.transform='translate('+(Math.sin(ts*0.5+m.ph)*16).toFixed(1)+'px,'+(yy-m.y).toFixed(1)+'px)';
+    m.el.style.opacity=(0.25+0.4*Math.abs(Math.sin(ts*0.7+m.ph))).toFixed(3);}
+  // world slow push-in
+  document.getElementById('world').style.transform='scale('+(1+0.04*prog).toFixed(4)+') translateY('+(-6*prog).toFixed(1)+'px)';
+  // brand
+  brandEl.style.opacity=Math.max(0,Math.min(smooth(t,2800,3500),1-smooth(t,27200,28000))).toFixed(3);
+  // scenes
+  const FADE=300;
+  for(let i=0;i<scEls.length;i++){const m=marks[i];let o=0,dy=14;
+    if(t>=m.start-FADE&&t<=m.end+FADE){if(t<m.start)o=(t-(m.start-FADE))/FADE;else if(t>m.end)o=1-(t-m.end)/FADE;else o=1;o=Math.max(0,Math.min(1,o));dy=14*(1-o);}
+    scEls[i].style.opacity=o.toFixed(3);scEls[i].style.transform='translateY('+dy.toFixed(1)+'px)';}
+};
+
+const bgm=document.getElementById('bgm');const barf=document.getElementById('barf');let t0=0;
+function play(){document.getElementById('ui').style.display='none';
+  try{bgm.currentTime=0;bgm.play();}catch(e){}
+  t0=performance.now();
+  (function loop(){const t=performance.now()-t0;const tt=Math.min(t,TOTAL);window.renderAt(tt);
+    barf.style.width=(100*tt/TOTAL)+'%';if(t<TOTAL)requestAnimationFrame(loop);})();
+  setTimeout(()=>{const st=performance.now();(function fo(){const k=(performance.now()-st)/1600;
+    bgm.volume=Math.max(0,0.92*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();},TOTAL-1600);
+}
+document.getElementById('play').addEventListener('click',play);
+window.renderAt(0);
+
+</script>
+</body></html>
