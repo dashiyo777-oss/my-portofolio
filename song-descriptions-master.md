@@ -1182,8 +1182,66 @@ Performed by: MARON
 - 海外向け：`A little glass on the shelf. Turn it over, and the snow begins to fall. Red roofs and white fir trees, a winter from long ago lies sleeping inside. Inside the snow globe, the snow dances again this year. Even far apart, under the same sky, the bells ring. Merry Christmas. Give it a turn, and you can go to meet them, to the light of that day's window. "Inside the Snow Globe" is the new single from MARON. A gentle Christmas song for the lit windows of the whole world.`
 
 > **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
-> **後回し（歌詞待ち・2曲）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale) → 歌詞が見つかり次第いつでも追記。
+## ㊴ Already Here（Not a Promise）/ ELLY　【Pop / Soul（バラード）】
+**YouTube（英）** `ELLY - "Already Here" (Official Music Video)`
+**YouTube（和表示）** `Already Here / ELLY【Music Video】`
+**説明（JP）**
+```
+夕暮れが窓をガラスに変えて、乗り遅れた電車を数えている夜。
+その重さを、ひとりで抱えないで。きみが歩くどの道にも、わたしの足音が、すぐ後ろで静かに鳴っている。
+明日への約束じゃない——わたしは、もう、ここにいる。きみが必要だと気づく前から。
+ELLY ニューシングル「Already Here」。閉じた扉の向こうでずっと待っていた、寄り添いのソウル・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：ELLY
+#AlreadyHere #ELLY #新曲 #洋楽 #ソウル #バラード #Shorts
+```
+**説明（EN）**
+```
+When the evening turns your window into glass, and you're counting up the trains you didn't catch,
+don't you carry that alone — every road you're walking on has my footsteps running quiet, just behind.
+I'm already here. Before you knew you needed me, I'm already here. Not a promise for tomorrow — I'm already here.
+"Already Here" is the new single from ELLY. A soul ballad that was waiting on the other side of every door you thought was closed.
+▼ Stream / Download
+[配信リンク]
+Performed by: ELLY
+#AlreadyHere #ELLY #NewSingle #Soul #Ballad #Shorts
+```
+**TuneCore** タイトル：Already Here / アレディ・ヒア（曲名のみ・和題なし）／ アーティスト：ELLY（エリー）／ ジャンル1：**オルタナティブ**・ジャンル2：**R&B/Soul** ／ ムード：ラブ/ロマンス（癒やし重視ならリラックス/チルアウト）
+- 国内向け：`夕暮れが窓をガラスに変えて、乗り遅れた電車を数えている夜。その重さを、ひとりで抱えないで。きみが歩くどの道にも、わたしの足音がすぐ後ろで静かに鳴っている。明日への約束じゃない。わたしは、もう、ここにいる。きみが必要だと気づく前から。ELLY ニューシングル「Already Here」。閉じた扉の向こうでずっと待っていた、寄り添いのソウルバラードです。`
+- 海外向け：`When the evening turns your window into glass, and you are counting up the trains you did not catch, do not carry that alone. Every road you are walking on has my footsteps running quiet, just behind. I am already here. Before you knew you needed me, I am already here. Not a promise for tomorrow, I am already here. "Already Here" is the new single from ELLY. A soul ballad that was waiting on the other side of every door you thought was closed.`
+
+## ㊵ Say It Plain / Noah Vale　【Americana / Country / Folk】
+**YouTube（英）** `Noah Vale - "Say It Plain" (Official Music Video)`
+**YouTube（和表示）** `Say It Plain / Noah Vale【Music Video】`
+**説明（JP）**
+```
+出会う誰もが、優しい言葉をくれる。夏のワインみたいに甘くて、夜明けには消えている。
+聞きたいことは、もう十分聞いた。誰か、もっと近くで、はっきり本当のことを言ってくれ。
+はっきり言って。たとえ傷ついても、それでいい。真実は、わたしには残酷じゃない——はっきり言うこと、それだけが、わたしを自由にする優しさだ。
+Noah Vale ニューシングル「Say It Plain」。甘い嘘より真実を求める、骨太のアメリカーナ。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Noah Vale
+#SayItPlain #NoahVale #新曲 #洋楽 #アメリカーナ #カントリー #Shorts
+```
+**説明（EN）**
+```
+Everyone I meet has something kind to say — sweet as summer wine, and gone by break of day.
+I've heard my fill of what I want to hear. Somebody come closer, tell me something clear.
+Say it plain, and if it cuts me, let it cut. Truth is not a cruelty to me — say it plain, that's the only kindness that will set me free.
+"Say It Plain" is the new single from Noah Vale. Rugged Americana for anyone who'd take the hard truth over a soft lie.
+▼ Stream / Download
+[配信リンク]
+Performed by: Noah Vale
+#SayItPlain #NoahVale #NewSingle #Americana #Country #Folk #Shorts
+```
+**TuneCore** タイトル：Say It Plain / セイ・イット・プレイン（曲名のみ・和題なし）／ アーティスト：Noah Vale（ノア・ヴェイル）／ ジャンル1：**カントリー**・ジャンル2：**フォーク** ／ ムード：ブルー/サッド（内省）
+- 国内向け：`出会う誰もが、優しい言葉をくれる。夏のワインみたいに甘くて、夜明けには消えている。聞きたいことは、もう十分聞いた。誰か、もっと近くで、はっきり本当のことを言ってくれ。はっきり言って。たとえ傷ついても、それでいい。真実は、わたしには残酷じゃない。はっきり言うこと、それだけが、わたしを自由にする優しさだ。Noah Vale ニューシングル「Say It Plain」。甘い嘘より真実を求める、骨太のアメリカーナです。`
+- 海外向け：`Everyone I meet has something kind to say, sweet as summer wine, and gone by break of day. I have heard my fill of what I want to hear. Somebody come closer, tell me something clear. Say it plain, and if it cuts me, let it cut. Truth is not a cruelty to me. Say it plain, that is the only kindness that will set me free. "Say It Plain" is the new single from Noah Vale. Rugged Americana for anyone who would take the hard truth over a soft lie.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
+> ✅ **Thinking cats を除き、全曲 清書完了。**
 > **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
