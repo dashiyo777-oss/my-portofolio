@@ -1064,10 +1064,99 @@ Performed by: Elly
 - JP：`壁の上には風が居座り、通りには作りものの笑顔が並ぶ。それでも石畳の割れ目には、名もない花がひとつ、隠れずに咲いている。その真実は誰にも消せない。石の中の花は、その場所を守ってきた。Elly の新曲。遠い雨からはじまり、夕陽のサビへと昇ってゆくシネマティックなバラード。どんな風が吹いても、この小さな炎は消えはしない。`
 - EN：`The wind sits high upon the wall, and painted smiles parade the street. But where the cobblestones divide, a nameless flower would not hide. The truth is not a thing they can erase. The flower in the stone has kept its place. A Flower in the Stone is the new single from Elly. A cinematic ballad that rises from distant rain to a golden hour chorus. Whatever wind may come to blow, this little flame will not let go.`
 
+## ㉟ 十月桜 / 琥珀譲二　【J-Pop / バラード】　（動画制作済み `jugatsu-zakura.mp4`）
+**YouTube（和）** `十月桜 / 琥珀譲二【Music Video】`
+**YouTube（英）** `Kohaku Joji - "October Cherry" (Official Music Video)`
+**説明（JP）**
+```
+木枯らしの吹く公園で、葉を落とした枝の先に、うす紅の花がひとつ、震えながら咲いていた。
+季節はずれと笑われても、冬が来ると知っていても、ひとひらずつ命を灯し、咲くことだけはやめなかった。
+十月桜、わたしは咲く。冬を越えて、春にもう一度。あの日 咲けなかった春に、もう一度 咲いてみせるから。
+琥珀譲二 ニューシングル「十月桜」。遅れて咲くすべての人へ贈る、再生のバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：琥珀譲二
+#十月桜 #琥珀譲二 #新曲 #邦楽 #バラード #応援ソング #Shorts
+```
+**説明（EN）**
+```
+In a park where the cold wind blows, at the tip of a leafless branch, a single pale-pink blossom trembled and bloomed.
+Laughed at for being out of season, knowing winter was coming, it lit its life petal by petal and never stopped blooming.
+October cherry, I will bloom. Through winter, into spring once more. In the spring I couldn't bloom that day, I'll bloom again, I promise.
+"October Cherry" is the new single from Kohaku Joji. A ballad of rebirth for everyone who blooms late.
+▼ Stream / Download
+[配信リンク]
+Performed by: Kohaku Joji
+#OctoberCherry #KohakuJoji #NewSingle #JPop #Ballad #Shorts
+```
+**TuneCore** タイトル：十月桜 / October Cherry / ジュウガツザクラ ／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：モチベーション/ハッピー（切なさ重視ならブルー/サッド）
+- 国内向け：`木枯らしの吹く公園で、葉を落とした枝の先に、うす紅の花がひとつ、震えながら咲いていた。季節はずれと笑われても、冬が来ると知っていても、ひとひらずつ命を灯し、咲くことだけはやめなかった。十月桜、わたしは咲く。冬を越えて、春にもう一度。あの日咲けなかった春に、もう一度咲いてみせるから。琥珀譲二 ニューシングル「十月桜」。遅れて咲くすべての人へ贈る、再生のバラードです。`
+- 海外向け：`In a park where the cold wind blows, at the tip of a leafless branch, a single pale pink blossom trembled and bloomed. Laughed at for being out of season, knowing winter was coming, it lit its life petal by petal and never stopped blooming. October cherry, I will bloom. Through winter, into spring once more. In the spring I could not bloom that day, I will bloom again, I promise. "October Cherry" is the new single from Kohaku Joji. A ballad of rebirth for everyone who blooms late.`
+
+## ㊱ 竜胆の栞 / 花明り　【J-Pop / Love song】　（動画制作済み `rindo-shiori.mp4`）
+**YouTube（和）** `竜胆の栞 / 花明り【Music Video】`
+**YouTube（英）** `Hanaakari - "The Gentian Bookmark" (Official Music Video)`
+**説明（JP）**
+```
+図書館の窓辺に秋の陽が傾く。あなたの借りた本に、竜胆をはさんだ。
+青むらさきの花は、陽ざしの中でだけ、そっと開く。言葉のかわりに、青く咲いている。
+押し花はやがて色を失くしても、閉じこめた秋の陽は消えないでしょう。
+竜胆の栞、時をこえて。あの日のわたしが、青く咲いている。悲しみごと あなたを 愛していたと。その時、微笑んで、秋の陽の中で。
+花明り ニューシングル「竜胆の栞」。時をこえて届く、静かな恋のバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：花明り
+#竜胆の栞 #花明り #新曲 #邦楽 #ラブソング #秋うた #Shorts
+```
+**説明（EN）**
+```
+Autumn sunlight slants through the library window. Into the book you borrowed, I slipped a gentian.
+The blue-violet flower opens softly only in the sun, blooming blue in place of words.
+Even when the pressed flower loses its color, the autumn light sealed inside won't fade.
+The gentian bookmark, across time: the me of that day is blooming blue. That I loved you, sorrow and all. Then you'll smile, in the autumn sun.
+"The Gentian Bookmark" is the new single from Hanaakari. A quiet love song that reaches across time.
+▼ Stream / Download
+[配信リンク]
+Performed by: Hanaakari
+#TheGentianBookmark #Hanaakari #NewSingle #JPop #LoveSong #AutumnSong #Shorts
+```
+**TuneCore** タイトル：竜胆の栞 / The Gentian Bookmark / リンドウノシオリ ／ ジャンル1：**J-Pop**・ジャンル2：**ポップ** ／ ムード：ラブ/ロマンス（静けさ重視ならフォーカス/スタディ）
+- 国内向け：`図書館の窓辺に秋の陽が傾く。あなたの借りた本に、竜胆をはさんだ。青むらさきの花は、陽ざしの中でだけ、そっと開く。言葉のかわりに、青く咲いている。押し花はやがて色を失くしても、閉じこめた秋の陽は消えないでしょう。竜胆の栞、時をこえて。あの日のわたしが、青く咲いている。悲しみごと あなたを 愛していたと。その時、微笑んで、秋の陽の中で。花明り ニューシングル「竜胆の栞」。時をこえて届く、静かな恋のバラードです。`
+- 海外向け：`Autumn sunlight slants through the library window. Into the book you borrowed, I slipped a gentian. The blue violet flower opens softly only in the sun, blooming blue in place of words. Even when the pressed flower loses its color, the autumn light sealed inside will not fade. The gentian bookmark, across time: the me of that day is blooming blue. That I loved you, sorrow and all. Then you will smile, in the autumn sun. "The Gentian Bookmark" is the new single from Hanaakari. A quiet love song that reaches across time.`
+
+## ㊲ 航跡 / w-Band feat. Akari Mizuno　【Rock / バラード（アンセム）】　（動画制作済み `kouseki.mp4`）
+**YouTube（和）** `航跡 / w-Band feat. Akari Mizuno【Music Video】`
+**YouTube（英）** `w-Band - "Wake" (feat. Akari Mizuno) (Official Music Video)`
+**説明（JP）**
+```
+言葉にならなかった想いは、夜の底で今も静かに光る。間違えた道の先にしか咲かない花がある。嵐の夜も凪いだ朝も、すべてがひとつの航路だった。
+振り返れば、一筋の光。暗い海に描いた航跡。間違いさえ いま輝いて、生きてきた それだけで 歌になる。
+w-Band ニューシングル「航跡」（featuring 水野灯）。声が枯れても歌は消えない。出会えたこと、それだけで奇跡だった。夜明けの海へ、歌よ届け、永遠に。
+▼ 配信・ダウンロード
+[配信リンク]
+Vocal：w-Band × 水野灯
+#航跡 #wBand #水野灯 #新曲 #邦楽 #ロックバラード #感動 #Shorts
+```
+**説明（EN）**
+```
+The feelings that never became words still glow, quietly, at the bottom of the night. Some flowers bloom only at the end of the wrong road. The storm and the calm were all one voyage.
+Look back: a single thread of light, the wake we drew across the dark sea. Even the mistakes are shining now, and just to have lived becomes a song.
+"Wake" is the new single from w-Band, featuring Akari Mizuno. Even when the voice withers, the song won't vanish. Just to have met you was a miracle. To the dawn sea, song, reach on, forever.
+▼ Stream / Download
+[配信リンク]
+Vocals: w-Band & Akari Mizuno
+#Wake #wBand #AkariMizuno #NewSingle #RockBallad #Cinematic #Shorts
+```
+**TuneCore** タイトル：航跡 / Wake / コウセキ ／ アーティスト：w-Band feat. Akari Mizuno（ダブリュー・バンド フィーチャリング ミズノ・アカリ）／ ジャンル1：**ロック**・ジャンル2：**J-Pop** ／ ムード：モチベーション/ハッピー
+- 国内向け：`言葉にならなかった想いは、夜の底で今も静かに光る。間違えた道の先にしか咲かない花がある。嵐の夜も凪いだ朝も、すべてがひとつの航路だった。振り返れば、一筋の光。暗い海に描いた航跡。間違いさえ いま輝いて、生きてきた それだけで歌になる。w-Band ニューシングル「航跡」featuring 水野灯。声が枯れても歌は消えない。出会えたこと、それだけで奇跡だった。夜明けの海へ、歌よ届け、永遠に。`
+- 海外向け：`The feelings that never became words still glow, quietly, at the bottom of the night. Some flowers bloom only at the end of the wrong road. The storm and the calm were all one voyage. Look back: a single thread of light, the wake we drew across the dark sea. Even the mistakes are shining now, and just to have lived becomes a song. "Wake" is the new single from w-Band, featuring Akari Mizuno. Even when the voice withers, the song will not vanish. Just to have met you was a miracle. To the dawn sea, song, reach on, forever.`
+> ※音源内部タイトルは「一筋の光」。リリース名は「航跡」で統一。
+
 > **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
 > **後回し（歌詞待ち・2曲）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale) → 歌詞が見つかり次第いつでも追記。
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix 動画・コピー済み）／ふたつのグラス（動画・コピー済み）／A Flower in the Stone（㉞・動画 flower-stone.mp4 済み）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）。
+> **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
 
