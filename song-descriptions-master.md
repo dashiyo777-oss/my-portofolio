@@ -1152,10 +1152,39 @@ Vocals: w-Band & Akari Mizuno
 - 海外向け：`The feelings that never became words still glow, quietly, at the bottom of the night. Some flowers bloom only at the end of the wrong road. The storm and the calm were all one voyage. Look back: a single thread of light, the wake we drew across the dark sea. Even the mistakes are shining now, and just to have lived becomes a song. "Wake" is the new single from w-Band, featuring Akari Mizuno. Even when the voice withers, the song will not vanish. Just to have met you was a miracle. To the dawn sea, song, reach on, forever.`
 > ※音源内部タイトルは「一筋の光」。リリース名は「航跡」で統一。
 
+## ㊳ スノーグローブの中で / MARON　【Holiday / Christmas】　（動画制作済み `snowglobe.mp4`）
+**YouTube（和）** `スノーグローブの中で / MARON【Music Video】`
+**YouTube（英）** `MARON - "Inside the Snow Globe" (Official Music Video)`
+**説明（JP）**
+```
+棚の上の小さなガラス。ひっくり返せば、雪が降る。赤い屋根と白いモミの木、いつかの冬が眠ってる。
+スノーグローブの中で、今年も雪が舞う。離れていても、同じ空に、ベルが鳴る——Merry Christmas。
+くるり回せば、会いにゆける。あの日の窓の、灯のもとへ。
+MARON ニューシングル「スノーグローブの中で」。世界中の窓の灯へ届く、やさしいクリスマスソング。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：MARON
+#スノーグローブの中で #MARON #クリスマスソング #新曲 #邦楽 #冬うた #MerryChristmas #Shorts
+```
+**説明（EN）**
+```
+A little glass on the shelf. Turn it over, and the snow begins to fall. Red roofs and white fir trees, a winter from long ago lies sleeping inside.
+Inside the snow globe, the snow dances again this year. Even far apart, under the same sky, the bells ring — Merry Christmas.
+Give it a turn, and you can go to meet them, to the light of that day's window.
+"Inside the Snow Globe" is the new single from MARON. A gentle Christmas song for the lit windows of the whole world.
+▼ Stream / Download
+[配信リンク]
+Performed by: MARON
+#InsideTheSnowGlobe #MARON #ChristmasSong #NewSingle #WinterSong #MerryChristmas #Shorts
+```
+**TuneCore** タイトル：スノーグローブの中で / Inside the Snow Globe / スノーグローブノナカデ ／ アーティスト：MARON（マロン）／ ジャンル1：**ホリデー**・ジャンル2：**J-Pop** ／ ムード：ウィークエンド/ホリデー
+- 国内向け：`棚の上の小さなガラス。ひっくり返せば、雪が降る。赤い屋根と白いモミの木、いつかの冬が眠ってる。スノーグローブの中で、今年も雪が舞う。離れていても、同じ空に、ベルが鳴る。Merry Christmas。くるり回せば、会いにゆける。あの日の窓の、灯のもとへ。MARON ニューシングル「スノーグローブの中で」。世界中の窓の灯へ届く、やさしいクリスマスソングです。`
+- 海外向け：`A little glass on the shelf. Turn it over, and the snow begins to fall. Red roofs and white fir trees, a winter from long ago lies sleeping inside. Inside the snow globe, the snow dances again this year. Even far apart, under the same sky, the bells ring. Merry Christmas. Give it a turn, and you can go to meet them, to the light of that day's window. "Inside the Snow Globe" is the new single from MARON. A gentle Christmas song for the lit windows of the whole world.`
+
 > **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
 > **後回し（歌詞待ち・2曲）**：Not a promise/Already Here(ELLY)／Say It Plain(Noah Vale) → 歌詞が見つかり次第いつでも追記。
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
