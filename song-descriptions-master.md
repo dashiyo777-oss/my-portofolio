@@ -1181,7 +1181,38 @@ Performed by: MARON
 - 国内向け：`棚の上の小さなガラス。ひっくり返せば、雪が降る。赤い屋根と白いモミの木、いつかの冬が眠ってる。スノーグローブの中で、今年も雪が舞う。離れていても、同じ空に、ベルが鳴る。Merry Christmas。くるり回せば、会いにゆける。あの日の窓の、灯のもとへ。MARON ニューシングル「スノーグローブの中で」。世界中の窓の灯へ届く、やさしいクリスマスソングです。`
 - 海外向け：`A little glass on the shelf. Turn it over, and the snow begins to fall. Red roofs and white fir trees, a winter from long ago lies sleeping inside. Inside the snow globe, the snow dances again this year. Even far apart, under the same sky, the bells ring. Merry Christmas. Give it a turn, and you can go to meet them, to the light of that day's window. "Inside the Snow Globe" is the new single from MARON. A gentle Christmas song for the lit windows of the whole world.`
 
-> **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
+## ㊶ The Light You Left On / Noah Vale　【Americana / Country / Folk】　（動画制作済み `light-left.mp4`）
+**YouTube（英）** `Noah Vale - "The Light You Left On" (Official Music Video)`
+**YouTube（和表示）** `The Light You Left On / Noah Vale【Music Video】`
+**説明（JP）**
+```
+ネオンの街を降りて、家までの長い道。星は紙の切り傷みたいに薄くて、でも収穫の月の向こうに、一度も消えない窓の灯りがあった。
+あなたは灯りを点けたままにしてくれた——わたしがいなかった冬のあいだ、ずっと。
+問いただしもせず、ただ「帰ってきたの?」とだけ。わたしは蛾で、嵐で、間違えた者だったのに——それでも、灯りは点いていた。
+だから今度は、わたしが灯りを点けておく。まだ道の途中にいる、誰かのために。
+Noah Vale ニューシングル「The Light You Left On」。帰る場所の灯りを歌う、温かなアメリカーナ。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Noah Vale
+#TheLightYouLeftOn #NoahVale #新曲 #洋楽 #アメリカーナ #カントリー #Shorts
+```
+**説明（EN）**
+```
+Down off the neon mile, a long road home. The stars were thin as paper cuts, but past the harvest moon, a window burned that never shut.
+You left the light on — through every winter I was gone.
+No questions on the door; you only asked if I'd come home. I was the moth, I was the storm, I was the one who got it wrong — but you left the light on.
+So I'll leave the light on, too — for anyone still on the road.
+"The Light You Left On" is the new single from Noah Vale. Warm Americana about the light that means home.
+▼ Stream / Download
+[配信リンク]
+Performed by: Noah Vale
+#TheLightYouLeftOn #NoahVale #NewSingle #Americana #Country #Folk #Shorts
+```
+**TuneCore** タイトル：The Light You Left On / ザ・ライト・ユー・レフト・オン（曲名のみ・和題なし）／ アーティスト：Noah Vale（ノア・ヴェイル）／ ジャンル1：**カントリー**・ジャンル2：**フォーク** ／ ムード：ラブ/ロマンス（寛ぎ重視ならリラックス/チルアウト）
+- 国内向け：`ネオンの街を降りて、家までの長い道。星は薄くて、でも収穫の月の向こうに、一度も消えない窓の灯りがあった。あなたは灯りを点けたままにしてくれた。わたしがいなかった冬のあいだ、ずっと。問いただしもせず、ただ帰ってきたのとだけ。わたしは蛾で、嵐で、間違えた者だったのに、それでも灯りは点いていた。だから今度は、わたしが灯りを点けておく。まだ道の途中にいる誰かのために。Noah Vale ニューシングル「The Light You Left On」。帰る場所の灯りを歌う、温かなアメリカーナです。`
+- 海外向け：`Down off the neon mile, a long road home. The stars were thin as paper cuts, but past the harvest moon, a window burned that never shut. You left the light on, through every winter I was gone. No questions on the door. You only asked if I would come home. I was the moth, I was the storm, I was the one who got it wrong, but you left the light on. So I will leave the light on, too, for anyone still on the road. "The Light You Left On" is the new single from Noah Vale. Warm Americana about the light that means home.`
+
+> **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。Noah Vale は Goodbye to the Neon Mile（街を去る）→ The Light You Left On（家に帰り着く）で物語が繋がる。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
 ## ㊴ Already Here（Not a Promise）/ ELLY　【Pop / Soul（バラード）】
 **YouTube（英）** `ELLY - "Already Here" (Official Music Video)`
 **YouTube（和表示）** `Already Here / ELLY【Music Video】`
@@ -1242,7 +1273,7 @@ Performed by: Noah Vale
 
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
