@@ -1212,6 +1212,35 @@ Performed by: Noah Vale
 - 国内向け：`ネオンの街を降りて、家までの長い道。星は薄くて、でも収穫の月の向こうに、一度も消えない窓の灯りがあった。あなたは灯りを点けたままにしてくれた。わたしがいなかった冬のあいだ、ずっと。問いただしもせず、ただ帰ってきたのとだけ。わたしは蛾で、嵐で、間違えた者だったのに、それでも灯りは点いていた。だから今度は、わたしが灯りを点けておく。まだ道の途中にいる誰かのために。Noah Vale ニューシングル「The Light You Left On」。帰る場所の灯りを歌う、温かなアメリカーナです。`
 - 海外向け：`Down off the neon mile, a long road home. The stars were thin as paper cuts, but past the harvest moon, a window burned that never shut. You left the light on, through every winter I was gone. No questions on the door. You only asked if I would come home. I was the moth, I was the storm, I was the one who got it wrong, but you left the light on. So I will leave the light on, too, for anyone still on the road. "The Light You Left On" is the new single from Noah Vale. Warm Americana about the light that means home.`
 
+## ㊷ Kick the Door Down / Rolling All Stars　【Dance-Rock / Party Anthem】　（動画制作済み `kickdoor.mp4`）
+**YouTube（英）** `Rolling All Stars - "Kick the Door Down" (Official Music Video)`
+**YouTube（和表示）** `Kick the Door Down / Rolling All Stars【Music Video】`
+**説明（JP）**
+```
+バス停、夜9時、誰も待っていない。四丁目の地下に、窓の灯り。
+床は君が誰かなんて気にしない。ベースは君が何を持ってるかなんて気にしない。今夜ここに辿り着いたなら、手を上げろ。
+HEY! HEY! ドアを蹴り開けろ。HEY! HEY! 朝まで踊ろう。6時になれば世界は返してやる。でも今夜だけは、誰にも渡さない。
+Rolling All Stars ニューシングル「Kick the Door Down」。四つ打ちで夜をぶち抜く、全員参加のダンス・ロック・アンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Rolling All Stars
+#KickTheDoorDown #RollingAllStars #新曲 #洋楽 #ダンスロック #パーティー #Shorts
+```
+**説明（EN）**
+```
+Bus stop, nine o'clock, nobody waiting. A basement on Fourth with a light in the window.
+The floor don't care who you are, the bass don't care what you got. Put your hands up if you made it here tonight.
+HEY! HEY! We're gonna kick the door down. HEY! HEY! We're gonna dance until it's morning. They can have the whole world back at six o'clock, but they can't have tonight.
+"Kick the Door Down" is the new single from Rolling All Stars. A four-on-the-floor, everybody-in dance-rock anthem that blasts through the night.
+▼ Stream / Download
+[配信リンク]
+Performed by: Rolling All Stars
+#KickTheDoorDown #RollingAllStars #NewSingle #DanceRock #PartyAnthem #Shorts
+```
+**TuneCore** タイトル：Kick the Door Down / キック・ザ・ドア・ダウン（曲名のみ・和題なし）／ アーティスト：Rolling All Stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**ダンス** ／ ムード：パーティー
+- 国内向け：`バス停、夜9時、誰も待っていない。四丁目の地下に、窓の灯り。床は君が誰かなんて気にしない。ベースは君が何を持ってるかなんて気にしない。今夜ここに辿り着いたなら、手を上げろ。HEY HEY ドアを蹴り開けろ。HEY HEY 朝まで踊ろう。6時になれば世界は返してやる。でも今夜だけは、誰にも渡さない。Rolling All Stars ニューシングル。四つ打ちで夜をぶち抜く、全員参加のダンスロックアンセムです。`
+- 海外向け：`Bus stop, nine o'clock, nobody waiting. A basement on Fourth with a light in the window. The floor don't care who you are, the bass don't care what you got. Put your hands up if you made it here tonight. HEY HEY we're gonna kick the door down. HEY HEY we're gonna dance until it's morning. They can have the whole world back at six o'clock, but they can't have tonight. The new single from Rolling All Stars. A four on the floor, everybody in dance rock anthem that blasts through the night.`
+
 > **関連メモ（配信プレイリスト用）**：ふたつのグラス／雨は琥珀色／聞かないでいい／Don't Have to Tell Me／Still Set for Two は「バー・喪失・空いた椅子」で世界観が通底。Noah Vale は Goodbye to the Neon Mile（街を去る）→ The Light You Left On（家に帰り着く）で物語が繋がる。日英ペア＝聞かないでいい⇔Don't Have to Tell Me、水平線 -Rise Again-⇔Horizon(Rise Again)、百億年前のパズル⇔The Grand Bloom。
 ## ㊴ Already Here（Not a Promise）/ ELLY　【Pop / Soul（バラード）】
 **YouTube（英）** `ELLY - "Already Here" (Official Music Video)`
@@ -1273,7 +1302,7 @@ Performed by: Noah Vale
 
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
