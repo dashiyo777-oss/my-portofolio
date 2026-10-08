@@ -1985,6 +1985,9 @@ async function startDiagnosis(){
   gT(()=>{window.scrollTo({top:0});},50);
 }
 
+/* ---- 計測ビーコン（D1 / 国別対応） ---- */
+try{new Image().src='https://api.eichinohi.com/api/hit?site=sae-yoshida&r='+Date.now();}catch(e){}
+
 </script>
 </body>
 </html>
