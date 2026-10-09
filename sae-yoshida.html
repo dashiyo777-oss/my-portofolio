@@ -1156,7 +1156,8 @@ function startDaily1(){
   startHanaCore();
 }
 function startHana5(){
-  HN=5;startHanaCore();
+  /* 大花園（5×5）は有料・政策ラボ側専用。健康版では提供せず、簡易版の花あわせに差し戻す */
+  startHana();
 }
 function startHanaCore(){
   gResolve=()=>{};clearGTimers();
