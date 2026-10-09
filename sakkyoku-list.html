@@ -49,6 +49,7 @@ td.title-cell .artist{display:block;font-weight:400;font-size:.72rem;color:var(-
 .badge.short-yes{background:var(--ok-soft);color:var(--ok)}
 .badge.short-no{background:#f1ede6;color:#b0a794}
 .badge.na{background:#f1ede6;color:#a79c88}
+.badge.new{background:#fdf0e7;color:#e8834e}
 /* sns cell */
 .sns-cell{display:flex;flex-direction:column;gap:3px;min-width:96px}
 .sns-toggle{font-size:.68rem;padding:3px 8px;border-radius:14px;border:1px solid var(--line);background:#f7f3ec;color:#a79c88;cursor:pointer;text-align:center;user-select:none}
@@ -198,6 +199,9 @@ const SONGS = [
   {id:"s59", reg:"", title:"Before my bedroom", artist:"Thinking cats", status:"未登録", note:false, yt:{pub:"2025-08-11", views:270}},
   {id:"s60", reg:"", title:"Summer session 1", artist:"Thinking cats", status:"未登録", note:false, yt:{pub:"2025-04-04", views:6272}},
   {id:"s61", reg:"", title:"Turn me on", artist:"Thinking cats", status:"未登録", note:false, yt:{pub:"2025-03-29", views:225}},
+  // ---- 新曲（ROUTER.FM配信登録前）----
+  {id:"s62", reg:"", title:"Kick the Door Down", artist:"Rolling All Stars", status:"新曲", note:false, memo0:"2026/10/09追加・歌詞/ジャケット完成"},
+  {id:"s63", reg:"", title:"The Light You Left On", artist:"Noah Vale", status:"新曲", note:false, memo0:"2026/10/09追加・歌詞/ジャケット完成（Goodbye to the Neon Mileの続編的内容）"},
 ];
 
 const PLATFORMS = [
@@ -297,7 +301,9 @@ function render(){
   if(sf === "yes") list = list.filter(hasShort);
   if(sf === "no") list = list.filter(m => !hasShort(m));
   list.sort((a,b)=>{
-    // 配信登録日が空（ROUTER未登録）の行は常に末尾へ
+    // 新曲は常に先頭、配信登録日が空（ROUTER未登録）の行は常に末尾へ
+    const an = a.status==="新曲", bn = b.status==="新曲";
+    if(an !== bn) return an ? -1 : 1;
     if(!a.reg && !b.reg) return a.id.localeCompare(b.id);
     if(!a.reg) return 1;
     if(!b.reg) return -1;
@@ -321,7 +327,7 @@ function render(){
         <span contenteditable="true" data-field="title" spellcheck="false">${escapeHtml(m.title)}</span>${m.check ? '<span class="badge check" title="スクリーンショットの文字が不鮮明だったため要確認。クリックして修正してください">要確認</span>' : ""}
         <span class="artist" contenteditable="true" data-field="artist" spellcheck="false">${escapeHtml(m.artist)}</span>
       </td>
-      <td><span class="badge ${m.status==="承認完了"?"ok":m.status==="審査中"?"wait":"na"}">${m.status}</span></td>
+      <td><span class="badge ${m.status==="承認完了"?"ok":m.status==="審査中"?"wait":m.status==="新曲"?"new":"na"}">${m.status}</span></td>
       <td class="num-col"><span class="badge ${short?"short-yes":"short-no"}">${short?"○ 掲載済":"− 未掲載"}</span></td>
       ${PLATFORMS.map(p=>{
         const s = m.sns[p.key];
