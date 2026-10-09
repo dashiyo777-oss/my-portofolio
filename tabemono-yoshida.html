@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>食べ物びっくり手帖｜よしだ（70歳）の無料雑学手帖</title>
+<meta name="description" content="クロワッサンの形は中身のサイン、ハチミツは3000年腐らない。食卓が楽しくなる味の裏がわを集めた、よしだ（70歳）がAIと作った無料の雑学手帖。毎日変わる「今日の5問クイズ」つき。会員登録・課金なし。JP/EN対応。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="よしだ（70歳の雑学手帖）">
+<meta property="og:title" content="食べ物びっくり手帖 — 今日の5問クイズ（無料）">
+<meta property="og:description" content="クロワッサンの形は中身のサイン、ハチミツは3000年腐らない。驚きの事実から食べ物を当てる日替わりクイズ。会員登録不要・無料。">
+<meta property="og:url" content="https://dashiyo777-oss.github.io/my-portofolio/tabemono-yoshida.html">
+<meta name="twitter:card" content="summary">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#100800">
+<style>
+:root{
+  --bg:#100800;--sf:#1C1000;--card:#271600;--bdr:#3D2800;
+  --ac:#FFA726;--acd:#7A4A00;--txt:#FFF8E7;--mut:#C4A060;--wow:#FF6B35;
+  --pan:#E8C56A;--fruit:#81C784;--drink:#64B5F6;--sweet:#F48FB1;--condiment:#FF7043;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:'Noto Sans JP',sans-serif;max-width:480px;margin:0 auto;min-height:100vh;}
+#hdr{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--bdr);padding:12px 14px 0;}
+.hrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.brand{display:flex;align-items:center;gap:8px}
+.bi{font-size:26px;line-height:1}
+.bjp{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:.04em}
+.ben{font-size:8px;font-weight:300;color:var(--mut);letter-spacing:.25em}
+.hbtns{display:flex;gap:6px}
+.hbtn{background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;line-height:1.2;}
+.hbtn.on{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
+/* 今日の5問クイズ */
+.qz-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:16px;margin-bottom:18px;}
+.qz-lead{font-size:13px;color:var(--txt);line-height:1.7;margin-bottom:10px;}
+.qz-meta{font-size:12px;color:var(--wow);margin-bottom:10px;}
+.qz-start{width:100%;padding:12px;border-radius:10px;border:none;background:var(--ac);color:var(--bg);font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.qz-row{display:flex;gap:8px;margin-top:8px;}
+.qz-sub{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bdr);background:var(--sf);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:12.5px;cursor:pointer;}
+.qz-q{font-size:13.5px;line-height:1.8;color:var(--txt);margin:10px 0 14px;font-weight:300;}
+.qz-cnt{font-size:11px;color:var(--mut);letter-spacing:.1em;}
+.qz-ch{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:14px;cursor:pointer;margin-bottom:8px;}
+.qz-ch.ok{border-color:var(--ac);background:rgba(0,229,204,.15);}
+.qz-ch.ng{border-color:#e05555;background:rgba(224,85,85,.12);}
+.qz-fb{font-size:13px;margin:4px 0 10px;color:var(--wow);min-height:18px;}
+.qz-next{width:100%;padding:11px;border-radius:10px;border:none;background:var(--wow);color:var(--bg);font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.qz-score{font-size:26px;font-weight:900;color:var(--ac);text-align:center;margin:8px 0;}
+/* モーダル */
+.qzm-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}.qzm-modal.show{display:flex}
+.qzm-box{background:var(--sf);border:1px solid rgba(255,107,53,.5);border-radius:18px;padding:24px;width:100%;max-width:320px;position:relative;}
+.qzm-title{font-size:16px;font-weight:900;color:var(--wow);margin-bottom:4px;}
+.qzm-cl{position:absolute;top:12px;right:14px;background:var(--card);border:1px solid var(--bdr);color:var(--mut);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;}
+/* トースト */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--bdr);color:var(--txt);border-radius:20px;padding:10px 20px;font-size:13px;z-index:300;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.sbar{margin-bottom:8px;display:none}
+.sbar.show{display:block}
+.sbar input{width:100%;background:var(--sf);border:1px solid var(--bdr);color:var(--txt);border-radius:10px;padding:8px 14px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;}
+.sbar input:focus{border-color:var(--ac)}
+.sbar input::placeholder{color:var(--mut)}
+.ctabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;}
+.ctabs::-webkit-scrollbar{display:none}
+.ctab{flex-shrink:0;background:transparent;border:1px solid var(--bdr);color:var(--mut);border-radius:20px;padding:4px 11px;font-size:11px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.ctab.on{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
+#main{padding:14px}
+.shd{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--ac);margin-bottom:10px;}
+.cnt{font-size:10px;color:var(--mut);margin-bottom:10px}
+.feat{background:linear-gradient(140deg,var(--card) 0%,#3A1800 100%);border:1px solid var(--acd);border-radius:16px;padding:18px 18px 14px;margin-bottom:20px;cursor:pointer;position:relative;transition:transform .15s;}
+.feat:active{transform:scale(.99)}
+.fe{font-size:52px;line-height:1;display:block;margin-bottom:8px}
+.fn{font-size:24px;font-weight:900;margin-bottom:2px}
+.fc{font-size:11px;color:var(--mut);margin-bottom:10px}
+.wrow{display:flex;align-items:center;gap:6px}
+.wlbl{font-size:10px;color:var(--mut);flex-shrink:0}
+.wdots{display:flex;gap:1px}
+.wd{font-size:14px;opacity:.2}
+.wd.on{opacity:1}
+.fhint{font-size:11px;color:var(--ac);margin-top:10px}
+.fstar{position:absolute;top:12px;right:12px;font-size:16px;cursor:pointer;background:none;border:none;opacity:.5;transition:opacity .15s;}
+.fstar.on{opacity:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:80px}
+.acard{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:12px 11px 10px;cursor:pointer;position:relative;transition:transform .15s,border-color .15s;min-height:110px;}
+.acard:active{transform:scale(.97)}
+.acard:hover{border-color:var(--acd)}
+.ce{font-size:30px;line-height:1;margin-bottom:6px;display:block}
+.cn{font-size:13px;font-weight:700;margin-bottom:1px}
+.cen{font-size:9px;color:var(--mut);margin-bottom:5px}
+.cbadge{display:inline-block;font-size:8px;border-radius:4px;padding:2px 6px;margin-bottom:4px;font-weight:700;}
+.c-pan{background:rgba(232,197,106,.15);color:var(--pan)}
+.c-fruit{background:rgba(129,199,132,.15);color:var(--fruit)}
+.c-drink{background:rgba(100,181,246,.15);color:var(--drink)}
+.c-sweet{background:rgba(244,143,177,.15);color:var(--sweet)}
+.c-condiment{background:rgba(255,112,67,.15);color:var(--condiment)}
+.cwow{display:flex;gap:2px;margin-top:2px}
+.cwd{font-size:9px;opacity:.2}
+.cwd.on{opacity:1}
+.acard .fstar{font-size:13px;top:7px;right:7px}
+.empty{text-align:center;padding:50px 20px;color:var(--mut)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
+.ov.show{display:block}
+.sh{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--sf);border-radius:20px 20px 0 0;padding:16px 18px 30px;z-index:100;max-height:72vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}
+.sh.show{transform:translateY(0)}
+.shhd{width:36px;height:4px;background:var(--bdr);border-radius:2px;margin:0 auto 14px}
+.shcl{position:absolute;top:12px;right:14px;background:var(--card);border:1px solid var(--bdr);color:var(--mut);border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;}
+.she{font-size:52px;line-height:1;display:block;margin-bottom:8px}
+.shn{font-size:22px;font-weight:900;margin-bottom:2px}
+.shen{font-size:12px;color:var(--mut);margin-bottom:8px}
+.shwrow{display:flex;align-items:center;gap:6px;margin:10px 0 14px}
+.shwlbl{font-size:10px;color:var(--mut)}
+.shwd{font-size:20px;opacity:.2}
+.shwd.on{opacity:1}
+.shdiv{border:none;border-top:1px solid var(--bdr);margin:0 0 14px}
+.shfact{font-size:14px;line-height:1.85;color:var(--txt);margin-bottom:10px;font-weight:300}
+.shsrc{font-size:10px;color:var(--ac);margin-bottom:16px}
+.shfav{width:100%;padding:12px;border-radius:10px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;}
+.shfav.on{background:rgba(255,167,38,.12);border-color:var(--ac);color:var(--ac)}
+.foot{max-width:480px;margin:24px auto 30px;padding:14px 18px;border:1px solid var(--bdr);border-radius:14px;font-size:12px;line-height:1.9;color:var(--mut);text-align:center;}
+.foot a{color:var(--ac);text-decoration:none;}
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="hrow">
+    <div class="brand">
+      <span class="bi">🍽️</span>
+      <div><div class="bjp">食べ物びっくり手帖</div><div class="ben">yoshida 70</div></div>
+    </div>
+    <div class="hbtns">
+      <button class="hbtn" id="btnS" onclick="toggleSearch()">🔍</button>
+      <button class="hbtn" id="btnL" onclick="toggleLang()">EN</button>
+      <button class="hbtn" id="btnF" onclick="toggleFavF()">🤍</button>
+    </div>
+  </div>
+  <div class="sbar" id="sbar">
+    <input type="search" id="si" placeholder="食べ物・特徴で検索…" oninput="onSearch(this.value)" autocomplete="off">
+  </div>
+  <div class="ctabs">
+    <button class="ctab on" onclick="setcat(this,'all')">🍽️ すべて</button>
+    <button class="ctab" onclick="setcat(this,'pan')">🥐 パン・麺</button>
+    <button class="ctab" onclick="setcat(this,'fruit')">🍎 果物・野菜</button>
+    <button class="ctab" onclick="setcat(this,'drink')">☕ 飲み物</button>
+    <button class="ctab" onclick="setcat(this,'sweet')">🍫 お菓子・乳製品</button>
+    <button class="ctab" onclick="setcat(this,'condiment')">🧂 調味料・その他</button>
+  </div>
+</header>
+<main id="main">
+  <div class="shd" id="tlbl"></div>
+  <div id="feat"></div>
+  <div class="shd" id="qzlbl"></div>
+  <div id="qzcard"></div>
+  <div class="shd" id="albl"></div>
+  <div class="cnt" id="cnt"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none"></div>
+</main>
+
+<div class="qzm-modal" id="qzModal">
+  <div class="qzm-box">
+    <button class="qzm-cl" onclick="closeQuiz()">✕</button>
+    <div class="qzm-title">🎯 <span id="qzmTitle">今日の5問</span></div>
+    <div id="qzBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="ov" id="ov" onclick="closeSheet()"></div>
+<div class="sh" id="sh">
+  <div class="shhd"></div>
+  <button class="shcl" onclick="closeSheet()">✕</button>
+  <div id="shc"></div>
+</div>
+
+<nav class="foot">
+  🍯 <b>食べ物びっくり手帖</b><br>
+  よしだ（70歳）が、AIと一緒に作った無料の雑学手帖です。<br>
+  会員登録もお金もいりません。どうぞ気軽に遊んでください。<br>
+  <a href="ageless-index.html">← よしだの記事一覧へ</a>
+</nav>
+
+<script>
+const DATA=[
+  {id:1,e:"🥐",n:"クロワッサン",ne:"Croissant",c:"pan",w:4,f:"フランスでは「三日月型＝マーガリン使用」「まっすぐ型＝純粋なバター使用」という業界慣習がある。形を見れば使った材料がわかる。",fe:"In France, curved croissants traditionally use margarine, while straight ones use pure butter. The shape reveals the ingredients — a tasty code hidden in plain sight.",s:"フランスパン文化"},
+  {id:2,e:"🍫",n:"チョコレート",ne:"Chocolate",c:"sweet",w:4,f:"約3000年間は飲み物として飲まれてきた。固形チョコが発明されたのは1847年（英国）。マヤ・アステカでは辛くスパイシーな飲み物だった。",fe:"Chocolate was consumed as a drink for ~3,000 years. Solid chocolate wasn't invented until 1847. The original Aztec cacao drink was bitter and spicy.",s:"食品史"},
+  {id:3,e:"🍓",n:"イチゴ",ne:"Strawberry",c:"fruit",w:4,f:"植物学的には「果実」ではなく「偽果」。食べている赤い部分は花托が膨らんだもの。本当の果実は表面のつぶつぶ（痩果）。",fe:"Botanically, strawberries are not true fruits. The red part is an enlarged receptacle. The actual fruits are the tiny seeds (achenes) on the surface.",s:"植物学"},
+  {id:4,e:"🥜",n:"ピーナッツ",ne:"Peanut",c:"fruit",w:3,f:"ナッツではなくマメ科植物の「豆」。花が咲いた後、子房が地中に潜って実を結ぶ「地上で咲いて地中で実る」珍しい植物。",fe:"Peanuts are not nuts but legumes. After flowering above ground, the stalk pushes into the soil where the pods develop — an unusual botanical phenomenon.",s:"農業植物学"},
+  {id:5,e:"🍋",n:"レモン",ne:"Lemon",c:"fruit",w:3,f:"「ビタミンCの王様」のイメージがあるが、イチゴや赤パプリカのほうが含有量が多い。赤パプリカ100gに170mg、レモン100gには50mgしかない。",fe:"Despite its reputation, lemons contain less Vitamin C than strawberries or red bell peppers. Red bell peppers have 170mg per 100g vs lemon's 50mg.",s:"栄養学データ"},
+  {id:6,e:"🍯",n:"はちみつ",ne:"Honey",c:"condiment",w:5,f:"密封保存すれば数千年でも腐らない。ツタンカーメンの墓（約3300年前）から発掘されたはちみつが今も食べられる状態だったとの記録がある。※ただし1歳未満の赤ちゃんには絶対に与えないこと（乳児ボツリヌス症の恐れ）。",fe:"Properly sealed honey never spoils. Honey found in Tutankhamun's tomb — over 3,300 years old — was reportedly still edible when archaeologists found it. Note: never give honey to infants under 1 year old (risk of infant botulism).",s:"食品保存科学"},
+  {id:7,e:"🍌",n:"バナナ",ne:"Banana",c:"fruit",w:3,f:"植物学的には「草（多年生ハーブ）」の実。木のように見える茎は「偽茎」で、葉の根元部分が重なって筒状になったもの。バナナ「の木」という木は存在しない。",fe:"Bananas grow on giant herbs, not trees. The 'trunk' is a pseudostem made of tightly packed leaf bases. There's no such thing as a banana tree.",s:"植物学"},
+  {id:8,e:"🧀",n:"チーズ",ne:"Cheese",c:"sweet",w:3,f:"世界最古のチーズは約7200年前のもの（ポーランドで発見）。EU内だけで1000種類以上、フランスだけで400種以上存在する。",fe:"The world's oldest known cheese dates ~7,200 years, found in Poland. France alone produces 400+ varieties. The EU has over 1,000 registered types.",s:"食品考古学"},
+  {id:9,e:"🌶️",n:"唐辛子",ne:"Chili Pepper",c:"condiment",w:4,f:"辛み成分カプサイシンは鳥には効かない。植物は哺乳類に種を消化させないために辛くなったが、鳥は種を遠くへ運ぶため忌避しない進化の知恵。",fe:"Capsaicin has no effect on birds. Chilis evolved spiciness to deter mammals (who crush seeds) while welcoming birds (who spread seeds intact). Elegant plant strategy.",s:"進化生態学"},
+  {id:10,e:"🍵",n:"抹茶",ne:"Matcha",c:"drink",w:4,f:"収穫前3週間以上、茶葉を日光から遮蔽することで旨味（テアニン）が増し苦み（カテキン）が抑えられる。同じ茶の木なのに全く異なる管理法で生まれる特別な茶。",fe:"Before harvest, matcha leaves are shade-grown for 3+ weeks, boosting umami (theanine) while reducing bitterness (catechins) — all from the same plant as regular green tea.",s:"茶業学"},
+  {id:11,e:"🥚",n:"白・茶色の卵",ne:"White vs Brown Eggs",c:"sweet",w:3,f:"白い卵と茶色い卵の違いはニワトリの品種だけ。栄養価にほぼ差はない。一般的に白い羽根の鶏は白い卵、赤茶の羽根の鶏は茶色い卵を産む。",fe:"The only difference between white and brown eggs is the hen's breed. There's virtually no nutritional difference. Feather color often predicts egg color.",s:"農業栄養学"},
+  {id:12,e:"☕",n:"コーヒー豆",ne:"Coffee Bean",c:"drink",w:3,f:"コーヒー豆は「豆」ではなく「コーヒーチェリー」という赤い実の種。カフェインは本来、虫を忌避するための天然農薬として植物が作り出した化合物。",fe:"Coffee 'beans' are seeds of a red fruit called the coffee cherry. Caffeine is a natural pesticide evolved by the plant to repel insects — now the world's most popular drug.",s:"植物生理学"},
+  {id:13,e:"🍕",n:"ナポリピッツァ",ne:"Neapolitan Pizza",c:"pan",w:3,f:"ナポリのピッツァ職人の技術は2017年にユネスコ無形文化遺産に登録された。本場のナポリピッツァは焼き時間60〜90秒以内と定義されている。",fe:"Neapolitan pizza-making was added to UNESCO's Intangible Cultural Heritage list in 2017. Authentic Neapolitan pizza must be baked in 60–90 seconds in a wood-fired oven.",s:"UNESCO文化遺産"},
+  {id:14,e:"🍷",n:"赤ワイン",ne:"Red Wine",c:"drink",w:3,f:"赤ワインの色は果汁ではなくブドウの皮から来ている。ほとんどの赤ブドウの果汁は白。皮ごと発酵させることで色素（アントシアニン）が溶け出す。",fe:"Red wine gets its color from grape skins, not juice. The juice of most red grapes is actually white. Fermenting with the skins extracts the red pigments.",s:"ワイン醸造学"},
+  {id:15,e:"🥦",n:"ブロッコリー",ne:"Broccoli",c:"fruit",w:3,f:"食べているのは「花のつぼみ（花蕾）」の集まり。放置すると黄色い小花が咲く。カリフラワーが白いのは葉で光が当たらないよう育てられるため。",fe:"We eat broccoli's flower buds. If left alone, it blooms into yellow flowers. Cauliflower is white because leaves are tied to block sunlight during growth.",s:"植物学"},
+  {id:16,e:"🧂",n:"市販わさび",ne:"Commercial Wasabi",c:"condiment",w:4,f:"スーパーやレストランで使われる市販わさびのほとんどはホースラディッシュ（西洋わさび）に着色したもの。本物の本わさびは非常に希少で高価。",fe:"Most commercial wasabi is actually colored horseradish. True Japanese wasabi (Wasabia japonica) is extremely rare and expensive to cultivate. You've probably never tasted the real thing.",s:"食品表示研究"},
+  {id:17,e:"🍊",n:"熱帯のオレンジ",ne:"Tropical Orange",c:"fruit",w:4,f:"熱帯地方のオレンジは熟しても緑色のまま。オレンジ色になるには低温が必要。輸出用はエチレンガス処理や低温管理でオレンジ色に変えられている。",fe:"In tropical countries, ripe oranges stay green — cold temperatures are needed to turn them orange. Export oranges are often treated with ethylene gas to develop their color.",s:"農業植物生理学"},
+  {id:18,e:"🫒",n:"オリーブ（生）",ne:"Raw Olive",c:"fruit",w:3,f:"生のオリーブはオレウロペインという苦み成分が強烈で、そのままでは食べられない。塩漬けや水さらしなどの加工が必須な食材。",fe:"Fresh olives are inedibly bitter due to oleuropein. They must be cured through salt-brining or water-soaking before eating — they're always a processed food.",s:"食品加工学"},
+  {id:19,e:"🍦",n:"ワッフルコーン",ne:"Ice Cream Cone",c:"sweet",w:3,f:"1904年のセントルイス万博が起源とされる。アイスクリーム屋が皿を切らしたとき、隣のワッフル屋が自分のワッフルを丸めてコーンを作ったのが始まりという逸話がある。",fe:"The ice cream cone was reportedly born at the 1904 St. Louis World's Fair, when a waffle vendor rolled his waffles into a cone to help an ice cream vendor who ran out of dishes.",s:"食品史"},
+  {id:20,e:"🍜",n:"インスタントラーメン",ne:"Instant Ramen",c:"pan",w:4,f:"アジア人調査で「20世紀最大の日本の発明」第1位に選ばれた（日清食品調べ）。現在、世界で年間約1200億食消費されている驚異の発明。",fe:"Instant ramen was voted the greatest Japanese invention of the 20th century in an Asian consumer poll. Over 120 billion servings are consumed globally every year.",s:"世界インスタントラーメン協会"},
+];
+const CATS={all:{ja:"すべて",en:"All"},pan:{ja:"パン・麺",en:"Bread & Noodles",cls:"c-pan"},fruit:{ja:"果物・野菜",en:"Fruit & Vegetables",cls:"c-fruit"},drink:{ja:"飲み物",en:"Drinks",cls:"c-drink"},sweet:{ja:"お菓子・乳製品",en:"Sweets & Dairy",cls:"c-sweet"},condiment:{ja:"調味料・その他",en:"Condiments & More",cls:"c-condiment"}};
+let lang="ja",cat="all",favOnly=false,q="";
+let favs=new Set();try{favs=new Set(JSON.parse(localStorage.getItem("gmy_f")||"[]"));}catch(e){}
+const savF=()=>{try{localStorage.setItem("gmy_f",JSON.stringify([...favs]));}catch(e){}};
+
+const today=()=>DATA[Math.floor(Date.now()/86400000)%DATA.length];
+const filtered=()=>DATA.filter(a=>{if(favOnly&&!favs.has(a.id))return false;if(cat!=="all"&&a.c!==cat)return false;if(q){const lq=q.toLowerCase();return a.n.includes(q)||a.ne.toLowerCase().includes(lq)||a.f.includes(q)||a.fe.toLowerCase().includes(lq);}return true;});
+const wdH=(n,cls,sz)=>Array.from({length:5},(_,i)=>`<span class="${cls}${i<n?" on":""}" style="font-size:${sz}px">⭐</span>`).join("");
+function render(){
+  const L=lang,f=today(),list=filtered(),cl=CATS[f.c];
+  document.getElementById("tlbl").textContent=L==="ja"?"🌟 今日の食べ物びっくり":"🌟 TODAY'S FOOD FACT";
+  document.getElementById("albl").textContent=L==="ja"?"🍽️ たべものカード":"🍽️ FOOD CARDS";
+  document.getElementById("si").placeholder=L==="ja"?"食べ物・特徴で検索…":"Search food facts...";
+  document.getElementById("feat").innerHTML=`<div class="feat" onclick="openSheet(${f.id})"><button class="fstar${favs.has(f.id)?" on":""}" onclick="event.stopPropagation();toggleFav(${f.id})">${favs.has(f.id)?"❤️":"🤍"}</button><span class="fe">${f.e}</span><div class="fn">${L==="ja"?f.n:f.ne}</div><div class="fc">${L==="ja"?cl.ja:cl.en}</div><div class="wrow"><span class="wlbl">びっくり度</span><div class="wdots">${wdH(f.w,"wd",15)}</div></div><div class="fhint">${L==="ja"?"▼ タップして詳しく":"▼ Tap for details"}</div></div>`;
+  document.getElementById("cnt").textContent=L==="ja"?`${list.length}品表示中（全${DATA.length}品）`:`${list.length} of ${DATA.length} food facts`;
+  const empty=document.getElementById("empty"),grid=document.getElementById("grid");
+  if(!list.length){grid.innerHTML="";empty.style.display="block";empty.textContent=L==="ja"?"🔍 見つかりませんでした":"🔍 No food facts found";}
+  else{empty.style.display="none";grid.innerHTML=list.map(a=>{const cl=CATS[a.c];return`<div class="acard" onclick="openSheet(${a.id})"><button class="fstar${favs.has(a.id)?" on":""}" onclick="event.stopPropagation();toggleFav(${a.id})">${favs.has(a.id)?"❤️":"🤍"}</button><span class="ce">${a.e}</span><div class="cn">${L==="ja"?a.n:a.ne}</div><div class="cen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}">${L==="ja"?cl.ja:cl.en}</span><div class="cwow">${wdH(a.w,"cwd",9)}</div></div>`;}).join("");}
+  renderQuizCard();
+}
+
+// ===== 🎯 今日の5問クイズ（日替わり・全員同じ出題） =====
+const QZ_URL="https://dashiyo777-oss.github.io/my-portofolio/tabemono-yoshida.html";
+const qzDay=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/86400000);
+function qzRng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function qzLoad(){try{return JSON.parse(localStorage.getItem("gmy_quiz"))||{};}catch(e){return{};}}
+function qzSave(s){try{localStorage.setItem("gmy_quiz",JSON.stringify(s));}catch(e){}}
+function qzBuild(seed){
+  const rnd=qzRng(seed);
+  const shuf=arr=>{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  return shuf(DATA).slice(0,5).map(ans=>{
+    const others=DATA.filter(x=>x.id!==ans.id);
+    const d=shuf(others.filter(x=>x.c===ans.c)).concat(shuf(others.filter(x=>x.c!==ans.c))).slice(0,2);
+    return {ans:ans,chs:shuf([ans].concat(d))};
+  });
+}
+let qz=null;
+function renderQuizCard(){
+  const L=lang,st=qzLoad(),d=qzDay(),done=st.d===d;
+  document.getElementById("qzlbl").textContent=L==="ja"?"🎯 今日の5問クイズ":"🎯 TODAY'S QUIZ";
+  const meta=done?(L==="ja"?`今日の成績 ${st.best}/5`+(st.streak>1?` ・🔥 ${st.streak}日連続`:""):`Today ${st.best}/5`+(st.streak>1?` ・🔥 ${st.streak}-day streak`:"")):"";
+  document.getElementById("qzcard").innerHTML=`<div class="qz-card">`+
+    (done
+      ?`<div class="qz-meta">${meta}</div><div class="qz-lead">${L==="ja"?"明日も新しい5問が出ます。":"New 5 questions tomorrow."}</div><div class="qz-row"><button class="qz-sub" onclick="shareQuiz()">${L==="ja"?"📤 成績をシェア":"📤 Share score"}</button><button class="qz-sub" onclick="startQuiz(true)">${L==="ja"?"🔁 練習モード":"🔁 Practice"}</button></div>`
+      :`<div class="qz-lead">${L==="ja"?"驚きの事実からどの食べ物かを当てる3択。毎日0時に全員同じ5問が出ます。全問正解できますか。":"Guess the food from the fact. Same 5 questions for everyone, daily."}</div><button class="qz-start" onclick="startQuiz(false)">${L==="ja"?"挑戦する":"Start"}</button>`)
+    +`</div>`;
+}
+function startQuiz(practice){
+  qz={qs:qzBuild(practice?Math.floor(Math.random()*1e9):qzDay()),i:0,score:0,practice:practice};
+  document.getElementById("qzmTitle").textContent=practice?(lang==="ja"?"練習モード":"Practice"):(lang==="ja"?"今日の5問":"Today's 5");
+  document.getElementById("qzModal").classList.add("show");
+  qzQuestion();
+}
+function closeQuiz(){document.getElementById("qzModal").classList.remove("show");qz=null;}
+function qzQuestion(){
+  const L=lang,q=qz.qs[qz.i];
+  const f=L==="ja"?q.ans.f:q.ans.fe;
+  const txt=f.length>150?f.slice(0,150)+"…":f;
+  document.getElementById("qzBody").innerHTML=`<div class="qz-cnt">Q${qz.i+1} / 5</div><div class="qz-q">${txt}</div>`+
+    q.chs.map((c,i)=>`<button class="qz-ch" id="qzc${i}" onclick="qzAnswer(${i})">${c.e} ${L==="ja"?c.n:c.ne}</button>`).join("")+
+    `<div class="qz-fb" id="qzfb"></div>`;
+}
+function qzAnswer(i){
+  const L=lang,q=qz.qs[qz.i],ok=q.chs[i].id===q.ans.id;
+  q.chs.forEach((c,j)=>{const el=document.getElementById("qzc"+j);el.disabled=true;if(c.id===q.ans.id)el.classList.add("ok");else if(j===i)el.classList.add("ng");});
+  if(ok)qz.score++;
+  document.getElementById("qzfb").textContent=ok?(L==="ja"?"⭕ 正解":"⭕ Correct"):(L==="ja"?`答えは ${q.ans.e} ${q.ans.n}`:`Answer: ${q.ans.e} ${q.ans.ne}`);
+  const last=qz.i>=4;
+  document.getElementById("qzfb").insertAdjacentHTML("afterend",`<button class="qz-next" onclick="${last?"qzFinish()":"qzNext()"}">${last?(L==="ja"?"結果を見る":"See result"):(L==="ja"?"次の問題へ":"Next")}</button>`);
+}
+function qzNext(){qz.i++;qzQuestion();}
+function qzFinish(){
+  const L=lang,sc=qz.score,d=qzDay();
+  if(!qz.practice){
+    const st=qzLoad();
+    if(st.d!==d){st.streak=(st.lastd===d-1&&st.streak)?st.streak+1:1;st.lastd=d;st.d=d;st.best=sc;}
+    else if(sc>(st.best||0)){st.best=sc;}
+    qzSave(st);
+  }
+  const msg=sc===5?(L==="ja"?"全問正解。食の博士です":"Perfect. Food expert"):sc>=3?(L==="ja"?"なかなかの食通です":"Nice work"):(L==="ja"?"明日リベンジできます":"Try again tomorrow");
+  document.getElementById("qzBody").innerHTML=`<div class="qz-score">${sc} / 5</div><div class="qz-lead" style="text-align:center">${msg}</div>`+
+    (qz.practice?"":`<button class="qz-start" onclick="shareQuiz()">${L==="ja"?"📤 成績をシェアする":"📤 Share score"}</button>`)+
+    `<div class="qz-row"><button class="qz-sub" onclick="closeQuiz();render()">${L==="ja"?"閉じる":"Close"}</button></div>`;
+}
+function shareQuiz(){
+  const L=lang,st=qzLoad();
+  const txt=(L==="ja"
+    ?`🍽 たべものクイズ 今日の5問、${st.best||0}/5問正解でした`+(st.streak>1?`（🔥${st.streak}日連続挑戦中）`:"")+`\n#食べ物びっくり手帖\n`
+    :`🍽 Food quiz: I scored ${st.best||0}/5 today\n#FoodFactsNotebook\n`)+QZ_URL;
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
+  else{try{navigator.clipboard.writeText(txt);showToast(L==="ja"?"📋 シェア文をコピーしました":"📋 Copied share text");}catch(e){}}
+}
+
+function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000);}
+function openSheet(id){
+  const a=DATA.find(x=>x.id===id);if(!a)return;
+  const L=lang,cl=CATS[a.c],isFav=favs.has(a.id);
+  document.getElementById("shc").innerHTML=`<span class="she">${a.e}</span><div class="shn">${L==="ja"?a.n:a.ne}</div><div class="shen">${L==="ja"?a.ne:a.n}</div><span class="cbadge ${cl.cls}" style="font-size:10px;padding:3px 8px">${L==="ja"?cl.ja:cl.en}</span><div class="shwrow"><span class="shwlbl">${L==="ja"?"びっくり度":"Surprise"}</span>${Array.from({length:5},(_,i)=>`<span class="shwd${i<a.w?" on":""}">⭐</span>`).join("")}</div><hr class="shdiv"><div class="shfact">${L==="ja"?a.f:a.fe}</div><div class="shsrc">📚 出典：${a.s}</div><button class="shfav${isFav?" on":""}" id="sfb">${isFav?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites")}</button>`;
+  document.getElementById("sfb").onclick=function(){toggleFav(a.id);const now=favs.has(a.id);this.className="shfav"+(now?" on":"");this.textContent=now?(L==="ja"?"❤️ お気に入り済み":"❤️ Favorited"):(L==="ja"?"🤍 お気に入りに追加":"🤍 Add to favorites");};
+  document.getElementById("ov").classList.add("show");document.getElementById("sh").classList.add("show");document.body.style.overflow="hidden";
+}
+function closeSheet(){document.getElementById("ov").classList.remove("show");document.getElementById("sh").classList.remove("show");document.body.style.overflow="";}
+function toggleFav(id){favs.has(id)?favs.delete(id):favs.add(id);savF();render();}
+function toggleLang(){lang=lang==="ja"?"en":"ja";document.getElementById("btnL").textContent=lang==="ja"?"EN":"JP";document.documentElement.lang=lang;render();}
+function toggleFavF(){favOnly=!favOnly;document.getElementById("btnF").classList.toggle("on",favOnly);document.getElementById("btnF").textContent=favOnly?"❤️":"🤍";render();}
+function toggleSearch(){const sb=document.getElementById("sbar"),shown=sb.classList.contains("show");sb.classList.toggle("show",!shown);document.getElementById("btnS").classList.toggle("on",!shown);if(!shown)document.getElementById("si").focus();else{q="";document.getElementById("si").value="";render();}}
+function onSearch(v){q=v;render();}
+function setcat(btn,c){document.querySelectorAll(".ctab").forEach(t=>t.classList.remove("on"));btn.classList.add("on");cat=c;render();}
+render();
+</script>
+</body>
+</html>
