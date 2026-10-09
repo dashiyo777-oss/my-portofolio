@@ -272,6 +272,7 @@ function qzAnswer(i){
 function qzNext(){qz.i++;qzQuestion();}
 function qzFinish(){
   const L=lang,sc=qz.score,d=qzDay();
+  try{new Image().src='https://api.eichinohi.com/api/hit?site=tabemono-yoshida-quiz&r='+Date.now();}catch(e){}
   if(!qz.practice){
     const st=qzLoad();
     if(st.d!==d){st.streak=(st.lastd===d-1&&st.streak)?st.streak+1:1;st.lastd=d;st.d=d;st.best=sc;}
@@ -308,6 +309,9 @@ function toggleSearch(){const sb=document.getElementById("sbar"),shown=sb.classL
 function onSearch(v){q=v;render();}
 function setcat(btn,c){document.querySelectorAll(".ctab").forEach(t=>t.classList.remove("on"));btn.classList.add("on");cat=c;render();}
 render();
+
+/* ---- 計測ビーコン（D1 / 国別対応） ---- */
+try{new Image().src='https://api.eichinohi.com/api/hit?site=tabemono-yoshida&r='+Date.now();}catch(e){}
 </script>
 </body>
 </html>
