@@ -1300,9 +1300,39 @@ Performed by: Noah Vale
 - 国内向け：`出会う誰もが、優しい言葉をくれる。夏のワインみたいに甘くて、夜明けには消えている。聞きたいことは、もう十分聞いた。誰か、もっと近くで、はっきり本当のことを言ってくれ。はっきり言って。たとえ傷ついても、それでいい。真実は、わたしには残酷じゃない。はっきり言うこと、それだけが、わたしを自由にする優しさだ。Noah Vale ニューシングル「Say It Plain」。甘い嘘より真実を求める、骨太のアメリカーナです。`
 - 海外向け：`Everyone I meet has something kind to say, sweet as summer wine, and gone by break of day. I have heard my fill of what I want to hear. Somebody come closer, tell me something clear. Say it plain, and if it cuts me, let it cut. Truth is not a cruelty to me. Say it plain, that is the only kindness that will set me free. "Say It Plain" is the new single from Noah Vale. Rugged Americana for anyone who would take the hard truth over a soft lie.`
 
+## ㊸ 子猫のロック / Maron　【Kids / Rock（キッズ・ロック）】　（動画制作済み `koneko.mp4`）
+**YouTube（和）** `子猫のロック / Maron【Music Video】`
+**YouTube（英）** `Maron - "Kitten Rock 'n' Roll" (Official Music Video)`
+**説明（JP）**
+```
+朝の光でおはよう。毛糸のボールを転がして、小さなバンドのはじまりだ。
+ニャ ニャ ニャ Rock 'n' Roll。ちいさな こねこの Rock 'n' Roll。
+ジャンプ ジャンプ ソファーをこえて、ゴロゴロ ハートが さけぶんだ——せかいで いちばん じゆうなの。
+手をあげて、しっぽ ふりふり、みんなで いっしょに（ニャー！）。あそびつかれたら、おひさまの窓辺でまるくなって、ゴロゴロ おやすみ。
+Maron 新曲「子猫のロック」。2歳からおとなまで、親子で踊れるごきげんキッズ・ロックです。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Maron
+#子猫のロック #Maron #新曲 #キッズソング #こどものうた #ねこ #Shorts
+```
+**説明（EN）**
+```
+Morning light says good morning. Roll the ball of yarn — the little band is starting up.
+Nya nya nya, rock 'n' roll. We little kittens rock 'n' roll. Jump, jump, over the sofa; purr-purr, our hearts cry out — the freest in the whole wide world.
+Paws up, tails swishing, all together now — meow! And when we're all played out, we curl up by the sunny window and purr ourselves to sleep.
+"Kitten Rock 'n' Roll" is the new song from Maron. A feel-good kids' rock 'n' roll the whole family can bounce to, ages 2 and up.
+▼ Stream / Download
+[配信リンク]
+Performed by: Maron
+#KittenRock #Maron #NewSong #KidsSong #RockForKids #Cats #Shorts
+```
+**TuneCore** タイトル：子猫のロック / Kitten Rock 'n' Roll / コネコノロック ／ アーティスト：Maron（マロン）／ ジャンル1：**ロック**・ジャンル2：**キッズ** ／ ムード：モチベーション/ハッピー（元気・パーティー寄りなら パーティー）
+- 国内向け：`朝の光でおはよう。毛糸のボールを転がして、小さなバンドのはじまりだ。ニャ ニャ ニャ Rock 'n' Roll。ちいさな こねこの Rock 'n' Roll。ジャンプ ジャンプ ソファーをこえて、ゴロゴロ ハートが さけぶんだ。せかいで いちばん じゆうなの。手をあげて、しっぽ ふりふり、みんなで いっしょに、ニャー。あそびつかれたら、おひさまの窓辺でまるくなって、ゴロゴロ おやすみ。Maron 新曲「子猫のロック」。2歳からおとなまで、親子で踊れるごきげんキッズロックです。`
+- 海外向け：`Morning light says good morning. Roll the ball of yarn, the little band is starting up. Nya nya nya, rock and roll. We little kittens rock and roll. Jump, jump, over the sofa. Purr purr, our hearts cry out. The freest in the whole wide world. Paws up, tails swishing, all together now, meow. And when we are all played out, we curl up by the sunny window and purr ourselves to sleep. "Kitten Rock 'n' Roll" is the new song from Maron. A feel good kids rock and roll the whole family can bounce to, ages 2 and up.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
