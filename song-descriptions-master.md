@@ -1330,9 +1330,40 @@ Performed by: Maron
 - 国内向け：`朝の光でおはよう。毛糸のボールを転がして、小さなバンドのはじまりだ。ニャ ニャ ニャ Rock 'n' Roll。ちいさな こねこの Rock 'n' Roll。ジャンプ ジャンプ ソファーをこえて、ゴロゴロ ハートが さけぶんだ。せかいで いちばん じゆうなの。手をあげて、しっぽ ふりふり、みんなで いっしょに、ニャー。あそびつかれたら、おひさまの窓辺でまるくなって、ゴロゴロ おやすみ。Maron 新曲「子猫のロック」。2歳からおとなまで、親子で踊れるごきげんキッズロックです。`
 - 海外向け：`Morning light says good morning. Roll the ball of yarn, the little band is starting up. Nya nya nya, rock and roll. We little kittens rock and roll. Jump, jump, over the sofa. Purr purr, our hearts cry out. The freest in the whole wide world. Paws up, tails swishing, all together now, meow. And when we are all played out, we curl up by the sunny window and purr ourselves to sleep. "Kitten Rock 'n' Roll" is the new song from Maron. A feel good kids rock and roll the whole family can bounce to, ages 2 and up.`
 
+## ㊹ 白い帆 / Seira Lumen　【Cinematic / Orchestral Ballad（J-Pop）】　（動画制作済み `shiroihan.mp4`）
+**YouTube（和）** `白い帆 / Seira Lumen【Music Video】`
+**YouTube（英）** `Seira Lumen - "White Sail" (Official Music Video)`
+**説明（JP）**
+```
+夜明けの港で、古いロープをほどく。泣いた日々さえ波に預けて、私は今、白い帆を上げる。
+母がくれた小さな歌を胸の灯にして、誰のためでもなく漕ぎ出すの。怖くはない——空がこんなに広いから。
+歌え 白い帆よ、光の海を。はるかな青へ、心を放て。失くしたものも抱きしめたまま、私は行く、風になって。
+嵐の夜も越えてきた。この胸だけは、沈まなかった。
+Seira Lumen 新曲「白い帆」。喪失を抱きしめ、光へ漕ぎ出す——オーケストラと合唱が高鳴るシネマティック・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Seira Lumen
+#白い帆 #SeiraLumen #新曲 #邦楽 #バラード #シネマティック #Shorts
+```
+**説明（EN）**
+```
+At the dawn harbor, I loosen the old rope. I give even my weeping days to the waves — and now I raise my white sail.
+A small song my mother gave me, kept burning in my chest; I row out, for no one but myself. I'm not afraid — the sky is this wide.
+Sing, white sail, across the sea of light. Toward the far blue, set your heart free. Holding even what I've lost, I sail on — becoming the wind.
+I've come through nights of storms, and this heart alone never sank.
+"White Sail" is the new single from Seira Lumen — a cinematic ballad of carrying your losses and rowing toward the light, swelling with full orchestra and choir.
+▼ Stream / Download
+[配信リンク]
+Performed by: Seira Lumen
+#WhiteSail #SeiraLumen #NewSong #Cinematic #Ballad #Shorts
+```
+**TuneCore** タイトル：白い帆 / White Sail / シロイホ ／ アーティスト：Seira Lumen（セイラ・ルーメン）／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：モチベーション/ハッピー（壮大・感動重視。静けさ重視ならリラックス/チルアウト）
+- 国内向け：`夜明けの港で、古いロープをほどく。泣いた日々さえ波に預けて、私は今、白い帆を上げる。母がくれた小さな歌を胸の灯にして、誰のためでもなく漕ぎ出すの。怖くはない。空がこんなに広いから。歌え 白い帆よ、光の海を。はるかな青へ、心を放て。失くしたものも抱きしめたまま、私は行く、風になって。嵐の夜も越えてきた。この胸だけは、沈まなかった。Seira Lumen 新曲「白い帆」。喪失を抱きしめ、光へ漕ぎ出す、オーケストラと合唱が高鳴るシネマティックバラードです。`
+- 海外向け：`At the dawn harbor, I loosen the old rope. I give even my weeping days to the waves, and now I raise my white sail. A small song my mother gave me, kept burning in my chest, I row out for no one but myself. I am not afraid, the sky is this wide. Sing, white sail, across the sea of light. Toward the far blue, set your heart free. Holding even what I have lost, I sail on, becoming the wind. I have come through nights of storms, and this heart alone never sank. "White Sail" is the new single from Seira Lumen, a cinematic ballad of carrying your losses and rowing toward the light, swelling with full orchestra and choir.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
