@@ -1361,9 +1361,38 @@ Performed by: Seira Lumen
 - 国内向け：`夜明けの港で、古いロープをほどく。泣いた日々さえ波に預けて、私は今、白い帆を上げる。母がくれた小さな歌を胸の灯にして、誰のためでもなく漕ぎ出すの。怖くはない。空がこんなに広いから。歌え 白い帆よ、光の海を。はるかな青へ、心を放て。失くしたものも抱きしめたまま、私は行く、風になって。嵐の夜も越えてきた。この胸だけは、沈まなかった。Seira Lumen 新曲「白い帆」。喪失を抱きしめ、光へ漕ぎ出す、オーケストラと合唱が高鳴るシネマティックバラードです。`
 - 海外向け：`At the dawn harbor, I loosen the old rope. I give even my weeping days to the waves, and now I raise my white sail. A small song my mother gave me, kept burning in my chest, I row out for no one but myself. I am not afraid, the sky is this wide. Sing, white sail, across the sea of light. Toward the far blue, set your heart free. Holding even what I have lost, I sail on, becoming the wind. I have come through nights of storms, and this heart alone never sank. "White Sail" is the new single from Seira Lumen, a cinematic ballad of carrying your losses and rowing toward the light, swelling with full orchestra and choir.`
 
+## ㊺ ジャスミンティーが冷めるまで / 水野灯　【しっとり系バラード（J-Pop）】　（動画制作済み `jasmine.mp4`）
+**YouTube（和）** `ジャスミンティーが冷めるまで / 水野灯【Music Video】`
+**YouTube（英）** `Akari Mizuno - "Until the Jasmine Tea Goes Cold" (Official Music Video)`
+**説明（JP）**
+```
+雨上がりの夜の窓辺。あなたが好きだった白いカップを、棚の奥から出してみたの。
+泣くためじゃない、忘れるため——ジャスミンティーが冷めるまでは、あなたを想っていてもいいでしょう。
+最後のひとくち飲みほしたら、明日の私に戻るから。空のカップに映った月。明日の私は、きっと笑ってる。
+水野灯 新曲「ジャスミンティーが冷めるまで」。一杯のお茶が冷めるまでの、やさしい決別と再生のバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：水野灯
+#ジャスミンティーが冷めるまで #水野灯 #新曲 #邦楽 #バラード #失恋ソング #Shorts
+```
+**説明（EN）**
+```
+A rainy night by the window. I took the white cup you loved down from the back of the shelf.
+Not to cry — but to let you go. Until the jasmine tea goes cold, let me keep thinking of you, won't you.
+When I drink the last sip, I'll return to tomorrow's me. A moon, reflected in the empty cup. Tomorrow, I'll surely be smiling.
+"Until the Jasmine Tea Goes Cold" is the new song from Akari Mizuno — a tender ballad of farewell and quiet healing, lasting just as long as a cup of tea stays warm.
+▼ Stream / Download
+[配信リンク]
+Performed by: Akari Mizuno
+#JasmineTea #AkariMizuno #NewSong #JPop #Ballad #Shorts
+```
+**TuneCore** タイトル：ジャスミンティーが冷めるまで / Until the Jasmine Tea Goes Cold / ジャスミンティーガサメルマデ ／ アーティスト：水野灯（ミズノ・アカリ）／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：ブルー/サッド（切なさ・失恋。癒やし重視なら リラックス/チルアウト）
+- 国内向け：`雨上がりの夜の窓辺。あなたが好きだった白いカップを、棚の奥から出してみたの。泣くためじゃない、忘れるため。ジャスミンティーが冷めるまでは、あなたを想っていてもいいでしょう。最後のひとくち飲みほしたら、明日の私に戻るから。空のカップに映った月。明日の私は、きっと笑ってる。水野灯 新曲「ジャスミンティーが冷めるまで」。一杯のお茶が冷めるまでの、やさしい決別と再生のバラードです。`
+- 海外向け：`A rainy night by the window. I took the white cup you loved down from the back of the shelf. Not to cry, but to let you go. Until the jasmine tea goes cold, let me keep thinking of you, won't you. When I drink the last sip, I will return to tomorrow's me. A moon, reflected in the empty cup. Tomorrow, I will surely be smiling. "Until the Jasmine Tea Goes Cold" is the new song from Akari Mizuno, a tender ballad of farewell and quiet healing, lasting just as long as a cup of tea stays warm.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
