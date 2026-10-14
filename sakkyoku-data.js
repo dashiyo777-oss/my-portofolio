@@ -20,7 +20,7 @@ const SONGS = [
   {id:"s11", nodee:"2krfx2et8uv5", tk:true, reg:"2026-08-28", title:"トキメキ上書き中",         artist:"Maron", status:"手続完了", note:false, yt:{pub:"2026-09-12", views:811}},
   {id:"s12", nodee:"pp6x0pus1spc", x:{views:19}, tk:true, reg:"2026-08-26", title:"愛がはじまる場所",         artist:"花明り", status:"手続完了", note:false,  yt:{pub:"2026-09-12", views:1680}},
   {id:"s13", nodee:"j6d9xrhvysj0", tk:true, reg:"2026-08-26", title:"さよならの続き",           artist:"琥珀譲二 & 白詰玲", status:"手続完了", note:false, yt:{pub:"2026-09-19", views:1081}},
-  {id:"s14", tk:true, reg:"2026-08-22", title:"ふたつのグラス",           artist:"琥珀譲二", status:"手続完了", note:false, yt:{pub:"2026-09-12", views:1486}, memo0:"ショート2本(琥珀ch 810＋英語版 Still Set for Two 676)"},
+  {id:"s14", nodee:"9zqeeisqgc3s", tk:true, reg:"2026-08-22", title:"ふたつのグラス",           artist:"琥珀譲二", status:"手続完了", note:false, yt:{pub:"2026-09-12", views:1486}, memo0:"ショート2本(琥珀ch 810＋英語版 Still Set for Two 676)"},
   {id:"s15", nodee:"19ga95cwnv2i", x:{views:11}, tk:true, reg:"2026-08-21", title:"雨は琥珀色",               artist:"琥珀譲二", status:"手続完了", note:false, yt:{pub:"2026-09-05", views:2437}},
   {id:"s16", nodee:"3h8b3pbqpecd", ig:{views:127}, x:{views:66}, reg:"2026-08-21", title:"Bad Moon Bourbon",         artist:"Rolling All Stars", status:"手続完了", note:false, yt:{pub:"2026-09-05", views:476}},
   {id:"s17", nodee:"18rdn6qeqg0z", x:{views:17}, tk:true, reg:"2026-08-21", title:"Moonlight on the Interstate", artist:"Signal", status:"手続完了", note:false, yt:{pub:"2026-09-05", views:419}},
