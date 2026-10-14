@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>楽曲リスト | Leo Music</title>
+<meta name="description" content="Leo Music（Leo's Records）のオリジナル楽曲一覧。曲名やアーティストから探して、フルコーラスを聴けます。">
+<meta property="og:title" content="楽曲リスト | Leo Music">
+<meta property="og:description" content="Leo Music（Leo's Records）のオリジナル楽曲一覧。曲名やアーティストから探して、フルコーラスを聴けます。">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#14110f; --card:#1f1a16; --card-2:#2a231d; --ink:#f3ece3; --sub:#b5a898;
+  --accent:#f0a35e; --accent-ink:#1a120a; --line:#3a3029; --soon:#7fc8a9;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#faf6f0; --card:#ffffff; --card-2:#f5ede2; --ink:#2f2820; --sub:#7d705f;
+    --accent:#d9772e; --accent-ink:#ffffff; --line:#eadfce; --soon:#2f8f68;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+header{padding:36px 0 20px;text-align:center}
+.brand{font-size:.8rem;letter-spacing:.12em;color:var(--accent);font-weight:700}
+h1{font-size:1.7rem;margin-top:6px;letter-spacing:.06em}
+.lead{color:var(--sub);font-size:.88rem;margin-top:10px}
+.count{color:var(--sub);font-size:.8rem;margin-top:6px}
+section{margin-top:22px}
+h2{font-size:1rem;margin-bottom:10px;letter-spacing:.04em}
+.soon-list{display:flex;flex-direction:column;gap:8px}
+.soon-item{background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.soon-date{color:var(--soon);font-weight:700;font-size:.85rem;white-space:nowrap}
+.search{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1rem}
+.search::placeholder{color:var(--sub)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:.82rem;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.songs{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.song{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px}
+.song-main{flex:1;min-width:0}
+.song-title{font-weight:700;font-size:1rem;overflow-wrap:anywhere}
+.song-artist{color:var(--sub);font-size:.82rem;margin-top:2px}
+.song-note{color:var(--soon);font-size:.75rem;margin-top:4px;font-weight:700}
+.listen{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.85rem;text-decoration:none;white-space:nowrap}
+.listen.alt{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.empty{color:var(--sub);text-align:center;padding:24px 0;font-size:.9rem}
+footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
+.sns{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:12px 0 16px}
+.sns a{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:.82rem;background:var(--card)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Leo Music ／ Leo's Records</div>
+    <h1>楽曲リスト</h1>
+    <p class="lead">オリジナル楽曲の一覧です。<br>「フルで聴く」からフルコーラスを聴けます。</p>
+    <p class="count" id="count"></p>
+  </header>
+
+  <section id="soon-section" hidden>
+    <h2>まもなく配信</h2>
+    <div class="soon-list" id="soon"></div>
+  </section>
+
+  <section>
+    <h2>すべての曲</h2>
+    <input class="search" id="q" type="search" placeholder="曲名・アーティストで探す" aria-label="曲名・アーティストで探す">
+    <div class="chips" id="chips" role="group" aria-label="アーティストで絞り込む"></div>
+    <div class="songs" id="songs"></div>
+  </section>
+
+  <footer>
+    <div class="sns">
+      <a href="https://www.tiktok.com/@ryutaroyoshida3" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://x.com/JyotaroY96366" target="_blank" rel="noopener">X</a>
+      <a href="https://www.instagram.com/wband_001/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <p>© 2026 LEO</p>
+  </footer>
+</div>
+
+<script src="../sakkyoku-data.js"></script>
+<script>
+const today = (() => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+})();
+const md = iso => `${Number(iso.slice(5,7))}/${Number(iso.slice(8,10))}`;
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+// 読み取りが不確かな曲名（check）はファン向けには出さない
+const songs = SONGS.filter(s => !s.check).map(s => ({
+  ...s,
+  sortKey: s.release || s.reg || (s.yt && s.yt.pub) || ""
+})).sort((a,b) => b.sortKey.localeCompare(a.sortKey) || a.title.localeCompare(b.title, "ja"));
+
+const isUpcoming = s => s.release && s.release > today;
+
+function linkHtml(s){
+  if(s.nodee) return `<a class="listen" href="https://nodee.net/a/${esc(s.nodee)}" target="_blank" rel="noopener">フルで聴く</a>`;
+  if(s.youtube) return `<a class="listen alt" href="${esc(s.youtube)}" target="_blank" rel="noopener">YouTubeで見る</a>`;
+  return "";
+}
+
+function noteHtml(s){
+  if(!s.release) return "";
+  return isUpcoming(s)
+    ? `<div class="song-note">${md(s.release)} 配信予定</div>`
+    : `<div class="song-note">${md(s.release)} から配信中</div>`;
+}
+
+const soon = songs.filter(isUpcoming).sort((a,b) => a.release.localeCompare(b.release));
+if(soon.length){
+  document.getElementById("soon-section").hidden = false;
+  document.getElementById("soon").innerHTML = soon.map(s => `
+    <div class="soon-item">
+      <div><div class="song-title">${esc(s.title)}</div><div class="song-artist">${esc(s.artist)}</div></div>
+      <div class="soon-date">${md(s.release)} 配信予定</div>
+    </div>`).join("");
+}
+
+const artists = [...new Set(songs.map(s => s.artist))].sort((a,b) => a.localeCompare(b, "ja"));
+let current = "";
+const chips = document.getElementById("chips");
+chips.innerHTML = ["", ...artists].map(a =>
+  `<button class="chip" type="button" data-artist="${esc(a)}" aria-pressed="${a === "" ? "true" : "false"}">${a === "" ? "すべて" : esc(a)}</button>`
+).join("");
+chips.addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  current = b.dataset.artist;
+  chips.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b ? "true" : "false"));
+  render();
+});
+document.getElementById("q").addEventListener("input", render);
+
+function render(){
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const list = songs.filter(s =>
+    (!current || s.artist === current) &&
+    (!q || (s.title + " " + s.artist).toLowerCase().includes(q))
+  );
+  document.getElementById("songs").innerHTML = list.length ? list.map(s => `
+    <div class="song">
+      <div class="song-main">
+        <div class="song-title">${esc(s.title)}</div>
+        <div class="song-artist">${esc(s.artist)}</div>
+        ${noteHtml(s)}
+      </div>
+      ${linkHtml(s)}
+    </div>`).join("") : `<p class="empty">見つかりませんでした</p>`;
+}
+
+document.getElementById("count").textContent = `全${songs.length}曲`;
+render();
+</script>
+</body>
+</html>
