@@ -260,7 +260,7 @@ function render(){
         <span contenteditable="true" data-field="title" spellcheck="false">${escapeHtml(m.title)}</span>${m.check ? '<span class="badge check" title="スクリーンショットの文字が不鮮明だったため要確認。クリックして修正してください">要確認</span>' : ""}
         <span class="artist" contenteditable="true" data-field="artist" spellcheck="false">${escapeHtml(m.artist)}</span>
       </td>
-      <td><span class="badge ${m.status==="手続完了"?"ok":m.status==="供給準備中"?"wait":m.status==="新曲"?"new":"na"}">${m.status}</span></td>
+      <td><span class="badge ${(m.status==="手続完了"||m.status==="配信中")?"ok":m.status==="供給準備中"?"wait":m.status==="新曲"?"new":"na"}">${m.status}</span></td>
       <td class="num-col"><span class="badge ${short?"short-yes":"short-no"}">${short?"○ 掲載済":"未掲載"}</span></td>
       ${PLATFORMS.map(p=>{
         const s = m.sns[p.key];
