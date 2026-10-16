@@ -43,6 +43,7 @@ h2{font-size:1rem;margin-bottom:10px;letter-spacing:.04em}
 .song-main{flex:1;min-width:0}
 .song-title{font-weight:700;font-size:1rem;overflow-wrap:anywhere}
 .song-artist{color:var(--sub);font-size:.82rem;margin-top:2px}
+.song-en{color:var(--sub);font-size:.75rem;font-style:italic;overflow-wrap:anywhere}
 .song-note{color:var(--soon);font-size:.75rem;margin-top:4px;font-weight:700}
 .listen{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.85rem;text-decoration:none;white-space:nowrap}
 .listen.alt{background:transparent;color:var(--accent);border:1px solid var(--accent)}
@@ -68,7 +69,7 @@ footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
 
   <section>
     <h2>すべての曲</h2>
-    <input class="search" id="q" type="search" placeholder="曲名・アーティストで探す" aria-label="曲名・アーティストで探す">
+    <input class="search" id="q" type="search" placeholder="曲名・英題・読み・アーティストで探す" aria-label="曲名・アーティストで探す">
     <div class="chips" id="chips" role="group" aria-label="アーティストで絞り込む"></div>
     <div class="songs" id="songs"></div>
   </section>
@@ -93,6 +94,10 @@ const md = iso => `${Number(iso.slice(5,7))}/${Number(iso.slice(8,10))}`;
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
 // 読み取りが不確かな曲名（check）はファン向けには出さない
+// ひらがなで検索してもカタカナの読みに当たるようにそろえる
+const norm = s => String(s).toLowerCase().replace(/[\u3041-\u3096]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60)).replace(/\s+/g, "");
+const subtitle = s => s.en && s.en !== s.title ? `<div class="song-en">${esc(s.en)}</div>` : "";
+
 const songs = SONGS.filter(s => !s.check).map(s => ({
   ...s,
   sortKey: s.release || s.reg || (s.yt && s.yt.pub) || ""
@@ -118,7 +123,7 @@ if(soon.length){
   document.getElementById("soon-section").hidden = false;
   document.getElementById("soon").innerHTML = soon.map(s => `
     <div class="soon-item">
-      <div><div class="song-title">${esc(s.title)}</div><div class="song-artist">${esc(s.artist)}</div></div>
+      <div><div class="song-title">${esc(s.title)}</div>${subtitle(s)}<div class="song-artist">${esc(s.artist)}</div></div>
       <div class="soon-date">${md(s.release)} 配信予定</div>
     </div>`).join("");
 }
@@ -138,15 +143,16 @@ chips.addEventListener("click", e => {
 document.getElementById("q").addEventListener("input", render);
 
 function render(){
-  const q = document.getElementById("q").value.trim().toLowerCase();
+  const q = norm(document.getElementById("q").value);
   const list = songs.filter(s =>
     (!current || s.artist === current) &&
-    (!q || (s.title + " " + s.artist).toLowerCase().includes(q))
+    (!q || norm([s.title, s.artist, s.en || "", s.kana || ""].join(" ")).includes(q))
   );
   document.getElementById("songs").innerHTML = list.length ? list.map(s => `
     <div class="song">
       <div class="song-main">
         <div class="song-title">${esc(s.title)}</div>
+        ${subtitle(s)}
         <div class="song-artist">${esc(s.artist)}</div>
         ${noteHtml(s)}
       </div>
