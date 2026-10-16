@@ -91,6 +91,8 @@ const today = (() => {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 })();
 const md = iso => `${Number(iso.slice(5,7))}/${Number(iso.slice(8,10))}`;
+// 今年以外の配信日は年も付ける（例：2018/10/7）
+const ymd = iso => iso.slice(0,4) === today.slice(0,4) ? md(iso) : `${iso.slice(0,4)}/${md(iso)}`;
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
 // 読み取りが不確かな曲名（check）はファン向けには出さない
@@ -107,6 +109,7 @@ const isUpcoming = s => s.release && s.release > today;
 
 function linkHtml(s){
   if(s.nodee) return `<a class="listen" href="https://nodee.net/a/${esc(s.nodee)}" target="_blank" rel="noopener">フルで聴く</a>`;
+  if(s.link) return `<a class="listen" href="${esc(s.link)}" target="_blank" rel="noopener">フルで聴く</a>`;
   if(s.youtube) return `<a class="listen alt" href="${esc(s.youtube)}" target="_blank" rel="noopener">YouTubeで見る</a>`;
   return "";
 }
@@ -115,7 +118,7 @@ function noteHtml(s){
   if(!s.release) return "";
   return isUpcoming(s)
     ? `<div class="song-note">${md(s.release)} 配信予定</div>`
-    : `<div class="song-note">${md(s.release)} から配信中</div>`;
+    : `<div class="song-note">${ymd(s.release)} から配信中</div>`;
 }
 
 const soon = songs.filter(isUpcoming).sort((a,b) => a.release.localeCompare(b.release));
