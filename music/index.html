@@ -87,8 +87,10 @@ footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
   </footer>
 </div>
 
-<script src="../sakkyoku-data.js"></script>
-<script src="../lyrics-data.js"></script>
+<script>
+// 曲や歌詞を更新したらすぐ見えるように、データは毎回最新を読み込む（ブラウザに古いものが残らないようにする）
+["../sakkyoku-data.js", "../lyrics-data.js"].forEach(f => document.write(`<script src="${f}?t=${Date.now()}"><\/script>`));
+</script>
 <script>
 const today = (() => {
   const d = new Date();
