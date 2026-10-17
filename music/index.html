@@ -39,7 +39,7 @@ h2{font-size:1rem;margin-bottom:10px;letter-spacing:.04em}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:.82rem;cursor:pointer;min-height:36px}
 .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
 .songs{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.song{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px}
+.song{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .song-main{flex:1;min-width:0}
 .song-title{font-weight:700;font-size:1rem;overflow-wrap:anywhere}
 .song-artist{color:var(--sub);font-size:.82rem;margin-top:2px}
@@ -47,6 +47,9 @@ h2{font-size:1rem;margin-bottom:10px;letter-spacing:.04em}
 .song-note{color:var(--soon);font-size:.75rem;margin-top:4px;font-weight:700}
 .listen{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.85rem;text-decoration:none;white-space:nowrap}
 .listen.alt{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.lyrics{flex:1 0 100%;border-top:1px solid var(--line);padding-top:10px}
+.lyrics summary{cursor:pointer;color:var(--accent);font-weight:700;font-size:.85rem;min-height:32px;display:flex;align-items:center}
+.lyrics-body{white-space:pre-wrap;font-family:inherit;font-size:.9rem;line-height:1.9;margin-top:8px;overflow-wrap:anywhere}
 .empty{color:var(--sub);text-align:center;padding:24px 0;font-size:.9rem}
 footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
 .sns{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:12px 0 16px}
@@ -58,7 +61,7 @@ footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
   <header>
     <div class="brand">Leo Music ／ Leo's Records</div>
     <h1>楽曲リスト</h1>
-    <p class="lead">オリジナル楽曲の一覧です。<br>「フルで聴く」からフルコーラスを聴けます。</p>
+    <p class="lead">オリジナル楽曲の一覧です。<br>「フルで聴く」からフルコーラスを聴けます。<br>一部の曲は「歌詞を見る」から歌詞も読めます。</p>
     <p class="count" id="count"></p>
   </header>
 
@@ -69,7 +72,7 @@ footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
 
   <section>
     <h2>すべての曲</h2>
-    <input class="search" id="q" type="search" placeholder="曲名・英題・読み・アーティストで探す" aria-label="曲名・アーティストで探す">
+    <input class="search" id="q" type="search" placeholder="曲名・アーティスト・歌詞の言葉で探す" aria-label="曲名・アーティストで探す">
     <div class="chips" id="chips" role="group" aria-label="アーティストで絞り込む"></div>
     <div class="songs" id="songs"></div>
   </section>
@@ -85,6 +88,7 @@ footer{margin-top:36px;text-align:center;color:var(--sub);font-size:.8rem}
 </div>
 
 <script src="../sakkyoku-data.js"></script>
+<script src="../lyrics-data.js"></script>
 <script>
 const today = (() => {
   const d = new Date();
@@ -106,6 +110,8 @@ const songs = SONGS.filter(s => !s.check).map(s => ({
 })).sort((a,b) => b.sortKey.localeCompare(a.sortKey) || a.title.localeCompare(b.title, "ja"));
 
 const isUpcoming = s => s.release && s.release > today;
+// 歌詞は配信日を過ぎた曲だけ出す
+const lyricsOf = s => (typeof LYRICS !== "undefined" && LYRICS[s.id] && !isUpcoming(s)) ? LYRICS[s.id] : "";
 
 function linkHtml(s){
   if(s.nodee) return `<a class="listen" href="https://nodee.net/a/${esc(s.nodee)}" target="_blank" rel="noopener">フルで聴く</a>`;
@@ -149,7 +155,7 @@ function render(){
   const q = norm(document.getElementById("q").value);
   const list = songs.filter(s =>
     (!current || s.artist === current) &&
-    (!q || norm([s.title, s.artist, s.en || "", s.kana || ""].join(" ")).includes(q))
+    (!q || norm([s.title, s.artist, s.en || "", s.kana || "", lyricsOf(s)].join(" ")).includes(q))
   );
   document.getElementById("songs").innerHTML = list.length ? list.map(s => `
     <div class="song">
@@ -160,6 +166,7 @@ function render(){
         ${noteHtml(s)}
       </div>
       ${linkHtml(s)}
+      ${lyricsOf(s) ? `<details class="lyrics"><summary>歌詞を見る</summary><div class="lyrics-body">${esc(lyricsOf(s))}</div></details>` : ""}
     </div>`).join("") : `<p class="empty">見つかりませんでした</p>`;
 }
 
