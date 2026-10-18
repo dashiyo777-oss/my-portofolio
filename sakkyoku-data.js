@@ -16,7 +16,7 @@ const SONGS = [
   {id:"s06", release:"2026-09-26", nodee:"8iuqn62n4n25", en:"Still Standing Here", kana:"マダココニタッテイル", reg:"2026-09-11", title:"まだ、ここに立っている",   artist:"w-Band", status:"手続完了", note:false, yt:{pub:"2026-09-26", views:0}, memo0:"YouTube公開予約"},
   {id:"s07", nodee:"eim7387cr4yt", ig:{views:32}, x:{views:18}, reg:"2026-08-31", title:"花束の重さ",               artist:"水野灯", status:"手続完了", note:false, yt:{pub:"2026-09-26", views:1}, memo0:"YouTube公開予約"},
   {id:"s08", nodee:"6g6pg13pceip", ig:{views:45}, x:{views:53}, reg:"2026-08-29", title:"雨になる約束",             artist:"水野灯", status:"手続完了", note:false,  yt:{pub:"2026-09-19", views:296}},
-  {id:"s09", release:"2026-09-26", ig:{views:167}, reg:"2026-08-26", title:"ほどける夜のワルツ",       artist:"琥珀譲二", status:"手続完了", note:false, yt:{pub:"2026-09-26", views:3}, memo0:"9/26リリース済"},
+  {id:"s09", nodee:"5a9itu0ekz41", release:"2026-09-26", ig:{views:167}, reg:"2026-08-26", title:"ほどける夜のワルツ",       artist:"琥珀譲二", status:"手続完了", note:false, yt:{pub:"2026-09-26", views:3}, memo0:"9/26リリース済"},
   {id:"s10", nodee:"14u5y1i2km63", tk:true, reg:"2026-08-28", title:"川は名前を変えて",         artist:"水野灯", status:"手続完了", note:false,  yt:{pub:"2026-09-12", views:840}},
   {id:"s11", nodee:"2krfx2et8uv5", tk:true, reg:"2026-08-28", title:"トキメキ上書き中",         artist:"Maron", status:"手続完了", note:false, yt:{pub:"2026-09-12", views:811}},
   {id:"s12", nodee:"pp6x0pus1spc", x:{views:19}, tk:true, reg:"2026-08-26", title:"愛がはじまる場所",         artist:"花明り", status:"手続完了", note:false,  yt:{pub:"2026-09-12", views:1680}},
