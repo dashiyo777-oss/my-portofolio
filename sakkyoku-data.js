@@ -75,7 +75,7 @@ const SONGS = [
   {id:"s62", en:"Kick the Door Down", kana:"キックザドアダウン", release:"2026-10-24", reg:"2026-10-07", title:"Kick the Door Down", artist:"Rolling All Stars", status:"手続完了", note:false, memo0:"リリース予定 10/24・Rock"},
   {id:"s63", en:"The Light You Left On", kana:"ザライトユーレフトオン", release:"2026-10-24", reg:"2026-10-07", title:"The Light You Left On", artist:"Noah Vale", status:"手続完了", note:false, memo0:"リリース予定 10/24・Country（Goodbye to the Neon Mileの続編的内容）"},
   // ---- 曲リスト（スプレッドシート）で追加 ----
-  {id:"s69", release:"2026-10-17", reg:"", title:"ふたつのグラス (Duet with 白詰玲)", en:"Two Glasses (Duet with Rei Shirotsume)", kana:"フタツノグラスデュエットウィズシロツメレイ", artist:"琥珀譲二と白詰玲", status:"手続完了", memo0:"リリース待ち", note:false},
+  {id:"s69", release:"2026-10-17", nodee:"e1hzm0am5ffw", reg:"", title:"ふたつのグラス (Duet with 白詰玲)", en:"Two Glasses (Duet with Rei Shirotsume)", kana:"フタツノグラスデュエットウィズシロツメレイ", artist:"琥珀譲二と白詰玲", status:"手続完了", memo0:"10/17リリース済", note:false},
   {id:"s70", release:"2026-10-17", reg:"", title:"三時三十四分 (VIP Mix)", en:"3:34 (VIP Mix)", kana:"サンジサンジュウヨンプンヴィアイピーミックス", artist:"Signal", status:"手続完了", memo0:"リリース待ち", note:false},
   {id:"s71", release:"2026-10-24", reg:"", title:"竜胆の栞", en:"The Gentian Bookmark", kana:"リンドウノシオリ", artist:"花明り", status:"手続完了", memo0:"リリース待ち", note:false},
   {id:"s72", release:"2026-10-24", reg:"", title:"十月桜", en:"October Cherry", kana:"ジュウガツザクラ", artist:"琥珀譲二", status:"手続完了", memo0:"リリース待ち", note:false},
