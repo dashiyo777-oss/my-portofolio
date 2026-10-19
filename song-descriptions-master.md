@@ -1390,9 +1390,42 @@ Performed by: Akari Mizuno
 - 国内向け：`雨上がりの夜の窓辺。あなたが好きだった白いカップを、棚の奥から出してみたの。泣くためじゃない、忘れるため。ジャスミンティーが冷めるまでは、あなたを想っていてもいいでしょう。最後のひとくち飲みほしたら、明日の私に戻るから。空のカップに映った月。明日の私は、きっと笑ってる。水野灯 新曲「ジャスミンティーが冷めるまで」。一杯のお茶が冷めるまでの、やさしい決別と再生のバラードです。`
 - 海外向け：`A rainy night by the window. I took the white cup you loved down from the back of the shelf. Not to cry, but to let you go. Until the jasmine tea goes cold, let me keep thinking of you, won't you. When I drink the last sip, I will return to tomorrow's me. A moon, reflected in the empty cup. Tomorrow, I will surely be smiling. "Until the Jasmine Tea Goes Cold" is the new song from Akari Mizuno, a tender ballad of farewell and quiet healing, lasting just as long as a cup of tea stays warm.`
 
+## ㊻ The Light in Her Window / Isla Moorcroft　【Cinematic Folk Ballad（洋楽）】　（動画制作済み `herwindow.mp4`）
+**YouTube（和）** `The Light in Her Window / Isla Moorcroft【Music Video】`
+**YouTube（英）** `Isla Moorcroft - "The Light in Her Window" (Official Music Video)`
+**説明（JP）**
+```
+17歳、怒りにまかせて家を出た。二度と帰らないと言い残して。
+毎週日曜、母から手紙が届いた。小さな、ていねいな字で。二十年、引き出しの中に。わたしは素直になれなかった。
+黒いドレスで帰った、冷たく静まった家。窓辺の椅子で、一通ずつ、すべての手紙を開いた。どれも同じ言葉で終わっていた。
+海辺の窓に、灯りはついてる。どんな言葉を残しても、あなたは今もわたしの大切な人。いつでも帰っておいで。
+今はわたしが灯す番。母さん、見えてる？ ただいま。やっと帰れた。
+Isla Moorcroft 新曲「The Light in Her Window」。海辺の灯りと手紙をめぐる、赦しと帰郷のシネマティックバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Isla Moorcroft
+#TheLightInHerWindow #IslaMoorcroft #新曲 #洋楽 #フォーク #バラード #Shorts
+```
+**説明（EN）**
+```
+Seventeen and full of fire, I slammed the door and caught the train. I swore I would never come again.
+Every Sunday a letter came, in her small and careful hand. Twenty years inside a drawer. I was too proud to understand.
+I came back in a black dress, to a house so cold and still. I opened every single letter, in her chair by the window sill. Every one ended the same.
+The light is on, my darling, in the window by the sea. Whatever words you left behind, you are still my girl to me. Come home when you are free.
+Now I am the one who lights it, every night, the way she did. Mother, can you see it shining. I came home, I am home at last.
+"The Light in Her Window" is the new single from Isla Moorcroft. A cinematic folk ballad of forgiveness and coming home, by a light in a window over the sea.
+▼ Stream / Download
+[配信リンク]
+Performed by: Isla Moorcroft
+#TheLightInHerWindow #IslaMoorcroft #NewSong #Folk #CinematicBallad #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：The Light in Her Window / ザ・ライト・イン・ハー・ウィンドウ ／ アーティスト：Isla Moorcroft（イスラ・ムーアクロフト）／ ジャンル1：**フォーク**・ジャンル2：**オルタナティブ** ／ ムード：ブルー/サッド（赦し・郷愁。高揚重視なら モチベーション/ハッピー）
+- 国内向け：`17歳、怒りにまかせて家を出た。二度と帰らないと言い残して。毎週日曜、母から手紙が届いた。小さな、ていねいな字で。二十年、引き出しの中に。わたしは素直になれなかった。黒いドレスで帰った、冷たく静まった家。窓辺の椅子で、一通ずつ、すべての手紙を開いた。どれも同じ言葉で終わっていた。海辺の窓に、灯りはついてる。どんな言葉を残しても、あなたは今もわたしの大切な人。いつでも帰っておいで。今はわたしが灯す番。ただいま。やっと帰れた。Isla Moorcroft 新曲「The Light in Her Window」。海辺の灯りと手紙をめぐる、赦しと帰郷のシネマティックバラードです。`
+- 海外向け：`Seventeen and full of fire, I slammed the door and caught the train. I swore I would never come again. Every Sunday a letter came, in her small and careful hand. Twenty years inside a drawer, I was too proud to understand. I came back in a black dress, to a house so cold and still, and opened every single letter in her chair by the window sill. Every one ended the same. The light is on, my darling, in the window by the sea. Whatever words you left behind, you are still my girl to me. Come home when you are free. Now I am the one who lights it, every night, the way she did. I came home, I am home at last. "The Light in Her Window" is the new single from Isla Moorcroft, a cinematic folk ballad of forgiveness and coming home, by a light in a window over the sea.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。

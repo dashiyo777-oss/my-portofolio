@@ -1,0 +1,313 @@
+# -*- coding: utf-8 -*-
+"""
+The Light in Her Window / Isla Moorcroft — 縦型9:16 宣伝ショート（シネマティック・フォーク/ケルト・バラード / 2歳以上の日米向け）
+ジャケット準拠：夕暮れの海辺の崖道。沈む夕陽と港の灯、石造りのコテージの「暖かく灯る窓」（ランプ・花瓶・額）、
+崖の石段に座り海を見つめる女性（黒いコート・ショール）と傍らのビンテージ・スーツケース、絡むツタと白い花。
+主役＝窓の灯り。サビ「The light is on」でランプがブルームして暖色があふれる。
+演出：ビート同期ではなくシネマティックな緩やかなうねり（海のうねり・雲と光のドリフト・髪とショールの揺れ）。
+BGM: herwindow-bgm.mp3 (source 4:14/254s の最終サビ 159s〜：転調サビ、歌詞が明瞭)。
+英語の歌詞＋やさしい日本語訳。画面テキストはジャケット表記＋提供歌詞のみ（創作なし）。
+決定論レンダリング：window.renderAt(t_ms)/window.TOTAL。?capture=1 でUI非表示。
+"""
+import os
+OUT=os.path.join(os.path.dirname(__file__),"..","herwindow.html")
+
+CSS=r"""
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0c1430;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0c1430}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:top left;
+  font-family:"EB Garamond","Noto Serif JP",serif;background:#16284c}
+#world{position:absolute;inset:-30px;transform-origin:50% 58%}
+/* sky dusk -> sunset */
+#sky{position:absolute;left:0;right:0;top:0;height:1180px;background:
+  linear-gradient(180deg,#141f44 0%,#20305e 24%,#36487e 44%,#6a5f8e 58%,#c8755e 70%,#ff9a52 80%,#ffbf6e 90%,#ffd98a 100%)}
+#clouds{position:absolute;left:0;right:0;top:120px;height:760px}
+.cloud{position:absolute;border-radius:50%;filter:blur(16px)}
+/* sun low over the sea (left-center) */
+#sunglow{position:absolute;left:330px;top:900px;width:920px;height:920px;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(circle,rgba(255,228,170,.9),rgba(255,180,110,.42) 26%,rgba(255,150,90,.14) 48%,transparent 70%)}
+#sun{position:absolute;left:330px;top:910px;width:150px;height:150px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 50% 46%,#fff6dc,#ffe0a0 46%,#ffba६e 74%,rgba(255,180,110,0) 100%);
+  background:radial-gradient(circle at 50% 46%,#fff6dc,#ffe0a0 46%,#ffba6e 74%,rgba(255,180,110,0) 100%);
+  box-shadow:0 0 80px 30px rgba(255,206,140,.6)}
+/* far headland right of the sun */
+#headland{position:absolute;left:470px;top:880px;width:360px;height:70px;border-radius:120px 60px 0 0/60px 30px 0 0;
+  background:linear-gradient(180deg,#2e3a5a,#223049);opacity:.9}
+/* sea */
+#sea{position:absolute;left:0;right:0;top:930px;bottom:0;background:
+  linear-gradient(180deg,#b06a3a 0%,#4a5f82 8%,#2f4a72 28%,#203a60 58%,#152a4c 100%)}
+#horizon{position:absolute;left:0;right:0;top:928px;height:7px;background:linear-gradient(90deg,rgba(255,210,150,.4),rgba(255,230,180,.92) 36%,rgba(255,200,150,.3));filter:blur(2px)}
+#sunpath{position:absolute;left:330px;top:936px;width:380px;height:780px;transform:translateX(-50%);pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(180deg,rgba(255,224,170,.8),rgba(255,196,130,.22) 34%,transparent 78%);
+  clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);filter:blur(12px)}
+.swell{position:absolute;left:-10%;width:120%;height:5px;border-radius:50%;background:rgba(255,255,255,.08);filter:blur(1.5px)}
+/* harbor village + breakwater lights (mid, near shore) */
+#harbor{position:absolute;left:380px;top:980px;width:460px;height:120px;z-index:2}
+.hbuild{position:absolute;bottom:0;background:#20314f;border-radius:2px 2px 0 0}
+.hlamp{position:absolute;width:8px;height:8px;border-radius:50%}
+#breakwater{position:absolute;left:360px;top:1052px;width:420px;height:26px;z-index:2;border-radius:20px;
+  background:linear-gradient(180deg,#273a56,#1a2a44)}
+/* cliff path + stone wall (foreground) */
+#ground{position:absolute;left:0;right:0;bottom:0;height:720px;z-index:4;
+  background:linear-gradient(180deg,#3a3326 0%,#2a2519 46%,#201c12 100%)}
+#ground::before{content:"";position:absolute;left:0;right:0;top:0;height:60px;background:linear-gradient(180deg,rgba(255,180,110,.25),transparent)}
+#stonewall{position:absolute;left:-20px;bottom:470px;width:560px;height:70px;z-index:4;transform:rotate(-5deg);transform-origin:left bottom;
+  background:repeating-linear-gradient(92deg,#6a6456 0 44px,#55503f 44px 48px),linear-gradient(180deg,#7a7362,#4e483a);border-radius:8px}
+.step{position:absolute;z-index:4;background:linear-gradient(180deg,#6a6050,#4a4234);border-radius:6px;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+/* cottage (right) with the warm glowing window — the hero */
+#cottage{position:absolute;right:-30px;top:250px;width:470px;height:1060px;z-index:5}
+#cwall{position:absolute;right:0;top:120px;width:430px;height:940px;
+  background:repeating-linear-gradient(94deg,#8a8273 0 60px,#746d5f 60px 66px),linear-gradient(180deg,#948b7b,#6a6253);
+  border-radius:16px 0 0 0;box-shadow:-14px 0 40px rgba(0,0,0,.35)}
+#croof{position:absolute;right:-10px;top:70px;width:460px;height:80px;background:linear-gradient(180deg,#4a4238,#332e27);border-radius:12px 0 0 0;transform:skewX(-8deg)}
+#gutter{position:absolute;right:120px;top:120px;width:12px;height:560px;background:#3a342c;border-radius:6px}
+#winframe{position:absolute;right:120px;top:360px;width:280px;height:360px;border-radius:10px;
+  background:linear-gradient(180deg,#efe7d2,#cdbfa0);box-shadow:0 0 50px 10px rgba(255,200,120,.3)}
+#winlight{position:absolute;right:134px;top:374px;width:252px;height:332px;border-radius:6px;overflow:hidden;
+  background:linear-gradient(180deg,#ffe6ad,#ffcf84 60%,#f0b86a)}
+#winlight::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,transparent 48%,rgba(120,90,50,.5) 49%,rgba(120,90,50,.5) 51%,transparent 52%),
+  linear-gradient(180deg,transparent 48%,rgba(120,90,50,.5) 49%,rgba(120,90,50,.5) 51%,transparent 52%)}
+/* interior: lamp + vase + picture */
+#lampcol{position:absolute;right:300px;top:560px;width:30px;height:120px;z-index:6;background:#8a6a3a}
+#lampshade{position:absolute;right:276px;top:520px;width:78px;height:60px;z-index:6;border-radius:40px 40px 6px 6px;
+  background:radial-gradient(circle at 50% 30%,#fff2cf,#ffd98a 70%);box-shadow:0 0 40px 14px rgba(255,220,150,.6)}
+#vase{position:absolute;right:160px;top:600px;width:60px;height:80px;z-index:6;border-radius:10px 10px 18px 18px;
+  background:linear-gradient(90deg,rgba(220,235,255,.5),rgba(190,215,250,.3));border:2px solid rgba(255,245,220,.5)}
+#picture{position:absolute;right:170px;top:400px;width:72px;height:92px;z-index:6;background:#5a4a30;border:5px solid #c7b48a;border-radius:3px}
+#winsill{position:absolute;right:112px;top:706px;width:300px;height:22px;z-index:6;background:linear-gradient(180deg,#d9cbae,#8f8268);border-radius:4px}
+#glowspill{position:absolute;right:40px;top:300px;width:620px;height:720px;z-index:5;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(44% 40% at 66% 44%,rgba(255,210,140,.75),rgba(255,180,110,.22) 44%,transparent 72%)}
+/* climbing vines + flowers on the cottage */
+#vinef{position:absolute;right:0;top:120px;width:470px;height:960px;z-index:6}
+.leaf{position:absolute;border-radius:0 70% 0 70%;background:linear-gradient(120deg,#3f6a3a,#2c5230)}
+/* woman + suitcase (foreground, dark silhouette, warm rim) */
+#woman{position:absolute;left:250px;bottom:150px;width:420px;height:620px;z-index:7;transform-origin:46% 100%}
+#head{position:absolute;left:186px;top:104px;width:100px;height:118px;z-index:6;border-radius:50% 50% 48% 48%;background:#191520}
+#hair{position:absolute;left:156px;top:92px;width:166px;height:300px;z-index:7;transform-origin:50% 12%;
+  background:linear-gradient(96deg,#17121e,#2a2130 64%,#43343c);
+  border-radius:50% 50% 40% 40% / 54% 54% 46% 46%}
+#body{position:absolute;left:96px;bottom:0;width:292px;height:410px;z-index:7;
+  background:linear-gradient(110deg,#130f1b,#241d2a 72%,#30263a);
+  clip-path:polygon(30% 0,50% 2%,62% 12%,80% 26%,92% 52%,100% 100%,0 100%,8% 52%,20% 26%,38% 12%)}
+#shawl{position:absolute;left:236px;top:300px;width:150px;height:120px;z-index:8;transform-origin:70% 10%;
+  background:linear-gradient(110deg,rgba(221,208,185,.0),rgba(214,200,170,.85) 60%);opacity:.9;
+  border-radius:40% 60% 50% 50% / 30% 70% 50% 50%}
+#suitcase{position:absolute;left:-30px;bottom:30px;width:180px;height:150px;z-index:8;border-radius:12px;
+  background:linear-gradient(180deg,#7a4e2a,#59391d);box-shadow:0 10px 22px rgba(0,0,0,.4)}
+#suitcase::before{content:"";position:absolute;left:10px;right:10px;top:40px;height:8px;background:#3e2814;box-shadow:0 26px 0 #3e2814}
+#suitcase::after{content:"";position:absolute;left:50%;top:-16px;transform:translateX(-50%);width:54px;height:24px;border:7px solid #4a3018;border-bottom:none;border-radius:16px 16px 0 0}
+#wrim{position:absolute;left:250px;bottom:150px;width:420px;height:620px;z-index:9;pointer-events:none;mix-blend-mode:screen;opacity:.0;
+  background:linear-gradient(60deg,rgba(255,200,120,.5),transparent 34%)}
+/* foreground white flowers */
+.flower{position:absolute;z-index:9}
+.fpetal{position:absolute;left:50%;top:50%;border-radius:50% 50% 50% 50%/70% 70% 40% 40%;transform-origin:50% 100%;
+  background:radial-gradient(circle at 50% 70%,#fffefb,#eee7d6)}
+.fcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#ffe488,#f1b840)}
+#motes{position:absolute;inset:0;z-index:10;pointer-events:none}
+.mote{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,224,170,.9),rgba(255,210,150,0) 70%)}
+#bloom{position:absolute;inset:0;z-index:11;pointer-events:none;mix-blend-mode:screen;opacity:0;
+  background:radial-gradient(42% 34% at 78% 28%,rgba(255,214,150,.7),transparent 66%)}
+/* text */
+#titlewrap{position:absolute;left:40px;right:40px;top:150px;text-align:center;z-index:16;opacity:0}
+.tt{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:600;font-style:italic;font-size:118px;line-height:1.02;letter-spacing:1px;color:#fff;
+  text-shadow:0 0 30px rgba(255,220,170,.5),0 5px 20px rgba(10,20,45,.7)}
+.tbrush{width:340px;height:2px;margin:14px auto 12px;background:linear-gradient(90deg,transparent,rgba(255,235,195,.9),transparent)}
+.tart{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:500;font-size:52px;letter-spacing:14px;color:#f1e8d6;text-shadow:0 2px 14px rgba(10,20,45,.7)}
+#scenes{position:absolute;left:54px;right:54px;top:540px;height:470px;z-index:16}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;will-change:opacity,transform}
+.lyr{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:600;font-size:80px;line-height:1.18;letter-spacing:1px;color:#fff;
+  text-shadow:0 3px 20px rgba(8,16,40,.85),0 0 34px rgba(255,205,150,.35)}
+.lyr .hl{color:#ffdca0}
+.lyr .jp{display:block;font-family:"Noto Serif JP",serif;font-weight:600;font-size:40px;letter-spacing:2px;color:#f2ead8;margin-top:20px;text-shadow:0 2px 6px rgba(8,16,40,1),0 0 18px rgba(8,16,40,.95),0 3px 24px rgba(8,16,40,.9)}
+.badge{display:inline-block;font-family:"EB Garamond",serif;font-weight:600;font-size:32px;letter-spacing:7px;color:#3a2a14;
+  background:linear-gradient(90deg,#ffe6b0,#ffcf86);padding:9px 28px;border-radius:30px;margin-bottom:22px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.cta-t{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:600;font-style:italic;font-size:96px;line-height:1.04;color:#fff;text-shadow:0 0 30px rgba(255,220,170,.5),0 5px 20px rgba(10,20,45,.7)}
+.cta-a{font-family:"EB Garamond",serif;font-weight:500;font-size:48px;letter-spacing:12px;color:#fff;margin-top:14px;text-shadow:0 2px 8px rgba(8,16,40,1),0 0 18px rgba(8,16,40,.95),0 3px 24px rgba(8,16,40,.85)}
+.cta-s{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:600;font-size:38px;letter-spacing:3px;color:#ffdca0;margin-top:22px}
+.cta-b{font-family:"EB Garamond",serif;font-weight:600;font-size:30px;letter-spacing:10px;color:#ece3f2;margin-top:12px;opacity:.9}
+#grain{position:absolute;inset:0;z-index:17;pointer-events:none;opacity:.05;background:repeating-radial-gradient(circle at 30% 40%,rgba(255,255,255,.3) 0 1px,transparent 1px 3px)}
+#vig{position:absolute;inset:0;pointer-events:none;z-index:18;background:radial-gradient(130% 82% at 50% 44%,transparent 52%,rgba(6,10,26,.64) 100%)}
+#ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:30}
+#play{width:150px;height:150px;border-radius:50%;border:none;cursor:pointer;color:#3a2a14;font-size:60px;background:linear-gradient(135deg,#ffe6b0,#ffcf86);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#bar{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.14);z-index:30}
+#barf{height:100%;width:0;background:linear-gradient(90deg,#ffdca0,#fff)}
+body.capture #ui,body.capture #bar{display:none}
+"""
+
+BODY=r"""
+<div id="wrap"><div id="stage">
+ <div id="world">
+  <div id="sky"></div>
+  <div id="clouds"></div>
+  <div id="sunglow"></div><div id="sun"></div>
+  <div id="headland"></div>
+  <div id="sea"></div><div id="horizon"></div><div id="sunpath"></div>
+  <div id="swellf"></div>
+  <div id="harbor"></div><div id="harborlit"></div><div id="breakwater"></div><div id="bwlamps"></div>
+  <div id="ground"></div><div id="stepf"></div><div id="stonewall"></div>
+  <div id="cottage">
+    <div id="croof"></div><div id="cwall"></div><div id="gutter"></div>
+    <div id="winframe"></div><div id="winlight"></div>
+    <div id="picture"></div><div id="lampcol"></div><div id="lampshade"></div><div id="vase"></div><div id="winsill"></div>
+    <div id="glowspill"></div>
+    <div id="vinef"></div>
+  </div>
+  <div id="woman">
+    <div id="suitcase"></div><div id="hair"></div><div id="head"></div><div id="body"></div>
+  </div>
+  <div id="wrim"></div>
+  <div id="flowerf"></div>
+  <div id="motes"></div>
+  <div id="bloom"></div>
+ </div>
+ <div id="titlewrap"><div class="tt">The Light<br>in Her Window</div><div class="tbrush"></div><div class="tart">Isla Moorcroft</div></div>
+ <div id="scenes"></div>
+ <div id="grain"></div>
+ <div id="vig"></div>
+ <div id="ui"><button id="play">&#9654;</button></div>
+ <div id="bar"><div id="barf"></div></div>
+</div></div>
+<audio id="bgm" src="herwindow-bgm.mp3" preload="auto"></audio>
+"""
+
+ENGINE=r"""
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);stage.style.transform='scale('+s+')';
+  document.getElementById('wrap').style.width=innerWidth+'px';}
+addEventListener('resize',fit);fit();
+const capture=new URLSearchParams(location.search).has('capture');
+if(capture)document.body.classList.add('capture');
+let _s=710425;function rnd(){_s=(_s*1103515245+12345)&0x7fffffff;return _s/0x7fffffff;}
+function mk(p,st,cls){const d=document.createElement('div');if(cls)d.className=cls;if(st)d.style.cssText+=st;p.appendChild(d);return d;}
+
+// clouds (warm dusk)
+const cf=document.getElementById('clouds');const clouds=[];
+for(let i=0;i<8;i++){const w=220+rnd()*320;const c=mk(cf,'width:'+w+'px;height:'+(w*0.4)+'px;left:'+(rnd()*1100-100)+'px;top:'+(rnd()*520)+'px;background:radial-gradient(circle,rgba(255,200,150,'+(0.3+rnd()*0.4)+'),transparent 70%)','cloud');
+  clouds.push({el:c,x:rnd()*1100-100,sp:5+rnd()*12});}
+// swells
+const sw=document.getElementById('swellf');const swells=[];
+for(let i=0;i<14;i++){const yy=960+i*58+rnd()*18;const s=mk(sw,'top:'+yy+'px;opacity:'+(0.05+rnd()*0.1),'swell');swells.push({el:s,ph:rnd()*6.28,sp:0.4+rnd()*0.5});}
+// harbor village silhouette + lamps
+const hb=document.getElementById('harbor'),hl=document.getElementById('harborlit');let hx=0;
+while(hx<460){const w=26+rnd()*42,h=30+rnd()*70;mk(hb,'left:'+hx+'px;width:'+w+'px;height:'+h+'px','hbuild');hx+=w+4+rnd()*8;}
+const HL=['rgba(255,206,130,.95)','rgba(255,226,170,.9)','rgba(255,180,120,.85)'];const hlamps=[];
+for(let i=0;i<26;i++){const e=mk(hl,'position:absolute;left:'+(380+rnd()*460)+'px;top:'+(1000+rnd()*90)+'px;width:7px;height:7px;border-radius:50%;background:'+HL[(rnd()*3)|0]+';box-shadow:0 0 10px 3px '+HL[(rnd()*3)|0],'');hlamps.push({el:e,ph:rnd()*6.28,sp:1+rnd()*2.5});}
+// breakwater lamps
+const bw=document.getElementById('bwlamps');
+for(let i=0;i<7;i++){mk(bw,'position:absolute;left:'+(372+i*58)+'px;top:'+(1044)+'px;width:6px;height:14px;background:rgba(255,220,150,.9);box-shadow:0 0 10px 3px rgba(255,210,150,.7)','');}
+// stone steps (foreground path)
+const st=document.getElementById('stepf');
+for(let i=0;i<4;i++){mk(st,'left:'+(120+i*70)+'px;bottom:'+(150+i*96)+'px;width:'+(360-i*40)+'px;height:40px','step');}
+// cottage vines/leaves + white flowers
+const vf=document.getElementById('vinef');
+for(let i=0;i<30;i++){const w=20+rnd()*34;mk(vf,'position:absolute;right:'+(rnd()*150)+'px;top:'+(120+rnd()*900)+'px;width:'+w+'px;height:'+(w*0.6)+'px;transform:rotate('+(rnd()*360)+'deg);opacity:'+(0.7+rnd()*0.3),'leaf');}
+// jasmine flower builder
+function flower(parent,cx,cy,sc,z){const f=mk(parent,'left:'+cx+'px;top:'+cy+'px;width:'+(80*sc)+'px;height:'+(80*sc)+'px;z-index:'+z,'flower');
+  for(let p=0;p<5;p++){const pt=mk(f,'width:'+(26*sc)+'px;height:'+(40*sc)+'px','fpetal');pt.style.transform='translate(-50%,-100%) rotate('+(p*72)+'deg)';}
+  mk(f,'width:'+(18*sc)+'px;height:'+(18*sc)+'px','fcenter');return f;}
+// flowers on the cottage wall (around the window)
+[[300,300,0.7],[360,760,0.8],[80,820,0.7],[150,220,0.6],[40,520,0.65]].forEach(([x,y,s])=>flower(vf,x,y,s,6));
+// foreground white flowers
+const ff=document.getElementById('flowerf');
+function leaf(p,x,y,a,sc){mk(p,'position:absolute;left:'+x+'px;top:'+y+'px;width:'+(70*sc)+'px;height:'+(26*sc)+'px;border-radius:0 70% 0 70%;background:linear-gradient(120deg,#3f6a3a,#2c5230);transform:rotate('+a+'deg);z-index:9','');}
+leaf(ff,40,1740,-16,1.3);leaf(ff,150,1800,22,1.1);leaf(ff,900,1760,18,1.2);
+flower(ff,30,1720,1.4,9);flower(ff,140,1760,1.15,9);flower(ff,80,1830,1.2,9);flower(ff,900,1740,1.25,9);flower(ff,980,1800,0.95,9);
+// warm motes
+const mf=document.getElementById('motes');const motes=[];
+for(let i=0;i<24;i++){const w=4+rnd()*12;const e=mk(mf,'width:'+w+'px;height:'+w+'px','mote');
+  motes.push({el:e,x:rnd()*1080,sp:7+rnd()*18,amp:18+rnd()*44,ph:rnd()*6.28,base:rnd()*1920});}
+
+const world=document.getElementById('world'),sun=document.getElementById('sun'),sunglow=document.getElementById('sunglow'),
+  winlight=document.getElementById('winlight'),glowspill=document.getElementById('glowspill'),lampshade=document.getElementById('lampshade'),
+  winframe=document.getElementById('winframe'),bloom=document.getElementById('bloom'),titlewrap=document.getElementById('titlewrap'),
+  wrim=document.getElementById('wrim'),woman=document.getElementById('woman'),hair=document.getElementById("hair"),sunpath=document.getElementById('sunpath');
+
+// BGM = source 159s.. (final chorus "The light is on..."). window-bloom climax in the back half.
+const CL_IN=6500, CL_PK=20000, CL_OUT=28500;
+const scenes=[
+ {s:2400, e:6800,  html:'<div class="sc"><div class="lyr"><span class="hl">The light is on,</span><br>my darling<span class="jp">灯りは、ついてるよ</span></div></div>'},
+ {s:6800, e:11000, html:'<div class="sc"><div class="lyr">In the window<br>by the sea<span class="jp">海辺の、あの窓辺に</span></div></div>'},
+ {s:11000,e:15400, html:'<div class="sc"><div class="lyr">Whatever words<br>you left behind<span class="jp">どんな言葉を残しても</span></div></div>'},
+ {s:15400,e:20000, html:'<div class="sc"><div class="lyr">You’re still<br><span class="hl">my girl to me</span><span class="jp">今も 私の、大切なあなた</span></div></div>'},
+ {s:20000,e:24400, html:'<div class="sc"><div class="lyr">Come home<br>when you are free<span class="jp">いつでも 帰っておいで</span></div></div>'},
+ {s:24400,e:27300, html:'<div class="sc"><div class="lyr"><span class="hl">I’m home at last</span><span class="jp">ただいま。やっと、帰れた</span></div></div>'},
+ {s:27300,e:30000, html:'<div class="sc"><span class="badge">NEW SONG</span><div class="cta-t">The Light<br>in Her Window</div><div class="cta-a">Isla Moorcroft</div><div class="cta-s">配信中 / Streaming Now</div><div class="cta-b">LEO MUSIC</div></div>'},
+];
+const scEls=[];const marks=[];const scenesEl=document.getElementById('scenes');
+scenes.forEach(sc=>{const w=document.createElement('div');w.innerHTML=sc.html;const el=w.firstElementChild;
+  scenesEl.appendChild(el);scEls.push(el);marks.push({start:sc.s,end:sc.e});});
+const TOTAL=30000;window.TOTAL=TOTAL;
+function smooth(t,a,b){if(t<=a)return 0;if(t>=b)return 1;const x=(t-a)/(b-a);return x*x*(3-2*x);}
+
+window.renderAt=function(t){
+  const ts=t/1000;
+  const climax=smooth(t,CL_IN,CL_PK)*(1-0.4*smooth(t,CL_OUT,30000));
+  // slow cinematic sway
+  world.style.transform='translateY('+(Math.sin(ts*0.32)*3).toFixed(2)+'px) scale('+(1.01+0.012*climax)+')';
+  // sun breathe + sink slightly; sky cools but window warms
+  sun.style.transform='translate(-50%,-50%) scale('+(1+0.02*Math.sin(ts*0.6)+0.03*climax)+')';
+  sunglow.style.opacity=(0.72+0.12*Math.sin(ts*0.5)+0.18*climax).toFixed(3);
+  sunpath.style.opacity=(0.66+0.3*Math.sin(ts*1.0)+0.15*climax).toFixed(3);
+  // THE WINDOW LIGHT: warm glow pulses like a lamp, blooms at the chorus ("the light is on")
+  const flick=0.9+0.06*Math.sin(ts*1.7)+0.04*Math.sin(ts*4.3);
+  const lit=flick*(0.82+0.32*climax);
+  winlight.style.filter='brightness('+(0.92+0.5*climax).toFixed(3)+') saturate(1.05)';
+  winlight.style.opacity=Math.min(1,0.9+0.1*climax).toFixed(3);
+  glowspill.style.opacity=(0.55*lit).toFixed(3);
+  glowspill.style.transform='scale('+(1+0.08*climax+0.02*Math.sin(ts*1.3))+')';
+  lampshade.style.boxShadow='0 0 '+(40+30*climax)+'px '+(14+12*climax)+'px rgba(255,220,150,'+(0.6*lit)+')';
+  winframe.style.boxShadow='0 0 '+(50+40*climax)+'px '+(10+14*climax)+'px rgba(255,200,120,'+(0.3+0.3*climax)+')';
+  // harbor + breakwater lamps twinkle
+  for(const h of hlamps){h.el.style.opacity=(0.5+0.5*Math.abs(Math.sin(ts*h.sp+h.ph))).toFixed(3);}
+  // swells shimmer
+  for(const s of swells){s.el.style.transform='translateX('+(Math.sin(ts*s.sp+s.ph)*12).toFixed(1)+'px) scaleY('+(1+0.5*Math.sin(ts*s.sp+s.ph))+')';
+    s.el.style.opacity=(0.05+0.09*Math.abs(Math.sin(ts*0.5+s.ph))+0.06*climax).toFixed(3);}
+  // clouds drift
+  for(const c of clouds){let x=((c.x+ts*c.sp)%1300)-150;c.el.style.transform='translateX('+x.toFixed(1)+'px)';}
+  // woman: gentle breathing; hair & shawl flutter in the sea breeze; warm rim grows with the light
+  const br=Math.sin(ts*0.9)*1+Math.sin(ts*1.7+0.5)*0.5;
+  woman.style.transform='translateY('+(Math.sin(ts*0.5)*2).toFixed(2)+'px) rotate('+(Math.sin(ts*0.33)*0.3).toFixed(2)+'deg) scale(0.86)';
+  hair.style.transform='rotate('+(br*1.4).toFixed(2)+'deg)';
+  wrim.style.opacity=(0.34+0.6*climax).toFixed(3);
+  // warm motes rise
+  for(const m of motes){let y=1960-((ts*m.sp+m.base)%2100);let xx=m.x+Math.sin(ts*0.4+m.ph)*m.amp;
+    const op=(y>1760?smooth(y,1960,1740):(y<140?smooth(y,-60,140):1));
+    m.el.style.transform='translate('+xx.toFixed(1)+'px,'+y.toFixed(1)+'px)';m.el.style.opacity=(op*(0.3+0.55*climax+0.15)).toFixed(3);}
+  // title / scenes
+  const tvis=Math.max(0,Math.min(smooth(t,350,1300),1-smooth(t,2000,2400)));
+  titlewrap.style.opacity=tvis.toFixed(3);
+  titlewrap.style.transform='translateY('+((1-tvis)*-8).toFixed(1)+'px)';
+  bloom.style.opacity=(0.46*climax).toFixed(3);
+  const FADE=360;
+  for(let i=0;i<scEls.length;i++){const m=marks[i];const o=smooth(t,m.start,m.start+FADE)*(1-smooth(t,m.end-FADE,m.end));
+    scEls[i].style.opacity=o.toFixed(3);scEls[i].style.transform='translateY('+((1-o)*16).toFixed(1)+'px)';}
+};
+
+const bgm=document.getElementById('bgm');const barf=document.getElementById('barf');let t0=0;
+function play(){document.getElementById('ui').style.display='none';
+  try{bgm.currentTime=0;bgm.play();}catch(e){}
+  t0=performance.now();
+  (function loop(){const t=performance.now()-t0;const tt=Math.min(t,TOTAL);window.renderAt(tt);
+    barf.style.width=(100*tt/TOTAL)+'%';if(t<TOTAL)requestAnimationFrame(loop);})();
+  setTimeout(()=>{const s0=performance.now();(function fo(){const k=(performance.now()-s0)/1500;
+    bgm.volume=Math.max(0,0.95*(1-k));if(k<1)requestAnimationFrame(fo);else bgm.pause();})();},TOTAL-1500);
+}
+document.getElementById('play').addEventListener('click',play);
+window.renderAt(0);
+"""
+
+html=f"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Light in Her Window / Isla Moorcroft</title>
+<style>{CSS}</style></head>
+<body>
+{BODY}
+<script>
+{ENGINE}
+</script>
+</body></html>"""
+with open(OUT,"w",encoding="utf-8") as f:f.write(html)
+print("wrote",os.path.abspath(OUT),len(html),"bytes")
