@@ -1423,9 +1423,38 @@ Performed by: Isla Moorcroft
 - 国内向け：`17歳、怒りにまかせて家を出た。二度と帰らないと言い残して。毎週日曜、母から手紙が届いた。小さな、ていねいな字で。二十年、引き出しの中に。わたしは素直になれなかった。黒いドレスで帰った、冷たく静まった家。窓辺の椅子で、一通ずつ、すべての手紙を開いた。どれも同じ言葉で終わっていた。海辺の窓に、灯りはついてる。どんな言葉を残しても、あなたは今もわたしの大切な人。いつでも帰っておいで。今はわたしが灯す番。ただいま。やっと帰れた。Isla Moorcroft 新曲「The Light in Her Window」。海辺の灯りと手紙をめぐる、赦しと帰郷のシネマティックバラードです。`
 - 海外向け：`Seventeen and full of fire, I slammed the door and caught the train. I swore I would never come again. Every Sunday a letter came, in her small and careful hand. Twenty years inside a drawer, I was too proud to understand. I came back in a black dress, to a house so cold and still, and opened every single letter in her chair by the window sill. Every one ended the same. The light is on, my darling, in the window by the sea. Whatever words you left behind, you are still my girl to me. Come home when you are free. Now I am the one who lights it, every night, the way she did. I came home, I am home at last. "The Light in Her Window" is the new single from Isla Moorcroft, a cinematic folk ballad of forgiveness and coming home, by a light in a window over the sea.`
 
+## ㊼ Shine Like I Don't Care / Rolling All Stars　【Swagger Blues Rock（洋楽）】　（動画制作済み `shine.mp4`）
+**YouTube（和）** `Shine Like I Don't Care / Rolling All Stars【Music Video】`
+**YouTube（英）** `Rolling All Stars - "Shine Like I Don't Care" (Official Music Video)`
+**説明（JP）**
+```
+真夜中過ぎ、サングラスをかけて、襟を立てて、ブーツを鳴らして歩く。調子はどうだって？ 最高さ、揺れてるのはグラスの氷だけ。
+クローゼットには、まだ彼女の香りのするジャケット。見ないものと一緒に、しまってある。でも今夜はバースツールとボトルとジュークボックス。
+憐れみなんか持って来るな。平気さ、平気さ、平気さ。シャイン、シャイン、まるで気にしてないみたいに。照らしてくれ、俺はそこに立つ。見たきゃ見ろ、俺はこの街で一番まぶしく光ってやる。その代償は、誰にも分からない。
+Rolling All Stars 新曲「Shine Like I Don't Care」。強がりと見栄を燃やして光る、スワッグ全開のブルースロック・アンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Rolling All Stars
+#ShineLikeIDontCare #RollingAllStars #新曲 #洋楽 #ロック #ブルースロック #Shorts
+```
+**説明（EN）**
+```
+Sunglasses on at a quarter past midnight, collar up, boots loud, walking like I own the block. Anybody asks me how I'm doing, I say never better. The only thing that's shaking is the ice inside my glass.
+Don't you come around here with your pity. I'm fine, I'm fine, I'm fine.
+Shine, shine, like I don't care. Light me up, I'll stand right there. Let 'em all look, let 'em all stare. I'll be the brightest thing on this whole street, and you'll never know what it cost me.
+"Shine Like I Don't Care" is the new single from Rolling All Stars. A swaggering blues rock anthem about shining your brightest to hide what it cost you.
+▼ Stream / Download
+[配信リンク]
+Performed by: Rolling All Stars
+#ShineLikeIDontCare #RollingAllStars #NewSong #Rock #BluesRock #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Shine Like I Don't Care / シャイン・ライク・アイ・ドント・ケア ／ アーティスト：Rolling All Stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**ブルース** ／ ムード：モチベーション/ハッピー（強がり・スワッグ。パーティー寄りでも可）
+- 国内向け：`真夜中過ぎ、サングラスをかけて、襟を立てて、ブーツを鳴らして歩く。調子はどうだって？ 最高さ、揺れてるのはグラスの氷だけ。クローゼットには、まだ彼女の香りのするジャケット。見ないものと一緒に、しまってある。でも今夜はバースツールとボトルとジュークボックス。憐れみなんか持って来るな。平気さ、平気さ、平気さ。シャイン、シャイン、まるで気にしてないみたいに。照らしてくれ、俺はそこに立つ。見たきゃ見ろ。俺はこの街で一番まぶしく光ってやる。その代償は、誰にも分からない。Rolling All Stars 新曲「Shine Like I Don't Care」。強がりと見栄を燃やして光る、スワッグ全開のブルースロックアンセムです。`
+- 海外向け：`Sunglasses on at a quarter past midnight, collar up, boots loud, walking like I own the block. Anybody asks me how I am doing, I say never better. The only thing that is shaking is the ice inside my glass. Do not come around here with your pity. I am fine, I am fine, I am fine. Shine, shine, like I do not care. Light me up, I will stand right there. Let them all look, let them all stare. I will be the brightest thing on this whole street, and you will never know what it cost me. "Shine Like I Don't Care" is the new single from Rolling All Stars, a swaggering blues rock anthem about shining your brightest to hide what it cost you.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
