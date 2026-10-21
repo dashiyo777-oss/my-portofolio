@@ -102,8 +102,8 @@ const ymd = iso => iso.slice(0,4) === today.slice(0,4) ? md(iso) : `${iso.slice(
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
 // 読み取りが不確かな曲名（check）はファン向けには出さない
-// ひらがなで検索してもカタカナの読みに当たるようにそろえる
-const norm = s => String(s).toLowerCase().replace(/[\u3041-\u3096]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60)).replace(/\s+/g, "");
+// ひらがなで検索してもカタカナの読みに当たるように、また ’ と ' の違いでも当たるようにそろえる
+const norm = s => String(s).toLowerCase().replace(/[’‘]/g, "'").replace(/[\u3041-\u3096]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60)).replace(/\s+/g, "");
 const subtitle = s => s.en && s.en !== s.title ? `<div class="song-en">${esc(s.en)}</div>` : "";
 
 const songs = SONGS.filter(s => !s.check).map(s => ({
