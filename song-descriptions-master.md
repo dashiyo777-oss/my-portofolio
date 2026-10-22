@@ -1452,9 +1452,42 @@ Performed by: Rolling All Stars
 - 国内向け：`真夜中過ぎ、サングラスをかけて、襟を立てて、ブーツを鳴らして歩く。調子はどうだって？ 最高さ、揺れてるのはグラスの氷だけ。クローゼットには、まだ彼女の香りのするジャケット。見ないものと一緒に、しまってある。でも今夜はバースツールとボトルとジュークボックス。憐れみなんか持って来るな。平気さ、平気さ、平気さ。シャイン、シャイン、まるで気にしてないみたいに。照らしてくれ、俺はそこに立つ。見たきゃ見ろ。俺はこの街で一番まぶしく光ってやる。その代償は、誰にも分からない。Rolling All Stars 新曲「Shine Like I Don't Care」。強がりと見栄を燃やして光る、スワッグ全開のブルースロックアンセムです。`
 - 海外向け：`Sunglasses on at a quarter past midnight, collar up, boots loud, walking like I own the block. Anybody asks me how I am doing, I say never better. The only thing that is shaking is the ice inside my glass. Do not come around here with your pity. I am fine, I am fine, I am fine. Shine, shine, like I do not care. Light me up, I will stand right there. Let them all look, let them all stare. I will be the brightest thing on this whole street, and you will never know what it cost me. "Shine Like I Don't Care" is the new single from Rolling All Stars, a swaggering blues rock anthem about shining your brightest to hide what it cost you.`
 
+## ㊽ We Are the Fireflies / w-Band　【Tender Cinematic Anthem（洋楽・フォーク）】　（動画制作済み `fireflies.mp4`）
+**YouTube（和）** `We Are the Fireflies / w-Band【Music Video】`
+**YouTube（英）** `w-Band - "We Are the Fireflies" (Official Music Video)`
+**説明（JP）**
+```
+見上げてごらん。暗闇は、空っぽじゃない。
+停電の古い町、窓を濡らすモンスーン。母さんは蝋燭も灯さず、ただ「待って、目が暗闇に慣れるのを」と言った。すると田んぼの上に、小さな緑の光がひとつ、またひとつ。
+太陽にならなくていい。夜の寂しさを、少しやわらげるだけでいい。小さな光、小さな光。世界は変えられなくても、誰かを家まで送り届けるには充分。
+デリーでは jugnu、京都では hotaru。同じ小さな炎の、違う名前。ひとつの光は秘密、ふたつは合図、一万の光は川になる。その川は、きみとぼくのもの。
+私たちは蛍。そして、夜は過ぎてゆく。
+w-Band 新曲「We Are the Fireflies」。国境を越えて小さな光が灯し合う、やさしく壮大なアンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：w-Band
+#WeAreTheFireflies #wBand #新曲 #洋楽 #フォーク #蛍 #Shorts
+```
+**説明（EN）**
+```
+Look up. The dark is not empty.
+The power's out in the whole old town, monsoon on the window glass. My mother lit no candle, she just said wait, and let your eyes forget the past. Then one by one above the paddy field, small green lights floated in the air.
+You don't need to be the sun to make the night less lonely. A small light, a small light, blinking in the wide unknown. Too little to change the world, enough to walk somebody home.
+In Delhi they call you jugnu, in Kyoto, hotaru. One light is a secret, two lights are a sign, ten thousand lights become a river, and the river is yours and mine.
+We are the fireflies, and the dark is passing through.
+"We Are the Fireflies" is the new single from w-Band. A tender, soaring anthem of small lights finding each other across the world.
+▼ Stream / Download
+[配信リンク]
+Performed by: w-Band
+#WeAreTheFireflies #wBand #NewSong #Folk #Fireflies #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る。w-Band はバンド名の固有名詞） タイトル：We Are the Fireflies / ウィー・アー・ザ・ファイアフライズ ／ アーティスト：w-Band（ダブリュー・バンド）／ ジャンル1：**フォーク**・ジャンル2：**オルタナティブ** ／ ムード：モチベーション/ハッピー（希望・癒やし。壮大さ重視でも可）
+- 国内向け：`見上げてごらん。暗闇は、空っぽじゃない。停電の古い町、窓を濡らすモンスーン。母さんは蝋燭も灯さず、ただ待って、目が暗闇に慣れるのをと言った。すると田んぼの上に、小さな緑の光がひとつ、またひとつ。太陽にならなくていい。夜の寂しさを少しやわらげるだけでいい。小さな光、小さな光。世界は変えられなくても、誰かを家まで送り届けるには充分。デリーでは jugnu、京都では hotaru。同じ小さな炎の違う名前。ひとつの光は秘密、ふたつは合図、一万の光は川になる。その川は、きみとぼくのもの。私たちは蛍。そして、夜は過ぎてゆく。w-Band 新曲「We Are the Fireflies」。国境を越えて小さな光が灯し合う、やさしく壮大なアンセムです。`
+- 海外向け：`Look up. The dark is not empty. The power is out in the whole old town, monsoon on the window glass. My mother lit no candle, she just said wait, and let your eyes forget the past. Then one by one above the paddy field, small green lights floated in the air. You do not need to be the sun to make the night less lonely. A small light, a small light, blinking in the wide unknown. Too little to change the world, enough to walk somebody home. In Delhi they call you jugnu, in Kyoto, hotaru. One light is a secret, two lights are a sign, ten thousand lights become a river, and the river is yours and mine. We are the fireflies, and the dark is passing through. "We Are the Fireflies" is the new single from w-Band, a tender and soaring anthem of small lights finding each other across the world.`
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
