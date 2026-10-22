@@ -112,6 +112,7 @@ footer a{color:var(--accent)}
           <th>公開日</th>
           <th>曲名 / アーティスト</th>
           <th>状況</th>
+          <th>歌詞</th>
           <th>ショート動画</th>
           <th>TikTok</th>
           <th>X (Twitter)</th>
@@ -133,7 +134,10 @@ footer a{color:var(--accent)}
   </footer>
 </div>
 
-<script src="sakkyoku-data.js"></script>
+<script>
+// 曲や歌詞を更新したらすぐ見えるように、データは毎回最新を読み込む（ブラウザに古いものが残らないようにする）
+["sakkyoku-data.js", "lyrics-data.js"].forEach(f => document.write(`<script src="${f}?t=${Date.now()}"><\/script>`));
+</script>
 <script>
 
 const PLATFORMS = [
@@ -146,6 +150,16 @@ const PLATFORMS = [
 ];
 
 const LS_KEY = "sakkyoku-list-v1";
+
+// 歌詞の状態：ファンページに出ている / 配信日から出る / まだない
+const today = (() => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+})();
+function lyricsState(song){
+  if(typeof LYRICS === "undefined" || !LYRICS[song.id]) return "none";
+  return (song.release && song.release > today) ? "later" : "on";
+}
 
 // ===== 保存データ =====
 function loadData(){
@@ -251,6 +265,10 @@ function render(){
 
     const short = hasShort(m);
     const total = rowTotal(m);
+    const ly = lyricsState(m);
+    const lyBadge = ly === "on" ? '<span class="badge short-yes" title="ファンページで歌詞を表示中">○ 掲載済</span>'
+      : ly === "later" ? `<span class="badge wait" title="歌詞は登録済み。配信日からファンページに表示">${m.release.slice(5).replace("-","/").replace(/^0/,"")}から</span>`
+      : '<span class="badge short-no">未登録</span>';
 
     tr.innerHTML = `
       <td class="num-col">${i+1}</td>
@@ -261,6 +279,7 @@ function render(){
         <span class="artist" contenteditable="true" data-field="artist" spellcheck="false">${escapeHtml(m.artist)}</span>
       </td>
       <td><span class="badge ${(m.status==="手続完了"||m.status==="配信中")?"ok":m.status==="供給準備中"?"wait":m.status==="新曲"?"new":"na"}">${m.status}</span></td>
+      <td class="num-col">${lyBadge}</td>
       <td class="num-col"><span class="badge ${short?"short-yes":"short-no"}">${short?"○ 掲載済":"未掲載"}</span></td>
       ${PLATFORMS.map(p=>{
         const s = m.sns[p.key];
@@ -286,6 +305,7 @@ function renderStats(){
   const st = [
     {num: all.length, lbl:"総曲数"},
     {num: all.filter(m=>m.status==="手続完了").length, lbl:"手続完了"},
+    {num: all.filter(m=>lyricsState(m)!=="none").length, lbl:"歌詞登録"},
     {num: all.filter(hasShort).length, lbl:"ショート動画掲載"},
     {num: all.filter(m=>m.sns.note.on).length, lbl:"note掲載"},
     {num: totalViews ? fmt(totalViews) : "0", lbl:"アクセス数合計"},
@@ -357,11 +377,11 @@ tbody.addEventListener("blur", e=>{
 
 // ===== 書き出し / 読み込み =====
 document.getElementById("exportCsv").addEventListener("click", ()=>{
-  const head = ["No","配信登録日","公開日","曲名","アーティスト","状況","ショート動画",
+  const head = ["No","配信登録日","公開日","曲名","アーティスト","状況","歌詞","ショート動画",
     ...PLATFORMS.flatMap(p=>[p.label+"掲載", p.label+"アクセス数"]),
     "アクセス数合計","ストリーミング数","メモ"];
   const rows = SONGS.map(merged).map((m,i)=>[
-    i+1, m.reg, m.pub, m.title, m.artist, m.status, hasShort(m)?"掲載済":"未掲載",
+    i+1, m.reg, m.pub, m.title, m.artist, m.status, {on:"掲載済",later:"配信日から",none:""}[lyricsState(m)], hasShort(m)?"掲載済":"未掲載",
     ...PLATFORMS.flatMap(p=>[m.sns[p.key].on?"○":"", m.sns[p.key].views]),
     rowTotal(m)||"", m.streams, m.memo
   ]);
