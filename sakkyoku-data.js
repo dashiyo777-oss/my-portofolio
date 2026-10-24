@@ -90,4 +90,5 @@ const SONGS = [
   {id:"s82", release:"2018-02-25", link:"https://linkco.re/stFnHYs4", reg:"", title:"Turn me on (Arrange 2)", artist:"w-Band", status:"配信中", memo0:"linkco.re で配信中", note:false},
   {id:"s83", release:"2026-10-22", link:"https://linkco.re/C8GuEHXG", reg:"", title:"Shine Like I Don’t Care", en:"Shine Like I Don’t Care", kana:"シャインライクアイドントケア", artist:"Rolling All Stars", status:"手続完了", memo0:"TuneCore Japan で審査完了・配信手続き開始（10/21）・リリース待ち", note:false},
   {id:"s84", release:"2026-10-22", link:"https://linkco.re/YNgumY03", reg:"", title:"The Light in Her Window", en:"The Light in Her Window", kana:"ザライトインハーウィンドウ", artist:"Isla Moorcroft", status:"手続完了", memo0:"TuneCore Japan で配信手続き済み・リリース待ち", note:false},
+  {id:"s85", en:"Wake", kana:"コウセキ", release:"2026-11-07", reg:"2026-10-24", title:"航跡", artist:"w-Band", status:"供給準備中", note:false, memo0:"リリース予定 11/7・英題 Wake・Rock・シングル（ROUTER.FM）"},
 ];

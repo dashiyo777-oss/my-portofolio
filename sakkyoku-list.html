@@ -267,7 +267,7 @@ function render(){
     const total = rowTotal(m);
     const ly = lyricsState(m);
     const lyBadge = ly === "on" ? '<span class="badge short-yes" title="ファンページで歌詞を表示中">○ 掲載済</span>'
-      : ly === "later" ? `<span class="badge wait" title="歌詞は登録済み。配信日からファンページに表示">${m.release.slice(5).replace("-","/").replace(/^0/,"")}から</span>`
+      : ly === "later" ? `<span class="badge wait" title="歌詞は登録済み。配信日からファンページに表示">${m.release.slice(5).split("-").map(Number).join("/")}から</span>`
       : '<span class="badge short-no">未登録</span>';
 
     tr.innerHTML = `
