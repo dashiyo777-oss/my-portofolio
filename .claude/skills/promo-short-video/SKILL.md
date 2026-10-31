@@ -102,3 +102,30 @@ styles set each frame would otherwise fight a running CSS animation.
   Copy it, fill the `scenes` array and brand tokens, save as `<slug>.html`.
 - `scripts/capture_frames.js` — Playwright frame exporter (`node capture_frames.js <url> <outdir> [fps]`).
 - `scripts/render_short.sh` — end-to-end: capture + encode with BGM. `render_short.sh <slug> <bgm> [port]`.
+
+## Living Jacket (Lv1) — ジャケ写真をそのまま動かす量産テンプレ
+
+曲ごとに世界観を描き起こす代わりに、**ChatGPT等で作った静止ジャケ(PNG/JPG)を背景にして動かす**方式。
+写真の質感を活かしつつ、Leo Music 統一フレーム（粒子＋光＋ロゴバグ＋締めCTA）を自動で乗せる。量産に最適。
+
+再利用ツール: `scripts-gen/gen_living_jacket.py`
+
+```
+# 1) ジャケ画像とBGMクリップをリポジトリ直下に置く（jacketは任意サイズ、正方形でOK）
+# 2) 生成（背景ブラーは事前に1枚だけ作る＝高速。CSSの毎フレームblurは使わない）
+python3 scripts-gen/gen_living_jacket.py \
+  --slug colors-living --jacket colors-jacket.jpg --bgm colors-bgm.mp3 \
+  --title "Colors at the Door" --artist "w-Band" \
+  --particles petals,powder,rays --logo left --accent "#ffd23d" --climax 19000
+# 3) レンダリング
+bash .claude/skills/promo-short-video/scripts/render_short.sh colors-living colors-bgm.mp3
+```
+
+- `--particles`: `petals, sakura, snow, powder, embers, fireflies, bokeh, rays` から曲調で選ぶ（複数可。`rays`は朝日/光条）。
+- 9:16へは「事前ブラー背景で全面フィル＋中央にシャープな正方形」＋ゆっくりKen Burns。
+- タイトルはジャケ内蔵想定（画面テキストはタイトル＋アーティストのみ）。終盤に `--title/--artist` のCTAカード。
+- ブランド既定：ロゴバグ=左下・円形（`leo-music-logo.png` を円形クロップ）、アクセント=ゴールド `#ffd23d`。
+- BGMは別途、曲の「歌が明瞭なサビ」を31秒で切り出す（`ffmpeg -ss <start> -t 31 ... <slug>-bgm.mp3`）。サビ選定は hf%(子音)×shapeΔ(母音変化) の worded 解析で。
+- 全歌詞は各 `*-bgm.mp3`(Suno制作)の ID3 `lyrics-eng` タグに埋め込み済み → `ffmpeg -i x.mp3 -f ffmetadata -` で復元可。
+
+**レベルの使い分け**：Lv1=この方式（量産・写真の質感）／Lv3=シーンをコードで全再現（勝負曲・MV感）。どちらも同じブランド枠なので混在しても統一感は保たれる。

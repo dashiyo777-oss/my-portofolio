@@ -1485,9 +1485,42 @@ Performed by: w-Band
 - 国内向け：`見上げてごらん。暗闇は、空っぽじゃない。停電の古い町、窓を濡らすモンスーン。母さんは蝋燭も灯さず、ただ待って、目が暗闇に慣れるのをと言った。すると田んぼの上に、小さな緑の光がひとつ、またひとつ。太陽にならなくていい。夜の寂しさを少しやわらげるだけでいい。小さな光、小さな光。世界は変えられなくても、誰かを家まで送り届けるには充分。デリーでは jugnu、京都では hotaru。同じ小さな炎の違う名前。ひとつの光は秘密、ふたつは合図、一万の光は川になる。その川は、きみとぼくのもの。私たちは蛍。そして、夜は過ぎてゆく。w-Band 新曲「We Are the Fireflies」。国境を越えて小さな光が灯し合う、やさしく壮大なアンセムです。`
 - 海外向け：`Look up. The dark is not empty. The power is out in the whole old town, monsoon on the window glass. My mother lit no candle, she just said wait, and let your eyes forget the past. Then one by one above the paddy field, small green lights floated in the air. You do not need to be the sun to make the night less lonely. A small light, a small light, blinking in the wide unknown. Too little to change the world, enough to walk somebody home. In Delhi they call you jugnu, in Kyoto, hotaru. One light is a secret, two lights are a sign, ten thousand lights become a river, and the river is yours and mine. We are the fireflies, and the dark is passing through. "We Are the Fireflies" is the new single from w-Band, a tender and soaring anthem of small lights finding each other across the world.`
 
+## ㊾ Colors at the Door / w-Band　【Tender World Folk Anthem（洋楽）】　（動画制作済み `colors-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `Colors at the Door / w-Band【Music Video】`
+**YouTube（英）** `w-Band - "Colors at the Door" (Official Music Video)`
+**説明（JP）**
+```
+日が昇る前、鳥より早く、母は戸口にひざまずいた。色粉のボウルと、昨夜の祈りを手に。
+サフラン、白、緑の葉。石の上に、ひらく蓮の花。「夜はただ夢を見ていただけ。さあ、朝に、朝だけの何かをあげて」。
+戸口に、色を。開いた手で、置いていく。雨がぜんぶ洗い流しても、わたしたちは、また始める。
+留めるためでも、所有するためでもなく。ただ、訪れる人を迎えるために。平和は石でできてはいない。それは戸口の色。愛が、もう一度、描くもの。
+w-Band 新曲「Colors at the Door」。インドの祝祭のランゴリに寄せて、消えてはまた描かれる優しさと再生を歌う、やさしく壮大なアンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：w-Band
+#ColorsAtTheDoor #wBand #新曲 #洋楽 #フォーク #ランゴリ #Shorts
+```
+**説明（EN）**
+```
+Before the sun, before the birds, my mother knelt beside the door, with a bowl of colored powder and the prayers from the night before.
+Saffron, white, a leaf of green, a lotus opening on the stone. She said, the night was only dreaming, now give the morning something of its own.
+Colors at the door, laid down by open hands. The rain will wash them all away, and we begin again. Not to keep, not to own, just to welcome who comes in.
+Peace was never made of stone. It's colors at the door, drawn by love, once more.
+"Colors at the Door" is the new single from w-Band. A tender, soaring anthem inspired by the rangoli at the threshold, about kindness and renewal that fades and is drawn again each morning.
+▼ Stream / Download
+[配信リンク]
+Performed by: w-Band
+#ColorsAtTheDoor #wBand #NewSong #Folk #Rangoli #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る。w-Band はバンド名の固有名詞） タイトル：Colors at the Door / カラーズ・アット・ザ・ドア ／ アーティスト：w-Band（ダブリュー・バンド）／ ジャンル1：**フォーク**・ジャンル2：**オルタナティブ** ／ ムード：モチベーション/ハッピー（希望・癒やし。穏やかさ重視なら リラックス/チルアウト）
+- 国内向け：`日が昇る前、鳥より早く、母は戸口にひざまずいた。色粉のボウルと、昨夜の祈りを手に。サフラン、白、緑の葉。石の上に、ひらく蓮の花。夜はただ夢を見ていただけ。さあ、朝に、朝だけの何かをあげて。戸口に、色を。開いた手で、置いていく。雨がぜんぶ洗い流しても、わたしたちは、また始める。留めるためでも、所有するためでもなく。ただ、訪れる人を迎えるために。平和は石でできてはいない。それは戸口の色。愛が、もう一度、描くもの。w-Band 新曲「Colors at the Door」。インドの祝祭のランゴリに寄せて、消えてはまた描かれる優しさと再生を歌う、やさしく壮大なアンセムです。`
+- 海外向け：`Before the sun, before the birds, my mother knelt beside the door, with a bowl of colored powder and the prayers from the night before. Saffron, white, a leaf of green, a lotus opening on the stone. She said, the night was only dreaming, now give the morning something of its own. Colors at the door, laid down by open hands. The rain will wash them all away, and we begin again. Not to keep, not to own, just to welcome who comes in. Peace was never made of stone. It is colors at the door, drawn by love, once more. "Colors at the Door" is the new single from w-Band, a tender and soaring anthem inspired by the rangoli at the threshold, about kindness and renewal that fades and is drawn again each morning.`
+
+> **メモ（制作方式）**：本作は Lv1「リビング・ジャケット」方式（ChatGPTの静止ジャケ＋Ken Burns＋粒子＋光＋Leo Musicロゴバグ/CTA）。再利用ツール：`scripts-gen/gen_living_jacket.py`。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
