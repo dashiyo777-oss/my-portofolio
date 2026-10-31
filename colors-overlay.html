@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>colors brand overlay</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,600&family=Kaushan+Script&family=Noto+Serif+JP:wght@500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:transparent}
+#stage{position:fixed;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:transparent;font-family:"EB Garamond","Noto Serif JP",serif}
+.layer{display:none}
+.layer.on{display:block}
+
+/* ---------- TITLE ---------- */
+#title{position:absolute;left:60px;right:60px;top:196px}
+.brush{font-family:"Kaushan Script",cursive;font-size:150px;line-height:1.02;
+  background:linear-gradient(95deg,#ff5fa2 0%,#ff8a3c 26%,#ffd23d 46%,#8fd0ff 68%,#ffffff 90%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.45)) drop-shadow(0 8px 26px rgba(0,0,0,.55))}
+.brush .s{ -webkit-text-stroke:0}
+.t-artist{margin-top:10px;font-family:"EB Garamond",serif;font-weight:600;font-size:54px;
+  letter-spacing:14px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.5),0 6px 22px rgba(0,0,0,.6)}
+
+/* ---------- LOGO BUG ---------- */
+#logobug{position:absolute;left:46px;bottom:46px;width:124px;height:124px;border-radius:50%;
+  overflow:hidden;box-shadow:0 0 0 3px rgba(255,220,150,.5),0 6px 16px rgba(0,0,0,.5);opacity:.95}
+#logobug img{position:absolute;left:-14%;top:-10%;width:128%;height:128%;object-fit:cover}
+#logotag{position:absolute;left:188px;bottom:70px;font-family:"EB Garamond",serif;font-weight:600;
+  font-size:34px;letter-spacing:5px;color:#f7ecd6;opacity:.9;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+
+/* ---------- CTA ---------- */
+#scrim{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(10,6,2,0) 30%,rgba(10,6,2,.42) 58%,rgba(10,6,2,.72) 100%)}
+#cta{position:absolute;left:30px;right:30px;top:560px;text-align:center}
+.badge{display:inline-block;font-family:"EB Garamond",serif;font-weight:600;font-size:32px;
+  letter-spacing:7px;color:#2a1704;background:linear-gradient(90deg,#ffd23d,#ff9a3c);
+  padding:9px 28px;border-radius:30px;margin-bottom:22px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.cta-t{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:600;font-style:italic;
+  font-size:104px;line-height:1.02;color:#fff;
+  text-shadow:0 0 28px rgba(255,200,120,.6),0 5px 20px rgba(10,6,2,.7)}
+.cta-a{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:500;font-size:50px;
+  letter-spacing:12px;color:#f3ead6;margin-top:14px;text-shadow:0 2px 12px rgba(10,6,2,.8)}
+.cta-s{font-family:"EB Garamond","Noto Serif JP",serif;font-weight:600;font-size:40px;
+  letter-spacing:3px;color:#ffd23d;margin-top:22px}
+.cta-b{font-family:"EB Garamond",serif;font-weight:600;font-size:32px;letter-spacing:10px;
+  color:#f3ead6;margin-top:12px;opacity:.92}
+</style></head>
+<body>
+<div id="stage">
+  <div class="layer" id="L-title">
+    <div id="title"><div class="brush">Colors at the Door</div><div class="t-artist">w-Band</div></div>
+  </div>
+  <div class="layer" id="L-logobug">
+    <div id="logobug"><img src="leo-music-logo.png"></div><div id="logotag">LEO MUSIC</div>
+  </div>
+  <div class="layer" id="L-cta">
+    <div id="scrim"></div>
+    <div id="cta"><span class="badge">NEW SONG</span>
+      <div class="cta-t">Colors at the Door</div><div class="cta-a">w-Band</div>
+      <div class="cta-s">配信中 / Streaming Now</div><div class="cta-b">LEO MUSIC</div></div>
+    <div id="logobug"><img src="leo-music-logo.png"></div><div id="logotag">LEO MUSIC</div>
+  </div>
+</div>
+<script>
+  var q=new URLSearchParams(location.search), layer=q.get('layer')||'L-title';
+  var el=document.getElementById(layer); if(el) el.classList.add('on');
+</script>
+</body></html>

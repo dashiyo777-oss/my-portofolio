@@ -129,3 +129,20 @@ bash .claude/skills/promo-short-video/scripts/render_short.sh colors-living colo
 - 全歌詞は各 `*-bgm.mp3`(Suno制作)の ID3 `lyrics-eng` タグに埋め込み済み → `ffmpeg -i x.mp3 -f ffmetadata -` で復元可。
 
 **レベルの使い分け**：Lv1=この方式（量産・写真の質感）／Lv3=シーンをコードで全再現（勝負曲・MV感）。どちらも同じブランド枠なので混在しても統一感は保たれる。
+
+## ブランド枠オーバーレイ（外部動画＝Sora2等に重ねる / Lv0）
+
+Sora2など**外部で作った実写・AI動画**をそのまま主役にしつつ、Leo Music のブランドを統一したいとき。
+映像実体をこちらに取り込めない（環境のネット制限で Drive/OneDrive 直DL不可）場合でも、
+**「重ねるだけ」の透過PNG素材**を生成して渡せる。
+
+- ツール：`scripts-gen/gen_brand_overlays.py`（＋ `scripts-gen/capture_png.js`）
+- 出力（1080×1920・背景透過PNG 3枚）：
+  - `<slug>-ov-title.png`  … 手描き風マルチカラーのタイトル＋アーティスト（冒頭用 / Kaushan Script + EB Garamond）
+  - `<slug>-ov-logobug.png` … Leo Music 丸ロゴバグ＋「LEO MUSIC」（左下・全編に重ねる）
+  - `<slug>-ov-cta.png`   … 締めCTA（やわらかいスクリム＋NEW SONG/タイトル/配信中・Streaming Now/LEO MUSIC＋ロゴバグ）
+- 例：
+  `python3 scripts-gen/gen_brand_overlays.py --slug colors --title "Colors at the Door" --artist "w-Band" --accent "#ffd23d" --accent2 "#ff9a3c" --logo left`
+- 透過PNGは playwright-core の `omitBackground:true` で書き出す（JPEGではなくPNG）。Chrome実行ファイルは `/opt/pw-browsers/chromium-*/chrome-linux/chrome` を解決。
+
+**CapCut等での重ね方**：①本編クリップを置く→②`-ov-logobug.png` を全編にオーバーレイ（PIP・不透明度100%）→③冒頭3〜4秒に `-ov-title.png`（フェードイン）→④末尾3秒に `-ov-cta.png`。すべて画面いっぱい(100%)・位置0,0で合わせるだけ。
