@@ -420,9 +420,10 @@
   // 会員コード入力バナー（note 月額）
   function memberBanner() {
     return '<div class="paywall">' +
-      '<h3>' + L("🔑 会員エリア（note）", "🔑 Members area (note)") + '</h3>' +
+      '<h3>' + L("🔑 会員エリア", "🔑 Members area") + '</h3>' +
       '<p>' + L("世界の偉人・聖典・伝説、そして多くの悩みは会員限定。<br>note会員ページの「今月のコード」を入れると解放されます。",
         "The world's sages, scriptures, legends and many worries are members-only.<br>Enter this month's code from the note members page to unlock.") + '</p>' +
+      '<p class="lic-buy"><a href="https://note.com/leo77777/membership" target="_blank" rel="noopener">' + L("→ noteメンバーシップ（有料記事が読み放題。ゲームの会員エリアも使えます）", "→ note membership (unlimited paid articles, plus this members area)") + '</a></p>' +
       '<input class="code-input" autocapitalize="characters" placeholder="' + L("今月のコード（例: TOMO-1234）", "This month's code (e.g. TOMO-1234)") + '">' +
       '<button class="btn gold sm" data-act="redeem" style="display:inline-block">' + L("コードで解放", "Unlock with code") + '</button>' +
       '<div class="code-msg"></div>' +
