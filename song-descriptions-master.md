@@ -1518,9 +1518,42 @@ Performed by: w-Band
 
 > **メモ（制作方式）**：本作は Lv1「リビング・ジャケット」方式（ChatGPTの静止ジャケ＋Ken Burns＋粒子＋光＋Leo Musicロゴバグ/CTA）。再利用ツール：`scripts-gen/gen_living_jacket.py`。
 
+## ㊿ 光れ! / NANASIGNAL　【J-Pop / 応援ロックアンセム】　（動画制作済み `hikare-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `光れ! / NANASIGNAL【Music Video】`
+**YouTube（英）** `NANASIGNAL - "Hikare! (Shine!)" (Official Music Video)`
+**説明（JP）**
+```
+履歴書に書けることなんて、まだ何もない。それでも胸の奥の小さな光は、誰にも消せない。
+笑われた夢の数だけ、明日は眩しくなる。震える手でいい、下手くそでいい。最初の一歩に、完璧はいらない。
+光れ! その光。世界がまだ知らない光。失敗は全部、伸びしろだ。転んだ地面は、発射台だ。
+まだ何者でもない。それは、何にでもなれるということ。さあ顔を上げて、夜明けは目の前。
+NANASIGNAL 新曲「光れ!」。一歩を踏み出すすべての人へ贈る、まっすぐな応援ロックアンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：NANASIGNAL
+#光れ #NANASIGNAL #新曲 #応援ソング #JPOP #Shorts
+```
+**説明（EN）**
+```
+There is nothing on my resume yet, but the small light inside me, no one can put it out.
+For every dream they laughed at, tomorrow burns brighter. Your hands can shake, you can be clumsy. The first step does not have to be perfect.
+Shine. That light. A light the world has not seen yet. Every failure is just room to grow. The ground you fell on is a launchpad.
+Being no one yet means you can still become anything. Lift your head, the dawn is right in front of you.
+"Hikare! (Shine!)" is the new single from NANASIGNAL, a straight, heartfelt rock anthem for everyone taking a first step.
+▼ Stream / Download
+[配信リンク]
+Performed by: NANASIGNAL
+#Hikare #NANASIGNAL #NewSong #JPop #Anthem #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：光れ! / ヒカレ ／ アーティスト：NANASIGNAL（ナナシグナル）／ ジャンル1：**J-Pop**・ジャンル2：**ロック** ／ ムード：モチベーション/ハッピー（力強い希望・前向き）
+- 国内向け：`履歴書に書けることなんて、まだ何もない。それでも胸の奥の小さな光は、誰にも消せない。笑われた夢の数だけ、明日は眩しくなる。震える手でいい、下手くそでいい。最初の一歩に、完璧はいらない。光れ、その光。世界がまだ知らない光。失敗は全部、伸びしろだ。転んだ地面は、発射台だ。まだ何者でもないことは、何にでもなれるということ。さあ顔を上げて、夜明けは目の前。NANASIGNAL 新曲「光れ!」。一歩を踏み出すすべての人へ贈る、まっすぐな応援ロックアンセムです。`
+- 海外向け：`There is nothing on my resume yet, but the small light inside me, no one can put it out. For every dream they laughed at, tomorrow burns brighter. Your hands can shake, you can be clumsy. The first step does not have to be perfect. Shine, that light, a light the world has not seen yet. Every failure is just room to grow, and the ground you fell on is a launchpad. Being no one yet means you can still become anything. Lift your head, the dawn is right in front of you. "Hikare! (Shine!)" is the new single from NANASIGNAL, a straight and heartfelt rock anthem for everyone taking a first step.`
+
+> **メモ（制作方式）**：㊾と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 embers/rays/bokeh＋光＋Leo Musicロゴバグ/CTA）。粒子は「上昇する金の光＝光れ」で選定。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（2:47起点）を30秒・BPM152で切り出し。画面テキストはタイトルとアーティストのみ。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
