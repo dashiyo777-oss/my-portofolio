@@ -1620,9 +1620,44 @@ Performed by: Rolling all stars
 
 > **メモ（制作方式）**：㊾㊿51と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 embers/rays/bokeh＋光＋Leo Musicロゴバグ/CTA）。粒子は「嵐の中の金の火花」で選定。アクセントは金 `#ffd23d`＋稲妻の赤オレンジ `#ff5a3c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMは歌声が明瞭なサビ（1:39起点・mid/side解析でギターデュエルを回避）を30秒。画面テキストはタイトルとアーティストのみ。アーティスト表記は「Rolling all stars」で統一。
 
+## 53 水仙の夜明け / 花明り　【J-Pop / 年越しバラード】　（動画制作済み `suisen-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `水仙の夜明け / 花明り【Music Video】`
+**YouTube（英）** `Hanaakari - "Suisen no Yoake (Daffodil Dawn)" (Official Music Video)`
+**説明（JP）**
+```
+今年最後の夕焼けが、坂の向こうに沈んでいく。手袋越しのぬくもりを、数えるように歩いた。
+笑った日も、泣いた日も、ぜんぶ、あなたがいてくれた。言いそびれた「ありがとう」を、白い息に包んで。
+水仙の花が、雪の中で、まっすぐ空を見上げてる。ねえ、来年も、となりにいてね。それだけで、わたしは強くなれる。
+暗い夜ほど、夜明けはまぶしい。あなたが教えてくれたね。三、二、一。
+はじめての朝、はじめての光。あなたと迎える、新しい年。ありがとう、やっと言えたよ。水仙の、夜明けに。
+花明り 新曲「水仙の夜明け」。大晦日から元旦へ、大切な人へ贈る、やさしく澄んだ年越しのバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：花明り
+#水仙の夜明け #花明り #新曲 #バラード #年越し #JPOP #Shorts
+```
+**説明（EN）**
+```
+The last sunset of the year sinks beyond the hill. I walked as if counting the warmth through my gloves.
+The days we laughed, the days we cried, you were there for all of them. The "thank you" I never said, I wrap it in a breath of white.
+The daffodils, in the snow, look straight up at the sky. Stay by my side next year too. Just that, and I can be strong.
+The darker the night, the brighter the dawn. You taught me that. Three, two, one.
+The first morning, the first light. A new year welcomed with you. Thank you. I finally said it. At the dawn of the daffodils.
+"Suisen no Yoake (Daffodil Dawn)" is the new single from Hanaakari, a gentle, luminous New Year ballad for the one who matters most.
+▼ Stream / Download
+[配信リンク]
+Performed by: Hanaakari
+#DaffodilDawn #Hanaakari #NewSong #Ballad #NewYear #JPop #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：水仙の夜明け / スイセンノヨアケ ／ アーティスト：花明り（ハナアカリ）／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：リラックス/チルアウト（感動・癒やし。前向きさ重視なら モチベーション/ハッピー）
+- 国内向け：`今年最後の夕焼けが、坂の向こうに沈んでいく。手袋越しのぬくもりを、数えるように歩いた。笑った日も、泣いた日も、ぜんぶ、あなたがいてくれた。言いそびれた「ありがとう」を、白い息に包んで。水仙の花が、雪の中で、まっすぐ空を見上げてる。ねえ、来年も、となりにいてね。それだけで、わたしは強くなれる。暗い夜ほど、夜明けはまぶしい。あなたが教えてくれたね。三、二、一。はじめての朝、はじめての光。あなたと迎える、新しい年。ありがとう、やっと言えたよ。水仙の、夜明けに。花明り 新曲「水仙の夜明け」。大晦日から元旦へ、大切な人へ贈る、やさしく澄んだ年越しのバラードです。`
+- 海外向け：`The last sunset of the year sinks beyond the hill. I walked as if counting the warmth through my gloves. The days we laughed, the days we cried, you were there for all of them. The thank you I never said, I wrap it in a breath of white. The daffodils, in the snow, look straight up at the sky. Stay by my side next year too. Just that, and I can be strong. The darker the night, the brighter the dawn. You taught me that. Three, two, one. The first morning, the first light. A new year welcomed with you. Thank you, I finally said it, at the dawn of the daffodils. "Suisen no Yoake (Daffodil Dawn)" is the new single from Hanaakari, a gentle and luminous New Year ballad for the one who matters most.`
+
+> **メモ（制作方式）**：㊾〜52と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/sakura/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「雪＋桜の花びら＋夜明けの光」で選定。アクセントは金 `#ffd23d`＋やわらかい桃色 `#ff9a6c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMは最終サビ（キーチェンジ＋フルオケの感動的クライマックス、3:10起点・mid/side解析）を30秒。画面テキストはタイトルとアーティストのみ。新曲名の英題は「Suisen no Yoake (Daffodil Dawn)」。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
