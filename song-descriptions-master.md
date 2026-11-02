@@ -1551,9 +1551,45 @@ Performed by: NANASIGNAL
 
 > **メモ（制作方式）**：㊾と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 embers/rays/bokeh＋光＋Leo Musicロゴバグ/CTA）。粒子は「上昇する金の光＝光れ」で選定。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（2:47起点）を30秒・BPM152で切り出し。画面テキストはタイトルとアーティストのみ。
 
+## 51 Wide Open / Rolling all stars　【Rock / アメリカーナ・ロードアンセム（洋楽）】　（動画制作済み `wideopen-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `Wide Open / Rolling all stars【Music Video】`
+**YouTube（英）** `Rolling all stars - "Wide Open" (Official Music Video)`
+**説明（JP）**
+```
+夜明け前の5時、誰も眠らなかった。彼女のコートは、春からずっと後部座席に置いたまま。
+ラジオ塔、給水塔、トウモロコシ畑。教会、教会、酒場、また教会。
+逃げているわけじゃない。向かっているわけでもない。昼にもう一度、聞いてくれ。
+心を開けっ放しにしたら、道のほうが流れ込んできた。Wide Open。
+名前も知られていない町まで、このまま走らせてくれ。車輪が外れるまで、全開で。
+そして朝の中へ歩いていって、最初に尋ねた人に、話すんだ。
+Rolling all stars 新曲「Wide Open」。夕陽のハイウェイを全開で駆ける、自由とやり直しのロード・アンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Rolling all stars
+#WideOpen #RollingAllStars #新曲 #洋楽 #ロック #ロードソング #Shorts
+```
+**説明（EN）**
+```
+Five in the morning, nobody slept. Her coat has been on the back seat since the spring.
+Radio tower, water tower, cornfield. Church, church, bar, church.
+I am not running from it, I am not running to it. Ask me again at noon.
+I left myself wide open, and the road came in. Wide open.
+I am gonna run it wide open till the wheels come off, then walk into the morning and tell it to the first man who asks.
+"Wide Open" is the new single from Rolling all stars, a wide open road anthem about freedom, and the things we finally say out loud.
+▼ Stream / Download
+[配信リンク]
+Performed by: Rolling all stars
+#WideOpen #RollingAllStars #NewSong #Rock #RoadSong #Americana #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Wide Open / ワイド・オープン ／ アーティスト：Rolling all stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**カントリー** ／ ムード：モチベーション/ハッピー（解放感・前向き。疾走感重視なら アゲ/パーティー）
+- 国内向け：`夜明け前の5時、誰も眠らなかった。彼女のコートは、春からずっと後部座席に置いたまま。ラジオ塔、給水塔、トウモロコシ畑。教会、教会、酒場、また教会。逃げているわけじゃない。向かっているわけでもない。昼にもう一度、聞いてくれ。心を開けっ放しにしたら、道のほうが流れ込んできた。名前も知られていない町まで、このまま走らせてくれ。車輪が外れるまで、全開で。そして朝の中へ歩いていって、最初に尋ねた人に話すんだ。Rolling all stars 新曲「Wide Open」。夕陽のハイウェイを全開で駆ける、自由とやり直しのロード・アンセムです。`
+- 海外向け：`Five in the morning, nobody slept. Her coat has been on the back seat since the spring. Radio tower, water tower, cornfield. Church, church, bar, church. I am not running from it, I am not running to it. Ask me again at noon. I left myself wide open, and the road came in. I am gonna run it wide open till the wheels come off, then walk into the morning and tell it to the first man who asks. "Wide Open" is the new single from Rolling all stars, a wide open road anthem about freedom, and the things we finally say out loud.`
+
+> **メモ（制作方式）**：㊾㊿と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 embers/rays/bokeh＋光＋Leo Musicロゴバグ/CTA）。粒子は「夕陽のハイウェイの金の光」で選定。アクセントは金 `#ffd23d`＋温かいオレンジ `#ff7a2c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはキーアップ後の大サビ（3:02起点）を30秒。画面テキストはタイトルとアーティストのみ。アーティスト表記は「Rolling all stars」で統一。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
