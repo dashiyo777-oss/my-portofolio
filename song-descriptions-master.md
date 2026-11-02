@@ -1587,9 +1587,42 @@ Performed by: Rolling all stars
 
 > **メモ（制作方式）**：㊾㊿と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 embers/rays/bokeh＋光＋Leo Musicロゴバグ/CTA）。粒子は「夕陽のハイウェイの金の光」で選定。アクセントは金 `#ffd23d`＋温かいオレンジ `#ff7a2c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはキーアップ後の大サビ（3:02起点）を30秒。画面テキストはタイトルとアーティストのみ。アーティスト表記は「Rolling all stars」で統一。
 
+## 52 Count to Three / Rolling all stars　【Rock / アウトロー・ブルースロック（洋楽）】　（動画制作済み `count3-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `Count to Three / Rolling all stars【Music Video】`
+**YouTube（英）** `Rolling all stars - "Count to Three" (Official Music Video)`
+**説明（JP）**
+```
+扉が開いて、部屋が静まる。板張りに響くのはブーツの音だけ。誰かが誰かに、俺が何者かを告げている。だが、もう遅い。俺はもうここにいる。
+声は張らない。張る必要がなかった。ただ、光の届かない場所に立つだけ。テュペロの頃から、嵐が俺と歩いてきた。そいつはノックなんてしない。
+閃光が見えたか。なら、あとは待て。ワン、ツー、スリー。俺の背後から、雷鳴が来る。見えていたはずだ。これから、聞くことになる。おまえには、三つ数える猶予があった。
+雷は謝らない。雷は言い訳もしない。ただ、行くべき場所へ行き、空を炎に残していく。
+Rolling all stars 新曲「Count to Three」。嵐を背負って歩く男の、ダークで痛快なアウトロー・ロックアンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Rolling all stars
+#CountToThree #RollingAllStars #新曲 #洋楽 #ロック #ブルースロック #Shorts
+```
+**説明（EN）**
+```
+The door swung wide, the room went quiet. Boots on the boards, that is all you hear. Somebody is telling somebody who I am. Tell him faster. I am already here.
+I do not raise my voice. I never had to. I just stand where the light does not reach. There is a storm that has walked with me since Tupelo, and it does not knock.
+You see the flash? Now you wait. One, two, three. Here comes the thunder right behind me. You saw it coming, now you are gonna hear it. You had a count of three.
+Lightning does not apologize. Lightning does not explain. It just goes where it is going, and it leaves the whole sky in flames.
+"Count to Three" is the new single from Rolling all stars, a dark and swaggering outlaw rock anthem.
+▼ Stream / Download
+[配信リンク]
+Performed by: Rolling all stars
+#CountToThree #RollingAllStars #NewSong #Rock #BluesRock #Outlaw #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Count to Three / カウント・トゥ・スリー ／ アーティスト：Rolling all stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**ブルース** ／ ムード：パワフル/クール（緊張感・ダーク。疾走感重視なら アゲ/パーティー）
+- 国内向け：`扉が開いて、部屋が静まる。板張りに響くのはブーツの音だけ。誰かが誰かに、俺が何者かを告げている。だが、もう遅い。俺はもうここにいる。声は張らない。張る必要がなかった。ただ、光の届かない場所に立つだけ。テュペロの頃から、嵐が俺と歩いてきた。閃光が見えたか。なら、あとは待て。ワン、ツー、スリー。俺の背後から、雷鳴が来る。見えていたはずだ。これから、聞くことになる。おまえには、三つ数える猶予があった。雷は謝らない。雷は言い訳もしない。ただ、行くべき場所へ行き、空を炎に残していく。Rolling all stars 新曲「Count to Three」。嵐を背負って歩く男の、ダークで痛快なアウトロー・ロックアンセムです。`
+- 海外向け：`The door swung wide, the room went quiet. Boots on the boards, that is all you hear. Somebody is telling somebody who I am. Tell him faster. I am already here. I do not raise my voice. I never had to. I just stand where the light does not reach. There is a storm that has walked with me since Tupelo, and it does not knock. You see the flash? Now you wait. One, two, three. Here comes the thunder right behind me. You saw it coming, now you are gonna hear it. You had a count of three. Lightning does not apologize, it does not explain. It just goes where it is going, and it leaves the whole sky in flames. "Count to Three" is the new single from Rolling all stars, a dark and swaggering outlaw rock anthem.`
+
+> **メモ（制作方式）**：㊾㊿51と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 embers/rays/bokeh＋光＋Leo Musicロゴバグ/CTA）。粒子は「嵐の中の金の火花」で選定。アクセントは金 `#ffd23d`＋稲妻の赤オレンジ `#ff5a3c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMは歌声が明瞭なサビ（1:39起点・mid/side解析でギターデュエルを回避）を30秒。画面テキストはタイトルとアーティストのみ。アーティスト表記は「Rolling all stars」で統一。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
