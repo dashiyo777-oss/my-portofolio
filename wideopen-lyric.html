@@ -69,7 +69,7 @@ const parts=document.getElementById('parts');const items=[];
 for(let i=0;i<46;i++){const sz=3+rnd()*7;const e=document.createElement('div');
   e.style.cssText='position:absolute;width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:radial-gradient(circle,rgba(255,210,130,.95),transparent 72%)';
   parts.appendChild(e);items.push({el:e,x:rnd()*1080,base:rnd()*2100,drift:10+rnd()*22,sway:20+rnd()*60,ph:rnd()*6.28,bl:0.6+rnd()*1.6,bp:rnd()*6.28});}
-const CUES=[{"t": 1800, "x": "Wide open!"}, {"t": 4600, "x": "I'm holding it wide open"}, {"t": 8000, "x": "I left myself wide open"}, {"t": 11000, "x": "and the road came in"}, {"t": 14200, "x": "I'm gonna run it wide open"}, {"t": 17400, "x": "till the wheels come off"}, {"t": 20400, "x": "then walk into the morning"}, {"t": 23400, "x": "and tell it to the first man who asks"}];
+const CUES=[{"t": 1500, "x": "Wide open!"}, {"t": 4200, "x": "I'm holding it wide open"}, {"t": 7400, "x": "I left myself wide open"}, {"t": 10600, "x": "and the road came in"}, {"t": 13900, "x": "Wide open!"}, {"t": 17100, "x": "I'm holding it wide open"}, {"t": 20400, "x": "I left myself wide open"}, {"t": 23800, "x": "and the road came in"}];
 const lyric=document.getElementById('lyric');const lns=[];
 function isHook(t){const u=t.toUpperCase();return u.indexOf('WIDE OPEN')>=0||t===t.toUpperCase();}
 for(const c of CUES){const d=document.createElement('div');d.className='ln'+(isHook(c.x)?' hook':'');d.textContent=c.x;lyric.appendChild(d);lns.push(d);}
