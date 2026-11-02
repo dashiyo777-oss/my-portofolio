@@ -1655,9 +1655,44 @@ Performed by: Hanaakari
 
 > **メモ（制作方式）**：㊾〜52と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/sakura/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「雪＋桜の花びら＋夜明けの光」で選定。アクセントは金 `#ffd23d`＋やわらかい桃色 `#ff9a6c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMは最終サビ（キーチェンジ＋フルオケの感動的クライマックス、3:10起点・mid/side解析）を30秒。画面テキストはタイトルとアーティストのみ。新曲名の英題は「Suisen no Yoake (Daffodil Dawn)」。
 
+## 54 ただいまの雨 / 水野灯 feat. 琥珀譲二　【J-Pop / 追憶バラード（デュエット）】　（動画制作済み `tadaima-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `ただいまの雨 / 水野灯 feat. 琥珀譲二【Music Video】`
+**YouTube（英）** `Akari Mizuno feat. Joji Kohaku - "Tadaima no Ame (The Rain That Says I'm Home)" (Official Music Video)`
+**説明（JP）**
+```
+窓をたたく、やさしい雨は、あなたを呼ぶ、私の声。傘はいらない、少しだけ、その手のひらで受けとめて。
+いなくなったと、思わないで。かたちを変えて、そばにいる。
+ただいまの雨が降る日には、空を見上げて、名前を呼んで。川になり、海になり、雲になって、何度でも、あなたに帰るから。
+さよならだけが、答えじゃない。めぐる水に、私はいる。悲しみもまた、水のように、いつかは空へのぼってゆく。
+ただいまの雨が降る日には、窓をあけて、おかえりと言って。いつまでも、あなたと生きてゆく。ただいま。おかえり。
+水野灯 feat. 琥珀譲二 新曲「ただいまの雨」。巡る水になって帰ってくる、喪失とぬくもりのデュエット・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：水野灯 feat. 琥珀譲二
+#ただいまの雨 #水野灯 #琥珀譲二 #新曲 #バラード #JPOP #Shorts
+```
+**説明（EN）**
+```
+The gentle rain tapping on the window is my voice, calling for you. You do not need an umbrella. Just, for a moment, catch it in your palm.
+Do not think that I am gone. I have only changed my shape, and I am right beside you.
+On days when the rain of "I'm home" falls, look up at the sky and call my name. I will become a river, a sea, a cloud, and come home to you, again and again.
+Goodbye is not the only answer. I am here, in the water that keeps going around. Sorrow, too, is like water, and one day it rises to the sky.
+On days when that rain falls, open the window and say "welcome home." I will live on with you, always. I'm home. Welcome home.
+"Tadaima no Ame (The Rain That Says I'm Home)" is the new single from Akari Mizuno feat. Joji Kohaku, a duet ballad of loss and tenderness.
+▼ Stream / Download
+[配信リンク]
+Performed by: Akari Mizuno feat. Joji Kohaku
+#TadaimaNoAme #NewSong #JPop #Ballad #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る。feat. 表記は固有の参加名義） タイトル：ただいまの雨 / タダイマノアメ ／ アーティスト：水野灯 feat. 琥珀譲二（ミズノ・アカリ feat. コハク・ジョウジ）／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：リラックス/チルアウト（感動・癒やし・追憶）
+- 国内向け：`窓をたたく、やさしい雨は、あなたを呼ぶ、私の声。傘はいらない、少しだけ、その手のひらで受けとめて。いなくなったと、思わないで。かたちを変えて、そばにいる。ただいまの雨が降る日には、空を見上げて、名前を呼んで。川になり、海になり、雲になって、何度でも、あなたに帰るから。さよならだけが、答えじゃない。めぐる水に、私はいる。悲しみもまた、水のように、いつかは空へのぼってゆく。ただいまの雨が降る日には、窓をあけて、おかえりと言って。いつまでも、あなたと生きてゆく。水野灯 feat. 琥珀譲二 新曲「ただいまの雨」。巡る水になって帰ってくる、喪失とぬくもりのデュエット・バラードです。`
+- 海外向け：`The gentle rain tapping on the window is my voice, calling for you. You do not need an umbrella. Just, for a moment, catch it in your palm. Do not think that I am gone. I have only changed my shape, and I am right beside you. On days when the rain of coming home falls, look up at the sky and call my name. I will become a river, a sea, a cloud, and come home to you again and again. Goodbye is not the only answer. I am here, in the water that keeps going around. On days when that rain falls, open the window and say welcome home. I will live on with you, always. "Tadaima no Ame (The Rain That Says I am Home)" is the new single from Akari Mizuno feat. Joji Kohaku, a duet ballad of loss and tenderness.`
+
+> **メモ（制作方式）**：㊾〜53と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 bokeh/snow/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「暖かな灯りの玉ボケ＋雨のようなきらめき」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはユーザー指定の **1:38付近**（1:39スナップ）から30秒。画面テキストはタイトルとアーティストのみ。英題は「Tadaima no Ame (The Rain That Says I'm Home)」、アーティスト英表記は Akari Mizuno feat. Joji Kohaku。琥珀譲二は既存アーティスト（㉟十月桜）。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
