@@ -1581,7 +1581,7 @@ I am gonna run it wide open till the wheels come off, then walk into the morning
 Performed by: Rolling all stars
 #WideOpen #RollingAllStars #NewSong #Rock #RoadSong #Americana #Shorts
 ```
-**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Wide Open / ワイド・オープン ／ アーティスト：Rolling all stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**カントリー** ／ ムード：モチベーション/ハッピー（解放感・前向き。疾走感重視なら アゲ/パーティー）
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Wide Open / ワイド・オープン ／ アーティスト：Rolling all stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**カントリー** ／ ムード：モチベーション/ハッピー（解放感・前向き。盛り上がり重視なら パーティー、ドライブ感なら ドライヴ / トラベル）
 - 国内向け：`夜明け前の5時、誰も眠らなかった。彼女のコートは、春からずっと後部座席に置いたまま。ラジオ塔、給水塔、トウモロコシ畑。教会、教会、酒場、また教会。逃げているわけじゃない。向かっているわけでもない。昼にもう一度、聞いてくれ。心を開けっ放しにしたら、道のほうが流れ込んできた。名前も知られていない町まで、このまま走らせてくれ。車輪が外れるまで、全開で。そして朝の中へ歩いていって、最初に尋ねた人に話すんだ。Rolling all stars 新曲「Wide Open」。夕陽のハイウェイを全開で駆ける、自由とやり直しのロード・アンセムです。`
 - 海外向け：`Five in the morning, nobody slept. Her coat has been on the back seat since the spring. Radio tower, water tower, cornfield. Church, church, bar, church. I am not running from it, I am not running to it. Ask me again at noon. I left myself wide open, and the road came in. I am gonna run it wide open till the wheels come off, then walk into the morning and tell it to the first man who asks. "Wide Open" is the new single from Rolling all stars, a wide open road anthem about freedom, and the things we finally say out loud.`
 
@@ -1614,7 +1614,7 @@ Lightning does not apologize. Lightning does not explain. It just goes where it 
 Performed by: Rolling all stars
 #CountToThree #RollingAllStars #NewSong #Rock #BluesRock #Outlaw #Shorts
 ```
-**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Count to Three / カウント・トゥ・スリー ／ アーティスト：Rolling all stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**ブルース** ／ ムード：パワフル/クール（緊張感・ダーク。疾走感重視なら アゲ/パーティー）
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Count to Three / カウント・トゥ・スリー ／ アーティスト：Rolling all stars（ローリング・オール・スターズ）／ ジャンル1：**ロック**・ジャンル2：**ブルース** ／ ムード：**ドライヴ / トラベル**（TuneCoreの固定リストから。高揚感を押すなら モチベーション / ハッピー、盛り上がり重視なら パーティー）
 - 国内向け：`扉が開いて、部屋が静まる。板張りに響くのはブーツの音だけ。誰かが誰かに、俺が何者かを告げている。だが、もう遅い。俺はもうここにいる。声は張らない。張る必要がなかった。ただ、光の届かない場所に立つだけ。テュペロの頃から、嵐が俺と歩いてきた。閃光が見えたか。なら、あとは待て。ワン、ツー、スリー。俺の背後から、雷鳴が来る。見えていたはずだ。これから、聞くことになる。おまえには、三つ数える猶予があった。雷は謝らない。雷は言い訳もしない。ただ、行くべき場所へ行き、空を炎に残していく。Rolling all stars 新曲「Count to Three」。嵐を背負って歩く男の、ダークで痛快なアウトロー・ロックアンセムです。`
 - 海外向け：`The door swung wide, the room went quiet. Boots on the boards, that is all you hear. Somebody is telling somebody who I am. Tell him faster. I am already here. I do not raise my voice. I never had to. I just stand where the light does not reach. There is a storm that has walked with me since Tupelo, and it does not knock. You see the flash? Now you wait. One, two, three. Here comes the thunder right behind me. You saw it coming, now you are gonna hear it. You had a count of three. Lightning does not apologize, it does not explain. It just goes where it is going, and it leaves the whole sky in flames. "Count to Three" is the new single from Rolling all stars, a dark and swaggering outlaw rock anthem.`
 
@@ -1729,6 +1729,7 @@ Performed by: Hanaakari
 > ✅ **Thinking cats を除き、全曲 清書完了。**
 > **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
+> **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
 
