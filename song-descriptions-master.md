@@ -1690,9 +1690,44 @@ Performed by: Akari Mizuno feat. Joji Kohaku
 
 > **メモ（制作方式）**：㊾〜53と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 bokeh/snow/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「暖かな灯りの玉ボケ＋雨のようなきらめき」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはユーザー指定の **1:38付近**（1:39スナップ）から30秒。画面テキストはタイトルとアーティストのみ。英題は「Tadaima no Ame (The Rain That Says I'm Home)」、アーティスト英表記は Akari Mizuno feat. Joji Kohaku。琥珀譲二は既存アーティスト（㉟十月桜）。
 
+## 55 十二月の柊 / 花明り　【J-Pop / クリスマス・バラード】　（動画制作済み `hiiragi-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `十二月の柊 / 花明り【Music Video】`
+**YouTube（英）** `Hanaakari - "Juunigatsu no Hiiragi (The Holly of December)" (Official Music Video)`
+**説明（JP）**
+```
+ショーウィンドウの灯りが、街を金色に変えて。ひとりで数える、十二月の日めくり。祖母の家の垣根に、柊が咲いていた。とげのある葉の奥に、小さな白い花。
+あの日あなたに投げた、とがった言葉たち。ほんとうは、その奥で咲いていたのに。
+柊の花、白くひそやかに、誰にも見えない場所で咲いてる。「ごめんね」と「会いたい」が、こぼれそうな冬の夜。あなたに届け、クリスマスの前に。
+とげがあるのは、守りたいから。傷つくことが、怖かっただけ。でも今なら、言えるよ。この花ごと、あなたに渡したい。
+柊の花、降る雪の中。はじめて言えた「ずっと好きでした」。鐘の音が、遠く響く。十二月の、奇跡の夜に。
+花明り 新曲「十二月の柊」。とげの奥に咲く白い花のような、不器用な想いを綴る、冬のクリスマス・ラブバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：花明り
+#十二月の柊 #花明り #新曲 #クリスマスソング #バラード #JPOP #Shorts
+```
+**説明（EN）**
+```
+The light of the shop windows turns the town to gold. Alone, I count the days of December. On my grandmother's hedge, the holly was blooming. Deep behind its thorny leaves, a small white flower.
+The sharp words I threw at you that day, the truth is, they were blooming somewhere behind them.
+The holly flower blooms white and quiet, in a place no one can see. "I'm sorry" and "I miss you" almost spill over, on a winter night. Let them reach you, before Christmas.
+The thorns are there because I wanted to protect something. I was only afraid of being hurt. But now, I can say it. I want to give you this flower, and all of it.
+The holly flower, in the falling snow. For the first time I could say it, "I have always loved you." A bell rings far away, on this miracle night of December.
+"Juunigatsu no Hiiragi (The Holly of December)" is the new single from Hanaakari, a tender Christmas love ballad about the clumsy feelings that bloom, white and hidden, behind the thorns.
+▼ Stream / Download
+[配信リンク]
+Performed by: Hanaakari
+#HollyOfDecember #Hanaakari #NewSong #Christmas #Ballad #JPop #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：十二月の柊 / ジュウニガツノヒイラギ ／ アーティスト：花明り（ハナアカリ）／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：リラックス/チルアウト（感動・癒やし・クリスマス。前向きさ重視なら モチベーション/ハッピー）
+- 国内向け：`ショーウィンドウの灯りが、街を金色に変えて。ひとりで数える、十二月の日めくり。祖母の家の垣根に、柊が咲いていた。とげのある葉の奥に、小さな白い花。あの日あなたに投げた、とがった言葉たち。ほんとうは、その奥で咲いていたのに。柊の花、白くひそやかに、誰にも見えない場所で咲いてる。「ごめんね」と「会いたい」が、こぼれそうな冬の夜。あなたに届け、クリスマスの前に。とげがあるのは、守りたいから。傷つくことが、怖かっただけ。でも今なら、言えるよ。この花ごと、あなたに渡したい。柊の花、降る雪の中。はじめて言えた「ずっと好きでした」。十二月の、奇跡の夜に。花明り 新曲「十二月の柊」。とげの奥に咲く白い花のような、不器用な想いを綴る、冬のクリスマス・ラブバラードです。`
+- 海外向け：`The light of the shop windows turns the town to gold. Alone, I count the days of December. On my grandmother's hedge, the holly was blooming. Deep behind its thorny leaves, a small white flower. The sharp words I threw at you that day, the truth is, they were blooming somewhere behind them. The holly flower blooms white and quiet, in a place no one can see. I am sorry and I miss you almost spill over, on a winter night. Let them reach you, before Christmas. The thorns are there because I wanted to protect something. I was only afraid of being hurt. But now I can say it, I want to give you this flower and all of it. The holly flower, in the falling snow, for the first time I could say it, I have always loved you, on this miracle night of December. "Juunigatsu no Hiiragi (The Holly of December)" is the new single from Hanaakari, a tender Christmas love ballad.`
+
+> **メモ（制作方式）**：㊾〜54と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋クリスマスの暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMは最終サビ（キーチェンジ＋フルオケの感動的クライマックス、4:00起点・mid/side解析）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Juunigatsu no Hiiragi (The Holly of December)」。花明りは既存アーティスト（53 水仙の夜明け）。クリスマス配信に好適。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 >
 > ※後回しの2曲（ELLY Not a promise・Noah Vale Say It Plain）を除き、**歌詞提供分は全曲 清書完了**。
