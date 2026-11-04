@@ -1725,9 +1725,44 @@ Performed by: Hanaakari
 
 > **メモ（制作方式）**：㊾〜54と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋クリスマスの暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMは最終サビ（キーチェンジ＋フルオケの感動的クライマックス、4:00起点・mid/side解析）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Juunigatsu no Hiiragi (The Holly of December)」。花明りは既存アーティスト（53 水仙の夜明け）。クリスマス配信に好適。
 
+## 56 ゆく年のグラス / 琥珀譲二　【歌謡曲 / 年越し・大人のバラード】　（動画制作済み `yukutoshi-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `ゆく年のグラス / 琥珀譲二【Music Video】`
+**YouTube（英）** `Joji Kohaku - "Yuku Toshi no Glass (A Glass for the Passing Year)" (Official Music Video)`
+**説明（JP）**
+```
+今年も笑った、今年も泣いた。ポケットの手帳が、厚くなった分だけ。うまくいかない日の帰り道さえも、振り返れば、みんな灯りに見える。
+ゆく年に、乾杯を。よくここまで歩いたねと。
+出会えた人がいて、別れた人がいた。どちらも、この胸の琥珀になってゆく。言えなかった「ごめん」と、言えた「ありがとう」。グラスの中で、静かに混ざり合う。
+ありがとう、ありがとう、今年のすべてに。いい年も、悪い年も、わたしの一年。鐘の音が夜を渡ってくるまで、もう少し、この琥珀と語らせておくれ。
+来年も、どうか、あなたと乾杯を。
+琥珀譲二 新曲「ゆく年のグラス」。一年を琥珀色のグラスに溶かして味わう、大人のための年越しバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：琥珀譲二
+#ゆく年のグラス #琥珀譲二 #新曲 #年越し #バラード #歌謡曲 #Shorts
+```
+**説明（EN）**
+```
+This year I laughed, this year I cried, by just as much as the notebook in my pocket grew thick. Even the way home on the days that did not go well, when I look back, it all looks like light.
+A toast, to the passing year. For walking all this way.
+There were people I got to meet, and people I had to part with. Both of them slowly become amber in my chest. The "sorry" I could not say, and the "thank you" I could, quietly blend together inside the glass.
+Thank you, thank you, for all of this year. The good years and the bad years, all of it is my one year. Until the sound of the bell crosses the night, let me talk a little longer with this amber.
+Next year too, please, a toast with you.
+"Yuku Toshi no Glass (A Glass for the Passing Year)" is the new single from Joji Kohaku, a grown-up New Year ballad that lets a whole year dissolve, amber-colored, in a glass.
+▼ Stream / Download
+[配信リンク]
+Performed by: Joji Kohaku
+#YukuToshiNoGlass #JojiKohaku #NewSong #NewYear #Ballad #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：ゆく年のグラス / ユクトシノグラス ／ アーティスト：琥珀譲二（コハク・ジョウジ）／ ジャンル1：**歌謡曲**・ジャンル2：**J-Pop** ／ ムード：**リラックス / チルアウト**（TuneCore固定リスト。バーの夜の雰囲気なら ディナー、しっとり切なさ重視なら ブルー / サッド）
+- 国内向け：`今年も笑った、今年も泣いた。ポケットの手帳が、厚くなった分だけ。うまくいかない日の帰り道さえも、振り返れば、みんな灯りに見える。ゆく年に、乾杯を。よくここまで歩いたねと。出会えた人がいて、別れた人がいた。どちらも、この胸の琥珀になってゆく。言えなかった「ごめん」と、言えた「ありがとう」。グラスの中で、静かに混ざり合う。ありがとう、ありがとう、今年のすべてに。いい年も、悪い年も、わたしの一年。鐘の音が夜を渡ってくるまで、もう少し、この琥珀と語らせておくれ。来年も、どうか、あなたと乾杯を。琥珀譲二 新曲「ゆく年のグラス」。一年を琥珀色のグラスに溶かして味わう、大人のための年越しバラードです。`
+- 海外向け：`This year I laughed, this year I cried, by just as much as the notebook in my pocket grew thick. Even the way home on the days that did not go well, when I look back, it all looks like light. A toast, to the passing year, for walking all this way. There were people I got to meet, and people I had to part with. Both of them slowly become amber in my chest. The sorry I could not say, and the thank you I could, quietly blend together inside the glass. Thank you, for all of this year, the good years and the bad years, all of it is my one year. Next year too, please, a toast with you. "Yuku Toshi no Glass (A Glass for the Passing Year)" is the new single from Joji Kohaku, a grown-up New Year ballad that lets a whole year dissolve, amber-colored, in a glass.`
+
+> **メモ（制作方式）**：㊾〜55と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋バーの暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`（曲の「琥珀」テーマに一致）。ツール：`scripts-gen/gen_living_jacket.py`。BGMは歌声が明瞭な箇所（1:00起点・mid/side解析）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Yuku Toshi no Glass (A Glass for the Passing Year)」。琥珀譲二は既存アーティスト（㉟十月桜・54ただいまの雨feat.）。年末配信に好適。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 > **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
