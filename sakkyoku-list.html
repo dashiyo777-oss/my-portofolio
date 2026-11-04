@@ -158,7 +158,8 @@ const today = (() => {
 })();
 function lyricsState(song){
   if(typeof LYRICS === "undefined" || !LYRICS[song.id]) return "none";
-  return (song.release && song.release > today) ? "later" : "on";
+  if(song.release && song.release > today) return "later";
+  return (song.release || song.nodee || song.link) ? "on" : "wait";
 }
 
 // ===== 保存データ =====
@@ -268,6 +269,7 @@ function render(){
     const ly = lyricsState(m);
     const lyBadge = ly === "on" ? '<span class="badge short-yes" title="ファンページで歌詞を表示中">○ 掲載済</span>'
       : ly === "later" ? `<span class="badge wait" title="歌詞は登録済み。配信日からファンページに表示">${m.release.slice(5).split("-").map(Number).join("/")}から</span>`
+      : ly === "wait" ? '<span class="badge wait" title="歌詞は登録済み。配信日か配信リンクが入るとファンページに表示">配信待ち</span>'
       : '<span class="badge short-no">未登録</span>';
 
     tr.innerHTML = `
@@ -381,7 +383,7 @@ document.getElementById("exportCsv").addEventListener("click", ()=>{
     ...PLATFORMS.flatMap(p=>[p.label+"掲載", p.label+"アクセス数"]),
     "アクセス数合計","ストリーミング数","メモ"];
   const rows = SONGS.map(merged).map((m,i)=>[
-    i+1, m.reg, m.pub, m.title, m.artist, m.status, {on:"掲載済",later:"配信日から",none:""}[lyricsState(m)], hasShort(m)?"掲載済":"未掲載",
+    i+1, m.reg, m.pub, m.title, m.artist, m.status, {on:"掲載済",later:"配信日から",wait:"配信待ち",none:""}[lyricsState(m)], hasShort(m)?"掲載済":"未掲載",
     ...PLATFORMS.flatMap(p=>[m.sns[p.key].on?"○":"", m.sns[p.key].views]),
     rowTotal(m)||"", m.streams, m.memo
   ]);

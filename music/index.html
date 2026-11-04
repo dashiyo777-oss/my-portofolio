@@ -112,8 +112,9 @@ const songs = SONGS.filter(s => !s.check).map(s => ({
 })).sort((a,b) => b.sortKey.localeCompare(a.sortKey) || a.title.localeCompare(b.title, "ja"));
 
 const isUpcoming = s => s.release && s.release > today;
-// 歌詞は配信日を過ぎた曲だけ出す
-const lyricsOf = s => (typeof LYRICS !== "undefined" && LYRICS[s.id] && !isUpcoming(s)) ? LYRICS[s.id] : "";
+// 歌詞は配信日を過ぎた曲だけ出す（配信日も配信リンクもない審査中の曲は、まだ出さない）
+const isReleased = s => !isUpcoming(s) && !!(s.release || s.nodee || s.link);
+const lyricsOf = s => (typeof LYRICS !== "undefined" && LYRICS[s.id] && isReleased(s)) ? LYRICS[s.id] : "";
 
 function linkHtml(s){
   if(s.nodee) return `<a class="listen" href="https://nodee.net/a/${esc(s.nodee)}" target="_blank" rel="noopener">フルで聴く</a>`;
