@@ -1830,9 +1830,44 @@ Performed by: Noah Vale
 
 > **メモ（制作方式）**：㊾〜57と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋ポーチ/村の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（2:49起点・mid/side解析で満点30/30の歌声区間）を30秒。画面テキストはタイトルとアーティストのみ。Noah Vale は既存アーティスト（後回しだった Say It Plain のアーティスト）。クリスマス配信に好適。
 
+## 59 A Light in the Window / Seira Lumen　【Folk / クリスマスバラード（洋楽）】　（動画制作済み `window-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `A Light in the Window / Seira Lumen【Music Video】`
+**YouTube（英）** `Seira Lumen - "A Light in the Window" (Official Music Video)`
+**説明（JP）**
+```
+雪の夜は、わざと遠回りして帰った。丘の上、一本だけ立つ古い楡（にれ）の木のそばへ。そこには彼女がいて、低く燃えるろうそくがひとつ。「おかえり」とささやく、小さな灯り。
+誰かが自分の場所を空けておいてくれる。それだけで、どんな冬もやわらかく思えた。
+メリークリスマス、窓に灯りを残して。今夜、どこかをさまよう誰かのために。知っている道はぜんぶ雪が覆っても、この小さな灯りだけは、消さないで。
+彼女の窓は、もう暗い。でも、わかっているの。彼女が守った炎は、いまわたしの手の中で眠っている。だから今年はわたしが、窓辺にそれを灯そう。丘を越えて帰る、見知らぬ誰かのために。
+メリークリスマス、わたしの窓には灯りがある。あなたがくれた愛を、わたしは手渡していく。この灯りを。
+Seira Lumen 新曲「A Light in the Window」。受け継がれていくひとつの灯りを歌う、静かで温かいクリスマス・バラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Seira Lumen
+#ALightInTheWindow #SeiraLumen #新曲 #洋楽 #クリスマスソング #フォーク #Shorts
+```
+**説明（EN）**
+```
+On snowy nights I'd take the long way home, up the hill where the old elm stood alone. And there she'd be, a candle burning low, a little light that whispered, welcome home.
+Just knowing someone kept a place for me made every winter softer than it seemed.
+Merry Christmas, leave a light in the window, for anyone who's wandering tonight. Let the snow cover every road we know, but keep this little light alive.
+Her window's dark now, but I understand, the flame she guarded rests inside my hands. So this year I will set it on my sill, for some stranger walking home across the hill.
+Merry Christmas, there's a light in my window, for anyone who's freezing in the night. All the love you gave me long ago, I'm handing on, I'm handing on the light.
+"A Light in the Window" is the new single from Seira Lumen, a quiet, warm Christmas ballad about a single light, passed from one heart to the next.
+▼ Stream / Download
+[配信リンク]
+Performed by: Seira Lumen
+#ALightInTheWindow #SeiraLumen #NewSong #Christmas #Folk #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：A Light in the Window / ア・ライト・イン・ザ・ウィンドウ ／ アーティスト：Seira Lumen（セイラ・ルーメン）／ ジャンル1：**フォーク**・ジャンル2：**カントリー** ／ ムード：**ウィークエンド / ホリデー**（TuneCore固定リスト。静けさ重視なら リラックス / チルアウト、愛情推しなら ラブ / ロマンス）
+- 国内向け：`雪の夜は、わざと遠回りして帰った。丘の上、一本だけ立つ古い楡の木のそばへ。そこには彼女がいて、低く燃えるろうそくがひとつ。おかえり、とささやく、小さな灯り。誰かが自分の場所を空けておいてくれる。それだけで、どんな冬もやわらかく思えた。メリークリスマス、窓に灯りを残して。今夜、どこかをさまよう誰かのために。知っている道はぜんぶ雪が覆っても、この小さな灯りだけは、消さないで。彼女の窓は、もう暗い。でも、わかっているの。彼女が守った炎は、いまわたしの手の中で眠っている。だから今年はわたしが、窓辺にそれを灯そう。丘を越えて帰る、見知らぬ誰かのために。あなたがくれた愛を、わたしは手渡していく。この灯りを。Seira Lumen 新曲「A Light in the Window」。受け継がれていくひとつの灯りを歌う、静かで温かいクリスマス・バラードです。`
+- 海外向け：`On snowy nights I would take the long way home, up the hill where the old elm stood alone. And there she would be, a candle burning low, a little light that whispered, welcome home. Just knowing someone kept a place for me made every winter softer than it seemed. Merry Christmas, leave a light in the window, for anyone who is wandering tonight. Let the snow cover every road we know, but keep this little light alive. Her window is dark now, but I understand, the flame she guarded rests inside my hands. So this year I will set it on my sill, for some stranger walking home across the hill. All the love you gave me long ago, I am handing on, I am handing on the light. "A Light in the Window" is the new single from Seira Lumen, a quiet and warm Christmas ballad about a single light, passed from one heart to the next.`
+
+> **メモ（制作方式）**：㊾〜58と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋窓辺/村の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（2:03起点・mid/side解析で歌声明瞭な区間）を30秒。画面テキストはタイトルとアーティストのみ。Seira Lumen は新規アーティスト（セイラ・ルーメン）。クリスマス配信に好適。㊻The Light in Her Window（w-Band）とは別曲。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）／A Light in the Window（59 window-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 > **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
