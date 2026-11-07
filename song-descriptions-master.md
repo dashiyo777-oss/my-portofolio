@@ -1795,9 +1795,44 @@ Performed by: w-Band
 
 > **メモ（制作方式）**：㊾〜56と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋街の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋暖色 `#ff9a4c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（1:25起点・mid/side解析で歌声明瞭な「鐘を鳴らせ!」のフック）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Kane wo Narase (Ring the Bell)」。w-Bandは既存アーティスト（㊾Colors at the Door他）。クリスマス配信の目玉候補。
 
+## 58 Leave the Porch Light On / Noah Vale　【Folk / アメリカーナ・クリスマスバラード（洋楽）】　（動画制作済み `porch-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `Leave the Porch Light On / Noah Vale【Music Video】`
+**YouTube（英）** `Noah Vale - "Leave the Porch Light On" (Official Music Video)`
+**説明（JP）**
+```
+今年も街は、同じ古い飾りを掲げた。金物屋の上の、くたびれた紙の星。この季節だけは、みんな少しだけ優しくなる。
+雪も、カードも、いらない。甘いものも、もう充分。ただ、戸口に、何かささやかなものを残しておいて。
+ポーチの灯りを、つけたまま。どんなに遅くなっても、かまわない。わたしは、まだ、待つのをやめていない。
+もし帰らないなら、はっきり言って。冬の寒さなら、きれいに受け止められる。でも、天使なんて送らないで。わたしが欲しいのは、一枚の扉なのだから。
+ポーチの灯りを、つけたまま。霜に焼きつくほどに。嘆いてなんかいない、迷ってもいない。小さな灯りひとつが、わたしを見つけてくれる。つけておいて。そうしたら、帰るから。
+Noah Vale 新曲「Leave the Porch Light On」。きらびやかな季節の片隅で、ひとつの灯りを待つ、静かで温かいアメリカーナ・クリスマスバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Noah Vale
+#LeaveThePorchLightOn #NoahVale #新曲 #洋楽 #クリスマスソング #フォーク #Shorts
+```
+**説明（EN）**
+```
+The town put up the same old lights again, that tired paper star above the hardware store. And everybody's gentle this time of year, gentler than they ever were before.
+I don't need the snow to make it true. I've had my fill of silver and of sweet. Just leave me something simple in the doorway.
+Leave the porch light on. I don't care how late it gets. Leave the porch light on. I'm not done waiting yet. One small light is all I'm asking of the whole wide evening.
+If you're not coming, say it. I can take a winter clean. But don't you send me angels, when a door is what I mean.
+Leave the porch light on. Let it burn into the frost. I'm not grieving, I'm not lost. One small light will find me. Leave it on, and I'll come home.
+"Leave the Porch Light On" is the new single from Noah Vale, a quiet, warm Americana Christmas ballad about one small light, and still waiting.
+▼ Stream / Download
+[配信リンク]
+Performed by: Noah Vale
+#LeaveThePorchLightOn #NoahVale #NewSong #Christmas #Folk #Americana #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：Leave the Porch Light On / リーブ・ザ・ポーチ・ライト・オン ／ アーティスト：Noah Vale（ノア・ヴェイル）／ ジャンル1：**フォーク**・ジャンル2：**カントリー** ／ ムード：**ウィークエンド / ホリデー**（TuneCore固定リスト。しっとり静けさなら リラックス / チルアウト、切なさ重視なら ブルー / サッド）
+- 国内向け：`今年も街は、同じ古い飾りを掲げた。金物屋の上の、くたびれた紙の星。この季節だけは、みんな少しだけ優しくなる。雪も、カードも、いらない。甘いものも、もう充分。ただ、戸口に、何かささやかなものを残しておいて。ポーチの灯りを、つけたまま。どんなに遅くなっても、かまわない。わたしは、まだ、待つのをやめていない。もし帰らないなら、はっきり言って。冬の寒さなら、きれいに受け止められる。でも、天使なんて送らないで。わたしが欲しいのは、一枚の扉なのだから。ポーチの灯りを、つけたまま。嘆いてなんかいない、迷ってもいない。小さな灯りひとつが、わたしを見つけてくれる。つけておいて。そうしたら、帰るから。Noah Vale 新曲「Leave the Porch Light On」。きらびやかな季節の片隅で、ひとつの灯りを待つ、静かで温かいアメリカーナ・クリスマスバラードです。`
+- 海外向け：`The town put up the same old lights again, that tired paper star above the hardware store. And everybody is gentle this time of year, gentler than they ever were before. I do not need the snow to make it true. I have had my fill of silver and of sweet. Just leave me something simple in the doorway. Leave the porch light on. I do not care how late it gets. I am not done waiting yet. One small light is all I am asking of the whole wide evening. If you are not coming, say it. I can take a winter clean. But do not send me angels, when a door is what I mean. Leave the porch light on, let it burn into the frost. I am not grieving, I am not lost. One small light will find me. Leave it on, and I will come home. "Leave the Porch Light On" is the new single from Noah Vale, a quiet and warm Americana Christmas ballad.`
+
+> **メモ（制作方式）**：㊾〜57と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋ポーチ/村の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（2:49起点・mid/side解析で満点30/30の歌声区間）を30秒。画面テキストはタイトルとアーティストのみ。Noah Vale は既存アーティスト（後回しだった Say It Plain のアーティスト）。クリスマス配信に好適。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 > **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
