@@ -1760,9 +1760,44 @@ Performed by: Joji Kohaku
 
 > **メモ（制作方式）**：㊾〜55と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋バーの暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`（曲の「琥珀」テーマに一致）。ツール：`scripts-gen/gen_living_jacket.py`。BGMは歌声が明瞭な箇所（1:00起点・mid/side解析）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Yuku Toshi no Glass (A Glass for the Passing Year)」。琥珀譲二は既存アーティスト（㉟十月桜・54ただいまの雨feat.）。年末配信に好適。
 
+## 57 鐘を鳴らせ / w-Band　【J-Pop / クリスマス・アンセム】　（動画制作済み `kane-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `鐘を鳴らせ / w-Band【Music Video】`
+**YouTube（英）** `w-Band - "Kane wo Narase (Ring the Bell)" (Official Music Video)`
+**説明（JP）**
+```
+コンビニの灯り、終電の窓。今夜も働く、誰かのための夜。家に帰れない、吐息が白い。そんな君にこそ、届けたい音がある。
+雪が鳴る、街が鳴る。心の奥で、何かが鳴り出す。
+鐘を鳴らせ! 夜空の果てまで。ひとりぼっちの窓にも、届くように。鐘を鳴らせ! 千の光になれ。今夜だけは、世界中が家族だ。
+プレゼントを買えなかった年も、言えなかった「ありがとう」もあるだろう。大丈夫さ、鐘の音に乗せて、いま送ればいい、遅れた言葉を。
+メリークリスマス、君に。メリークリスマス、世界に。鐘はまだ鳴ってる、朝まで鳴ってる。
+w-Band 新曲「鐘を鳴らせ」。働く人、ひとりの夜を過ごす人へ。今夜だけは誰もひとりじゃない、壮大なクリスマス・アンセム。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：w-Band
+#鐘を鳴らせ #wBand #新曲 #クリスマスソング #アンセム #JPOP #Shorts
+```
+**説明（EN）**
+```
+The convenience store light, the last train window. Tonight, too, someone is working, a night for somebody else. You cannot go home, your breath is white. It is you, most of all, that this sound wants to reach.
+The snow rings out, the town rings out. Deep in the heart, something begins to ring.
+Ring the bell! To the ends of the night sky. So it reaches even the loneliest window. Ring the bell! Become a thousand lights. Just for tonight, the whole world is family.
+The years you could not buy a gift, the thank you you could not say, there are those too. It is all right. Carry them on the sound of the bell, and send those late words now.
+Merry Christmas, to you. Merry Christmas, to the world. The bell is still ringing, ringing until morning.
+"Kane wo Narase (Ring the Bell)" is the new single from w-Band, a soaring Christmas anthem for everyone working late and everyone spending the night alone. Just for tonight, no one is alone.
+▼ Stream / Download
+[配信リンク]
+Performed by: w-Band
+#RingTheBell #wBand #NewSong #Christmas #Anthem #JPop #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る。w-Band はバンド名の固有名詞） タイトル：鐘を鳴らせ / カネヲナラセ ／ アーティスト：w-Band（ダブリュー・バンド）／ ジャンル1：**J-Pop**・ジャンル2：**ロック** ／ ムード：**ウィークエンド / ホリデー**（TuneCore固定リスト。高揚感なら モチベーション / ハッピー）
+- 国内向け：`コンビニの灯り、終電の窓。今夜も働く、誰かのための夜。家に帰れない、吐息が白い。そんな君にこそ、届けたい音がある。雪が鳴る、街が鳴る。心の奥で、何かが鳴り出す。鐘を鳴らせ、夜空の果てまで。ひとりぼっちの窓にも、届くように。鐘を鳴らせ、千の光になれ。今夜だけは、世界中が家族だ。プレゼントを買えなかった年も、言えなかった「ありがとう」もあるだろう。大丈夫さ、鐘の音に乗せて、いま送ればいい、遅れた言葉を。メリークリスマス、君に。メリークリスマス、世界に。w-Band 新曲「鐘を鳴らせ」。働く人、ひとりの夜を過ごす人へ。今夜だけは誰もひとりじゃない、壮大なクリスマス・アンセムです。`
+- 海外向け：`The convenience store light, the last train window. Tonight, too, someone is working, a night for somebody else. You cannot go home, your breath is white. It is you, most of all, that this sound wants to reach. The snow rings out, the town rings out, and deep in the heart, something begins to ring. Ring the bell, to the ends of the night sky, so it reaches even the loneliest window. Ring the bell, become a thousand lights. Just for tonight, the whole world is family. The years you could not buy a gift, the thank you you could not say, carry them on the sound of the bell, and send those late words now. Merry Christmas, to you. Merry Christmas, to the world. "Kane wo Narase (Ring the Bell)" is the new single from w-Band, a soaring Christmas anthem for everyone working late and everyone spending the night alone.`
+
+> **メモ（制作方式）**：㊾〜56と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋街の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋暖色 `#ff9a4c`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（1:25起点・mid/side解析で歌声明瞭な「鐘を鳴らせ!」のフック）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Kane wo Narase (Ring the Bell)」。w-Bandは既存アーティスト（㊾Colors at the Door他）。クリスマス配信の目玉候補。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 > **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
