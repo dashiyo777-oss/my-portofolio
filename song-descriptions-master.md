@@ -1865,9 +1865,44 @@ Performed by: Seira Lumen
 
 > **メモ（制作方式）**：㊾〜58と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋窓辺/村の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（2:03起点・mid/side解析で歌声明瞭な区間）を30秒。画面テキストはタイトルとアーティストのみ。Seira Lumen は新規アーティスト（セイラ・ルーメン）。クリスマス配信に好適。㊻The Light in Her Window（w-Band）とは別曲。
 
+## 60 Amber Christmas / Amber & Rain　【Jazz / 大人のクリスマス・トーチバラード（洋楽）】　（動画制作済み `amber-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `Amber Christmas / Amber & Rain【Music Video】`
+**YouTube（英）** `Amber & Rain - "Amber Christmas" (Official Music Video)`
+**説明（JP）**
+```
+バーは今夜、早じまい。クリスマス・イヴだから。マスターはキャンドルをひとつ残して、静かに「おやすみ」と言った。
+外では雪が、家路を急ぐ肩に降る。わたしはここで、琥珀のグラスを掲げる。ひとりきりのすべての人のために。
+メリークリスマス。つなぎとめられなかった愛に。メリークリスマス。眠ってしまった約束に。すべての悲しみの上に、やわらかな白い雪を。わたしにだって、この夜を聖なる夜と呼べる。メリークリスマス、この琥珀の夜に。低く、そして明るく燃えて。
+もしあなたが、わたしの知らないどこかで温かくいてくれるなら。それが、この夜からわたしへの、贈り物。
+キャンドルはもうすぐ消える。雪が街を静めた。メリークリスマス、ダーリン。二度と会えない、どこかで。
+Amber & Rain 新曲「Amber Christmas」。ひとりの聖夜に琥珀のグラスを掲げる、大人のための切なく温かいクリスマス・トーチバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：Amber & Rain
+#AmberChristmas #AmberAndRain #新曲 #洋楽 #クリスマスソング #ジャズ #Shorts
+```
+**説明（EN）**
+```
+The bar is closing early, it's Christmas Eve tonight. The master leaves one candle, and quietly says goodnight.
+Outside the snow is falling on shoulders hurrying home. And here I raise my amber, for everyone alone.
+Merry Christmas, to the love I couldn't keep. Merry Christmas, to the promises asleep. Let it snow on every sorrow, soft and white. Even I can call this holy night. Merry Christmas, on this amber night, burning low and bright.
+If you are warm tonight, somewhere I'll never see, then that will be your present, from the night to me.
+The candle's almost over, the snow has hushed the street. Merry Christmas, darling, wherever we don't meet.
+"Amber Christmas" is the new single from Amber & Rain, a bittersweet, warm Christmas torch ballad, a glass of amber raised on a lonely holy night.
+▼ Stream / Download
+[配信リンク]
+Performed by: Amber & Rain
+#AmberChristmas #AmberAndRain #NewSong #Christmas #Jazz #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る。& はアーティスト名の一部） タイトル：Amber Christmas / アンバー・クリスマス ／ アーティスト：Amber & Rain（アンバー・アンド・レイン）／ ジャンル1：**ジャズ**・ジャンル2：**オルタナティブ** ／ ムード：**ウィークエンド / ホリデー**（TuneCore固定リスト。バー・ラウンジ感なら ディナー、切なさ重視なら ブルー / サッド）
+- 国内向け：`バーは今夜、早じまい。クリスマス・イヴだから。マスターはキャンドルをひとつ残して、静かに「おやすみ」と言った。外では雪が、家路を急ぐ肩に降る。わたしはここで、琥珀のグラスを掲げる。ひとりきりのすべての人のために。メリークリスマス。つなぎとめられなかった愛に。メリークリスマス。眠ってしまった約束に。すべての悲しみの上に、やわらかな白い雪を。わたしにだって、この夜を聖なる夜と呼べる。メリークリスマス、この琥珀の夜に。低く、そして明るく燃えて。もしあなたが、わたしの知らないどこかで温かくいてくれるなら。それが、この夜からわたしへの、贈り物。メリークリスマス、ダーリン。二度と会えない、どこかで。Amber & Rain 新曲「Amber Christmas」。ひとりの聖夜に琥珀のグラスを掲げる、大人のための切なく温かいクリスマス・トーチバラードです。`
+- 海外向け：`The bar is closing early, it is Christmas Eve tonight. The master leaves one candle, and quietly says goodnight. Outside the snow is falling on shoulders hurrying home. And here I raise my amber, for everyone alone. Merry Christmas, to the love I could not keep. Merry Christmas, to the promises asleep. Let it snow on every sorrow, soft and white. Even I can call this holy night. Merry Christmas, on this amber night, burning low and bright. If you are warm tonight, somewhere I will never see, then that will be your present, from the night to me. The candle is almost over, the snow has hushed the street. Merry Christmas, darling, wherever we do not meet. "Amber Christmas" is the new single from Amber & Rain, a bittersweet and warm Christmas torch ballad.`
+
+> **メモ（制作方式）**：㊾〜59と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋バーの暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`（曲名「Amber」に一致）。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（1:44起点・mid/side解析で歌声明瞭な区間）を30秒。画面テキストはタイトルとアーティストのみ。Amber & Rain は新規アーティスト（アンバー・アンド・レイン）。56ゆく年のグラス（琥珀譲二）と同じ“琥珀のグラス×年末”系だが別曲（洋楽・ジャズ）。クリスマス配信に好適。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）／A Light in the Window（59 window-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）／A Light in the Window（59 window-living.mp4・リビングジャケット）／Amber Christmas（60 amber-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 > **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
