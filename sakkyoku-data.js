@@ -79,7 +79,7 @@ const SONGS = [
   {id:"s70", release:"2026-10-17", nodee:"7gzn12v858a9", reg:"", title:"三時三十四分 (VIP Mix)", en:"3:34 (VIP Mix)", kana:"サンジサンジュウヨンプンヴィアイピーミックス", artist:"Signal", status:"手続完了", memo0:"10/17リリース済", note:false},
   {id:"s71", release:"2026-10-24", nodee:"1d8sjf4w68yu", reg:"", title:"竜胆の栞", en:"The Gentian Bookmark", kana:"リンドウノシオリ", artist:"花明り", status:"手続完了", memo0:"10/24リリース済", note:false},
   {id:"s72", release:"2026-10-24", nodee:"y5pgniq7xijc", reg:"", title:"十月桜", en:"October Cherry", kana:"ジュウガツザクラ", artist:"琥珀譲二", status:"手続完了", memo0:"10/24リリース済", note:false},
-  {id:"s73", release:"2026-10-24", reg:"", title:"A Flower in the Stone", en:"A Flower in the Stone", kana:"アフラワーインザストーン", artist:"ELLY", status:"手続完了", memo0:"リリース待ち", note:false},
+  {id:"s73", release:"2026-10-24", nodee:"4uvcqe1km4ek", reg:"", title:"A Flower in the Stone", en:"A Flower in the Stone", kana:"アフラワーインザストーン", artist:"ELLY", status:"手続完了", memo0:"10/24リリース済", note:false},
   {id:"s74", release:"2026-10-31", nodee:"csdyia8rbvny", reg:"", title:"スノーグローブの中で", en:"Inside the Snow Globe", kana:"スノーグローブノナカデ", artist:"Maron", status:"手続完了", memo0:"10/31リリース済", note:false},
   {id:"s75", release:"2026-08-08", nodee:"t60g3gkrtq5z", en:"Still Set for Two", kana:"スティルセットフォートゥー", reg:"2026-07-26", title:"Still Set for Two", artist:"ELLY", status:"手続完了", memo0:"アルバム「Already Here」収録（Already Here・Still Set for Two）・「ふたつのグラス」の英語版", note:false},
   {id:"s76", release:"2026-08-08", nodee:"zvnesu4ehurf", en:"My Turn Has Come Around", kana:"マイターンハズカムアラウンド", reg:"2026-07-22", title:"My Turn Has Come Around", artist:"Thinking cats", status:"手続完了", memo0:"アルバム「I'll Meet You in a Dream」収録（I'll Meet You in a Dream・My Turn Has Come Around・I Stopped Asking Why）", note:false},
