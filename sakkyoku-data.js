@@ -100,7 +100,7 @@ const SONGS = [
   {id:"s92", release:"2026-10-28", link:"https://linkco.re/727NE3DG", reg:"", title:"We Are the Fireflies", en:"We Are the Fireflies", kana:"ウィーアーザファイアフライズ", artist:"w-Band", status:"配信中", memo0:"TuneCore Japan・シングル・フォーク／オルタナティブ・配信中（審査承認 10/28）", note:false},
   {id:"s93", release:"2026-11-21", link:"https://linkco.re/SzGafn96", reg:"", title:"十二月の柊", kana:"ジュウニガツノヒイラギ", artist:"花明り", status:"手続完了", memo0:"TuneCore Japan・シングル・J-Pop／歌謡曲・審査承認 10/26・リリース予定 11/21", note:false},
   {id:"s94", release:"2026-10-25", link:"https://linkco.re/f3a6gcVH", reg:"", title:"Fireflies of the Dream Forest", en:"Fireflies of the Dream Forest", kana:"ファイアフライズオブザドリームフォレスト", artist:"w-Band", status:"配信中", memo0:"TuneCore Japan・シングル・J-Pop／フォーク・配信中（審査承認 10/25）", note:false},
-  {id:"s95", reg:"", title:"鐘を鳴らせ", kana:"カネヲナラセ", artist:"w-Band", status:"供給準備中", memo0:"TuneCore Japan で審査中（リリースID TCJPR0002048338）・シングル・J-Pop／ロック・リリース日未定", note:false},
+  {id:"s95", release:"2026-11-30", link:"https://linkco.re/TA4FTqMp", reg:"", title:"鐘を鳴らせ", kana:"カネヲナラセ", artist:"w-Band", status:"手続完了", memo0:"TuneCore Japan・シングル・J-Pop／ロック・審査承認 11/8・リリース予定 11/30", note:false},
   {id:"s96", release:"2026-11-21", link:"https://linkco.re/3f6sN4Cs", reg:"", title:"A Light in the Window", en:"A Light in the Window", kana:"アライトインザウィンドウ", artist:"Seira Lumen", status:"手続完了", memo0:"TuneCore Japan・シングル・フォーク／カントリー・審査承認 11/8・リリース予定 11/21", note:false},
   {id:"s97", release:"2026-11-21", link:"https://linkco.re/yCDAbQdb", reg:"", title:"Leave the Porch Light On", en:"Leave the Porch Light On", kana:"リーヴザポーチライトオン", artist:"Noah Vale", status:"手続完了", memo0:"TuneCore Japan・シングル・フォーク／カントリー・審査承認 11/8・リリース予定 11/21", note:false},
 ];
