@@ -93,7 +93,7 @@ const SONGS = [
   {id:"s85", en:"Wake", kana:"コウセキ", release:"2026-11-07", nodee:"7td2yguuru0e", reg:"2026-10-24", title:"航跡", artist:"w-Band", status:"手続完了", note:false, memo0:"11/7リリース済・英題 Wake・Rock・シングル（ROUTER.FM）"},
   {id:"s86", release:"2026-11-01", link:"https://linkco.re/5PAtsN43", reg:"", title:"光れ!", kana:"ヒカレ", artist:"NANASIGNAL（ナナシグナル）", status:"配信中", memo0:"TuneCore Japan・シングル・ロック／J-Pop・配信中（審査承認 11/1）", note:false},
   {id:"s87", release:"2026-11-02", link:"https://linkco.re/ADpMgNF7", reg:"", title:"Colors at the Door", en:"Colors at the Door", kana:"カラーズアットザドア", artist:"w-Band", status:"配信中", memo0:"TuneCore Japan・シングル・フォーク／オルタナティブ・配信中（審査承認 11/2）", note:false},
-  {id:"s88", reg:"", title:"ただいまの雨 (feat. 琥珀譲二)", kana:"タダイマノアメ", artist:"水野灯", status:"供給準備中", memo0:"TuneCore Japan で審査中・シングル・J-Pop／歌謡曲・リリース日未定", note:false},
+  {id:"s88", release:"2026-11-04", link:"https://linkco.re/76GbyBc2", reg:"", title:"ただいまの雨 (feat. 琥珀譲二)", kana:"タダイマノアメ", artist:"水野灯", status:"配信中", memo0:"TuneCore Japan・シングル・J-Pop／歌謡曲・11/4から配信中", note:false},
   {id:"s89", reg:"", title:"水仙の夜明け", kana:"スイセンノヨアケ", artist:"花明り", status:"供給準備中", memo0:"TuneCore Japan で審査中・シングル・J-Pop／歌謡曲・リリース日未定", note:false},
   {id:"s90", release:"2026-11-04", link:"https://linkco.re/0333CS5F", reg:"", title:"Wide Open", en:"Wide Open", kana:"ワイドオープン", artist:"Rolling All Stars", status:"配信中", memo0:"TuneCore Japan（リリースID TCJPR0002041643）・シングル・ロック／カントリー・11/4から配信中", note:false},
   {id:"s91", release:"2026-11-04", link:"https://linkco.re/eC13m1bm", reg:"", title:"Count to Three", en:"Count to Three", kana:"カウントトゥスリー", artist:"Rolling All Stars", status:"配信中", memo0:"TuneCore Japan（リリースID TCJPR0002041950）・シングル・ロック／ブルース・11/4から配信中", note:false},
