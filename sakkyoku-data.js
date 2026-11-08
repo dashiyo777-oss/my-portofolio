@@ -77,7 +77,7 @@ const SONGS = [
   // ---- 曲リスト（スプレッドシート）で追加 ----
   {id:"s69", release:"2026-10-17", nodee:"e1hzm0am5ffw", reg:"", title:"ふたつのグラス (Duet with 白詰玲)", en:"Two Glasses (Duet with Rei Shirotsume)", kana:"フタツノグラスデュエットウィズシロツメレイ", artist:"琥珀譲二と白詰玲", status:"手続完了", memo0:"10/17リリース済", note:false},
   {id:"s70", release:"2026-10-17", nodee:"7gzn12v858a9", reg:"", title:"三時三十四分 (VIP Mix)", en:"3:34 (VIP Mix)", kana:"サンジサンジュウヨンプンヴィアイピーミックス", artist:"Signal", status:"手続完了", memo0:"10/17リリース済", note:false},
-  {id:"s71", release:"2026-10-24", reg:"", title:"竜胆の栞", en:"The Gentian Bookmark", kana:"リンドウノシオリ", artist:"花明り", status:"手続完了", memo0:"リリース待ち", note:false},
+  {id:"s71", release:"2026-10-24", nodee:"1d8sjf4w68yu", reg:"", title:"竜胆の栞", en:"The Gentian Bookmark", kana:"リンドウノシオリ", artist:"花明り", status:"手続完了", memo0:"10/24リリース済", note:false},
   {id:"s72", release:"2026-10-24", reg:"", title:"十月桜", en:"October Cherry", kana:"ジュウガツザクラ", artist:"琥珀譲二", status:"手続完了", memo0:"リリース待ち", note:false},
   {id:"s73", release:"2026-10-24", reg:"", title:"A Flower in the Stone", en:"A Flower in the Stone", kana:"アフラワーインザストーン", artist:"ELLY", status:"手続完了", memo0:"リリース待ち", note:false},
   {id:"s74", release:"2026-10-31", reg:"", title:"スノーグローブの中で", en:"Inside the Snow Globe", kana:"スノーグローブノナカデ", artist:"Maron", status:"手続完了", memo0:"リリース待ち", note:false},
