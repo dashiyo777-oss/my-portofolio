@@ -5,8 +5,8 @@
 // reg: ROUTER.FM配信登録日 / yt: YouTubeショートの公開日・視聴回数（YouTube Studioより転記）
 // check:true = スクリーンショット読取が不鮮明。ページ上で編集して修正してください。
 const SONGS = [
-  {id:"s64", en:"White Sail", kana:"シロイホ", release:"2026-10-31", reg:"2026-10-13", title:"白い帆", artist:"Seira Lumen", status:"供給準備中", note:false, memo0:"リリース予定 10/31・英題 White Sail・J-Pop"},
-  {id:"s65", en:"Until the Jasmine Tea Goes Cold", kana:"ジャスミンティーガサメルマデ", release:"2026-10-31", reg:"2026-10-13", title:"ジャスミンティーが冷めるまで", artist:"水野灯", status:"供給準備中", note:false, memo0:"リリース予定 10/31・英題 Until the Jasmine Tea Goes Cold・J-Pop"},
+  {id:"s64", en:"White Sail", kana:"シロイホ", release:"2026-10-31", nodee:"9v6z508zp15p", reg:"2026-10-13", title:"白い帆", artist:"Seira Lumen", status:"手続完了", note:false, memo0:"10/31リリース済・英題 White Sail・J-Pop"},
+  {id:"s65", en:"Until the Jasmine Tea Goes Cold", kana:"ジャスミンティーガサメルマデ", release:"2026-10-31", nodee:"6ymftxk3xi0b", reg:"2026-10-13", title:"ジャスミンティーが冷めるまで", artist:"水野灯", status:"手続完了", note:false, memo0:"10/31リリース済・英題 Until the Jasmine Tea Goes Cold・J-Pop"},
   {id:"s66", en:"Kitten Rock n Roll", kana:"コネコノロック", release:"2026-10-24", reg:"2026-10-11", title:"子猫のロック", artist:"Maron", status:"手続完了", note:false, memo0:"リリース予定 10/24・英題 Kitten Rock n Roll・Rock"},
   {id:"s01", nodee:"ignk9ihiwp6w", x:{views:14}, reg:"2026-09-20", title:"the Sound With No Name", artist:"NANASIGNAL（ナナシグナル）", status:"供給準備中", note:false, yt:{pub:"2026-10-03", views:0}, memo0:"YouTube公開予約"},
   {id:"s02", release:"2026-10-03", nodee:"4pwpsfks88iq", en:"Carry Me Over", kana:"キャリーミーオーバー", ig:{views:253}, x:{views:16}, reg:"2026-09-17", title:"Carry Me Over",           artist:"Amber & Rain", status:"供給準備中", note:false, yt:{pub:"2026-10-03", views:0}, memo0:"YouTube公開予約・Instagram 2本(250+3)"},
