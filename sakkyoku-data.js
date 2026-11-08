@@ -72,7 +72,7 @@ const SONGS = [
   {id:"s59", memo0:"linkco.re で配信中", link:"https://linkco.re/AePzn4c9", release:"2017-12-29", reg:"", title:"Before my bedtime", artist:"Thinking cats", status:"配信中", note:false, yt:{pub:"2025-08-11", views:270}},
   {id:"s60", memo0:"linkco.re で配信中", link:"https://linkco.re/5YT7Dg43", release:"2015-08-22", reg:"", title:"Summer session 1", artist:"w-Band", status:"配信中", note:false, yt:{pub:"2025-04-04", views:6272}},
   {id:"s61", memo0:"linkco.re で配信中", link:"https://linkco.re/ha7CfHvn", release:"2019-04-07", reg:"", title:"Turn me on Sweet Jazz Taste", artist:"Thinking cats", status:"配信中", note:false, yt:{pub:"2025-03-29", views:225}},
-  {id:"s62", en:"Kick the Door Down", kana:"キックザドアダウン", release:"2026-10-24", reg:"2026-10-07", title:"Kick the Door Down", artist:"Rolling All Stars", status:"手続完了", note:false, memo0:"リリース予定 10/24・Rock"},
+  {id:"s62", en:"Kick the Door Down", kana:"キックザドアダウン", release:"2026-10-24", nodee:"67dv2qwnuz8x", reg:"2026-10-07", title:"Kick the Door Down", artist:"Rolling All Stars", status:"手続完了", note:false, memo0:"10/24リリース済・Rock"},
   {id:"s63", en:"The Light You Left On", kana:"ザライトユーレフトオン", release:"2026-10-24", nodee:"w36g34qr9k21", reg:"2026-10-07", title:"The Light You Left On", artist:"Noah Vale", status:"手続完了", note:false, memo0:"10/24リリース済・Country（Goodbye to the Neon Mileの続編的内容）"},
   // ---- 曲リスト（スプレッドシート）で追加 ----
   {id:"s69", release:"2026-10-17", nodee:"e1hzm0am5ffw", reg:"", title:"ふたつのグラス (Duet with 白詰玲)", en:"Two Glasses (Duet with Rei Shirotsume)", kana:"フタツノグラスデュエットウィズシロツメレイ", artist:"琥珀譲二と白詰玲", status:"手続完了", memo0:"10/17リリース済", note:false},
