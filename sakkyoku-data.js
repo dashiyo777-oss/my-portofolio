@@ -90,7 +90,7 @@ const SONGS = [
   {id:"s82", release:"2018-02-25", link:"https://linkco.re/stFnHYs4", reg:"", title:"Turn me on (Arrange 2)", artist:"w-Band", status:"配信中", memo0:"linkco.re で配信中", note:false},
   {id:"s83", release:"2026-10-22", link:"https://linkco.re/C8GuEHXG", reg:"", title:"Shine Like I Don’t Care", en:"Shine Like I Don’t Care", kana:"シャインライクアイドントケア", artist:"Rolling All Stars", status:"配信中", memo0:"TuneCore Japan・審査承認 10/21・10/22から配信中", note:false},
   {id:"s84", release:"2026-10-22", link:"https://linkco.re/nnbdr5Qa", reg:"", title:"The Light in Her Window", en:"The Light in Her Window", kana:"ザライトインハーウィンドウ", artist:"Isla Moorcroft", status:"配信中", memo0:"TuneCore Japan・審査承認 10/23・配信中", note:false},
-  {id:"s85", en:"Wake", kana:"コウセキ", release:"2026-11-07", reg:"2026-10-24", title:"航跡", artist:"w-Band", status:"供給準備中", note:false, memo0:"リリース予定 11/7・英題 Wake・Rock・シングル（ROUTER.FM）"},
+  {id:"s85", en:"Wake", kana:"コウセキ", release:"2026-11-07", nodee:"7td2yguuru0e", reg:"2026-10-24", title:"航跡", artist:"w-Band", status:"手続完了", note:false, memo0:"11/7リリース済・英題 Wake・Rock・シングル（ROUTER.FM）"},
   {id:"s86", release:"2026-11-01", link:"https://linkco.re/5PAtsN43", reg:"", title:"光れ!", kana:"ヒカレ", artist:"NANASIGNAL（ナナシグナル）", status:"配信中", memo0:"TuneCore Japan・シングル・ロック／J-Pop・配信中（審査承認 11/1）", note:false},
   {id:"s87", release:"2026-11-02", link:"https://linkco.re/ADpMgNF7", reg:"", title:"Colors at the Door", en:"Colors at the Door", kana:"カラーズアットザドア", artist:"w-Band", status:"配信中", memo0:"TuneCore Japan・シングル・フォーク／オルタナティブ・配信中（審査承認 11/2）", note:false},
   {id:"s88", reg:"", title:"ただいまの雨 (feat. 琥珀譲二)", kana:"タダイマノアメ", artist:"水野灯", status:"供給準備中", memo0:"TuneCore Japan で審査中・シングル・J-Pop／歌謡曲・リリース日未定", note:false},
