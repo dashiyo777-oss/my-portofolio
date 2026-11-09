@@ -1900,9 +1900,46 @@ Performed by: Amber & Rain
 
 > **メモ（制作方式）**：㊾〜59と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋バーの暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`（曲名「Amber」に一致）。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（1:44起点・mid/side解析で歌声明瞭な区間）を30秒。画面テキストはタイトルとアーティストのみ。Amber & Rain は新規アーティスト（アンバー・アンド・レイン）。56ゆく年のグラス（琥珀譲二）と同じ“琥珀のグラス×年末”系だが別曲（洋楽・ジャズ）。クリスマス配信に好適。
 
+## 61 白い便り / 水野灯　【J-Pop / クリスマス・ラブバラード】　（動画制作済み `shiroi-living.mp4`／方式：リビング・ジャケット Lv1）
+**YouTube（和）** `白い便り / 水野灯【Music Video】`
+**YouTube（英）** `Akari Mizuno - "Shiroi Tayori (A Letter in White)" (Official Music Video)`
+**説明（JP）**
+```
+ふたつのマグに、ゆげがのぼる。窓の外では、白いたより。つもるかなって、つぶやくあなたの、やさしい横顔を、見つめていた。
+灯りを少し、落としたら、雪あかりだけが、ふたりを照らす。
+メリークリスマス、降りつもれ。ふたりの時間を、包むように。空が書いた、ラブレター。静かに、そっと、だきしめて。
+ひとつのマフラー、ふたりで巻いて、ほはばそろえる、帰り道。冷たいはずの、夜なのに、どうしてこんなに、あたたかいの。
+川も、雨も、雪になって、長い旅して、ここへ来たの。私もきっと、遠回りして、あなたのそばに、たどりついた。
+メリークリスマス、降りつもれ。来年も、その次の冬も。空が書いた、ラブレター。あなたと読みたい、いつまでも。メリークリスマス。愛してる。
+水野灯 新曲「白い便り」。降る雪を“空が書いたラブレター”と呼ぶ、やさしく温かいクリスマス・ラブバラード。
+▼ 配信・ダウンロード
+[配信リンク]
+Performed by：水野灯
+#白い便り #水野灯 #新曲 #クリスマスソング #ラブソング #JPOP #Shorts
+```
+**説明（EN）**
+```
+Steam rises from two mugs. Outside the window, a letter in white. "Will it pile up?" you murmur, and I was watching the gentle side of your face.
+When we turn the lights down low, only the glow of the snow lights the two of us.
+Merry Christmas, let it fall and pile up, as if to wrap our time together. A love letter the sky wrote. Hold it, softly, quietly, close.
+One scarf, wound around the two of us, our steps in time on the way home. It should be a cold night, so why is it this warm?
+The rivers and the rain all became snow, and traveled a long way to come here. I'm sure I took the long way too, and found my way to your side.
+Merry Christmas, let it fall and pile up, next winter and the one after that. The love letter the sky wrote, I want to read it with you, forever. Merry Christmas. I love you.
+"Shiroi Tayori (A Letter in White)" is the new single from Akari Mizuno, a gentle, warm Christmas love ballad that calls the falling snow a love letter written by the sky.
+▼ Stream / Download
+[配信リンク]
+Performed by: Akari Mizuno
+#ShiroiTayori #AkariMizuno #NewSong #Christmas #LoveSong #JPop #Shorts
+```
+**TuneCore**（※申請文はダッシュ記号を使わず句読点で区切る） タイトル：白い便り / シロイタヨリ ／ アーティスト：水野灯（ミズノ・アカリ）／ ジャンル1：**J-Pop**・ジャンル2：**歌謡曲** ／ ムード：**ラブ / ロマンス**（TuneCore固定リスト。季節推しなら ウィークエンド / ホリデー、しっとりなら リラックス / チルアウト）
+- 国内向け：`ふたつのマグに、ゆげがのぼる。窓の外では、白いたより。つもるかなって、つぶやくあなたの、やさしい横顔を、見つめていた。灯りを少し、落としたら、雪あかりだけが、ふたりを照らす。メリークリスマス、降りつもれ。ふたりの時間を、包むように。空が書いた、ラブレター。静かに、そっと、だきしめて。ひとつのマフラー、ふたりで巻いて、ほはばそろえる、帰り道。冷たいはずの、夜なのに、どうしてこんなに、あたたかいの。川も、雨も、雪になって、長い旅して、ここへ来たの。私もきっと、遠回りして、あなたのそばに、たどりついた。メリークリスマス、降りつもれ。来年も、その次の冬も。空が書いた、ラブレター。あなたと読みたい、いつまでも。水野灯 新曲「白い便り」。降る雪を空が書いたラブレターと呼ぶ、やさしく温かいクリスマス・ラブバラードです。`
+- 海外向け：`Steam rises from two mugs. Outside the window, a letter in white. Will it pile up, you murmur, and I was watching the gentle side of your face. When we turn the lights down low, only the glow of the snow lights the two of us. Merry Christmas, let it fall and pile up, as if to wrap our time together. A love letter the sky wrote, hold it softly, quietly, close. One scarf, wound around the two of us, our steps in time on the way home. It should be a cold night, so why is it this warm? The rivers and the rain all became snow, and traveled a long way to come here. I am sure I took the long way too, and found my way to your side. Merry Christmas, let it fall and pile up, next winter and the one after that. The love letter the sky wrote, I want to read it with you, forever. "Shiroi Tayori (A Letter in White)" is the new single from Akari Mizuno, a gentle and warm Christmas love ballad.`
+
+> **メモ（制作方式）**：㊾〜60と同じ Lv1「リビング・ジャケット」（ジャケ静止画＋Ken Burns＋粒子 snow/bokeh/rays＋光＋Leo Musicロゴバグ/CTA）。粒子は「舞う雪＋窓辺/村の暖かな玉ボケ」で選定。アクセントは金 `#ffd23d`＋琥珀色 `#ffb066`。ツール：`scripts-gen/gen_living_jacket.py`。BGMはサビ（0:44起点・mid/side解析で歌声明瞭な「メリークリスマス 降りつもれ」）を30秒。画面テキストはタイトルとアーティストのみ。英題は「Shiroi Tayori (A Letter in White)」。水野灯は既存アーティスト（54ただいまの雨 feat.琥珀譲二のリード）。クリスマス配信に好適。
+
 > **除外**：Thinking cats 全4曲（ユーザー指示により説明文は不要）。
 > ✅ **Thinking cats を除き、全曲 清書完了。**
-> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）／A Light in the Window（59 window-living.mp4・リビングジャケット）／Amber Christmas（60 amber-living.mp4・リビングジャケット）。
+> **既出/動画化済み**：三時三十四分（Signal名義VIP Mix）／ふたつのグラス／A Flower in the Stone（㉞ flower-stone.mp4）／十月桜（㉟ jugatsu-zakura.mp4）／竜胆の栞（㊱ rindo-shiori.mp4）／航跡（㊲ kouseki.mp4）／スノーグローブの中で（㊳ snowglobe.mp4）／The Light You Left On（㊶ light-left.mp4）／Kick the Door Down（㊷ kickdoor.mp4）／子猫のロック（㊸ koneko.mp4）／白い帆（㊹ shiroihan.mp4）／ジャスミンティーが冷めるまで（㊺ jasmine.mp4）／The Light in Her Window（㊻ herwindow.mp4）／Shine Like I Don't Care（㊼ shine.mp4）／We Are the Fireflies（㊽ fireflies.mp4）／Colors at the Door（㊾ colors-living.mp4・リビングジャケット）／光れ!（㊿ hikare-living.mp4・リビングジャケット）／Wide Open（51 wideopen-living.mp4・リビングジャケット／wideopen-lyric.mp4・リリック版）／Count to Three（52 count3-living.mp4・リビングジャケット）／水仙の夜明け（53 suisen-living.mp4・リビングジャケット）／ただいまの雨（54 tadaima-living.mp4・リビングジャケット）／十二月の柊（55 hiiragi-living.mp4・リビングジャケット）／ゆく年のグラス（56 yukutoshi-living.mp4・リビングジャケット）／鐘を鳴らせ（57 kane-living.mp4・リビングジャケット）／Leave the Porch Light On（58 porch-living.mp4・リビングジャケット）／A Light in the Window（59 window-living.mp4・リビングジャケット）／Amber Christmas（60 amber-living.mp4・リビングジャケット）／白い便り（61 shiroi-living.mp4・リビングジャケット）。
 > **TuneCoreジャンル注意**：ジャンル1に「ポップ」は使わない（配信ストアのサブミット対象外になり得るため）。日本語歌モノ=J-Pop、英語歌モノ=オルタナティブ/フォーク/カントリー、大人の情緒=歌謡曲、で振り分け。
 > **TuneCoreムードは固定リストから選ぶ**（自由入力不可）。選べるのは：なし／ウィークエンド・ホリデー／エクササイズ・ワークアウト／パーティー／フォーカス・スタディ／フラッシュバック・年代別／ブルー・サッド／モチベーション・ハッピー／リラックス・チルアウト／ラブ・ロマンス／ディナー／ポップカルチャー／ドライヴ・トラベル／ゲーム／スリープ。※「パワフル」「クール」「アゲ」等はリストに無いので使わない。ダーク/硬派なロック=ドライヴ・トラベル or モチベーション・ハッピー、バラード=リラックス・チルアウト or ラブ・ロマンス で振り分け。
 >
