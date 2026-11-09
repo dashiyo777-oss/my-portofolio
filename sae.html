@@ -2001,6 +2001,8 @@ async function startDiagnosis(){
 
 /* ---- 計測ビーコン（D1 / 国別対応） ---- */
 try{new Image().src='https://api.eichinohi.com/api/hit?site=sae&r='+Date.now();}catch(e){}
+/* カウント一覧（count-dashboard）用の累計カウンター。ほかの手帖と同じ eichi-count Worker に +1 */
+try{fetch('https://eichi-count.dashiyo777.workers.dev/sae/up').catch(function(){});}catch(e){}
 
 </script>
 </body>
