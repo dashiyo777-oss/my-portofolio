@@ -105,5 +105,5 @@ const SONGS = [
   {id:"s97", release:"2026-11-21", link:"https://linkco.re/yCDAbQdb", reg:"", title:"Leave the Porch Light On", en:"Leave the Porch Light On", kana:"リーヴザポーチライトオン", artist:"Noah Vale", status:"手続完了", memo0:"TuneCore Japan・シングル・フォーク／カントリー・審査承認 11/8・リリース予定 11/21", note:false},
   {id:"s98", release:"2026-11-21", link:"https://linkco.re/Byce6Nu1", reg:"", title:"Amber Christmas", en:"Amber Christmas", kana:"アンバークリスマス", artist:"Amber & Rain", status:"手続完了", memo0:"TuneCore Japan・シングル・ジャズ／オルタナティブ・審査承認 11/8・リリース予定 11/21", note:false},
   {id:"s99", release:"2026-11-21", link:"https://linkco.re/acQbZhpS", reg:"", title:"ゆく年のグラス", kana:"ユクトシノグラス", artist:"琥珀譲二", status:"手続完了", memo0:"TuneCore Japan・シングル・歌謡曲／J-Pop・審査承認 11/5・リリース予定 11/21", note:false},
-  {id:"s100", release:"2026-11-13", reg:"", title:"白い便り", kana:"シロイタヨリ", artist:"水野灯", status:"供給準備中", memo0:"TuneCore Japan で審査中（リリースID TCJPR0002051959）・シングル・J-Pop／歌謡曲・リリース予定 11/13", note:false},
+  {id:"s100", release:"2026-11-13", link:"https://linkco.re/d6ayvqN3", reg:"", title:"白い便り", kana:"シロイタヨリ", artist:"水野灯", status:"手続完了", memo0:"TuneCore Japan（リリースID TCJPR0002051959）・シングル・J-Pop／歌謡曲・リリース予定 11/13", note:false},
 ];
