@@ -1,0 +1,31 @@
+﻿番号,区分,発行元,タイトル・内容,言語,URL,信頼度,本文での使用箇所
+T1,A 一次資料（政府・公的機関）,監察院（台湾）,維民専案に関する糾正案（行政院を糾正）関連文書,中文,https://cybsbox.cy.gov.tw/CYBSBoxSSL/edoc/download/67968,高,維民専案の規模・糾正理由
+T7,A 一次資料（政府・公的機関）,監察院（台湾）,糾正案 公告文書（PDF）,中文,https://multimedia.cy.gov.tw/\DocFiles\IFDEWebBBS_CY\Docs\112\3RD\01\72\1122630293.pdf,高,維民専案（参考）
+T16,A 一次資料（政府・公的機関）,台北駐日経済文化代表処,日華議員懇談会（日本台湾友好議員連盟）との交流記事,日本語,https://roc-taiwan.org/jp_ja/post/117661.html,高（発信元の公式情報）,議員交流
+T17,A 一次資料（政府・公的機関）,台北駐日経済文化代表処,日華議員懇談会 議員総会への代表出席（写真記事）,日本語,https://www.roc-taiwan.org/jp/album/32/photo/2721.html,高（発信元の公式情報）,議員交流
+T4,B 学術・研究,中央通訊社 CNA（研究紹介）,党国特務の目の下で　米国での台湾意識の芽生え（鄭昕氏の研究）,中文,https://www.cna.com.tw/news/acul/202312203001.aspx,中,米国での留学生監視
+T6,B 学術・研究,国立清華大学図書館,誤ってブラックリストに載った人の帰郷の道（展示）,中文,https://www.lib.nthu.edu.tw/events/2021/diaoyun/story09.html,中,ブラックリストの体験
+T9,B 学術・研究,広島大学『広島法学』（CiNii）,柳文卿・陳玉璽事件とアムネスティ・インターナショナル日本の設立,日本語,https://cir.nii.ac.jp/crid/1390572174805666560?lang=en,高,柳文卿事件
+T30,B 学術・研究,国立台湾師範大学 学位論文（Airiti）,台湾警備総司令部に関する研究,中文,https://www.airitilibrary.com/Article/Detail/U0021-NTNU43016,中,警総と国安局の関係（参考）
+T31,B 学術・研究,Amnesty International,Taiwan 1992 報告書（ASA 38/003/1992）,English,https://www.amnesty.org/es/wp-content/uploads/2021/06/asa380031992en.pdf,高,参考（1991年の独立派逮捕）
+T2,C 報道（台湾）,新頭殻 Newtalk,監察院が維民専案で行政院を糾正（2023年8月16日）,中文,https://newtalk.tw/news/view/2023-08-16/884409,中,維民専案
+T5,C 報道（台湾）,自由時報,威権時期に国民党が留学生を監視　監察院が行政院を糾正,中文,https://news.ltn.com.tw/news/politics/breakingnews/4398539,中,採用拒否136人のうち日本8人
+T8,C 報道（台湾）,Taipei Times,柳文卿事件を振り返る（2025年2月8日）,English,https://www.taipeitimes.com/News/feat/archives/2025/02/08/2003831523,中,柳文卿事件・文書公開の要求
+T14,D 報道（日本）,風傳媒 日本語版,台湾政府高官の元側近にスパイ疑惑,日本語,https://japan.storm.mg/articles/1031292,中,台湾国内の中国スパイ事件
+T15,D 報道（日本）,CNN.co.jp,台湾、中国のスパイ容疑による摘発が急増　昨年は64人起訴,日本語,https://www.cnn.co.jp/world/35228230.html,中,台湾の防諜の現状
+T19,D 報道（日本）,週刊文春 電子版,中国の非公式警察拠点をめぐる公安部の捜査,日本語,https://bunshun.jp/denshiban/articles/b8122,中,公安部外事二課
+T20,D 報道（日本）,東洋経済オンライン,中国の非公式警察拠点と書類送検,日本語,https://toyokeizai.net/articles/-/737268,中,セーフガード・ディフェンダーズの指摘
+T22,D 報道（日本）,現代ビジネス,秘密警察拠点をめぐる家宅捜索,日本語,https://gendai.media/articles/-/125091,中,2023年5月の家宅捜索
+T23,D 報道（日本）,時事ドットコム,「外国代理人」の活動可視化　登録制度、政府が本格検討（2026年11月）,日本語,https://www.jiji.com/jc/article?k=2026110100251&g=pol,中,法制度のすき間・論点
+T24,D 報道（日本）,東京新聞,スパイ対策政府案、不当な影響工作に刑事罰　代理人登録義務付け,日本語,https://www.tokyo-np.co.jp/article/524072,中,制度案の中身
+T25,D 報道（日本）,nippon.com（時事通信配信）,「外国代理人制度」の検討着手＝政府、スパイ防止法第1弾,日本語,https://www.nippon.com/ja/news/yjj2026102600774/,中,検討開始（10月26日）
+T26,D 報道（日本）,日本経済新聞,ロビー活動に「外国代理人」登録を義務づけ　スパイ防止法で検討,日本語,https://www.nikkei.com/article/DGXZQOUA230QY0T21C26A0000000/,中,制度案の中身
+T27,D 報道（日本）,NOVAIST,外国干渉防止法案、ロビー活動の事前登録を検討,日本語,https://novaist.jp/articles/japan-foreign-agent-bill/,中,法案名・提出時期
+T28,D 報道（日本）,朝日新聞（Yahoo!ニュース配信）,「スパイ防止法」政府が初の具体像　外国代理人登録と罰則を提示,日本語,https://news.yahoo.co.jp/articles/36460c3c5fd9fba34849528bdb2a496d1cb0d529,中,参考
+T29,D 報道（日本）,Newsweek日本版,中国の海外「警察署」問題（2023年4月）,日本語,https://www.newsweekjapan.jp/stories/world/2023/04/no-16.php,中,非公式警察拠点
+T18,E 報道・団体（国際）,The Japan Times,China overseas police station in Tokyo raided（2024年2月21日）,English,https://japantimes.co.jp/news/2024/02/21/japan/crime-legal/china-overseas-police-station-in-tokyo-raided,中,書類送検
+T21,E 報道・団体（国際）,The Japan Times,Human Rights Watch report on Chinese harassment in Japan（2024年10月10日）,English,https://www.japantimes.co.jp/news/2024/10/10/japan/japan-chinese-harassment-report,中,越境的な圧力
+T3,F 百科事典（二次・要裏取り）,Wikipedia 中国語版,黒名単（台湾）,中文,https://zh.wikipedia.org/wiki/%E9%BB%91%E5%90%8D%E5%96%AE_(%E5%8F%B0%E7%81%A3),低〜中,ブラックリストの仕組み
+T11,F 百科事典（二次・要裏取り）,Wikipedia,World United Formosans for Independence（台湾独立建国聯盟）,English,https://en.wikipedia.org/wiki/World_United_Formosans_for_Independence,低〜中,黄昭堂氏の経歴
+T12,F 百科事典（二次・要裏取り）,Wikipedia,Taiwan Garrison Command（台湾警備総司令部）,English,https://en.wikipedia.org/wiki/Taiwan_Garrison_Command,低〜中,警総の解散
+T13,F 百科事典（二次・要裏取り）,Military History Wiki（Fandom）,Taiwan Garrison Command,English,https://military-history.fandom.com/wiki/Taiwan_Garrison_Command,低,警総の改組
