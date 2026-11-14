@@ -48,6 +48,7 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(24px,6vw,34px);letter
 .row .ct.err{color:var(--stamp);font-size:13px;font-family:var(--body)}
 .row .dl{min-width:52px;text-align:right;font-size:12px;color:var(--up);font-variant-numeric:tabular-nums}
 .row .dl.zero{color:#B6A78E}
+.row .geo{font-size:15px;text-decoration:none;opacity:.75;flex-shrink:0}
 .row a.ext{font-size:12px;color:var(--gold);border-bottom:1px dotted var(--gold)}
 
 .note{font-size:11.5px;color:#8A7A64;margin-top:16px;line-height:1.9}
@@ -125,7 +126,13 @@ var EXT = [
   {em:'🏛️', nm:'政治家ランク',            sub:'api.eichinohi.com（site=politicians）', url:'https://dashiyo777-oss.github.io/politicians.html'},
   {em:'🌏', nm:'世界の見方',              sub:'eichinohi.com/sekai.html',              url:'https://eichinohi.com/sekai.html'},
   {em:'📝', nm:'冴え手帖（itch.io）',       sub:'itch.io Analytics',                     url:'https://ryuzaburo7.itch.io/sae-techo'},
-  {em:'🕯️', nm:'叡智の灯火／賢人会議',      sub:'Discord日次レポート / dashboard',        url:'https://eichinohi.com/'}
+  {em:'🕯️', nm:'叡智の灯火／賢人会議',      sub:'Discord日次レポート / dashboard',        url:'https://eichinohi.com/'},
+  {em:'🪷', nm:'墓所手帖',                sub:'api.eichinohi.com（site=bosho）',        url:'https://api.eichinohi.com/dashboard?key=eichi-2026&site=bosho'},
+  {em:'🍽️', nm:'食べ物びっくり手帖（yoshida版）', sub:'api.eichinohi.com（site=tabemono-yoshida）', url:'https://api.eichinohi.com/dashboard?key=eichi-2026&site=tabemono-yoshida'},
+  {em:'🎯', nm:'同クイズ完了数',           sub:'api.eichinohi.com（site=tabemono-yoshida-quiz）', url:'https://api.eichinohi.com/dashboard?key=eichi-2026&site=tabemono-yoshida-quiz'},
+  {em:'🌿', nm:'若さ維持ノート（記事の目次）', sub:'api.eichinohi.com（site=ageless-index）', url:'https://api.eichinohi.com/dashboard?key=eichi-2026&site=ageless-index'},
+  {em:'➡️', nm:'目次からクイズへ移った数', sub:'api.eichinohi.com（site=ageless-to-quiz）', url:'https://api.eichinohi.com/dashboard?key=eichi-2026&site=ageless-to-quiz'},
+  {em:'🧠', nm:'冴え手帖（yoshida版）',     sub:'api.eichinohi.com（site=sae-yoshida）',   url:'https://api.eichinohi.com/dashboard?key=eichi-2026&site=sae-yoshida'}
 ];
 
 function fmt(n){ return Number(n).toLocaleString(); }
@@ -147,6 +154,8 @@ function renderRows(container, items){
     var row=document.createElement('div'); row.className='row';
     row.innerHTML='<span class="em">'+it.em+'</span>'+
       '<span class="nm">'+it.nm+'<small>'+it.sub+'</small></span>'+
+      // 🌍 = 国別・日次推移ダッシュボード（D1計測。ビーコン設置日以降のデータが貯まる）
+      '<a class="geo" href="https://api.eichinohi.com/dashboard?key=eichi-2026&site='+it.ns+'" target="_blank" rel="noopener" title="国別・推移ダッシュボード">🌍</a>'+
       '<span class="dl" data-dl></span>'+
       '<span class="ct load" data-ct>…</span>';
     container.appendChild(row);

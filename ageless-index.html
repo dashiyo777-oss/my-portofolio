@@ -36,9 +36,17 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(21px,5.4vw,27px);lett
 .card .badge{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px;margin-bottom:7px;letter-spacing:.04em}
 .badge.honne{background:#F1F6EE;color:var(--up);border:1px solid #CFE3C4}
 .badge.karada{background:#FBF3E4;color:#8A5A22;border:1px solid #E7D3A9}
+.badge.note{background:#F3EEF6;color:#6E4A86;border:1px solid #DBCBE6}
 .soon{opacity:.62}
 .soon .arw{color:var(--muted)}
 .soon .badge{background:#EFEAE0;color:#8A7A64;border:1px solid var(--line)}
+.notetop{display:flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(135deg,#6E4A86,#8A5AA6);color:#fff;border-radius:14px;padding:14px 16px;margin:16px 0 4px;font-weight:700;font-size:14.5px;line-height:1.5;text-align:center;box-shadow:0 3px 12px rgba(110,74,134,.22)}
+.notetop:active{transform:scale(.99)}
+.quiztop{display:block;background:#F1F6EE;border:1.5px solid #CFE3C4;border-radius:14px;padding:13px 16px;margin:12px 0 4px;text-align:center;box-shadow:0 2px 10px rgba(62,124,79,.10)}
+.quiztop:active{transform:scale(.99)}
+.quiztop .qt{font-family:var(--disp);font-weight:700;font-size:15.5px;color:#2F5E3C;line-height:1.5}
+.quiztop .qd{font-size:12px;color:#5E7A63;margin-top:3px;line-height:1.7}
+.notetop .np{background:#fff;color:#6E4A86;font-size:11px;border-radius:6px;padding:2px 8px;letter-spacing:.04em;flex:none}
 .disc{font-size:11.5px;color:var(--muted);line-height:1.9;margin:22px 4px 0;text-align:center}
 footer{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-size:11px;color:var(--muted);text-align:center;line-height:1.8}
 </style>
@@ -55,6 +63,16 @@ footer{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-si
     70歳。まだまだ若くいたい。<br>
     サプリも皮膚科も、いろいろ試しました。<b>効いたもの・ムダだったお金まで</b>、大げさに言わず<b>実体験と"正直"</b>で綴っています。同世代のあなたへ🌿
   </div>
+
+  <a class="notetop" href="https://note.com/kenyuzaburo">
+    <span class="np">note</span>
+    じっくり読む「若さ維持ノート」は、こちら
+  </a>
+
+  <a class="quiztop" id="quizLink" href="tabemono-yoshida.html">
+    <div class="qt">🍽 食べ物びっくりクイズ（毎日5問）</div>
+    <div class="qd">3択なので気軽にどうぞ。Threadsで読者のみなさんに教わった話も、問題になっています。</div>
+  </a>
 
   <div class="sec">正直な体験の記録</div>
 
@@ -107,6 +125,64 @@ footer{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-si
     <span class="arw">›</span>
   </a>
 
+  <div class="sec">note（じっくり読む記録）</div>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/nb12f1ca56148">
+    <span class="badge note">note</span>
+    <div class="t">70歳、働くことが、いちばんの健康法だった</div>
+    <div class="d">前職から通算4年、無遅刻無欠勤。休まず働けること自体が、いちばんの健康の証かもしれない――現役で生きる正直な記録。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/nd5f987e71c6c">
+    <span class="badge note">note</span>
+    <div class="t">40年、怒鳴り合ってきた夫婦が、ストレスなく暮らせている理由</div>
+    <div class="d">喧嘩が多いのは、悪いことじゃない。大事なのは「ぶつかった後、すぐ戻れるか」。夫婦げんかと若さの関係を、本人の実体験と科学で正直に。わが家の仲直り係は、じつは猫でした。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/nf8049610bb89">
+    <span class="badge note">note</span>
+    <div class="t">古希の年に、二つの同窓会へ行ってきました。70歳が見た、それぞれの「歳の取り方」</div>
+    <div class="d">中学と高校、二つの同窓会へ。55年ぶりの顔、もう会えない仲間、それぞれの場所で現役の友。歳の取り方に、正解はない。「歳をとるのも、悪くないな」と思えた二日間の記録。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/n43ba38da9a90">
+    <span class="badge note">note</span>
+    <div class="t">骨のためにできること ―「増やす」より「転ばない」</div>
+    <div class="d">高齢者の転倒は、およそ半分が"家の中"なんだそうです。お金をかけない工夫を、公的なデータと一緒に正直に。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/n06c3498e480a">
+    <span class="badge note">note</span>
+    <div class="t">入れ歯が、どうしても馴染めなかった</div>
+    <div class="d">70歳、もう一度"普通に噛める"まで。甘いものが好きだった私の、歯にまつわる長い正直な話。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/n336099eb34a1">
+    <span class="badge note">note</span>
+    <div class="t">「あとは人工関節しかない」と言われた股関節が、また歩けるまで</div>
+    <div class="d">見放されても諦めなかった、70歳の"静かなる再生"の記録。※手術を否定する話ではありません。迷う方は主治医とご相談を。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/nafa1a96de191">
+    <span class="badge note">note</span>
+    <div class="t">股関節や膝が痛いあなたへ。正解は、ひとつじゃありませんでした</div>
+    <div class="d">股関節の話に集まった、たくさんの"痛みと向き合った記録"を匿名でまとめました。手術した人、しない道を選んだ人、今も闘う人。正解はひとつじゃない。※体験談です。治療法のおすすめではありません。不安は専門医にご相談を。</div>
+    <span class="arw">›</span>
+  </a>
+
+  <a class="card" href="https://note.com/kenyuzaburo/n/n069aad5f04ab">
+    <span class="badge note">note</span>
+    <div class="t">「作ってもらえない味噌汁」が、70人の知恵になりました</div>
+    <div class="d">妻が作らなくなり、自分でインスタントを探した70歳。その話に集まった、100人超の"味噌汁の工夫"を、お金をかけず続けられるものだけ正直にまとめました。</div>
+    <span class="arw">›</span>
+  </a>
+
   <div class="sec">研究でわかっていること（中立まとめ）</div>
 
   <a class="card" href="review-antiaging-honest.html">
@@ -140,5 +216,18 @@ footer{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-si
     正直・実体験・背伸びしない ―― この3つだけは守って書いています。
   </footer>
 </div>
+<script>
+/* 計測：目次ページの訪問と、クイズへの移動（api.eichinohi.com の国別計測） */
+(function(){
+  var API='https://api.eichinohi.com/api/hit?site=';
+  try{new Image().src=API+'ageless-index&r='+Date.now();}catch(e){}
+  var q=document.getElementById('quizLink');
+  if(q) q.addEventListener('click',function(){
+    try{fetch(API+'ageless-to-quiz&r='+Date.now(),{keepalive:true,mode:'no-cors'});}catch(e){}
+  });
+})();
+</script>
 </body>
 </html>
+<!-- deploy refresh 2026-11-07 -->
+
