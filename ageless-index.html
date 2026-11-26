@@ -6,6 +6,11 @@
 <title>よしだ｜70歳の若さ維持ノート ― 記事の目次 ｜ ageless diary</title>
 <meta name="description" content="サプリも皮膚科も、いろいろ試した70歳。効いたもの・ムダだったお金まで、実体験と正直で綴る若さ維持ノートの目次です。">
 <meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="よしだ｜70歳・24時間勤務と若さ維持ノート">
+<meta property="og:description" content="70歳、駐車場の24時間勤務で今も現役。仕事と体のこと、効いたもの、ムダだったお金まで正直に。">
+<meta property="og:url" content="https://dashiyo777-oss.github.io/my-portofolio/ageless-index.html">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -42,6 +47,10 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(21px,5.4vw,27px);lett
 .soon .badge{background:#EFEAE0;color:#8A7A64;border:1px solid var(--line)}
 .notetop{display:flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(135deg,#6E4A86,#8A5AA6);color:#fff;border-radius:14px;padding:14px 16px;margin:16px 0 4px;font-weight:700;font-size:14.5px;line-height:1.5;text-align:center;box-shadow:0 3px 12px rgba(110,74,134,.22)}
 .notetop:active{transform:scale(.99)}
+.kinmutop{display:block;background:#2E3A55;color:#EEF0F6;border-radius:14px;padding:14px 16px;margin:16px 0 4px;text-align:center;box-shadow:0 3px 12px rgba(46,58,85,.25)}
+.kinmutop:active{transform:scale(.99)}
+.kinmutop .kt{font-family:var(--disp);font-weight:700;font-size:16px;line-height:1.5}
+.kinmutop .kd{font-size:12px;color:#C9D0E0;margin-top:3px;line-height:1.7}
 .quiztop{display:block;background:#F1F6EE;border:1.5px solid #CFE3C4;border-radius:14px;padding:13px 16px;margin:12px 0 4px;text-align:center;box-shadow:0 2px 10px rgba(62,124,79,.10)}
 .quiztop:active{transform:scale(.99)}
 .quiztop .qt{font-family:var(--disp);font-weight:700;font-size:15.5px;color:#2F5E3C;line-height:1.5}
@@ -63,6 +72,11 @@ footer{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-si
     70歳。まだまだ若くいたい。<br>
     サプリも皮膚科も、いろいろ試しました。<b>効いたもの・ムダだったお金まで</b>、大げさに言わず<b>実体験と"正直"</b>で綴っています。同世代のあなたへ🌿
   </div>
+
+  <a class="kinmutop" id="kinmuLink" href="kinmu-24h.html">
+    <div class="kt">🌙 70歳、24時間勤務の記録</div>
+    <div class="kd">1日の流れ、仮眠、68歳で仕事を変えた理由、資格。読者のみなさんに教わった「何歳まで働くか」の声も。</div>
+  </a>
 
   <a class="notetop" href="https://note.com/kenyuzaburo">
     <span class="np">note</span>
@@ -224,6 +238,10 @@ footer{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-si
   var q=document.getElementById('quizLink');
   if(q) q.addEventListener('click',function(){
     try{fetch(API+'ageless-to-quiz&r='+Date.now(),{keepalive:true,mode:'no-cors'});}catch(e){}
+  });
+  var k=document.getElementById('kinmuLink');
+  if(k) k.addEventListener('click',function(){
+    try{fetch(API+'ageless-to-kinmu&r='+Date.now(),{keepalive:true,mode:'no-cors'});}catch(e){}
   });
 })();
 </script>
